@@ -1,0 +1,960 @@
+@font-face {
+    font-family: 'DIN REGULAR';
+    font-style: normal;
+    font-weight: 400;
+    src: url(css/fonts/din_regular.otf);
+}
+
+@font-face {
+    font-family: 'DIN BOLD';
+    font-style: normal;
+    font-weight: 600;
+    src: url(css/fonts/din_bold.otf);
+}
+
+@font-face {
+    font-family: 'DIN LIGHT';
+    font-style: normal;
+    font-weight: 300;
+    src: url(css/fonts/din_light.otf);
+}
+
+body {
+    direction: rtl;
+    text-align: right;
+    unicode-bidi: embed;
+    font-family: "DIN REGULAR", serif;
+    font-size: 13px;
+}
+
+.h5 {
+    font-size: 1rem;
+}
+
+.h4 {
+    font-size: 1rem;
+}
+
+.ml-auto,
+.mx-auto {
+    margin-right: auto !important;
+    margin-left: unset !important;
+}
+
+.mr-1,
+.mx-1 {
+    margin: 0 !important;
+    margin-left: 0.25rem !important;
+}
+
+.ml-1,
+.mx-1 {
+    margin: 0 !important;
+    margin-right: 0.25rem !important;
+}
+
+.mr-2,
+.mx-2 {
+    margin: 0 !important;
+    margin-left: 0.5rem !important;
+}
+
+.ml-2,
+.mx-2 {
+    margin: 0 !important;
+    margin-right: 0.5rem !important;
+}
+
+.mr-3,
+.mx-3 {
+    margin-left: 1rem !important;
+}
+
+.ml-3,
+.mx-3 {
+    margin: 0 !important;
+    margin-right: 1rem !important;
+}
+
+.mr-4,
+.mx-4 {
+    margin: 0 !important;
+    margin-left: 1.5rem !important;
+}
+
+.ml-4,
+.mx-4 {
+    margin: 0 !important;
+    margin-right: 1.5rem !important;
+}
+
+.mr-5,
+.mx-5 {
+    margin: 0 !important;
+    margin-left: 3rem !important;
+}
+
+.ml-5,
+.mx-5 {
+    margin: 0 !important;
+    margin-right: 3rem !important;
+}
+
+.tag-item {
+    float: right;
+}
+
+small,
+.about-section h2,
+.page-header h1,
+.section-title h2 span,
+.tetsimonial-box .person span.name,
+.newsletter-section h3,
+.newsletter-section h3 span,
+.consulting-sidebar-box h2,
+.fancy-title,
+.education-banner h2,
+.inner-education-box h2,
+.boldfont,
+.exam-box .price,
+.course-info-box h6,
+.article-post .published,
+.article-post h2,
+.contact-box h3,
+.related-articel-box .img-wrapper span,
+.business-up .fancy-box h3,
+footer.consulting-footer .footer-title,
+footer.consulting-footer .footer-title a,
+.main-services .service-box .title h2,
+.partnership-with .fancy-box h3,
+.course-info__buttons li a,
+.autocomplete-result h5 {
+    font-family: "DIN BOLD", serif;
+}
+
+.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.btn-group>.btn-group:not(:first-child)>.btn, .btn-group>.btn:not(:first-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.btn-group>.btn:first-child {
+    border-top-right-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
+}
+
+
+.btn-group>.btn:last-child {
+    border-top-left-radius: .25rem !important;
+    border-bottom-left-radius: .25rem !important;
+}
+
+.page-header ol li {
+    margin-right: 0;
+    margin-left: 6px;
+}
+
+.page-header ol li:not(:last-child):after {
+    margin-left: 0;
+    margin-right: 5px;
+}
+
+p {
+    font-family: 'DIN REGULAR', serif;
+    font-size: 14px;
+}
+
+ul,
+ol {
+    font-family: 'DIN REGULAR', serif;
+    font-size: 14px;
+}
+
+.widget ul,
+.widget p {
+    font-family: "DIN REGULAR", serif !important;
+    font-size: 14px;
+}
+
+.footer p,
+button {
+    font-family: "DIN REGULAR", serif !important;
+
+}
+
+.input-group > .input-group-append > .btn {
+    border-radius: .25rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.list-unstyled {
+    padding: 0;
+}
+
+.widget p .post-date {
+    font-size: 12px;
+}
+
+.dir {
+    direction: ltr !important;
+}
+
+.pull-right {
+    float: left !important;
+}
+
+.pull-left {
+    float: right !important;
+}
+
+.searchForm button {
+    left: 20px;
+}
+
+.about-img-flip {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.navbar-brand {
+    padding-left: 35px;
+    float: right;
+}
+
+
+h3,li.autocomplete-result a, li.autocomplete-result a small {
+    font-family: "DIN REGULAR", serif;
+}
+
+ul {
+    margin-right: 0;
+}
+
+.knowledge-center-table {
+    font-family: "DIN REGULAR";
+}
+
+.knowledge-center-table td {
+    border: 1px solid #d9d9d9;
+
+}
+
+.knowledge-center-table th {
+    text-align: center;
+}
+
+.wpcf7-form-control {
+    display: inline-block;
+}
+
+blockquote {
+    border-right: 5px solid #eee;
+    border-left: none;
+}
+
+.bakkah_knowledge_center ul {
+    margin-right: 0;
+}
+
+.entry-summary {
+    padding: 0 0 0 10%;
+}
+
+.entry-tags ul:before {
+    position: static;
+    right: 0;
+}
+
+.entry-tags ul {
+    list-style: none;
+    display: inline-flex;
+    margin-right: 0;
+    padding-right: 15px;
+}
+
+.entry-tags li {
+    padding-right: 5px;
+    padding-left: 0;
+}
+
+.more-bt {
+    float: left;
+}
+
+.tag-entry-tags ul:before {
+    right: 15px !important;
+    bottom: 0px !important;
+}
+
+.entry-tags {
+    font-family: "Open Sans";
+}
+
+.ltr {
+    direction: ltr !important
+}
+
+.widget_nav_menu ul,
+#widget_nav_menu ul {
+    margin-right: 0;
+}
+
+.widget_nav_menu ul li,
+#widget_nav_menu ul li {
+    padding-right: 16px;
+}
+
+.widget_nav_menu ul li > a,
+#widget_nav_menu ul li > a {
+
+    padding-right: 0;
+
+}
+
+.widget_search #searchform input[type=submit] {
+    font-family: "DIN REGULAR", serif;
+}
+
+::-webkit-input-placeholder {
+    font-family: "DIN REGULAR", serif;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    font-family: "DIN REGULAR", serif;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    font-family: "DIN REGULAR", serif;
+}
+
+:-ms-input-placeholder {
+    font-family: "DIN REGULAR", serif;
+}
+
+.tc-table th {
+
+    font-family: "DIN REGULAR", serif;
+
+}
+
+.tc-table th:first-child {
+    border-radius: 0 3px 0 0;
+}
+
+.tc-table th:last-child {
+    border-radius: 3px 0 0 0;
+}
+
+.selct-input {
+    font-family: "DIN REGULAR", serif;
+    padding: 4px 12px !important;
+    font-size: 12px;
+}
+
+.stats-number {
+
+    font-family: "Open Sans", serif !important;
+}
+
+.pagination .fa-angle-left:before {
+    content: "\f104";
+}
+
+.widget_search #searchform input[type=submit] {
+    left: 0px !important;
+    right: auto;
+}
+
+.widget_search #searchform input[type=text] {
+    font-family: "DIN REGULAR", serif;
+}
+
+#error404 .search404 input[type=submit] {
+
+    font-family: "DIN REGULAR", serif;
+}
+
+#error404 h2 {
+    font-size: 23px;
+}
+
+#error404 .search404 input[type=submit] {
+    left: 0px !important;
+    right: 220px;
+}
+
+.radio-inline input[type=radio] {
+    margin-left: 0;
+    margin-right: -20px;
+}
+
+.exam-table th:first-child {
+    border-radius: 0 3px 0 0;
+}
+
+.exam-table th:last-child {
+    border-radius: 3px 0px 0 0;
+}
+
+.exam-meta > div:first-child:after {
+    left: -9px;
+    right: unset;
+}
+
+.exam_btn {
+    float: left;
+}
+
+.col_border_left {
+    border-right: 1px solid #ccc;
+}
+
+#payment_type {
+    padding: 0 !important;
+}
+
+.related_courses > div {
+    border-left: 0px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.js-banner__link_box {
+    text-align: center;
+}
+
+.headerstrip-text {
+    text-align: left;
+}
+
+.related_courses ul li {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.consulting-sidebar-box li a {
+    border-left: 0;
+    border-right: 5px solid transparent;
+}
+
+#evaluation_form .evaluate .level_q {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.register_btn {
+    font-family: 'DIN REGULAR', serif;
+    font-size: 15px;
+    padding: 3px 6px;
+}
+
+ul.download_list li:before {
+    margin-right: 0;
+    margin-left: 5px;
+}
+
+.highlightBox {
+    background-position: 75% 50% !important;
+}
+
+.npsRow {
+    padding-left: 0;
+    padding-right: 70px;
+}
+
+.orange-broder-last {
+    border-left: 1px solid #fb4400 !important;
+}
+
+.orange-broder {
+    border: 1px solid #fb4400;
+    border-left: 0;
+    border-right: 1px solid #fb4400;
+}
+
+.upcoming_session_interest button {
+    margin-top: 0px !important;
+    margin-right: 5px !important;
+}
+
+.exam-table {
+    font-family: inherit;
+}
+
+.rtl.home .post-share {
+    display: none;
+}
+
+.rtl-table th,
+.rtl-table td {
+    text-align: right !important;
+}
+
+.loyalty-hero-section .wpb_column h1 span {
+    padding-bottom: 0;
+}
+
+.loyalty-hero-section .wpb_column h1 span:after {
+    bottom: -23px;
+}
+
+.custom-info-box .top-icon .aio-icon-description ul li {
+    text-align: right;
+}
+
+.custom-info-box .top-icon .aio-icon-description ul li:before {
+    left: auto;
+    right: -12px;
+}
+
+.custom-info-box .wpb_column:not(:last-of-type):after {
+    right: auto;
+    left: 8px;
+}
+
+.custom-box-2 .aio-icon-img {
+    margin-left: 15px;
+    margin-right: 0 !important;
+}
+
+.loyalty-hero-section .wpb_column p {
+    line-height: 1.8;
+}
+
+.course-price-wrapper:before {
+    left: auto;
+    right: -3px;
+}
+
+span.price-after-discount {
+    right: auto;
+    left: 0;
+}
+
+.advertisement_bar .close-banner {
+    right: auto;
+    left: 5px;
+    top: 2px;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    font-size: 11px;
+}
+
+.testimonails-wrapper .text:before {
+    left: auto;
+    right: -25px;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.testimonails-wrapper .text .userinfo span:after {
+    right: auto;
+    bottom: 10px;
+    left: -12px;
+}
+
+.testimonails-wrapper .text .userinfo span {
+    margin-right: 0;
+    margin-left: 20px;
+}
+
+/* New Web Site Design */
+.header-option {
+    position: absolute;
+    display: flex;
+    left: 15px;
+    right: auto;
+}
+
+.btn-header-contact {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+div#mega-menu-wrap-main_menu {
+    margin-right: 30px;
+    margin-left: auto;
+}
+
+.header-form {
+    right: -290px;
+    left: auto;
+    transform-origin: left;
+}
+
+.hero-section .fancy-box .box-link a {
+    transform: rotate(180deg);
+}
+
+.hero-section .fancy-box .box-link:hover a {
+    transform: rotate(180deg) translateX(5px);
+}
+
+.hero-section .fancy-box h2 {
+    font-family: 'DIN BOLD';
+}
+
+.circle-list li {
+    padding-left: 0;
+    padding-right: 20px;
+}
+
+.circle-list li:before {
+    left: auto;
+    right: 0px;
+}
+
+.consulting-box > a {
+    padding-left: 0;
+    padding-right: 30px;
+}
+
+.consulting-box .title img {
+    margin-left: 0;
+    margin-right: 20px;
+}
+
+.consulting-header .text-right,
+.page-header .text-right {
+    text-align: left !important;
+}
+
+.back-to-top {
+    left: auto;
+    right: 20px;
+}
+
+/* .exam-box i {
+    transform: rotate(180deg);
+} */
+
+form#searchform button {
+    right: auto;
+    left: 5px;
+}
+
+.about-text-block ul.check-list li,
+.check-list li,
+.careers_details ul li {
+    padding-left: 0;
+    padding-right: 20px;
+}
+
+.about-text-block ul.check-list li:before,
+.check-list li:before,
+.careers_details ul li:before {
+    right: 0;
+    left: auto;
+}
+
+#category-sidebar-hover li a {
+    border: 0;
+    border-right: 5px solid transparent;
+}
+
+.alliance-box p {
+    height: 105px;
+}
+
+.about-text-block.move-left {
+    left: auto;
+    right: -170px;
+}
+
+.about-text-block.move-right {
+    right: auto;
+    /* left: -170px; */
+}
+
+#about-slider .carousel-control-prev {
+    right: 0;
+    left: auto;
+    transform: rotate(180deg);
+}
+
+#about-slider .carousel-control-next {
+    left: 0;
+    right: auto;
+    transform: rotate(180deg);
+}
+
+#menu-quick-links a i {
+    right: -16px;
+    left: auto;
+    transform: rotate(180deg);
+}
+
+.testimonials-section .glance .col-sm-6:nth-child(1) .glance-numbers,
+.testimonials-section .glance .col-sm-6:nth-child(3) .glance-numbers {
+    border-right: 0;
+    border-left: 1px solid #f0f0f0;
+}
+
+.article-post .published {
+    border-left: 1px solid #d4d6d8;
+    border-right: 0;
+}
+
+.clients-section a i {
+    transform: rotate(180deg);
+}
+
+li.company-profile {
+    margin-right: 0;
+}
+
+
+.upcoming-courses .slick-next {
+    left: 5%;
+    right: auto;
+}
+
+.upcoming-courses .slick-prev {
+    right: 5%;
+    left: auto;
+}
+
+button#ExploreMenu {
+    margin: 0 !important;
+    margin-left: 1.5em !important;
+}
+
+.education-header .explore-mega-menu .dropdown-menu {
+    left: auto;
+    right: 115px;
+}
+
+.education-header .explore-mega-menu .menu-wrapper button.dropdown-item .sub-menu {
+    right: 100%;
+    left: auto;
+}
+
+.education-header .explore-mega-menu .menu-wrapper > .dropdown-menu .dropdown-item i {
+    transform: rotate(0deg);
+}
+
+.dropdown-menu {
+    right: 0;
+    left: auto;
+    text-align: right;
+}
+.dropdown-menu.dropdown-menu-right {
+    right: auto;
+    left: 0;
+}
+
+.cart-items-wrapper .course-image img {
+    margin-left: 10px;
+    margin-right: 0;
+}
+.fa-chevron-left::before {
+    content: "\f054";
+}
+.fa-chevron-right::before {
+    content: "\f053";
+}
+.event-pagination .next {
+    text-align: left;
+}
+.event-img span.date {
+    right: auto;
+    left: 40px;
+}
+.modal-header .close {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+.our-servises .owl-theme .owl-nav [class*=owl-] {
+    transform: rotate(180deg);
+}
+.autosuggest__results-container ul li small {
+    font-family: 'DIN REGULAR';
+}
+
+.widget ul li img,
+.consulting-sidebar-box li a img {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+.div-home-lang {
+    left: 40px;
+    right: auto;
+}
+
+.main-content img.logo {
+    right: 60px;
+    left: auto;
+}
+
+.partnership-with .fancy-box h3 {
+    font-size: 18px;
+}
+
+.education-header .explore-mega-menu .menu-wrapper button.dropdown-item .sub-menu{
+    text-align: right;
+}
+.navbar .dropdown-toggle::after {margin-right: 8px}
+
+.consulting-header ul.navbar-nav {
+    padding: 0;
+}
+.slider .carousel-indicators {
+    left: 0;
+    right: auto;
+}
+
+.course-info-box .checkmark {
+    left: auto;
+    top: 8px;
+    right: 0;
+}
+.course-info-box .container-radio {
+    padding-right: 30px;
+    font-family: 'DIN REGULAR', serif;
+}
+
+.chk_container {
+    padding-right: 30px;
+}
+
+.chk_container .checkmark {
+    right: 0;
+    left: auto;
+}
+.text-right {
+    text-align: left!important;
+}
+
+.main-services .service-box.education:hover {
+    margin-left: -5px;
+}
+.main-services .service-box.consulting:hover {
+    margin-right: 5px;
+}
+/**/
+a.lang-switcher {
+    margin-right: 0;
+    margin-left: 0;
+}
+.consulting-header .navbar-nav a.nav-link.btn {
+    padding: 2px 10px 7px;
+}
+ul.social a {
+    line-height: 22px;
+}
+button#ExploreMenu {
+    padding-top: 4px;
+    padding-bottom: 8px;
+}
+
+.headerstrip-text .btn {
+    padding: 1px 15px 5px;
+}
+
+.course-info ol li a:after {
+    margin-right: 15px;
+    margin-left: 0;
+}
+
+#trainig-schedule .owl-dots {
+    left: 0;
+    right: auto;
+}
+
+.course-schedule-card .item i {
+    right: -20px;
+    left: 0;
+}
+
+.course-content-description .badge {
+    margin: 0 5px;
+    padding: 1px 8px 5px;
+    position: relative;
+    top: 2px;
+}
+
+.timeltr>p{ direction: ltr !important; }
+
+@media(max-width: 480px) {
+    ul.social-network {
+        margin-left: 5px !important;
+        margin-right: 10px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .offset-md-1 {
+        margin-right: 8.333333%;
+        margin-left: 0;
+    }
+
+    .offset-md-2,
+    .offset-lg-2 {
+        margin-right: 16.666667%;
+        margin-left: 0;
+    }
+
+    .header-form {
+        right: -240px;
+    }
+
+}
+
+@media(max-width: 767px) {
+    .navbar-light .navbar-toggler {
+        left: 20px;
+        right: auto;
+    }
+
+    table.tc-table td {
+        padding-right: 30%;
+        padding-left: .75rem;
+    }
+    table.tc-table td:before {
+        text-align: right;
+        right: 6px;
+        left: auto;
+        font-family: "DIN BOLD",serif;
+    }
+    table.tc-table td:nth-of-type(1):before { content: "التاريخ"; }
+    table.tc-table td:nth-of-type(2):before { content: "المدة"; }
+    table.tc-table td:nth-of-type(3):before { content: "التوقيت"; }
+    table.tc-table td:nth-of-type(4):before { content: "اللغة"; }
+    table.tc-table td:nth-of-type(5):before { content: "السعر"; }
+    table.tc-table td:nth-of-type(6):before { content: "التسجيل"; }
+
+    #trainig-schedule .owl-dots {
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        bottom: -30px;
+        top: auto;
+    }
+    .navbar > div > .btn-primary {
+        margin-right: auto;
+        margin-left: 30px;
+    }
+}
+
+@media (max-width: 1200px) and (min-width: 767px) {
+    .navbar > div > .btn-primary {
+        margin-left: 30px;
+        margin-right: auto;
+    }
+    .education-header .navbar-nav {
+        padding: 0;
+    }
+}
+@media (max-width: 991px) {
+    .navbar-light .navbar-toggler {
+        right: -15px;
+    }
+}

@@ -1,0 +1,52 @@
+<table>
+    <tr>
+        <th>UserId</th>
+        <th style="width:15px;">Invoice Number</th>
+        <th style="width:40px;">Course Title</th>
+        <th style="width:40px;">Session From-To</th>
+        <th style="width:25px;">Name</th>
+        <th style="width:20px;">Email</th>
+        <th style="width:15px;">Mobile</th>
+        <th style="width:20px;">Job Title</th>
+        <th style="width:20px;">Company</th>
+        <th style="width:15px;">Price</th>
+        <th style="width:15px;">Discount</th>
+        <th style="width:15px;">Exam Price</th>
+        <th style="width:15px;">Take2</th>
+        <th style="width:15px;">SubTotal</th>
+        <th style="width:15px;">VAT</th>
+        <th style="width:15px;">Total</th>
+        <th style="width:15px;">Paid</th>
+        <th style="width:15px;">Paid Status</th>
+        <th style="width:15px;">Date</th>
+        <th style="width:15px;">Post Yesr</th>
+    </tr>
+    @foreach($carts as $post)
+    <tr>
+        <td>{{$post->user_id}}</td>
+        <td>{{$post->invoice_number}}</td>
+        <td>{{$post->trainingOption->training_name??null}}</td>
+        <td>{{$post->session->date_from??null}} - {{$post->session->date_to??null}}</td>
+        <td>{{$post->userId->trans_name??null}}</td>
+        <td>{{$post->userId->email??null}}</td>
+        <td>"{{$post->userId->mobile??null}}"</td>
+        <td>{{$post->userId->job_title??null}}</td>
+        <td>{{$post->userId->company??null}}</td>
+        <td>{{$post->price}}</td>
+        <td>{{$post->discount_value}}</td>
+        <td>{{$post->exam_price}}</td>
+        <td>{{$post->take2_price}}</td>
+        <td>{{$post->total}}</td>
+        <td>{{$post->vat_value}}</td>
+        <td>{{$post->total_after_vat}}</td>
+        <td>{{$post->payment->paid_in??0}}</td>
+        <td>
+            @if(isset($post->payment->paid_in) && $post->payment->paid_in!=0)
+                {{$post->payment->paymentStatus->trans_name??null}}
+            @endif
+        </td>
+        <td>{{$post->created_at->isoFormat('D MMM Y')}}</td>
+        <td>{{$post->post_year}}</td>
+    </tr>
+    @endforeach
+</table>

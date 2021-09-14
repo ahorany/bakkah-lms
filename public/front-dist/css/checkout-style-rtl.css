@@ -1,0 +1,12 @@
+.cvv-frame.frame--activated,
+.expiry-date-frame.frame--activated,
+.card-number-frame.frame--activated
+ {
+    padding-right: 40px;
+    padding-left: 0;
+}
+
+.input-container.expiry-date {
+    margin-left: 8px;
+    margin-right: 0px;
+}
