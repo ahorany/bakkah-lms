@@ -63,6 +63,26 @@ ul{
 
     {!!Builder::Tinymce('en_details', 'en_training_options')!!}
     {!!Builder::Tinymce('ar_details', 'ar_training_options')!!}
+
+    <div class="card card-info col-md-12 p-0" id="features">
+        <div class="card-header font-weight-bold">{{__('Trainings Features')}}</div>
+        <div class="card-body">
+            <ul class="p-0">
+                <li class="mb-3" v-for="feature in features" :key="feature.id">
+                    <feature-input :id="feature.id" :title="JSON.parse(feature.title??'[]').en"
+                                   :feature_id="feature.training_option_feature ? feature.training_option_feature.id :''"
+                                   :price="feature.training_option_feature ? feature.training_option_feature.price :''"
+                                   :price_usd="feature.training_option_feature ? feature.training_option_feature.price_usd:''"
+                                   :xero_feature_code="feature.training_option_feature ? feature.training_option_feature.xero_feature_code :''"
+                                   :is_include="feature.training_option_feature ? feature.training_option_feature.is_include : 0"
+                                   :en_excerpt="feature.training_option_feature ? JSON.parse(feature.training_option_feature.excerpt??'[]').en :''"
+                                   :ar_excerpt="feature.training_option_feature ? JSON.parse(feature.training_option_feature.excerpt??'[]').ar :''">
+                    </feature-input>
+                </li>
+            </ul>
+            @{{ price_usd }}
+        </div>
+    </div>
 @endsection
 
 @section('col3_block')
@@ -84,27 +104,22 @@ ul{
         </div>
     </div>
 
-    <div class="card card-default" id="features">
+    {{-- <div class="card card-default" id="features">
         <div class="card-header">{{__('Trainings Features')}}</div>
         <div class="card-body">
             <ul class="p-0">
-{{-- feature.title --}}
-                <li v-for="feature in features" :key="feature.id">
+                <li class="mb-3" v-for="feature in features" :key="feature.id">
                     <feature-input :id="feature.id"  :title="JSON.parse(feature.title).en"
                                    :feature_id="feature.training_option_feature ? feature.training_option_feature.id :''"
                                    :price="feature.training_option_feature ? feature.training_option_feature.price :''"
                                    :price_usd="feature.training_option_feature ? feature.training_option_feature.price_usd:''"
                                    :is_include="feature.training_option_feature ? feature.training_option_feature.is_include : 0">
                     </feature-input>
-
                 </li>
-
             </ul>
             @{{ price_usd }}
-
-
         </div>
-    </div>
+    </div> --}}
 
     {{-- <div class="card card-default">
         <div class="card-header">{{__('admin.evaluation_options')}}</div>
@@ -134,68 +149,92 @@ ul{
         </div>
 @endsection
 
-        @push('vue')
-            <script>
-                Vue.component('feature-input',
-                    {
-                        template: `
-                                   <div>
-                        <label>
-                                <input type="checkbox" name="feature_id[]" v-if="feature_id > 0" :checked="feature_id"   :value="id">
-                                <input type="checkbox" name="feature_id[]" v-else="feature_id = 0" v-model="featureItems"   :value="id">
-                                <span  v-html="title"></span>
-                        </label>
-                        <div class="d-flex align-items-center">
-                            <label class="m-0">SAR</label>
-                            <input type="text" :name="'price-'+id" class="form-control col-sm-4 mx-1" v-model="price" v-if="price > 0 ">
-                            <input type="text" :name="'price-'+id" class="form-control col-sm-4 mx-1" v-model="price"  v-else="price == null"  :disabled="featureItems.length==0">
-                            <label class="m-0">USD</label>
-                            <input type="text" :name="'price_usd-'+id" class="form-control col-sm-4 mx-1"   v-model="price_usd" v-if="price_usd > 0" >
-                            <input type="text" :name="'price_usd-'+id" class="form-control col-sm-4 mx-1"    v-else="price_usd == 0"  :disabled="featureItems.length==0">
-                            <input type="checkbox" :checked="is_include" :name="'is_include_'+id" value="1">
-                        </div>
-
-                                   </div>`,
-                        data() {
-                            return {
-                                feature:{
-                                    id:'',
-                                    title:''
-                                },
-                                price: '',
-                                price_usd: '',
-                                is_active:true,
-                                featureItems:[],
-                                features: features,
-                                uri:'http://localhost:8000/training/feature'
-                            }
-
+@push('vue')
+    <script>
+        Vue.component('feature-input',
+            {
+                // d-flex align-items-center
+                template: `
+                        <div>
+                <label>
+                        <input type="checkbox" name="feature_id[]" v-if="feature_id > 0" :checked="feature_id" :value="id">
+                        <input type="checkbox" name="feature_id[]" v-else="feature_id = 0" v-model="featureItems" :value="id">
+                        <span class="text-danger" v-html="title"></span>
+                </label>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="m-0">SAR</label>
+                        <input type="text" :name="'price-'+id" class="form-control" v-model="price" v-if="price > 0 ">
+                        <input type="text" :name="'price-'+id" class="form-control" v-model="price"  v-else="price == 0" :disabled="featureItems.length==0">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="m-0 pl-2">USD</label>
+                        <input type="text" :name="'price_usd-'+id" class="form-control"   v-model="price_usd" v-if="price_usd > 0" >
+                        <input type="text" :name="'price_usd-'+id" class="form-control" v-else="price_usd == 0" :disabled="featureItems.length==0">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="m-0 pl-2" style="width: 150px;">Xero Code</label>
+                        <input type="text" :name="'xero_feature_code_'+id" class="form-control" v-model="xero_feature_code" v-if="feature_id > 0">
+                        <input type="text" :name="'xero_feature_code_'+id" class="form-control" v-model="xero_feature_code" v-else="feature_id = 0" :disabled="featureItems.length==0">
+                    </div>
+                    <div class="col-md-2 pt-4">
+                        <input type="checkbox" :checked="is_include" :name="'is_include_'+id" value="1" v-if="feature_id > 0">
+                        <input type="checkbox" :checked="is_include" :name="'is_include_'+id" value="1" v-else="feature_id = 0" :disabled="featureItems.length==0">
+                        <label class="align-middle">Build In</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="m-0" style="width: 150px;">English Details</label>
+                        <input type="text" :name="'en_excerpt_'+id" class="form-control" v-model="en_excerpt" v-if="feature_id > 0">
+                        <input type="text" :name="'en_excerpt_'+id" class="form-control" v-model="en_excerpt" v-else="feature_id = 0" :disabled="featureItems.length==0">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="m-0" style="width: 150px;">Arabic Details</label>
+                        <input type="text" :name="'ar_excerpt_'+id" class="form-control" v-model="ar_excerpt" v-if="feature_id > 0">
+                        <input type="text" :name="'ar_excerpt_'+id" class="form-control" v-model="ar_excerpt" v-else="feature_id = 0" :disabled="featureItems.length==0">
+                    </div>
+                </div>
+                        </div>`,
+                data() {
+                    return {
+                        feature:{
+                            id:'',
+                            title:''
                         },
-                        methods: {
+                        price: '',
+                        price_usd: '',
+                        is_active:true,
+                        featureItems:[],
+                        features: features,
+                        uri:'http://localhost:8000/training/feature'
+                    }
 
-                        },
-                        props: ['id', 'title','price','price_usd','feature_id', 'is_include']
-                    }),
-                    window.features = {!!json_encode($features??[])!!}
-                    new Vue({
-                        el:'#features',
-                        data:{
-                            price:'',
-                            price_usd:'',
-                            features: features,
-                            featureItems:[],
-                            uri:'http://localhost:8000/training/feature',
-                            // disabled:true,
-                        },
-                        methods: {
-                            testtest: function($event){
-                                console.log($event);
-                                // this.disabled = false;
-                            }
-                        }
+                },
+                methods: {
 
+                },
+                props: ['id', 'title','price','price_usd','feature_id','is_include','xero_feature_code','en_excerpt','ar_excerpt']
+            }),
+            window.features = {!!json_encode($features??[])!!}
+            console.log(window.features);
+            new Vue({
+                el:'#features',
+                data:{
+                    price:'',
+                    price_usd:'',
+                    features: features,
+                    featureItems:[],
+                    uri:'http://localhost:8000/training/feature',
+                    // disabled:true,
+                },
+                methods: {
+                    testtest: function($event){
+                        console.log($event);
+                        // this.disabled = false;
+                    }
+                }
 
-
-                    });
-            </script>
-    @endpush
+            });
+    </script>
+@endpush

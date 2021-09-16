@@ -315,5 +315,6 @@ return [
     'confirm'=>'Confirm',
     'on_demand_cost'=>'On Demand Cost',
     'is_confirmed'=>'Confirm Status',
+    'add_section'=>'Add Section',
 
 ];

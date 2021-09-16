@@ -29,5 +29,11 @@ Route::group([
         Route::resource('roles', 'RoleController');
         Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
 
+        Route::resource('accordions', 'AccordionController');
+        Route::patch('/accordions/{accordion}/restore', 'AccordionController@restore')->name('accordions.restore');
+        
+        Route::resource('details', 'DetailController');
+        Route::patch('/details/{detail}/restore', 'AccordionController@restore')->name('details.restore');
+
     });
 });

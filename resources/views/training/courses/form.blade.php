@@ -1,5 +1,4 @@
 @extends(ADMIN.'.general.form')
-<?php //phpinfo(); ?>
 {!!Builder::SetPostType($post_type)!!}
 {{Builder::SetFolder($folder)}}
 
@@ -48,7 +47,16 @@
 @endsection
 
 @section('col3_block')
-
+    @if(isset($eloquent->id))
+    <div class="card card-default">
+        <div class="card-header">{{__('admin.contents')}}</div>
+        <div class="card-body">
+        <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents">Add to contents</a>
+       
+        </div>
+    </div>
+    @endif
+    
     <div class="card card-default">
         <div class="card-header">{{__('admin.options')}}</div>
         <div class="card-body">
@@ -86,7 +94,6 @@
     @include(ADMIN.'.Html.checkbox_const', ['const_type'=>'language'])
 
     @include(ADMIN.'.details.call', ['eloquent'=>$eloquent??null])
-{{--    @include(ADMIN.'.details.call', ['eloquent'=>$eloquent??null, 'title'=>__('training.JI'), 'parent_id'=>311])--}}
 
     @include(ADMIN.'.accordions.call', ['eloquent'=>$eloquent??null])
 
@@ -158,3 +165,4 @@
 	<?php $image_title = __('admin.image'); ?>
 	@include(ADMIN.'.Html.image')
 @endsection
+
