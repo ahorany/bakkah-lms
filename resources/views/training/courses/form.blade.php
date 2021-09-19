@@ -1,5 +1,4 @@
 @extends(ADMIN.'.general.form')
-<?php //phpinfo(); ?>
 {!!Builder::SetPostType($post_type)!!}
 {{Builder::SetFolder($folder)}}
 
@@ -52,12 +51,6 @@
     <div class="card card-default">
         <div class="card-header">{{__('admin.options')}}</div>
         <div class="card-body">
-            {{-- {!!Builder::Number('PDUs', 'PDUs', null, ['col'=>'col-md-12'])!!} --}}
-            {{-- {!!Builder::Input('price', 'price', null, ['col'=>'col-md-12'])!!}
-            {!!Builder::Input('exam_price', 'exam_price', null, ['col'=>'col-md-12'])!!}
-            {!!Builder::CheckBox('exam_is_included', 'exam_is_included', null, ['col'=>'col-md-12'])!!}
-            {!!Builder::Input('take2_price', 'take2_price', null, ['col'=>'col-md-12'])!!}
-            {!!Builder::Input('take2_price_usd', 'take2_price_usd', null, ['col'=>'col-md-12'])!!} --}}
             {!!Builder::Input('rating', 'rating', null, ['col'=>'col-md-12'])!!}
             {!!Builder::Input('reviews', 'reviews', null, ['col'=>'col-md-12'])!!}
             {!!Builder::Input('en_short_title', 'en_short_title', null)!!}
@@ -65,18 +58,16 @@
             {!!Builder::Input('order', 'order', null)!!}
             {!!Builder::Input('algolia_order', 'algolia_order', null)!!}
             {!!Builder::Input('xero_code', 'xero_code', null)!!}
-            {{-- {!!Builder::Input('xero_exam_code', 'xero_exam_code', null)!!} --}}
-            {{-- {!!Builder::Input('xero_exam_code_practitioner', 'xero_exam_code_practitioner', null)!!} --}}
             {!! Builder::Input('material_cost', 'material_cost', null, ['attr' => 'digit']) !!}
 
             {!!Builder::Select('partner_id', 'partners', $partners, null, ['col'=>'col-md-12']) !!}
 
             <hr>
             <?php $type_id = \App\Constant::where('id', 370)->get(); ?>
-            {!! Builder::Select('type_id', 'type_id', $type_id, null, ['col'=>'col-md-12']) !!}
+            {{-- {!! Builder::Select('type_id', 'type_id', $type_id, null, ['col'=>'col-md-12']) !!}
             {!!Builder::CheckBox('show_in_website')!!}
             <a href="{{route('education.courses',[$eloquent->slug ,'preview' => 'true'])}}" target="_blank" class="btn btn-primary">Preview</a>
-            {!!Builder::CheckBox('active')!!}
+            {!!Builder::CheckBox('active')!!} --}}
 
         </div>
     </div>
@@ -86,7 +77,6 @@
     @include(ADMIN.'.Html.checkbox_const', ['const_type'=>'language'])
 
     @include(ADMIN.'.details.call', ['eloquent'=>$eloquent??null])
-{{--    @include(ADMIN.'.details.call', ['eloquent'=>$eloquent??null, 'title'=>__('training.JI'), 'parent_id'=>311])--}}
 
     @include(ADMIN.'.accordions.call', ['eloquent'=>$eloquent??null])
 

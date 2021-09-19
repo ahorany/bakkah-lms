@@ -31,12 +31,6 @@ class EducationComposer
             ->first();
         $view->with('modal_campaign', $modal_campaign);
 
-        //
-        // $course_menus = Constant::with('postMorph.postable:title,slug,id')
-        // ->where('post_type', 'course')
-        // ->orderBy('order')
-        // ->select('id', 'name', 'post_type', 'slug')
-        // ->get();
         $course_menus = Cache::rememberForever('course_menus', function () {
             return Constant::with('postMorph.postable:title,slug,id,show_in_website')
             ->where('post_type', 'course')
@@ -47,10 +41,6 @@ class EducationComposer
         });
         $view->with('course_menus', $course_menus);
 
-        // $education_footer_menus = Infastructure::where('type', 'education_footer_menu')
-        // ->orderBy('order')
-        // ->select('id', 'title', 'route_name', 'route_param', 'icon', 'order')
-        // ->get();
         $education_footer_menus = Cache::rememberForever('education_footer_menus', function(){
             return Infastructure::where('type', 'education_footer_menu')
             ->orderBy('order')
