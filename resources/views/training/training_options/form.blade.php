@@ -24,7 +24,7 @@ ul{
         $exams = \App\Models\Training\TrainingOption::where('constant_id', 353)->get();
     ?>
     {!! Builder::Select('constant_id', 'option', $constants, null, ['col'=>'col-md-6']) !!}
-    {!!Builder::Select('course_id', 'course_name', $courses, null, [
+    {!!Builder::Select2('course_id', 'course_name', $courses, null, [
         'col'=>'col-md-6', 'model_title'=>'trans_title',
     ])!!}
 

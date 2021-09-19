@@ -16,8 +16,6 @@ body .table td, body .table th {
 
 @section('content')
 @include(FRONT.'.education.Html.page-header', ['title'=>__('education.My Cart')])
-<button @click.prevent="AddCartFeature(18151,3, 1200,1200, $event)">b</button>
-<div v-text="test"></div>
 
 <div class="main-content py-5">
     <div class="container">
@@ -61,7 +59,8 @@ body .table td, body .table th {
                                                     <label v-if="feature_item.is_include" class="d-flex">
                                                         <span style="font-size: 23px;width: 30px;"><i class="fas fa-plus-square main-color"></i></span>
 
-                                                        <span v-html="convertJson(feature_item.feature.title)"></span>
+                                                        <span v-html="convertJson(feature_item.feature.title)" v-if="feature_item.feature_id != 5"></span>
+                                                        <span v-html="convertJson(feature_item.excerpt)" v-else="feature_item.feature_id == 5"></span>
 
                                                         <span v-if="currency_check == 'SAR'" v-html="`- ${feature_item.price} ${currency}`"></span>
                                                         <span v-else v-html="`- ${feature_item.price_usd} ${currency}`"></span>
@@ -69,18 +68,19 @@ body .table td, body .table th {
 
                                                     <label v-else class="chk_container">
 
-                                                        <span v-html="convertJson(feature_item.feature.title)"></span>
+                                                        <span v-html="convertJson(feature_item.feature.title)" v-if="feature_item.feature_id != 5"></span>
+                                                        <span v-html="convertJson(feature_item.excerpt)" v-else="feature_item.feature_id == 5"></span>
 
                                                         <!--<span v-html="feature_item.feature.title"></span>-->
                                                         <span v-if="currency_check == 'SAR'" v-html="`- ${feature_item.price} ${currency}`"></span>
                                                         <span v-else v-html="`- ${feature_item.price_usd} ${currency}`"></span>
 
-                                                        <input v-if="currency_check == 'SAR'" :checked="chackIfExist(cart.cart_features, feature_item.id)" type="checkbox"
-                                                            @click="AddCartFeature(cart.id, feature_item.id, feature_item.price, cart.total, $event)"
-                                                            name="mail_subscribe" value="1" v-model="features.input[cart.id + '-' + feature_item.id]">
-                                                        <input v-else :checked="chackIfExist(cart.cart_features, feature_item.id)" type="checkbox"
-                                                            @click="AddCartFeature(cart.id, feature_item.id, feature_item.price_usd, cart.total, $event)"
-                                                            name="mail_subscribe" value="1" v-model="features.input[cart.id + '-' + feature_item.id]">
+                                                        <input v-if="currency_check == 'SAR'" :checked="IsChecked(cart.cart_features, feature_item.id)" type="checkbox"
+                                                            @click="AddCartFeature(cart.id, feature_item.id, 0, $event)"
+                                                            name="mail_subscribe" value="1"><!--v-model="features.input[cart.id + '-' + feature_item.id]"-->
+                                                        <input v-else :checked="IsChecked(cart.cart_features, feature_item.id)" type="checkbox"
+                                                            @click="AddCartFeature(cart.id, feature_item.id, 0, $event)"
+                                                            name="mail_subscribe" value="1"><!--v-model="features.input[cart.id + '-' + feature_item.id]"-->
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </template>
@@ -92,18 +92,18 @@ body .table td, body .table th {
                                 </td>
 {{--                      end problem          --}}
                                 <td>
-                                    {{-- @{{cart}} --}}
                                     <input type="text" :disabled="cart.promo_code" :value="cart.promo_code" placeholder="{{ __('education.Promo Code') }}" class="form-control" :class="cart.promo_code ? 'is-valid' : ''" v-on:blur="PromoCodeCart(cart.id, $event)" v-on:keypress.enter="PromoCodeCart(cart.id, $event)">
                                 </td>
                                 <td class="text-center">
-                                    <span v-html="currency"></span> <span v-html="(parseFloat(TotalByCurrency(cart.session.price, cart.session.price_usd)) - cart.discount_value).toFixed(2)"></span>
+                                    <span v-html="currency"></span>
+                                    <span>
+                                        @{{ TotalByCurrency1(cart).toFixed(0) }}
+                                    </span>
                                 </td>
                                 <td class=" text-center">
                                     <span v-html="currency"></span>
                                     {{-- <span>@{{(cart.price - cart.discount_value).toFixed(2)}}</span> --}}
-                                    {{-- @{{features.total[cart.id]??cart.total}} --}}
-                                    @{{TotalByCurrency(cart.session.price, cart.session.price_usd)}}
-                                    {{-- <span v-html="currency"></span> <span v-html="(cart.total).toFixed(2)"></span> --}}
+                                    @{{ TotalFeatures(cart).toFixed(0) }}
                                 </td>
                                 <td class=" text-center">
                                     <small class="main-color" style="cursor: pointer;font-size: 70%;text-decoration: underline;" @click="moveToSaveLater(cart.id)" class="mx-2">{{ __('education.Save for later') }}</small>
@@ -123,25 +123,16 @@ body .table td, body .table th {
                                 <h6>{{__('education.Sub Total')}}</h6>
                             </td>
                             <td class="text-right">
-                                <h6><strong><span v-html="currency"></span> <span>@{{cartMaster.total}}</span></strong></h6>
-                              <div v-text="test"></div>
-                            </td>
-                        </tr>
-                        <tr class="text-success" v-if="bundle_discount!=0">
-                            <td>
-                                <h6>{{__('education.Bundle Discount')}}</h6>
-                            </td>
-                            <td class="text-right">
-                                <h6><strong><span v-html="currency"></span> -@{{bundle_discount}}</strong></h6>
+                                <h6><strong><span v-html="currency"></span> <span>@{{CartWithDetails.cartMaster.total}}</span></strong></h6>
                             </td>
                         </tr>
                         <tr v-if="vat != 0">
                             <td><h6>{{ __('education.VAT') }} <span v-html="`(${vat * 100}%)`"></span></h6></td>
-                            <td class="text-right"><h6><strong><span v-html="currency"></span> <span>@{{cartMaster.vat_value}}</span></strong></h6></td>
+                            <td class="text-right"><h6><strong><span v-html="currency"></span> <span>@{{CartWithDetails.cartMaster.vat_value}}</span></strong></h6></td>
                         </tr>
                         <tr>
                             <td><h4>{{ __('education.Total') }}</h4></td>
-                            <td class="text-right"><h4><strong><span v-html="currency"></span> <span>@{{cartMaster.total_after_vat}}</span></strong></h4></td>
+                            <td class="text-right"><h4><strong><span v-html="currency"></span> <span>@{{CartWithDetails.cartMaster.total_after_vat}}</span></strong></h4></td>
                         </tr>
                             <tr>
                             <td colspan="2">
@@ -163,7 +154,7 @@ body .table td, body .table th {
         </div>
         <div v-else class="row justify-content-center">
             <div class="col-12 text-center">
-                <p class="lead">{{ __('education.Your cart is empty.') }} {{ __('education.Keep shopping to find a course!') }}</p>
+                <p class="lead">{{ __('education.Your cart is empty.') }} <br> {{ __('education.Keep shopping to find a course!') }}</p>
                 <a class="btn btn-primary" href="{{ route('education.courses') }}">{{ __('education.Keep shopping') }}</a>
             </div>
         </div>

@@ -1,4 +1,7 @@
-
+        </div>
+        </div>
+    </div>
+</div>
 </div>
 @include(FRONT.'.social_scripts.learning.footer')
 
@@ -97,7 +100,6 @@
             CartWithDetails: @isset($CartWithDetails)@json($CartWithDetails)@else [] @endisset,
             carts: @isset($carts)@json($carts)@else [] @endisset,
             cartMaster: @isset($cartMaster)@json($cartMaster)@else {} @endisset,
-            test : 'khaled',
             langCode : '{{app()->getLocale()}}',
 
             bundle_discount: '{{$bundle_discount??0}}',
@@ -136,6 +138,11 @@
                 return JSON.parse(data).en;
                 // return JSON.parse(data)
             },
+            DiscountValue : function(price, discount){
+
+                discount_value = price * (discount / 100);
+                return price - discount_value;
+            },
             TotalByCurrency : function(total, total_usd){
 
                 if(this.currency_check != 'SAR'){
@@ -143,10 +150,27 @@
                 }
                 return total;
             },
+            TotalByCurrency1 : function(cart){
+
+                if(this.currency_check != 'SAR'){
+                    return this.DiscountValue(cart.training_option_or_session.price_usd, cart.discount);
+                }
+                return this.DiscountValue(cart.training_option_or_session.price, cart.discount);
+            },
+            TotalFeatures : function(cart){
+
+                var price = this.TotalByCurrency(cart.training_option_or_session.price, cart.training_option_or_session.price_usd);
+                price = this.DiscountValue(price, cart.discount);
+
+                cart.cart_features.forEach(function(elem, index){
+                    price += parseFloat(elem.training_option_feature.price);
+                });
+                return price;
+            },
             chackIfExistWishlist: function(training_option_id) {
                 return this.wishlists.some(item => item.training_option_id == training_option_id)
             },
-            chackIfExist: function(arrayOfFeatures, feature_id){
+            IsChecked: function(arrayOfFeatures, feature_id){
                 const checkOptionID = obj => obj.training_option_feature_id == feature_id;
                 return arrayOfFeatures.some(checkOptionID);
             },
@@ -160,85 +184,58 @@
                     }
                 })
                 .then(response => {
-
-                    // console.log(response);
-                    self.lastCartItem = response.data;
+                    self.lastCartItem = response.data.cart;
+                    self.CartWithDetails = response.data.CartWithDetails;
                     $('#course_modal').modal('show');
-                    // self.$set(self.lastCartItem, response.data, null);
-                    // console.log(self.lastCartItem);
-                    // if(type == 'wishlist') {
-                    //     self.deleteWishlistItem(wishlist_id);
-                    // }else if (type == 'register'){
-                    //     $('#course_modal').modal('show');
-                    // }else {
-                    //     $('#course_modal').modal('show');
-                    // }
-                    // self.getCartItems();
                 })
                 .catch(e => {
                     console.log(e)
                 });
             },
-            AddCartFeature: function(cart_id, feature_id, price, course_price, event) {
+            AddCartFeature: function(cart_id, feature_id, update_cart, event) {
 
                 let self = this;
                 axios.get("{{route('education.addCartFeature')}}", {
                     params:{
                         cart_id: cart_id,
                         feature_id: feature_id,
-                        price: price,
-                        // feature_action: this.features.input[cart_id + '-' + feature_id],
+                        update_cart: update_cart,
                     }
                 }).then(function (response){
 
-                    self.carts.forEach(function(elem,index){
-                        if(elem.id == response.data.cart.id) {
-                            self.$set(self.carts, index, response.data.cart);
-                        }
-                    });
-                    self.test = 'ali';
-                    self.cartMaster = response.data.CartMaster;
-
+                    if(update_cart==1){
+                        self.lastCartItem = response.data.cart;
+                    }
+                    self.CartWithDetails = response.data.CartWithDetails;
                 })
-                    .catch(e => { console.log(e) });
+                .catch(e => { console.log(e) });
             },
             PromoCodeCart: function(cart_id, event) {
-                var self = this;
+
+                let self = this;
                 axios.get("{{route('education.promoCodeCart')}}", {
                     params:{
                         cart_id: cart_id,
-                        // session_id: session_id,
                         PromoCode: event.target.value
                     }
                 })
                 .then(response => {
 
-                    // console.log(response.data);
-                    if(response.data) {
-
-                        event.target.classList.remove('is-invalid');
-                        event.target.classList.add('is-valid');
-                        // this.getCartItems();
-                    }else {
-                        event.target.classList.remove('is-valid');
-                        event.target.classList.add('is-invalid');
-                    }
-                    // vm_this.$set(vm_this.features.total, cart_id, response.data.cart.total);
-                    self.promo_code = response.data.cart.promo_code;
-
-                    self.carts.forEach(function(elem,index){
-                        if(elem.id == response.data.cart.id) {
-                            // self.carts[index] = response.data.cart;
-                            self.$set(self.carts, index, response.data.cart);
-                        }
-                    });
-                    // vm_this.$set(vm_this.CartMaster, index, response.data.CartMaster);
-                    // console.log(vm_this.carts[0])
-
-                    // vm_this.sub_total = response.data.CartMaster.total;
-                    // vm_this.vat_value = response.data.CartMaster.vat_value;
-                    // vm_this.vat_value = response.data.CartMaster.vat_value;
-                    // vm_this.total_after_vat = response.data.CartMaster.total_after_vat;
+                    self.CartWithDetails = response.data.CartWithDetails;
+                    // if(response.data.CartWithDetails) {
+                    //     event.target.classList.remove('is-invalid');
+                    //     event.target.classList.add('is-valid');
+                    // }else {
+                    //     event.target.classList.remove('is-valid');
+                    //     event.target.classList.add('is-invalid');
+                    // }
+                    // self.promo_code = response.data.cart.promo_code;
+                    // self.carts.forEach(function(elem,index){
+                    //     if(elem.id == response.data.cart.id) {
+                    //         // self.carts[index] = response.data.cart;
+                    //         self.$set(self.carts, index, response.data.cart);
+                    //     }
+                    // });
                 })
                 .catch(e => { console.log(e) });
             },
@@ -246,29 +243,25 @@
                 return this.carts.some(item => item.session_id == session_id)
             },
             deleteCartItem: function(cart_id) {
+
                 if(confirm('Are you Sure?')) {
+
+                    let self = this;
                     axios.get("{{route('education.deleteCartItem')}}", {
                         params:{
                             cart_id: cart_id
                         }
                     })
-                        .then(response => {
-                            this.carts = this.carts.filter(function (cart) {
-                                  return cart.id != response.data.id;
-                            })
-                            console.log(response)
-                            // this.getCartItems();
-                            // this.getCartLater();
-                        })
-                        .catch(e => { console.log(e) });
+                    .then(response => {
+                        self.CartWithDetails = response.data.CartWithDetails;
+                    })
+                    .catch(e => { console.log(e) });
                 }
             },
 
         }
     });
 </script>
-
-
 
 </body>
 

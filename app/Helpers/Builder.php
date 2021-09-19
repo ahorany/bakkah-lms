@@ -347,7 +347,7 @@ class Builder {
 		$val = old($name)??$value;
 
 		$div = '';
-        $div .= '<select '.$disabled.' name="'.$name.'" class="form-control '.$cls.' select2 select2-hidden-accessible" '.$multiple.'>';
+        $div .= '<select '.$disabled.' name="'.$name.'" class="form-control '.$cls.'" '.$multiple.'>';
             if($name!='coin_id_insights'){
                 $div .= '<option value="-1">'.__('admin.choose_value').'</option>';
             }

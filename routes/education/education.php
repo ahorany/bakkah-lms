@@ -24,7 +24,6 @@ Route::group([
 
             Route::get('/training-schedule', [EducationController::class, 'trainingSchedule'])->name('training-schedule');
 
-            // {category?}
             Route::get('/{category?}', [EducationController::class, 'sessions'])->name('courses');
 
             Route::get('/autofill/email', [EducationController::class, 'autofill'])->name('courses.register.autofill');

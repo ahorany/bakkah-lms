@@ -337,56 +337,56 @@ class Invoice {
 
             if(env('NODE_ENV')=='production'){
                 foreach($cart->cartFeatures as $cartFeature){
-                    // Exam Voucher
-                    if($cartFeature->trainingOptionFeature->feature->id == 1 && !empty($cart->course->xero_exam_code)){
+
+                    if($cartFeature->trainingOptionFeature->feature->id > 0 && !empty($cartFeature->trainingOptionFeature->xero_feature_code)){
                         $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
-                            // 'itemCode'=>$itemCode,
-                            'itemCode'=>$cart->course->xero_exam_code,
-                            'description'=>'Exam Voucher',
-                            // 'description'=>$cartFeature->trainingOptionFeature->feature->trans_title??'Exam Voucher',
+                            'itemCode'=>$cartFeature->trainingOptionFeature->xero_feature_code??'',
+                            'description'=>($cartFeature->trainingOptionFeature->feature->id == 5) ?$cartFeature->trainingOptionFeature->feature->en_title??'' : json_decode($cartFeature->trainingOptionFeature->excerpt??'')->en??'',
                             'quantity'=>1,
                             'discountRate'=>0,
                             'amount'=>$cartFeature->price,
                         ]);
                     }
 
-                    // Exam Simulation
-                    if($cartFeature->trainingOptionFeature->feature->id == 2 && !empty($cartFeature->cart->trainingOption->ExamSimulation->course->xero_code)){
-                        $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
-                            // 'itemCode'=>$itemCode,
-                            'itemCode'=>$cartFeature->cart->trainingOption->ExamSimulation->course->xero_code,
-                            'description'=>'Exam Simulation',
-                            // 'description'=>$cartFeature->trainingOptionFeature->feature->trans_title??'Exam Simulation',
-                            'quantity'=>1,
-                            'discountRate'=>0,
-                            'amount'=>$cartFeature->price,
-                        ]);
-                    }
+                    // // Exam Voucher
+                    // if($cartFeature->trainingOptionFeature->feature->id == 1 && !empty($cart->course->xero_exam_code)){
+                    //     $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
+                    //         // 'itemCode'=>$itemCode,
+                    //         'itemCode'=>$cart->course->xero_exam_code,
+                    //         'description'=>'Exam Voucher',
+                    //         // 'description'=>$cartFeature->trainingOptionFeature->feature->trans_title??'Exam Voucher',
+                    //         'quantity'=>1,
+                    //         'discountRate'=>0,
+                    //         'amount'=>$cartFeature->price,
+                    //     ]);
+                    // }
 
-                    // Take2
-                    if($cartFeature->trainingOptionFeature->feature->id == 3){
-                        $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
-                            // 'itemCode'=>$itemCode,
-                            'itemCode'=>'Take2 Exam',
-                            'description'=>'Take2 Exam',
-                            // 'description'=>$cartFeature->trainingOptionFeature->feature->trans_title??'Take2',
-                            'quantity'=>1,
-                            'discountRate'=>0,
-                            'amount'=>$cartFeature->price,
-                        ]);
-                    }
+                    // // Exam Simulation
+                    // if($cartFeature->trainingOptionFeature->feature->id == 2 && !empty($cartFeature->cart->trainingOption->ExamSimulation->course->xero_code)){
+                    //     $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
+                    //         // 'itemCode'=>$itemCode,
+                    //         'itemCode'=>$cartFeature->cart->trainingOption->ExamSimulation->course->xero_code,
+                    //         'description'=>'Exam Simulation',
+                    //         // 'description'=>$cartFeature->trainingOptionFeature->feature->trans_title??'Exam Simulation',
+                    //         'quantity'=>1,
+                    //         'discountRate'=>0,
+                    //         'amount'=>$cartFeature->price,
+                    //     ]);
+                    // }
 
-                    // Exam Voucher
-                    if($cartFeature->trainingOptionFeature->feature->id == 4 && !empty($cart->course->xero_exam_code_practitioner)){
-                        $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
-                            'itemCode'=>$cart->course->xero_exam_code_practitioner,
-                            'description'=>'Practitioner Exam Voucher',
-                            // 'description'=>$cartFeature->trainingOptionFeature->feature->trans_title??'Take2',
-                            'quantity'=>1,
-                            'discountRate'=>0,
-                            'amount'=>$cartFeature->price,
-                        ]);
-                    }
+                    // // Take2
+                    // if($cartFeature->trainingOptionFeature->feature->id == 3){
+                    //     $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
+                    //         // 'itemCode'=>$itemCode,
+                    //         'itemCode'=>'Take2 Exam',
+                    //         'description'=>'Take2 Exam',
+                    //         // 'description'=>$cartFeature->trainingOptionFeature->feature->trans_title??'Take2',
+                    //         'quantity'=>1,
+                    //         'discountRate'=>0,
+                    //         'amount'=>$cartFeature->price,
+                    //     ]);
+                    // }
+
                 } //foreach
             } //if(env('NODE_ENV')=='production'){
         // } //foreach

@@ -71,7 +71,7 @@ class EducationComposer
 
         $CartHelper = new CartHelper();
         $CartWithDetails = $CartHelper->Details();
-        // dd($CartWithDetails);
+
         $view->with('CartWithDetails', $CartWithDetails);
         // $carts = $cart_with_details['carts'];
     }

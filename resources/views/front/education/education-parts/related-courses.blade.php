@@ -1,7 +1,7 @@
 @if (count($RelatedCourses) > 0)
 <div class="my-5 slider-wrapper" data-items="{{ $items??3 }}">
     <h3 class="boldfont mb-3">{!! __('education.Related Courses') !!}</h3>
-    <div class="related-articles owl-carousel owl-theme owl-loaded owl-drag">
+    <div class="related-courses owl-carousel">
         @foreach($RelatedCourses as $course)
             <div class="course-column category_{{$course->category_id}} course_type_{{$course->constant_id}}">
                 <div class="exam-box">

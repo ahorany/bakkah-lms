@@ -35,7 +35,6 @@
                 </div>
 
                     @if (!is_null($category) && $category->trans_excerpt)
-                        <hr>
                         <p class="lead my-5">{{ $category->trans_excerpt }}</p>
                     @endif
 
@@ -45,12 +44,21 @@
                     <div class="col-12 col-md">
                         <h3 id="category-title" class="uppertext boldfont m-0">{{$title}}</h3>
                     </div>
-                    <div class="filter-course">
-                        <button type="button" data-target="all" class="btn btn-light active">{{__('education.All')}}</button>
-                        <button type="button" data-target="course_type_13" class="btn btn-light">{{__('education.Online Training')}}</button>
-                        <button type="button" data-target="course_type_11" class="btn btn-light">{{__('education.Self Study')}}</button>
-                        <button type="button" data-target="course_type_353" class="btn btn-light">{{__('education.Exam Simulation')}}</button>
-                    </div>
+                    @if (is_null($category))
+                        <div class="filter-course">
+                            <a href="{{ route($route_name) }}" type="button" data-target="all" class="btn btn-light {{ is_null($method) ? 'active' : '' }}">{{__('education.All')}}</a>
+                            <a href="{{ route($route_name, 'live-online') }}" type="button" data-target="course_type_13" class="btn btn-light {{ !is_null($method) && $method == 'live-online' ? 'active' : '' }}">{{__('education.Online Training')}}</a>
+                            <a href="{{ route($route_name, 'self-paced') }}" type="button" data-target="course_type_11" class="btn btn-light {{ !is_null($method) && $method == 'self-paced' ? 'active' : '' }}">{{__('education.Self Study')}}</a>
+                            <a href="{{ route($route_name, 'exam-simulation') }}" type="button" data-target="course_type_353" class="btn btn-light {{ !is_null($method) && $method == 'exam-simulation' ? 'active' : '' }}">{{__('education.Exam Simulation')}}</a>
+                        </div>
+                    @else
+                        <div class="filter-course">
+                            <button type="button" data-target="all" class="btn btn-light {{ is_null($method) ? 'active' : '' }}">{{__('education.All')}}</button>
+                            <button type="button" data-target="course_type_13" class="btn btn-light {{ !is_null($method) && $method == 'live-online' ? 'active' : '' }}">{{__('education.Online Training')}}</button>
+                            <button type="button" data-target="course_type_11" class="btn btn-light {{ !is_null($method) && $method == 'self-paced' ? 'active' : '' }}">{{__('education.Self Study')}}</button>
+                            <button type="button" data-target="course_type_353" class="btn btn-light {{ !is_null($method) && $method == 'exam-simulation' ? 'active' : '' }}">{{__('education.Exam Simulation')}}</button>
+                        </div>
+                    @endif
                 </div>
             @endif
 
@@ -58,4 +66,16 @@
 
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    <script>
+        var target = $('.filter-course .btn.active').data('target');
+        if( target == 'all') {
+            $('.course-categories-content .course-column').show();
+        }else {
+            $('.course-categories-content .course-column').hide();
+            $('.course-categories-content .'+target).show();
+        }
+    </script>
 @endsection

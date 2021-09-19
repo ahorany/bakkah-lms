@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+     @if(auth()->check())
+        <meta name="userId" content="{{ auth()->id() }}">
+    @endif
     @yield('useHead')
 
     @yield('d_title')
@@ -86,7 +89,7 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-<div class="page-content-wrapper" id="page_content">
+<div id="page_content" class="page-content-wrapper">
 
     @include(FRONT.'.education.layouts.header')
 

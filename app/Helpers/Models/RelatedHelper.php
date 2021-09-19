@@ -8,9 +8,15 @@ use App\Models\Admin\RelatedItem;
 
 class RelatedHelper {
 
-    public function Articles($course_id, $col = 'parent_id', $pluck = 'item_id'){
+    public function Articles($post_id, $item_type_id, $parent_type_id, $col = 'parent_id', $pluck = 'item_id'){
 
-        $relatedArticles = RelatedItem::where($col, $course_id)->pluck($pluck)->toArray();
+        $relatedArticles = $this->getRelatedItems($post_id, $item_type_id, $parent_type_id, $col, $pluck);
+        // if($parent_type_id == 471) {
+        //     $relatedArticles = RelatedItem::where($col, $post_id)->pluck($pluck)->toArray();
+        // }else {
+        //     $relatedArticles = $this->getRelatedItems($post_id, $item_type_id, $parent_type_id, $col, $pluck);
+        // }
+
         $relatedArticles = Post::with(['upload:uploadable_id,uploadable_type,file', 'postMorph.constant'])
         ->whereIn('id', $relatedArticles)
         ->lang()
@@ -45,6 +51,8 @@ class RelatedHelper {
             foreach(request()->$name as $id) {
 
                 $RelatedItem = RelatedItem::where('parent_id', $parent_id)
+                ->where('item_type_id', $type)
+                ->where('parent_type_id', $parent_type)
                 ->where('item_id', $id)
                 ->count();
                 if($RelatedItem==0){
@@ -68,11 +76,22 @@ class RelatedHelper {
         ]);
     }
 
-    public function getRelatedItems($parent_id, $item_type_id, $parent_type_id) {
-        return RelatedItem::where('parent_id', $parent_id)
-        ->where('item_type_id', $item_type_id)
-        ->where('parent_type_id', $parent_type_id)
-        ->pluck('item_id')
-        ->toArray();
+    public function getRelatedItems($parent_id, $item_type_id, $parent_type_id, $col = 'parent_id', $pluck = 'item_id') {
+        //$relatedArticles = RelatedItem::where($col, $post_id)->pluck($pluck)->toArray();
+
+        if($parent_type_id == 471) {
+            return RelatedItem::where($col, $parent_id)
+            ->where('item_type_id', $parent_type_id)
+            ->where('parent_type_id', $item_type_id)
+            ->pluck($pluck)
+            ->toArray();
+        }else {
+            return RelatedItem::where($col, $parent_id)
+            ->where('item_type_id', $item_type_id)
+            ->where('parent_type_id', $parent_type_id)
+            ->pluck($pluck)
+            ->toArray();
+        }
+
     }
 }

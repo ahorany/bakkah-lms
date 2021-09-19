@@ -313,8 +313,9 @@ return [
     'zoom_cost'=>'Zoom Cost',
     'cancel'=>'Cancel',
     'confirm'=>'Confirm',
+    'Pract. Exam Price'=>'Pract. Exam Price',
+    'Book Price'=>'Book Price',
     'on_demand_cost'=>'On Demand Cost',
     'is_confirmed'=>'Confirm Status',
-    'add_section'=>'Add Section',
-
+    'replicate'=>'تكرار',
 ];

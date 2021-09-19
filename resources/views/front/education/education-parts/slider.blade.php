@@ -8,11 +8,12 @@
             @if(isset($slider->file))
             <div class="carousel-item">
                 <a href="{{$slider->url??'#'}}">
-                    @if($agent->isPhone())
+                    <img src="{{CustomAsset('upload/full/'.$slider->file)}}" class="d-block w-100" alt="{{$slider->upload->excerpt??''}}" title="{{$slider->upload->title??''}}">
+                    {{-- @if($agent->isPhone())
                         <img src="{{CustomAsset('upload/thumb450/'.$slider->file)}}" class="d-block w-100" alt="{{$slider->upload->excerpt??''}}" title="{{$slider->upload->title??''}}">
                     @else
                         <img src="{{CustomAsset('upload/full/'.$slider->file)}}" class="d-block w-100" alt="{{$slider->upload->excerpt??''}}" title="{{$slider->upload->title??''}}">
-                    @endif
+                    @endif --}}
                 </a>
                 <div class="carousel-caption d-none">
                     <h5 class="d-none">{{$slider->title}}</h5>

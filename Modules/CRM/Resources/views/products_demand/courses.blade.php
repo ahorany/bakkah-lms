@@ -133,6 +133,7 @@
                                 <template v-if="cartMaster.coin_id == 335 && Features(cart.cart_features, feature_item.id, feature_item.price_usd, cart.id) == true">
                                     <small class="font-weight-bold badge badge-warning badge-pill mx-1"> @{{Features_price(cart.cart_features, feature_item.id, feature_item.price_usd, cart.id)}}</small>
                                 </template>
+                                <small class="text-danger" v-html=" JSON.parse(feature_item.excerpt).en" v-if="feature_item.feature_id == 5"></small>
                             </span>
                         </label>
                         <label v-else class="d-flex justify-content-between m-0" style="font-weight: normal;white-space: pre-line;">
@@ -161,6 +162,7 @@
                                 <template v-if="cartMaster.coin_id == 335 && Features(cart.cart_features, feature_item.id, feature_item.price_usd, cart.id) == true">
                                     <small class="font-weight-bold badge badge-warning badge-pill mx-1"> @{{Features_price(cart.cart_features, feature_item.id, feature_item.price_usd, cart.id)}}</small>
                                 </template>
+                                <small class="text-danger" v-html=" JSON.parse(feature_item.excerpt).en" v-if="feature_item.feature_id == 5"></small>
                             </span>
                         </label>
 

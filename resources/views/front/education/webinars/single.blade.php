@@ -129,15 +129,15 @@
                         </div>
                     </div>
 
+                    @include(FRONT.'.education.education-parts.related-articles')
+                    @include(FRONT.'.education.education-parts.related-courses', ['items' => 4])
+
                     <div class="share-box  border p-3 rounded my-5">
                         @include(FRONT.'.Html.share')
                     </div>
 
                 </div> <!-- /.col-md-8 -->
             </div> <!-- /.row -->
-
-            {{-- @include(FRONT.'.education.education-parts.related-articles') --}}
-            @include(FRONT.'.education.education-parts.related-courses')
         </div> <!-- /.container -->
     </section>
 

@@ -11,6 +11,7 @@
     {!! Builder::Input('en_name', 'en_name', null, ['col' => 'col-md-6']) !!}
     {!! Builder::Input('ar_name', 'ar_name', null, ['col' => 'col-md-6']) !!}
     {!! Builder::Input('email', 'email', null, ['col' => 'col-md-6']) !!}
+    {!! Builder::Input('mobile', 'mobile', null, ['col' => 'col-md-6']) !!}
     {!! Builder::Select('gender_id', 'gender_id', $genders->where('parent_id', 42), null, [
     'col' => 'col-md-6',
     'model_title' => 'trans_name',

@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <img class="footer-card" src="{{CustomAsset('images/CreditCard-Sadad.png')}}" alt="{{__('education.PayPal Verification')}}">
+                <img class="footer-card" src="{{CustomAsset('images/Payments-CreditCards.png')}}" alt="{{__('education.PayPal Verification')}}">
             </div>
         </div>
     </div>

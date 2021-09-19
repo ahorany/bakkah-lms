@@ -18,4 +18,8 @@ class Feature extends Model
     public function TrainingOptionFeature(){
         return $this->hasOne(TrainingOptionFeature::class);
     }
+
+    public function xeroAccount(){
+    	return $this->morphOne(XeroAccount::class, 'xeroAccountable');
+    }
 }

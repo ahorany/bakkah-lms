@@ -26,13 +26,17 @@
                     </div> <!-- /.img-wrapper -->
                 </div>
                 <div class="col-md-7 mt-5 mt-md-0">
-                    <div>{!!$post->trans_details!!}</div>
+                    <div class="mb-4">{!!$post->trans_details!!}</div>
                     @if(isset($post->uploads()->where('post_type', 'pdf')->where('locale', app()->getLocale())->first()->file))
-                        <a class="btn btn-primary px-4" href="{{CustomAsset('upload/pdf/'.$post->uploads->where('post_type', 'pdf')->where('locale', app()->getLocale())->first()->file)}}" download>{{__('education.Download')}}</a>
+                        <a class="btn btn-primary px-5" href="{{CustomAsset('upload/pdf/'.$post->uploads->where('post_type', 'pdf')->where('locale', app()->getLocale())->first()->file)}}" download>{{__('education.Download')}}</a>
                     @endif
 
                     </div>
                 </div>
+
+                @include(FRONT.'.education.education-parts.related-articles')
+                @include(FRONT.'.education.education-parts.related-courses', ['items' => 4])
+
                 <hr>
                 <div class="share-box">
                     @include(FRONT.'.Html.share')

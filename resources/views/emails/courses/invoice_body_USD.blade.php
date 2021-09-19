@@ -51,7 +51,12 @@
                             <td style="font-family: lato;text-align:center;vertical-align:middle;border:1px solid #e4e4e4;color:#737373;padding:12px"><span>{{NumberFormatWithComma($feature->price)}}</span></td>
                             <td style="font-family: lato;text-align:center;vertical-align:middle;border:1px solid #e4e4e4;color:#737373;padding:12px"><span>{{NumberFormatWithComma($feature->price)}}</span></td>
                             <td style="font-family: lato;text-align:center;vertical-align:middle;border:1px solid #e4e4e4;color:#737373;padding:12px">1</td>
-                            <td width="45%" style="font-family: lato;text-align:left;vertical-align:middle;border:1px solid #e4e4e4;word-wrap:break-word;color:#737373;padding:12px;line-height: 150%;">{{$feature->trainingOptionFeature->feature->en_title}}{{--Voucher and Paper Based Exam--}}
+                            <td width="45%" style="font-family: lato;text-align:left;vertical-align:middle;border:1px solid #e4e4e4;word-wrap:break-word;color:#737373;padding:12px;line-height: 150%;">
+                                @if ($feature->trainingOptionFeature->feature->id != 5)
+                                {{$feature->trainingOptionFeature->feature->en_title??null}}{{--Voucher and Paper Based Exam--}}
+                                @else
+                                    {{json_decode($feature->trainingOptionFeature->excerpt??'')->en??''}} {{--Book title--}}
+                                @endif
                             </td>
                         </tr>
                     @endforeach

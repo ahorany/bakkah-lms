@@ -34,15 +34,23 @@ class CartController extends Controller
         if (auth()->check() && !auth()->user()->email_verified_at)
             return view('auth.verify');
 
-        $CartHelper = new CartHelper();
-        // $carts = $this->GetCarts();
-        $cart_with_details = $CartHelper->Details();
+        // $CartHelper = new CartHelper();
+        // $cart_with_details = $CartHelper->Details();
 
-        $cartMaster = $cart_with_details['cartMaster'];
-        $carts = $cart_with_details['carts'];
-        $features = $cart_with_details['features'];
+        // $cartMaster = $cart_with_details['cartMaster'];
+        // $carts = $cart_with_details['carts'];
 
-        return view('front.education.products.cart', compact('cartMaster', 'carts', 'features'));
+        // // foreach($carts as $cart){
+        //     // foreach($cart->cartFeatures as $cartFeature){
+        //     //     dump($cartFeature->trainingOptionFeature);
+        //     // }
+        //     // dump($cart->cartFeatures->trainingOptionFeature);
+        // // }
+        // // dd('test');
+        // $features = $cart_with_details['features'];
+
+        // return view('front.education.products.cart', compact('cartMaster', 'carts', 'features'));
+        return view('front.education.products.cart');
     }
 
     public function addCartItem()
@@ -55,7 +63,7 @@ class CartController extends Controller
         $UserHelper = new UserHelper();
         $user_token = $UserHelper->user_token();
 
-        $cartMaster = $CartMasterHelper->updateOrCreate($user_token);
+        $cartMaster = $CartMasterHelper->firstOrCreate($user_token);
 
         $cart = $CartHelper->updateOrCreate([
             'master_id'=>$cartMaster->id,
@@ -63,54 +71,47 @@ class CartController extends Controller
             'session_id' => $session_id,
             'type' => $type,
         ]);
+        $session = Session::find($session_id);
+        $trainingOptions = $session->trainingOption->TrainingOptionFeature()->where('is_include', 1)->get();
+        foreach($trainingOptions as $trainingOption){
+            $CartHelper->AddOrRemoveFeature($cart, $trainingOption->feature_id);
+        }
 
         $CartMasterHelper->updateTotalAll($cart);
         $cart = $CartHelper->GetCart($cart->id);
-        return $cart;
+        // return $cart;
+        $CartWithDetails = $CartHelper->Details();
+        return compact('cart', 'CartWithDetails');
     }
 
     function addCartFeature()
     {
+        $CartHelper = new CartHelper();
+
         $cart_id = request()->cart_id??18151;
+        $update_cart = request()->update_cart??0;
         $cart = Cart::find($cart_id);
 
-        $CartHelper = new CartHelper();
         $CartHelper->AddOrRemoveFeature($cart, request()->feature_id);
 
         $CartMasterHelper = new CartMasterHelper();
-        $CartMasterHelper->updateTotalAll($cart);
+        $UserHelper = new UserHelper();
+        $user_token = $UserHelper->user_token();
+        $CartMasterHelper->firstOrCreate($user_token);
 
-        $CartMaster = $this->GetMaster($cart->master_id);
-        $cart = $CartHelper->GetCart($cart->id);
-        return [
-            'CartMaster'=>$CartMaster,
-            'cart'=>$cart,
+        // $CartMaster = $CartMasterHelper->GetMaster($cart->master_id);
+        $CartWithDetails = $CartHelper->Details();
+        $args = [
+            'CartWithDetails'=>$CartWithDetails,
         ];
-        // CartMaster::UpdateTotal($cart);
-
-        // $total = GetCartTotalPriceAfterVat($cart->master_id);
-
-        // CartMaster::updateOrCreate([
-        //     'user_token' => Cookie::get('user_token'),
-        //     'payment_status' => 63,
-        // ], [
-        //     'invoice_amount' => NumberFormat($total),
-        //     'total_after_vat' => NumberFormat($total),
-        // ]);
-        // CartMaster::UpdateSummation($cart->master_id);
-        ////////////////////////////////////////////////////
-
-        // $cart = Cart::find($cart_id);
-        // $CartMaster = CartMaster::where('id', $cart->master_id)->first();
-        return [
-            'cart'=>$CartMaster['cart'],
-            'CartMaster'=>$CartMaster['CartMaster'],
-        ];
-        // return [
-        //     'cart'=>json_decode($cart),
-        //     'CartMaster'=>$CartMaster,
-        // ];
-        // return 'done';
+        if($update_cart)
+        {
+            $cart = $CartHelper->GetCart($cart->id);
+            $args = array_merge($args, [
+                'cart'=>$cart,
+            ]);
+        }
+        return $args;
     }
 
     function deleteExpireCarts()
@@ -163,12 +164,13 @@ class CartController extends Controller
 
             $master_id = $cart->master_id;
             $cart->delete();
-
-            CartMaster::UpdateSummation($master_id);
-
-            return $cart;
+            // CartMaster::UpdateSummation($master_id);
+            // return $cart;
         }
-        return false;
+        $CartHelper = new CartHelper();
+        $CartWithDetails = $CartHelper->Details();
+        return compact('CartWithDetails');
+        // return false;
     }
 
     function cartSaveForLater()
@@ -251,64 +253,105 @@ class CartController extends Controller
         return 'done';
     }
 
-    function promoCodeCart()
+    public function promoCodeCart()
     {
         $cart_id = request()->cart_id??18151;
-        $promocode = request()->PromoCode??'bakkah-bfebd09aec';
+        $promocode = request()->PromoCode??'';
 
         $cart = Cart::find($cart_id);
         $session_id = $cart->session_id;
 
-        $session = Session::with('trainingOption')->find($session_id);
-        $training_option_id = $session->training_option_id;
+        $SmartPromocode = DiscountDetail::SmartPromocode($promocode, $cart->training_option_id, $session_id);
 
-        $discount_detail = DiscountDetail::SmartPromocode($promocode, $training_option_id, $session_id);
+        if ($SmartPromocode) {
 
-        if ($discount_detail) {
-
-            CartMaster::UpdateTotal($cart, $discount_detail);
-            // $cart = Cart::find($cart_id);
-
-            /*$price = $cart->price;
-            // calculate new price
-            $discount_id = $discount_detail->id;
-            $discount = $discount_detail->value;
-            $discount_value = $price * $discount_detail->value / 100;
-            $new_price = $price - $discount_value;
-
-            $new_total = $new_price + $cart->exam_price + $cart->take2_price + $cart->exam_simulation_price;
-            $new_value = $new_total * $cart->vat / 100;
-            $new_total_after_vat = $new_total + $new_value;
-            */
-
-            // update cart
-            // $cart->update([
-            //     'discount_id' => $discount_id,
-            //     'discount' => $discount,
-            //     'discount_value' => $discount_value,
-            //     'total' => $new_total,
-            //     'total_after_vat' => $new_total_after_vat,
-            //     'promo_code' => $promocode
-            // ]);
-
-            // CartMaster::UpdateSummation($cart->master_id);
-
-            // $cart = Cart::find($cart_id);
+            // $session_id = request()->session_id;
+            // $type = request()->type;
+            $CartMasterHelper = new CartMasterHelper();
             $CartHelper = new CartHelper();
+            $UserHelper = new UserHelper();
+            $user_token = $UserHelper->user_token();
 
-            $GetCarts = $CartHelper->GetCarts();
+            $cartMaster = $CartMasterHelper->firstOrCreate($user_token);
 
-            if(is_null($GetCarts)){
-                return;
-            }
-            $carts = $GetCarts->first();
-            $CartMaster = CartMaster::where('id', $cart->master_id)->first();
-            return [
-                'cart'=>$carts,
-                'CartMaster'=>$CartMaster,
-            ];
+            $cart = $CartHelper->updateOrCreate([
+                'master_id'=>$cartMaster->id,
+                'user_token'=>$user_token,
+                'session_id' => $session_id,
+                'type' => '1',
+                'SmartPromocode' => $SmartPromocode,
+                'promo_code' => $promocode,
+                // 'type' => $type,
+            ]);
+
+            $CartMasterHelper->updateTotalAll($cart);
+            // $cart = $CartHelper->GetCart($cart->id);
+            $CartWithDetails = $CartHelper->Details();
+            // 'cart',
+            return compact('CartWithDetails');
         } else {
             return '';
         }
     }
+
+    // function promoCodeCart()
+    // {
+    //     $cart_id = request()->cart_id??18151;
+    //     $promocode = request()->PromoCode??'bakkah-bfebd09aec';
+
+    //     $cart = Cart::find($cart_id);
+    //     $session_id = $cart->session_id;
+
+    //     $session = Session::with('trainingOption')->find($session_id);
+    //     $training_option_id = $session->training_option_id;
+
+    //     $discount_detail = DiscountDetail::SmartPromocode($promocode, $training_option_id, $session_id);
+
+    //     if ($discount_detail) {
+
+    //         CartMaster::UpdateTotal($cart, $discount_detail);
+    //         // $cart = Cart::find($cart_id);
+
+    //         /*$price = $cart->price;
+    //         // calculate new price
+    //         $discount_id = $discount_detail->id;
+    //         $discount = $discount_detail->value;
+    //         $discount_value = $price * $discount_detail->value / 100;
+    //         $new_price = $price - $discount_value;
+
+    //         $new_total = $new_price + $cart->exam_price + $cart->take2_price + $cart->exam_simulation_price + $cart->pract_exam_price + $cart->book_price;
+    //         $new_value = $new_total * $cart->vat / 100;
+    //         $new_total_after_vat = $new_total + $new_value;
+    //         */
+
+    //         // update cart
+    //         // $cart->update([
+    //         //     'discount_id' => $discount_id,
+    //         //     'discount' => $discount,
+    //         //     'discount_value' => $discount_value,
+    //         //     'total' => $new_total,
+    //         //     'total_after_vat' => $new_total_after_vat,
+    //         //     'promo_code' => $promocode
+    //         // ]);
+
+    //         // CartMaster::UpdateSummation($cart->master_id);
+
+    //         // $cart = Cart::find($cart_id);
+    //         $CartHelper = new CartHelper();
+
+    //         $GetCarts = $CartHelper->GetCarts();
+
+    //         if(is_null($GetCarts)){
+    //             return;
+    //         }
+    //         $carts = $GetCarts->first();
+    //         $CartMaster = CartMaster::where('id', $cart->master_id)->first();
+    //         return [
+    //             'cart'=>$carts,
+    //             'CartMaster'=>$CartMaster,
+    //         ];
+    //     } else {
+    //         return '';
+    //     }
+    // }
 }

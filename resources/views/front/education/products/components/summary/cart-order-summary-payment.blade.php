@@ -89,7 +89,17 @@ if(round($total_after_vat_ceil-$total_after_vat, 2)==0.01){
                         @forelse ($cart->cartFeatures as $feature)
                         <div class="row">
                             <div class="col-8 col-lg-8">
-                                <span class="subheadline-primary">{{$feature->trainingOptionFeature->feature->trans_title}}</span>
+                                <span class="subheadline-primary">
+                                    @if ($feature->trainingOptionFeature->feature->id != 5)
+                                        {{$feature->trainingOptionFeature->feature->trans_title}}
+                                    @else
+                                        @if(app()->getLocale() == 'en')
+                                            {{json_decode($feature->trainingOptionFeature->excerpt??'')->en}}
+                                        @else
+                                            {{json_decode($feature->trainingOptionFeature->excerpt??'')->ar}}
+                                        @endif
+                                    @endif
+                                </span>
                             </div>
                             <div class="col-4 col-lg-4 text-right">
                                 {{__('education.SAR')}}

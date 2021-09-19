@@ -5,7 +5,7 @@ use App\Models\Training\CartMaster;
 
 class CartMasterHelper {
 
-    public function updateOrCreate($user_token){
+    public function firstOrCreate($user_token){
 
         $cartMaster = CartMaster::firstOrCreate([
             'user_token'=>$user_token,
@@ -19,6 +19,27 @@ class CartMasterHelper {
         $CartMaster = CartMaster::where('id', $master_id)->first();
 
         return $CartMaster;
+    }
+
+    public function GetTotal($carts){
+
+        $total = 0;
+        foreach($carts as $cart){
+
+            $discount_value = $cart->price * ($cart->discount / 100);
+            $total += $cart->price - $discount_value;
+            foreach($cart->cartFeatures as $cartFeature){
+                $total += $cartFeature->trainingOptionFeature->price??0;
+            }
+        }
+
+        $vat_value = NumberFormat($total * (VAT / 100));
+        $total_after_vat = NumberFormat($total + $vat_value);
+        return [
+            'total'=>NumberFormat($total),
+            'vat_value'=>$vat_value,
+            'total_after_vat'=>$total_after_vat,
+        ];
     }
 
     public function updateTotal($id, $cart_total, $feature_total){

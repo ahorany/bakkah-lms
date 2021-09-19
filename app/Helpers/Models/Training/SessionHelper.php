@@ -326,9 +326,9 @@ class SessionHelper {
         return $courses;
     }
 
-    public function TrainingOption($show_in_website=[1]){
+    public function TrainingOption($show_in_website=[1], $filter_by_date=true){
 
-        $courses = $this->Query('leftJoin', true, 0, $show_in_website);
+        $courses = $this->Query('leftJoin', true, 0, $show_in_website, null, $filter_by_date);
 
         if(request()->has('course_id') && request()->course_id != -1 && !is_null(request()->course_id)){
             $courses = $courses->where('courses.id', request()->course_id);
@@ -346,7 +346,7 @@ class SessionHelper {
         // ->orderBy('discount_details.value', 'desc')
         ->get()
         ->map(function ($data) {
-            if(!is_null($data->session_id) || $data->constant_id==13){
+            if(!is_null($data->session_id) || $data->constant_id==13 || $data->constant_id==383){
                 return $data;
             }
         })
@@ -357,6 +357,7 @@ class SessionHelper {
     }
 
     public function Single($course_slug, $GetAllSessions=false){
+
         $courses = $this->Query('leftJoin', $GetAllSessions)
         ->where('courses.slug', $course_slug)
         ->orderBy('sessions.session_start_time', 'asc')
@@ -415,23 +416,29 @@ class SessionHelper {
     // private function Map(){
     // }
 
-    private function SessionOBJ($GetAllSessions=false){
+    private function SessionOBJ($GetAllSessions=false, $filter_by_date=true){
 
         if($GetAllSessions){
-            $sessions_query = '(select *
-                from sessions
-                where session_start_time >= "'.DateTimeNowAddHours().'"
-                and show_in_website = 1
-                and deleted_at is null
-            ) as sessions';
+            $sql = 'select *
+            from sessions
+            where show_in_website = 1
+            and deleted_at is null';
+            if($filter_by_date){
+                $sql .= ' and session_start_time >= "'.DateTimeNowAddHours().'"';
+            }
+            $sessions_query = '('.$sql.') as sessions';
         }else{
 
             $SessionQuery = "select training_option_id, min(date_from) as date_from
             from sessions
             where date_from is not null
-            and date(date_from) >= '".DateTimeNowAddHours()."'
-            and deleted_at is null
-            group by training_option_id
+            and deleted_at is null";
+
+            if($filter_by_date){
+                $SessionQuery .= " and date(date_from) >= '".DateTimeNowAddHours()."'";
+            }
+
+            $SessionQuery .= " group by training_option_id
             order by date_from";
 
             $sessions_query = '(
@@ -457,7 +464,7 @@ class SessionHelper {
     }
 
     private function Query($DiscountJoinFns='leftJoin', $GetAllSessions=false, $is_private=0
-        , $show_in_website=[1], $category_id=null){
+        , $show_in_website=[1], $category_id=null, $filter_by_date=true){
 
         $DateTimeNow = DateTimeNow();
 
@@ -468,7 +475,7 @@ class SessionHelper {
         $constatns_course = Constant::where('post_type', 'course')->pluck('id')->toArray();
         $constatns_language = Constant::where('post_type', 'language')->pluck('id')->toArray();
 
-        $sessions_query = $this->SessionOBJ($GetAllSessions);
+        $sessions_query = $this->SessionOBJ($GetAllSessions, $filter_by_date);
 
         $courses = Course::join('uploads', function($query){
             $query->on('courses.id', 'uploads.uploadable_id')

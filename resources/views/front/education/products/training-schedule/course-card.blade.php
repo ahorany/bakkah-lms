@@ -8,7 +8,7 @@
 
         <div class="bg-light py-5" id="trainig-schedule">
             <div class="container">
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4 table-title">
                     @if($_count!=0)
                         <h2 class="m-0">{{__('education.Online Training Schedule')}}</h2>
                     @endif

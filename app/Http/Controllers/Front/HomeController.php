@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\sendTestNotfication;
 use Carbon\Carbon;
 // use http\Url;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Spatie\Sitemap\SitemapGenerator;
 
 use Spatie\Sitemap\Tags\Url;
@@ -17,6 +19,7 @@ class HomeController extends Controller
 //        SitemapGenerator::create('http://localhost:8000')
 //            ->writeToFile(public_path('sitemap.xml'));
 //        $this->sitemap('http://127.0.0.1:8000');
+
         return view(FRONT.'.home.index');
     }
 

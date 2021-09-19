@@ -32,6 +32,15 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         @if(auth()->user()->role_id==2)
+            <li class="nav-item"><!--menu-open-->
+                <ul class="nav nav-treeview" style="display: inline-block;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('training.sessions.index', ['post_type'=>'session'])}}">
+                            <i class="nav-icon fas fa-chalkboard"></i>
+                            Sessions</a>
+                    </li>
+                </ul>
+            </li>
               <li class="nav-item"><!--menu-open-->
                   <ul class="nav nav-treeview" style="display: inline-block;">
                       <li class="nav-item">

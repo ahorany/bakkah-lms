@@ -33,12 +33,15 @@ class ExcelImport implements ToCollection
         $coin_id = GetCoinId();
         $coin_price = GetCoinPrice();
 
-        // dd($this->session_id);
+        // dump($this->session_id);
         request()->training_option_id = -1;
         request()->course_id = $this->course_id;
         $SessionHelper = new SessionHelper();
-        $session = $SessionHelper->TrainingOption([0, 1])->where('session_id', $this->session_id)->first();
-
+        $session = $SessionHelper->TrainingOption([0, 1], false)
+        ->where('session_id', $this->session_id)
+        ->first();
+        // dump('test');
+        // dd($session);
         if(!is_null($session)){
             request()->training_option_id = $session->training_option_id;
             $SessionHelper->SetCourse($session);

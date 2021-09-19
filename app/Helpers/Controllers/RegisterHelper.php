@@ -29,6 +29,8 @@ class RegisterHelper {
         $price = request()->price??0;
         $take2_price = request()->Take2Price??0;
         $exam_simulation_price = request()->ExamSimulationPrice??0;
+        $pract_exam_price = request()->pract_exam_price??0;
+        $book_price = request()->book_price??0;
         $exam_price = request()->ExamPrice??0;
         $Discount = request()->Discount??0;
         $DiscountValue = request()->DiscountValue??0;
@@ -90,6 +92,8 @@ class RegisterHelper {
             'take2_price' => NumberFormat($take2_price),
             'exam_simulation_price' => NumberFormat($exam_simulation_price),
             //
+            'pract_exam_price' => NumberFormat($pract_exam_price),
+            'book_price' => NumberFormat($book_price),
             'total' => NumberFormat($subtotal),
             'vat' => NumberFormat($VAT),
             'vat_value' => NumberFormat($VATVALUE),
@@ -179,6 +183,8 @@ class RegisterHelper {
         $exam_price = 0;
         $take2_price = 0;
         $exam_simulation_price = 0;
+        $pract_exam_price = 0;
+        $book_price = 0;
         foreach($cartFeatures as $cartFeature) {
             if($cartFeature->trainingOptionFeature->feature_id == 1){
                 $exam_price = $cartFeature->price;
@@ -189,11 +195,19 @@ class RegisterHelper {
             else if($cartFeature->trainingOptionFeature->feature_id == 3){
                 $take2_price = $cartFeature->price;
             }
+            else if($cartFeature->trainingOptionFeature->feature_id == 4){
+                $pract_exam_price = $cartFeature->price;
+            }
+            else if($cartFeature->trainingOptionFeature->feature_id == 5){
+                $book_price = $cartFeature->price;
+            }
         }
         Cart::where('id', $cart->id)->update([
             'exam_price'=>$exam_price,
             'take2_price'=>$take2_price,
             'exam_simulation_price'=>$exam_simulation_price,
+            'pract_exam_price'=>$pract_exam_price,
+            'book_price'=>$book_price,
         ]);
     }
 

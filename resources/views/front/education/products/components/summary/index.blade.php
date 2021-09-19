@@ -84,10 +84,14 @@ $take2_price = 0;
                 <li>
                     @forelse ($trainingOptionFeatures as $option)
                         @if ($option['is_include'])
-                            <label class="bg-trans d-flex justify-content-between m-0">
+                            <label class="d-flex justify-content-between m-0">
                                 <span class="d-flex align-items-center">
-                                    <span style="font-size: 26px;width: 30px;"><i class="fas fa-plus-square"></i></span>
-                                    <span>{{ $option['title'] }}</span>
+                                    <span style="font-size: 26px;width: 30px;"><i class="fas fa-plus-square main-color"></i></span>
+                                    @if ($option['feature_id'] != 5)
+                                        <span>{{ $option['title'] }}</span>
+                                    @else
+                                        <span>{{ $option['excerpt'] }}</span>
+                                    @endif
                                 </span>
                                 <b>{{ $option['price'] }} @{{ currency }} </b>
                             </label>
@@ -95,7 +99,11 @@ $take2_price = 0;
                             <?php $left_padding=app()->getLocale()=='en'?30:0; ?>
                             <label class="chk_container d-flex justify-content-between mb-3" style="padding-left:{{$left_padding}}px;">
 
-                                <span>{{ $option['title'] }}</span>
+                                @if ($option['feature_id'] != 5)
+                                    <span>{{ $option['title'] }}</span>
+                                @else
+                                    <span>{{ $option['excerpt'] }}</span>
+                                @endif
                                 <b>{{ $option['price'] }} @{{ currency }} </b>
 
                                 <input type="checkbox" name="trainingOptionFeatures[{{ $option['id'] }}]" @click="addTrainingOption('{{ $option['price'] }}', $event)" value="{{ $option['price'] }}" {{ old("trainingOptionFeatures." . $option['id']) == $option['price'] ? 'checked' : '' }}> <span class="checkmark"></span>

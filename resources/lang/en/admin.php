@@ -343,5 +343,7 @@ return [
     'article_name' => 'Articles',
     'on_demand_cost'=>'On Demand Cost',
     'is_confirmed'=>'Confirm Status',
-    'add_section'=>'Add Section',
+    'Pract. Exam Price'=>'Pract. Exam Price',
+    'Book Price'=>'Book Price',
+    'replicate'=>'Replicate',
 ];

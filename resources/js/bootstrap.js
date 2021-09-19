@@ -36,6 +36,36 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: process.env.MIX_PUSHER_APP_KEY,
+//     wsHost: window.location.hostname,
+//     wsPort: 6001,
+//     forceTLS: false,
+//     disableStats: true,
+// });
+
+// let userId = document.querySelector('meta[name="userId"]').content;
+
+// // let userId = 13008;
+// window.Echo.private('App.User.' + userId)
+//     .notification((notification) => {
+//         console.log(notification);
+//         alert(notification.name)
+//     });
+
+
+// window.Echo.channel('khaled').listen('PublicMessageEvent', (e) => {
+//     console.log(e)
+// });
+
+
+
+
+// import Echo from 'laravel-echo';
+
+// window.Pusher = require('pusher-js');
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });

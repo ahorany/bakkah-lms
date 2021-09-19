@@ -90,13 +90,21 @@ class TrainingOptionController extends Controller
 
                     return redirect()->back()->with('message','Please Enter Price & Price_usd');
                 }
+
+                $excerpt = json_encode([
+                    'en'=>request()->get('en_excerpt_' . $feature_id),
+                    'ar'=>request()->get('ar_excerpt_' . $feature_id),
+                ], JSON_UNESCAPED_UNICODE);
+
                 TrainingOptionFeature::updateOrCreate([
                     'feature_id' => $feature_id,
                     'training_option_id' => $training_option->id,
                 ], [
                     'price' => request()->get('price-' . $feature_id),
                     'price_usd' => request()->get('price_usd-' . $feature_id),
+                    'xero_feature_code' => request()->get('xero_feature_code_' . $feature_id),
                     'is_include' => request()->get('is_include_' . $feature_id),
+                    'excerpt' => $excerpt,
                 ]);
 
              }

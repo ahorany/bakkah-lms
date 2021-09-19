@@ -16,12 +16,20 @@ class TrainingOptionFeature extends Model
         $trainingOptionFeatures = $query->where('training_option_id', $training_option_id)->with(['feature'])
         ->get()
         ->map(function($trainingOptionFeature){
+            $excerpt = '';
+            if(app()->getLocale()=='en'){
+                $excerpt = json_decode($trainingOptionFeature->excerpt??'')->en??'';
+            }else{
+                $excerpt = json_decode($trainingOptionFeature->excerpt??'')->ar??'';
+            }
             return [
                 'id' => $trainingOptionFeature->id,
                 'title' => $trainingOptionFeature->feature->trans_title,
                 'price' => $trainingOptionFeature->final_price,
                 'total_after_vat' => $trainingOptionFeature->total_after_vat,
                 'is_include' => $trainingOptionFeature->is_include,
+                'excerpt' => $excerpt,
+                'feature_id' => $trainingOptionFeature->feature->id,
             ];
         });
 

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 // If error sure if TAX002 is created from Xero -> (Accounting->Advanced->Tax Rates)
 // **************************************
 // Review and check if there is errors
+// https://developer.xero.com/app/health/c4eff83a-4b17-4eb1-954c-9dbb2eaa4adb
 // https://developer.xero.com/app/apphistory/c4eff83a-4b17-4eb1-954c-9dbb2eaa4adb?endpoint=&method=&status=&minDuration=&maxDuration=
 
 // https://developer.xero.com/
@@ -42,6 +43,7 @@ use Illuminate\Database\Eloquent\Builder;
 // #XTID=x30bakkah
 
 // Testing
+// local test
 // XERO_CLIENT_ID="B711564CFE7C41FEA534EC93C0F47024"
 // XERO_CLIENT_SECRET="q0u4VNbCyXNu1ja64NDd0_TXFDqM8IF_pfVxxV0xFj2o0BAU"
 // #XERO_WEBHOOK_KEY=+7xcpsUZLu91bnKoPuleXK4otCLlUczqGgiqVDkUA7biRxd/eeHLbR0a5jncGf0+9KY15DMi4gkxGBeCeDMo/A==
@@ -56,7 +58,7 @@ class Prepayment {
     public $secondTrackingName = 'Partnership';
 
     // Prepayment
-    public $prepayment_account_code = '620';
+    // public $prepayment_account_code = '620';
     public $bank_account_number_SAR = '0908007006543';
     public $bank_account_number_USD = '121314121314';
 
@@ -70,9 +72,9 @@ class Prepayment {
             $this->secondTrackingName = 'Partnership';
 
             // Prepayment
-            $this->prepayment_account_code = '11301';
-            $this->bank_account_number_SAR = '0908007006543';
-            $this->bank_account_number_USD = '121314121314';
+            // $this->prepayment_account_code = '11301';
+            $this->bank_account_number_SAR = '13544'; // HYPERPAY
+            $this->bank_account_number_USD = '11010502'; // PayPal-SAR
         }
     }
 
@@ -124,6 +126,16 @@ class Prepayment {
 
         // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
+        // &&&&&&&&&&&&&&&&&&&&& Get The Item Data &&&&&&&&&&&&&&&&&&&&&&&
+            // dd('testtttt');
+
+            // $item = $this->getItem($this->xeroTenantId,$this->apiInstance,'aPHRi-Course-OT');
+            // $SalesAccountID = $item[0]['sales_details']['account_code']??'';
+
+            // dd($SalesAccountID);
+            // dd('Endeeee');
+        // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
         // dd('Done_Yes');
 
         // if(env('NODE_ENV')=='production')
@@ -151,6 +163,7 @@ class Prepayment {
         // }
         // else
         // {
+
             $cartMasters = CartMaster::whereNull('xero_prepayment')
             ->whereNull('xero_prepayment_created_at')
             ->where('type_id', 374)
@@ -174,13 +187,13 @@ class Prepayment {
             // ->whereNotIn('id', [4300,4327])
             // ->whereNotIn('id', [4026])
             ->orderBy('id', 'asc')
-            // ->where('id', 10711)  //4059
+            ->where('id', 14853)  //14877 SAR - 14854 USD
             // ->take(2)
             ->get();
             // dd($cartMasters);
         // } //if
 
-        dd($cartMasters);
+        // dd($cartMasters);
 
         $i = 0;
         foreach($cartMasters as $cartMaster){
@@ -202,13 +215,14 @@ class Prepayment {
             // Asking amer Abu Ahmed
             // In Prepayment all items will have the same Account that will stored in $accountCode=prpayment as tamer says
 
-            $account = $this->getAccountExpense($this->xeroTenantId,$this->apiInstance);
-            $accountCode = $account->getAccounts()[0]->getCode();
+            // $account = $this->getAccountExpense($this->xeroTenantId,$this->apiInstance);
+            // $accountCode = $account->getAccounts()[0]->getCode();
             // dd($account);
 
             $contact = $this->Contact($cartMaster->user_id??null);
 
-            $arr_lineItem = $this->ListItem($cartMaster, $tax_type, $accountCode);
+            $arr_lineItem = $this->ListItem($cartMaster, $tax_type);
+            // $arr_lineItem = $this->ListItem($cartMaster, $tax_type, $accountCode);
             // dump($arr_lineItem);
 
             // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Determine the Bank Account &&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -225,11 +239,16 @@ class Prepayment {
                 // dd($getAccount);
             // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
+            $paid_in = $cartMaster->payment->paid_in;
+            if($cartMaster->coin_id==335){  // USD
+                $paid_in = ($cartMaster->payment->paid_in) * USD_PRICE;
+            }
+            
             $ret_array = $this->createPrepayment($this->xeroTenantId,$this->apiInstance,$getAccount,false,$contact,$cartMaster, $arr_lineItem, [
-                'cart_master_id'=>$cartMaster->id,
-                'invoice_number'=>$cartMaster->invoice_number,
-                'date'=>$cartMaster->payment->updated_at,
-                'paid'=>$cartMaster->payment->paid_in,
+                'cart_master_id'=>$cartMaster->id??'',
+                'invoice_number'=>$cartMaster->invoice_number??'',
+                'date'=>$cartMaster->payment->updated_at??now(),
+                'paid'=>$paid_in,
                 'coin_id'=>$coin_id,
             ]);
 
@@ -244,7 +263,7 @@ class Prepayment {
 
 
             if($xero_prepayment && $xero_prepayment_id){
-                echo ++$i.') Prepayment was created successfully for Master Invoice: <b>'.$cartMaster->invoice_number.'</b> with amount: <b>'.$cartMaster->payment->paid_in.'</b><br><br>';
+                echo ++$i.') Prepayment was created successfully for Master Invoice: <b>'.$cartMaster->invoice_number.'</b> with amount: <b>'.$paid_in.'</b><br><br>';
             }
 
 
@@ -366,7 +385,8 @@ class Prepayment {
 //                     ->setQuantity(1)
 //                     ->setUnitAmount(20)
 
-    public function ListItem($cartMaster, $tax_type, $accountCode){
+    // public function ListItem($cartMaster, $tax_type, $accountCode){
+    public function ListItem($cartMaster, $tax_type){
         $arr_lineItem = [];
         foreach($cartMaster->carts as $cart){
 
@@ -379,79 +399,108 @@ class Prepayment {
             }
 
             $itemCode = 'BOOK';
-            if(env('NODE_ENV')=='production'){
+            // if(env('NODE_ENV')=='production'){
                 $itemCode = $this->GenerateItemCode($cart);
-            }
+            // }
             // $arr_lineItem = [];
             // if(isset($cart->course->xero_code) && !is_null($cart->course->xero_code))
             {
+                // here get the $item Sales Account Code
+                $item = $this->getItem($this->xeroTenantId,$this->apiInstance,$itemCode);
+                $SalesAccountID = $item[0]['sales_details']['account_code']??'';
+
+                $amount = $cart->price - $cart->discount_value;
+                if($cartMaster->coin_id==335){  // USD
+                    $amount = ($cart->price - $cart->discount_value) * USD_PRICE;
+                }
+
                 $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
                     'itemCode'=>$itemCode,
                     'description'=>$cart->course->en_short_title.' - '.$option_name.''.$session_date,
                     'quantity'=>1,
                     'discountRate'=>0,
                     // 'unitAmount'=>$cart->price - $cart->discount_value,
-                    'amount'=>$cart->price - $cart->discount_value,
-                    'accountCode'=>$accountCode,
+                    'amount'=>$amount,
+                    'accountCode'=>$SalesAccountID,
+                    // 'accountCode'=>$accountCode,
                 ]);
             }
 
-            if(env('NODE_ENV')=='production'){
+            // if(env('NODE_ENV')=='production'){
                 foreach($cart->cartFeatures as $cartFeature){
-                    // Exam Voucher
-                    if($cartFeature->trainingOptionFeature->feature->id == 1 && !empty($cart->course->xero_exam_code)){
+
+                    if($cartFeature->trainingOptionFeature->feature->id > 0 && !empty($cartFeature->trainingOptionFeature->xero_feature_code)){
+
+                        $itemCode = $cartFeature->trainingOptionFeature->xero_feature_code??'-';
+                        $item = $this->getItem($this->xeroTenantId,$this->apiInstance,$itemCode);
+                        $SalesAccountID = $item[0]['sales_details']['account_code']??'';
+
+                        $amount = $cartFeature->price;
+                        if($cartMaster->coin_id==335){  // USD
+                            $amount = ($cartFeature->price) * USD_PRICE;
+                        }
+
+                        $description = $itemCode;
+                        if($cartFeature->trainingOptionFeature->feature->id == 5){
+                            $description = json_decode($cartFeature->trainingOptionFeature->excerpt??'-')->en??'-';
+                        }
+
                         $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
-                            'itemCode'=>$cart->course->xero_exam_code,
-                            'description'=>'Exam Voucher',
+                            'itemCode'=>$itemCode,
+                            'description'=>$description,
                             'quantity'=>1,
                             'discountRate'=>0,
                             // 'unitAmount'=>$cartFeature->price,
-                            'amount'=>$cartFeature->price,
-                            'accountCode'=>$accountCode,
+                            'amount'=>$amount,
+                            'accountCode'=>$SalesAccountID,
                         ]);
+
                     }
 
-                    // Exam Simulation
-                    if($cartFeature->trainingOptionFeature->feature->id == 2 && !empty($cartFeature->cart->trainingOption->ExamSimulation->course->xero_code)){
-                        $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
-                            'itemCode'=>$cartFeature->cart->trainingOption->ExamSimulation->course->xero_code,
-                            'description'=>'Exam Simulation',
-                            'quantity'=>1,
-                            'discountRate'=>0,
-                            // 'unitAmount'=>$cartFeature->price,
-                            'amount'=>$cartFeature->price,
-                            'accountCode'=>$accountCode,
-                        ]);
-                    }
+                    // // Exam Voucher
+                    // if($cartFeature->trainingOptionFeature->feature->id == 1 && !empty($cart->course->xero_exam_code)){
+                    //     $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
+                    //         'itemCode'=>$cart->course->xero_exam_code,
+                    //         'description'=>'Exam Voucher',
+                    //         'quantity'=>1,
+                    //         'discountRate'=>0,
+                    //         // 'unitAmount'=>$cartFeature->price,
+                    //         'amount'=>$cartFeature->price,
+                    //         'accountCode'=>$accountCode,
+                    //     ]);
+                    // }
 
-                    // Take2
-                    if($cartFeature->trainingOptionFeature->feature->id == 3){
-                        $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
-                            'itemCode'=>'Take2 Exam',
-                            'description'=>'Take2 Exam',
-                            // 'description'=>$cartFeature->trainingOptionFeature->feature->trans_title??'Take2',
-                            'quantity'=>1,
-                            'discountRate'=>0,
-                            // 'unitAmount'=>$cartFeature->price,
-                            'amount'=>$cartFeature->price,
-                            'accountCode'=>$accountCode,
-                        ]);
-                    }
+                    // // Exam Simulation
+                    // if($cartFeature->trainingOptionFeature->feature->id == 2 && !empty($cartFeature->cart->trainingOption->ExamSimulation->course->xero_code)){
+                    //     $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
+                    //         'itemCode'=>$cartFeature->cart->trainingOption->ExamSimulation->course->xero_code,
+                    //         'description'=>'Exam Simulation',
+                    //         'quantity'=>1,
+                    //         'discountRate'=>0,
+                    //         // 'unitAmount'=>$cartFeature->price,
+                    //         'amount'=>$cartFeature->price,
+                    //         'accountCode'=>$accountCode,
+                    //     ]);
+                    // }
 
-                    // Exam Voucher
-                    if($cartFeature->trainingOptionFeature->feature->id == 4 && !empty($cart->course->xero_exam_code_practitioner)){
-                        $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
-                            'itemCode'=>$cart->course->xero_exam_code_practitioner,
-                            'description'=>'Practitioner Exam Voucher',
-                            'quantity'=>1,
-                            'discountRate'=>0,
-                            // 'unitAmount'=>$cartFeature->price,
-                            'amount'=>$cartFeature->price,
-                            'accountCode'=>$accountCode,
-                        ]);
-                    }
+                    // // Take2
+                    // if($cartFeature->trainingOptionFeature->feature->id == 3){
+                    //     $arr_lineItem = $this->LineItem($arr_lineItem, $cart, $tax_type, [
+                    //         'itemCode'=>'Take2 Exam',
+                    //         'description'=>'Take2 Exam',
+                    //         // 'description'=>$cartFeature->trainingOptionFeature->feature->trans_title??'Take2',
+                    //         'quantity'=>1,
+                    //         'discountRate'=>0,
+                    //         // 'unitAmount'=>$cartFeature->price,
+                    //         'amount'=>$cartFeature->price,
+                    //         'accountCode'=>$accountCode,
+                    //     ]);
+                    // }
+
                 } //foreach
-            } //if(env('NODE_ENV')=='production'){
+
+            // } //if(env('NODE_ENV')=='production'){
+
         } //foreach
 
         return $arr_lineItem;
@@ -591,7 +640,7 @@ class Prepayment {
                                 ->setBankAccount($bankAccount)
                                 ->setType(\XeroAPI\XeroPHP\Models\Accounting\BankTransaction::TYPE_RECEIVE_PREPAYMENT)
                                 ->setDate($date)
-                                ->setReference('S.G.-'.$array['invoice_number']??null.'-HyperPay-MID.: '.$array['cart_master_id']??null)
+                                ->setReference('S.G.-'.$array['invoice_number'].'-HyperPay-MID.: '.$array['cart_master_id'])
                                 ->setLineItems($arr_lineItem);
 
                     // dd($prepayment);
@@ -664,20 +713,20 @@ class Prepayment {
             //     return $str;
             // }
 
-            public function getLineItemForPrepayment($xeroTenantId,$apiInstance)
-            {
-                // aaaaaaaaaaaaaaaaaaaa
-                $account = $this->getAccountExpense($xeroTenantId,$apiInstance);
+            // public function getLineItemForPrepayment($xeroTenantId,$apiInstance)
+            // {
+            //     // aaaaaaaaaaaaaaaaaaaa
+            //     $account = $this->getAccountExpense($xeroTenantId,$apiInstance);
 
-                // $lineItem = new \XeroAPI\XeroPHP\Models\Accounting\LineItem;
+            //     // $lineItem = new \XeroAPI\XeroPHP\Models\Accounting\LineItem;
 
-                $lineitem = new \XeroAPI\XeroPHP\Models\Accounting\LineItem;
-                $lineitem->setDescription('Something-' . $this->getRandNum())
-                    ->setQuantity(1)
-                    ->setUnitAmount(20)
-                    ->setAccountCode($account->getAccounts()[0]->getCode());
-                return $lineitem;
-            }
+            //     $lineitem = new \XeroAPI\XeroPHP\Models\Accounting\LineItem;
+            //     $lineitem->setDescription('Something-' . $this->getRandNum())
+            //         ->setQuantity(1)
+            //         ->setUnitAmount(20)
+            //         ->setAccountCode($account->getAccounts()[0]->getCode());
+            //     return $lineitem;
+            // }
 
             // public function getLineItemForPurchaseOrder($xeroTenantId,$apiInstance)
             // {
@@ -691,27 +740,27 @@ class Prepayment {
             //     return $lineitem;
             // }
 
-            public function getAccountExpense($xeroTenantId,$apiInstance)
-            {
-                // dd(XeroAPI\XeroPHP\Models\Accounting\Account::STATUS_ACTIVE);
+            // public function getAccountExpense($xeroTenantId,$apiInstance)
+            // {
+            //     // dd(XeroAPI\XeroPHP\Models\Accounting\Account::STATUS_ACTIVE);
 
-                // $where = 'Status=="' . \XeroAPI\XeroPHP\Models\Accounting\Account::STATUS_ACTIVE .'" AND Type=="' .  \XeroAPI\XeroPHP\Models\Accounting\Account::MODEL_CLASS_EXPENSE . '"';
+            //     // $where = 'Status=="' . \XeroAPI\XeroPHP\Models\Accounting\Account::STATUS_ACTIVE .'" AND Type=="' .  \XeroAPI\XeroPHP\Models\Accounting\Account::MODEL_CLASS_EXPENSE . '"';
 
-                // if(env('NODE_ENV')=='production'){
-                //     $where = 'Code=="620"';  //Prepayments
-                // }else{
-                //     $where = 'Code=="620"';  //Prepayments
-                // }
+            //     // if(env('NODE_ENV')=='production'){
+            //     //     $where = 'Code=="620"';  //Prepayments
+            //     // }else{
+            //     //     $where = 'Code=="620"';  //Prepayments
+            //     // }
 
-                $where = 'Status=="ACTIVE" AND Code=="'. $this->prepayment_account_code .'"';  //Prepayments
+            //     $where = 'Status=="ACTIVE" AND Code=="'. $this->prepayment_account_code .'"';  //Prepayments
 
-                // $where = 'Status=="ACTIVE" AND Type=="EXPENSE"';
-                // $where = 'Status=="ACTIVE" AND Type=="ASSET"';
+            //     // $where = 'Status=="ACTIVE" AND Type=="EXPENSE"';
+            //     // $where = 'Status=="ACTIVE" AND Type=="ASSET"';
 
-                $result = $apiInstance->getAccounts($xeroTenantId, null, $where);
+            //     $result = $apiInstance->getAccounts($xeroTenantId, null, $where);
 
-                return $result;
-            }
+            //     return $result;
+            // }
 
             public function getBankAccount($xeroTenantId,$apiInstance,$bank_account_number)
             {
@@ -730,4 +779,10 @@ class Prepayment {
                 return $randNum;
             }
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++
+            public function getItem($xero_tenant_id, $apiInstance, $item_id, $unitdp = null)
+            {
+                list($response) = $apiInstance->getItemWithHttpInfo($xero_tenant_id, $item_id, $unitdp);
+                return $response;
+            }
+            
 }

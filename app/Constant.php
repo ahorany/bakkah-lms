@@ -6,6 +6,7 @@ use App\Models\Admin\Detail;
 use App\Models\Admin\PostMorph;
 use App\Models\Training\Discount\Discount;
 use App\Models\Training\Session;
+use App\Models\Training\XeroAccount;
 use App\Traits\Json\ExcerptTrait;
 use App\Traits\JsonTrait;
 use App\Traits\SeoTrait;
@@ -22,11 +23,6 @@ class Constant extends Eloquent
 	    'en_name', 'ar_name',
     ];
 
-    /**
-     * Get the index name for the model.
-     *
-     * @return string
-     */
     public function searchableAs()
     {
         return 'constants_index';
@@ -49,6 +45,10 @@ class Constant extends Eloquent
 
     public function details(){
         return $this->hasMany(Detail::class, 'constant_id');
+    }
+
+    public function xeroAccount(){
+    	return $this->morphOne(XeroAccount::class, 'xeroAccountable');
     }
 
     public function discounts(){

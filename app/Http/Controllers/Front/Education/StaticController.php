@@ -377,6 +377,7 @@ class StaticController extends Controller
 
 
         $RelatedCourses = $RelatedHelper->Courses($post->id, 471, 475);
+        $relatedArticles = $RelatedHelper->Articles($post->id, 472, 475);
 
 
 //        if (!$post) {
@@ -385,7 +386,7 @@ class StaticController extends Controller
 //        RedirectTransSlug::checkPostSlug($post->locale,$post->basic_id,'education.static.webinars.single');
 
         if(!is_null($post)) {
-            return view($this->path . '.webinars.single', compact('post', 'RelatedCourses', 'SessionHelper'));
+            return view($this->path . '.webinars.single', compact('post', 'RelatedCourses', 'SessionHelper', 'relatedArticles'));
         }
         return redirect()->back();
     }
@@ -419,9 +420,14 @@ class StaticController extends Controller
 
         $this->previewButton($post);
 
+        $RelatedHelper = new RelatedHelper();
+        $SessionHelper = new SessionHelper();
+        $RelatedCourses = $RelatedHelper->Courses($post->id, 471, 476);
+        $relatedArticles = $RelatedHelper->Articles($post->id, 472, 476);
+
         if(!is_null($post)) {
 
-            return view($this->path . '.reports.single', compact('post'));
+            return view($this->path . '.reports.single', compact('post', 'RelatedCourses', 'SessionHelper', 'relatedArticles'));
         }
         return redirect()->back();
     }

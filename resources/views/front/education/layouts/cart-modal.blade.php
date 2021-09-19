@@ -30,23 +30,25 @@
                     <label v-if="feature_item.is_include" class="d-flex justify-content-between m-0">
                         <span class="d-flex align-items-center">
                             <span style="font-size: 26px;width: 30px;"><i class="fas fa-plus-square main-color"></i></span>
-                            <span>@{{ langCode == 'en' ? JSON.parse(feature_item.feature.title).en : JSON.parse(feature_item.feature.title).ar}}</span>
+                            <span>@{{ convertJson(feature_item.feature.title) }}</span>
                         </span>
                         @{{ currency == 'SAR' ? feature_item.price * (vat + 1) : feature_item.price_usd * (vat + 1) }} @{{currency}}
                         {{-- <b v-html="`${feature_item.total_after_vat} ${currency}`"></b> --}}
                     </label>
                     <label v-else class="chk_container d-flex justify-content-between m-0">
                         {{-- <span v-html="`${feature_item.feature.title}`"></span> --}}
-                        <span>@{{ langCode == 'en' ? JSON.parse(feature_item.feature.title).en : JSON.parse(feature_item.feature.title).ar}}</span>
-                        @{{ currency == 'SAR' ? feature_item.price : feature_item.price_usd }} @{{currency}}
-                        <input type="checkbox" :checked="feature_item.is_include" @click="addCartFeature(lastCartItem.cart_id, feature_item.id, feature_item.price, feature_item.total_after_vat, $event)" value="1"> <span class="checkmark"></span>
+                        <span>@{{ convertJson(feature_item.feature.title) }}</span>
+                        @{{ TotalByCurrency(feature_item.price, feature_item.price_usd) }} @{{currency}}
+                        <input type="checkbox" :checked="IsChecked(lastCartItem.cart_features, feature_item.id)" @click="AddCartFeature(lastCartItem.id, feature_item.id, 1, $event)" value="1"> <span class="checkmark"></span>
+                        {{-- <input type="checkbox" :checked="feature_item.is_include" @click="AddCartFeature(lastCartItem.id, feature_item.id, 1, $event)" value="1"> <span class="checkmark"></span> --}}
                     </label>
                 </div>
 
                 <div class="col-12 mt-4 px-5 py-3 bg-light">
                     <div class="d-flex d-flex justify-content-between">
                         <h4 class="boldfont m-0">{{ __('education.Total') }}</h4>
-                        <h4 class="boldfont m-0" v-html="`${lastCartItem.price} ${currency}`"></h4>
+                        <h4 class="boldfont m-0">@{{ TotalFeatures(lastCartItem) }} @{{currency}}</h4>
+                        {{-- <h4 class="boldfont m-0" v-html="`${lastCartItem.price} ${currency}`"></h4> --}}
                     </div>
                 </div>
             </div>

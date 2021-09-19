@@ -329,8 +329,9 @@ class CartHelper {
                     'course.upload',
                     'trainingOption.TrainingOptionFeature.feature',
                     'trainingOption.type',
-                    'cartFeatures',
+                    'cartFeatures.trainingOptionFeature',
                     'cartMaster',
+                    'trainingOptionOrSession',
                 ])
                 ->orderBy('id', 'desc');
                 // ->get();
@@ -355,7 +356,8 @@ class CartHelper {
                         'course.upload',
                         'trainingOption.TrainingOptionFeature.feature',
                         'trainingOption.type',
-                        'cartFeatures'
+                        'cartFeatures.trainingOptionFeature',
+                        'trainingOptionOrSession',
                     ])
                     ->orderBy('id', 'desc');
                     // ->get();
@@ -379,34 +381,15 @@ class CartHelper {
         // dd($carts);
 
         $cartMaster = null;
-        if(count($carts)!=0){
-            $cartMaster = CartMaster::whereIn('id', [$carts->pluck('master_id', 'master_id')])
-            ->select(DB::raw('sum(total) as total, sum(vat_value) as vat_value, sum(total_after_vat) as total_after_vat'))
-            ->first();
-        }
+        // if(count($carts)!=0){
+        //     $cartMaster = CartMaster::whereIn('id', [$carts->pluck('master_id', 'master_id')])
+        //     ->select(DB::raw('sum(total) as total, sum(vat_value) as vat_value, sum(total_after_vat) as total_after_vat'))
+        //     ->first();
+        // }
+        $CartMasterHelper = new CartMasterHelper();
+        $cartMaster = $CartMasterHelper->GetTotal($carts);
 
         $features = $this->GetFeatures($GetCarts);
-
-        // $bundle = Bundle::GetBundle();
-
-        // $details1 = $CartHelper->GetCarts()->select(DB::raw(
-        //     'sum(total_after_vat) as total_after_vat, sum(total) as sub_total, sum(total_after_vat-total) as vat_value'
-        // ))
-        // ->first()
-        // ->toArray();
-
-        // $sub_total = NumberFormat($details1['sub_total']);
-        // $bundle_discount = ($bundle!=0)?($sub_total - $bundle):0;
-        // // $vat_value = $bundle * (VAT/100);
-        // // $total_after_vat = $bundle + $vat_value;
-
-        // $details = [
-        //     'sub_total'=>$sub_total,
-        //     'bundle_discount'=>$sub_total - $bundle,
-        //     'vat_value'=>0,
-        //     'total_after_vat'=>0,
-        // ];
-        // $details = json_encode($details);
 
         return compact('cartMaster', 'carts', 'features');
     }
@@ -497,6 +480,13 @@ class CartHelper {
         $discount = $SessionHelper->Discount() ?? 0;
         $discount_value = $SessionHelper->DiscountValue();
 
+        $promo_code = $array['promo_code']??null;
+        if(isset($array['SmartPromocode'])){
+            $discount_id = $array['SmartPromocode']->id;
+            $discount = $array['SmartPromocode']->value;
+            $discount_value = $price * $array['SmartPromocode']->value / 100;
+        }
+
         $cart = Cart::updateOrCreate([
             'user_token' => $array['user_token'],
             'payment_status' => 63,
@@ -526,6 +516,7 @@ class CartHelper {
             'payment_status'     => 63,
             // 'user_token'         => $user_token,
             'register_type'      => $type,
+            'promo_code'          => $promo_code,
         ]);
         return $cart;
     }
@@ -553,7 +544,9 @@ class CartHelper {
 
     public function GetCart($cart_id){
 
-        $cart = Cart::with(['course.upload', 'trainingOption.trainingOptionFeatures.feature'])->find($cart_id);
+        $cart = Cart::with(['trainingOptionOrSession', 'course.upload', 'trainingOption.trainingOptionFeatures.feature'
+        , 'cartFeatures.trainingOptionFeature'])
+        ->find($cart_id);
 
         return $cart;
     }

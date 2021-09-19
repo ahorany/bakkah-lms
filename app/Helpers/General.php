@@ -11,7 +11,7 @@ define('LINKEDIN', 'https://www.linkedin.com/company/bakkah-inc-?trk=top_nav_hom
 define('YEAR', date('Y'));
 define('VAT', 15);
 define('green_attendance_rate', 15);
-define('USD_PRICE', 3.8);
+define('USD_PRICE', 3.75);
 define('ZOOM_COST', 86);
 
 

@@ -43,9 +43,10 @@ class ProductDemandController extends Controller
 
     public function show($cartMasterId)
     {
+        
         $DateTimeNow = DateTimeNow();
         // dump($DateTimeNow);
-
+        
         $cartMaster = CartMaster::with(['rfpGroup', 'rfpGroup.organization', 'userId', 'userId.countries'
         , 'rfpGroup.session.trainingOption.course', 'rfpGroup.userId', 'payment', 'coin', 'paymentStatus', 'notes.user', 'notes'=>function($query){ $query->orderBy('id', 'DESC'); }
         , 'carts'=>function($query)use($DateTimeNow){
@@ -90,7 +91,7 @@ class ProductDemandController extends Controller
         if($cartMaster->payment_rep_id){
             $paymentDetails = $this->getPaymentDetails($cartMasterId);
         }
-        // dd($paymentDetails);
+        // dd($paymentDetails->code??null);
 
         $countries = Constant::where('post_type','countries')->get();
         $p_status = Constant::where('parent_id', 62)->where('id', '!=', 375)->get();
@@ -562,6 +563,8 @@ class ProductDemandController extends Controller
                     'exam_price' => NumberFormat($cart['exam_price']),
                     'take2_price' => $cart['take2_price'],
                     'exam_simulation_price' => NumberFormat($cart['exam_simulation_price']),
+                    'pract_exam_price' => NumberFormat($cart['pract_exam_price']),
+                    'book_price' => NumberFormat($cart['book_price']),
                     'total' => NumberFormat($cart['total']),
                     'vat' => NumberFormat($cart['vat']),
                     'vat_value' => NumberFormat($cart['vat_value']),
@@ -667,6 +670,8 @@ class ProductDemandController extends Controller
                 $exam_simulation_price = ($request->exam_simulation_price!=0) ? $request->exam_simulation_price : $session->exam_simulation_price;
                 // $take2_price = ($request->take2_price!=0) ? $request->take2_price : $session->take2_price;
                 $take2_price = $request->take2_price;
+                $pract_exam_price = $request->pract_exam_price;
+                $book_price = $request->book_price;
 
                 $session_exam_price = $SessionHelper->ExamPrice();
                 // $ExamIsIncluded = $SessionHelper->ExamIsIncluded();
@@ -676,6 +681,8 @@ class ProductDemandController extends Controller
                 $sub_total = $SessionHelper->PriceWithExamPrice();
                 $sub_total += $exam_simulation_price;
                 $sub_total += $take2_price;
+                $sub_total += $pract_exam_price;
+                $sub_total += $book_price;
 
                 $discount_value = $SessionHelper->DiscountValue();
                 $vat = $SessionHelper->VAT();
@@ -683,6 +690,8 @@ class ProductDemandController extends Controller
                 $_vat = ($vat / 100);
                 $vat__exam_simulation_price = $exam_simulation_price * $_vat;
                 $vat__take2_price = $take2_price * $_vat;
+                $vat__pract_exam_price = $pract_exam_price * $_vat;
+                $vat__book_price = $book_price * $_vat;
 
                 /////////////////////
                 $vat_value = $SessionHelper->VATFortPriceWithExamPrice();
@@ -693,6 +702,10 @@ class ProductDemandController extends Controller
                 $total_after_vat += $vat__exam_simulation_price;
                 $total_after_vat += $take2_price;
                 $total_after_vat += $vat__take2_price;
+                $total_after_vat += $pract_exam_price;
+                $total_after_vat += $vat__pract_exam_price;
+                $total_after_vat += $book_price;
+                $total_after_vat += $vat__book_price;
 
                 return response()->json([
                     'msg'=>'success',
@@ -707,6 +720,8 @@ class ProductDemandController extends Controller
                     // 'take2_price' => NumberFormat($session->take2_price),
                     'take2_price' => NumberFormat($take2_price),
                     'exam_simulation_price' => NumberFormat($exam_simulation_price),
+                    'pract_exam_price' => NumberFormat($pract_exam_price),
+                    'book_price' => NumberFormat($book_price),
                     'total' => NumberFormat($sub_total),
                     'vat' => NumberFormat($vat),
                     'vat_value' => NumberFormat($vat_value),
@@ -816,7 +831,7 @@ class ProductDemandController extends Controller
             $query->where('id', $comments->id);
         }, 'notes.user'])
         ->findOrFail($id);
-
+        
         return response()->json($comment->notes);
     }
 
@@ -917,7 +932,7 @@ class ProductDemandController extends Controller
         $cartMaster = CartMaster::where('id', $cartMasterId)->select('payment_rep_id')->first();
         // dd($cartMaster);
         if($cartMaster) {
-            $checkout = new CheckoutApi(env('CHECHOUT_SECRET_KEY'), false);
+            $checkout = new CheckoutApi(env('CHECHOUT_SECRET_KEY'), env('APP_ENV')=='production'?false:true);
             // $checkout = new CheckoutApi("sk_test_8d7c9bd1-ed3b-44b4-a0a8-b2db38e17dde");
             // $threeDsSessionId = 'sid_y3oqhf46pyzuxjbcn2giaqnb44';
             $threeDsSessionId = $cartMaster->payment_rep_id??null;
@@ -934,7 +949,12 @@ class ProductDemandController extends Controller
                 // ]);
 
             } catch (CheckoutHttpException $ex) {
-                dd($ex);
+                // return response()->json([
+                //     'msg'=>'success',
+                //     'status'=>'true',
+                // ]);
+                return null;
+                // dd($ex);
                 // return $ex->getErrors();
             }
         }

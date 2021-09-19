@@ -7,8 +7,6 @@ use App\Helpers\Active;
 use App\Http\Requests\Training\CourseRequest;
 use App\Models\Admin\Partner;
 use App\Models\Training\Course;
-use App\Models\Training\Content;
-
 use App\Constant;
 use Illuminate\Database\Eloquent\Builder;
 // use Illuminate\Support\Str;
@@ -296,7 +294,4 @@ class CourseController extends Controller
             }
         }
     }
-
-
-    
 }

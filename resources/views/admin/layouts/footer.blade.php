@@ -9,4 +9,3 @@
 </footer>
 
 @stack('vue')
-@stack('scripts')

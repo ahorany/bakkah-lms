@@ -94,12 +94,8 @@
                                             </div>
                                             <div class="shopping-item">
                                                 <div class="course-title">
-                                                    @if(app()->getLocale() == 'en')
-                                                        @{{JSON.parse(wishlist.training_option.course.title).en}}
-                                                    @else
-                                                        @{{JSON.parse(wishlist.training_option.course.title).ar}}
-                                                    @endif
-                                                    </div>
+                                                    @{{ convertJson(wishlist.training_option.course.title) }}
+                                                </div>
                                             </div>
                                         </a>
                                         <button class="btn btn-outline-primary btn-sm btn-block mt-2"  @click="addCartItem(wishlist.training_option.course.id, wishlist.session_id, 'wishlist', wishlist.id)">{{__('education.Add to Cart')}}</button>
@@ -134,7 +130,7 @@
                         <div class="items-wrapper">
                             <div v-if="typeof CartWithDetails.carts != 'undefined'" v-for="cart in CartWithDetails.carts">
                                 <div class="p-3">
-                                    <a :href="'/sessions/'" class="d-flex align-items-start">
+                                    <a :href="'/sessions/'" class="d-flex align-items-start align-items-center">
                                         <div class="course-image">
                                             <img :src="ImageUrl(cart.course.upload.file, 'thumb100')" alt="" width="100" height="100">
                                         </div>
@@ -142,7 +138,7 @@
                                             <div class="course-title">
                                                 @{{convertJson(cart.course.title)}}
                                                 </div>
-                                            <span class="course-price main-color">@{{cart.total_after_vat}} <small>@{{currency}}</small></span>
+                                            <span class="course-price main-color">@{{TotalFeatures(cart)}} <small>@{{currency}}</small></span>
                                         </div>
                                     </a>
                                     @unless (strpos(url()->full(), "/checkout") !== false)
@@ -154,7 +150,7 @@
                         </div>
                         <div class="p-3">
                             <div v-if="typeof CartWithDetails.carts != 'undefined'">
-                                <h4 class="boldfont">{{__('education.Total')}}: @{{cartTotal}} @{{currency}} </h4>
+                                <h4 class="boldfont m-0 mb-2">{{__('education.Total')}}: @{{CartWithDetails.cartMaster.total}} @{{currency}} </h4>
                                 <a href="{{route('education.cart')}}" class="btn btn-primary btn-block boldfont">{{__('education.Cart')}} <i class="fas fa-shopping-cart"></i></a>
                             </div>
                             <div class="text-center" v-else>
