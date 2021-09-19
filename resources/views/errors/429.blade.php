@@ -1,1 +1,0 @@
-@include('errors.bakkah-errors')
