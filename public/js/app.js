@@ -37337,6 +37337,26 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: process.env.MIX_PUSHER_APP_KEY,
+//     wsHost: window.location.hostname,
+//     wsPort: 6001,
+//     forceTLS: false,
+//     disableStats: true,
+// });
+// let userId = document.querySelector('meta[name="userId"]').content;
+// // let userId = 13008;
+// window.Echo.private('App.User.' + userId)
+//     .notification((notification) => {
+//         console.log(notification);
+//         alert(notification.name)
+//     });
+// window.Echo.channel('khaled').listen('PublicMessageEvent', (e) => {
+//     console.log(e)
+// });
+// import Echo from 'laravel-echo';
+// window.Pusher = require('pusher-js');
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
@@ -37361,8 +37381,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\BakkahLearning\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\BakkahLearning\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\wamp64\www\BakkahLMS\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\BakkahLMS\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

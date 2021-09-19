@@ -3,7 +3,7 @@
 @section('table')
 <div class="toLoad" id="contents">
 	{{$course->trans_title}}<br><br>
-	
+
 	<button type="button" @click="OpenModal()" class="btn btn-warning">
 	{{__('admin.add_section')}}
   	</button>
@@ -14,16 +14,16 @@
 		<div class="panel panel-default" v-for="(content,index) in contents">
 			<div class="panel-heading">@{{content.title}}</div>
 			<div class="panel-body">@{{content.excerpt}}</div>
-			
+
 			<button type="button" class="btn btn-primary child" id="video" >
 				<i class="fa fa-save"></i> {{__('admin.video')}}</button>
 			<div  v-for="(entry, index) in contents"  v-if="entry.id === content.id">
-				----- @{{entry.title}} 
+				----- @{{entry.title}}
 				-----  @{{entry.excerpt}}
 				<br>
 			</div>
 			<br>
-	
+
 		</div>
 	</div>
 
@@ -40,15 +40,17 @@
 			</div>
 
 			<div class="modal-body">
-				<div class="col-md-12">	
+				<div class="col-md-12">
 					<div class="form-group">
 						<label>Title </label>
 						<input type="text" v-model="title" name="title" class="form-control" placeholder="title">
 					</div>
 				</div>
-				<div class="modal-diff-content"></div>
+				<div class="modal-diff-content">
+                    @{{modal_content}}
+                </div>
 			</div>
-		
+
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">
 					<i class="fas fa-times"></i> {{__('admin.close')}}</button>
@@ -56,13 +58,13 @@
 					<i class="fas fa-eraser"></i> {{__('admin.clear')}}</button>
 				<button type="button"  @click="AddSection()" class="btn btn-primary">
 					<i class="fa fa-save"></i> {{__('admin.save')}}</button>
-	
+
 			</div>
 		</div>
 	</div>
 </div>
 
-	
+
 </div>
 
 
@@ -80,10 +82,11 @@
 			title: '',
 			// excerpt : '',
 			contents: window.contents,
+			modal_content: '',
 		},
 		methods: {
 			OpenModal: function(){
-				
+
 				let self = this;
 				axios.get("{{route('training.showModal')}}", {
 					params:{
@@ -91,7 +94,9 @@
 					}
 				})
 				.then(response => {
-					$('.modal-diff-content').html(response.data);
+
+                    self.modal_content = response.data;
+					// $('.modal-diff-content').html(response.data);
 					$('#ContentModal').modal('show');
 				})
 				.catch(e => {
@@ -99,11 +104,11 @@
 				});
 			},
 			AddSection: function(){
-				
+
 				let self = this;
 				console.log(self.excerpt);
 				console.log(self.title);
-				return; 
+				return;
 				axios.get("{{route('training.add_section')}}", {
 					params:{
 						course_id 	: self.course_id,
