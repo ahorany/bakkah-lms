@@ -46,4 +46,10 @@ return [
 	'PDUs'=>'الساعات المعتمدة',
 	'choose_value'=>'اختر',
 	'logout'=>'خروج',
+	'add_section'=>'Add Section',
+	'clear'=>'Clear',
+	'close'=>'Close',
+	'video'=>'Video',
+	'audio'=>'Audio',
+	'presentaion'=>'Presentaion',
 ];

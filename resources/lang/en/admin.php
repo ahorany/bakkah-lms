@@ -46,4 +46,11 @@ return [
 	'PDUs'=>'PDUs',
 	'choose_value'=>'choose value',
 	'logout'=>'Logout',
+	'add_section'=>'Add Section',
+	'clear'=>'Clear',
+	'close'=>'Close',
+	'video'=>'Video',
+	'audio'=>'Audio',
+	'presentaion'=>'Presentaion',
+	
 ];

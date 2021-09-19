@@ -10,16 +10,10 @@ class ContentController extends Controller
 {
     public function contents()
     {
-        // return request()->all();
         $course_id = request()->course_id;
-
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
         $contents = Content::where('course_id',$course_id)->get();
-        // dd($contents);
-        // return $courses;
-        // $contents = Content::get();
         return view('training.courses.contents.index', compact('course', 'contents'));
-
     }
 
     public function showModal()
@@ -27,6 +21,15 @@ class ContentController extends Controller
         $course_id = request()->course_id;
         return view('training.courses.contents.section', compact('course_id'));
     }
+
+    public function showChildModal()
+    {
+        $page = request()->type;
+        $course_id = request()->course_id;
+        return view('training.courses.contents.'.$page, compact('course_id'));
+        
+    }
+    
 
     public function add_section()
     {
@@ -39,11 +42,10 @@ class ContentController extends Controller
         $content->course_id  = request()->course_id;
 
         $content->save();
-// 
-        // $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
-        // $contents = Content::where('course_id',$course_id)->get();
-        
-        // return view('training.courses.contents.index', compact('course','contents'));
+
+        $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
+        $contents = Content::where('course_id',$course_id)->get();
+        return $contents;
     }
 
 
