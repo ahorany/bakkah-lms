@@ -45,20 +45,20 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
         $this->mapEducationRoutes();
-        $this->mapEPayRoutes();
-        $this->mapStaticRoutes();
-        $this->mapUserRoutes();
-        $this->mapUserFromExcelRoutes();
+        // $this->mapEPayRoutes();
+        // $this->mapStaticRoutes();
+        // $this->mapUserRoutes();
+        // $this->mapUserFromExcelRoutes();
 
-        $this->mapAdminRoutes();
-        $this->mapServiceRoutes();
+        // $this->mapAdminRoutes();
+        // $this->mapServiceRoutes();
 
-        $this->mapTrainingRoutes();
-        $this->mapEvaluationRoutes();
-        $this->mapCertificatesRoutes();
-        $this->mapXeroRoutes();
+        // $this->mapTrainingRoutes();
+        // $this->mapEvaluationRoutes();
+        // $this->mapCertificatesRoutes();
+        // $this->mapXeroRoutes();
 
-        $this->mapTestingRoutes();
+        // $this->mapTestingRoutes();
         //
     }
 
