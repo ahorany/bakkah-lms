@@ -38,7 +38,13 @@
 				</div>
 
 				<div class="modal-body">
-					<span v-html="modal_content"></span>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Excerpt </label>
+							<input type="text" v-model="title" name="title" class="form-control" placeholder="title">
+						</div>
+					</div>
+					<div class="modal-diff-content"></div>
 				</div>
 			
 				<div class="modal-footer">
@@ -67,7 +73,6 @@
 			title: '',
 			excerpt : '',
 			contents: window.contents,
-			modal_content:'',
 		},
 		methods: {
 			OpenModal: function(){
@@ -79,9 +84,7 @@
 					}
 				})
 				.then(response => {
-					// $('.modal-diff-content').html(response.data);
-					self.modal_content = response.data;
-					// $('.modal-body').html(response.data);
+					$('.modal-diff-content').html(response.data);
 					$('#ContentModal').modal('show');
 				})
 				.catch(e => {
