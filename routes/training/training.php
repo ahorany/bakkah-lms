@@ -10,26 +10,23 @@ Route::group([
 
         Route::resource('courses', 'CourseController');
         Route::patch('/courses/{course}/restore', 'CourseController@restore')->name('courses.restore');
+<<<<<<< HEAD
 
         Route::resource('training_options', 'TrainingOptionController');
         Route::patch('/training_options/{training_option}/restore', 'TrainingOptionController@restore')->name('training_options.restore');
+=======
+        
+        
+        Route::resource('training_options', 'TrainingOptionController');
+        Route::patch('/training_options/{training_option}/restore', 'TrainingOptionController@restore')->name('training_options.restore');
+
+        Route::get('/contents', 'ContentController@contents')->name('contents');
+        Route::get('/add_section', 'ContentController@add_section')->name('add_section');
+        Route::get('/showModal', 'ContentController@showModal')->name('showModal');
+        
+        
+        
+>>>>>>> c89d1697efbbad74dee21aa845b4144b3241f548
     });
 });
 
-Route::group([
-    'middleware' => 'web',
-	'prefix'=>LaravelLocalization::setLocale(),
-], function(){
-
-	Route::group(['prefix'=>'training', 'as'=>'training.'], function(){
-
-        Route::get('certificates/{id}', 'CertificateController@certificate')->name('certificate');
-        Route::get('certificates-url/{id}', 'CertificateController@certificate_url')->name('certificate-url');
-        Route::get('certificates-pdf/{id}', 'CertificateController@certificate_pdf')->name('certificate-pdf');
-
-        Route::get('attendance/{id}', 'CertificateController@attendance')->name('attendance');
-        Route::get('attendance-url/{id}', 'CertificateController@attendance_url')->name('attendance-url');
-        Route::get('attendance-pdf/{id}', 'CertificateController@attendance_pdf')->name('attendance-pdf');
-
-    });
-});

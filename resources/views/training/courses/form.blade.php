@@ -47,7 +47,16 @@
 @endsection
 
 @section('col3_block')
-
+    @if(isset($eloquent->id))
+    <div class="card card-default">
+        <div class="card-header">{{__('admin.contents')}}</div>
+        <div class="card-body">
+        <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents">Add to contents</a>
+       
+        </div>
+    </div>
+    @endif
+    
     <div class="card card-default">
         <div class="card-header">{{__('admin.options')}}</div>
         <div class="card-body">
@@ -58,6 +67,11 @@
             {!!Builder::Input('order', 'order', null)!!}
             {!!Builder::Input('algolia_order', 'algolia_order', null)!!}
             {!!Builder::Input('xero_code', 'xero_code', null)!!}
+<<<<<<< HEAD
+=======
+            {!!Builder::Input('xero_exam_code', 'xero_exam_code', null)!!}
+            {!!Builder::Input('xero_exam_code_practitioner', 'xero_exam_code_practitioner', null)!!}
+>>>>>>> c89d1697efbbad74dee21aa845b4144b3241f548
             {!! Builder::Input('material_cost', 'material_cost', null, ['attr' => 'digit']) !!}
 
             {!!Builder::Select('partner_id', 'partners', $partners, null, ['col'=>'col-md-12']) !!}
@@ -148,3 +162,4 @@
 	<?php $image_title = __('admin.image'); ?>
 	@include(ADMIN.'.Html.image')
 @endsection
+

@@ -2,7 +2,7 @@
 
 return [
 // 	'app_title'=>'بكه',
-    'app_title'=>'بكه للتعليم',
+    'app_title'=>'Bakkah LMS',
 	'translate'=>'ترجم لـ ( '.strtoupper(':locale').' )',
 	'Home'=>'الرئيسية',
     'lang'=>'English',
