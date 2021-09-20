@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Training;
 
 use App\Http\Controllers\Controller;
 use App\Models\Training\Content;
+use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
+use Illuminate\Support\Facades\Request;
+
 class ContentController extends Controller
 {
     public function contents()
@@ -32,15 +35,27 @@ class ContentController extends Controller
 
     public function add_section()
     {
+
         $course_id = request()->course_id;
 
-        $content = new Content;
-        // return request()->excerpt;
-        $content->title      = request()->title;
-        $content->excerpt    = request()->excerpt;
-        $content->course_id  = request()->course_id;
+        return \request()->title;
+//        return request()->all();
+//        $imageName = time().'.'.$request->name->getClientOriginalExtension();
+//        $request->image->move(public_path('images'), $imageName);
 
-        $content->save();
+        $content = Content::create([
+                     'title'      => request()->title,
+                     'course_id'  =>request()->course_id,
+                     'post_type'  => request()->type,
+                     'parent_id'  => request()->content_id,
+          ]);
+
+        if (request()->type == 'section'){
+            ContentDetails::create([
+                'excerpt'    =>  request()->excerpt,
+                'content_id' => $content->id,
+            ]);
+        }
 
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
         $contents = Content::where('course_id',$course_id)->get();

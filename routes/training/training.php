@@ -15,7 +15,7 @@ Route::group([
         Route::patch('/training_options/{training_option}/restore', 'TrainingOptionController@restore')->name('training_options.restore');
 
         Route::get('/contents', 'ContentController@contents')->name('contents');
-        Route::get('/add_section', 'ContentController@add_section')->name('add_section');
+        Route::post('/add_section', 'ContentController@add_section')->name('add_section');
         Route::get('/showModal', 'ContentController@showModal')->name('showModal');
         Route::get('/showChildModal', 'ContentController@showChildModal')->name('showChildModal');
     });
