@@ -8,24 +8,6 @@
 	{{__('admin.add_section')}}
   	</button>
 
-<<<<<<< HEAD
-
-	<div class="panel-group">
-
-		<div class="panel panel-default" v-for="(content,index) in contents">
-			<div class="panel-heading">@{{content.title}}</div>
-			<div class="panel-body">@{{content.excerpt}}</div>
-
-			<button type="button" class="btn btn-primary child" id="video" >
-				<i class="fa fa-save"></i> {{__('admin.video')}}</button>
-			<div  v-for="(entry, index) in contents"  v-if="entry.id === content.id">
-				----- @{{entry.title}}
-				-----  @{{entry.excerpt}}
-				<br>
-			</div>
-			<br>
-
-=======
 	<div class="card">
 		<div class="card-header" v-for="(content,index) in contents" v-if="!content.parent_id">
 			@{{content.title}}<br>@{{content.excerpt}}<br>
@@ -38,10 +20,8 @@
 				<p class="card-text"> @{{entry.excerpt}}</p>
 			</div>
 			<br>
->>>>>>> cc7f18ca76523f8cb9ebdf254397b4070de3ab68
 		</div>
 	</div>
-
 
 	<div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg" role="document">
@@ -137,12 +117,6 @@
 			AddSection: function(){
 
 				let self = this;
-<<<<<<< HEAD
-				console.log(self.excerpt);
-				console.log(self.title);
-				return;
-=======
->>>>>>> cc7f18ca76523f8cb9ebdf254397b4070de3ab68
 				axios.get("{{route('training.add_section')}}", {
 					params:{
 						course_id 	: self.course_id,

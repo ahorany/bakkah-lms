@@ -26,9 +26,9 @@ class ContentController extends Controller
         $page = request()->type;
         $course_id = request()->course_id;
         return view('training.courses.contents.'.$page, compact('course_id'));
-        
+
     }
-    
+
 
     public function add_section()
     {
@@ -41,20 +41,9 @@ class ContentController extends Controller
         $content->course_id  = request()->course_id;
 
         $content->save();
-<<<<<<< HEAD
-//
-        // $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
-        // $contents = Content::where('course_id',$course_id)->get();
-
-        // return view('training.courses.contents.index', compact('course','contents'));
-=======
 
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
         $contents = Content::where('course_id',$course_id)->get();
         return $contents;
->>>>>>> cc7f18ca76523f8cb9ebdf254397b4070de3ab68
     }
-
-
-
 }
