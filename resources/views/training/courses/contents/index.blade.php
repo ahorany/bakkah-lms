@@ -2,23 +2,59 @@
 
 @section('table')
 <div class="toLoad" id="contents">
-	{{$course->trans_title}}<br><br>
 
-	<button type="button" @click="OpenModal('section',null)" class="btn btn-warning">
-	{{__('admin.add_section')}}
-  	</button>
+    <div style="margin-bottom: 20px">
+        {{$course->trans_title}}
+        <button type="button" @click="OpenModal('section',null)" class="btn btn-warning">
+            {{__('admin.add_section')}}
+        </button>
 
-	<div class="card">
-		<div class="card-header" v-for="(content,index) in contents" v-if="!content.parent_id">
-			@{{content.title}}<br>@{{content.excerpt}}<br>
+    </div>
+
+
+
+	<div  class="card" v-for="(content,index) in contents">
+		<div class="card-header" >
+            <h3>@{{content.title}}</h3>
+            <div v-if="content.details" style="margin: 20px;">@{{content.details.excerpt}}</div>
 			<button type="button" @click="OpenModal('video',content.id)" class="btn btn-primary btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
 			<button type="button" @click="OpenModal('audio',content.id)" class="btn btn-primary btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-			<button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-primary btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button><br>
-			<br>
-			<div class="card-body"  v-for="(entry, index) in contents"  v-if="entry.parent_id === content.id">
-				<h5 class="card-title">@{{entry.title}} </h5>
-				<p class="card-text"> @{{entry.excerpt}}</p>
-			</div>
+			<button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-primary btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
+            <button type="button" @click="OpenModal('scorm',content.id)" class="btn btn-primary btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button><br>
+
+            <br>
+{{--			<div class="card-body"  v-for="(entry, index) in contents"  v-if="entry.parent_id === content.id">--}}
+{{--				<h5 class="card-title">@{{entry.title}} </h5>--}}
+{{--				<p class="card-text"> @{{entry.excerpt}}</p>--}}
+{{--			</div>--}}
+
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr v-if="content.contents"  v-for="(entry, index) in content.contents"  >
+                    <td>@{{entry.title}}</td>
+                    <td>
+                        <div class="BtnGroupRows" data-id="150">
+                            <button @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-primary" >
+                                <i class="fa fa-pencil-alt"></i> Edit</button>
+
+                            <button @click="deleteContent(content.id,entry.id)"  class="btn btn-sm btn-danger" >
+                                <i class="fa fa-trash"></i> Delete</button>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
 			<br>
 		</div>
 	</div>
@@ -45,7 +81,7 @@
                 </div>
 
                 <div v-else class="modal-diff-content">
-                    <input type="file" @change="file = $event.target.files[0]" class="form-control">
+                    <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
                 </div>
 
 			</div>
@@ -82,61 +118,81 @@
 			excerpt : '',
 			contents: window.contents,
             model_type : 'section',
+            save_type : 'add',
             file : '',
             content_id : '',
-			// modal_content: '',
 		},
 		methods: {
-			{{--OpenModal: function(){--}}
-
-			{{--	let self = this;--}}
-			{{--	axios.get("{{route('training.showModal')}}", {--}}
-			{{--		params:{--}}
-			{{--			course_id: self.course_id,--}}
-			{{--		}--}}
-			{{--	})--}}
-			{{--	.then(response => {--}}
-
-            {{--        self.modal_content = response.data;--}}
-			{{--		// $('.modal-diff-content').html(response.data);--}}
-			{{--		$('#ContentModal').modal('show');--}}
-			{{--	})--}}
-			{{--	.catch(e => {--}}
-			{{--		// vm.errors.push(e)--}}
-			{{--	});--}}
-			{{--},--}}
-			{{--OpenChildModal: function(type){--}}
-			{{--	let self = this;--}}
-			{{--	axios.get("{{route('training.showChildModal')}}", {--}}
-			{{--		params:{--}}
-			{{--			course_id: self.course_id,--}}
-			{{--			type 		: type,--}}
-			{{--		}--}}
-			{{--	})--}}
-			{{--	.then(response => {--}}
-			{{--		console.log(response.data);--}}
-			{{--		$('.modal-diff-content').html(response.data);--}}
-			{{--		$('#ContentModal').modal('show');--}}
-			{{--	})--}}
-			{{--	.catch(e => {--}}
-			{{--		// vm.errors.push(e)--}}
-			{{--	});--}}
-			{{--	},--}}
 
            OpenModal : function(type,content_id){
-                 this.model_type = type;
+               // clear
+               this.title = '';
+
+
+               this.save_type  = 'add';
+               this.model_type = type;
                  this.content_id = content_id;
                 $('#ContentModal').modal('show')
             },
+
+            OpenEditModal : function(parent_id,content_id){
+                let self = this;
+
+                this.model_type = 'other';
+                this.content_id = content_id;
+                this.save_type  = 'edit';
+
+
+               this.contents.forEach(function (section) {
+                    if(section.id == parent_id){
+                         section.contents.forEach(function (content) {
+                            if(content.id == content_id) {
+                                    self.title = content.title;
+                            }
+                        })
+                    }
+                    return true ;
+                });
+
+
+                $('#ContentModal').modal('show')
+            },
+
+
+            deleteContent : function (parent_id,content_id){
+               let self = this;
+               if(confirm("Are you sure ? ")){
+                   this.contents = this.contents.filter(function (section) {
+                       if(section.id == parent_id){
+                           section.contents =  section.contents.filter(function (content) {
+                               console.log(content)
+                               return  content.id != content_id;
+                           })
+                       }
+                       return true ;
+                   });
+
+
+                   axios.get("{{route('training.delete_content')}}",{
+                       params : {
+                           content_id : content_id
+                       }
+                   })
+                       .then(response => {
+                       })
+                       .catch(e => {
+                           console.log(e)
+                       });
+               }
+
+
+            },
+
 			Add: function(){
 
 				let self = this;
-
-
-
                 let formData = new FormData();
 
-                //Using this config in my request, the response gives me the mentioned waring of missing boundary
                 const config = {
                     headers:{
                         'Content-Type' : 'multipart/form-data',
@@ -149,25 +205,59 @@
                 formData.append('title', self.title);
                 formData.append('content_id', self.content_id);
                 formData.append('type', self.model_type);
+                if(self.save_type == 'add'){
+                    axios.post("{{route('training.add_section')}}",
+                        formData
+                        ,config)
+                        .then(response => {
+                            if(this.file != '' ){
+                                this.$refs.inputFile.type='text';
+                                this.$refs.inputFile.type='file';
+                            }
 
-                axios.post("{{route('training.add_section')}}",
-                    formData
-				,config)
-				.then(response => {
-					this.title 		= '';
-					this.excerpt 	= '';
-					this.contents = response.data;
-					console.log(response)
-				})
-				.catch(e => {
-					// vm.errors.push(e)
-				});
+                            this.title 		= '';
+                            this.excerpt 	= '';
+                            this.file 	= '';
+                            this.contents = response.data;
+
+                            $('#ContentModal').modal('hide')
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        });
+                }else{
+                    axios.post("{{route('training.update_content')}}",
+                        formData
+                        ,config)
+                        .then(response => {
+                            if(this.file != '' ){
+                                this.$refs.inputFile.type='text';
+                                this.$refs.inputFile.type='file';
+                            }
+
+                            this.title 		= '';
+                            this.excerpt 	= '';
+                            this.file 	= '';
+                            this.contents = response.data;
+
+                            $('#ContentModal').modal('hide')
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        });
+                }
+
 			},
 
 
 			Clear:function(){
 				this.title 		= '';
 				this.excerpt 	= '';
+
+                if(this.file != '' ){
+                    this.$refs.inputFile.type='text';
+                    this.$refs.inputFile.type='file';
+                }
 			},
 		},
 	});

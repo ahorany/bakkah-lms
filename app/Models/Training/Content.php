@@ -14,5 +14,11 @@ class Content extends Model
     protected $guarded = [];
 
 
+    public function contents(){
+        return $this->hasMany('App\Models\Training\Content','parent_id');
+    }
 
+    public function details(){
+        return $this->hasOne('App\Models\Training\ContentDetails','content_id');
+    }
 }

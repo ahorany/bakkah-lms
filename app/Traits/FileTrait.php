@@ -34,8 +34,11 @@ Trait FileTrait
 
 		$eloquent = $query->where('id', $post->id)->first();
 
-        $fileName = $this->NameManipulation($fileName, $name);
-        request()->file->move(public_path('upload/files/videos'), $fileName);
+		if(request()->$name){
+            $fileName = $this->NameManipulation($fileName, $name);
+            request()->file->move(public_path('upload/files/videos'), $fileName);
+        }
+
 
 		$title = $_POST[$upload_title]??null;
 		$excerpt = $_POST[$upload_excerpt]??null;

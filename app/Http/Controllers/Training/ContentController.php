@@ -14,23 +14,19 @@ class ContentController extends Controller
     {
         $course_id = request()->course_id;
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
-        $contents = Content::where('course_id',$course_id)->get();
+//        $contents = Content::where('course_id',$course_id)->with('details')->latest()->get();
+        $contents = Content::where('course_id',$course_id)->whereNull('parent_id')->with(['contents','details'])->latest()->get();
+
         return view('training.courses.contents.index', compact('course', 'contents'));
     }
 
-    public function showModal()
+    public function delete_content()
     {
-        $course_id = request()->course_id;
-        return view('training.courses.contents.section', compact('course_id'));
+        $content_id = request()->content_id;
+         Content::where('id',$content_id)->delete();
+        return response()->json([ 'status' => 'success']);
     }
 
-    public function showChildModal()
-    {
-        $page = request()->type;
-        $course_id = request()->course_id;
-        return view('training.courses.contents.'.$page, compact('course_id'));
-
-    }
 
 
     public function add_section()
@@ -38,27 +34,51 @@ class ContentController extends Controller
 
         $course_id = request()->course_id;
 
-        return \request()->title;
-//        return request()->all();
-//        $imageName = time().'.'.$request->name->getClientOriginalExtension();
-//        $request->image->move(public_path('images'), $imageName);
-
-        $content = Content::create([
-                     'title'      => request()->title,
-                     'course_id'  =>request()->course_id,
-                     'post_type'  => request()->type,
-                     'parent_id'  => request()->content_id,
-          ]);
 
         if (request()->type == 'section'){
+
+            $content = Content::create([
+                'title'      => request()->title,
+                'course_id'  =>request()->course_id,
+                'post_type'  => request()->type,
+            ]);
+
             ContentDetails::create([
                 'excerpt'    =>  request()->excerpt,
                 'content_id' => $content->id,
             ]);
+        }else{
+            $content = Content::create([
+                'title'      => request()->title,
+                'course_id'  =>request()->course_id,
+                'post_type'  => request()->type,
+                'parent_id'  => request()->content_id,
+            ]);
         }
 
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
-        $contents = Content::where('course_id',$course_id)->get();
-        return $contents;
+//        $contents = Content::where('course_id',$course_id)->with('details')->latest()->get();
+        $contents = Content::where('course_id',$course_id)->whereNull('parent_id')->with(['contents','details'])->latest()->get();
+        return response()->json($contents);
+    }
+
+
+    public function update_content()
+    {
+
+        $course_id = request()->course_id;
+
+
+        $content = Content::where('')->update([
+                'title'      => request()->title,
+                'course_id'  =>request()->course_id,
+                'post_type'  => request()->type,
+                'parent_id'  => request()->content_id,
+        ]);
+
+        $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
+//        $contents = Content::where('course_id',$course_id)->with('details')->latest()->get();
+        $contents = Content::where('course_id',$course_id)->whereNull('parent_id')->with(['contents','details'])->latest()->get();
+        return response()->json($contents);
     }
 }
