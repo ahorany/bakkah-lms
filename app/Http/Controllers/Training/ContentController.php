@@ -69,11 +69,8 @@ class ContentController extends Controller
         $course_id = request()->course_id;
 
 
-        $content = Content::where('')->update([
-                'title'      => request()->title,
-                'course_id'  =>request()->course_id,
-                'post_type'  => request()->type,
-                'parent_id'  => request()->content_id,
+        $content = Content::where('id',request()->content_id)->update([
+                'title'      => request()->title
         ]);
 
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
