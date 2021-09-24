@@ -8,7 +8,7 @@ Trait FileTrait
 	public static function create(array $attributes = [])
 	{
 	    $model = static::query()->create($attributes);
-	    static::query()->UploadFile($model);
+//	    static::query()->UploadFile($model)]);
 	    return $model;
 	}
 
@@ -30,13 +30,15 @@ Trait FileTrait
 		$upload_excerpt = $array['upload_excerpt']??'upload_excerpt';
 		$upload_caption = $array['upload_caption']??'upload_caption';
 		$exclude_img = $array['exclude_img']??'exclude_img';
+        $folder_path = $array['folder_path']??public_path('upload/files');
+
         $fileName = null;
 
 		$eloquent = $query->where('id', $post->id)->first();
 
 		if(request()->$name){
             $fileName = $this->NameManipulation($fileName, $name);
-            request()->file->move(public_path('upload/files/videos'), $fileName);
+            request()->file->move($folder_path, $fileName);
         }
 
 
@@ -87,7 +89,7 @@ Trait FileTrait
 
 				if(isset($eloquent->upload()->where('post_type', $post_type)->first()->file)){
 //				    dump($eloquent->upload()->where('post_type', $post_type)->first()->file);
-		    		$this->UnLinkImage($name, $eloquent->upload()->where('post_type', $post_type)->first()->file);
+//		    		$this->UnLinkImage($name, $eloquent->upload()->where('post_type', $post_type)->first()->file);
 		    		$eloquent->uploads()->where('post_type', $post_type)->updateOrCreate([], $args);
 				}else if(isset($args['file'])){
 					$eloquent->uploads()->create($args);
@@ -107,6 +109,25 @@ Trait FileTrait
 		return $fileName;
 	}
 
+
+
+//    private function UnLinkImage($name, $image){
+//        if(request()->hasFile($name) && !empty($name) && !is_null($name) && !empty($image) && !is_null($image))
+//        {
+//            $this->UnLinkImg($image);
+//        }
+//    }
+//
+//    private function UnLinkImg($image){
+//        if(file_exists(public_path('/upload/full/') . $image)){
+//            unlink(public_path('/upload/full/') . $image);
+//            unlink(public_path('/upload/thumb100/') . $image);
+//            unlink(public_path('/upload/thumb160/') . $image);
+//            unlink(public_path('upload/thumb200/') . $image);
+//            unlink(public_path('/upload/thumb300/') . $image);
+//            unlink(public_path('/upload/thumb450/') . $image);
+//        }
+//    }
 
 
 

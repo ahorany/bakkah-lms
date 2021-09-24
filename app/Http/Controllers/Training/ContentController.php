@@ -47,13 +47,27 @@ class ContentController extends Controller
                 'excerpt'    =>  request()->excerpt,
                 'content_id' => $content->id,
             ]);
-        }else{
+        }
+        else{
             $content = Content::create([
                 'title'      => request()->title,
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
+                'url'  => request()->url,
                 'parent_id'  => request()->content_id,
             ]);
+
+            $path = '';
+            switch (request()->type){
+                case 'video': $path = public_path('upload/files/videos'); break;
+                case 'audio': $path = public_path('upload/files/audios'); break;
+                case 'presentation': $path = public_path('upload/files/presentations'); break;
+                case 'scorm': $path = public_path('upload/files/scorms'); break;
+                default : $path = public_path('upload/files/files');
+            }
+
+            Content::UploadFile($content,['folder_path' => $path]);
+
         }
 
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
@@ -72,6 +86,19 @@ class ContentController extends Controller
         $content = Content::where('id',request()->content_id)->update([
                 'title'      => request()->title
         ]);
+
+        $path = '';
+        switch (request()->type){
+            case 'video': $path = public_path('upload/files/videos'); break;
+            case 'audio': $path = public_path('upload/files/audios'); break;
+            case 'presentation': $path = public_path('upload/files/presentations'); break;
+            case 'scorm': $path = public_path('upload/files/scorms'); break;
+            default : $path = public_path('upload/files/files');
+        }
+
+
+        Content::UploadFile(Content::where('id',request()->content_id)->first(), ['method'=>'update','folder_path' => $path]);
+
 
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
 //        $contents = Content::where('course_id',$course_id)->with('details')->latest()->get();

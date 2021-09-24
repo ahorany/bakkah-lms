@@ -77,12 +77,40 @@
 					</div>
 				</div>
 				<div v-if="model_type == 'section'" class="modal-diff-content">
-                        <textarea v-model="excerpt"  cols="30" rows="10"></textarea>
+                        <textarea v-model="excerpt"  class="form-control"  rows="5" placeholder="Details"></textarea>
+                </div>
+
+                <div v-else-if="model_type != 'video'" class="modal-diff-content">
+                    <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" :style="{'width' : progress}"  aria-valuemin="0" aria-valuemax="100">@{{ progress }}</div>
+                    </div>
                 </div>
 
                 <div v-else class="modal-diff-content">
-                    <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">Url</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-file-tab">
+                            <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" :style="{'width' : progress}"  aria-valuemin="0" aria-valuemax="100">@{{ progress }}</div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-url" role="tabpanel" aria-labelledby="pills-url-tab">
+                            <input type="url" v-model="url" class="form-control" placeholder="Enter url">
+                        </div>
+                    </div>
                 </div>
+
+
 
 			</div>
 
@@ -120,7 +148,9 @@
             model_type : 'section',
             save_type : 'add',
             file : '',
+            url : '',
             content_id : '',
+            progress : '0%',
 		},
 		methods: {
 
@@ -148,6 +178,7 @@
                          section.contents.forEach(function (content) {
                             if(content.id == content_id) {
                                     self.title = content.title;
+                                    self.model_type = content.post_type;
                             }
                         })
                     }
@@ -193,13 +224,27 @@
 				let self = this;
                 let formData = new FormData();
 
-                const config = {
+
+                let config = {
+                    onUploadProgress(progressEvent) {
+                        var percentCompleted = Math.round((progressEvent.loaded * 100) /
+                            progressEvent.total);
+                           self.progress = percentCompleted +'%'
+                        // alert(percentCompleted)
+
+                        // execute the callback
+                        // if (onProgress) onProgress(percentCompleted)
+
+                        return percentCompleted;
+                    },
+
                     headers:{
                         'Content-Type' : 'multipart/form-data',
                     }
                 };
 
                 formData.append('file', self.file);
+                formData.append('url', self.url);
                 formData.append('course_id', self.course_id);
                 formData.append('excerpt', self.excerpt);
                 formData.append('title', self.title);
@@ -218,6 +263,8 @@
                             this.title 		= '';
                             this.excerpt 	= '';
                             this.file 	= '';
+                            this.url 	= '';
+                            this.progress 	= '0%';
                             this.contents = response.data;
 
                             $('#ContentModal').modal('hide')
@@ -238,6 +285,8 @@
                             this.title 		= '';
                             this.excerpt 	= '';
                             this.file 	= '';
+                            this.url 	= '';
+                            this.progress 	= '0%';
                             this.contents = response.data;
 
                             $('#ContentModal').modal('hide')
