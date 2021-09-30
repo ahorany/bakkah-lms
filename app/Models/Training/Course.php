@@ -13,6 +13,7 @@ use App\Traits\PostMorphTrait;
 use App\Traits\SeoTrait;
 use App\Traits\TrashTrait;
 use App\Traits\UserTrait;
+use App\User;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
@@ -271,6 +272,17 @@ class Course extends Model
         }else{
             return null;
         }
+    }
+
+
+    ///////////// lms //////////////
+
+    public function users(){
+        return $this->belongsToMany(User::class,'courses_registration','course_id');
+    }
+
+    public function contents(){
+        return $this->hasMany(Content::class,'course_id');
     }
 
 }

@@ -2,17 +2,15 @@
 
 namespace Modules\UserProfile\Http\Controllers;
 
+use App\Models\Training\Content;
 use App\User;
 use App\Constant;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Admin\Upload;
 use Illuminate\Http\Request;
-use App\Models\Training\Cart;
 use App\Models\Training\Course;
 use App\Models\Training\Social;
-use App\Models\Training\Wishlist;
 use Illuminate\Routing\Controller;
-use App\Models\Training\CartMaster;
 use App\Models\Training\Experience;
 use App\Models\Training\Payment;
 use App\Profile;
@@ -60,28 +58,8 @@ class UserProfileController extends Controller
         return view('userprofile::users.home');
     }
 
-    public function payment_info() {
-        $user = auth()->user();
-        $payments = Payment::where('user_id',$user->id)
-        ->where('paid_in','>',0)
-        ->whereHas('cartMaster')
-        ->with([
-                'paymentStatus',
-                'cartMaster.coin',
-            ])->get();
-        return view('userprofile::users.payment_info',compact('payments'));
-    }
-
     public function referral() {
         return view('userprofile::users.referral');
-    }
-
-    public function invoice() {
-        return view('userprofile::users.invoice');
-    }
-
-    public function request_tickets() {
-        return view('userprofile::users.request_tickets');
     }
 
     public function complaintView($type) {
@@ -221,79 +199,58 @@ class UserProfileController extends Controller
         return redirect()->back();
     }
 
-    // public function notification() {
-    //     return view('userprofile::users.notification');
-    // }
+
 
     public function my_courses() {
-        $user = Auth::user();
-        $courses = [];
-        if($user->carts->count() > 0) {
-            foreach ($user->carts as $cart){
-                $courses = Cart::where('course_id','!=',$cart->course->id)->with('course.uploads','session.trainingOption')->get();
-            }
+        $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
+            return $q->where('post_type','image')->where('locale',app()->getLocale());
+        }])->first();
+        return view('userprofile::users.my_courses',compact('courses'));
+    }
+
+    public function course_details($course_id){
+          $course = Course::where('id',$course_id)->whereHas('users',function ($q){
+               $q->where('users.id',\auth()->id());
+          })->with(['contents' => function($query){
+              $query->where('post_type','section')->with(['contents']);
+          }])->first();
+          if (!$course){
+              abort(404);
+          }
+        return view('userprofile::users.course_details',compact('course'));
+
+//        return $course;
+    }
+
+    public function course_preview($content_id){
+        $content = Content::whereId($content_id)->with(['upload','course.users' => function($q){
+            $q->where('users.id',\auth()->id());
+        }])->first();
+
+        if (!$content){
+            abort(404);
         }
-        return view('userprofile::users.my_courses',compact('courses','user'));
-    }
+//        return $content;
 
-    public function wishlist() {
-        $user = Auth::user();
-        return view('userprofile::users.wishlist',compact('user'));
-    }
+        return view('userprofile::users.course_preview',compact('content'));
 
-    public function certifications() {
 
-        // where('certificate_file','!=',null)->
-        $carts = Cart::where('user_id', auth()->user()->id)->with('course')->get();
-        return view('userprofile::users.certifications',compact('carts'));
-    }
 
-    public function downloadCertifications($id){
-        $cart= Cart::where('certificate_file','!=',null)->where('id',$id)->first();
-        $folder = null;
-        if($cart->course->certificate_type_id == 324){
-            $folder = 'certificate';
-        }elseif($cart->course->certificate_type_id == 325){
-            $folder = 'attendance';
-        }
-        if($folder){
-            $path = public_path("certificates/$folder/").$cart->certificate_file;
-            return response()->download($path);
-        }
-        return false;
-    }
-
-    public function previewCertifications($id){
-        $cart= Cart::where('certificate_file','!=',null)->where('id',$id)->first();
-        $folder = null;
-        if($cart->course->certificate_type_id == 324){
-            $folder = 'certificate';
-        }elseif($cart->course->certificate_type_id == 325){
-            $folder = 'attendance';
-        }
-        if($folder){
-            $path = public_path("certificates/$folder/").$cart->certificate_file;
-            return response()->file($path);
-        }
-        return false;
-    }
-
-    public function payment_history() {
-
-        $users = \auth()->user();
-
-        return view('userprofile::users.payment_info',['users'=>$users]);
+//        return response()
+//            ->download( public_path('upload/files/videos/'.$content->upload->file) , $content->upload->name,
+//                [
+//                    'Content-Type' => 'application/octet-stream'
+//                ]);
 
     }
+
+
 
     public function logout(Request $request) {
         Auth::logout();
         return redirect('/');
     }
 
-    public function cart() {
-        return view('userprofile::users.cart');
-    }
 
     public function login()
     {
@@ -312,36 +269,9 @@ class UserProfileController extends Controller
 
         if (Auth::attempt($data)) {
 
-            if(Cookie::get('user_token')) {
-
-                Cart::whereIn('user_token', [Cookie::get('user_token')])
-                ->where('payment_status', 63)
-                ->whereNull('user_id')
-                ->update([
-                    'user_id' => auth()->id(),
-                ]);
-
-                CartMaster::whereIn('user_token', [Cookie::get('user_token')])
-                ->where('payment_status', 63)
-                ->whereNull('user_id')
-                ->update([
-                    'user_id' => auth()->id(),
-                ]);
-
-            }
 
             if(request()->has('redirectTo')) {
                 return redirect()->route('education.cart');
-            }
-
-            if(request()->has('action') && request()->action == 'wishlist') {
-                Wishlist::create([
-                    'user_id' => auth()->id(),
-                    'training_option_id' => request()->option,
-                    'session_id' => request()->session_id
-                ]);
-
-                return redirect(request()->redirect);
             }
 
             return redirect()->route('user.my_courses');
@@ -391,29 +321,8 @@ class UserProfileController extends Controller
             ]);
         }
 
-        // if(session('user_token')) {
-        // if(Cookie::get('user_token')) {
 
-        //     // Cart::whereIn('user_token', [session('user_token')])->update([
-        //     Cart::whereIn('user_token', [Cookie::get('user_token')])->update([
-        //         'user_id' => auth()->id()
-        //     ]);
 
-        //     // CartMaster::whereIn('user_token', [session('user_token')])->update([
-        //     CartMaster::whereIn('user_token', [Cookie::get('user_token')])->update([
-        //         'user_id' => auth()->id(),
-        //     ]);
-        // }
-
-        if(request()->has('action') && request()->action == 'wishlist') {
-            Wishlist::create([
-                'user_id' => auth()->id(),
-                'training_option_id' => request()->option,
-                'session_id' => request()->session_id
-            ]);
-
-            return redirect(request()->redirect);
-        }
 
         Auth::login($user);
 

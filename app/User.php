@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Training\Course;
 use Exception;
 use App\Traits\ImgTrait;
 use App\Traits\JsonTrait;
@@ -146,5 +147,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Profile::class, 'user_id');
     }
 
-    
+    /////// LMS //////////
+
+    public function courses(){
+        return $this->belongsToMany(Course::class,'courses_registration','user_id');
+    }
+
 }

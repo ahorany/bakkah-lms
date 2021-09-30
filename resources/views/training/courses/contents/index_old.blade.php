@@ -2,6 +2,7 @@
 
 @section('table')
 <div class="toLoad" id="contents">
+
     <div style="margin-bottom: 20px">
         Course name : {{$course->trans_title}}
         <button type="button" @click="OpenModal('section',null)" class="btn btn-warning">
@@ -9,31 +10,19 @@
         </button>
     </div>
 
+
+
 	<div  class="card" v-for="(content,index) in contents">
 		<div class="card-header" >
-            <div class="clearfix">
-                <h3  class="BtnGroupRows float-left">@{{content.title}}</h3>
-
-                <div class="BtnGroupRows float-right" data-id="150">
-
-                    <button @click="OpenSectionEditModal(content.id)"  class="btn btn-sm btn-primary" >
-                        <i class="fa fa-pencil-alt"></i> Edit</button>
-
-                    <button @click="deleteSection(content.id)"  class="btn btn-sm btn-danger" >
-                        <i class="fa fa-trash"></i> Delete</button>
-                </div>
-            </div>
-
-
-
+            <h3>@{{content.title}}</h3>
             <div v-if="content.details" style="margin: 20px;">@{{content.details.excerpt}}</div>
-            <div class="my-3">
-                <button type="button" @click="OpenModal('video',content.id)" class="btn btn-primary btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
-                <button type="button" @click="OpenModal('audio',content.id)" class="btn btn-primary btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                <button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-primary btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
-                <button type="button" @click="OpenModal('scorm',content.id)" class="btn btn-primary btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
-                <button  type="button" @click="OpenModal('exam',content.id)" class="btn btn-primary btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
-            </div>
+			<button type="button" @click="OpenModal('video',content.id)" class="btn btn-primary btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
+			<button type="button" @click="OpenModal('audio',content.id)" class="btn btn-primary btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+			<button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-primary btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
+            <button type="button" @click="OpenModal('scorm',content.id)" class="btn btn-primary btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button><br>
+            <br>
+            <button  type="button" @click="OpenModal('exam',content.id)" class="btn btn-primary btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button><br>
+            <br>
 
 
 
@@ -52,10 +41,7 @@
                         <div class="BtnGroupRows" data-id="150">
                             <a v-if="entry.post_type == 'exam'"  class="btn btn-sm btn-primary" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "> <i class="fa fa-pencil-alt"></i> Add Questions</a>
 
-                            <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-primary" >
-                                <i class="fa fa-pencil-alt"></i> Edit</button>
-
-                            <button v-else @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-primary" >
+                            <button @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-primary" >
                                 <i class="fa fa-pencil-alt"></i> Edit</button>
 
                             <button @click="deleteContent(content.id,entry.id)"  class="btn btn-sm btn-danger" >
@@ -97,14 +83,14 @@
 
                 <template v-if="model_type == 'exam' ">
                     <div  class="modal-diff-content">
-                        <input   type="datetime-local" v-model="start_date" name="start_date" class="form-control" placeholder="start date">
+                        <input type="datetime-local" v-model="start_date" name="start_date" class="form-control" placeholder="start date">
                         <div v-show="'start_date' in errors">
                             <span style="color: red;font-size: 13px">@{{ errors.start_date }}</span>
                         </div>
                     </div>
 
                     <div  class="modal-diff-content">
-                        <input  type="datetime-local" v-model="end_date" name="end_date" class="form-control" placeholder="end date">
+                        <input type="datetime-local" v-model="end_date" name="end_date" class="form-control" placeholder="end date">
                         <div v-show="'end_date' in errors">
                             <span style="color: red;font-size: 13px">@{{ errors.end_date }}</span>
                         </div>
@@ -161,98 +147,74 @@
                     </div>
                 </div>
 
+
+
 			</div>
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">
 					<i class="fas fa-times"></i> {{__('admin.close')}}</button>
-				<button type="reset" class="btn btn-primary" @click="clear()">
+				<button type="reset" class="btn btn-primary" @click="Clear()">
 					<i class="fas fa-eraser"></i> {{__('admin.clear')}}</button>
-				<button type="button"  @click="save()" class="btn btn-primary">
+				<button type="button"  @click="Add()" class="btn btn-primary">
 					<i class="fa fa-save"></i> {{__('admin.save')}}</button>
 
 			</div>
 		</div>
 	</div>
 </div>
+
+
 </div>
+
+
 
 @endsection
 
 @push('vue')
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
 <script>
-    window.contents = {!! json_encode($contents??[]) !!}
+	window.contents = {!! json_encode($contents??[]) !!}
 
 	var contents = new Vue({
 		el:'#contents',
 		data:{
-            contents: window.contents,
-            course_id:'{{$course->id}}',
-            section_id : '',
-            content_id : '',
-            title: '',
+			course_id:'{{$course->id}}',
+			title: '',
 			excerpt : '',
             start_date : '',
             end_date : '',
-            file : '',
-            url : '',
-            progress : '0%',
+			contents: window.contents,
             model_type : 'section',
             save_type : 'add',
+            file : '',
+            url : '',
+            content_id : '',
+            progress : '0%',
             base_url : window.location.origin,
             errors : {},
 		},
 		methods: {
-		    clear : function(){
-                this.title = '';
-                this.excerpt = '';
-                this.url = '';
-                this.start_date = '';
-                this.end_date 	= '';
-                this.progress 	= '0%';
-                this.errors = {};
 
-                if(this.file != '' ){
-                    this.$refs.inputFile.type='text';
-                    this.$refs.inputFile.type='file';
-                }
+           OpenModal : function(type,content_id){
 
-            },
+               // clear
+               this.title = '';
+               this.url = '';
+               this.start_date 		= '';
+               this.end_date 		= '';
 
-            OpenModal : function(type,content_id){
-               this.clear(); // clear data
+
                this.save_type  = 'add';
                this.model_type = type;
                this.content_id = content_id;
                this.errors = {};
-               $('#ContentModal').modal('show')
-            },
-
-            OpenSectionEditModal : function(content_id){
-                let self = this;
-                this.clear(); // clear data
-                this.save_type  = 'edit';
-                this.content_id = content_id;
-
-                this.contents.forEach(function (section) {
-                    if(section.id == content_id){
-                        self.title = section.title;
-                        self.excerpt = section.details.excerpt;
-                        self.model_type = section.post_type;
-                    }
-                    return true ;
-                });
-
-
                 $('#ContentModal').modal('show')
             },
 
             OpenEditModal : function(parent_id,content_id){
-                this.clear(); // clear data
                 let self = this;
-                this.section_id = parent_id;
+                this.url = '';
+                this.model_type = 'other';
                 this.content_id = content_id;
                 this.save_type  = 'edit';
                 this.errors = {};
@@ -263,9 +225,9 @@
                          section.contents.forEach(function (content) {
                             if(content.id == content_id) {
                                     self.title = content.title;
-                                    self.excerpt =  content.details ?  content.details.excerpt : '';
-                                     content.exam ? self.start_date = moment(content.exam.start_date).format('YYYY-MM-DDTHH:mm')  : '';
-                                     content.exam ? self.end_date = moment(content.exam.end_date).format('YYYY-MM-DDTHH:mm')  : '';
+                                    // self.excerpt = content.details.excerpt;
+                                    // self.start_date = content.exams.start_date;
+                                    // self.end_date = content.exams.end_date;
                                     self.model_type = content.post_type;
                                     self.url = content.url;
                             }
@@ -274,8 +236,10 @@
                     return true ;
                 });
 
+
                 $('#ContentModal').modal('show')
             },
+
 
             deleteContent : function (parent_id,content_id){
                let self = this;
@@ -290,109 +254,28 @@
                        return true ;
                    });
 
-                   this.deleteRequest(content_id)
+
+                   axios.get("{{route('training.delete_content')}}",{
+                       params : {
+                           content_id : content_id
+                       }
+                   })
+                       .then(response => {
+                       })
+                       .catch(e => {
+                           console.log(e)
+                       });
                }
 
-            },
-
-            deleteSection : function(section_id){
-                let self = this;
-                if(confirm("Are you sure ? ")){
-                    this.contents = this.contents.filter(function (section) {
-                        if(section.id == section_id){
-                            return  section.id != section_id;
-                        }
-                        return true ;
-                    });
-
-                   this.deleteRequest(section_id)
-                }
-
 
             },
 
-            deleteRequest : function(content_id){
-                axios.get("{{route('training.delete_content')}}",{
-                    params : {
-                        content_id : content_id
-                    }
-                })
-                    .then(response => {
-                    })
-                    .catch(e => {
-                        console.log(e)
-                    });
-            },
+			Add: function(){
 
-            saveSection : function(){
-                let self = this;
-                if(this.save_type  == 'add'){
-                    axios.post("{{route('training.add_section')}}",
-                        {
-                            title : self.title,
-                            excerpt : self.excerpt,
-                            type : self.model_type,
-                            course_id : self.course_id,
-                        })
-                        .then(response => {
-                            console.log(response)
-                            if(response['data']['errors']) {
-                                self.errors =  response['data']['errors']
-                                for (let property in self.errors) {
-                                    self.errors[property] = self.errors[property][0];
-                                }
-                            }else{
-                                this.contents.push(response.data.section);
-                                this.errors = {};
-
-                                $('#ContentModal').modal('hide')
-                            }
-
-                        })
-                        .catch(e => {
-                            console.log(e)
-                        });
-                }else{
-                    self.contents.forEach(function (section) {
-                        if(section.id == self.content_id){
-                            section.title = self.title  ;
-                            section.details.excerpt = self.excerpt;
-                        }
-                        return true ;
-                    });
-
-                    console.log(self.contents)
-
-                    axios.post("{{route('training.update_section')}}",
-                        {
-                            title : self.title,
-                            excerpt : self.excerpt,
-                            type : self.model_type,
-                            course_id : self.course_id,
-                            content_id : self.content_id,
-                        })
-                        .then(response => {
-                            console.log(response)
-                            if(response['data']['errors']) {
-                                self.errors =  response['data']['errors']
-                                for (let property in self.errors) {
-                                    self.errors[property] = self.errors[property][0];
-                                }
-                            }else{
-                                this.errors = {};
-                                $('#ContentModal').modal('hide')
-                            }
-                        })
-                        .catch(e => {
-                            console.log(e)
-                        });
-                }
-
-            },
-
-            saveContent: function(){
-                let self = this;
+				let self = this;
                 let formData = new FormData();
+
+
                 let config = {
                     onUploadProgress(progressEvent) {
                         var percentCompleted = Math.round((progressEvent.loaded * 100) /
@@ -407,18 +290,17 @@
                     }
                 };
 
-                formData.append('course_id', self.course_id);
-                formData.append('content_id', self.content_id);
-                formData.append('title', self.title);
-                formData.append('excerpt', self.excerpt);
-                formData.append('url', self.url);
-                formData.append('type', self.model_type);
                 formData.append('file', self.file);
+                formData.append('url', self.url);
+                formData.append('course_id', self.course_id);
+                formData.append('excerpt', self.excerpt);
+                formData.append('title', self.title);
                 formData.append('start_date', self.start_date);
                 formData.append('end_date', self.end_date);
-
+                formData.append('content_id', self.content_id);
+                formData.append('type', self.model_type);
                 if(self.save_type == 'add'){
-                    axios.post("{{route('training.add_content')}}",
+                    axios.post("{{route('training.add_section')}}",
                         formData
                         ,config)
                         .then(response => {
@@ -429,54 +311,31 @@
                                     self.errors[property] = self.errors[property][0];
                                 }
                             }else{
-                                console.log(response)
-                                // this.contents.push(response.data.data);
+                                if(this.file != '' ){
+                                    this.$refs.inputFile.type='text';
+                                    this.$refs.inputFile.type='file';
+                                }
 
-                                self.contents.forEach(function (section) {
-                                    if(section.id == self.content_id){
-                                        section.contents.push(response.data.data);
-                                    }
-                                    return true ;
-                                });
+                                this.title 		= '';
+                                this.start_date 		= '';
+                                this.end_date 		= '';
+                                this.excerpt 	= '';
+                                this.file 	= '';
+                                this.url 	= '';
+                                this.progress 	= '0%';
+                                this.contents = response.data.data;
                                 this.errors = {};
+
                                 $('#ContentModal').modal('hide')
                             }
+
+
 
                         })
                         .catch(e => {
                             console.log(e)
                         });
                 }else{
-
-                    self.contents.forEach(function (section) {
-                        if(section.id == self.content_id){
-                            section.title = self.title  ;
-                            section.details.excerpt = self.excerpt;
-                        }
-                        return true ;
-                    });
-
-                    this.contents.forEach(function (section) {
-                        if(section.id == self.section_id){
-                            section.contents.forEach(function (content) {
-                                if(content.id == self.content_id) {
-                                    content.title = self.title;
-                                    if(content.details ){
-                                        content.details.excerpt = self.excerpt
-                                    }
-
-                                    if(content.exam ){
-                                       content.exam.start_date = self.start_date;
-                                       content.exam.end_date =self.end_date;
-                                    }
-                                    content.post_type = self.model_type;
-                                    content.url = self.url;
-                                }
-                            })
-                        }
-                        return true ;
-                    });
-
                     axios.post("{{route('training.update_content')}}",
                         formData
                         ,config)
@@ -489,8 +348,19 @@
                                     self.errors[property] = self.errors[property][0];
                                 }
                             }else{
+                                if(this.file != '' ){
+                                    this.$refs.inputFile.type='text';
+                                    this.$refs.inputFile.type='file';
+                                }
 
+                                this.title 		= '';
+                                this.excerpt 	= '';
+                                this.file 	= '';
+                                this.url 	= '';
+                                this.progress 	= '0%';
+                                this.contents = response.data.data;
                                 this.errors = {};
+
                                 $('#ContentModal').modal('hide')
                             }
 
@@ -499,14 +369,17 @@
                             console.log(e)
                         });
                 }
-            },
 
-			save: function(){
-				let self = this;
-				if(self.model_type == 'section'){
-                    this.saveSection();
-                }else{
-                    this.saveContent();
+			},
+
+
+			Clear:function(){
+				this.title 		= '';
+				this.excerpt 	= '';
+
+                if(this.file != '' ){
+                    this.$refs.inputFile.type='text';
+                    this.$refs.inputFile.type='file';
                 }
 			},
 		},

@@ -38,8 +38,8 @@
                         </div>
                         </a>
                         <div class="nav-item mx-2 profile-info">
-                            <p class="m-0 username">Jihad Hamdan</p>
-                            <p class="m-0 email">jhamdan@bakkah.net.sa</p>
+                            <p class="m-0 username">{{auth()->user()->trans_name}}</p>
+                            <p class="m-0 email">{{auth()->user()->email}}</p>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a style="background: #f8f9fa" class="nav-link dropdown-item">
