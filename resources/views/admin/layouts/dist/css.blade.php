@@ -1,15 +1,17 @@
-<link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/bootstrap/css/bootstrap.min.css')}}">
+<!-- <link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/bootstrap/css/bootstrap.min.css')}}"> -->
+<link rel="stylesheet" href="{{CustomAsset('front-dist/css/bootstrap-grid.min.css')}}">
+<!-- public/front-dist/css/bootstrap-grid.min.css -->
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/fontawesome-free/css/all.min.css')}}">
 
-<link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/jquery-ui.min.css')}}">
+<!-- <link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/jquery-ui.min.css')}}"> -->
 <link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/adminlte.min.css')}}">
-{{-- <link rel="stylesheet" href="{{CustomAsset(env('APP_ASSET').ADMIN.'-dist/select2/select2.min.css')}}"> --}}
-<link rel="stylesheet" href="{{CustomAsset(env('APP_ASSET').ADMIN.'-dist/select2/select2-bootstrap4.min.css')}}">
+<!-- {{-- <link rel="stylesheet" href="{{CustomAsset(env('APP_ASSET').ADMIN.'-dist/select2/select2.min.css')}}"> --}} -->
+<!-- <link rel="stylesheet" href="{{CustomAsset(env('APP_ASSET').ADMIN.'-dist/select2/select2-bootstrap4.min.css')}}"> -->
 
-{{--<link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/admin.css')}}">--}}
-<link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/all.css')}}">
-{{--<link rel="stylesheet" href="{{CustomAsset(env('APP_ASSET').ADMIN.'-dist/css/admin-rtl.css')}}">--}}
+<!-- {{--<link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/admin.css')}}">--}} -->
+<!-- <link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/all.css')}}"> -->
+<!-- {{--<link rel="stylesheet" href="{{CustomAsset(env('APP_ASSET').ADMIN.'-dist/css/admin-rtl.css')}}">--}} -->
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 

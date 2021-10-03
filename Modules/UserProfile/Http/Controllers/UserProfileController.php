@@ -55,7 +55,10 @@ class UserProfileController extends Controller
     }
 
     public function home() {
-        return view('userprofile::users.home');
+        $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
+            return $q->where('post_type','image')->where('locale',app()->getLocale());
+        }])->first();
+        return view('userprofile::users.home',compact('courses'));
     }
 
     public function referral() {
@@ -274,7 +277,7 @@ class UserProfileController extends Controller
                 return redirect()->route('education.cart');
             }
 
-            return redirect()->route('user.my_courses');
+            return redirect()->route('user.home');
 
         }
 
