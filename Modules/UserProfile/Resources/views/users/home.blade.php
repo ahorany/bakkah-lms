@@ -6,18 +6,18 @@
 
 @section('content')
 <style>
+.userarea-wrapper{
+    background: #fafafa;
+}
 .user-course .my-courses {
     border: 1px solid gainsboro;
     background: #fff;
-    padding: 40px 30px;
+    padding: 20px;
 }
 .card.my-badge {
     border: 1px solid gainsboro;
     background: #fff;
     padding: 50px;
-}
-.card.my-badge div {
-    padding: 0 10px;
 }
 .line {
     width: 100%;
@@ -45,8 +45,8 @@
                         </h4>
                         <div class="row mx-0 my-courses">
                             @foreach($courses->courses as $course)
-                                <div class="col-6 col-md-4 col-lg-4 mb-3">
-                                    <div class="card p-5" style="width: 100%; border-radius: 10px; border: 1px solid #f2f2f2">
+                                <div class="col-6 col-md-3 col-lg-3 my-2 p-4">
+                                    <div class="card p-4" style="width: 100%; border-radius: 10px; border: 1px solid #f2f2f2">
                                         @isset($course->upload->file)
                                         <img class="card-img-top" src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" alt="Card image cap">
                                         @endisset
@@ -68,16 +68,16 @@
                         </h4>
                         <small class="num m-0 mt-2 mb-4 d-block" style="color:gray;">Your Latest Achievements</small>
                         <div class="card my-badge p-4" style="display:flex; flex-direction:row;">
-                            <div>
+                            <div style="text-align: center; width: 6%; margin: 0 10px;">
                                 <img class="img-fluid" src="{{CustomAsset('/images/lms1.png')}}" alt="Card image cap">
                             </div>
-                            <div>
+                            <div style="text-align: center; width: 6%; margin: 0 10px;">
                                 <img class="img-fluid" src="{{CustomAsset('/images/lms2.png')}}" alt="Card image cap">
                             </div>
-                            <div>
+                            <div style="text-align: center; width: 6%; margin: 0 10px;">
                                 <img class="img-fluid" src="{{CustomAsset('/images/lms3.png')}}" alt="Card image cap">
                             </div>
-                            <div>
+                            <div style="text-align: center; width: 6%; margin: 0 10px;">
                                 <img class="img-fluid" src="{{CustomAsset('/images/lms4.png')}}" alt="Card image cap">
                             </div>
                         </div>

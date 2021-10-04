@@ -30,12 +30,12 @@ mix.js([
 mix.styles([
     // 'public/front-dist/css/bootstrap.min.css',
     'public/front-dist/css/bootstrap-grid.min.css',
-    // 'public/front-dist/css/owl.carousel.min.css',
-    // 'public/front-dist/css/owl.theme.default.css',
-    // 'public/front-dist/css/animate.css',
+    'public/front-dist/css/owl.carousel.min.css',
+    'public/front-dist/css/owl.theme.default.css',
+    'public/front-dist/css/animate.css',
     // 'public/front-dist/css/slick.css',
-    // 'public/front-dist/css/all.min.css',
-    // 'public/front-dist/style.css'
+    'public/front-dist/css/all.min.css',
+    'public/front-dist/style.css'
 ], 'public/front-dist/css/all.css');
 
 // mix.styles('public/front-dist/style.css', 'public/front-dist/all.css');
