@@ -74,13 +74,13 @@ label.navigation {
             @include('userprofile::users.sidebar')
             <div class="col-md-9 col-lg-10">
                 <div class="main-user-content m-4">
-                    <div class="p-5">
+                    <div class="p-5 exams">
                         <small>Dashboard / My Course / ITEL</small>
                         <h1 style="font-weight: 700; margin: 5px 0 10px;">ITEL Course</h1>
                         <div class="row">
-                            <div class="col-md-10 col-lg-10 col-12">
+                            <div class="col-md-9 col-lg-10 col-12">
                                 <form action="">
-                                    <div class="card position-relative p-5 mb-4" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
+                                    <div class="card position-relative p-5 mb-4 exam" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
                                         <div class="position-absolute number_question">Q1</div>
                                         <p class="question">What is the Worranty?</p>
                                         <label>Select one:</label>
@@ -101,7 +101,7 @@ label.navigation {
                                             <label for="answer4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
                                         </div>
                                     </div>
-                                    <div class="card position-relative p-5 mb-4" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
+                                    <div class="card position-relative p-5 mb-4 exam" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
                                         <div class="position-absolute number_question">Q1</div>
                                         <p class="question">What is the Worranty?</p>
                                         <label>Select one:</label>
@@ -122,7 +122,7 @@ label.navigation {
                                             <label for="answer4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
                                         </div>
                                     </div>
-                                    <div class="row m-0">
+                                    <div class="row m-0 my-2">
                                         <div class="col-md-6 col-6 col-lg-6 p-0">
                                             <input type="submit" value="Submit">
                                         </div>
@@ -135,8 +135,8 @@ label.navigation {
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-md-2 col-lg-2 col-12">
-                                <div class="card py-4" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
+                            <div class="col-md-3 col-lg-2 col-12 px-0">
+                                <div class="card py-4 navigation" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
                                     <div class="row m-0">
                                         <div class="col-md-12 col-lg-12 col-12 mb-3">
                                             <h5 class="title">Quiz Navigation</h5>

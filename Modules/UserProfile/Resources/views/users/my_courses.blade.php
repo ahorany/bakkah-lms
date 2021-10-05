@@ -9,45 +9,45 @@
 .userarea-wrapper{
     background: #fafafa;
 }
-.user-info .line {
+.courses .line {
     width: 100%;
     background: #fb4400;
     height: 4px;
 }
-.user-info .rating {
+.courses .rating {
     border: none;
     direction: rtl;
   }
   .rating > input { display: none; }
 
-  .user-info .rating.star > label {
+  .courses .rating.star > label {
       width: 20px;
       color: #eaeaea;
   }
-  .user-info fieldset.rating.star > label:before {
+  .courses fieldset.rating.star > label:before {
       font-size: 25px;
       content: "\2605";
   }
-  .user-info .rating.star > label{
+  .courses .rating.star > label{
     background-color: transparent !important;
   }
-  .user-info .rating.star:not(:checked) > label:hover,
-  .user-info .rating.star:not(:checked) > label:hover ~ label {
+  .courses .rating.star:not(:checked) > label:hover,
+  .courses .rating.star:not(:checked) > label:hover ~ label {
     color:red!important;
     background-color: transparent !important;
     cursor:pointer;
   }
-  .user-info .star_rating{
+  .courses .star_rating{
     display:flex;
 }
-.user-info .star_rating>label{
+.courses .star_rating>label{
     background: #efefef;
     padding: 10px;
     border-radius: 50%;
     font-weight: 600;
     margin-right: 5px;
   }
-  .user-info .resume{
+  .courses .resume{
     background: #fb4400;
     color: #fff;
     border: none;
@@ -56,35 +56,35 @@
     border-radius: 7px;
     margin-top: 10px;
   }
-  .user-info .description{
+  .courses .description{
     color: #4c4c4c;
     font-size: 17px;
   }
 
-  .user-info .title{
+  .courses .title{
     font-weight: 700;
   }
-  .user-info a.video-link:hover,
-  .user-info .my-links a:hover{
+  .courses a.video-link:hover,
+  .courses .my-links a:hover{
       color:#fb4400;
       background:#f9f9f9;
   }
-  .user-info a.video-link{
+  .courses a.video-link{
     padding: 15px 30px;
     font-size: 17px;
     color: #4f4f4f;
   }
 
-  .user-info .my-links a{
+  .courses .my-links a{
     padding: 5px 30px;
     font-size: 17px;
     color: #4f4f4f;
   }
-  .user-info .activity li{
+  .courses .activity li{
       margin: 10px 0;
       font-size: 15px;
   }
-  .user-info .activity .circle {
+  .courses .activity .circle {
     width: 10px;
     height: 10px;
     display: inline-block;
@@ -97,9 +97,9 @@
             @include('userprofile::users.sidebar')
             <div class="col-md-9 col-lg-10">
                 <div class="main-user-content m-4">
-                    <div class="p-5 user-info">
+                    <div class="p-5 user-info courses">
                             <div class="row">
-                                <div class="col-4 col-md-3 col-lg-3 mb-4 px-3">
+                                <div class="col-4 col-md-3 col-lg-3 mb-4 px-3 image">
                                     <div class="card p-4" style="width: 100%; border-radius: 10px; border: 1px solid #f2f2f2">
                                         <img class="card-img-top" src="{{CustomAsset('upload/thumb200/itel.png')}}" alt="Card image cap">
                                         <div class="card-body text-center p-0">
@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-8 col-md-9 col-lg-9 mb-4 px-3">
+                                <div class="col-8 col-md-9 col-lg-9 mb-4 px-3 info">
                                     <div class="px-4" style="width: 100%;">
                                         <div class="card-body p-0">
                                             <small>Dashboard / My Course / ITEL</small>
@@ -140,7 +140,7 @@
                                     </p>
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-3 py-3">
+                                <div class="col-12 col-md-3 col-lg-3 mb-3 py-3 px-0">
                                 <video style="border: 1px solid gainsboro; border-radius: 15px;" width="100%" height="200px" controls>
                                     <source src="https://www.youtube.com/watch?v=CH50zuS8DD0">
                                 </video>
@@ -160,7 +160,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
-                                            <div class="card" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
+                                            <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
                                                 <p class="learning_file" style="padding-left:30px;">LEARNING FILES</p>
                                                 <div class="my-links">
                                                     <a href="#" class="d-block">
@@ -179,7 +179,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
-                                            <div class="card" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
+                                            <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
                                                 <p class="learning_file" style="padding-left:30px;">LEARNING FILES</p>
                                                 <div class="my-links">
                                                     <a href="#" class="d-block">
