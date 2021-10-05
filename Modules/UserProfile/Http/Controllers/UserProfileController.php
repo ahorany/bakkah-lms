@@ -3,10 +3,14 @@
 namespace Modules\UserProfile\Http\Controllers;
 
 use App\Models\Training\Content;
+use App\Models\Training\Exam;
+use App\Models\Training\UserAnswer;
+use App\Models\Training\UserExam;
 use App\User;
 use App\Constant;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Admin\Upload;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Training\Course;
 use App\Models\Training\Social;
@@ -37,6 +41,86 @@ class UserProfileController extends Controller
             'login', 'register', 'loginSubmit', 'registerSubmit', 'logout'
         ]]);
     }
+
+    public function exam($exam_id){
+        $exam = Content::whereId($exam_id)
+            ->with(['exam' => function($q){
+                return $q->with(['users_exams']);
+            },'questions.answers'])->first();
+
+        if (!$exam->exam) abort(404);
+
+//        return $exam;
+//        $user_exams_count = count($exam->exam->users_exams);
+//
+//        if ($exam->exam->users_exams[$user_exams_count-1]->status == 0){
+//            return view('userprofile::users.exam_preview',compact('exam'));
+//        }
+        return view('userprofile::users.exam',compact('exam'));
+    }
+
+    public function add_answers(){
+
+      $user_exam =  UserExam::whereId(\request()->user_exam_id)->where('user_id',\auth()->id())->where('status',0)->first();
+      if (!$user_exam) abort(404);
+
+        foreach (\request()->answers as $key => $value){
+            if (!is_null($value)){
+                UserAnswer::updateOrCreate([
+                    'question_id' => $key,
+                    'user_exam_id' => \request()->user_exam_id,
+                ],[
+                    'answer_id' => $value,
+                    'question_id' => $key,
+                    'user_exam_id' => \request()->user_exam_id,
+                ]);
+            }
+        }
+
+        if (\request()->status == 'save'){
+            $user_exam->update([
+                'status' => 1
+            ]);
+            $user_exam = UserExam::whereId(\request()->user_exam_id)
+                ->select('id','exam_id')->with('exam')->first();
+            return response(['status' => 'success' , 'redirect_route' => route('user.exam',$user_exam->exam->content_id)]);
+        }
+    }
+
+
+    public function preview_exam($exam_id){
+        $exam = Content::whereId($exam_id)
+            ->with(['exam' => function($q){
+                return $q->with(['users_exams' => function($query){
+                    return $query->where('user_id',\auth()->id())->with('user_answers');
+                }])->where('start_date','<=',Carbon::now())
+                    ->where('end_date','>',Carbon::now());
+            },'questions.answers'])->first();
+        if (!$exam->exam) abort(404);
+
+        $user_exams_count = count($exam->exam->users_exams);
+
+
+        if (count($exam->exam->users_exams) > 0 && $exam->exam->users_exams[$user_exams_count-1]->status == 0){
+            return view('userprofile::users.exam_preview',compact('exam'));
+        }
+
+        if ( $user_exams_count < $exam->exam->attempt_count){
+            $data = UserExam::create([
+                    'user_id' => \auth()->id() ,
+                    'exam_id' => $exam->exam->id,
+                    'status' => 0,
+                    'time' => Carbon::now(),
+                ]);
+            $exam->exam->users_exams->push($data);
+
+            return view('userprofile::users.exam_preview',compact('exam'));
+
+        }else{
+            abort(404);
+        }
+    }
+
 
     public function dashboard() {
         //$user = User::find(auth()->user()->id);

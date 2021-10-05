@@ -96,7 +96,36 @@
 				</div>
 
                 <template v-if="model_type == 'exam' ">
+
+
                     <div  class="modal-diff-content">
+                        <label>Duration (minutes)</label>
+                        <input  type="number" v-model="duration" name="duration" class="form-control" placeholder="duration">
+                        <div v-show="'duration' in errors">
+                            <span style="color: red;font-size: 13px">@{{ errors.duration }}</span>
+                        </div>
+                    </div>
+
+
+                    <div  class="modal-diff-content">
+                        <label>Attempt Count</label>
+                        <input  type="number" v-model="attempt_count" name="attempt_count" class="form-control" placeholder="attempt_count">
+                        <div v-show="'attempt_count' in errors">
+                            <span style="color: red;font-size: 13px">@{{ errors.attempt_count }}</span>
+                        </div>
+                    </div>
+
+                    <div  class="modal-diff-content">
+                        <label>Pagination Number</label>
+                        <input  type="number" v-model="pagination" name="pagination" class="form-control" placeholder="pagination">
+                        <div v-show="'pagination' in errors">
+                            <span style="color: red;font-size: 13px">@{{ errors.pagination }}</span>
+                        </div>
+                    </div>
+
+
+                    <div  class="modal-diff-content">
+                        <label>Start Date </label>
                         <input   type="datetime-local" v-model="start_date" name="start_date" class="form-control" placeholder="start date">
                         <div v-show="'start_date' in errors">
                             <span style="color: red;font-size: 13px">@{{ errors.start_date }}</span>
@@ -104,11 +133,13 @@
                     </div>
 
                     <div  class="modal-diff-content">
+                        <label>End Date </label>
                         <input  type="datetime-local" v-model="end_date" name="end_date" class="form-control" placeholder="end date">
                         <div v-show="'end_date' in errors">
                             <span style="color: red;font-size: 13px">@{{ errors.end_date }}</span>
                         </div>
                     </div>
+
                 </template>
 
 
@@ -196,6 +227,9 @@
 			excerpt : '',
             start_date : '',
             end_date : '',
+            duration : 0,
+            attempt_count : 1,
+            pagination : 1,
             file : '',
             url : '',
             progress : '0%',
@@ -211,6 +245,8 @@
                 this.url = '';
                 this.start_date = '';
                 this.end_date 	= '';
+                this.duration 	= 0;
+                this.pagination = 1;
                 this.progress 	= '0%';
                 this.errors = {};
 
@@ -264,8 +300,10 @@
                             if(content.id == content_id) {
                                     self.title = content.title;
                                     self.excerpt =  content.details ?  content.details.excerpt : '';
+                                    // self.duration =  content.duration ?  content.details.duration : '';
                                      content.exam ? self.start_date = moment(content.exam.start_date).format('YYYY-MM-DDTHH:mm')  : '';
                                      content.exam ? self.end_date = moment(content.exam.end_date).format('YYYY-MM-DDTHH:mm')  : '';
+                                     content.exam ? self.duration = content.exam.duration : 0;
                                     self.model_type = content.post_type;
                                     self.url = content.url;
                             }
@@ -416,6 +454,9 @@
                 formData.append('file', self.file);
                 formData.append('start_date', self.start_date);
                 formData.append('end_date', self.end_date);
+                formData.append('duration', self.duration);
+                formData.append('pagination', self.pagination);
+                formData.append('attempt_count', self.attempt_count);
 
                 if(self.save_type == 'add'){
                     axios.post("{{route('training.add_content')}}",

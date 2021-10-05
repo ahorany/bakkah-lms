@@ -13,7 +13,6 @@ class Content extends Model
     use TrashTrait,FileTrait;
     protected $guarded = [];
 
-
     public function contents(){
         return $this->hasMany('App\Models\Training\Content','parent_id');
     }

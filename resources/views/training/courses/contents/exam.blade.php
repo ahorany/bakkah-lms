@@ -240,6 +240,9 @@
                             }else{
                                 this.content.questions.forEach(function (question) {
                                     if(question.id == response.data.data.question_id){
+                                        if( question.answers === undefined ){
+                                            question.answers = [];
+                                        }
                                         question.answers.push(response.data.data);
                                     }
                                 });

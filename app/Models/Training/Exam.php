@@ -16,4 +16,8 @@ class Exam extends Model
         return $this->belongsTo(Content::class,'content_id');
     }
 
+    public function users_exams(){
+        return $this->hasMany(UserExam::class,'exam_id');
+    }
+
 }

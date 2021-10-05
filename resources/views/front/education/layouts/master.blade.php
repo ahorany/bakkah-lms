@@ -41,7 +41,7 @@
 
 </head>
 
-<body class="home" data-spy="scroll" data-target="#course-deatilas-tabs" data-offset="200">
+<body  class="home" data-spy="scroll" data-target="#course-deatilas-tabs" data-offset="200">
 
 
 <div id="page_content" class="page-content-wrapper">

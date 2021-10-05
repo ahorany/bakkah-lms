@@ -17,10 +17,8 @@ Route::group([
         Route::get('/contents', 'ContentController@contents')->name('contents');
         Route::post('/add_section', 'ContentController@add_section')->name('add_section');
         Route::post('/update_section', 'ContentController@update_section')->name('update_section');
-
         Route::post('/add_content', 'ContentController@add_content')->name('add_content');
         Route::post('/update_content', 'ContentController@update_content')->name('update_content');
-
         Route::get('/delete_content', 'ContentController@delete_content')->name('delete_content');
 
 

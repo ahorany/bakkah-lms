@@ -29,9 +29,15 @@ Route::group([
         Route::get('/home', [UserProfileController::class, 'home'])->name('home');
         Route::get('/info', [UserProfileController::class, 'info'])->name('info');
         Route::post('/info/{id}/upadte', [UserProfileController::class, 'update'])->name('update');
+
         Route::get('/my-courses', [UserProfileController::class, 'my_courses'])->name('my_courses');
         Route::get('/course_details/{course_id}', [UserProfileController::class, 'course_details'])->name('course_details');
         Route::get('/preview-content/{content_id}', [UserProfileController::class, 'course_preview'])->name('course_preview');
+        Route::get('/exam/{exam_id}', [UserProfileController::class, 'exam'])->name('exam');
+        Route::get('preview/exam/{exam_id}', [UserProfileController::class, 'preview_exam'])->name('preview.exam');
+        Route::post('exam/add_answers', [UserProfileController::class, 'add_answers'])->name('exam.add_answers');
+
+
         Route::get('/certifications', [UserProfileController::class, 'certifications'])->name('certifications');
         Route::get('/downloadCertifications/{id}', [UserProfileController::class, 'downloadCertifications'])->name('downloadCertifications');
         Route::get('/previewCertifications/{id}', [UserProfileController::class, 'previewCertifications'])->name('previewCertifications');

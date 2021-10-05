@@ -16,4 +16,8 @@ class Answer extends Model
         return $this->belongsTo('App\Models\Training\Question','question_id');
     }
 
+    public function user_answers(){
+        return $this->belongsToMany(UserExam::class,'user_answers','answer_id','user_exam_id');
+    }
+
 }
