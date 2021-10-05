@@ -12,7 +12,19 @@ class EducationComposer
 {
     public function compose(View $view){
 
-        $DateTimeNow = DateTimeNow();
+        // $DateTimeNow = DateTimeNow();
+        
+
+
+       $user_sidebar = Cache::rememberForever('user_sidebar', function(){
+           return Infastructure::where('type', 'user_aside')
+           ->orderBy('order')
+           ->select('id', 'title', 'route_name', 'route_param', 'icon', 'order')
+           ->get();
+       });
+       $view->with('user_sidebar', $user_sidebar);
+
+
 
 //        $navbar_campaign = Post::where('post_type', 'navbar-campaign')
 //            ->where('post_date', '<', $DateTimeNow)

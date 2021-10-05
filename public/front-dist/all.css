@@ -628,8 +628,8 @@ a:hover {
 }
 
 .card {
-    border-color: rgba(127, 170, 203, .1);
-    box-shadow: 0 0 20px rgba(127, 170, 203, .21);
+    /* border-color: rgba(127, 170, 203, .1); */
+    box-shadow: none;
 }
 
 .box-shadow {

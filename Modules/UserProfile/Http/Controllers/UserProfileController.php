@@ -139,7 +139,10 @@ class UserProfileController extends Controller
     }
 
     public function home() {
-        return view('userprofile::users.home');
+        $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
+            return $q->where('post_type','image')->where('locale',app()->getLocale());
+        }])->first();
+        return view('userprofile::users.home',compact('courses'));
     }
 
     public function referral() {
@@ -292,6 +295,16 @@ class UserProfileController extends Controller
         return view('userprofile::users.my_courses',compact('courses'));
     }
 
+    public function exercise() {
+        return view('userprofile::users.exercise');
+    }
+    public function exam() {
+        return view('userprofile::users.exam');
+    }
+    public function file() {
+        return view('userprofile::users.file');
+    }
+
     public function course_details($course_id){
           $course = Course::where('id',$course_id)->whereHas('users',function ($q){
                $q->where('users.id',\auth()->id());
@@ -358,7 +371,7 @@ class UserProfileController extends Controller
                 return redirect()->route('education.cart');
             }
 
-            return redirect()->route('user.my_courses');
+            return redirect()->route('user.home');
 
         }
 
@@ -418,7 +431,7 @@ class UserProfileController extends Controller
             return redirect(request()->redirect);
         }
 
-        return redirect()->route('user.my_courses');
+        return redirect()->route('user.home');
     }
 
     // public function passwordReset() {
