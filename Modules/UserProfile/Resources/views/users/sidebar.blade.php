@@ -1,8 +1,12 @@
 <div class="col-md-3 col-lg-2">
     <aside>
         <ul class="list-unstyled p-0 m-0">
-            <li><a href="#"><i class="fas fa-tachometer-alt"></i> <span class="m-0">{{__('education.Dashboard')}} </span></a></li>
 
+
+        @foreach($user_sidebar as $item)
+            <li><a href="{{CustomRoute($item->route_name)}}"><i class="fas fa-tachometer-alt"></i> <span class="m-0">{{$item->trans_title}} </span></a></li>
+         @endforeach
+         <!-- <li><a href="#"><i class="fas fa-tachometer-alt"></i> <span class="m-0">{{__('education.Dashboard')}} </span></a></li> -->
             <li><a class="{{ Request::routeIs('user.home') ? 'active' : '' }}" href="{{ route('user.home') }}"><i class="fas fa-home"></i><span> {{__('education.home')}} </span></a></li>
             <!-- <li><a class="{{ Request::routeIs('user.info') ? 'active' : '' }}" href="{{ route('user.info') }}"><i class="far fa-user"></i> <span> {{__('education.Info')}} </span></a></li> -->
             <li><a class="{{ Request::routeIs('user.my_courses') ? 'active' : '' }}" href="{{ route('user.my_courses') }}"><i class="fas fa-inbox"></i> <span>{{__('education.My Courses')}} </span></a></li>
