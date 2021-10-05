@@ -106,20 +106,20 @@ label.navigation {
                                         <p class="question">What is the Worranty?</p>
                                         <label>Select one:</label>
                                         <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer1">
-                                            <label for="answer1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
+                                            <input type="radio" name="answer" id="answer5">
+                                            <label for="answer5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
                                         </div>
                                         <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer2">
-                                            <label for="answer2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
+                                            <input type="radio" name="answer" id="answer6">
+                                            <label for="answer6">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
                                         </div>
                                         <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer3">
-                                            <label for="answer3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
+                                            <input type="radio" name="answer" id="answer7">
+                                            <label for="answer7">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
                                         </div>
                                         <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer4">
-                                            <label for="answer4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
+                                            <input type="radio" name="answer" id="answer8">
+                                            <label for="answer8">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
                                         </div>
                                     </div>
                                     <div class="row m-0 my-2">
