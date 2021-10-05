@@ -6629,7 +6629,8 @@ img.footer-card {
     width: 18px;
     height: 18px;
     font-weight: 700;
-    padding: 0px 1px;
+    padding: 0px 4px;
+    font-size: 10px;
     color: #fff;
     background: #fb4400;
     position: absolute;
