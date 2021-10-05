@@ -6624,14 +6624,18 @@ img.footer-card {
 }
 .userarea-wrapper [type="radio"]:checked + label:after,
 .userarea-wrapper [type="radio"]:not(:checked) + label:after {
-    content: '';
-    width: 12px;
-    height: 12px;
+    font-family: "Font Awesome 5 Free";
+    content: '\f00c';
+    width: 18px;
+    height: 18px;
+    font-weight: 700;
+    padding: 0px 1px;
+    color: #fff;
     background: #fb4400;
     position: absolute;
-    top: 6px;
-    left: 4px;
-    border-radius: 100%;
+    top: 3px;
+    left: 1px;
+    border-radius: 50%;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
