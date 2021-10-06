@@ -3,53 +3,49 @@
 @section('table')
 <div class="toLoad" id="questions">
 
-    <div style="margin-bottom: 20px">
-        <button type="button" @click="OpenModal('question',content.id)" class="btn btn-warning">
-            {{__('admin.add_question')}}
+    <div class="course_info">
+        <label class="m-0">@{{content.title}}</label>
+        <button type="button" @click="OpenModal('question',content.id)" class="btn btn-outline-dark">
+            <i class="fa fa-plus"></i>  {{__('admin.add_question')}}
         </button>
     </div>
 
-
-    <h3>@{{content.title}}</h3>
-
 	<div  class="card" v-for="(question,index) in content.questions">
-		<div class="card-header" >
-            <div  style="margin: 20px;">@{{question.title}}</div>
-			<button type="button" @click="OpenModal('answer',question.id)" class="btn btn-primary btn-sm px-3" id="answer" ><i class="fa fa-file-powerpoint"></i> {{__('admin.answer')}}</button>
-            <br>
+		<div class="card-header p-0" >
+            <div class="clearfix mb-1 p-3 m-0">
+                <h3 class="BtnGroupRows float-left" style="font-size: 22px;">@{{question.title}}</h3>
 
-
+                <div class="BtnGroupRows float-right" data-id="150">
+                    <button type="button" @click="OpenModal('answer',question.id)" class="btn btn-outline-info btn-sm px-3" id="answer" ><i class="fa fa-file-powerpoint"></i> {{__('admin.add_answer')}}</button>
+                </div>
+            </div>
 
             <table class="table">
                 <thead>
                 <tr>
                     <th scope="col">Title</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" class="text-center">TrueOrFalse</th>
+                    <th scope="col" class="text-center">Action</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr v-if="question.answers"  v-for="(entry, index) in question.answers"  >
                     <td>@{{entry.title}}</td>
-                    <td>
+                    <td class="text-center" v-if="entry.check_correct == 1" v-html="`<i class='fas fa-check' style='color:#00d700;'></i>`"></td>
+                    <td class="text-center" v-else v-html="`<i class='fas fa-times' style='color:#f02117;'></i>`"></td>
+                    <td class="text-center">
                         <div class="BtnGroupRows" data-id="150">
-                            <button @click="OpenEditModal(question.id,entry.id)"  class="btn btn-sm btn-primary" >
-                                <i class="fa fa-pencil-alt"></i> Edit</button>
+                            <button @click="OpenEditModal(question.id,entry.id)" class="btn btn-sm btn-outline-warning" >
+                                <i class="fa fa-pencil-alt"></i><!-- Edit --> </button>
 
-                            <button @click="deleteAnswer(question.id,entry.id)"  class="btn btn-sm btn-danger" >
-                                <i class="fa fa-trash"></i> Delete</button>
-
+                            <button @click="deleteAnswer(question.id,entry.id)" class="btn btn-sm btn-outline-danger" >
+                                <i class="fa fa-trash"></i><!-- Delete --> </button>
                         </div>
                     </td>
-
-
                 </tr>
-
                 </tbody>
             </table>
-
-
-			<br>
 		</div>
 	</div>
 
@@ -65,8 +61,8 @@
 
 			<div class="modal-body">
 				<div class="col-md-12">
-					<div class="form-group">
-                        <div>
+					{{-- <div class="form-group"> --}}
+                        <div class="form-group">
                             <label>Title </label>
                             <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
                                 <div v-show="'title' in errors">
@@ -75,7 +71,7 @@
                         </div>
 
 
-                        <div v-if="model_type != 'answer'">
+                        <div class="form-group" v-if="model_type != 'answer'">
                             <label>Mark </label>
                             <input type="number" v-model="mark" name="mark" class="form-control" placeholder="mark">
                             <div v-show="'mark' in errors">
@@ -83,25 +79,25 @@
                             </div>
                         </div>
 
-                        <div v-if="model_type == 'answer'">
-                            <label>Correct  </label>
-                            <input type="checkbox" v-model="correct" name="correct"  >
+                        <div class="boxes mt-4" v-if="model_type == 'answer'">
+                            <input type="checkbox" v-model="correct" name="correct" id="correct" >
+                            <label for="correct">Correct </label>
                             <div v-show="'check_correct' in errors">
                                 <span style="color: red;font-size: 13px">@{{ errors.check_correct }}</span>
                             </div>
                         </div>
 
-					</div>
+					{{-- </div> --}}
 				</div>
 
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">
+				<button type="button" class="btn btn-outline-danger" data-dismiss="modal">
 					<i class="fas fa-times"></i> {{__('admin.close')}}</button>
-				<button type="reset" class="btn btn-primary" @click="Clear()">
+				<button type="reset" class="btn btn-outline-info" @click="Clear()">
 					<i class="fas fa-eraser"></i> {{__('admin.clear')}}</button>
-				<button type="button"  @click="Add()" class="btn btn-primary">
+				<button type="button"  @click="Add()" class="btn btn-outline-success">
 					<i class="fa fa-save"></i> {{__('admin.save')}}</button>
 
 			</div>

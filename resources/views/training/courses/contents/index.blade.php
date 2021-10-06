@@ -1,66 +1,9 @@
 @extends(ADMIN.'.general.index')
 
 @section('table')
-<style>
-.course_info {
-    display: flex;
-    justify-content: space-between;
-    /* background: #7896b4; */
-    background: #b0b0b0;
-    padding: 10px 20px;
-    color: #fff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-.course_info button{
-    color: #fff;
-    border: 1px solid #fff;
-}
-.course_info button:hover{
-    background: #fff;
-    color:#000;
-}
-.course_info label {
-    text-transform: capitalize;
-    font-size: 30px;
-    font-weight: 500 !important;
-    letter-spacing: -1px;
-    word-spacing: 3px;
-}
-.card {
-    margin-bottom: 20px;
-}
-table tbody tr .buttons button,
-table tbody tr .buttons a {
-    border-radius: 50%;
-    margin: 0 5px;
-}
-table tbody tr:hover {
-    background: #f4f4f4;
-}
-table th {
-    background: ghostwhite;
-    border-top: none !important;
-}
-table tr {
-    height: 60px !important;
-}
-table {
-    margin: 0px !important;
-}
-</style>
-<script>
-    // $(document).ready(function(){
-    // $("table tbody tr").mouseenter(function(){
-    //     $("table tbody tr .buttons").child().show();
-    // });
-    // $("table tbody tr").mouseleave(function(){
-    //     $("table tbody tr .buttons").hide();
-    // });
-    // });
-</script>
+
 <div class="toLoad" id="contents">
-    <div  class="course_info">
+    <div class="course_info">
         <label class="m-0"><!-- Course name :  -->{{$course->trans_title}}</label>
         <button type="button" @click="OpenModal('section',null)" class="btn btn-outline-dark ">
         <i class="far fa-plus-square mr-2"></i> {{__('admin.add_section')}}
@@ -70,27 +13,47 @@ table {
 	<div  class="card" v-for="(content,index) in contents">
 		<div class="card-header" >
             <div class="clearfix">
-                <h3  class="BtnGroupRows float-left">@{{content.title}}</h3>
+                <div class="row my-3">
+                    <div class="col-md-8 col-lg-8">
+                        <h3  class="BtnGroupRows">@{{content.title}}</h3>
+                    </div>
+                    <div class="col-md-4 col-lg-4 text-right">
+                        <div class="BtnGroupRows" data-id="150">
 
-                <div class="BtnGroupRows float-right" data-id="150">
+                            <button @click="OpenSectionEditModal(content.id)"  class="btn btn-sm btn-outline-warning" >
+                                <i class="fa fa-pencil-alt"></i> Edit</button>
 
-                    <button @click="OpenSectionEditModal(content.id)"  class="btn btn-sm btn-outline-warning" >
-                        <i class="fa fa-pencil-alt"></i> Edit</button>
+                            <button @click="deleteSection(content.id)"  class="btn btn-sm btn-outline-danger" >
+                                <i class="fa fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+                    <div class="mt-3 col-md-12 col-lg-12">
+                        <div>
+                            <button type="button" @click="OpenModal('video',content.id)" class="btn btn-outline-info btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
+                            <button type="button" @click="OpenModal('audio',content.id)" class="btn btn-outline-info btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+                            <button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-outline-info btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
+                            <button type="button" @click="OpenModal('scorm',content.id)" class="btn btn-outline-info btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
+                            <button  type="button" @click="OpenModal('exam',content.id)" class="btn btn-outline-info btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
+                        </div>
+                    </div>
 
-                    <button @click="deleteSection(content.id)"  class="btn btn-sm btn-outline-danger" >
-                        <i class="fa fa-trash"></i> Delete</button>
                 </div>
+
+
+
+
+
             </div>
 
             <div v-if="content.details" class="my-2">@{{content.details.excerpt}}</div>
 
-            <div class="my-3">
+            {{-- <div class="my-3">
                 <button type="button" @click="OpenModal('video',content.id)" class="btn btn-outline-info btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
                 <button type="button" @click="OpenModal('audio',content.id)" class="btn btn-outline-info btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
                 <button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-outline-info btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
                 <button type="button" @click="OpenModal('scorm',content.id)" class="btn btn-outline-info btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
                 <button  type="button" @click="OpenModal('exam',content.id)" class="btn btn-outline-info btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
-            </div>
+            </div> --}}
 
             <table class="table">
                 <thead>
@@ -141,7 +104,7 @@ table {
 			</div>
 
 			<div class="modal-body">
-				<div class="col-md-12">
+				<div class="col-md-12 p-0">
 					<div class="form-group">
 						<label>Title </label>
 						<input type="text" v-model="title" name="title" class="form-control" placeholder="title">
@@ -222,16 +185,22 @@ table {
                 <div v-else class="modal-diff-content">
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
+                            <a class="nav-link active btn btn-outline-info" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">Url</a>
+                            <a class="nav-link btn btn-outline-info" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">Url</a>
                         </li>
 
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-file-tab">
-                            <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
+                            <div class="form-group">
+                                <label class="label">
+                                    <i class="far fa-file-code"></i>
+                                    <span class="title">Add File</span>
+                                  <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
+                                </label>
+                              </div>
                             <div v-show="'file' in errors">
                                 <span style="color: red;font-size: 13px">@{{ errors.file }}</span>
                             </div>
@@ -251,11 +220,11 @@ table {
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">
+				<button type="button" class="btn btn-outline-danger" data-dismiss="modal">
 					<i class="fas fa-times"></i> {{__('admin.close')}}</button>
-				<button type="reset" class="btn btn-primary" @click="clear()">
+				<button type="reset" class="btn btn-outline-info" @click="clear()">
 					<i class="fas fa-eraser"></i> {{__('admin.clear')}}</button>
-				<button type="button"  @click="save()" class="btn btn-primary">
+				<button type="button"  @click="save()" class="btn btn-outline-success">
 					<i class="fa fa-save"></i> {{__('admin.save')}}</button>
 
 			</div>
