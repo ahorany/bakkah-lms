@@ -15,7 +15,7 @@
             <div class="clearfix">
                 <div class="row my-3">
                     <div class="col-md-8 col-lg-8">
-                        <h3  class="BtnGroupRows">@{{content.title}}</h3>
+                        <h3  class="BtnGroupRows" style="font-size: 22px;">@{{content.title}}</h3>
                     </div>
                     <div class="col-md-4 col-lg-4 text-right">
                         <div class="BtnGroupRows" data-id="150">

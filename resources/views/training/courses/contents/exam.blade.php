@@ -13,7 +13,7 @@
 	<div  class="card" v-for="(question,index) in content.questions">
 		<div class="card-header p-0" >
             <div class="clearfix mb-1 p-3 m-0">
-                <h3 class="BtnGroupRows float-left" style="font-size: 22px;">@{{question.title}}</h3>
+                <h3 class="BtnGroupRows float-left" style="font-size: 20px;">@{{question.title}}</h3>
 
                 <div class="BtnGroupRows float-right" data-id="150">
                     <button type="button" @click="OpenModal('answer',question.id)" class="btn btn-outline-info btn-sm px-3" id="answer" ><i class="fa fa-file-powerpoint"></i> {{__('admin.add_answer')}}</button>

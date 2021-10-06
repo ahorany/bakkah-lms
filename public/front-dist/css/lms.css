@@ -1,21 +1,17 @@
 @font-face {
-    /*font-family: 'Janna LT Bold';
-    src: url(../fonts/Janna LT Bold.ttf);*/
     font-family: 'Lato-Regular';
     src: url(../../Lato/Lato-Regular.ttf);
 }
 
 @font-face {
-    /*font-family: 'JannaLT-Regular';
-    src: url(../fonts/JannaLT-Regular.ttf);*/
     font-family: 'Lato-Bold';
     src: url(../../Lato/Lato-Bold.ttf);
 }
 
 body {
-    /*font-family: 'JannaLT-Regular';*/
     font-family: 'Lato-Regular';
 }
+
 .course_info {
     display: flex;
     justify-content: space-between;
@@ -26,8 +22,9 @@ body {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.course_info button{
+.course_info button {
     color: #fff;
+    padding: 0 10px;
     border: 1px solid #fff;
 }
 .course_info button:hover{
@@ -36,7 +33,7 @@ body {
 }
 .course_info label {
     text-transform: capitalize;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 500 !important;
     letter-spacing: -1px;
     word-spacing: 3px;
@@ -65,7 +62,7 @@ table tr {
 table {
     margin: 0px !important;
 }
-/************************************/
+/*****************custom checkbox*******************/
   input[type="checkbox"] { display: none; }
 
   input[type="checkbox"] + label {
@@ -76,9 +73,6 @@ table {
     font: 14px/20px 'Open Sans', Arial, sans-serif;
     color: #000;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
   }
 
   input[type="checkbox"] + label:last-child { margin-bottom: 0; }
@@ -108,7 +102,8 @@ table {
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-  .modal-header {
+  /***************modal*****************/
+.modal-header {
     background: #7896b4;
     color: #fff;
 }
@@ -127,7 +122,7 @@ button.close span {
 .progress{
     display: none;
 }
-
+/*********************custom file************************/
 #pills-tabContent input[type=file] {
     outline: 0;
     opacity: 0;
