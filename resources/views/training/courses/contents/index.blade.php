@@ -1,11 +1,69 @@
 @extends(ADMIN.'.general.index')
 
 @section('table')
+<style>
+.course_info {
+    display: flex;
+    justify-content: space-between;
+    /* background: #7896b4; */
+    background: #b0b0b0;
+    padding: 10px 20px;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.course_info button{
+    color: #fff;
+    border: 1px solid #fff;
+}
+.course_info button:hover{
+    background: #fff;
+    color:#000;
+}
+.course_info label {
+    text-transform: capitalize;
+    font-size: 30px;
+    font-weight: 500 !important;
+    letter-spacing: -1px;
+    word-spacing: 3px;
+}
+.card {
+    margin-bottom: 20px;
+}
+table tbody tr .buttons button,
+table tbody tr .buttons a {
+    border-radius: 50%;
+    margin: 0 5px;
+}
+table tbody tr:hover {
+    background: #f4f4f4;
+}
+table th {
+    background: ghostwhite;
+    border-top: none !important;
+}
+table tr {
+    height: 60px !important;
+}
+table {
+    margin: 0px !important;
+}
+</style>
+<script>
+    // $(document).ready(function(){
+    // $("table tbody tr").mouseenter(function(){
+    //     $("table tbody tr .buttons").child().show();
+    // });
+    // $("table tbody tr").mouseleave(function(){
+    //     $("table tbody tr .buttons").hide();
+    // });
+    // });
+</script>
 <div class="toLoad" id="contents">
-    <div style="margin-bottom: 20px">
-        Course name : {{$course->trans_title}}
-        <button type="button" @click="OpenModal('section',null)" class="btn btn-warning">
-            {{__('admin.add_section')}}
+    <div  class="course_info">
+        <label class="m-0"><!-- Course name :  -->{{$course->trans_title}}</label>
+        <button type="button" @click="OpenModal('section',null)" class="btn btn-outline-dark ">
+        <i class="far fa-plus-square mr-2"></i> {{__('admin.add_section')}}
         </button>
     </div>
 
@@ -16,56 +74,54 @@
 
                 <div class="BtnGroupRows float-right" data-id="150">
 
-                    <button @click="OpenSectionEditModal(content.id)"  class="btn btn-sm btn-primary" >
+                    <button @click="OpenSectionEditModal(content.id)"  class="btn btn-sm btn-outline-warning" >
                         <i class="fa fa-pencil-alt"></i> Edit</button>
 
-                    <button @click="deleteSection(content.id)"  class="btn btn-sm btn-danger" >
+                    <button @click="deleteSection(content.id)"  class="btn btn-sm btn-outline-danger" >
                         <i class="fa fa-trash"></i> Delete</button>
                 </div>
             </div>
 
+            <div v-if="content.details" class="my-2">@{{content.details.excerpt}}</div>
 
-
-            <div v-if="content.details" style="margin: 20px;">@{{content.details.excerpt}}</div>
             <div class="my-3">
-                <button type="button" @click="OpenModal('video',content.id)" class="btn btn-primary btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
-                <button type="button" @click="OpenModal('audio',content.id)" class="btn btn-primary btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                <button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-primary btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
-                <button type="button" @click="OpenModal('scorm',content.id)" class="btn btn-primary btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
-                <button  type="button" @click="OpenModal('exam',content.id)" class="btn btn-primary btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
+                <button type="button" @click="OpenModal('video',content.id)" class="btn btn-outline-info btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
+                <button type="button" @click="OpenModal('audio',content.id)" class="btn btn-outline-info btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+                <button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-outline-info btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
+                <button type="button" @click="OpenModal('scorm',content.id)" class="btn btn-outline-info btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
+                <button  type="button" @click="OpenModal('exam',content.id)" class="btn btn-outline-info btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
             </div>
-
-
 
             <table class="table">
                 <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Action</th>
-                </tr>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Action</th>
+                    </tr>
                 </thead>
-
                 <tbody>
-                <tr v-if="content.contents"  v-for="(entry, index) in content.contents"  >
-                    <td>@{{entry.title}}</td>
-                    <td>
-                        <div class="BtnGroupRows" data-id="150">
-                            <a v-if="entry.post_type == 'exam'"  class="btn btn-sm btn-primary" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "> <i class="fa fa-pencil-alt"></i> Add Questions</a>
+                    <tr v-if="content.contents"  v-for="(entry, index) in content.contents"  >
+                        <td>
+                            <span>@{{entry.title}}</span>
+                        </td>
+                        <td>
+                            <span>@{{entry.post_type}}</span>
+                        </td>
+                        <td>
+                            <div class="BtnGroupRows buttons" data-id="150">
+                                <a v-if="entry.post_type == 'exam'"  class="btn btn-sm btn-outline-primary" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "> <i class="fa fa-plus"></i><!-- Add Questions  --> </a>
+                                <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-outline-warning" >
+                                    <i class="fa fa-pencil-alt"></i><!-- Edit --> </button>
+                                <button v-else @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-outline-warning" >
+                                    <i class="fa fa-pencil-alt"></i><!-- Edit --> </button>
 
-                            <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-primary" >
-                                <i class="fa fa-pencil-alt"></i> Edit</button>
-
-                            <button v-else @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-primary" >
-                                <i class="fa fa-pencil-alt"></i> Edit</button>
-
-                            <button @click="deleteContent(content.id,entry.id)"  class="btn btn-sm btn-danger" >
-                                <i class="fa fa-trash"></i> Delete</button>
-                        </div>
-                    </td>
-
-
-                </tr>
-
+                                <button @click="deleteContent(content.id,entry.id)"  class="btn btn-sm btn-outline-danger" >
+                                    <i class="fa fa-trash"></i><!-- Delete --> </button>
+                                    <!--  -->
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 

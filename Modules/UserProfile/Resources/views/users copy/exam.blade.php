@@ -74,7 +74,6 @@ label.navigation {
             @include('userprofile::users.sidebar')
             <div class="col-md-9 col-lg-10">
                 <div class="main-user-content m-4">
-                    <!-- <div class="card p-5 user-info"> -->
                     <div class="p-5 exams">
                         <small>Dashboard / My Course / ITEL</small>
                         <h1 style="font-weight: 700; margin: 5px 0 10px;">ITEL Course</h1>
@@ -190,16 +189,4 @@ label.navigation {
         </div>
     </div>
 
-
 @endsection
-
-@section('scripts')
-    <script>
-        function confirmNewAttempt(){
-           if( confirm('Are u sure ?') == false)
-               event.preventDefault()
-        }
-
-    </script>
-@endsection
-

@@ -32,7 +32,7 @@ Route::group([
 
         Route::get('/my-courses', [UserProfileController::class, 'my_courses'])->name('my_courses');
         Route::get('/exercise', [UserProfileController::class, 'exercise'])->name('exercise');
-        Route::get('/exam', [UserProfileController::class, 'exam'])->name('exam');
+        Route::get('/exams', [UserProfileController::class, 'exams'])->name('exams');
         Route::get('/file', [UserProfileController::class, 'file'])->name('file');
         Route::get('/course_details/{course_id}', [UserProfileController::class, 'course_details'])->name('course_details');
         Route::get('/preview-content/{content_id}', [UserProfileController::class, 'course_preview'])->name('course_preview');

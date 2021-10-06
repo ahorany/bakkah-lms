@@ -298,7 +298,7 @@ class UserProfileController extends Controller
     public function exercise() {
         return view('userprofile::users.exercise');
     }
-    public function exam() {
+    public function exams() {
         return view('userprofile::users.exam');
     }
     public function file() {

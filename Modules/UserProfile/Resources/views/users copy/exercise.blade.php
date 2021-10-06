@@ -74,7 +74,6 @@ label.navigation {
             @include('userprofile::users.sidebar')
             <div class="col-md-9 col-lg-10">
                 <div class="main-user-content m-4">
-                    <!-- <div class="card p-5 user-info"> -->
                     <div class="p-5 exams">
                         <small>Dashboard / My Course / ITEL</small>
                         <h1 style="font-weight: 700; margin: 5px 0 10px;">ITEL Course</h1>
@@ -124,18 +123,10 @@ label.navigation {
                                         </div>
                                     </div>
                                     <div class="row m-0 my-2">
-                                        <div class="col-md-4 col-4 col-lg-4 p-0">
+                                        <div class="col-md-6 col-6 col-lg-6 p-0">
                                             <input type="submit" value="Submit">
                                         </div>
-                                        <div class="col-md-4 col-4 col-lg-4 text-center p-0 py-2">
-                                            <div class="time">
-                                                <span>
-                                                    <i class="far fa-clock"></i>
-                                                    19m and 55s
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-4 col-lg-4 text-right p-0 py-1">
+                                        <div class="col-md-6 col-6 col-lg-6 text-right p-0 py-1">
                                             <div class="arrow">
                                                 <i class="fas fa-angle-left"></i>
                                                 <i class="fas fa-angle-right"></i>
@@ -145,7 +136,7 @@ label.navigation {
                                 </form>
                             </div>
                             <div class="col-md-3 col-lg-2 col-12 px-0">
-                                <div class="card py-4" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
+                                <div class="card py-4 navigation" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
                                     <div class="row m-0">
                                         <div class="col-md-12 col-lg-12 col-12 mb-3">
                                             <h5 class="title">Quiz Navigation</h5>
@@ -157,10 +148,10 @@ label.navigation {
                                             <label class="navigation done_question">2</label>
                                         </div>
                                         <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation done_question">3</label>
+                                            <label class="navigation">3</label>
                                         </div>
                                         <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation done_question">4</label>
+                                            <label class="navigation">4</label>
                                         </div>
                                         <div class="col-md-4 col-lg-4 col-4 text-center px-1">
                                             <label class="navigation">5</label>
@@ -190,16 +181,5 @@ label.navigation {
         </div>
     </div>
 
-
 @endsection
-
-@section('scripts')
-    <script>
-        function confirmNewAttempt(){
-           if( confirm('Are u sure ?') == false)
-               event.preventDefault()
-        }
-
-    </script>
-@endsection
-
+               

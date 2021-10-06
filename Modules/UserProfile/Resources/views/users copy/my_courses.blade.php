@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-8 col-lg-8 mb-3 p-3">
+                                <div class="col-12 col-md-9 col-lg-9 mb-3 p-3">
                                     <p class="description">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eveniet, qui consequatur voluptas obcaecati magnam similique? Nemo aliquam corrupti, illum culpa, delectus aspernatur aperiam aut minima, ad itaque in accusantium!locale_filter_matches
                                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto hic debitis illo, officia maxime odio veniam incidunt, excepturi atque suscipit officiis voluptatibus. Necessitatibus, est! Est quo impedit quasi dolores totam.
@@ -140,7 +140,7 @@
                                     </p>
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-3 py-3 px-0">
+                                <div class="col-12 col-md-3 col-lg-3 mb-3 py-3 px-0">
                                 <video style="border: 1px solid gainsboro; border-radius: 15px;" width="100%" height="200px" controls>
                                     <source src="https://www.youtube.com/watch?v=CH50zuS8DD0">
                                 </video>
