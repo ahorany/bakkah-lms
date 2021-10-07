@@ -31,6 +31,11 @@ Route::group([
         Route::post('/info/{id}/upadte', [UserProfileController::class, 'update'])->name('update');
 
         Route::get('/my-courses', [UserProfileController::class, 'my_courses'])->name('my_courses');
+<<<<<<< HEAD
+=======
+        Route::get('/exercise', [UserProfileController::class, 'exercise'])->name('exercise');
+        Route::get('/exams', [UserProfileController::class, 'exams'])->name('exams');
+>>>>>>> 2df76dc9fb4758ceded8bdc5b6d351ee41ae7467
         Route::get('/file', [UserProfileController::class, 'file'])->name('file');
         Route::get('/exercise', [UserProfileController::class, 'exercise'])->name('exercise');
 //        Route::get('/exams', [UserProfileController::class, 'exams'])->name('exams');

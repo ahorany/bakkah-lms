@@ -373,12 +373,21 @@ class UserProfileController extends Controller
     public function exercise() {
         return view('userprofile::users.exercise');
     }
+<<<<<<< HEAD
 //    public function exams() {
 //        return view('userprofile::users.exam');
 //    }
 //    public function file() {
 //        return view('userprofile::users.file');
 //    }
+=======
+    public function exams() {
+        return view('userprofile::users.exam');
+    }
+    public function file() {
+        return view('userprofile::users.file');
+    }
+>>>>>>> 2df76dc9fb4758ceded8bdc5b6d351ee41ae7467
 
     public function course_details($course_id){
           $course = Course::where('id',$course_id)->whereHas('users',function ($q){

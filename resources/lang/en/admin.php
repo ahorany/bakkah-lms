@@ -52,5 +52,7 @@ return [
 	'video'=>'Video',
 	'audio'=>'Audio',
 	'presentaion'=>'Presentaion',
-	
+	'add_question'=>'Add Question',
+	'add_answer'=>'Add Answer',
+
 ];

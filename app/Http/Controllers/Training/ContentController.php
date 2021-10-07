@@ -39,7 +39,7 @@ class ContentController extends Controller
     public function add_section()
     {
         $rules = [
-            'title'      => "required|string|min:3|max:20",
+            'title'      => "required|string|min:3|max:50",
             'course_id'  =>'required|exists:courses,id',
             'excerpt'    =>  "required|string",
         ];
@@ -99,7 +99,7 @@ class ContentController extends Controller
         // validation
         if($type == 'exam'){
             $rules = [
-                'title'      => "required|string|min:3|max:20",
+                'title'      => "required|string|min:3|max:50",
                 'course_id'  =>'required|exists:courses,id',
                 'excerpt'    =>  "required|string",
                 'content_id' => 'required|exists:contents,id',
@@ -216,7 +216,7 @@ class ContentController extends Controller
             }
 
             $rules = [
-                'title'      => "required|string|min:3|max:20",
+                'title'      => "required|string|min:3|max:50",
                 'url'        =>   "required_without:file|max:200",
                 'file'      => $file,
             ];
