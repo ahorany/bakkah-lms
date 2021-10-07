@@ -275,8 +275,9 @@
                 this.contents.forEach(function (section) {
                     if(section.id == content_id){
                         self.title = section.title;
-                        self.excerpt = section.details.excerpt;
-                        self.model_type = section.post_type;
+                        self.excerpt =  section.details ?  section.details.excerpt : '';
+                        self.model_type = 'section';
+                        console.log(section)
                     }
                     return true ;
                 });
@@ -394,7 +395,9 @@
                     self.contents.forEach(function (section) {
                         if(section.id == self.content_id){
                             section.title = self.title  ;
-                            section.details.excerpt = self.excerpt;
+                            section.details = section.details == null ? {excerpt : ''} : section.details.excerpt ;
+                            section.details.excerpt  = self.excerpt;
+                            console.log(section)
                         }
                         return true ;
                     });

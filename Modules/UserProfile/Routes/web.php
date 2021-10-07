@@ -31,9 +31,10 @@ Route::group([
         Route::post('/info/{id}/upadte', [UserProfileController::class, 'update'])->name('update');
 
         Route::get('/my-courses', [UserProfileController::class, 'my_courses'])->name('my_courses');
-        Route::get('/exercise', [UserProfileController::class, 'exercise'])->name('exercise');
-        Route::get('/exam', [UserProfileController::class, 'exam'])->name('exam');
         Route::get('/file', [UserProfileController::class, 'file'])->name('file');
+        Route::get('/exercise', [UserProfileController::class, 'exercise'])->name('exercise');
+//        Route::get('/exams', [UserProfileController::class, 'exams'])->name('exams');
+
         Route::get('/course_details/{course_id}', [UserProfileController::class, 'course_details'])->name('course_details');
         Route::get('/preview-content/{content_id}', [UserProfileController::class, 'course_preview'])->name('course_preview');
         Route::get('/exam/{exam_id}', [UserProfileController::class, 'exam'])->name('exam');
@@ -71,5 +72,5 @@ Route::group([
     });
 });
 
-    Route::get('/redirect/{service}', [AuthSocialController::class, 'redirect']);
-    Route::get('/callback/{service}', [AuthSocialController::class, 'callback']);
+Route::get('/redirect/{service}', [AuthSocialController::class, 'redirect']);
+Route::get('/callback/{service}', [AuthSocialController::class, 'callback']);

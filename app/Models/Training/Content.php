@@ -6,6 +6,7 @@ use App\Models\Admin\Upload;
 use App\Traits\FileTrait;
 use App\Traits\ImgTrait;
 use App\Traits\TrashTrait;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Content extends Model
@@ -36,5 +37,9 @@ class Content extends Model
 
     public function course(){
         return $this->belongsTo(Course::class,'course_id');
+    }
+
+    public function user_contents(){
+        return $this->belongsToMany(User::class,'user_contents','content_id','user_id');
     }
 }

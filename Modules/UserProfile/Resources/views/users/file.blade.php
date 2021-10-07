@@ -32,27 +32,92 @@
             <div class="col-md-9 col-lg-10">
                 <div class="main-user-content m-4">
                     <div class="p-5 user-info file"  style="width:100%; margin:0 auto">
-                        <small>Dashboard / My Course / ITEL</small>
-                        <h1 style="font-weight: 700; margin: 5px 0 10px;">ITEL Course</h1>
-                        <p>PDF File</p>
-                        <!-- <iframe src="https://docs.google.com/gview?url={{CustomAsset('upload/pdf/slides.pdf')}}" style="" width="100%" height="500px" allowfullscreen="" webkitallowfullscreen=""></iframe> -->
-                        
+                        <small>Dashboard / My Course / {{ $content->course->trans_title }}</small>
+                        <h1 style="font-weight: 700; margin: 5px 0 10px;">{{ $content->course->trans_title }}</h1>
+{{--                        <p>PDF File</p>--}}
+{{--                        <!-- <iframe src="https://docs.google.com/gview?url={{CustomAsset('upload/pdf/slides.pdf')}}" style="" width="100%" height="500px" allowfullscreen="" webkitallowfullscreen=""></iframe> -->--}}
+
                         <div class="card" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
                             <div class="card-title px-5 py-3">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-12 col-12">
-                                        <h3>ITEL Course</h3>
+                                        <h3>{{ $content->title }}</h3>
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="card-body py-0">
-                                <iframe src="https://www.alwatanvoice.com/arabic/index.html" style="" width="100%" height="500px" allowfullscreen="" webkitallowfullscreen=""></iframe>
+
+                                 @isset($content->upload->file)
+                                        @if($content->post_type == 'video' )
+                                                <video controls>
+                                                    <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">
+                                                </video>
+                                         @elseif($content->post_type == 'audio' )
+                                                 <audio controls>
+                                                      <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
+                                                </audio>
+                                            @elseif($content->post_type == 'presentation' )
+                                                  <iframe style="" width="100%" height="500px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                                            @elseif($content->post_type == 'scorm' )
+                                                 <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
+                                            @else
+                                                <iframe style="" width="100%" height="500px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
+                                        @endif
+
+                                    @endisset
+
+                                        @if($content->post_type == 'video' && $content->url)
+                                            <?php
+                                                 if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
+                                                     $video_id = $match[1];
+//                                                     dd($video_id);
+                                                 }
+                                            ?>
+
+
+                                               <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id}}' ></iframe>
+                                        @endif
+
+
+
+
+                                        {{--                                <iframe src="https://www.alwatanvoice.com/arabic/index.html"  webkitallowfullscreen=""></iframe>--}}
                             </div>
+
+
                             <div class="arrow text-center py-3">
-                                <i class="fas fa-angle-left"></i>
-                                <span class="num">2 / 9</span>
-                                <i class="fas fa-angle-right"></i>
+
+
+                            <?php
+                                if( !is_null($next)){
+                                    if( $next->post_type != 'exam') {
+                                        $next_url = CustomRoute('user.course_preview',$next->id);
+                                    }else{
+                                        $next_url =  CustomRoute('user.exam',$next->id);
+                                    }
+                                }
+
+                                if(!is_null($previous)){
+                                    if($previous->post_type != 'exam'){
+                                        $previous_url = CustomRoute('user.course_preview',$previous->id);
+
+                                    }else{
+                                        $previous_url =  CustomRoute('user.exam',$previous->id);
+                                    }
+                                }
+
+                                ?>
+                                @if($next)
+                                 <i onclick="location.href = '{{$next_url}}'  " class="fas fa-angle-left"></i>
+                                @endif
+{{--                                <span class="num">2 / 9</span>--}}
+                                    @if($previous)
+                                        <i onclick="location.href =  '{{$previous_url}}'" class="fas fa-angle-right"></i>
+                                    @endif
                             </div>
+
                         </div>
                     </div>
                 </div>

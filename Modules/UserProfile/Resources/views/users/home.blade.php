@@ -51,7 +51,7 @@
                                         <img class="card-img-top" src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" alt="Card image cap">
                                         @endisset
                                         <div class="card-body text-center p-0">
-                                            <h3 class="card-title my-2" style="font-weight:700;">{{$course->trans_title}}</h3>
+                                            <h3 class="card-title my-2" style="font-weight:700;"><a href="{{CustomRoute('user.course_details',$course->id)}}">{{$course->trans_title}}</a></h3>
                                             <div class="rate">
                                                 <div class="line"></div>
                                                 <small class="num m-0 mt-2" style="color:gray;">25% Complete</small>

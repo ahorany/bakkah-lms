@@ -4,7 +4,9 @@ namespace Modules\UserProfile\Http\Controllers;
 
 use App\Models\Training\Content;
 use App\Models\Training\Exam;
+use App\Models\Training\Question;
 use App\Models\Training\UserAnswer;
+use App\Models\Training\UserContent;
 use App\Models\Training\UserExam;
 use App\User;
 use App\Constant;
@@ -19,10 +21,10 @@ use App\Models\Training\Experience;
 use App\Models\Training\Payment;
 use App\Profile;
 use App\ProfileAnswer;
-use App\ProfileAnswere;
 use App\ProfileQuestion;
 use App\ProfileQuestionUser;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
@@ -46,7 +48,7 @@ class UserProfileController extends Controller
         $exam = Content::whereId($exam_id)
             ->with(['exam' => function($q){
                 return $q->with(['users_exams']);
-            },'questions.answers'])->first();
+            }])->first();
 
         if (!$exam->exam) abort(404);
 
@@ -61,7 +63,8 @@ class UserProfileController extends Controller
 
     public function add_answers(){
 
-      $user_exam =  UserExam::whereId(\request()->user_exam_id)->where('user_id',\auth()->id())->where('status',0)->first();
+      $user_exam =  UserExam::whereId(\request()->user_exam_id)
+          ->where('user_id',\auth()->id())->where('status',0)->first();
       if (!$user_exam) abort(404);
 
         foreach (\request()->answers as $key => $value){
@@ -83,6 +86,47 @@ class UserProfileController extends Controller
             ]);
             $user_exam = UserExam::whereId(\request()->user_exam_id)
                 ->select('id','exam_id')->with('exam')->first();
+
+            // mark
+
+            foreach (\request()->answers as $key => $value){
+                if (!is_null($value)){
+                    UserAnswer::updateOrCreate([
+                        'question_id' => $key,
+                        'user_exam_id' => \request()->user_exam_id,
+                    ],[
+                        'answer_id' => $value,
+                        'question_id' => $key,
+                        'user_exam_id' => \request()->user_exam_id,
+                    ]);
+                }
+            }
+
+            $user_exam_id = \request()->user_exam_id;
+
+            $grade =  DB::select( DB::raw("SELECT SUM(questions.mark) as grade
+                                FROM `user_answers`
+                                    INNER JOIN answers ON user_answers.answer_id = answers.id
+                                    INNER JOIN questions ON questions.id = answers.question_id
+                                WHERE user_exam_id = ". $user_exam_id ."
+                                AND answers.check_correct = 1"));
+
+
+
+            UserExam::where('id',$user_exam_id)->update([
+                'mark' => $grade[0]->grade??0
+            ]);
+
+/*
+       SELECT SUM(questions.mark) as grade
+    FROM `user_answers`
+        INNER JOIN answers ON user_answers.answer_id = answers.id
+        INNER JOIN questions ON questions.id = answers.question_id
+    WHERE user_exam_id = 41
+    AND answers.check_correct = 1
+
+*/
+
             return response(['status' => 'success' , 'redirect_route' => route('user.exam',$user_exam->exam->content_id)]);
         }
     }
@@ -102,19 +146,50 @@ class UserProfileController extends Controller
 
 
         if (count($exam->exam->users_exams) > 0 && $exam->exam->users_exams[$user_exams_count-1]->status == 0){
-            return view('userprofile::users.exam_preview',compact('exam'));
+            // duration time calc
+//            $start_user_attepmt =$exam->exam->users_exams[$user_exams_count-1]->time;
+            $start_user_attepmt = Carbon::now();
+
+            $d = Carbon::parse($start_user_attepmt)
+                ->addSeconds($exam->exam->duration * 60)
+                ->format('Y-m-d H:i:s');;
+            $d1 = strtotime($d);
+            $d2 = strtotime($exam->exam->end_date);
+            if( ($d1 - $d2) > 0){
+                $exam->exam->duration =   $exam->exam->duration * 60 -  ($d1 - $d2);
+            }else{
+                $d = Carbon::parse($start_user_attepmt)
+                    ->format('Y-m-d H:i:s');;
+                $d1 = strtotime($d);
+                $d2 = strtotime($exam->exam->users_exams[$user_exams_count-1]->time);
+                $exam->exam->duration = ($exam->exam->duration * 60) -  ($d1 - $d2);
+            }
+
+            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt'));
         }
 
         if ( $user_exams_count < $exam->exam->attempt_count){
+            $start_user_attepmt = Carbon::now();
             $data = UserExam::create([
                     'user_id' => \auth()->id() ,
                     'exam_id' => $exam->exam->id,
                     'status' => 0,
-                    'time' => Carbon::now(),
+                    'time' => $start_user_attepmt,
                 ]);
             $exam->exam->users_exams->push($data);
 
-            return view('userprofile::users.exam_preview',compact('exam'));
+            // duration time calc
+           $d = Carbon::parse($start_user_attepmt)
+               ->addSeconds($exam->exam->duration * 60)
+               ->format('Y-m-d H:i:s');;
+           $d1 = strtotime($d);
+           $d2 = strtotime($exam->exam->end_date);
+            if( ($d1 - $d2) > 0){
+                $exam->exam->duration =   $exam->exam->duration * 60 -  ($d1 - $d2);
+            }else{
+                $exam->exam->duration *= 60;
+            }
+            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt'));
 
         }else{
             abort(404);
@@ -298,12 +373,12 @@ class UserProfileController extends Controller
     public function exercise() {
         return view('userprofile::users.exercise');
     }
-    public function exam() {
-        return view('userprofile::users.exam');
-    }
-    public function file() {
-        return view('userprofile::users.file');
-    }
+//    public function exams() {
+//        return view('userprofile::users.exam');
+//    }
+//    public function file() {
+//        return view('userprofile::users.file');
+//    }
 
     public function course_details($course_id){
           $course = Course::where('id',$course_id)->whereHas('users',function ($q){
@@ -314,12 +389,18 @@ class UserProfileController extends Controller
           if (!$course){
               abort(404);
           }
-        return view('userprofile::users.course_details',compact('course'));
+
+
+
+        return view('userprofile::users.my_courses',compact('course'));
+//        return view('userprofile::users.course_details',compact('course'));
 
 //        return $course;
     }
 
     public function course_preview($content_id){
+
+
         $content = Content::whereId($content_id)->with(['upload','course.users' => function($q){
             $q->where('users.id',\auth()->id());
         }])->first();
@@ -327,19 +408,56 @@ class UserProfileController extends Controller
         if (!$content){
             abort(404);
         }
-//        return $content;
-
-        return view('userprofile::users.course_preview',compact('content'));
 
 
+//        $previous = Content::where('id', '<', $content->id)
+//            ->where('course_id',$content->course_id)
+//            ->where('post_type','!=','section')
+//            ->select('id')
+//            ->with(['user_contents' => function($q){
+////                $q->where();
+//            }])
+//            ->latest()->first();
 
-//        return response()
-//            ->download( public_path('upload/files/videos/'.$content->upload->file) , $content->upload->name,
-//                [
-//                    'Content-Type' => 'application/octet-stream'
-//                ]);
+        UserContent::firstOrCreate([
+            'user_id' => \auth()->id(),
+            'content_id' => $content_id,
+        ],[
+            'user_id'  => \auth()->id(),
+            'content_id' => $content_id,
+        ]);
 
+
+        $previous = Content::where('id', '<', $content->id)
+                            ->where('course_id',$content->course_id)
+                            ->where('post_type','!=','section')
+                            ->select('id','post_type','course_id')->latest()->first();
+
+        $next = Content::where('id', '>', $content->id)
+                            ->where('course_id',$content->course_id)
+                            ->where('post_type','!=','section')
+                             ->select('id','post_type')->first();
+//        dump($content->id);
+//        dd($previous);
+//        dump($next);
+
+        return view('userprofile::users.file',compact('content','previous','next'));
     }
+
+
+
+//    public function course_preview($content_id){
+//        $content = Content::whereId($content_id)->with(['upload','course.users' => function($q){
+//            $q->where('users.id',\auth()->id());
+//        }])->first();
+//
+//        if (!$content){
+//            abort(404);
+//        }
+////        return $content;
+//
+//        return view('userprofile::users.course_preview',compact('content'));
+//    }
 
 
 

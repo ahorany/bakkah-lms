@@ -101,7 +101,9 @@
                             <div class="row">
                                 <div class="col-4 col-md-3 col-lg-3 mb-4 px-3 image">
                                     <div class="card p-4" style="width: 100%; border-radius: 10px; border: 1px solid #f2f2f2">
-                                        <img class="card-img-top" src="{{CustomAsset('upload/thumb200/itel.png')}}" alt="Card image cap">
+                                        @isset($course->upload->file)
+                                          <img class="card-img-top" src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}">
+                                        @endisset
                                         <div class="card-body text-center p-0">
                                             <div class="rate">
                                                 <div class="line"></div>
@@ -114,8 +116,8 @@
                                 <div class="col-8 col-md-9 col-lg-9 mb-4 px-3 info">
                                     <div class="px-4" style="width: 100%;">
                                         <div class="card-body p-0">
-                                            <small>Dashboard / My Course / ITEL</small>
-                                            <h1 style="font-weight: 700;    margin: 5px 0 10px;">ITEL Course</h1>
+                                            <small>Dashboard / My Course / {{$course->trans_title}}</small>
+                                            <h1 style="font-weight: 700;    margin: 5px 0 10px;">{{$course->trans_title}}</h1>
                                             <div class="star_rating">
                                                 <label>4.5</label>
                                                 <fieldset class="rating star">
@@ -132,12 +134,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-9 col-lg-9 mb-3 p-3">
-                                    <p class="description">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eveniet, qui consequatur voluptas obcaecati magnam similique? Nemo aliquam corrupti, illum culpa, delectus aspernatur aperiam aut minima, ad itaque in accusantium!locale_filter_matches
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto hic debitis illo, officia maxime odio veniam incidunt, excepturi atque suscipit officiis voluptatibus. Necessitatibus, est! Est quo impedit quasi dolores totam.
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eveniet, qui consequatur voluptas obcaecati magnam similique? Nemo aliquam corrupti, illum culpa, delectus aspernatur aperiam aut minima, ad itaque in accusantium!locale_filter_matches
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto hic debitis illo, officia maxime odio veniam incidunt, excepturi atque suscipit officiis voluptatibus. Necessitatibus, est! Est quo impedit quasi dolores totam.
-                                    </p>
+                                    <p class="description">{{$course->trans_excerpt}}</p>
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-3 py-3 px-0">
@@ -152,51 +149,32 @@
 
                                 <div class="col-12 col-md-7 col-lg-7 mb-3 p-3">
                                     <div class="row m-0">
-                                        <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
-                                            <div class="card" style="border: 1.5px solid #e6e6e6; border-radius: 10px; overflow:hidden;">
-                                                <a href="#" class="video-link">
-                                                    <i class="fas fa-video mr-2"></i> Self Study Tour Video
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
-                                            <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
-                                                <p class="learning_file" style="padding-left:30px;">LEARNING FILES</p>
-                                                <div class="my-links">
-                                                    <a href="#" class="d-block">
-                                                        <i class="fas fa-video mr-2"></i> Study Plan
-                                                    </a>
-                                                    <a href="#" class="d-block">
-                                                        <i class="fas fa-video mr-2"></i> Pre-Readings
-                                                    </a>
-                                                    <a href="#" class="d-block">
-                                                        <i class="fas fa-video mr-2"></i> Assess your Knowledge - Pre-Learning
-                                                    </a>
-                                                    <a href="#" class="d-block">
-                                                        <i class="fas fa-video mr-2"></i> Bakkah Introduction
-                                                    </a>
+                                            @foreach($course->contents as $section)
+                                                <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
+                                                    <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
+                                                        <p class="learning_file" style="padding-left:30px;">{{$section->title}}</p>
+                                                        @isset($section->contents)
+                                                           <div class="my-links">
+                                                               @foreach($section->contents as $content)
+                                                                   <?php
+                                                                    $class = 'fas fa-file';
+                                                                      switch($content->post_type){
+                                                                       case "video" :  $class = 'fas fa-video';    break;
+                                                                       case "presentation" :  $class = 'fas fa-file-powerpoint';   break;
+                                                                       case "exam" :  $class = 'fas fa-question-circle';  break;
+                                                                      }
+                                                                   ?>
+                                                                   <a target="_blank"   href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" class="d-block">
+                                                                     <i  class="{{$class}} mr-2"></i>  {{$content->title}}
+                                                                   </a>
+                                                               @endforeach
+                                                           </div>
+                                                        @endisset
+
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
-                                            <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
-                                                <p class="learning_file" style="padding-left:30px;">LEARNING FILES</p>
-                                                <div class="my-links">
-                                                    <a href="#" class="d-block">
-                                                        <i class="fas fa-video mr-2"></i> Study Plan
-                                                    </a>
-                                                    <a href="#" class="d-block">
-                                                        <i class="fas fa-video mr-2"></i> Pre-Readings
-                                                    </a>
-                                                    <a href="#" class="d-block">
-                                                        <i class="fas fa-video mr-2"></i> Assess your Knowledge - Pre-Learning
-                                                    </a>
-                                                    <a href="#" class="d-block">
-                                                        <i class="fas fa-video mr-2"></i> Bakkah Introduction
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            @endforeach
+
                                     </div>
                                 </div>
 

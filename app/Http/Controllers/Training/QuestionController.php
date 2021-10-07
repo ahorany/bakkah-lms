@@ -7,7 +7,9 @@ use App\Models\Training\Answer;
 use App\Models\Training\Content;
 use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
+use App\Models\Training\Exam;
 use App\Models\Training\Question;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,6 +40,13 @@ class QuestionController extends Controller
             'mark' => \request()->mark,
             'exam_id' => \request()->exam_id,
         ]);
+
+       $mark = DB::select(DB::raw("SELECT SUM(mark) as mark FROM questions WHERE exam_id =".\request()->exam_id));
+
+        Exam::where('content_id' ,\request()->exam_id)->update([
+            'exam_mark' => $mark[0]->mark
+        ]);
+
         return response()->json(['data' => $question]);
     }
 

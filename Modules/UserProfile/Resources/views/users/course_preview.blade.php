@@ -14,27 +14,32 @@
                         <h4 class="mb-4"><i class="fas fa-graduation-cap"></i> {{ __('education.My Courses') }}</h4>
                         @if($content->post_type == 'video' )
 
-                               @if($content->upload->file)
+                               @isset($content->upload->file)
                                      <video controls>
                                          <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">
                                      </video>
                                  @elseif($content->url)
                                     <iframe style="height:400px"  frameborder='0' src='{{$content->url}}' >
-                                @endif
+                                @endisset
 
                         @elseif($content->post_type == 'audio' )
-                              <audio controls>
-                                  <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
-                              </audio>
+                                     @isset($content->upload->file)
+                                            <audio controls>
+                                                  <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
+                                              </audio>
+                                     @endisset
                         @elseif($content->post_type == 'presentation' )
-                            <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' >
-
+                               @isset($content->upload->file)
+                                       <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' >
+                              @endisset
                         @elseif($content->post_type == 'scorm' )
-                             <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' >
-
+                           @isset($content->upload->file)
+                              <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' >
+                          @endisset
                         @else
-                             <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' >
-
+                                 @isset($content->upload->file)
+                                <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' >
+                               @endisset
                         @endif
                     </div>
                 </div>
