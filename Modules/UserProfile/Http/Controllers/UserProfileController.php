@@ -52,6 +52,15 @@ class UserProfileController extends Controller
 
         if (!$exam->exam) abort(404);
 
+
+        UserContent::firstOrCreate([
+            'user_id' => \auth()->id(),
+            'content_id' => $exam_id,
+        ],[
+            'user_id'  => \auth()->id(),
+            'content_id' => $exam_id,
+        ]);
+
 //        return $exam;
 //        $user_exams_count = count($exam->exam->users_exams);
 //
@@ -114,6 +123,7 @@ class UserProfileController extends Controller
 
 
             UserExam::where('id',$user_exam_id)->update([
+                'end_attempt' => Carbon::now(),
                 'mark' => $grade[0]->grade??0
             ]);
 
@@ -142,12 +152,16 @@ class UserProfileController extends Controller
             },'questions.answers'])->first();
         if (!$exam->exam) abort(404);
 
+
+
+
+
+
         $user_exams_count = count($exam->exam->users_exams);
 
 
         if (count($exam->exam->users_exams) > 0 && $exam->exam->users_exams[$user_exams_count-1]->status == 0){
             // duration time calc
-//            $start_user_attepmt =$exam->exam->users_exams[$user_exams_count-1]->time;
             $start_user_attepmt = Carbon::now();
 
             $d = Carbon::parse($start_user_attepmt)
@@ -373,38 +387,27 @@ class UserProfileController extends Controller
     public function exercise() {
         return view('userprofile::users.exercise');
     }
-<<<<<<< HEAD
-//    public function exams() {
-//        return view('userprofile::users.exam');
-//    }
-//    public function file() {
-//        return view('userprofile::users.file');
-//    }
-=======
-    public function exams() {
-        return view('userprofile::users.exam');
-    }
-    public function file() {
-        return view('userprofile::users.file');
-    }
->>>>>>> 2df76dc9fb4758ceded8bdc5b6d351ee41ae7467
+
+
 
     public function course_details($course_id){
           $course = Course::where('id',$course_id)->whereHas('users',function ($q){
                $q->where('users.id',\auth()->id());
           })->with(['contents' => function($query){
-              $query->where('post_type','section')->with(['contents']);
+              $query->where('post_type','section')->with(['contents.user_contents' => function($q){
+                  return $q->where('user_id',\auth()->id());
+              }]);
           }])->first();
           if (!$course){
               abort(404);
           }
 
+//          return $course->contents[0]->contents[0]->user_contents[0];
 
 
         return view('userprofile::users.my_courses',compact('course'));
 //        return view('userprofile::users.course_details',compact('course'));
 
-//        return $course;
     }
 
     public function course_preview($content_id){

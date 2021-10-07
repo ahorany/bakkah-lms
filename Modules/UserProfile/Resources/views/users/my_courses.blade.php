@@ -133,18 +133,8 @@
                                     </div>
                                 </div>
 
-<<<<<<< HEAD
-                                <div class="col-12 col-md-9 col-lg-9 mb-3 p-3">
-                                    <p class="description">{{$course->trans_excerpt}}</p>
-=======
                                 <div class="col-12 col-md-8 col-lg-8 mb-3 p-3">
-                                    <p class="description">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eveniet, qui consequatur voluptas obcaecati magnam similique? Nemo aliquam corrupti, illum culpa, delectus aspernatur aperiam aut minima, ad itaque in accusantium!locale_filter_matches
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto hic debitis illo, officia maxime odio veniam incidunt, excepturi atque suscipit officiis voluptatibus. Necessitatibus, est! Est quo impedit quasi dolores totam.
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eveniet, qui consequatur voluptas obcaecati magnam similique? Nemo aliquam corrupti, illum culpa, delectus aspernatur aperiam aut minima, ad itaque in accusantium!locale_filter_matches
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto hic debitis illo, officia maxime odio veniam incidunt, excepturi atque suscipit officiis voluptatibus. Necessitatibus, est! Est quo impedit quasi dolores totam.
-                                    </p>
->>>>>>> 2df76dc9fb4758ceded8bdc5b6d351ee41ae7467
+                                    <p class="description">{{$course->trans_excerpt}}</p>
                                 </div>
 
                                 <div class="col-12 col-md-4 col-lg-4 mb-3 py-3 px-0">
@@ -159,13 +149,14 @@
 
                                 <div class="col-12 col-md-7 col-lg-7 mb-3 p-3">
                                     <div class="row m-0">
-                                            @foreach($course->contents as $section)
+                                            @foreach($course->contents as $key => $section)
+
                                                 <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
                                                     <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
                                                         <p class="learning_file" style="padding-left:30px;">{{$section->title}}</p>
                                                         @isset($section->contents)
                                                            <div class="my-links">
-                                                               @foreach($section->contents as $content)
+                                                               @foreach($section->contents as $k => $content)
                                                                    <?php
                                                                     $class = 'fas fa-file';
                                                                       switch($content->post_type){
@@ -173,8 +164,10 @@
                                                                        case "presentation" :  $class = 'fas fa-file-powerpoint';   break;
                                                                        case "exam" :  $class = 'fas fa-question-circle';  break;
                                                                       }
+
+
                                                                    ?>
-                                                                   <a target="_blank"   href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" class="d-block">
+                                                                   <a  @if( (isset($content->user_contents[0])) || ($key == 0 && $k == 0) || isset($section->contents[($k-1)]->user_contents[0])) )   target="_blank"  href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"   @endif    class="d-block">
                                                                      <i  class="{{$class}} mr-2"></i>  {{$content->title}}
                                                                    </a>
                                                                @endforeach

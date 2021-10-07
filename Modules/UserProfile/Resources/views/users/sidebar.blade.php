@@ -3,7 +3,6 @@
         <ul class="list-unstyled p-0 m-0">
 
         @foreach($user_sidebar as $item)
-<<<<<<< HEAD
             <li><a class="{{ Request::routeIs($item->route_name) ? 'active' : '' }}" href="{{CustomRoute($item->route_name)}}"><i class="fas fa-tachometer-alt"></i> <span class="m-0">{{$item->trans_title}} </span></a></li>
          @endforeach
          <!-- <li><a href="#"><i class="fas fa-tachometer-alt"></i> <span class="m-0">{{__('education.Dashboard')}} </span></a></li> -->
@@ -15,16 +14,6 @@
 {{--            <li><a class="{{ Request::routeIs('user.exercise') ? 'active' : '' }}" href="{{ route('user.exercise') }}"><i class="fas fa-inbox"></i> <span>{{__('education.Exercise')}} </span></a></li>--}}
 
 
-=======
-            <li><a href="{{CustomRoute($item->route_name)}}"><i class="{{$item->icon}}"></i> <span class="m-0">{{$item->trans_title}} </span></a></li>
-         @endforeach
-         <!-- <li><a href="#"><i class="fas fa-tachometer-alt"></i> <span class="m-0">{{__('education.Dashboard')}} </span></a></li> -->
-            <!-- <li><a class="{{ Request::routeIs('user.home') ? 'active' : '' }}" href="{{ route('user.home') }}"><i class="fas fa-home"></i><span> {{__('education.home')}} </span></a></li>
-            <li><a class="{{ Request::routeIs('user.my_courses') ? 'active' : '' }}" href="{{ route('user.my_courses') }}"><i class="fas fa-inbox"></i> <span>{{__('education.My Courses')}} </span></a></li>
-            <li><a class="{{ Request::routeIs('user.file') ? 'active' : '' }}" href="{{ route('user.file') }}"><i class="fas fa-inbox"></i> <span>{{__('education.File')}} </span></a></li>
-            <li><a class="{{ Request::routeIs('user.exercise') ? 'active' : '' }}" href="{{ route('user.exercise') }}"><i class="fas fa-inbox"></i> <span>{{__('education.Exercise')}} </span></a></li>
-            <li><a class="{{ Request::routeIs('user.exams') ? 'active' : '' }}" href="{{ route('user.exams') }}"><i class="fas fa-inbox"></i> <span>{{__('education.Exam')}} </span></a></li> -->
->>>>>>> 2df76dc9fb4758ceded8bdc5b6d351ee41ae7467
              <li><a href="{{ route('user.logout') }}"><i class="fas fa-sign-out-alt"></i> <span>{{__('education.Logout')}} </span></a></li>
         </ul>
     </aside>

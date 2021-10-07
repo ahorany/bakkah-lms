@@ -119,9 +119,9 @@ button.close span {
 .modal-diff-content {
     margin: 10px 0;
 }
-.progress{
-    display: none;
-}
+/*.progress{*/
+/*    display: none;*/
+/*}*/
 /*********************custom file************************/
 #pills-tabContent input[type=file] {
     outline: 0;

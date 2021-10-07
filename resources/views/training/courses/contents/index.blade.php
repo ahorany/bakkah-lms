@@ -275,6 +275,11 @@
                 this.progress 	= '0%';
                 this.errors = {};
 
+                this.duration = 0;
+                this.pagination = 1;
+                this.attempt_count = 1;
+
+
                 if(this.file != '' ){
                     this.$refs.inputFile.type='text';
                     this.$refs.inputFile.type='file';
@@ -330,8 +335,13 @@
                                      content.exam ? self.start_date = moment(content.exam.start_date).format('YYYY-MM-DDTHH:mm')  : '';
                                      content.exam ? self.end_date = moment(content.exam.end_date).format('YYYY-MM-DDTHH:mm')  : '';
                                      content.exam ? self.duration = content.exam.duration : 0;
+                                     content.exam ? self.pagination = content.exam.pagination : 1;
+                                     content.exam ? self.attempt_count = content.exam.attempt_count :1;
                                     self.model_type = content.post_type;
                                     self.url = content.url;
+
+                                    console.log(content)
+
                             }
                         })
                     }
@@ -537,6 +547,12 @@
                                     if(content.exam ){
                                        content.exam.start_date = self.start_date;
                                        content.exam.end_date =self.end_date;
+
+                                       content.exam.duration =self.duration;
+                                       content.exam.pagination =self.pagination;
+                                       content.exam.attempt_count =self.attempt_count;
+
+
                                     }
                                     content.post_type = self.model_type;
                                     content.url = self.url;

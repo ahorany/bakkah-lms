@@ -48,7 +48,10 @@
                                             <div class="card-body">
                                                 @isset($section->contents)
                                                     @foreach($section->contents as $content)
-                                                        <p class="card-text"><a   target="_blank"   href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif"><i class="fas fa-check"></i> {{$content->title}}</a></p>
+                                                        <p class="card-text"><a   target="_blank" @isset($content->user_contents[0]) style="color: red" @endisset   href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif"><i class="fas fa-check"></i> {{$content->title}}</a></p>
+
+
+
                                                     @endforeach
                                                 @endisset
                                             </div>

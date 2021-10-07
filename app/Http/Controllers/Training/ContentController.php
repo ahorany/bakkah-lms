@@ -87,9 +87,12 @@ class ContentController extends Controller
             'course_id'  =>request()->course_id,
         ]);
 
-        ContentDetails::where('content_id',request()->content_id)->update([
+        ContentDetails::updateOrCreate([
+            'content_id' => request()->content_id
+        ],[
             'excerpt'    =>  request()->excerpt,
         ]);
+
 
         return response()->json([ 'status' => 'success']);
 

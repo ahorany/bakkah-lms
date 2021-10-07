@@ -5,9 +5,7 @@
 @endsection
 
 @section('content')
-<<<<<<< HEAD
 
-=======
 <style>
 .userarea-wrapper{
     background: #fafafa;
@@ -72,13 +70,11 @@ label.navigation {
     background: #efefef !important;
 }
 </style>
->>>>>>> 2df76dc9fb4758ceded8bdc5b6d351ee41ae7467
     <div class="userarea-wrapper">
         <div class="row no-gutters">
             @include('userprofile::users.sidebar')
             <div class="col-md-9 col-lg-10">
                 <div class="main-user-content m-4">
-<<<<<<< HEAD
                     <div class="card p-5 user-info">
                         <h4 class="mb-4"><i class="fas fa-graduation-cap"></i> {{ __('education.Exam') }}</h4>
                         <div class="row">
@@ -95,16 +91,22 @@ label.navigation {
                                             <p class="card-title">Your attempts  : {{$users_exams_count}}</p>
                                             <p class="card-title">Mark  : {{$exam->exam->exam_mark}} </p>
 
-                                            @if($users_exams_count == 0)
-                                                <p class="text-warning">No Attempts</p>
-                                                <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start Attempt</a>
-                                            @elseif($exam->exam->users_exams[$users_exams_count-1]->status == 0)
-                                                <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Return to Exam</a>
 
-                                            @elseif($users_exams_count < $exam->exam->attempt_count && $exam->exam->users_exams[$users_exams_count-1]->status == 1)
-                                                <a onclick="confirmNewAttempt()" href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start New Attempt</a>
+
+                                            @if( \Carbon\Carbon::create($exam->exam->end_date)  > \Carbon\Carbon::now())
+                                                @if($users_exams_count == 0)
+                                                    <p class="text-warning">No Attempts</p>
+                                                    <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start Attempt</a>
+                                                @elseif($exam->exam->users_exams[$users_exams_count-1]->status == 0)
+                                                    <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Return to Exam</a>
+
+                                                @elseif($users_exams_count < $exam->exam->attempt_count && $exam->exam->users_exams[$users_exams_count-1]->status == 1)
+                                                    <a onclick="confirmNewAttempt()" href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start New Attempt</a>
+                                                @else
+                                                    <p class="text-danger">All your attempts are over</p>
+                                                @endif
                                             @else
-                                                <p class="text-danger">All your attempts are over</p>
+                                                <p class="text-danger">Expired Time</p>
                                             @endif
                                         </div>
                                     </div>
@@ -128,8 +130,10 @@ label.navigation {
                                     <caption>List of Attempts</caption>
                                     <thead>
                                     <tr>
-                                        <th scope="col">Title</th>
+                                        <th scope="col"># Attempt</th>
                                         <th scope="col">Your Start Time</th>
+                                        <th scope="col">Your End Time</th>
+                                        <th scope="col">Time taken</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mark</th>
                                     </tr>
@@ -137,8 +141,20 @@ label.navigation {
                                     <tbody>
                                     @foreach($exam->exam->users_exams as $attempt)
                                         <tr>
-                                            <td>Attempt # {{$loop->iteration}}</td>
+                                            <td>{{$loop->iteration}}</td>
                                             <td>{{$attempt->time}}</td>
+                                            <td >{{$attempt->end_attempt??'-----'}}</td>
+                                            <?php
+
+                                            $date1 = new DateTime( $attempt->time);
+                                            $date2 = new DateTime($attempt->end_attempt);
+                                            $interval = $date1->diff($date2);
+                                            $diff = '';
+//
+
+                                            $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
+                                            ?>
+                                            <td>{{$diff??'0 seconds'}}</td>
                                             <td class="text-bold {{$attempt->status == 1 ? 'text-success' : 'text-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</td>
                                             <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                                         </tr>
@@ -147,128 +163,13 @@ label.navigation {
                                 </table>
                             </div>
 
-=======
-                    <!-- <div class="card p-5 user-info"> -->
-                    <div class="p-5 exams">
-                        <small>Dashboard / My Course / ITEL</small>
-                        <h1 style="font-weight: 700; margin: 5px 0 10px;">ITEL Course</h1>
-                        <div class="row">
-                            <div class="col-md-9 col-lg-10 col-12">
-                                <form action="">
-                                    <div class="card position-relative p-5 mb-4 exam" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
-                                        <div class="position-absolute number_question">Q1</div>
-                                        <p class="question">What is the Worranty?</p>
-                                        <label>Select one:</label>
-                                        <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer1">
-                                            <label for="answer1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
-                                        </div>
-                                        <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer2">
-                                            <label for="answer2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
-                                        </div>
-                                        <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer3">
-                                            <label for="answer3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
-                                        </div>
-                                        <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer4">
-                                            <label for="answer4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
-                                        </div>
-                                    </div>
-                                    <div class="card position-relative p-5 mb-4 exam" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
-                                        <div class="position-absolute number_question">Q1</div>
-                                        <p class="question">What is the Worranty?</p>
-                                        <label>Select one:</label>
-                                        <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer5">
-                                            <label for="answer5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
-                                        </div>
-                                        <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer6">
-                                            <label for="answer6">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
-                                        </div>
-                                        <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer7">
-                                            <label for="answer7">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
-                                        </div>
-                                        <div class="answer my-2">
-                                            <input type="radio" name="answer" id="answer8">
-                                            <label for="answer8">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, obcaecati.</label>
-                                        </div>
-                                    </div>
-                                    <div class="row m-0 my-2">
-                                        <div class="col-md-4 col-4 col-lg-4 p-0">
-                                            <input type="submit" value="Submit">
-                                        </div>
-                                        <div class="col-md-4 col-4 col-lg-4 text-center p-0 py-2">
-                                            <div class="time">
-                                                <span>
-                                                    <i class="far fa-clock"></i>
-                                                    19m and 55s
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-4 col-lg-4 text-right p-0 py-1">
-                                            <div class="arrow">
-                                                <i class="fas fa-angle-left"></i>
-                                                <i class="fas fa-angle-right"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-md-3 col-lg-2 col-12 px-0">
-                                <div class="card py-4" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
-                                    <div class="row m-0">
-                                        <div class="col-md-12 col-lg-12 col-12 mb-3">
-                                            <h5 class="title">Quiz Navigation</h5>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation done_question">1</label>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation done_question">2</label>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation done_question">3</label>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation done_question">4</label>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation">5</label>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation">6</label>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation">7</label>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation">8</label>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation">9</label>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                            <label class="navigation">10</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
->>>>>>> 2df76dc9fb4758ceded8bdc5b6d351ee41ae7467
+
                 </div>
             </div>
         </div>
     </div>
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 2df76dc9fb4758ceded8bdc5b6d351ee41ae7467
 @endsection
 
 @section('scripts')
@@ -280,7 +181,3 @@ label.navigation {
 
     </script>
 @endsection
-<<<<<<< HEAD
-=======
-
->>>>>>> 2df76dc9fb4758ceded8bdc5b6d351ee41ae7467

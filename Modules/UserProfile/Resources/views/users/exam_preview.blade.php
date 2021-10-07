@@ -155,11 +155,13 @@
     <script>
 
         window.exam = {!! json_encode($exam??[]) !!}
+        window.start_user_attepmt = {!! json_encode($start_user_attepmt??[]) !!}
 
         new Vue({
             'el' : '#exam',
             'data' : {
                 exam: window.exam,
+                start_user_attepmt: window.start_user_attepmt,
                 current: 1,
                 user_exam_id: '',
                 indexStart: 0,
@@ -199,23 +201,18 @@
                }
 
                 this.countdownTimeStart();
-                // console.log(this.paginated)
-                // console.log(this.exam)
             },
             methods : {
 
            countdownTimeStart : function(){
                var self = this;
-            // if (localStorage.getItem("start_time_exam") === null) {
-            //     var now = new Date().getTime();
-            //     localStorage.setItem('start_time_exam', now);
-            // }
 
-            let t = new Date()
-            t.setSeconds({{$exam->exam->duration}})
+            let t = this.start_user_attepmt
+               t = new Date(t)
+
+               t.setSeconds({{$exam->exam->duration}})
             var countDownDate = t.getTime();
 
-// Update the count down every 1 second
 
             var x = setInterval(function() {
 
@@ -225,10 +222,8 @@
                 // var now2 = new Date().getTime();
                 var now = new Date().getTime();
 
-
                 // Find the distance between now an the count down date
                 var distance = countDownDate - now;
-                // alert(now + " " + distance + " " + countDownDate)
                 // Time calculations for days, hours, minutes and seconds
                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -238,8 +233,6 @@
                 document.getElementById("demo").innerHTML = hours + "h "
                     + minutes + "m " + seconds + "s ";
 
-                // alert(hours + "h " + minutes + "m " + seconds + "s ")
-
                 // If the count down is over, write some text
                 if (distance < 0) {
                     clearInterval(x);
@@ -247,13 +240,11 @@
                     self.nextSaveAnswers('save');
                 }
 
-                // var now = new Date().getTime();
-                // localStorage.setItem('start_time_exam', parseInt(now) + 1000);
             }, 1000);
         },
 
 
-        searchAndOpenQuestion : function(question_id){
+                searchAndOpenQuestion : function(question_id){
                     // index question
                     let current_page = this.current
                     let start_index = 0;
