@@ -76,6 +76,11 @@ class UserProfileController extends Controller
           ->where('user_id',\auth()->id())->where('status',0)->first();
       if (!$user_exam) abort(404);
 
+//      Exam::where('id',$user_exam->exam_id)
+//          ->where('start_date','<=',Carbon::now())
+//          ->where('end_date','>=',Carbon::now())->first();
+
+
         foreach (\request()->answers as $key => $value){
             if (!is_null($value)){
                 UserAnswer::updateOrCreate([
@@ -143,6 +148,7 @@ class UserProfileController extends Controller
 
 
     public function preview_exam($exam_id){
+        $page_type = 'exam';
         $exam = Content::whereId($exam_id)
             ->with(['exam' => function($q){
                 return $q->with(['users_exams' => function($query){
@@ -178,7 +184,7 @@ class UserProfileController extends Controller
                 $exam->exam->duration = ($exam->exam->duration * 60) -  ($d1 - $d2);
             }
 
-            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt'));
+            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt','page_type'));
         }
 
         if ( $user_exams_count < $exam->exam->attempt_count){
@@ -202,12 +208,42 @@ class UserProfileController extends Controller
             }else{
                 $exam->exam->duration *= 60;
             }
-            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt'));
+            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt','page_type'));
 
         }else{
             abort(404);
         }
     }
+
+
+    public function review_exam($exam_id){
+        $page_type = 'review';
+
+        $exam = UserExam::whereId($exam_id)
+            ->where('user_id',\auth()->id())
+            ->where('status',1)
+            ->with(['exam.content.questions.answers','user_answers'])
+            ->first();
+
+
+//        return $exam;
+//        $exam = Content::whereId($exam_id)
+//            ->with(['exam' => function($q){
+//                return $q->with(['users_exams' => function($query){
+//                    return $query->where('user_id',\auth()->id())->with('user_answers');
+//                }]);
+//            },'questions.answers'])->first();
+
+
+//        if ( !$exam && (count($exam->exam->questions) == 0) ) abort(404);
+
+
+//         return $exam;
+
+        return view('userprofile::users.exam_preview',compact('exam','page_type'));
+
+    }
+
 
 
     public function dashboard() {

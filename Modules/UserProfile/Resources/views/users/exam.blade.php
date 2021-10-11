@@ -158,6 +158,7 @@ label.navigation {
 
                                             $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
                                             ?>
+                                            <td><a href="{{CustomRoute('user.review.exam',$attempt->id)}}">Review</a></td>
                                             <td>{{$diff??'0 seconds'}}</td>
                                             <td class="text-bold {{$attempt->status == 1 ? 'text-success' : 'text-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</td>
                                             <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>

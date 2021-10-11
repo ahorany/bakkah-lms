@@ -68,6 +68,15 @@
         .done_question{
             background: #efefef !important;
         }
+        .done_answer{
+            color:#fff;
+            background: #2a9055 !important;
+        }
+
+        .fail_answer{
+            color:#fff;
+            background: #da4f49 !important;
+        }
     </style>
     <div class="userarea-wrapper">
         <div class="row no-gutters">
@@ -84,10 +93,17 @@
                                         <div class="position-absolute number_question" v-text="'Q' + (index+indexStart+1)"></div>
                                         <p class="question" v-text="question.title"></p>
                                         <label>Select one:</label>
-                                          <template v-for="answer in question.answers">
+                                          <template v-if="page_type == 'exam'" v-for="answer in question.answers">
                                               <div class="answer my-2">
-                                                <input type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                <input :disabled="page_type != 'exam'" type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
                                                 <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
+                                              </div>
+                                          </template>
+
+                                          <template v-if="page_type != 'exam'" v-for="answer in question.answers">
+                                              <div class="answer my-2">
+                                                  <input :disabled="page_type != 'exam'" type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id].id == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                  <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
                                               </div>
                                           </template>
                                     </div>
@@ -96,18 +112,21 @@
 
                                     <div class="row m-0 my-2">
                                             <div class="col-md-4 col-4 col-lg-4 p-0">
-                                                <template v-if="save_status">
-                                                  <input type="submit" @click.prevent="save()"  value="Submit">
+                                                <template v-if="save_status && page_type == 'exam' ">
+                                                   <input type="submit" @click.prevent="save()"  value="Submit">
                                                 </template>
                                             </div>
 
                                         <div class="col-md-4 col-4 col-lg-4 text-center p-0 py-2">
-                                            <div class="time">
-                                                <span>
-                                                    <i class="far fa-clock"></i>
-                                                    <span id="demo"></span>
-                                                </span>
-                                            </div>
+                                            <template v-if="page_type == 'exam'">
+                                                <div  class="time">
+                                                    <span>
+                                                        <i class="far fa-clock"></i>
+                                                        <span id="demo"></span>
+                                                    </span>
+                                                </div>
+                                            </template>
+
                                         </div>
                                         <div class="col-md-4 col-4 col-lg-4 text-right p-0 py-1">
                                             <div class="arrow">
@@ -132,11 +151,20 @@
                                         <div  class="col-md-12 col-lg-12 col-12 mb-3">
                                             <h5 class="title">Quiz Navigation</h5>
                                         </div>
-                                        <template v-for="(question, index) in exam.questions">
+                                        <template v-if="page_type == 'exam' "  v-for="(question, index) in exam.questions">
                                             <div :key="question.id"  class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                                <label @click="searchAndOpenQuestion(question.id)" class="navigation" :class="{'done_question': answers[question.id]  ? true:false}" v-text="index+1"></label>
+                                                <label  @click="searchAndOpenQuestion(question.id)" class="navigation" :class="{'done_question': answers[question.id]  ? true:false}" v-text="index+1"></label>
                                             </div>
                                         </template>
+
+                                        <template v-if="page_type != 'exam' "  v-for="(question, index) in exam.questions">
+                                            <div :key="question.id"  class="col-md-4 col-lg-4 col-4 text-center px-1">
+                                                <label  @click="searchAndOpenQuestion(question.id)" class="navigation" :class="{'done_question': answers[question.id]  ? true:false, 'done_answer' : answers[question.id] ? answers[question.id].check_correct == 1 : false , 'fail_answer' : answers[question.id] ? answers[question.id].check_correct == 0 : true}" v-text="index+1"></label>
+                                            </div>
+                                        </template>
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -156,11 +184,13 @@
 
         window.exam = {!! json_encode($exam??[]) !!}
         window.start_user_attepmt = {!! json_encode($start_user_attepmt??[]) !!}
+        window.page_type = {!! json_encode($page_type??'exam') !!}
 
         new Vue({
             'el' : '#exam',
             'data' : {
                 exam: window.exam,
+                page_type: window.page_type,
                 start_user_attepmt: window.start_user_attepmt,
                 current: 1,
                 user_exam_id: '',
@@ -182,33 +212,55 @@
             },
             created(){
                 this.pageSize = this.exam.exam.pagination
-                this.user_exam_id = this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].id
-                if(this.exam.questions.length == 1){
-                    this.save_status = true
+                if(this.page_type == 'exam'){
+                    this.user_exam_id = this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].id
+
+                    if(this.exam.questions.length == 1){
+                        this.save_status = true
+                    }
+
+                    let self = this;
+                    if(this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].user_answers != undefined){
+                        this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].user_answers.forEach(function (value) {
+                            self.answers[value.question_id] = value.id;
+                        })
+                    }
+
+                    if(Math.ceil( this.exam.questions.length / this.pageSize) == 1){
+                        this.save_status = true
+                    }
+
+                    this.countdownTimeStart();
+
+                }else{
+                    let self = this;
+                    if(this.exam.user_answers != undefined){
+                        this.exam.user_answers.forEach(function (value) {
+                            self.answers[value.question_id] = value;
+                        })
+                    }
+                    console.log(self.answers)
+                    this.exam = this.exam.exam.content;
+                    console.log(this.exam.questions)
+
                 }
 
-                let self = this;
-               if(this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].user_answers != undefined){
-                   this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].user_answers.forEach(function (value) {
-                       self.answers[value.question_id] = value.id;
-                   })
-               }
 
 
-               if(Math.ceil( this.exam.questions.length / this.pageSize) == 1){
-                   this.save_status = true
-               }
-
-                this.countdownTimeStart();
             },
             methods : {
+                checkAnswers : function(){
+                    // this.exam.user_answers.forEach(function (value) {
+                    //     self.answers[value.question_id] = value.id;
+                    // })
+                },
                 countdownTimeStart : function(){
                var self = this;
 
             let t = this.start_user_attepmt
                t = new Date(t)
 
-               t.setSeconds({{$exam->exam->duration}})
+               t.setSeconds({{$exam->exam->duration??null}})
             var countDownDate = t.getTime();
 
 
@@ -284,6 +336,10 @@
 
                 },
                 save : function(){
+                    if(this.page_type != 'exam') {
+                        return ;
+                    }
+
                     if(confirm('Are you sure (save answers) !!!')){
                         this.nextSaveAnswers('save');
                     }
@@ -311,10 +367,18 @@
                     this.nextSaveAnswers();
                 },
                 addAnswer : function (question_id,answer_id) {
+                    if(this.page_type != 'exam') {
+                        return ;
+                    }
+
                     this.answers[question_id] = answer_id
                     this.nextSaveAnswers();
                 },
                 nextSaveAnswers : function (status = null) {
+                    if(this.page_type != 'exam') {
+                        return ;
+                    }
+
                     let self = this;
                     let data = {
                         answers : self.answers,
