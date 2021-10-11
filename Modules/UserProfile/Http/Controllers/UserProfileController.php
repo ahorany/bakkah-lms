@@ -150,10 +150,9 @@ class UserProfileController extends Controller
                 }])->where('start_date','<=',Carbon::now())
                     ->where('end_date','>',Carbon::now());
             },'questions.answers'])->first();
-        if (!$exam->exam) abort(404);
 
 
-
+        if (!$exam->exam || (count($exam->questions) == 0) ) abort(404);
 
 
 
@@ -393,7 +392,11 @@ class UserProfileController extends Controller
     public function course_details($course_id){
           $course = Course::where('id',$course_id)->whereHas('users',function ($q){
                $q->where('users.id',\auth()->id());
-          })->with(['contents' => function($query){
+          })->with(['uploads' => function($query){
+              return $query->where(function ($q){
+                  $q->where('post_type','intro_video')->orWhere('post_type','image');
+              });
+          },'contents' => function($query){
               $query->where('post_type','section')->with(['contents.user_contents' => function($q){
                   return $q->where('user_id',\auth()->id());
               }]);
@@ -402,7 +405,10 @@ class UserProfileController extends Controller
               abort(404);
           }
 
-//          return $course->contents[0]->contents[0]->user_contents[0];
+//        return $course->uploads;
+
+
+//          return $course;
 
 
         return view('userprofile::users.my_courses',compact('course'));
@@ -412,8 +418,8 @@ class UserProfileController extends Controller
 
     public function course_preview($content_id){
 
-
-        $content = Content::whereId($content_id)->with(['upload','course.users' => function($q){
+        $content = Content::whereId($content_id)
+            ->with(['upload','course.users' => function($q){
             $q->where('users.id',\auth()->id());
         }])->first();
 
@@ -421,15 +427,6 @@ class UserProfileController extends Controller
             abort(404);
         }
 
-
-//        $previous = Content::where('id', '<', $content->id)
-//            ->where('course_id',$content->course_id)
-//            ->where('post_type','!=','section')
-//            ->select('id')
-//            ->with(['user_contents' => function($q){
-////                $q->where();
-//            }])
-//            ->latest()->first();
 
         UserContent::firstOrCreate([
             'user_id' => \auth()->id(),
@@ -440,18 +437,63 @@ class UserProfileController extends Controller
         ]);
 
 
-        $previous = Content::where('id', '<', $content->id)
-                            ->where('course_id',$content->course_id)
-                            ->where('post_type','!=','section')
-                            ->select('id','post_type','course_id')->latest()->first();
+        /*
+           SELECT * FROM `contents`
+               INNER JOIN contents AS sections ON contents.parent_id = sections.id
+                WHERE contents.course_id = 1
+               ORDER BY contents.parent_id
+        *******************
 
-        $next = Content::where('id', '>', $content->id)
-                            ->where('course_id',$content->course_id)
-                            ->where('post_type','!=','section')
-                             ->select('id','post_type')->first();
-//        dump($content->id);
-//        dd($previous);
-//        dump($next);
+        SELECT * FROM `contents`
+           INNER JOIN contents AS sections ON contents.parent_id = sections.id
+        WHERE contents.course_id = 1
+              AND (contents.parent_id >= 203 AND contents.id != 210)
+        ORDER BY contents.parent_id
+        LIMIT 1
+
+         */
+
+
+      $next =  DB::select(DB::raw("
+                        SELECT contents.id , contents.title,contents.post_type FROM `contents`
+                          INNER JOIN contents AS sections ON contents.parent_id = sections.id
+                            WHERE contents.course_id = $content->course_id
+                              AND contents.id !=  $content->id
+                              AND contents.deleted_at IS NULL
+                              AND  (
+                                  (contents.order > $content->order AND contents.parent_id = $content->parent_id)
+                                    OR
+                                  (contents.parent_id > $content->parent_id)
+                              )
+                        ORDER BY contents.parent_id
+                        ,contents.order
+                        LIMIT 1
+                        "
+        ));
+
+
+        $previous =  DB::select(DB::raw(
+            "
+                        SELECT contents.id , contents.title,contents.post_type FROM `contents`
+                          INNER JOIN contents AS sections ON contents.parent_id = sections.id
+                            WHERE contents.course_id = $content->course_id
+                             AND contents.id !=  $content->id
+                              AND contents.deleted_at IS NULL
+                              AND  (
+                                  (contents.order < $content->order AND contents.parent_id = $content->parent_id)
+                                    OR
+                                  ( contents.parent_id < $content->parent_id)
+                              )
+                        ORDER BY contents.parent_id DESC
+                        ,contents.order DESC
+                        LIMIT 1
+                         "
+        ));
+
+
+        $next = ($next[0]??null);
+        $previous = ($previous[0]??null);
+
 
         return view('userprofile::users.file',compact('content','previous','next'));
     }

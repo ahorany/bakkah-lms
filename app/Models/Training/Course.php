@@ -30,7 +30,7 @@ class Course extends Model
     use DetailMorphTrait;
     use Sluggable;
 
-    use Searchable;
+//    use Searchable;
 
     protected $guarded = ['en_title', 'ar_title', 'en_excerpt', 'ar_excerpt'
     , 'en_accredited_notes', 'ar_accredited_notes', 'en_short_title', 'ar_short_title', 'en_disclaimer', 'ar_disclaimer'];
@@ -49,32 +49,32 @@ class Course extends Model
      *
      * @return string
      */
-    public function searchableAs()
-    {
-        return 'products_index';
-    }
-
-    const SEARCHABLE_FIELDS = ['id', 'en_title', 'ar_title', 'en_short_excerpt', 'ar_short_excerpt', 'en_path', 'ar_path'
-    , 'model_name', 'order', 'algolia_order', 'price'];
+//    public function searchableAs()
+//    {
+//        return 'products_index';
+//    }
+//
+//    const SEARCHABLE_FIELDS = ['id', 'en_title', 'ar_title', 'en_short_excerpt', 'ar_short_excerpt', 'en_path', 'ar_path'
+//    , 'model_name', 'order', 'algolia_order', 'price'];
     /**
      * Get the indexable data array for the model.
      *
      * @return array
      */
-    public function toSearchableArray()
-    {
-        return $this->only(self::SEARCHABLE_FIELDS);
-        // $array = $this->toArray();
-        // $courses = self::all();
-        // $array = $courses->map(function($data){
-        //     return [
-        //         'en_title'=>$data['en_title'],
-        //         'ar_title'=>$data['ar_title'],
-        //     ];
-        // })->toArray();
-
-        // return $array;
-    }
+//    public function toSearchableArray()
+//    {
+//        return $this->only(self::SEARCHABLE_FIELDS);
+//        // $array = $this->toArray();
+//        // $courses = self::all();
+//        // $array = $courses->map(function($data){
+//        //     return [
+//        //         'en_title'=>$data['en_title'],
+//        //         'ar_title'=>$data['ar_title'],
+//        //     ];
+//        // })->toArray();
+//
+//        // return $array;
+//    }
 
     public function getEnPathAttribute(){
         return 'sessions/'.$this->slug;

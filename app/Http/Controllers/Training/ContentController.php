@@ -9,6 +9,7 @@ use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
 use App\Models\Training\Exam;
 use App\Models\Training\Question;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -122,18 +123,28 @@ class ContentController extends Controller
                 default : $mimes = '';;
             }
 
-            $file =  'required_without:url';
-            if(\request()->hasFile('file')){
-                $file = 'required_without:url|file'.$mimes;
+            if($type == 'video'){
+                $file =  'required_without:url';
+                if(\request()->hasFile('file')){
+                    $file = 'required_without:url|file'.$mimes;
+                }
+
+                $rules = [
+                    'title'      => "required|string|min:3|max:20",
+                    'url'        =>   "required_without:file|max:200",
+                    'course_id'  =>'required|exists:courses,id',
+                    'content_id' => 'required|exists:contents,id',
+                    'file'      => $file,
+                ];
+            }else{
+                $rules = [
+                    'title'      => "required|string|min:3|max:20",
+                    'course_id'  =>'required|exists:courses,id',
+                    'content_id' => 'required|exists:contents,id',
+                    'file'      => 'required|file'.$mimes,
+                ];
             }
 
-            $rules = [
-                'title'      => "required|string|min:3|max:20",
-                'url'        =>   "required_without:file|max:200",
-                'course_id'  =>'required|exists:courses,id',
-                'content_id' => 'required|exists:contents,id',
-                'file'      => $file,
-            ];
 
         }
 
@@ -152,13 +163,19 @@ class ContentController extends Controller
         if($validate){
             return response()->json(['errors' => $validate]);
         }
+        $parent_id = (int) request()->content_id;
+
+        $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE parent_id= $parent_id  "));
 
         if(\request()->type == 'exam'){
+
+
             $content = Content::create([
                 'title'      => request()->title,
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
                 'parent_id'  => request()->content_id,
+                'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
             $content->details()->create([
                 'excerpt'    =>  request()->excerpt,
@@ -183,6 +200,7 @@ class ContentController extends Controller
                 'post_type'  => request()->type,
                 'url'        => request()->url,
                 'parent_id'  => request()->content_id,
+                'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
 
             $path = '';

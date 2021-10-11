@@ -71,13 +71,13 @@
                                         @if($content->post_type == 'video' && $content->url)
                                             <?php
                                                  if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
-                                                     $video_id = $match[1];
+                                                     $video_id = $match[1]??null;
 //                                                     dd($video_id);
                                                  }
                                             ?>
 
 
-                                               <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id}}' ></iframe>
+                                               <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
                                         @endif
 
 
@@ -92,7 +92,7 @@
 
                             <?php
                                 if( !is_null($next)){
-                                    if( $next->post_type != 'exam') {
+                                    if( $next->post_type != 'exam' ) {
                                         $next_url = CustomRoute('user.course_preview',$next->id);
                                     }else{
                                         $next_url =  CustomRoute('user.exam',$next->id);
@@ -102,7 +102,6 @@
                                 if(!is_null($previous)){
                                     if($previous->post_type != 'exam'){
                                         $previous_url = CustomRoute('user.course_preview',$previous->id);
-
                                     }else{
                                         $previous_url =  CustomRoute('user.exam',$previous->id);
                                     }

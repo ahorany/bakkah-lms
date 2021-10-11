@@ -180,7 +180,6 @@
                     return this.exam.questions.slice(this.indexStart, this.pageSize * this.current );
                 },
             },
-
             created(){
                 this.pageSize = this.exam.exam.pagination
                 this.user_exam_id = this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].id
@@ -203,8 +202,7 @@
                 this.countdownTimeStart();
             },
             methods : {
-
-           countdownTimeStart : function(){
+                countdownTimeStart : function(){
                var self = this;
 
             let t = this.start_user_attepmt
@@ -242,8 +240,6 @@
 
             }, 1000);
         },
-
-
                 searchAndOpenQuestion : function(question_id){
                     // index question
                     let current_page = this.current
@@ -316,6 +312,7 @@
                 },
                 addAnswer : function (question_id,answer_id) {
                     this.answers[question_id] = answer_id
+                    this.nextSaveAnswers();
                 },
                 nextSaveAnswers : function (status = null) {
                     let self = this;

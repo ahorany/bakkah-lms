@@ -138,9 +138,11 @@
                                 </div>
 
                                 <div class="col-12 col-md-4 col-lg-4 mb-3 py-3 px-0">
-                                <video style="border: 1px solid gainsboro; border-radius: 15px;" width="100%" height="200px" controls>
-                                    <source src="https://www.youtube.com/watch?v=CH50zuS8DD0">
-                                </video>
+                                    @isset($course->upload->file)
+                                        <video style="border: 1px solid gainsboro; border-radius: 15px;" width="100%" height="200px" controls>
+                                            <source src="{{CustomAsset('upload/video/'.$course->upload->file)}}">
+                                        </video>
+                                    @endisset
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 mb-3 p-3">
@@ -164,10 +166,8 @@
                                                                        case "presentation" :  $class = 'fas fa-file-powerpoint';   break;
                                                                        case "exam" :  $class = 'fas fa-question-circle';  break;
                                                                       }
-
-
                                                                    ?>
-                                                                   <a  @if( (isset($content->user_contents[0])) || ($key == 0 && $k == 0) || isset($section->contents[($k-1)]->user_contents[0])) )   target="_blank"  href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"   @endif    class="d-block">
+                                                                   <a  @if( ( isset($section->contents[($k-1)]->user_contents[0]) || ( isset($course->contents[($key-1)])  && isset($course->contents[($key-1)]->contents[ (count($course->contents[($key-1)]->contents) - 1)]->user_contents[0]) && $k == 0  ) )  || ($key == 0 && $k == 0)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif    class="d-block">
                                                                      <i  class="{{$class}} mr-2"></i>  {{$content->title}}
                                                                    </a>
                                                                @endforeach

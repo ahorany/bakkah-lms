@@ -92,21 +92,25 @@ label.navigation {
                                             <p class="card-title">Mark  : {{$exam->exam->exam_mark}} </p>
 
 
-
-                                            @if( \Carbon\Carbon::create($exam->exam->end_date)  > \Carbon\Carbon::now())
-                                                @if($users_exams_count == 0)
-                                                    <p class="text-warning">No Attempts</p>
-                                                    <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start Attempt</a>
-                                                @elseif($exam->exam->users_exams[$users_exams_count-1]->status == 0)
-                                                    <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Return to Exam</a>
-
-                                                @elseif($users_exams_count < $exam->exam->attempt_count && $exam->exam->users_exams[$users_exams_count-1]->status == 1)
-                                                    <a onclick="confirmNewAttempt()" href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start New Attempt</a>
-                                                @else
-                                                    <p class="text-danger">All your attempts are over</p>
-                                                @endif
+                                           @if(count($exam->questions) == 0)
+                                                    <p class="text-danger">Not Ready Now</p>
                                             @else
-                                                <p class="text-danger">Expired Time</p>
+                                                @if( \Carbon\Carbon::create($exam->exam->end_date)  > \Carbon\Carbon::now())
+                                                    @if($users_exams_count == 0)
+                                                        <p class="text-warning">No Attempts</p>
+                                                        <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start Attempt</a>
+                                                    @elseif($exam->exam->users_exams[$users_exams_count-1]->status == 0)
+                                                        <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Return to Exam</a>
+
+                                                    @elseif($users_exams_count < $exam->exam->attempt_count && $exam->exam->users_exams[$users_exams_count-1]->status == 1)
+                                                        <a onclick="confirmNewAttempt()" href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start New Attempt</a>
+                                                    @else
+                                                        <p class="text-danger">All your attempts are over</p>
+                                                    @endif
+                                                @else
+                                                    <p class="text-danger">Expired Time</p>
+                                                @endif
+
                                             @endif
                                         </div>
                                     </div>

@@ -47,13 +47,7 @@
 
             <div v-if="content.details" class="my-2">@{{content.details.excerpt}}</div>
 
-            {{-- <div class="my-3">
-                <button type="button" @click="OpenModal('video',content.id)" class="btn btn-outline-info btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
-                <button type="button" @click="OpenModal('audio',content.id)" class="btn btn-outline-info btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                <button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-outline-info btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
-                <button type="button" @click="OpenModal('scorm',content.id)" class="btn btn-outline-info btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
-                <button  type="button" @click="OpenModal('exam',content.id)" class="btn btn-outline-info btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
-            </div> --}}
+
 
             <table class="table">
                 <thead>
@@ -281,9 +275,13 @@
 
 
                 if(this.file != '' ){
-                    this.$refs.inputFile.type='text';
-                    this.$refs.inputFile.type='file';
+                    if(this.$refs.inputFile.type != undefined){
+                        this.$refs.inputFile.type='text';
+                        this.$refs.inputFile.type='file';
+                    }
                 }
+
+                this.file = '';
 
             },
 
@@ -291,6 +289,7 @@
                this.clear(); // clear data
                this.save_type  = 'add';
                this.model_type = type;
+               console.log(type)
                this.content_id = content_id;
                this.errors = {};
                $('#ContentModal').modal('show')
