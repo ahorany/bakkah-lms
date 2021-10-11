@@ -17,4 +17,6 @@ return [
     'contact'=>'اتصل بنا',
     'explore'=>'تصفح',
     'courses'=>'الدورات',
+    'Logout' => 'خروج'
+
 ];

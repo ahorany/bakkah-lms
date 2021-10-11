@@ -17,4 +17,8 @@ return [
     'contact'=>'Contact',
     'explore'=>'Explore',
     'courses'=>'Courses',
+    'Badges'=>'Badges',
+    'Logout' => 'logout',
+    'Welcome,' => 'Welcome,',
+    'Change Password' => 'Change Password',
 ];

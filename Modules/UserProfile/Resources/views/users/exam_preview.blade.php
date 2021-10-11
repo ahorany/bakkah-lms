@@ -95,17 +95,29 @@
                                         <label>Select one:</label>
                                           <template v-if="page_type == 'exam'" v-for="answer in question.answers">
                                               <div class="answer my-2">
-                                                <input :disabled="page_type != 'exam'" type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                <input  type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
                                                 <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
                                               </div>
                                           </template>
 
-                                          <template v-if="page_type != 'exam'" v-for="answer in question.answers">
-                                              <div class="answer my-2">
-                                                  <input :disabled="page_type != 'exam'" type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id].id == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
-                                                  <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
+                                          <template v-if="page_type != 'exam'">
+                                              <template  v-for="answer in question.answers">
+                                                  <div class="answer my-2" :class="{'text-success' : answer.check_correct == 1 , 'text-danger' : (answer.check_correct == 0 && (answers[answer.question_id].id == answer.id)) }">
+                                                      <input disabled="true" type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id].id == answer.id ? true:false " :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                      <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
+                                                  </div>
+                                              </template>
+
+
+                                              <div v-if="answers[question.id].check_correct == 0">
+                                                  <span>Answers correct : </span>
+                                                  <div class="text-success" v-for="answer in correct_answers(question)">
+                                                      @{{  answer.title }}
+                                                  </div>
+
                                               </div>
                                           </template>
+
                                     </div>
                                     </template>
 
@@ -249,10 +261,21 @@
 
             },
             methods : {
-                checkAnswers : function(){
-                    // this.exam.user_answers.forEach(function (value) {
-                    //     self.answers[value.question_id] = value.id;
-                    // })
+                search_correct_answer: function(question,answer){
+                    let answers = this.correct_answers(question)
+                    answer = answers.filter(function (value) {
+                        return  value.id == answer.id;
+                    })
+                    console.log(answer)
+                    if(answer)
+                        return true;
+
+                     return false;
+                },
+                correct_answers: function(question){
+                   return question.answers.filter(function (value) {
+                        return  value.check_correct == 1;
+                    })
                 },
                 countdownTimeStart : function(){
                var self = this;

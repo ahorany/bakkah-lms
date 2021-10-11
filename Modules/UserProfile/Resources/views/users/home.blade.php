@@ -41,7 +41,7 @@
                 <div class="main-user-content">
                     <div class="p-5 user-course">
                         <h4 class="mb-4">
-                            {{ __('education.Course Overview') }}
+                            {{ __('education.courses') }}
                         </h4>
                         <div class="row mx-0 my-courses">
                             @foreach($courses->courses as $course)

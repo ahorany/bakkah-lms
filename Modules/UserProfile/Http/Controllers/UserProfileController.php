@@ -235,7 +235,7 @@ class UserProfileController extends Controller
 //            },'questions.answers'])->first();
 
 
-//        if ( !$exam && (count($exam->exam->questions) == 0) ) abort(404);
+        if ( !$exam  ) abort(404);
 
 
 //         return $exam;
