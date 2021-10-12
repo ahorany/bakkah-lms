@@ -24,6 +24,8 @@ Route::group([
 
         Route::get('/add_questions/{exam_id}', 'QuestionController@add_questions')->name('add_questions');
         Route::post('/add_question', 'QuestionController@add_question')->name('add_question');
+        Route::get('/delete_question', 'QuestionController@delete_question')->name('delete_question');
+
         Route::post('/add_answer', 'QuestionController@add_answer')->name('add_answer');
         Route::get('/delete_answer', 'QuestionController@delete_answer')->name('delete_answer');
         Route::post('/update_answer', 'QuestionController@update_answer')->name('update_answer');
