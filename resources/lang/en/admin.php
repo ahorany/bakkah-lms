@@ -54,5 +54,11 @@ return [
 	'presentaion'=>'Presentaion',
 	'add_question'=>'Add Question',
 	'add_answer'=>'Add Answer',
-
+	'scorm'=>'Scorm',
+	'exam'=>'Exam',
+	'search'=>'Search',
+    'course_search'=>'Course Search',
+    'show_in_website'=>'Show In Website',
+    'category_id'=>'Category',
+    'contents'=>'Contents',
 ];

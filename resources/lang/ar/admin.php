@@ -52,4 +52,11 @@ return [
 	'video'=>'Video',
 	'audio'=>'Audio',
 	'presentaion'=>'Presentaion',
+    'scorm'=>'Scorm',
+	'exam'=>'Exam',
+    'search'=>'Search',
+    'course_search'=>'Course Search',
+    'show_in_website'=>'Show In Website',
+    'category_id'=>'Category',
+    'contents'=>'Contents',
 ];
