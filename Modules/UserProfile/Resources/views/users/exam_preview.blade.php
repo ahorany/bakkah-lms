@@ -405,6 +405,7 @@
                     }
 
                     if(this.answers[question_id] == undefined){
+                        alert('ddddddd')
                         this.answers[question_id] = [answer_id];
                     }else{
                         let answer_index = null;
