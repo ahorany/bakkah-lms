@@ -28,7 +28,7 @@ class QuestionController extends Controller
 
 
         $rules = [
-            "title"   => "required|string|min:3|max:20",
+            "title"   => "required|string",
             "mark"   => "required|numeric",
             'exam_id' => 'required|exists:contents,id',
         ];
@@ -128,7 +128,7 @@ class QuestionController extends Controller
 
         // validation
         $rules = [
-            "title"   => "required|string|min:3|max:20",
+            "title"   => "required|string",
             "check_correct"   => "required|boolean",
             'answer_id' => 'required|exists:answers,id',
 
