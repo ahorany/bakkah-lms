@@ -111,11 +111,11 @@
 
 {{--                                <span class="num">2 / 9</span>--}}
                                 @if($previous)
-                                        <i onclick="location.href =  '{{$previous_url}}'" class="fas fa-angle-left"></i>
+                                        <i onclick="location.href =  '{{$previous_url}}'" class="fas fa-angle-left" title="previous"></i>
                                 @endif
 
                                 @if($next)
-                                    <i onclick="location.href = '{{$next_url}}'  " class="fas fa-angle-right"></i>
+                                    <i onclick="location.href = '{{$next_url}}'  " class="fas fa-angle-right" title="next"></i>
                                 @endif
                             </div>
 

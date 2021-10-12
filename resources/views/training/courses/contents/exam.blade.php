@@ -87,7 +87,7 @@
 					<i class="fas fa-times"></i> {{__('admin.close')}}</button>
 				<button type="reset" class="btn btn-outline-info" @click="Clear()">
 					<i class="fas fa-eraser"></i> {{__('admin.clear')}}</button>
-				<button type="button"  @click="Add()" class="btn btn-outline-success">
+				<button type="button"  @click="save()" class="btn btn-outline-success">
 					<i class="fa fa-save"></i> {{__('admin.save')}}</button>
 
 			</div>
@@ -227,11 +227,7 @@
 
 
 
-                Add: function () {
-                    this.AddQuestion();
-                },
-
-                AddQuestion: function () {
+                save: function () {
                     let self = this;
                     if (self.title == null) {
                         self.errors = {'title': 'The title field is required.'};
@@ -263,9 +259,9 @@
 
                                 }else{
                                     this.content.questions.forEach(function (question,index) {
-                                         if(question.id == self.question_id ){
-                                             self.content.questions[index] = response.data.data;
-                                         }
+                                        if(question.id == self.question_id ){
+                                            self.content.questions[index] = response.data.data;
+                                        }
                                     })
                                     // console.log(this.content.questions)
                                 }
@@ -280,10 +276,9 @@
 
                         })
                         .catch(e => {
-                            alert('ff')
                             console.log(e)
                         });
-                },
+                    },
 
             Clear: function () {
                 this.title = '';

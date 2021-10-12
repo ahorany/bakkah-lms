@@ -40,9 +40,9 @@ class ContentController extends Controller
     public function add_section()
     {
         $rules = [
-            'title'      => "required|string|min:3|max:50",
+            'title'      => "required|string",
             'course_id'  =>'required|exists:courses,id',
-            'excerpt'    =>  "required|string",
+//            'excerpt'    =>  "required|string",
         ];
 
         $validator = Validator::make(\request()->all(), $rules);
@@ -70,10 +70,10 @@ class ContentController extends Controller
     public function update_section()
     {
         $rules = [
-            'title'      => "required|string|min:3|max:20",
+            'title'      => "required|string",
             'course_id'  =>'required|exists:courses,id',
             'content_id'  =>'required|exists:contents,id',
-            'excerpt'    =>  "required|string",
+//            'excerpt'    =>  "required|string",
         ];
 
         $validator = Validator::make(\request()->all(), $rules);
@@ -103,9 +103,9 @@ class ContentController extends Controller
         // validation
         if($type == 'exam'){
             $rules = [
-                'title'      => "required|string|min:3|max:50",
+                'title'      => "required|string",
                 'course_id'  =>'required|exists:courses,id',
-                'excerpt'    =>  "required|string",
+//                'excerpt'    =>  "required|string",
                 'content_id' => 'required|exists:contents,id',
                 'duration'=>'required|numeric|gt:-1',
                 'pagination'=>'required|numeric|gt:-1',
@@ -130,15 +130,15 @@ class ContentController extends Controller
                 }
 
                 $rules = [
-                    'title'      => "required|string|min:3|max:20",
-                    'url'        =>   "required_without:file|max:200",
+                    'title'      => "required|string",
+                    'url'        =>   "required_without:file",
                     'course_id'  =>'required|exists:courses,id',
                     'content_id' => 'required|exists:contents,id',
                     'file'      => $file,
                 ];
             }else{
                 $rules = [
-                    'title'      => "required|string|min:3|max:20",
+                    'title'      => "required|string",
                     'course_id'  =>'required|exists:courses,id',
                     'content_id' => 'required|exists:contents,id',
                     'file'      => 'required|file'.$mimes,
@@ -237,14 +237,14 @@ class ContentController extends Controller
             }
 
             $rules = [
-                'title'      => "required|string|min:3|max:50",
-                'url'        =>   "required_without:file|max:200",
+                'title'      => "required|string",
+                'url'        =>   "required_without:file",
                 'file'      => $file,
             ];
         }else{
             $rules = [
-                'title'      => "required|string|min:3|max:20",
-                'excerpt'    =>  "required|string",
+                'title'      => "required|string",
+//                'excerpt'    =>  "required|string",
                 'duration'=>'required|numeric|gt:-1',
                 'attempt_count'=>'required|numeric|gt:0',
                 'pagination'=>'required|numeric|gt:-1',

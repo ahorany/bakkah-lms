@@ -95,7 +95,8 @@
                                         <label>Select one:</label>
                                           <template v-if="page_type == 'exam'" v-for="answer in question.answers">
                                               <div class="answer my-2">
-                                                <input  type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                <input v-if="countCorrectAnswers(question) == 1"  type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                <input v-else  type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addMultiAnswers(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
                                                 <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
                                               </div>
                                           </template>
@@ -103,7 +104,8 @@
                                           <template v-if="page_type != 'exam'">
                                               <template  v-for="answer in question.answers">
                                                   <div class="answer my-2" :class="{'text-success' : answer.check_correct == 1 , 'text-danger' : (answer.check_correct == 0 && (answers[answer.question_id].id == answer.id)) }">
-                                                      <input disabled="true" type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id].id == answer.id ? true:false " :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                      <input v-if="countCorrectAnswers(question) == 1"  disabled="true" type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id].id == answer.id ? true:false " :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                      <input v-else  disabled="true" type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id].id == answer.id ? true:false " :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
                                                       <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
                                                   </div>
                                               </template>
@@ -211,6 +213,7 @@
                 save_status: false,
                 prev_status: false,
                 answers : [],
+                multi_answers : [],
                 hours: 0,
                 minutes: 0,
                 seconds: 0,
@@ -223,6 +226,7 @@
                 },
             },
             created(){
+
                 this.pageSize = this.exam.exam.pagination
                 if(this.page_type == 'exam'){
                     this.user_exam_id = this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].id
@@ -259,8 +263,12 @@
 
 
 
+
             },
             methods : {
+                countCorrectAnswers : function(question){
+                   return this.correct_answers(question).length
+                },
                 search_correct_answer: function(question,answer){
                     let answers = this.correct_answers(question)
                     answer = answers.filter(function (value) {
@@ -286,13 +294,7 @@
                t.setSeconds({{$exam->exam->duration??null}})
             var countDownDate = t.getTime();
 
-
             var x = setInterval(function() {
-
-                // Get todays date and time
-                // var now = new Date().getTime();
-                // var now = localStorage.getItem('start_time_exam');
-                // var now2 = new Date().getTime();
                 var now = new Date().getTime();
 
                 // Find the distance between now an the count down date
@@ -395,8 +397,32 @@
                     }
 
                     this.answers[question_id] = answer_id
-                    this.nextSaveAnswers();
+                    // this.nextSaveAnswers();
                 },
+                addMultiAnswers : function (question_id,answer_id) {
+                    if(this.page_type != 'exam') {
+                        return ;
+                    }
+
+                    if(this.answers[question_id] == undefined){
+                        this.answers[question_id] = [answer_id];
+                    }else{
+                        let answer_index = null;
+                        this.answers[question_id].forEach(function (answer_id,index) {
+                              if( answer_id == answer_id ){
+                                    answer_index = index
+                              }
+                        })
+                        if(answer_index){
+                            this.answers[question_id].push(answer_id);
+                        }else{
+                            this.answers[question_id] = answer_id;
+                        }
+                    }
+                    console.log(this.answers)
+                    // this.nextSaveAnswers();
+                },
+
                 nextSaveAnswers : function (status = null) {
                     if(this.page_type != 'exam') {
                         return ;

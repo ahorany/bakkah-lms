@@ -225,6 +225,7 @@ class UserProfileController extends Controller
             ->with(['exam.content.questions.answers','user_answers'])
             ->first();
 
+//        return $exam;
 
 //        return $exam;
 //        $exam = Content::whereId($exam_id)
