@@ -71,26 +71,33 @@ class UserProfileController extends Controller
     }
 
     public function add_answers(){
-
       $user_exam =  UserExam::whereId(\request()->user_exam_id)
           ->where('user_id',\auth()->id())->where('status',0)->first();
       if (!$user_exam) abort(404);
 
-//      Exam::where('id',$user_exam->exam_id)
-//          ->where('start_date','<=',Carbon::now())
-//          ->where('end_date','>=',Carbon::now())->first();
-
-
         foreach (\request()->answers as $key => $value){
             if (!is_null($value)){
-                UserAnswer::updateOrCreate([
-                    'question_id' => $key,
-                    'user_exam_id' => \request()->user_exam_id,
-                ],[
-                    'answer_id' => $value,
-                    'question_id' => $key,
-                    'user_exam_id' => \request()->user_exam_id,
-                ]);
+                 if(is_array($value)){
+                     UserAnswer::where( 'user_exam_id' , \request()->user_exam_id)->
+                           where('question_id',$key)->delete();
+                     foreach ($value as $answer){
+                         UserAnswer::create([
+                             'answer_id' => $answer,
+                             'question_id' => $key,
+                             'user_exam_id' => \request()->user_exam_id,
+                         ]);
+                     }
+                 }
+                 else{
+                     UserAnswer::updateOrCreate([
+                         'question_id' => $key,
+                         'user_exam_id' => \request()->user_exam_id,
+                     ],[
+                         'answer_id' => $value,
+                         'question_id' => $key,
+                         'user_exam_id' => \request()->user_exam_id,
+                     ]);
+                 }
             }
         }
 
@@ -102,30 +109,13 @@ class UserProfileController extends Controller
                 ->select('id','exam_id')->with('exam')->first();
 
             // mark
-
-            foreach (\request()->answers as $key => $value){
-                if (!is_null($value)){
-                    UserAnswer::updateOrCreate([
-                        'question_id' => $key,
-                        'user_exam_id' => \request()->user_exam_id,
-                    ],[
-                        'answer_id' => $value,
-                        'question_id' => $key,
-                        'user_exam_id' => \request()->user_exam_id,
-                    ]);
-                }
-            }
-
             $user_exam_id = \request()->user_exam_id;
-
             $grade =  DB::select( DB::raw("SELECT SUM(questions.mark) as grade
                                 FROM `user_answers`
                                     INNER JOIN answers ON user_answers.answer_id = answers.id
                                     INNER JOIN questions ON questions.id = answers.question_id
                                 WHERE user_exam_id = ". $user_exam_id ."
                                 AND answers.check_correct = 1"));
-
-
 
             UserExam::where('id',$user_exam_id)->update([
                 'end_attempt' => Carbon::now(),
@@ -141,7 +131,6 @@ class UserProfileController extends Controller
     AND answers.check_correct = 1
 
 */
-
             return response(['status' => 'success' , 'redirect_route' => route('user.exam',$user_exam->exam->content_id)]);
         }
     }
@@ -157,14 +146,10 @@ class UserProfileController extends Controller
                     ->where('end_date','>',Carbon::now());
             },'questions.answers'])->first();
 
-
         if (!$exam->exam || (count($exam->questions) == 0) ) abort(404);
-
-
+//        return $exam;
 
         $user_exams_count = count($exam->exam->users_exams);
-
-
         if (count($exam->exam->users_exams) > 0 && $exam->exam->users_exams[$user_exams_count-1]->status == 0){
             // duration time calc
             $start_user_attepmt = Carbon::now();
@@ -187,7 +172,7 @@ class UserProfileController extends Controller
             return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt','page_type'));
         }
 
-        if ( $user_exams_count < $exam->exam->attempt_count){
+        if ( $user_exams_count < $exam->exam->attempt_count ||  $exam->exam->attempt_count == 0){
             $start_user_attepmt = Carbon::now();
             $data = UserExam::create([
                     'user_id' => \auth()->id() ,

@@ -87,38 +87,60 @@
                         <small>Dashboard / Exams / {{$exam->title}}</small>
                         <h1 style="font-weight: 700; margin: 5px 0 10px;">{{$exam->title}}</h1>
                         <div class="row">
-                            <div class="col-md-9 col-lg-10 col-12 questions">
-                                    <template v-for="(question, index) in paginated">
-                                      <div :id="'question'+question.id" :key="index" class="card position-relative p-5 mb-4 exam" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
+                            <div  class="col-md-9 col-lg-10 col-12 questions">
+                                    <template v-for="(question, index) in paginated" >
+                                        <div v-text="question.mark + 'marks'"></div>
+                                      <div :ref="'question'+question.id" :id="'question'+question.id" :key="index" class="card position-relative p-5 mb-4 exam" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
                                         <div class="position-absolute number_question" v-text="'Q' + (index+indexStart+1)"></div>
                                         <p class="question" v-text="question.title"></p>
                                         <label>Select one:</label>
-                                          <template v-if="page_type == 'exam'" v-for="answer in question.answers">
-                                              <div class="answer my-2">
-                                                <input v-if="countCorrectAnswers(question) == 1"  type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
-                                                <input v-else  type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addMultiAnswers(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
-                                                <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
+
+                                          <template v-if="page_type == 'exam'">
+                                              <div  v-if="countCorrectAnswers(question) == 1" v-for="answer in question.answers" class="answer my-2">
+                                                  <input   type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                  <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
                                               </div>
+
+                                              <div  v-if="countCorrectAnswers(question) > 1" v-for="answer in question.answers" class="answer my-2">
+                                                  <input   type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="searchMultiAnswers(answer.question_id,answer.id) ? true:false " @change="addMultiAnswers(answer.question_id,answer.id)"  :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                  <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
+                                              </div>
+
                                           </template>
 
+
                                           <template v-if="page_type != 'exam'">
-                                              <template  v-for="answer in question.answers">
-                                                  <div class="answer my-2" :class="{'text-success' : answer.check_correct == 1 , 'text-danger' : (answer.check_correct == 0 && (answers[answer.question_id].id == answer.id)) }">
-                                                      <input v-if="countCorrectAnswers(question) == 1"  disabled="true" type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id].id == answer.id ? true:false " :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
-                                                      <input v-else  disabled="true" type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id].id == answer.id ? true:false " :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                              <template v-if="countCorrectAnswers(question) == 1" >
+                                                  <div  v-for="answer in question.answers" class="answer my-2" :class="{'text-success' : answer.check_correct == 1 , 'text-danger' : (answer.check_correct == 0 && (answers.length > 0) && (answers[answer.question_id] != undefined) && (answers[answer.question_id].id == answer.id)) }">
+                                                      <input   disabled="true" type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked=" (answers.length > 0) && (answers[answer.question_id] != undefined) ? answers[answer.question_id].id == answer.id ? true:false : false " :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
                                                       <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
+                                                  </div>
+
+                                                  <div v-if="(answers.length == 0 || (answers[question.id] == undefined)) || answers[question.id].check_correct == 0">
+                                                      <span>Answers correct : </span>
+                                                      <div class="text-success" v-for="answer in correct_answers(question)">
+                                                          @{{  answer.title }}
+                                                      </div>
+                                                  </div>
+                                              </template>
+
+                                              <template v-if="countCorrectAnswers(question) > 1">
+                                                  <div  v-for="answer in question.answers" class="answer my-2" :class="{'text-success' : answer.check_correct == 1 , 'text-danger' : (answer.check_correct == 0 && (answers.length > 0) && (searchReviewMultiAnswers(answer.question_id,answer.id) ) ) }">
+                                                      <input   disabled="true" type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="(answers.length > 0) ? (searchReviewMultiAnswers(answer.question_id,answer.id) ) : false" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
+                                                      <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
+                                                  </div>
+                                                  <div v-if="(answers.length == 0) || checkIfQuestionHasInCorrectAnswers(question.id)">
+                                                      <span>Answers correct : </span>
+                                                          <div class="text-success" v-for="answer in correct_answers(question)">
+                                                              @{{  answer.title }}
+                                                          </div>
                                                   </div>
                                               </template>
 
 
-                                              <div v-if="answers[question.id].check_correct == 0">
-                                                  <span>Answers correct : </span>
-                                                  <div class="text-success" v-for="answer in correct_answers(question)">
-                                                      @{{  answer.title }}
-                                                  </div>
-
-                                              </div>
                                           </template>
+
+
 
                                     </div>
                                     </template>
@@ -132,7 +154,7 @@
                                             </div>
 
                                         <div class="col-md-4 col-4 col-lg-4 text-center p-0 py-2">
-                                            <template v-if="page_type == 'exam'">
+                                            <template v-if="page_type == 'exam' && exam.exam.duration > 0">
                                                 <div  class="time">
                                                     <span>
                                                         <i class="far fa-clock"></i>
@@ -172,9 +194,14 @@
                                         </template>
 
                                         <template v-if="page_type != 'exam' "  v-for="(question, index) in exam.questions">
-                                            <div :key="question.id"  class="col-md-4 col-lg-4 col-4 text-center px-1">
-                                                <label  @click="searchAndOpenQuestion(question.id)" class="navigation" :class="{'done_question': answers[question.id]  ? true:false, 'done_answer' : answers[question.id] ? answers[question.id].check_correct == 1 : false , 'fail_answer' : answers[question.id] ? answers[question.id].check_correct == 0 : true}" v-text="index+1"></label>
+                                            <div v-if="countCorrectAnswers(question) == 1" :key="question.id"  class="col-md-4 col-lg-4 col-4 text-center px-1">
+                                                <label  @click="searchAndOpenQuestion(question.id)" class="navigation" :class="{'done_answer' : answers[question.id] ? answers[question.id].check_correct == 1 : false , 'fail_answer' : answers[question.id] ? answers[question.id].check_correct == 0 : true}" v-text="index+1"></label>
                                             </div>
+
+                                            <div v-else :key="question.id"  class="col-md-4 col-lg-4 col-4 text-center px-1">
+                                                <label  @click="searchAndOpenQuestion(question.id)" class="navigation" :class="{'done_answer' : !checkIfQuestionHasInCorrectAnswers(question.id) , 'fail_answer' : answers.length == 0 || checkIfQuestionHasInCorrectAnswers(question.id)}" v-text="index+1"></label>
+                                            </div>
+
                                         </template>
 
 
@@ -218,6 +245,7 @@
                 minutes: 0,
                 seconds: 0,
                 question_id: null,
+                question_container : '',
             },
 
             computed: {
@@ -225,8 +253,10 @@
                     return this.exam.questions.slice(this.indexStart, this.pageSize * this.current );
                 },
             },
+
             created(){
 
+                console.log(this.exam)
                 this.pageSize = this.exam.exam.pagination
                 if(this.page_type == 'exam'){
                     this.user_exam_id = this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].id
@@ -238,9 +268,19 @@
                     let self = this;
                     if(this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].user_answers != undefined){
                         this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].user_answers.forEach(function (value) {
-                            self.answers[value.question_id] = value.id;
+                           if(self.answers[value.question_id] != undefined && self.answers[value.question_id] !=null ){
+                                if(Array.isArray(self.answers[value.question_id])){
+                                    self.answers[value.question_id].push(value.id)
+                                }else{
+                                    self.answers[value.question_id] = [ self.answers[value.question_id] ,value.id ]
+                                }
+                           }else{
+                               self.answers[value.question_id] = value.id;
+                           }
                         })
                     }
+
+                    // console.log(self.answers)
 
                     if(Math.ceil( this.exam.questions.length / this.pageSize) == 1){
                         this.save_status = true
@@ -252,7 +292,19 @@
                     let self = this;
                     if(this.exam.user_answers != undefined){
                         this.exam.user_answers.forEach(function (value) {
-                            self.answers[value.question_id] = value;
+                            // self.answers[value.question_id] = value;
+                            if(self.answers[value.question_id] != undefined && self.answers[value.question_id] !=null ){
+                                if(Array.isArray(self.answers[value.question_id])){
+                                    self.answers[value.question_id].push(value)
+                                }else{
+                                    self.answers[value.question_id] = [ self.answers[value.question_id] ,value ]
+                                }
+                            }else{
+                                self.answers[value.question_id] = value;
+                            }
+
+
+
                         })
                     }
                     console.log(self.answers)
@@ -265,7 +317,9 @@
 
 
             },
+
             methods : {
+
                 countCorrectAnswers : function(question){
                    return this.correct_answers(question).length
                 },
@@ -274,7 +328,6 @@
                     answer = answers.filter(function (value) {
                         return  value.id == answer.id;
                     })
-                    console.log(answer)
                     if(answer)
                         return true;
 
@@ -286,36 +339,39 @@
                     })
                 },
                 countdownTimeStart : function(){
-               var self = this;
+                    var self = this;
+                    let t = this.start_user_attepmt
+                       t = new Date(t)
 
-            let t = this.start_user_attepmt
-               t = new Date(t)
+                       t.setSeconds({{$exam->exam->duration??null}})
+                    var countDownDate = t.getTime();
 
-               t.setSeconds({{$exam->exam->duration??null}})
-            var countDownDate = t.getTime();
+                    var x = setInterval(function() {
+                        var now = new Date().getTime();
 
-            var x = setInterval(function() {
-                var now = new Date().getTime();
+                        // Find the distance between now an the count down date
+                        var distance = countDownDate - now;
+                        // Time calculations for days, hours, minutes and seconds
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                // Find the distance between now an the count down date
-                var distance = countDownDate - now;
-                // Time calculations for days, hours, minutes and seconds
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        // // Output the result in an element with id="demo"
+                        if(exam.exam.duration > 0)
+                        document.getElementById("demo").innerHTML = hours + "h "
+                            + minutes + "m " + seconds + "s ";
 
-                // // Output the result in an element with id="demo"
-                document.getElementById("demo").innerHTML = hours + "h "
-                    + minutes + "m " + seconds + "s ";
+                        // If the count down is over, write some text
+                        if (distance < 0) {
+                            clearInterval(x);
+                            if(self.exam.exam.duration > 0){
+                                document.getElementById("demo").innerHTML = "EXPIRED";
+                                self.nextSaveAnswers('save');
+                            }
 
-                // If the count down is over, write some text
-                if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("demo").innerHTML = "EXPIRED";
-                    self.nextSaveAnswers('save');
-                }
+                        }
 
-            }, 1000);
+                    }, 1000);
         },
                 searchAndOpenQuestion : function(question_id){
                     // index question
@@ -358,7 +414,19 @@
                     this.current = page;
                     this.indexStart= start_index
                     this.question_id = question_id
+                    this.question_container = question_id
+                    // const  [element] = this.$refs["question"+question_id];
+                    // element.scrollIntoView({ behavior: "smooth", block: "end" });
 
+                    // var top = element.offsetTop;
+                    // alert(top)
+                    // window.scrollTo(0, top);
+
+                    // console.log($('.questions').find($("#question"+question_id)).offset().top)
+
+                    // $('html, body').animate({
+                    //     scrollTop: $("#question"+question_id).offset().top - 100
+                    // }, 500);
                 },
                 save : function(){
                     if(this.page_type != 'exam') {
@@ -397,31 +465,101 @@
                     }
 
                     this.answers[question_id] = answer_id
-                    // this.nextSaveAnswers();
+                    this.nextSaveAnswers();
+                },
+
+                searchReviewMultiAnswers : function(question_id,answer_id){
+                    if(this.answers[question_id] == undefined)
+                        return false;
+
+                    let answer = null;
+                    if(Array.isArray(this.answers[question_id])) {
+                         answer = this.answers[question_id].filter(function (answer,index) {
+                            return( answer.id == answer_id )
+                        })
+                    }else{
+                        answer = [this.answers[question_id]]
+                    }
+
+                    console.log(answer)
+                    if(answer.length > 0)
+                        return true;
+
+                    return false;
+                },
+                checkIfQuestionHasInCorrectAnswers : function(question_id){
+                    console.log(this.answers)
+                    if(this.answers[question_id] == undefined)
+                        return false;
+
+                    let answer = null;
+                    if(Array.isArray(this.answers[question_id])){
+                         answer = this.answers[question_id].filter(function (answer,index) {
+                            return( answer.check_correct == 0 )
+                        })
+                    }else{
+                         answer = [this.answers[question_id]]
+                    }
+
+                    // console.log(answer)
+                    if(answer.length > 0)
+                        return true;
+
+                    return false;
+                },
+
+
+                searchMultiAnswers : function(question_id,answer_id){
+                    // alert(question_id)
+                    // alert(answer_id)
+                    if(this.answers[question_id] == undefined)
+                        return false;
+                    let answer = this.answers[question_id].filter(function (answer,index) {
+                        return( answer == answer_id )
+                    })
+                    console.log(answer)
+                    if(answer.length > 0)
+                        return true;
+
+                    return false;
                 },
                 addMultiAnswers : function (question_id,answer_id) {
                     if(this.page_type != 'exam') {
                         return ;
                     }
 
-                    if(this.answers[question_id] == undefined){
-                        alert('ddddddd')
-                        this.answers[question_id] = [answer_id];
+                    if(event.target.checked){
+                        if(this.answers[question_id] == undefined){
+                            this.answers[question_id] = [answer_id];
+                        }else{
+                            let answer_index = null;
+                            this.answers[question_id].forEach(function (answer,index) {
+                                if( answer == answer_id ){
+                                    answer_index = index
+                                }
+                            })
+                            if(answer_index){
+                                this.answers[question_id][answer_index] = answer_id;
+                            }else{
+                                this.answers[question_id].push(answer_id);
+                            }
+                        }
                     }else{
                         let answer_index = null;
-                        this.answers[question_id].forEach(function (answer_id,index) {
-                              if( answer_id == answer_id ){
-                                    answer_index = index
-                              }
+                        this.answers[question_id].forEach(function (answer,index) {
+                            if( answer == answer_id ){
+                                answer_index = index
+                            }
                         })
-                        if(answer_index){
-                            this.answers[question_id].push(answer_id);
-                        }else{
-                            this.answers[question_id] = answer_id;
+                        if(answer_index >= 0){
+                                this.answers[question_id].splice(answer_index,1);
                         }
                     }
+
+
+
                     console.log(this.answers)
-                    // this.nextSaveAnswers();
+                    this.nextSaveAnswers();
                 },
 
                 nextSaveAnswers : function (status = null) {

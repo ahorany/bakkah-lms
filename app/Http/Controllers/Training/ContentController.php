@@ -102,14 +102,19 @@ class ContentController extends Controller
     private function contentValidation($type){
         // validation
         if($type == 'exam'){
+
+//            if( !is_null(\request()->start_date) && !is_null(\request()->end_date)  ){
+//
+//            }
+            
             $rules = [
                 'title'      => "required|string",
                 'course_id'  =>'required|exists:courses,id',
 //                'excerpt'    =>  "required|string",
                 'content_id' => 'required|exists:contents,id',
-                'duration'=>'required|numeric|gt:-1',
-                'pagination'=>'required|numeric|gt:-1',
-                'attempt_count'=>'required|numeric|gt:0',
+                'duration'=>'nullable|numeric|gt:-1',
+                'pagination'=>'nullable|numeric|gt:-1',
+                'attempt_count'=>'nullable|numeric|gt:0',
                 'start_date'  => 'required|date|before:end_date',
                 'end_date'     => 'required|date|after:start_date',
             ];
@@ -188,9 +193,9 @@ class ContentController extends Controller
                 'end_date' => request()->end_date,
                 'created_by' => auth()->id(),
                 'updated_by' => auth()->id(),
-                'duration' => request()->duration,
-                'pagination' => request()->pagination,
-                'attempt_count' => request()->attempt_count,
+                'duration' => request()->duration??0,
+                'pagination' => request()->pagination??1,
+                'attempt_count' => request()->attempt_count??0,
             ]);
 
         }else{
@@ -245,9 +250,9 @@ class ContentController extends Controller
             $rules = [
                 'title'      => "required|string",
 //                'excerpt'    =>  "required|string",
-                'duration'=>'required|numeric|gt:-1',
-                'attempt_count'=>'required|numeric|gt:0',
-                'pagination'=>'required|numeric|gt:-1',
+                'duration'=>'nullable|numeric|gt:-1',
+                'pagination'=>'nullable|numeric|gt:-1',
+                'attempt_count'=>'nullable|numeric|gt:0',
                 'start_date'  => 'required|date|before:end_date',
                 'end_date'     => 'required|date|after:start_date',
             ];
@@ -283,9 +288,9 @@ class ContentController extends Controller
             Exam::where('content_id', request()->content_id)->update([
                 'start_date' => request()->start_date,
                 'end_date' => request()->end_date,
-                'duration' => request()->duration,
-                'pagination' => request()->pagination,
-                'attempt_count' => request()->attempt_count,
+                'duration' => request()->duration??0,
+                'pagination' => request()->pagination??1,
+                'attempt_count' => request()->attempt_count??0,
                 'updated_by' => auth()->id(),
             ]);
 

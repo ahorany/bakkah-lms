@@ -86,8 +86,8 @@ label.navigation {
                                             <h5 class="card-title">Exam title : {{$exam->title}}</h5>
                                             <p class="card-title">Start date : {{$exam->exam->start_date}}</p>
                                             <p class="card-title">End date : {{$exam->exam->end_date}}</p>
-                                            <p class="card-title">Duration : {{$exam->exam->duration}} minutes</p>
-                                            <p class="card-title">Exam attempt count : {{$exam->exam->attempt_count}}</p>
+                                            <p class="card-title">Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration  !!} minutes</p>
+                                            <p class="card-title">Exam attempt count : {!! $exam->exam->attempt_count == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->attempt_count!!}</p>
                                             <p class="card-title">Your attempts  : {{$users_exams_count}}</p>
                                             <p class="card-title">Mark  : {{$exam->exam->exam_mark}} </p>
 
@@ -102,7 +102,7 @@ label.navigation {
                                                     @elseif($exam->exam->users_exams[$users_exams_count-1]->status == 0)
                                                         <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Return to Exam</a>
 
-                                                    @elseif($users_exams_count < $exam->exam->attempt_count && $exam->exam->users_exams[$users_exams_count-1]->status == 1)
+                                                    @elseif( ( $exam->exam->attempt_count == 0) || ($users_exams_count < $exam->exam->attempt_count && $exam->exam->users_exams[$users_exams_count-1]->status == 1))
                                                         <a onclick="confirmNewAttempt()" href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start New Attempt</a>
                                                     @else
                                                         <p class="text-danger">All your attempts are over</p>
@@ -137,6 +137,7 @@ label.navigation {
                                         <th scope="col"># Attempt</th>
                                         <th scope="col">Your Start Time</th>
                                         <th scope="col">Your End Time</th>
+                                        <th scope="col">Review</th>
                                         <th scope="col">Time taken</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mark</th>

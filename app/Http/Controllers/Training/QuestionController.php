@@ -24,9 +24,6 @@ class QuestionController extends Controller
 //        return \request();
         // validation
 
-
-
-
         $rules = [
             "title"   => "required|string",
             "mark"   => "required|numeric",
