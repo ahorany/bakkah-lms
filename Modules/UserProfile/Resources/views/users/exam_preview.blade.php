@@ -154,7 +154,7 @@
                                             </div>
 
                                         <div class="col-md-4 col-4 col-lg-4 text-center p-0 py-2">
-                                            <template v-if="page_type == 'exam' && exam.exam.duration > 0">
+                                            <template v-if="page_type == 'exam' && !without_timer">
                                                 <div  class="time">
                                                     <span>
                                                         <i class="far fa-clock"></i>
@@ -226,12 +226,14 @@
         window.exam = {!! json_encode($exam??[]) !!}
         window.start_user_attepmt = {!! json_encode($start_user_attepmt??[]) !!}
         window.page_type = {!! json_encode($page_type??'exam') !!}
+        window.without_timer = {!! json_encode($without_timer??false) !!}
 
         new Vue({
             'el' : '#exam',
             'data' : {
                 exam: window.exam,
                 page_type: window.page_type,
+                without_timer: window.without_timer,
                 start_user_attepmt: window.start_user_attepmt,
                 current: 1,
                 user_exam_id: '',
@@ -357,18 +359,19 @@
                         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                         // // Output the result in an element with id="demo"
-                        if(exam.exam.duration > 0)
-                        document.getElementById("demo").innerHTML = hours + "h "
-                            + minutes + "m " + seconds + "s ";
+                        if(!without_timer){
+                            document.getElementById("demo").innerHTML = hours + "h "
+                                + minutes + "m " + seconds + "s ";
+                        }
+
 
                         // If the count down is over, write some text
                         if (distance < 0) {
                             clearInterval(x);
-                            if(self.exam.exam.duration > 0){
+                            if(!without_timer){
                                 document.getElementById("demo").innerHTML = "EXPIRED";
                                 self.nextSaveAnswers('save');
                             }
-
                         }
 
                     }, 1000);

@@ -142,12 +142,19 @@ class UserProfileController extends Controller
             ->with(['exam' => function($q){
                 return $q->with(['users_exams' => function($query){
                     return $query->where('user_id',\auth()->id())->with('user_answers');
-                }])->where('start_date','<=',Carbon::now())
-                    ->where('end_date','>',Carbon::now());
+                }])->where('start_date','<=',Carbon::now())->where(function ($q){
+                      $q->where('end_date','>',Carbon::now())->orWhere('end_date',null);
+                });
             },'questions.answers'])->first();
 
         if (!$exam->exam || (count($exam->questions) == 0) ) abort(404);
 //        return $exam;
+
+        $without_timer = false;
+        if($exam->exam->duration == 0){
+            $without_timer = true;
+        }
+
 
         $user_exams_count = count($exam->exam->users_exams);
         if (count($exam->exam->users_exams) > 0 && $exam->exam->users_exams[$user_exams_count-1]->status == 0){
@@ -169,7 +176,7 @@ class UserProfileController extends Controller
                 $exam->exam->duration = ($exam->exam->duration * 60) -  ($d1 - $d2);
             }
 
-            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt','page_type'));
+            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt','page_type','without_timer'));
         }
 
         if ( $user_exams_count < $exam->exam->attempt_count ||  $exam->exam->attempt_count == 0){
@@ -193,7 +200,7 @@ class UserProfileController extends Controller
             }else{
                 $exam->exam->duration *= 60;
             }
-            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt','page_type'));
+            return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt','page_type','without_timer'));
 
         }else{
             abort(404);

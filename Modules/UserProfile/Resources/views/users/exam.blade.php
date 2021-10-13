@@ -85,8 +85,8 @@ label.navigation {
                                         <div class="card-body">
                                             <h5 class="card-title">Exam title : {{$exam->title}}</h5>
                                             <p class="card-title">Start date : {{$exam->exam->start_date}}</p>
-                                            <p class="card-title">End date : {{$exam->exam->end_date}}</p>
-                                            <p class="card-title">Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration  !!} minutes</p>
+                                            <p class="card-title">End date : {!!$exam->exam->end_date??'<span style="font-size:19px">∞</span>'!!}</p>
+                                            <p class="card-title">Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
                                             <p class="card-title">Exam attempt count : {!! $exam->exam->attempt_count == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->attempt_count!!}</p>
                                             <p class="card-title">Your attempts  : {{$users_exams_count}}</p>
                                             <p class="card-title">Mark  : {{$exam->exam->exam_mark}} </p>
@@ -95,7 +95,7 @@ label.navigation {
                                            @if(count($exam->questions) == 0)
                                                     <p class="text-danger">Not Ready Now</p>
                                             @else
-                                                @if( \Carbon\Carbon::create($exam->exam->end_date)  > \Carbon\Carbon::now())
+                                                @if( \Carbon\Carbon::create($exam->exam->end_date)  > \Carbon\Carbon::now() || is_null($exam->exam->end_date) )
                                                     @if($users_exams_count == 0)
                                                         <p class="text-warning">No Attempts</p>
                                                         <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start Attempt</a>
@@ -159,7 +159,7 @@ label.navigation {
 
                                             $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
                                             ?>
-                                            <td><a href="{{CustomRoute('user.review.exam',$attempt->id)}}">Review</a></td>
+                                            <td>@if($attempt->status == 1)<a href="{{CustomRoute('user.review.exam',$attempt->id)}}">Review</a>@else ---- @endif</td>
                                             <td>{{$diff??'0 seconds'}}</td>
                                             <td class="text-bold {{$attempt->status == 1 ? 'text-success' : 'text-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</td>
                                             <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>

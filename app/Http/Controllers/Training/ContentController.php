@@ -9,6 +9,7 @@ use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
 use App\Models\Training\Exam;
 use App\Models\Training\Question;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
@@ -103,10 +104,14 @@ class ContentController extends Controller
         // validation
         if($type == 'exam'){
 
-//            if( !is_null(\request()->start_date) && !is_null(\request()->end_date)  ){
-//
-//            }
-            
+            $start_date = '';
+            $end_date = '';
+            if( strtotime(\request()->start_date) && strtotime(\request()->end_date)  ){
+                $start_date  = 'required|date|before:end_date';
+                $end_date    = 'required|date|after:start_date';
+            }
+
+
             $rules = [
                 'title'      => "required|string",
                 'course_id'  =>'required|exists:courses,id',
@@ -114,9 +119,9 @@ class ContentController extends Controller
                 'content_id' => 'required|exists:contents,id',
                 'duration'=>'nullable|numeric|gt:-1',
                 'pagination'=>'nullable|numeric|gt:-1',
-                'attempt_count'=>'nullable|numeric|gt:0',
-                'start_date'  => 'required|date|before:end_date',
-                'end_date'     => 'required|date|after:start_date',
+                'attempt_count'=>'nullable|numeric|gt:-1',
+                'start_date'  => $start_date,
+                'end_date'     => $end_date,
             ];
         }else{
             $mimes ='';
@@ -189,7 +194,7 @@ class ContentController extends Controller
             ]);
 
             $content->exams()->create([
-                'start_date'    =>  request()->start_date,
+                'start_date'    =>  request()->start_date??Carbon::now(),
                 'end_date' => request()->end_date,
                 'created_by' => auth()->id(),
                 'updated_by' => auth()->id(),
@@ -247,14 +252,28 @@ class ContentController extends Controller
                 'file'      => $file,
             ];
         }else{
+
+            $start_date = '';
+            $end_date = '';
+//            dd(strtotime(\request()->end_date));
+            if( strtotime(\request()->start_date) && strtotime(\request()->end_date)  ){
+                $start_date  = 'required|date|before:end_date';
+                $end_date    = 'required|date|after:start_date';
+            }else if(strtotime(\request()->start_date) && !strtotime(\request()->end_date) ){
+                request()->request->add(['end_date' => null]);
+                $start_date = '';
+                $end_date = '';
+            }
+
+//            dd(\request()->end_date);
             $rules = [
                 'title'      => "required|string",
 //                'excerpt'    =>  "required|string",
                 'duration'=>'nullable|numeric|gt:-1',
                 'pagination'=>'nullable|numeric|gt:-1',
-                'attempt_count'=>'nullable|numeric|gt:0',
-                'start_date'  => 'required|date|before:end_date',
-                'end_date'     => 'required|date|after:start_date',
+                'attempt_count'=>'nullable|numeric|gt:-1',
+                'start_date'  => $start_date,
+                'end_date'     => $end_date,
             ];
         }
 
@@ -286,7 +305,7 @@ class ContentController extends Controller
             ]);
 
             Exam::where('content_id', request()->content_id)->update([
-                'start_date' => request()->start_date,
+                'start_date'    =>  request()->start_date??Carbon::now(),
                 'end_date' => request()->end_date,
                 'duration' => request()->duration??0,
                 'pagination' => request()->pagination??1,
