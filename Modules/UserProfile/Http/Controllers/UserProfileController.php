@@ -61,12 +61,6 @@ class UserProfileController extends Controller
             'content_id' => $exam_id,
         ]);
 
-//        return $exam;
-//        $user_exams_count = count($exam->exam->users_exams);
-//
-//        if ($exam->exam->users_exams[$user_exams_count-1]->status == 0){
-//            return view('userprofile::users.exam_preview',compact('exam'));
-//        }
         return view('userprofile::users.exam',compact('exam'));
     }
 
@@ -75,6 +69,7 @@ class UserProfileController extends Controller
           ->where('user_id',\auth()->id())->where('status',0)->first();
       if (!$user_exam) abort(404);
 
+         // save answers
         foreach (\request()->answers as $key => $value){
             if (!is_null($value)){
                  if(is_array($value)){
@@ -102,37 +97,41 @@ class UserProfileController extends Controller
         }
 
         if (\request()->status == 'save'){
-            $user_exam->update([
-                'status' => 1
-            ]);
-            $user_exam = UserExam::whereId(\request()->user_exam_id)
-                ->select('id','exam_id')->with('exam')->first();
+            $this->saveAndCalcMark($user_exam);
+            return response(['status' => 'success' , 'redirect_route' => route('user.exam',$user_exam->exam->content_id)]);
+        }
+    }
 
-            // mark
-            $user_exam_id = \request()->user_exam_id;
-            $grade =  DB::select( DB::raw("SELECT SUM(questions.mark) as grade
+    private function saveAndCalcMark($user_exam){
+        $user_exam->update([
+            'status' => 1
+        ]);
+        $user_exam = UserExam::whereId(\request()->user_exam_id)
+            ->select('id','exam_id')->with('exam')->first();
+
+        // mark
+        $user_exam_id = \request()->user_exam_id;
+        $grade =  DB::select( DB::raw("SELECT SUM(questions.mark) as grade
                                 FROM `user_answers`
                                     INNER JOIN answers ON user_answers.answer_id = answers.id
                                     INNER JOIN questions ON questions.id = answers.question_id
                                 WHERE user_exam_id = ". $user_exam_id ."
                                 AND answers.check_correct = 1"));
 
-            UserExam::where('id',$user_exam_id)->update([
-                'end_attempt' => Carbon::now(),
-                'mark' => $grade[0]->grade??0
-            ]);
+        UserExam::where('id',$user_exam_id)->update([
+            'end_attempt' => Carbon::now(),
+            'mark' => $grade[0]->grade??0
+        ]);
 
-/*
-       SELECT SUM(questions.mark) as grade
-    FROM `user_answers`
-        INNER JOIN answers ON user_answers.answer_id = answers.id
-        INNER JOIN questions ON questions.id = answers.question_id
-    WHERE user_exam_id = 41
-    AND answers.check_correct = 1
+        /*
+               SELECT SUM(questions.mark) as grade
+            FROM `user_answers`
+                INNER JOIN answers ON user_answers.answer_id = answers.id
+                INNER JOIN questions ON questions.id = answers.question_id
+            WHERE user_exam_id = 41
+            AND answers.check_correct = 1
 
-*/
-            return response(['status' => 'success' , 'redirect_route' => route('user.exam',$user_exam->exam->content_id)]);
-        }
+        */
     }
 
 
@@ -148,7 +147,7 @@ class UserProfileController extends Controller
             },'questions.answers'])->first();
 
         if (!$exam->exam || (count($exam->questions) == 0) ) abort(404);
-//        return $exam;
+
 
         $without_timer = false;
         if($exam->exam->duration == 0){
@@ -160,24 +159,25 @@ class UserProfileController extends Controller
         if (count($exam->exam->users_exams) > 0 && $exam->exam->users_exams[$user_exams_count-1]->status == 0){
             // duration time calc
             $start_user_attepmt = Carbon::now();
-
             $d = Carbon::parse($start_user_attepmt)
                 ->addSeconds($exam->exam->duration * 60)
                 ->format('Y-m-d H:i:s');;
             $d1 = strtotime($d);
             $d2 = strtotime($exam->exam->end_date);
-            if( ($d1 - $d2) > 0){
-                $exam->exam->duration =   $exam->exam->duration * 60 -  ($d1 - $d2);
-            }else{
-                $d = Carbon::parse($start_user_attepmt)
-                    ->format('Y-m-d H:i:s');;
-                $d1 = strtotime($d);
-                $d2 = strtotime($exam->exam->users_exams[$user_exams_count-1]->time);
-                $exam->exam->duration = ($exam->exam->duration * 60) -  ($d1 - $d2);
-            }
+
+                if( $d2 && ($d1 - $d2) > 0 ){
+                    $exam->exam->duration =   $exam->exam->duration * 60 -  ($d1 - $d2);
+                }else{
+                    $d = Carbon::parse($start_user_attepmt)
+                        ->format('Y-m-d H:i:s');;
+                    $d1 = strtotime($d);
+                    $d2 = strtotime($exam->exam->users_exams[$user_exams_count-1]->time);
+                    $exam->exam->duration = ($exam->exam->duration * 60) -  ($d1 - $d2);
+                }
 
             return view('userprofile::users.exam_preview',compact('exam','start_user_attepmt','page_type','without_timer'));
         }
+
 
         if ( $user_exams_count < $exam->exam->attempt_count ||  $exam->exam->attempt_count == 0){
             $start_user_attepmt = Carbon::now();
@@ -195,7 +195,7 @@ class UserProfileController extends Controller
                ->format('Y-m-d H:i:s');;
            $d1 = strtotime($d);
            $d2 = strtotime($exam->exam->end_date);
-            if( ($d1 - $d2) > 0){
+            if( $d2 && ($d1 - $d2) > 0){
                 $exam->exam->duration =   $exam->exam->duration * 60 -  ($d1 - $d2);
             }else{
                 $exam->exam->duration *= 60;
@@ -217,26 +217,133 @@ class UserProfileController extends Controller
             ->with(['exam.content.questions.answers','user_answers'])
             ->first();
 
-//        return $exam;
-
-//        return $exam;
-//        $exam = Content::whereId($exam_id)
-//            ->with(['exam' => function($q){
-//                return $q->with(['users_exams' => function($query){
-//                    return $query->where('user_id',\auth()->id())->with('user_answers');
-//                }]);
-//            },'questions.answers'])->first();
-
-
         if ( !$exam  ) abort(404);
-
-
-//         return $exam;
-
         return view('userprofile::users.exam_preview',compact('exam','page_type'));
 
     }
 
+
+    public function course_details($course_id){
+        $course = Course::where('id',$course_id)->whereHas('users',function ($q){
+            $q->where('users.id',\auth()->id());
+        })->with(['uploads' => function($query){
+            return $query->where(function ($q){
+                $q->where('post_type','intro_video')->orWhere('post_type','image');
+            });
+        },'contents' => function($query){
+            $query->where('post_type','section')->with(['contents.user_contents' => function($q){
+                return $q->where('user_id',\auth()->id());
+            }]);
+        }])->first();
+        if (!$course){
+            abort(404);
+        }
+
+//        return $course->uploads;
+
+
+//          return $course;
+
+
+        return view('userprofile::users.my_courses',compact('course'));
+//        return view('userprofile::users.course_details',compact('course'));
+
+    }
+
+    public function course_preview($content_id){
+
+        $content = Content::whereId($content_id)
+            ->with(['upload','course.users' => function($q){
+                $q->where('users.id',\auth()->id());
+            }])->first();
+
+        if (!$content){
+            abort(404);
+        }
+
+
+        UserContent::firstOrCreate([
+            'user_id' => \auth()->id(),
+            'content_id' => $content_id,
+        ],[
+            'user_id'  => \auth()->id(),
+            'content_id' => $content_id,
+        ]);
+
+
+        /*
+           SELECT * FROM `contents`
+               INNER JOIN contents AS sections ON contents.parent_id = sections.id
+                WHERE contents.course_id = 1
+               ORDER BY contents.parent_id
+        *******************
+
+        SELECT * FROM `contents`
+           INNER JOIN contents AS sections ON contents.parent_id = sections.id
+        WHERE contents.course_id = 1
+              AND (contents.parent_id >= 203 AND contents.id != 210)
+        ORDER BY contents.parent_id
+        LIMIT 1
+
+         */
+
+
+        $next =  DB::select(DB::raw("
+                        SELECT contents.id , contents.title,contents.post_type FROM `contents`
+                          INNER JOIN contents AS sections ON contents.parent_id = sections.id
+                            WHERE contents.course_id = $content->course_id
+                              AND contents.id !=  $content->id
+                              AND contents.deleted_at IS NULL
+                              AND  (
+                                  (contents.order > $content->order AND contents.parent_id = $content->parent_id)
+                                    OR
+                                  (contents.parent_id > $content->parent_id)
+                              )
+                        ORDER BY contents.parent_id
+                        ,contents.order
+                        LIMIT 1
+                        "
+        ));
+
+
+        $previous =  DB::select(DB::raw(
+            "
+                        SELECT contents.id , contents.title,contents.post_type FROM `contents`
+                          INNER JOIN contents AS sections ON contents.parent_id = sections.id
+                            WHERE contents.course_id = $content->course_id
+                             AND contents.id !=  $content->id
+                              AND contents.deleted_at IS NULL
+                              AND  (
+                                  (contents.order < $content->order AND contents.parent_id = $content->parent_id)
+                                    OR
+                                  ( contents.parent_id < $content->parent_id)
+                              )
+                        ORDER BY contents.parent_id DESC
+                        ,contents.order DESC
+                        LIMIT 1
+                         "
+        ));
+
+
+        $next = ($next[0]??null);
+        $previous = ($previous[0]??null);
+
+
+        return view('userprofile::users.file',compact('content','previous','next'));
+    }
+
+    public function my_courses() {
+        $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
+            return $q->where('post_type','image')->where('locale',app()->getLocale());
+        }])->first();
+        return view('userprofile::users.my_courses',compact('courses'));
+    }
+
+    public function exercise() {
+        return view('userprofile::users.exercise');
+    }
+
+//////////////////////////////////////
 
 
     public function dashboard() {
@@ -402,146 +509,6 @@ class UserProfileController extends Controller
 
         return redirect()->back();
     }
-
-
-
-    public function my_courses() {
-        $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
-            return $q->where('post_type','image')->where('locale',app()->getLocale());
-        }])->first();
-        return view('userprofile::users.my_courses',compact('courses'));
-    }
-
-    public function exercise() {
-        return view('userprofile::users.exercise');
-    }
-
-
-
-    public function course_details($course_id){
-          $course = Course::where('id',$course_id)->whereHas('users',function ($q){
-               $q->where('users.id',\auth()->id());
-          })->with(['uploads' => function($query){
-              return $query->where(function ($q){
-                  $q->where('post_type','intro_video')->orWhere('post_type','image');
-              });
-          },'contents' => function($query){
-              $query->where('post_type','section')->with(['contents.user_contents' => function($q){
-                  return $q->where('user_id',\auth()->id());
-              }]);
-          }])->first();
-          if (!$course){
-              abort(404);
-          }
-
-//        return $course->uploads;
-
-
-//          return $course;
-
-
-        return view('userprofile::users.my_courses',compact('course'));
-//        return view('userprofile::users.course_details',compact('course'));
-
-    }
-
-    public function course_preview($content_id){
-
-        $content = Content::whereId($content_id)
-            ->with(['upload','course.users' => function($q){
-            $q->where('users.id',\auth()->id());
-        }])->first();
-
-        if (!$content){
-            abort(404);
-        }
-
-
-        UserContent::firstOrCreate([
-            'user_id' => \auth()->id(),
-            'content_id' => $content_id,
-        ],[
-            'user_id'  => \auth()->id(),
-            'content_id' => $content_id,
-        ]);
-
-
-        /*
-           SELECT * FROM `contents`
-               INNER JOIN contents AS sections ON contents.parent_id = sections.id
-                WHERE contents.course_id = 1
-               ORDER BY contents.parent_id
-        *******************
-
-        SELECT * FROM `contents`
-           INNER JOIN contents AS sections ON contents.parent_id = sections.id
-        WHERE contents.course_id = 1
-              AND (contents.parent_id >= 203 AND contents.id != 210)
-        ORDER BY contents.parent_id
-        LIMIT 1
-
-         */
-
-
-      $next =  DB::select(DB::raw("
-                        SELECT contents.id , contents.title,contents.post_type FROM `contents`
-                          INNER JOIN contents AS sections ON contents.parent_id = sections.id
-                            WHERE contents.course_id = $content->course_id
-                              AND contents.id !=  $content->id
-                              AND contents.deleted_at IS NULL
-                              AND  (
-                                  (contents.order > $content->order AND contents.parent_id = $content->parent_id)
-                                    OR
-                                  (contents.parent_id > $content->parent_id)
-                              )
-                        ORDER BY contents.parent_id
-                        ,contents.order
-                        LIMIT 1
-                        "
-        ));
-
-
-        $previous =  DB::select(DB::raw(
-            "
-                        SELECT contents.id , contents.title,contents.post_type FROM `contents`
-                          INNER JOIN contents AS sections ON contents.parent_id = sections.id
-                            WHERE contents.course_id = $content->course_id
-                             AND contents.id !=  $content->id
-                              AND contents.deleted_at IS NULL
-                              AND  (
-                                  (contents.order < $content->order AND contents.parent_id = $content->parent_id)
-                                    OR
-                                  ( contents.parent_id < $content->parent_id)
-                              )
-                        ORDER BY contents.parent_id DESC
-                        ,contents.order DESC
-                        LIMIT 1
-                         "
-        ));
-
-
-        $next = ($next[0]??null);
-        $previous = ($previous[0]??null);
-
-
-        return view('userprofile::users.file',compact('content','previous','next'));
-    }
-
-
-
-//    public function course_preview($content_id){
-//        $content = Content::whereId($content_id)->with(['upload','course.users' => function($q){
-//            $q->where('users.id',\auth()->id());
-//        }])->first();
-//
-//        if (!$content){
-//            abort(404);
-//        }
-////        return $content;
-//
-//        return view('userprofile::users.course_preview',compact('content'));
-//    }
-
 
 
     public function logout(Request $request) {
