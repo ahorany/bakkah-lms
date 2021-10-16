@@ -26,7 +26,8 @@
         ul.tree li:before {
             position:relative;
             top:-0.3em;
-            height:1em;
+            /*height:1em;*/
+            height:2.5em;
             width:12px;
             color:white;
             border-bottom:1px solid rgb(100,100,100);
@@ -170,7 +171,7 @@
               }
             },
             template: `
-                         <li @click.stop="open = (!open)">@{{item.title }}
+                         <li @click.stop="open = (!open)">@{{item.title }} <i class="fas fa-sort-down"></i>
 
                                   <button @click.stop="$root.deleteUnit(course.units,item.id)"  class="btn text-danger btn-sm" >
                                            <i class="fa fa-trash"></i></button>
