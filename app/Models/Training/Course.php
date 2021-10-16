@@ -285,4 +285,9 @@ class Course extends Model
         return $this->hasMany(Content::class,'course_id');
     }
 
+    public function units(){
+        return $this->hasMany(Unit::class,'course_id');
+    }
+
+
 }
