@@ -92,6 +92,25 @@
     border-radius: 50%;
 }
 </style>
+
+<?php
+   $video = null;
+   $image = null;
+
+   if($course->uploads){
+       foreach ($course->uploads as $file){
+           if($file->post_type == 'intro_video' ){
+               $video = $file;
+           }else if($file->post_type == 'image'){
+               $image = $file;
+           }
+       }
+   }
+
+
+?>
+
+
     <div class="userarea-wrapper">
         <div class="row no-gutters">
             @include('userprofile::users.sidebar')
@@ -101,9 +120,9 @@
                             <div class="row">
                                 <div class="col-4 col-md-3 col-lg-3 mb-4 px-3 image">
                                     <div class="card p-4" style="width: 100%; border-radius: 10px; border: 1px solid #f2f2f2">
-                                        @isset($course->upload->file)
-                                          <img class="card-img-top" src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}">
-                                        @endisset
+                                        @if($image)
+                                          <img class="card-img-top" src="{{CustomAsset('upload/thumb200/'.$image->file)}}">
+                                        @endif
                                         <div class="card-body text-center p-0">
                                             <div class="rate">
                                                 <div class="line"></div>
@@ -128,7 +147,7 @@
                                                     <input type="radio" id="field6_star1" name="rating2" value="1" /><label class = "full" for="field6_star1"></label>
                                                 </fieldset>
                                             </div>
-                                            <button class="resume">Resume Course</button>
+{{--                                            <button class="resume">Resume Course</button>--}}
                                         </div>
                                     </div>
                                 </div>
@@ -138,11 +157,11 @@
                                 </div>
 
                                 <div class="col-12 col-md-4 col-lg-4 mb-3 py-3 px-0">
-                                    @isset($course->upload->file)
+                                    @if($video)
                                         <video style="border: 1px solid gainsboro; border-radius: 15px;" width="100%" height="200px" controls>
-                                            <source src="{{CustomAsset('upload/video/'.$course->upload->file)}}">
+                                            <source src="{{CustomAsset('upload/video/'.$video->file)}}">
                                         </video>
-                                    @endisset
+                                    @endif
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 mb-3 p-3">
@@ -156,6 +175,9 @@
                                                 <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
                                                     <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
                                                         <p class="learning_file" style="padding-left:30px;">{{$section->title}}</p>
+                                                        <p class="learning_file" style="padding-left:55px;">
+                                                            {{ $section->details->excerpt??null}}
+                                                        </p>
                                                         @isset($section->contents)
                                                            <div class="my-links">
                                                                @foreach($section->contents as $k => $content)
@@ -170,6 +192,10 @@
                                                                    <a  @if( ( isset($section->contents[($k-1)]->user_contents[0]) || ( isset($course->contents[($key-1)])  && isset($course->contents[($key-1)]->contents[ (count($course->contents[($key-1)]->contents) - 1)]->user_contents[0]) && $k == 0  ) )  || ($key == 0 && $k == 0)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif    class="d-block">
                                                                      <i  class="{{$class}} mr-2"></i>  {{$content->title}}
                                                                    </a>
+
+                                                                       <p class="learning_file" style="padding-left:70px;">
+                                                                           {{ $content->details->excerpt??null}}
+                                                                       </p>
                                                                @endforeach
                                                            </div>
                                                         @endisset

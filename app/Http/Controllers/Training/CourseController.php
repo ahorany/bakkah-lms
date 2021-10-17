@@ -63,27 +63,6 @@ class CourseController extends Controller
         $validated['created_by'] = auth()->user()->id;
 
         $course = Course::create($validated);
-//        CourseDetail::Add($course);
-
-        Course::UploadFile($course, [
-            'post_type'=>'en_image'
-            , 'locale'=>'en'
-            , 'upload_title'=>'en_upload_title'
-            , 'upload_excerpt'=>'en_upload_excerpt'
-            , 'upload_alternate'=>'en_upload_alternate'
-            , 'upload_caption'=>'en_upload_caption'
-            , 'exclude_img'=>'exclude_img'
-        ], $name='en_image');
-
-        Course::UploadFile($course, [
-            'post_type'=>'ar_image'
-            , 'locale'=>'ar'
-            , 'upload_title'=>'ar_upload_title'
-            , 'upload_excerpt'=>'ar_upload_excerpt'
-            , 'upload_alternate'=>'ar_upload_alternate'
-            , 'upload_caption'=>'ar_upload_caption'
-            , 'exclude_img'=>'exclude_img'
-        ], $name='ar_image');
 
         Course::SetMorph($course->id);
         Course::AddMorph($course->id, [22]);//25
@@ -93,7 +72,6 @@ class CourseController extends Controller
 
         $this->uploadsVideo($course, 'intro_video', null);
 
-//        Course::AddMorph($course->id, 26);
         \App\Models\SEO\Seo::seo($course);
 
         return Active::Inserted($course->trans_title);
@@ -102,32 +80,15 @@ class CourseController extends Controller
     public function edit(Course $course){
         $partners = Partner::GetPartners('partners', -1, false, 1, 0);
         $certificate_types = Constant::where('parent_id', 323)->get();
-        // $params = $this->_create_edit_params();
         return Active::Edit(['eloquent'=>$course, 'partners'=>$partners, 'certificate_types'=>$certificate_types]);
     }
 
     public function update(CourseRequest $request, Course $course){
         $validated = $this->Validated($request->validated());
-        // return $validated;
         Course::find($course->id)->update($validated);
         Course::SetMorph($course->id);
         Course::UploadFile($course, ['method'=>'update']);
 
-        Course::UploadFile($course, [
-            'post_type'=>'en_image'
-            , 'locale'=>'en'
-            , 'upload_title'=>'en_upload_title'
-            , 'upload_excerpt'=>'en_upload_excerpt'
-            , 'method'=>'update'
-        ], $name='en_image');
-
-        Course::UploadFile($course, [
-            'post_type'=>'ar_image'
-            , 'locale'=>'ar'
-            , 'upload_title'=>'ar_upload_title'
-            , 'upload_excerpt'=>'ar_upload_excerpt'
-            , 'method'=>'update'
-        ], $name='ar_image');
 
         $this->uploadsPDF($course, 'pdf', 'en');
         $this->uploadsPDF($course, 'pdf', 'ar');
@@ -161,10 +122,6 @@ class CourseController extends Controller
         $validated['show_in_website'] = request()->has('show_in_website')?1:0;
         $validated['active'] = request()->has('active')?1:0;
 
-        // $validated['exam_is_included'] = 0;
-        // if(request()->has('exam_is_included')){
-        //     $validated['exam_is_included'] = 1;
-        // }
         return $validated;
     }
 
@@ -226,12 +183,6 @@ class CourseController extends Controller
         }
     }
 
-    // protected function _create_edit_params(){
-        // $certificate_types = Constant::where('parent_id', 323)->get();
-    //     return [
-    //         'certificate_types'=>$certificate_types
-    //     ];
-    // }
 
     private function uploadsVideo($model, $name='video', $locale='en'){
 

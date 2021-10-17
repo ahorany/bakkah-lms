@@ -61,4 +61,6 @@ return [
     'show_in_website'=>'Show In Website',
     'category_id'=>'Category',
     'contents'=>'Contents',
+    'add_unit'=>'Add Unit',
+    'units'=>'Units',
 ];

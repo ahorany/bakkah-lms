@@ -66,11 +66,11 @@
             {!!Builder::Input('en_short_title', 'en_short_title', null)!!}
             {!!Builder::Input('ar_short_title', 'ar_short_title', null)!!}
             {!!Builder::Input('order', 'order', null)!!}
-            {!!Builder::Input('algolia_order', 'algolia_order', null)!!}
-            {!!Builder::Input('xero_code', 'xero_code', null)!!}
-            {!!Builder::Input('xero_exam_code', 'xero_exam_code', null)!!}
-            {!!Builder::Input('xero_exam_code_practitioner', 'xero_exam_code_practitioner', null)!!}
-            {!! Builder::Input('material_cost', 'material_cost', null, ['attr' => 'digit']) !!}
+{{--            {!!Builder::Input('algolia_order', 'algolia_order', null)!!}--}}
+{{--            {!!Builder::Input('xero_code', 'xero_code', null)!!}--}}
+{{--            {!!Builder::Input('xero_exam_code', 'xero_exam_code', null)!!}--}}
+{{--            {!!Builder::Input('xero_exam_code_practitioner', 'xero_exam_code_practitioner', null)!!}--}}
+{{--            {!! Builder::Input('material_cost', 'material_cost', null, ['attr' => 'digit']) !!}--}}
 
             {!!Builder::Select('partner_id', 'partners', $partners, null, ['col'=>'col-md-12']) !!}
 
@@ -111,47 +111,6 @@
 
 @section('seo')
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card card-default">
-                <div class="card-header">{{__('admin.upcoming_courses')}} (EN)</div>
-                <div class="card-body">
-                    {!!Builder::File('en_image', 'en_image')!!}
-                    {!!Builder::UploadFormLang(null, null, ['post_type'=>'en_image'])!!}
-                    <?php
-                    $en_upload_title = null;
-                    $en_upload_excerpt = null;
-                    if(!is_null(Builder::$eloquent)){
-                        $en_upload_title = Builder::$eloquent->uploads()->where('post_type', 'en_image')->first()->title??null;
-                        $en_upload_excerpt = Builder::$eloquent->uploads()->where('post_type', 'en_image')->first()->excerpt??null;
-                    }
-                    ?>
-                    {!!Builder::Input('en_upload_title', 'title', $en_upload_title)!!}
-                    {!!Builder::Excerpt('en_upload_excerpt', 'excerpt', $en_upload_excerpt)!!}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="card card-default">
-                <div class="card-header">{{__('admin.upcoming_courses')}} (AR)</div>
-                <div class="card-body">
-                    {!!Builder::File('ar_image', 'ar_image')!!}
-                    {!!Builder::UploadFormLang(null, null, ['post_type'=>'ar_image'])!!}
-                    <?php
-                    $ar_upload_title = null;
-                    $ar_upload_excerpt = null;
-                    if(!is_null(Builder::$eloquent)){
-                        $ar_upload_title = Builder::$eloquent->uploads()->where('post_type', 'ar_image')->first()->title??null;
-                        $ar_upload_excerpt = Builder::$eloquent->uploads()->where('post_type', 'ar_image')->first()->excerpt??null;
-                    }
-                    ?>
-                    {!!Builder::Input('ar_upload_title', 'title', $ar_upload_title)!!}
-                    {!!Builder::Excerpt('ar_upload_excerpt', 'excerpt', $ar_upload_excerpt)!!}
-                </div>
-            </div>
-        </div>
-    </div>
 
     @include(ADMIN.'.SEO.form', ['post'=>$eloquent??null])
 @endsection

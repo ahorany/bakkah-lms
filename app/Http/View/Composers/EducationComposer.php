@@ -5,6 +5,8 @@ use App\Constant;
 use App\Helpers\Models\Training\CartHelper;
 use App\Infastructure;
 use App\Models\Admin\Post;
+use App\Models\Training\Course;
+use App\User;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Cache;
 
@@ -13,7 +15,7 @@ class EducationComposer
     public function compose(View $view){
 
         // $DateTimeNow = DateTimeNow();
-        
+
 
 
        $user_sidebar = Cache::rememberForever('user_sidebar', function(){
@@ -24,7 +26,9 @@ class EducationComposer
        });
        $view->with('user_sidebar', $user_sidebar);
 
+        $user_sidebar_courses = User::whereId(auth()->id())->with(['courses'])->first();
 
+       $view->with('user_sidebar_courses', $user_sidebar_courses);
 
 //        $navbar_campaign = Post::where('post_type', 'navbar-campaign')
 //            ->where('post_date', '<', $DateTimeNow)

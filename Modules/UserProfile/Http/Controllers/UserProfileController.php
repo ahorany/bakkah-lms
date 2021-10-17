@@ -231,7 +231,7 @@ class UserProfileController extends Controller
                 $q->where('post_type','intro_video')->orWhere('post_type','image');
             });
         },'contents' => function($query){
-            $query->where('post_type','section')->with(['contents.user_contents' => function($q){
+            $query->where('post_type','section')->with(['details','contents.details','contents.user_contents' => function($q){
                 return $q->where('user_id',\auth()->id());
             }]);
         }])->first();
@@ -364,8 +364,9 @@ class UserProfileController extends Controller
 
     public function home() {
         $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
-            return $q->where('post_type','image')->where('locale',app()->getLocale());
+            return $q->where('post_type','image');
         }])->first();
+//        return $courses;
         return view('userprofile::users.home',compact('courses'));
     }
 
