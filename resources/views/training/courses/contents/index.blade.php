@@ -1,13 +1,26 @@
 @extends(ADMIN.'.general.index')
 
 @section('table')
+    <style>
+        .course_info button {
+            padding: .375rem .75rem !important;
+        }
+    </style>
 
 <div class="toLoad" id="contents">
+{{--    {!!Builder::Tinymce('details', 'details')!!}--}}
+
     <div class="course_info">
         <label class="m-0"><!-- Course name :  -->{{$course->trans_title}}</label>
-        <button type="button" @click="OpenModal('section',null)" class="btn btn-outline-dark ">
-        <i class="far fa-plus-square mr-2"></i> {{__('admin.add_section')}}
-        </button>
+       <div>
+           <button type="button" @click="OpenModal('section',null)" class="btn btn-outline-dark mx-2">
+           <i class="far fa-plus-square mr-2"></i> {{__('admin.add_section')}}
+           </button>
+           <a href="{{route('training.units',['course_id'=>$course->id])}}"  class="btn btn-outline-light">
+               {{__('admin.units')}}
+           </a>
+       </div>
+
     </div>
 
 	<div  class="card" v-for="(content,index) in contents">
@@ -306,7 +319,6 @@
                         self.title = section.title;
                         self.excerpt =  section.details ?  section.details.excerpt : '';
                         self.model_type = 'section';
-                        console.log(section)
                     }
                     return true ;
                 });
@@ -429,7 +441,7 @@
                     self.contents.forEach(function (section) {
                         if(section.id == self.content_id){
                             section.title = self.title  ;
-                            section.details = section.details == null ? {excerpt : ''} : section.details.excerpt ;
+                            section.details = section.details != null ? {excerpt : ''} : section.details.excerpt ;
                             section.details.excerpt  = self.excerpt;
                             console.log(section)
                         }

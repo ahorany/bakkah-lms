@@ -62,4 +62,8 @@ return [
     'category_id'=>'Category',
     'contents'=>'Contents',
     'add_unit'=>'Add Unit',
+<<<<<<< HEAD
+=======
+    'units'=>'Units',
+>>>>>>> d1937360dd82de7df50956baadcf4cf9996ef0b8
 ];

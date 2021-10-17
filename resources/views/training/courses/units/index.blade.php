@@ -47,7 +47,9 @@
             margin-left: 10px;
         }
 
-
+        .course_info button {
+            padding: .375rem .75rem !important;
+        }
     </style>
     <div class="toLoad" id="units">
 
@@ -110,9 +112,15 @@
 
         <div  class="course_info">
             <label class="m-0">{{$course->trans_title}}</label>
-            <button type="button" @click="OpenModal()" class="btn btn-outline-dark">
-                <i class="fa fa-plus"></i>  {{__('admin.add_unit')}}
-            </button>
+            <div>
+                <button type="button" @click="OpenModal()" class="btn btn-outline-dark mx-3">
+                    <i class="fa fa-plus"></i>  {{__('admin.add_unit')}}
+                </button>
+                <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="btn btn-outline-light">
+                    {{__('admin.contents')}}
+                </a>
+            </div>
+
         </div>
 
         <div  class="card">
