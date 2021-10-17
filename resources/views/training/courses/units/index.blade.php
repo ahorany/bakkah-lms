@@ -77,7 +77,7 @@
 
 
 
-                                <div class="mt-5">
+                                <div v-if="counter <= 2" class="mt-5">
 
                                     <button @click.prevent="addSubUnitBox()" class="btn btn-primary mb-3">Add Subunit +</button>
                                     <div class="mb-2" v-show="'subunits' in errors">
@@ -221,6 +221,7 @@
                     unit_id: '',
                     errors: {},
                     model_type : 'units',
+                    counter : 0,
                 },
                 created: function () {
                     this.course.units = this.units;
@@ -265,6 +266,28 @@
                         }
                     },
 
+                    searchNodeFromTree : function (array, label) {
+                        for (var i = 0; i < array.length; ++i) {
+                            var obj = array[i];
+
+                            if(obj.parent_id == null){
+                                this.counter = 1;
+                            }else{
+                                this.counter++;
+                            }
+                            if (obj.id === label) {
+                                return true;
+                            }
+
+
+                            if (obj.s) {
+                                if ( this.searchNodeFromTree(obj.s, label)) {
+                                    return true;
+                                }
+                            }
+                        }
+                    },
+
                     OpenModal: function () {
                         // clear
                         this.title = '';
@@ -275,12 +298,16 @@
                     },
 
                     searchTree : function (element, unit_id){
+                        // this.counter++;
+                        // console.log(this.counter)
+                        // alert(unit_id)
                         if(element.id == unit_id){
                             return element;
                         }else if (element.s != null){
                             var i;
                             var result = null;
                             for(i=0; result == null && i < element.s.length; i++){
+
                                 result = this.searchTree(element.s[i], unit_id);
                             }
                             return result;
@@ -291,7 +318,9 @@
                         this.save_type = 'edit';
                         this.unit_id = unit_id;
                         this.errors = {};
-                        element = this.searchTree(element, unit_id)
+                        this.counter = 0;
+                        // this.searchTree(element, unit_id)
+                        this.searchNodeFromTree(this.course.units,unit_id)
                         this.title = element.title;
                         this.subunits = element.s??[];
                         $('#ContentModal').modal('show')
