@@ -95,6 +95,13 @@
     .gold-star{
         color: #f0ad4e;
     }
+
+    .part-star{
+        background: -webkit-linear-gradient(
+            180deg , transparent 10% , red 90%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 </style>
 
 <?php
@@ -146,7 +153,7 @@
                                                 <fieldset class="rating star">
                                                     <input type="radio" id="field6_star5" name="rating2" value="5" /><label class = "full" for="field6_star5"></label>
                                                     <input type="radio" id="field6_star4" name="rating2" value="4" /><label class = "full" for="field6_star4"></label>
-                                                    <input type="radio" id="field6_star3" name="rating2" value="3" /><label class = "full" for="field6_star3"></label>
+                                                    <input type="radio" id="field6_star3" name="rating2" value="3" /><label class = "full part-star" for="field6_star3"></label>
                                                     <input type="radio" id="field6_star2" name="rating2" value="2" /><label class = "full" for="field6_star2"></label>
                                                     <input type="radio" id="field6_star1" name="rating2" value="1" /><label class = "full" for="field6_star1"></label>
                                                 </fieldset>

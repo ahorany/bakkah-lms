@@ -159,7 +159,11 @@ class UserProfileController extends Controller
                 }])->where('start_date','<=',Carbon::now())->where(function ($q){
                       $q->where('end_date','>',Carbon::now())->orWhere('end_date',null);
                 });
-            },'questions.answers'])->first();
+            },'questions.answers:id,title,question_id','questions' => function($q){
+                $q->withCount(['answers' => function ($query){
+                    $query->where('check_correct' ,1);
+                }]);
+            }])->first();
 
         if (!$exam->exam || (count($exam->questions) == 0) ) abort(404);
 
