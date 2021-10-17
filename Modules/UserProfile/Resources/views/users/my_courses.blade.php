@@ -175,9 +175,9 @@
                                                 <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
                                                     <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
                                                         <p class="learning_file" style="padding-left:30px;">{{$section->title}}</p>
-                                                        <p class="learning_file" style="padding-left:55px;">
-                                                            {{ $section->details->excerpt??null}}
-                                                        </p>
+                                                        <div class="learning_file" style="padding-left:55px;">
+                                                            {!!  $section->details->excerpt??null !!}
+                                                        </div>
                                                         @isset($section->contents)
                                                            <div class="my-links">
                                                                @foreach($section->contents as $k => $content)
@@ -193,9 +193,9 @@
                                                                      <i  class="{{$class}} mr-2"></i>  {{$content->title}}
                                                                    </a>
 
-                                                                       <p class="learning_file" style="padding-left:70px;">
-                                                                           {{ $content->details->excerpt??null}}
-                                                                       </p>
+{{--                                                                       <p class="learning_file" style="padding-left:70px;">--}}
+{{--                                                                           {{ $content->details->excerpt??null}}--}}
+{{--                                                                       </p>--}}
                                                                @endforeach
                                                            </div>
                                                         @endisset

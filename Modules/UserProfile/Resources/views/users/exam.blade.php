@@ -122,7 +122,7 @@ label.navigation {
                                     <h5 class="card-title">Exam Description</h5>
 
                                     <div class="card-body">
-                                        <p class="card-text">{{$exam->details->excerpt}}</p>
+                                        <p class="card-text">{!!  $exam->details->excerpt  !!}</p>
                                     </div>
                                 </div>
 
