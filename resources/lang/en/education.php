@@ -21,4 +21,6 @@ return [
     'Logout' => 'logout',
     'Welcome,' => 'Welcome,',
     'Change Password' => 'Change Password',
+
+    'Exam' => 'Exam'
 ];

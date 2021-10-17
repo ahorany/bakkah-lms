@@ -175,7 +175,7 @@
                                                 <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
                                                     <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
                                                         <p class="learning_file" style="padding-left:30px;">{{$section->title}}</p>
-                                                        <div class="learning_file" style="padding-left:55px;">
+                                                        <div class="learning_file mb-3" style="padding-left:55px;">
                                                             {!!  $section->details->excerpt??null !!}
                                                         </div>
                                                         @isset($section->contents)
