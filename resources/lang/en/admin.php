@@ -79,4 +79,7 @@ return [
     'caption'=>'Caption',
     'exclude_img'=>'Exclude Img',
     'intro_video'=>'Intro Video',
+    'search form'=>'Search Form',
+    'course_id'=>'Course',
+    'training_option_id'=>'Delivery Method',
 ];
