@@ -154,7 +154,7 @@
                                             </div>
 
                                         <div class="col-md-4 col-4 col-lg-4 text-center p-0 py-2">
-                                            <template v-if="page_type == 'exam' && exam.exam.duration > 0">
+                                            <template v-if="page_type == 'exam' && !without_timer">
                                                 <div  class="time">
                                                     <span>
                                                         <i class="far fa-clock"></i>
@@ -226,12 +226,14 @@
         window.exam = {!! json_encode($exam??[]) !!}
         window.start_user_attepmt = {!! json_encode($start_user_attepmt??[]) !!}
         window.page_type = {!! json_encode($page_type??'exam') !!}
+        window.without_timer = {!! json_encode($without_timer??false) !!}
 
         new Vue({
             'el' : '#exam',
             'data' : {
                 exam: window.exam,
                 page_type: window.page_type,
+                without_timer: window.without_timer,
                 start_user_attepmt: window.start_user_attepmt,
                 current: 1,
                 user_exam_id: '',
@@ -245,7 +247,6 @@
                 minutes: 0,
                 seconds: 0,
                 question_id: null,
-                question_container : '',
             },
 
             computed: {
@@ -255,8 +256,6 @@
             },
 
             created(){
-
-                console.log(this.exam)
                 this.pageSize = this.exam.exam.pagination
                 if(this.page_type == 'exam'){
                     this.user_exam_id = this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].id
@@ -279,8 +278,6 @@
                            }
                         })
                     }
-
-                    // console.log(self.answers)
 
                     if(Math.ceil( this.exam.questions.length / this.pageSize) == 1){
                         this.save_status = true
@@ -307,72 +304,15 @@
 
                         })
                     }
-                    console.log(self.answers)
                     this.exam = this.exam.exam.content;
-                    console.log(this.exam.questions)
 
                 }
-
-
-
 
             },
 
             methods : {
 
-                countCorrectAnswers : function(question){
-                   return this.correct_answers(question).length
-                },
-                search_correct_answer: function(question,answer){
-                    let answers = this.correct_answers(question)
-                    answer = answers.filter(function (value) {
-                        return  value.id == answer.id;
-                    })
-                    if(answer)
-                        return true;
-
-                     return false;
-                },
-                correct_answers: function(question){
-                   return question.answers.filter(function (value) {
-                        return  value.check_correct == 1;
-                    })
-                },
-                countdownTimeStart : function(){
-                    var self = this;
-                    let t = this.start_user_attepmt
-                       t = new Date(t)
-
-                       t.setSeconds({{$exam->exam->duration??null}})
-                    var countDownDate = t.getTime();
-
-                    var x = setInterval(function() {
-                        var now = new Date().getTime();
-
-                        // Find the distance between now an the count down date
-                        var distance = countDownDate - now;
-                        // Time calculations for days, hours, minutes and seconds
-                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                        // // Output the result in an element with id="demo"
-                        if(exam.exam.duration > 0)
-                        document.getElementById("demo").innerHTML = hours + "h "
-                            + minutes + "m " + seconds + "s ";
-
-                        // If the count down is over, write some text
-                        if (distance < 0) {
-                            clearInterval(x);
-                            if(self.exam.exam.duration > 0){
-                                document.getElementById("demo").innerHTML = "EXPIRED";
-                                self.nextSaveAnswers('save');
-                            }
-
-                        }
-
-                    }, 1000);
-        },
+                // shared methods bettwen exam and review
                 searchAndOpenQuestion : function(question_id){
                     // index question
                     let current_page = this.current
@@ -383,7 +323,6 @@
                     for (let i = 0; i <  this.exam.questions.length; i++) {
                         if(next){
                             page++;
-                            // alert(page)
                             start_index =  i;
                             next = false;
                         }
@@ -408,13 +347,12 @@
 
 
                     if((page) == Math.ceil( this.exam.questions.length / this.pageSize)){
-                            this.save_status = true;
+                        this.save_status = true;
                     }
 
                     this.current = page;
                     this.indexStart= start_index
                     this.question_id = question_id
-                    this.question_container = question_id
                     // const  [element] = this.$refs["question"+question_id];
                     // element.scrollIntoView({ behavior: "smooth", block: "end" });
 
@@ -427,15 +365,6 @@
                     // $('html, body').animate({
                     //     scrollTop: $("#question"+question_id).offset().top - 100
                     // }, 500);
-                },
-                save : function(){
-                    if(this.page_type != 'exam') {
-                        return ;
-                    }
-
-                    if(confirm('Are you sure (save answers) !!!')){
-                        this.nextSaveAnswers('save');
-                    }
                 },
                 prev() {
                     this.save_status = false;
@@ -457,7 +386,107 @@
                         this.save_status = true;
                     }
 
-                    this.nextSaveAnswers();
+                    // this.nextSaveAnswers();
+                },
+
+
+
+                // review methods
+                countCorrectAnswers : function(question){
+                   return this.correct_answers(question).length
+                },
+                search_correct_answer: function(question,answer){
+                    let answers = this.correct_answers(question)
+                    answer = answers.filter(function (value) {
+                        return  value.id == answer.id;
+                    })
+                    if(answer)
+                        return true;
+
+                     return false;
+                },
+                correct_answers: function(question){
+                   return question.answers.filter(function (value) {
+                        return  value.check_correct == 1;
+                    })
+                },
+                searchReviewMultiAnswers : function(question_id,answer_id){
+                    if(this.answers[question_id] == undefined)
+                        return false;
+
+                    let answer = null;
+                    if(Array.isArray(this.answers[question_id])) {
+                        answer = this.answers[question_id].filter(function (answer,index) {
+                            return( answer.id == answer_id )
+                        })
+                    }else{
+                        answer = [this.answers[question_id]]
+                    }
+
+                    if(answer.length > 0)
+                        return true;
+
+                    return false;
+                },
+                checkIfQuestionHasInCorrectAnswers : function(question_id){
+                    if(this.answers[question_id] == undefined)
+                        return false;
+
+                    let answer = null;
+                    if(Array.isArray(this.answers[question_id])){
+                        answer = this.answers[question_id].filter(function (answer,index) {
+                            return( answer.check_correct == 0 )
+                        })
+                    }else{
+                        answer = [this.answers[question_id]]
+                    }
+
+                    if(answer.length > 0)
+                        return true;
+
+                    return false;
+                },
+
+
+
+                // exam methods
+                countdownTimeStart : function(){
+                    var self = this;
+                    let t = this.start_user_attepmt
+                        t = new Date(t)
+                        t.setSeconds({{$exam->exam->duration??null}})
+                    var countDownDate = t.getTime();
+
+                    var x = setInterval(function() {
+                        var now = new Date().getTime();
+                        var distance = countDownDate - now;
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        if(!without_timer){
+                            document.getElementById("demo").innerHTML = hours + "h "
+                                + minutes + "m " + seconds + "s ";
+                        }
+
+                        if (distance < 0) {
+                            clearInterval(x);
+                            if(!without_timer){
+                                document.getElementById("demo").innerHTML = "EXPIRED";
+                                self.nextSaveAnswers('save');
+                            }
+                        }
+
+                    }, 900);
+        },
+                save : function(){
+                    if(this.page_type != 'exam') {
+                        return ;
+                    }
+
+                    if(confirm('Are you sure (save answers) !!!')){
+                        this.nextSaveAnswers('save');
+                    }
                 },
                 addAnswer : function (question_id,answer_id) {
                     if(this.page_type != 'exam') {
@@ -467,57 +496,13 @@
                     this.answers[question_id] = answer_id
                     this.nextSaveAnswers();
                 },
-
-                searchReviewMultiAnswers : function(question_id,answer_id){
-                    if(this.answers[question_id] == undefined)
-                        return false;
-
-                    let answer = null;
-                    if(Array.isArray(this.answers[question_id])) {
-                         answer = this.answers[question_id].filter(function (answer,index) {
-                            return( answer.id == answer_id )
-                        })
-                    }else{
-                        answer = [this.answers[question_id]]
-                    }
-
-                    console.log(answer)
-                    if(answer.length > 0)
-                        return true;
-
-                    return false;
-                },
-                checkIfQuestionHasInCorrectAnswers : function(question_id){
-                    console.log(this.answers)
-                    if(this.answers[question_id] == undefined)
-                        return false;
-
-                    let answer = null;
-                    if(Array.isArray(this.answers[question_id])){
-                         answer = this.answers[question_id].filter(function (answer,index) {
-                            return( answer.check_correct == 0 )
-                        })
-                    }else{
-                         answer = [this.answers[question_id]]
-                    }
-
-                    // console.log(answer)
-                    if(answer.length > 0)
-                        return true;
-
-                    return false;
-                },
-
-
                 searchMultiAnswers : function(question_id,answer_id){
-                    // alert(question_id)
-                    // alert(answer_id)
                     if(this.answers[question_id] == undefined)
                         return false;
                     let answer = this.answers[question_id].filter(function (answer,index) {
                         return( answer == answer_id )
                     })
-                    console.log(answer)
+
                     if(answer.length > 0)
                         return true;
 
@@ -556,12 +541,8 @@
                         }
                     }
 
-
-
-                    console.log(this.answers)
                     this.nextSaveAnswers();
                 },
-
                 nextSaveAnswers : function (status = null) {
                     if(this.page_type != 'exam') {
                         return ;
@@ -578,7 +559,6 @@
                         data
                     )
                         .then(response => {
-                            console.log(response)
                             if(response.data.status == 'success'){
                                 window.location.replace(response.data.redirect_route);
                             }
@@ -589,8 +569,6 @@
                 }
             }
         })
-
-
 
     </script>
 

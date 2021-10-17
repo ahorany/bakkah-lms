@@ -14,6 +14,12 @@ Route::group([
         Route::resource('training_options', 'TrainingOptionController');
         Route::patch('/training_options/{training_option}/restore', 'TrainingOptionController@restore')->name('training_options.restore');
 
+        Route::get('/units', 'UnitController@index')->name('units');
+        Route::get('/delete_unit', 'UnitController@delete_unit')->name('delete_unit');
+        Route::post('/add_unit', 'UnitController@add_unit')->name('add_unit');
+        Route::post('/update_unit', 'UnitController@update_unit')->name('update_unit');
+
+
         Route::get('/contents', 'ContentController@contents')->name('contents');
         Route::post('/add_section', 'ContentController@add_section')->name('add_section');
         Route::post('/update_section', 'ContentController@update_section')->name('update_section');
