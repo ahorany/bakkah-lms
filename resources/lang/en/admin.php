@@ -62,8 +62,21 @@ return [
     'category_id'=>'Category',
     'contents'=>'Contents',
     'add_unit'=>'Add Unit',
-<<<<<<< HEAD
-=======
     'units'=>'Units',
->>>>>>> d1937360dd82de7df50956baadcf4cf9996ef0b8
+    'Profile'=>'Profile',
+    'Change Password'=>'Change Password',
+    'rating'=>'Rating',
+    'reviews'=>'Reviews',
+    'en_short_title'=>'English Short Title',
+    'ar_short_title'=>'Arabic Short Title',
+    'order'=>'Order',
+    'partners'=>'Partners',
+    'options'=>'Options',
+    'cerificate'=>'Cerificate',
+    'SEO English'=>'SEO English',
+    'SEO Arabic'=>'SEO Arabic',
+    'alt_text'=>'alt Text',
+    'caption'=>'Caption',
+    'exclude_img'=>'Exclude Img',
+    'intro_video'=>'Intro Video',
 ];
