@@ -91,6 +91,10 @@
     background: gainsboro;
     border-radius: 50%;
 }
+
+    .gold-star{
+        color: #f0ad4e;
+    }
 </style>
 
 <?php
@@ -138,7 +142,7 @@
                                             <small>Dashboard / My Course / {{$course->trans_title}}</small>
                                             <h1 style="font-weight: 700;    margin: 5px 0 10px;">{{$course->trans_title}}</h1>
                                             <div class="star_rating">
-                                                <label>4.5</label>
+                                                <label class="total_rate">{{round($total_rate,1)}}</label>
                                                 <fieldset class="rating star">
                                                     <input type="radio" id="field6_star5" name="rating2" value="5" /><label class = "full" for="field6_star5"></label>
                                                     <input type="radio" id="field6_star4" name="rating2" value="4" /><label class = "full" for="field6_star4"></label>
@@ -148,6 +152,27 @@
                                                 </fieldset>
                                             </div>
 {{--                                            <button class="resume">Resume Course</button>--}}
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Reviews
+                                                </button>
+                                                <div class="dropdown-menu flex" aria-labelledby="dropdownMenuButton">
+                                                    <div class="p-2">
+                                                            <span class="star_review star1" data-num="1"><i class="fas fa-star"></i></span>
+                                                            <span class="star_review star2" data-num="2"><i class="fas fa-star"></i></span>
+                                                            <span class="star_review star3" data-num="3"><i class="fas fa-star"></i></span>
+                                                            <span class="star_review star4" data-num="4"><i class="fas fa-star"></i></span>
+                                                            <span class="star_review star5" data-num="5"><i class="fas fa-star"></i></span>
+{{--                                                            <input type="radio" id="field6_star5" name="rating2" value="5" /><label class = "star_review full" for="field6_star5"></label>--}}
+{{--                                                            <input type="radio" id="field6_star4" name="rating2" value="4" /><label class = "star_review full" for="field6_star4"></label>--}}
+{{--                                                            <input type="radio" id="field6_star3" name="rating2" value="3" /><label class = "star_review full" for="field6_star3"></label>--}}
+{{--                                                            <input type="radio" id="field6_star2" name="rating2" value="2" /><label class = "star_review full" for="field6_star2"></label>--}}
+{{--                                                            <input type="radio" id="field6_star1" name="rating2" value="1" /><label class = "star_review full" for="field6_star1"></label>--}}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -264,13 +289,43 @@
     </div>
 
     <script>
-        $(".star label").click(function(){
-            $(this).parent().find("label").css({"color": "#eaeaea"});
-            $(this).css({"color": "#fb4400"});
-            $(this).nextAll().css({"color": "#fb4400"});
-            $(this).css({"background-color": "transparent"});
-            $(this).nextAll().css({"background-color": "transparent"});
+
+        function rate() {
+            let element =   $('.star'+@json($course->course_rate->rate))
+            element.find('i').addClass('gold-star')
+            element.prevAll().find('i').addClass('gold-star')
+        }
+
+        $( document ).ready(function() {
+            rate();
         });
+
+        $(".star_review").click(function(event){
+            let rate =   $(this).data('num')
+            $(".star_review i").removeClass('gold-star')
+            $(this).find('i').addClass('gold-star')
+            $(this).prevAll().find('i').addClass('gold-star')
+
+            // ajax
+
+            $.ajax({
+                type: "POST",
+                url: @json(CustomRoute('user.rate')),
+                data: {
+                    'course_id' : {{$course->id}},
+                    '_token' : @json(csrf_token()),
+                    'rate' : rate
+                },
+                success: function(response){
+                    console.log(response)
+                    $('.total_rate').text(parseFloat(response.data).toFixed(1))
+                },
+            });
+        });
+
+
     </script>
+
+
 
 @endsection
