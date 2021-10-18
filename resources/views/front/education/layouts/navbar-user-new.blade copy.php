@@ -1,21 +1,9 @@
-<style>
-.navbar-brand img {
-    width: 254px;
-    height: 83px;
-}
-.userarea-wrapper aside li a.active {
-    background: #707070;
-    border-color: #707070;
-    color: #fff;
-}
-    
-</style>
 <div class="menu-overlay"></div>
 <nav id="navbar" class="navbar navbar-expand-xl navbar-light bg-white p-0">
-    <div class="container-fluid pl-0">
+    <div class="container-fluid">
         <span itemprop="headline">
             <a class="navbar-brand" href="{{route('education.index')}}" title="{{__('education.header_title')}}">
-                <img src="{{CustomAsset('images/logo1.png')}}" alt="{{__('education.header_title')}}">
+                <img src="{{CustomAsset('images/logo.png')}}" alt="{{__('education.header_title')}}">
             </a>
         </span>
         {{-- <a href="{{route('education.courses')}}" class="btn btn-primary btn-sm d-xl-none">{{__('education.explore_all_courses')}}</a> --}}
@@ -62,6 +50,7 @@
                         </div>
                     </li>
                 @endauth
+
 
 
                 <li class="nav-item">

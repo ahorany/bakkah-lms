@@ -33,10 +33,10 @@ Route::group([
         Route::get('/my-courses', [UserProfileController::class, 'my_courses'])->name('my_courses');
 
 
-//        Route::get('/exercise', [UserProfileController::class, 'exercise'])->name('exercise');
-//        Route::get('/exams', [UserProfileController::class, 'exams'])->name('exams');
+       Route::get('/exercise', [UserProfileController::class, 'exercise'])->name('exercise');
+       Route::get('/exams', [UserProfileController::class, 'exams'])->name('exams');
 //
-//        Route::get('/file', [UserProfileController::class, 'file'])->name('file');
+       Route::get('/file', [UserProfileController::class, 'file'])->name('file');
 //        Route::get('/exercise', [UserProfileController::class, 'exercise'])->name('exercise');
 //        Route::get('/exams', [UserProfileController::class, 'exams'])->name('exams');
 

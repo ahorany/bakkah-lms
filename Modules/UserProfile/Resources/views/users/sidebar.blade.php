@@ -1,7 +1,6 @@
 <div class="col-md-3 col-lg-2">
     <aside>
         <ul class="list-unstyled p-0 m-0">
-
         @foreach($user_sidebar as $item)
             <li><a class="{{ Request::routeIs($item->route_name) ? 'active' : '' }}" href="{{CustomRoute($item->route_name)}}"><i class="fas fa-tachometer-alt"></i> <span class="m-0">{{$item->trans_title}} </span></a></li>
          @endforeach

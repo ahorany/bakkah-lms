@@ -52,6 +52,9 @@ class UserProfileController extends Controller
     public function request_ticket() {
         return view($this->path.'.request_ticket');
     }
+    public function exercise() {
+        return view($this->path.'.exercise');
+    }
 
     public function logout(Request $request) {
         Auth::logout();
