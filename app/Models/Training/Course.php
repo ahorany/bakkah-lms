@@ -289,5 +289,9 @@ class Course extends Model
         return $this->hasMany(Unit::class,'course_id');
     }
 
+    public function course_rate(){
+        return $this->hasOne(CourseRegistration::class,'course_id');
+    }
+
 
 }

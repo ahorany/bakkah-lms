@@ -96,12 +96,12 @@
                                         <label>Select one:</label>
 
                                           <template v-if="page_type == 'exam'">
-                                              <div  v-if="countCorrectAnswers(question) == 1" v-for="answer in question.answers" class="answer my-2">
+                                              <div  v-if="question.answers_count == 1" v-for="answer in question.answers" class="answer my-2">
                                                   <input   type="radio" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="answers[answer.question_id] == answer.id ? true:false " @change="addAnswer(answer.question_id,answer.id)" :name="answer.question_id" :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
                                                   <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
                                               </div>
 
-                                              <div  v-if="countCorrectAnswers(question) > 1" v-for="answer in question.answers" class="answer my-2">
+                                              <div  v-if="question.answers_count > 1" v-for="answer in question.answers" class="answer my-2">
                                                   <input   type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="searchMultiAnswers(answer.question_id,answer.id) ? true:false " @change="addMultiAnswers(answer.question_id,answer.id)"  :id="answer.title + '_' + answer.id + '_' + answer.question_id" >
                                                   <label :for="answer.title + '_' + answer.id + '_' + answer.question_id" v-text="answer.title"></label>
                                               </div>

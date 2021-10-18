@@ -26,4 +26,5 @@ return [
     'Next Video' => 'Next Video',
     'Sign In' => 'Sign In',
     'New user?' => 'New user?',
+    'Exam' => 'Exam',
 ];

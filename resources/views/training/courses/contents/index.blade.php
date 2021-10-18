@@ -5,7 +5,12 @@
         .course_info button {
             padding: .375rem .75rem !important;
         }
+
+        .ql-container.ql-snow{
+            height: 200px;
+        }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
 <div class="toLoad" id="contents">
 {{--    {!!Builder::Tinymce('details', 'details')!!}--}}
@@ -58,7 +63,7 @@
 
             </div>
 
-            <div v-if="content.details" class="my-2">@{{content.details.excerpt}}</div>
+            <div v-if="content.details" class="my-2" v-html="content.details.excerpt">}</div>
 
 
 
@@ -170,8 +175,12 @@
 
 
 				<div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content">
-                        <textarea v-model="excerpt"  class="form-control"  rows="5" placeholder="Details"></textarea>
-                    <div v-show="'excerpt' in errors">
+{{--                        <textarea  v-model="excerpt"  class="form-control"  rows="5" placeholder="Details"></textarea>--}}
+{{--                    <editor v-model="excerpt" theme="snow"></editor>--}}
+                    <editor v-model="excerpt" theme="snow" :options="options" :placeholder="'Details'"></editor>
+
+
+                   <div v-show="'excerpt' in errors">
                         <span style="color: red;font-size: 13px">@{{ errors.excerpt }}</span>
                     </div>
                 </div>
@@ -245,9 +254,10 @@
 @push('vue')
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.min.js" type="text/javascript"></script>
 <script>
     window.contents = {!! json_encode($contents??[]) !!}
-
 	var contents = new Vue({
 		el:'#contents',
 		data:{
@@ -269,6 +279,23 @@
             save_type : 'add',
             base_url : window.location.origin,
             errors : {},
+            options: {
+                modules: {
+
+                    'toolbar': [
+                        [{ 'size': [] }],
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'script': 'super' }, { 'script': 'sub' }],
+                        [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block'],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                        [{ 'direction': 'rtl' }, { 'align': [] }],
+                        ['link', 'image', 'video', 'formula'],
+                        ['clean']
+                    ],
+                },
+            }
 		},
 		methods: {
 		    clear : function(){

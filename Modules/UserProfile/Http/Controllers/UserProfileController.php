@@ -3,6 +3,7 @@
 namespace Modules\UserProfile\Http\Controllers;
 
 use App\Models\Training\Content;
+use App\Models\Training\CourseRegistration;
 use App\Models\Training\Exam;
 use App\Models\Training\Question;
 use App\Models\Training\UserAnswer;
@@ -44,6 +45,20 @@ class UserProfileController extends Controller
         ]]);
     }
 
+    public function user_rate(){
+      $course_registration =   CourseRegistration::where('user_id',\auth()->id())
+            ->where('course_id',\request()->course_id)->first();
+        if (!$course_registration){
+             return response()->json(['status' => 'error']);
+        }
+
+        $course_registration->update(['rate' => \request()->rate]);
+
+        $total_rate = DB::select(DB::raw('SELECT AVG(rate) as total_rate FROM `courses_registration` WHERE course_id =' .\request()->course_id));
+        $total_rate = $total_rate[0]->total_rate;
+
+        return response()->json(['status' => 'success','data' => $total_rate ]);
+    }
     public function exam($exam_id){
         $exam = Content::whereId($exam_id)
             ->with(['exam' => function($q){
@@ -151,7 +166,11 @@ class UserProfileController extends Controller
                 }])->where('start_date','<=',Carbon::now())->where(function ($q){
                       $q->where('end_date','>',Carbon::now())->orWhere('end_date',null);
                 });
-            },'questions.answers'])->first();
+            },'questions.answers:id,title,question_id','questions' => function($q){
+                $q->withCount(['answers' => function ($query){
+                    $query->where('check_correct' ,1);
+                }]);
+            }])->first();
 
         if (!$exam->exam || (count($exam->questions) == 0) ) abort(404);
 
@@ -233,7 +252,7 @@ class UserProfileController extends Controller
     public function course_details($course_id){
         $course = Course::where('id',$course_id)->whereHas('users',function ($q){
             $q->where('users.id',\auth()->id());
-        })->with(['uploads' => function($query){
+        })->with(['course_rate','uploads' => function($query){
             return $query->where(function ($q){
                 $q->where('post_type','intro_video')->orWhere('post_type','image');
             });
@@ -246,13 +265,11 @@ class UserProfileController extends Controller
             abort(404);
         }
 
-//        return $course->uploads;
+        $total_rate = DB::select(DB::raw('SELECT AVG(rate) as total_rate FROM `courses_registration` WHERE course_id =' .$course->id));
+        $total_rate = $total_rate[0]->total_rate;
 
 
-//          return $course;
-
-
-        return view('userprofile::users.my_courses',compact('course'));
+        return view('userprofile::users.my_courses',compact('course','total_rate'));
 //        return view('userprofile::users.course_details',compact('course'));
 
     }
