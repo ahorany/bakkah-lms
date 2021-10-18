@@ -92,7 +92,6 @@
     background: gainsboro;
     border-radius: 50%;
 }
-<<<<<<< HEAD
 .card.files {
     box-shadow: 0px 3px 10px 1px #e3e3e3;
 }
@@ -114,7 +113,6 @@
     border-radius: 50%;
     margin-left: -8px;
 }
-=======
 
     .gold-star{
         color: #f0ad4e;
@@ -126,7 +124,6 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
->>>>>>> 9b8772aa53dc83eef67d562213a6db9229cf3127
 </style>
 
 <?php
@@ -232,15 +229,9 @@
                                                 <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
                                                     <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
                                                         <p class="learning_file" style="padding-left:30px;">{{$section->title}}</p>
-<<<<<<< HEAD
-                                                        {{-- <p class="learning_file" style="padding-left:55px;">
-                                                            {{ $section->details->excerpt??null}}
-                                                        </p> --}}
-=======
                                                         <div class="learning_file mb-3" style="padding-left:55px;">
                                                             {!!  $section->details->excerpt??null !!}
                                                         </div>
->>>>>>> 9b8772aa53dc83eef67d562213a6db9229cf3127
                                                         @isset($section->contents)
                                                            <div class="my-links">
                                                                @foreach($section->contents as $k => $content)
