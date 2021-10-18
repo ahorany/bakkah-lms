@@ -13,7 +13,18 @@ input.form-control {
     background: #F8F8F8;
     border: none;
     box-shadow: none;
+    padding-left: 45px;
 }
+input.form-control::placeholder {
+    color: #222222;
+}
+.form-login .form-group i {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: #222222;
+}
+
 </style>
 <div style="background-image:url('{{CustomAsset('images/background.png')}}'); background-repeat: no-repeat; background-size: cover; padding: 150px 0;">
     <div class="row m-0 justify-content-center">
@@ -22,7 +33,7 @@ input.form-control {
             <form action="{{route('user.loginSubmit')}}" method="POST" style="width:50%; padding:20px 65px;">
                 @csrf
                 <div class="my-4">
-                    <h2>{{ __('education.Sign In') }}</h2>
+                    <h2 class="mb-4">{{ __('education.Sign In') }}</h2>
                     <p>{{ __('education.New user?') }} <a href="#">Create an account</a> </p>
                     {{-- <p>{{__('education.Welcome! Please, fill email and password to sign in into your account.')}}</p> --}}
                 </div>
@@ -60,7 +71,7 @@ input.form-control {
                 <div class="form-group d-flex justify-content-between align-items-center">
                     <div>
                         <input id="save" type="checkbox" name="checkbox">
-                        <label style="color: #767676; margin: 0;" for="save">Keep me signed in</label>
+                        <label style="color: #222222; margin: 0;" for="save">Keep me signed in</label>
                         {{-- <label style="color: #767676; margin: 0;" for="save">Save Password</label> --}}
                     </div>
                     {{-- <a style="color: #242a2e" href="{{ url('password/reset') }}" class="my-3">{{ __('education.Forgot Your Password?') }}</a> --}}
