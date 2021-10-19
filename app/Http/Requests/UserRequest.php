@@ -45,7 +45,8 @@ class UserRequest extends FormRequest
             'gender_id' => '',
             'trainer_courses_for_certifications'=>'max:500',
             'password'=>'nullable|min:8|confirmed',
-            'role_id' => ''
+            'role_id' => '',
+            'group_id' => '',
         ];
         // if(request('_method')!='PATCH'){
         //     $args = array_merge($args, [

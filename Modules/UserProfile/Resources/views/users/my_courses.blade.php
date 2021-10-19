@@ -96,10 +96,15 @@
         color: #f0ad4e;
     }
 
+.gold-star2{
+    color: #f00 !important;
+}
+
     .part-star{
-        background: -webkit-linear-gradient(
-            180deg , transparent 10% , red 90%);
-        -webkit-background-clip: text;
+        /*background: -webkit-linear-gradient(*/
+        /*    180deg , transparent 10% , red 90%);*/
+        /*background: linear-gradient(to left, transparent 50%, #e8b30f 50%);*/
+        -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent;
     }
 </style>
@@ -137,7 +142,11 @@
                                         <div class="card-body text-center p-0">
                                             <div class="rate">
                                                 <div class="line"></div>
-                                                <small class="num m-0 mt-2" style="color:gray;">25% Complete</small>
+                                                <small class="num m-0 mt-2" style="color:gray;">{{$course->users[0]->pivot->progress??0}}% Complete</small>
+                                            </div>
+
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: {{$course->users[0]->pivot->progress??0}}%;" aria-valuenow="{{$course->users[0]->pivot->progress??0}}" aria-valuemin="0" aria-valuemax="100">{{$course->users[0]->pivot->progress??0}}%</div>
                                             </div>
                                         </div>
                                     </div>
@@ -150,13 +159,13 @@
                                             <h1 style="font-weight: 700;    margin: 5px 0 10px;">{{$course->trans_title}}</h1>
                                             <div class="star_rating">
                                                 <label class="total_rate">{{round($total_rate,1)}}</label>
-                                                <fieldset class="rating star">
-                                                    <input type="radio" id="field6_star5" name="rating2" value="5" /><label class = "full" for="field6_star5"></label>
-                                                    <input type="radio" id="field6_star4" name="rating2" value="4" /><label class = "full" for="field6_star4"></label>
-                                                    <input type="radio" id="field6_star3" name="rating2" value="3" /><label class = "full part-star" for="field6_star3"></label>
-                                                    <input type="radio" id="field6_star2" name="rating2" value="2" /><label class = "full" for="field6_star2"></label>
-                                                    <input type="radio" id="field6_star1" name="rating2" value="1" /><label class = "full" for="field6_star1"></label>
-                                                </fieldset>
+                                                <div>
+                                                        <span class="star review_star1" data-num="1"><i class="fas fa-star"></i></span>
+                                                        <span class="star review_star2" data-num="2"><i class="fas fa-star"></i></span>
+                                                        <span class="star review_star3" data-num="3" ><i class="fas fa-star"></i></span>
+                                                        <span class="star review_star4" data-num="4"><i class="fas fa-star"></i></span>
+                                                        <span class="star review_star5" data-num="5" ><i class="fas fa-star"></i></span>
+                                                </div>
                                             </div>
 {{--                                            <button class="resume">Resume Course</button>--}}
                                             <div class="dropdown">
@@ -298,11 +307,35 @@
     <script>
 
         function rate() {
+           // dropdown stars
             let element =   $('.star'+@json($course->course_rate->rate))
             element.find('i').addClass('gold-star')
             element.prevAll().find('i').addClass('gold-star')
+            total_review()
         }
 
+        function total_review(){
+            // total starts
+            let total =  $('.total_rate').text()
+            let total_as_int = parseInt(total)
+            let arr =  (total + "").split('.')
+            let num_after_point = arr[1]??0;
+            let elements_stars = $('.star');
+            // remove stars style
+            elements_stars.find('i').removeClass('gold-star')
+            $('.part-star').removeClass('part-star').css('background', '')
+            // add style to total num int
+            element =   $('.review_star'+total_as_int)
+            element.find('i').addClass('gold-star')
+            element.prevAll().find('i').addClass('gold-star')
+            if(num_after_point != 0){
+                    let num =  (total + "").split('.').pop();
+                    num = (parseInt(num) / 10) * 100;
+                    element = element.next()
+                    element.addClass('part-star');
+                    element.css('background',`linear-gradient(to left, transparent ${100 - num}%, #e8b30f ${num}%)`);
+            }
+        }
         $( document ).ready(function() {
             rate();
         });
@@ -326,6 +359,7 @@
                 success: function(response){
                     console.log(response)
                     $('.total_rate').text(parseFloat(response.data).toFixed(1))
+                    total_review()
                 },
             });
         });

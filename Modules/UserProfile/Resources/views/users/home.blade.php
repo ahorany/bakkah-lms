@@ -54,7 +54,10 @@
                                             <h3 class="card-title my-2" style="font-weight:700;"><a href="{{CustomRoute('user.course_details',$course->id)}}">{{$course->trans_title}}</a></h3>
                                             <div class="rate">
                                                 <div class="line"></div>
-                                                <small class="num m-0 mt-2" style="color:gray;">25% Complete</small>
+                                                <small class="num m-0 mt-2" style="color:gray;">{{$course->pivot->progress??0}}% Complete</small>
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" style="width: {{$course->pivot->progress??0}}%;" aria-valuenow="{{$course->pivot->progress}}" aria-valuemin="0" aria-valuemax="100">{{$course->pivot->progress}}%</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -62,6 +65,26 @@
                             @endforeach
                         </div>
                     </div>
+                    <div style="background: #fff;" class="container mx-5 py-5 ">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4 class="mb-0">Latest video watched</h4>
+                            @if($last_video)
+                                    <video controls class="w-100 my-5">
+                                        <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
+                                    </video>
+                                @endif
+                            </div>
+                            <div class="col-6">
+                                <h4 class="mb-5">Next videos</h4>
+
+                                @foreach($next_videos as $next_video)
+                                  <div class="my-2"><i class="fas fa-video mr-2"></i> <a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="px-5 pb-5 user-badge">
                         <h4 class="mb-0">
                             {{ __('education.Badges') }}

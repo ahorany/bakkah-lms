@@ -2,6 +2,7 @@
 
 namespace Modules\UserProfile\Http\Controllers;
 
+use App\Models\Training\Answer;
 use App\Models\Training\Content;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\Exam;
@@ -45,6 +46,22 @@ class UserProfileController extends Controller
         ]]);
     }
 
+    public function attempt_details ($user_exams_id){
+//        $user_exams_id = 183;
+       $unit_marks =  DB::select(DB::raw("SELECT units.title  , SUM(user_answers.mark) as marks FROM user_exams
+                INNER JOIN user_answers ON user_exams.id = user_answers.user_exam_id
+                INNER JOIN questions ON questions.id = user_answers.question_id
+                LEFT JOIN units ON units.id = questions.unit_id
+                WHERE user_exams.id = $user_exams_id
+                GROUP BY questions.unit_id , units.title
+       "));
+
+//       dd($unit_marks);
+        return view('userprofile::users.exam_details',compact('unit_marks'));
+
+    }
+
+
     public function user_rate(){
       $course_registration =   CourseRegistration::where('user_id',\auth()->id())
             ->where('course_id',\request()->course_id)->first();
@@ -87,18 +104,36 @@ class UserProfileController extends Controller
          // save answers
         foreach (\request()->answers as $key => $value){
             if (!is_null($value)){
-                 if(is_array($value)){
+
+                if(is_array($value)){
                      UserAnswer::where( 'user_exam_id' , \request()->user_exam_id)->
                            where('question_id',$key)->delete();
-                     foreach ($value as $answer){
+
+                    $question = Question::select('id','mark')->where('id',$key)->withCount(['answers' => function($q){
+                        return $q->where('check_correct',1);
+                    }])->first();
+
+                    foreach ($value as $answer){
+                         $answer_db = Answer::select('id','check_correct')->where('id',$answer)->first();
+
                          UserAnswer::create([
                              'answer_id' => $answer,
                              'question_id' => $key,
                              'user_exam_id' => \request()->user_exam_id,
+                             'mark' => $answer_db->check_correct == 0 ? 0 : ( $question->mark / $question->answers_count )
                          ]);
+
+                        $user_answers =  DB::select(DB::raw('SELECT COUNT(answer_id) as user_answers FROM `user_answers` where user_exam_id = '.\request()->user_exam_id .' and question_id = '.$key));
+                        $user_answers = $user_answers[0]->user_answers??0;
+                         if($user_answers > $question->answers_count){
+                             UserAnswer::where('user_exam_id',\request()->user_exam_id)->where('question_id',$key)->update(['mark' => 0]);
+                         }
                      }
                  }
                  else{
+                     $question = Question::select('id','mark')->where('id',$key)->first();
+                     $answer_db = Answer::select('id','check_correct')->where('id',$value)->first();
+
                      UserAnswer::updateOrCreate([
                          'question_id' => $key,
                          'user_exam_id' => \request()->user_exam_id,
@@ -106,6 +141,7 @@ class UserProfileController extends Controller
                          'answer_id' => $value,
                          'question_id' => $key,
                          'user_exam_id' => \request()->user_exam_id,
+                         'mark' => ($answer_db->check_correct == 1 ? $question->mark : 0 )
                      ]);
                  }
             }
@@ -118,25 +154,66 @@ class UserProfileController extends Controller
     }
 
     private function saveAndCalcMark($user_exam){
-        $user_exam->update([
-            'status' => 1
-        ]);
-        $user_exam = UserExam::whereId(\request()->user_exam_id)
-            ->select('id','exam_id')->with('exam')->first();
 
-        // mark
+//        $user_exam = UserExam::whereId(\request()->user_exam_id)
+//            ->select('id','exam_id')->with('exam')->first();
         $user_exam_id = \request()->user_exam_id;
-        $grade =  DB::select( DB::raw("SELECT SUM(questions.mark) as grade
-                                FROM `user_answers`
-                                    INNER JOIN answers ON user_answers.answer_id = answers.id
-                                    INNER JOIN questions ON questions.id = answers.question_id
-                                WHERE user_exam_id = ". $user_exam_id ."
-                                AND answers.check_correct = 1"));
 
-        UserExam::where('id',$user_exam_id)->update([
+                $grade =  DB::select( DB::raw("SELECT SUM(mark) as grade
+                                FROM `user_answers`
+                                WHERE user_exam_id = ". $user_exam_id ."
+                                "));
+        $user_exam->update([
+            'status' => 1,
             'end_attempt' => Carbon::now(),
             'mark' => $grade[0]->grade??0
         ]);
+        // mark
+//        $grade =  DB::select( DB::raw("SELECT SUM(questions.mark) as grade
+//                                FROM `user_answers`
+//                                    INNER JOIN answers ON user_answers.answer_id = answers.id
+//                                    INNER JOIN questions ON questions.id = answers.question_id
+//                                WHERE user_exam_id = ". $user_exam_id ."
+//                                AND answers.check_correct = 1"));
+//
+//        UserExam::where('id',$user_exam_id)->update([
+//            'end_attempt' => Carbon::now(),
+//            'mark' => $grade[0]->grade??0
+//        ]);
+
+//        $grade =  DB::select( DB::raw("SELECT questions.mark, correct_answer.total
+//                    from questions
+//                    inner join (
+//                        SELECT user_answers.question_id
+//                        , (COUNT(user_answers.question_id) / COUNT(answers.question_id)) as total
+//
+//                        FROM user_answers
+//                        INNER JOIN answers ON user_answers.answer_id = answers.id
+//                        WHERE user_exam_id = ".$user_exam_id."
+//                        AND answers.check_correct = 1
+//                        GROUP BY user_answers.question_id
+//                    ) as correct_answer on questions.id = correct_answer.question_id"));
+//
+//        dd($grade);
+
+        // new sql
+        /* final query
+           SELECT sum(t.total) FROM( SELECT user_answers.question_id , questions.mark * (COUNT(user_answers.question_id) / COUNT(answers.question_id)) as total  FROM user_answers
+                INNER JOIN answers ON user_answers.answer_id = answers.id
+                INNER JOIN questions ON questions.id = answers.question_id
+         WHERE user_exam_id = 134
+         AND answers.check_correct = 1
+         GROUP BY user_answers.question_id) as t
+        */
+        /*
+           SELECT user_answers.question_id , questions.mark * (COUNT(user_answers.question_id) / COUNT(answers.question_id))  FROM user_answers
+                INNER JOIN answers ON user_answers.answer_id = answers.id
+                INNER JOIN questions ON questions.id = answers.question_id
+         WHERE user_exam_id = 134
+         AND answers.check_correct = 1
+         GROUP BY user_answers.question_id
+
+         * */
 
         /*
                SELECT SUM(questions.mark) as grade
@@ -245,7 +322,9 @@ class UserProfileController extends Controller
     public function course_details($course_id){
         $course = Course::where('id',$course_id)->whereHas('users',function ($q){
             $q->where('users.id',\auth()->id());
-        })->with(['course_rate','uploads' => function($query){
+        })->with(['users' => function($query){
+            $query->where('user_id',\auth()->id());
+        },'course_rate','uploads' => function($query){
             return $query->where(function ($q){
                 $q->where('post_type','intro_video')->orWhere('post_type','image');
             });
@@ -258,6 +337,8 @@ class UserProfileController extends Controller
             abort(404);
         }
 
+
+
         $total_rate = DB::select(DB::raw('SELECT AVG(rate) as total_rate FROM `courses_registration` WHERE course_id =' .$course->id));
         $total_rate = $total_rate[0]->total_rate;
 
@@ -268,7 +349,6 @@ class UserProfileController extends Controller
     }
 
     public function course_preview($content_id){
-
         $content = Content::whereId($content_id)
             ->with(['upload','course.users' => function($q){
                 $q->where('users.id',\auth()->id());
@@ -286,6 +366,30 @@ class UserProfileController extends Controller
             'user_id'  => \auth()->id(),
             'content_id' => $content_id,
         ]);
+
+
+        $user_contents_count = DB::select(DB::raw("SELECT COUNT(user_contents.id) as user_contents_count FROM user_contents
+                                   INNER JOIN contents on user_contents.content_id = contents.id
+                                   WHERE user_contents.user_id =".\auth()->id()."
+                                   AND  contents.deleted_at IS NULL
+                                   AND contents.course_id = ". $content->course_id ."
+
+                             "));
+        $user_contents_count = $user_contents_count[0]->user_contents_count??0;
+
+        $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
+                                                            FROM contents
+
+                                                            WHERE   course_id =". $content->course_id ." AND parent_id IS NOT NULL AND  deleted_at IS NULL"));
+        $contents_count = $contents_count[0]->contents_count??0;
+
+        CourseRegistration::where('course_id',$content->course_id)
+            ->where('user_id',\auth()->id())->update(['progress'=> round(($user_contents_count / $contents_count) * 100 ,  1)  ]);
+
+
+
+
+//        return $user_contents_count;
 
 
         /*
@@ -383,8 +487,25 @@ class UserProfileController extends Controller
         $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
             return $q->where('post_type','image');
         }])->first();
-//        return $courses;
-        return view('userprofile::users.home',compact('courses'));
+       $video = DB::select(DB::raw("SELECT user_contents.id , uploads.file FROM user_contents
+                INNER JOIN contents ON  contents.id = user_contents.content_id
+                INNER JOIN uploads  ON  contents.id = uploads.uploadable_id
+            WHERE user_contents.user_id = ".\auth()->id()."
+            AND uploads.uploadable_type = 'App\\\\Models\\\\Training\\\\Content'
+            AND contents.post_type = 'video'
+            AND contents.deleted_at IS NULL
+            ORDER BY user_contents.id DESC LIMIT 1
+            "));
+
+        $last_video = $video[0];
+
+       $next_videos = DB::select(DB::raw("SELECT id ,title  FROM contents
+            WHERE id > ".$last_video->id."
+            AND post_type = 'video'
+            AND deleted_at IS NULL"));
+
+//dd($next_videos);
+        return view('userprofile::users.home',compact('courses','last_video','next_videos'));
     }
 
     public function referral() {

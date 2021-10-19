@@ -429,8 +429,8 @@
                     return false;
                 },
                 checkIfQuestionHasInCorrectAnswers : function(question_id){
-                    if(this.answers[question_id] == undefined)
-                        return false;
+                    // if(this.answers[question_id] == undefined)
+                    //     return false;
 
                     let answer = null;
                     if(Array.isArray(this.answers[question_id])){

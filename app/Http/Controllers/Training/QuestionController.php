@@ -9,15 +9,39 @@ use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
 use App\Models\Training\Exam;
 use App\Models\Training\Question;
+use App\Models\Training\Unit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
 {
+    private function buildTree($elements, $parentId = 0) {
+        $branch = array();
+
+        foreach ($elements as $element) {
+            if ($element->parent_id == $parentId) {
+                $children = $this->buildTree($elements, $element->id);
+                if ($children) {
+                    $element->s = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+        return $branch;
+    }
+
     public function add_questions($exam_id){
         $content = Content::where('id',$exam_id)->with(['questions.answers'])->latest()->first();
-        return view('training.courses.contents.exam', compact('content'));
+        /////
+        $course_id = $content->course_id;
+        $units = Unit::where('course_id',$course_id)->with(['subunits'])->get();
+
+
+        $units = $this->buildTree($units);
+
+//        return $units;
+        return view('training.courses.contents.exam', compact('content','units'));
     }
 
     public function add_question(){
@@ -52,6 +76,7 @@ class QuestionController extends Controller
             'title' => \request()->title,
             'mark' => \request()->mark,
             'exam_id' => \request()->exam_id,
+            'unit_id' => \request()->unit_id,
         ]);
 
        $mark = DB::select(DB::raw("SELECT SUM(mark) as mark FROM questions WHERE exam_id =".\request()->exam_id));

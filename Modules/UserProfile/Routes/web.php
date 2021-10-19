@@ -44,6 +44,7 @@ Route::group([
         Route::get('/preview-content/{content_id}', [UserProfileController::class, 'course_preview'])->name('course_preview');
         Route::get('/exam/{exam_id}', [UserProfileController::class, 'exam'])->name('exam');
         Route::get('preview/exam/{exam_id}', [UserProfileController::class, 'preview_exam'])->name('preview.exam');
+        Route::get('exam/{user_exams_id}/details', [UserProfileController::class, 'attempt_details'])->name('attempt_details.exam');
         Route::get('review/exam/{exam_id}', [UserProfileController::class, 'review_exam'])->name('review.exam');
         Route::post('exam/add_answers', [UserProfileController::class, 'add_answers'])->name('exam.add_answers');
         Route::post('rate', [UserProfileController::class, 'user_rate'])->name('rate');

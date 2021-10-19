@@ -36,6 +36,8 @@ Route::group([
         Route::get('/delete_answer', 'QuestionController@delete_answer')->name('delete_answer');
         Route::post('/update_answer', 'QuestionController@update_answer')->name('update_answer');
 
+        Route::resource('groups', 'GroupController');
+        Route::patch('/groups/{group}/restore', 'GroupController@restore')->name('groups.restore');
 
     });
 });
