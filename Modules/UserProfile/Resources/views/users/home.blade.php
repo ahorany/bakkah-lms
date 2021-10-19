@@ -33,12 +33,12 @@
     color: #fff;
 }
 /*.badges{
-    display:flex; 
-    flex-direction:row; 
+    display:flex;
+    flex-direction:row;
     flex-wrap: wrap;
 }*/
 .badge_icons{
-    text-align: center; 
+    text-align: center;
 }
 .level h6 {
     font-size: 18px;
@@ -109,7 +109,7 @@ a {
   border:1px solid @calendar-border;
   border-radius:5px;
   background:@calendar-bg;
-  
+
 }
 table {
   clear:both;
@@ -174,7 +174,7 @@ thead td {
   &:hover {
     color:@calendar-standout;
     font-weight:bold;
-  } 
+  }
 }
 button#btnPrev{
       position:absolute;
@@ -216,6 +216,25 @@ video{
 label.top {
     font-size: 15px;
 }
+label.bottom {
+    font-size: 13px;
+    color: gray;
+}
+
+/********************************/
+
+text.highcharts-credits ,
+g.highcharts-legend.highcharts-no-tooltip ,
+g.highcharts-axis-labels.highcharts-yaxis-labels ,
+text.highcharts-title ,
+g.highcharts-axis.highcharts-yaxis ,
+{
+    display: none !important;
+}
+
+#divCal tr {
+    height: 40px !important;
+}
 
 </style>
     <?php
@@ -230,15 +249,15 @@ label.top {
     <div class="userarea-wrapper">
         <div class="row no-gutters">
             @include('userprofile::users.sidebar')
-            <div class="col-md-9 col-lg-10">
-                <div class="main-user-content pb-5">
+            <div class="col-md-9 col-lg-10 home">
+                <div class="main-user-content pb-5 px-5">
                     <div class="p-5 user-course">
                         <div class="row mx-0 my-courses">
                             <div class="col-md-8 col-12 col-lg-8">
                                 <div class="left py-5">
-                                    <h2 class="mb-3">Hi Ahmed,</h2>
+                                    <h2 class="mb-3">{{auth()->user()->trans_name}}</h2>
                                     <p>Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement, tools and techniques of  Six Sigma. In this course, you’ll understand how </p>
-                                    <a href="#" class="btn">Resume Course</a>
+                                    {{-- <a href="#" class="btn">Resume Course</a> --}}
                                 </div>
                             </div>
                             <div class="col-md-4 col-12 col-lg-4">
@@ -322,7 +341,7 @@ label.top {
                                                             <small>82/90</small>
                                                         </div>
                                                     </div>
-                                                </div>  
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -341,15 +360,15 @@ label.top {
                             </div>
                         </div>
                         <div class="row m-0">
-                          <div class="col-md-6 col-12 col-lg-6 pr-0 mb-2">
+                          <div class="col-md-6 col-12 col-lg-6 pr-0 mb-4">
                             <div class="pl-4 pr-0 user-badge">
                                 <div class="my-courses">
-                                    
+                                    <div id="container" style="height: 400px; width: 100%"></div>
                                 </div>
                               </div>
                           </div>
-                          
-                          <div class="col-md-6 col-12 col-lg-6 mb-2">
+
+                          <div class="col-md-6 col-12 col-lg-6 mb-2" style="display: flex; align-items: center;">
                               <div class="px-4 user-badge">
                                   <div class="row">
 
@@ -393,7 +412,7 @@ label.top {
                               </div>
                           </div>
 
-                          <div class="col-md-6 col-6 col-lg-6 pr-0 mb-2">
+                          <div class="col-md-6 col-12 col-lg-6 pr-0 mb-2">
                               <div class="pl-3 pb-4 user-badge">
                                   <div class="card my-badge p-5 my-courses">
                                       <h4 class="mb-3" style="font-weight:bold;">
@@ -408,9 +427,9 @@ label.top {
                               </div>
                           </div>
 
-                          <div class="col-md-6 col-6 col-lg-6 mb-2">
+                          <div class="col-md-6 col-12 col-lg-6 mb-2">
                               <div class="px-4 user-badge">
-                                  <div class="card my-badge p-5 my-courses">
+                                  <div class="card my-badge px-5 pt-5 pb-0 my-courses">
                                       <h4 class="mb-3" style="font-weight:bold;">
                                           {{ __('education.Next Video') }}
                                       </h4>
@@ -476,165 +495,193 @@ label.top {
         </div>
     </div>
 
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+
     <script>
-        var Cal = function(divId) {
 
-  //Store div id
-  this.divId = divId;
 
-  // Days of week, starting on Sunday
-  this.DaysOfWeek = [
-    'Sun',
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat'
-  ];
+/************* calender **************/
 
-  // Months, stating on January
-  this.Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+var Cal = function(divId) {
 
-  // Set the current month, year
-  var d = new Date();
+//Store div id
+this.divId = divId;
 
-  this.currMonth = d.getMonth();
-  this.currYear = d.getFullYear();
-  this.currDay = d.getDate();
+// Days of week, starting on Sunday
+this.DaysOfWeek = [
+  'Sun',
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat'
+];
+
+// Months, stating on January
+this.Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+
+// Set the current month, year
+var d = new Date();
+
+this.currMonth = d.getMonth();
+this.currYear = d.getFullYear();
+this.currDay = d.getDate();
 
 };
 
 // Goes to next month
 Cal.prototype.nextMonth = function() {
-  if ( this.currMonth == 11 ) {
-    this.currMonth = 0;
-    this.currYear = this.currYear + 1;
-  }
-  else {
-    this.currMonth = this.currMonth + 1;
-  }
-  this.showcurr();
+if ( this.currMonth == 11 ) {
+  this.currMonth = 0;
+  this.currYear = this.currYear + 1;
+}
+else {
+  this.currMonth = this.currMonth + 1;
+}
+this.showcurr();
 };
 
 // Goes to previous month
 Cal.prototype.previousMonth = function() {
-  if ( this.currMonth == 0 ) {
-    this.currMonth = 11;
-    this.currYear = this.currYear - 1;
-  }
-  else {
-    this.currMonth = this.currMonth - 1;
-  }
-  this.showcurr();
+if ( this.currMonth == 0 ) {
+  this.currMonth = 11;
+  this.currYear = this.currYear - 1;
+}
+else {
+  this.currMonth = this.currMonth - 1;
+}
+this.showcurr();
 };
 
 // Show current month
 Cal.prototype.showcurr = function() {
-  this.showMonth(this.currYear, this.currMonth);
+this.showMonth(this.currYear, this.currMonth);
 };
 
 // Show month (year, month)
 Cal.prototype.showMonth = function(y, m) {
 
-  var d = new Date()
-  // First day of the week in the selected month
-  , firstDayOfMonth = new Date(y, m, 1).getDay()
-  // Last day of the selected month
-  , lastDateOfMonth =  new Date(y, m+1, 0).getDate()
-  // Last day of the previous month
-  , lastDayOfLastMonth = m == 0 ? new Date(y-1, 11, 0).getDate() : new Date(y, m, 0).getDate();
+var d = new Date()
+// First day of the week in the selected month
+, firstDayOfMonth = new Date(y, m, 1).getDay()
+// Last day of the selected month
+, lastDateOfMonth =  new Date(y, m+1, 0).getDate()
+// Last day of the previous month
+, lastDayOfLastMonth = m == 0 ? new Date(y-1, 11, 0).getDate() : new Date(y, m, 0).getDate();
 
 
-  var html = '<table>';
+var html = '<table>';
 
-  // Write selected month and year
-  html += '<thead><tr>';
-  html += '<td colspan="7">' + this.Months[m] + ' ' + y + '</td>';
-  html += '</tr></thead>';
+// Write selected month and year
+html += '<thead><tr>';
+html += '<td colspan="7">' + this.Months[m] + ' ' + y + '</td>';
+html += '</tr></thead>';
 
 
-  // Write the header of the days of the week
-  html += '<tr class="days">';
-  for(var i=0; i < this.DaysOfWeek.length;i++) {
-    html += '<td>' + this.DaysOfWeek[i] + '</td>';
+// Write the header of the days of the week
+html += '<tr class="days">';
+for(var i=0; i < this.DaysOfWeek.length;i++) {
+  html += '<td>' + this.DaysOfWeek[i] + '</td>';
+}
+html += '</tr>';
+
+// Write the days
+var i=1;
+do {
+
+  var dow = new Date(y, m, i).getDay();
+
+  // If Sunday, start new row
+  if ( dow == 0 ) {
+    html += '<tr>';
   }
-  html += '</tr>';
-
-  // Write the days
-  var i=1;
-  do {
-
-    var dow = new Date(y, m, i).getDay();
-
-    // If Sunday, start new row
-    if ( dow == 0 ) {
-      html += '<tr>';
+  // If not Sunday but first day of the month
+  // it will write the last days from the previous month
+  else if ( i == 1 ) {
+    html += '<tr>';
+    var k = lastDayOfLastMonth - firstDayOfMonth+1;
+    for(var j=0; j < firstDayOfMonth; j++) {
+      html += '<td class="not-current">' + k + '</td>';
+      k++;
     }
-    // If not Sunday but first day of the month
-    // it will write the last days from the previous month
-    else if ( i == 1 ) {
-      html += '<tr>';
-      var k = lastDayOfLastMonth - firstDayOfMonth+1;
-      for(var j=0; j < firstDayOfMonth; j++) {
-        html += '<td class="not-current">' + k + '</td>';
-        k++;
-      }
-    }
+  }
 
-    // Write the current day in the loop
-    var chk = new Date();
-    var chkY = chk.getFullYear();
-    var chkM = chk.getMonth();
-    if (chkY == this.currYear && chkM == this.currMonth && i == this.currDay) {
-      html += '<td class="today">' + i + '</td>';
-    } else {
-      html += '<td class="normal">' + i + '</td>';
+  // Write the current day in the loop
+  var chk = new Date();
+  var chkY = chk.getFullYear();
+  var chkM = chk.getMonth();
+  if (chkY == this.currYear && chkM == this.currMonth && i == this.currDay) {
+    html += '<td class="today">' + i + '</td>';
+  } else {
+    html += '<td class="normal">' + i + '</td>';
+  }
+  // If Saturday, closes the row
+  if ( dow == 6 ) {
+    html += '</tr>';
+  }
+  // If not Saturday, but last day of the selected month
+  // it will write the next few days from the next month
+  else if ( i == lastDateOfMonth ) {
+    var k=1;
+    for(dow; dow < 6; dow++) {
+      html += '<td class="not-current">' + k + '</td>';
+      k++;
     }
-    // If Saturday, closes the row
-    if ( dow == 6 ) {
-      html += '</tr>';
-    }
-    // If not Saturday, but last day of the selected month
-    // it will write the next few days from the next month
-    else if ( i == lastDateOfMonth ) {
-      var k=1;
-      for(dow; dow < 6; dow++) {
-        html += '<td class="not-current">' + k + '</td>';
-        k++;
-      }
-    }
+  }
 
-    i++;
-  }while(i <= lastDateOfMonth);
+  i++;
+}while(i <= lastDateOfMonth);
 
-  // Closes table
-  html += '</table>';
+// Closes table
+html += '</table>';
 
-  // Write HTML to the div
-  document.getElementById(this.divId).innerHTML = html;
+// Write HTML to the div
+document.getElementById(this.divId).innerHTML = html;
 };
 
 // On Load of the window
 window.onload = function() {
 
-  // Start calendar
-  var c = new Cal("divCal");			
-  c.showcurr();
+// Start calendar
+var c = new Cal("divCal");
+c.showcurr();
 
-  // Bind next and previous button clicks
-  getId('btnNext').onclick = function() {
-    c.nextMonth();
-  };
-  getId('btnPrev').onclick = function() {
-    c.previousMonth();
-  };
+// Bind next and previous button clicks
+getId('btnNext').onclick = function() {
+  c.nextMonth();
+};
+getId('btnPrev').onclick = function() {
+  c.previousMonth();
+};
 }
 
 // Get element by id
 function getId(id) {
-  return document.getElementById(id);
+return document.getElementById(id);
 }
+
+
+/************* line chart **************/
+
+var chart = new Highcharts.Chart({
+  chart: {
+    renderTo: 'container',
+    marginBottom: 80
+  },
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    labels: {
+      rotation: 90
+    }
+  },
+
+  series: [{
+    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+  }]
+});
+
+
     </script>
 
 @endsection

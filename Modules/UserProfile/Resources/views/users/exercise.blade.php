@@ -75,6 +75,21 @@ div.navigation {
 .answer label {
     margin:0;
 }
+
+
+/*
+.main-user-content .card.position-relative.p-5.mb-4.exam {
+        padding: 100px 20px 20px !important;
+    }
+
+    .main-user-content .p-5.exams {
+        padding: 25px !important;
+    }
+
+    .main-user-content .answer label{
+        display: inline;
+    }
+*/
 </style>
     <div class="userarea-wrapper">
         <div class="row no-gutters">
@@ -91,7 +106,7 @@ div.navigation {
                             </p>
                         </div> --}}
                         <div class="row">
-                            <div class="col-md-9 col-lg-10 col-12">
+                            <div class="col-md-9 col-lg-10 col-12 mb-3">
                                 <form action="">
                                     <div class="card position-relative p-5 mb-4 exam" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
                                         <div class="position-absolute number_question">
@@ -131,7 +146,7 @@ div.navigation {
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-md-3 col-lg-2 col-12 px-0">
+                            <div class="col-md-3 col-lg-2 col-12 mb-3">
                                 <div class="card py-4" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
                                     <div class="row m-0 px-2">
                                         <div class="col-md-12 col-lg-12 col-12 mb-3">
