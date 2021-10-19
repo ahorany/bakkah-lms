@@ -21,6 +21,12 @@ return [
     'Logout' => 'logout',
     'Welcome,' => 'Welcome,',
     'Change Password' => 'Change Password',
-
-    'Exam' => 'Exam'
+    'Course Overview' => 'Course Overview',
+    'Last Video View' => 'Last Video View',
+    'Next Video' => 'Next Video',
+    'Sign In' => 'Sign In',
+    'New user?' => 'New user?',
+    'Exam' => 'Exam',
+    'Password' => 'Password',
+    'Email or Username' => 'Email or Username',
 ];

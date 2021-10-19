@@ -75,21 +75,6 @@ div.navigation {
 .answer label {
     margin:0;
 }
-
-
-/*
-.main-user-content .card.position-relative.p-5.mb-4.exam {
-        padding: 100px 20px 20px !important;
-    }
-
-    .main-user-content .p-5.exams {
-        padding: 25px !important;
-    }
-
-    .main-user-content .answer label{
-        display: inline;
-    }
-*/
 </style>
     <div class="userarea-wrapper">
         <div class="row no-gutters">
@@ -99,12 +84,12 @@ div.navigation {
                     <div class="p-5 exams">
                         <small>Dashboard / My Course / ITEL</small>
                         <h1 style="font-weight: 700; margin: 5px 0 25px;">ITEL Course</h1>
-                        {{-- <div class="time text-right">
+                        <div class="time text-right">
                             <p>
                                 <img style="width:2%;" class="img-fluid" src="{{CustomAsset('/images/clock.png')}}" alt="Card image cap">
                                 19m and 55s Remaining
                             </p>
-                        </div> --}}
+                        </div>
                         <div class="row">
                             <div class="col-md-9 col-lg-10 col-12 mb-3">
                                 <form action="">
@@ -222,4 +207,14 @@ div.navigation {
         </div>
     </div>
 
+@endsection
+
+@section('scripts')
+    <script>
+        function confirmNewAttempt(){
+           if( confirm('Are u sure ?') == false)
+               event.preventDefault()
+        }
+
+    </script>
 @endsection

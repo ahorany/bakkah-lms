@@ -96,6 +96,13 @@ class UserProfileController extends Controller
         return view('userprofile::users.exam',compact('exam'));
     }
 
+    public function exams(){
+        return view('userprofile::users.exam-front');
+    }
+    // public function file(){
+    //     return view('userprofile::users.exam-front');
+    // }
+
     public function add_answers(){
       $user_exam =  UserExam::whereId(\request()->user_exam_id)
           ->where('user_id',\auth()->id())->where('status',0)->first();
@@ -741,8 +748,8 @@ class UserProfileController extends Controller
         return redirect()->route('user.home');
     }
 
-    // public function passwordReset() {
-    //     return view('userprofile::users.password_reset');
+    // public function file() {
+    //     return view('userprofile::users.file');
     // }
 
     // public function resetSubmit() {

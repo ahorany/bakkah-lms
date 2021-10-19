@@ -63,7 +63,8 @@
 
   .courses .title{
     font-weight: 700;
-  }
+    margin-bottom: 30px;
+}
   .courses a.video-link:hover,
   .courses .my-links a:hover{
       color:#fb4400;
@@ -90,6 +91,27 @@
     display: inline-block;
     background: gainsboro;
     border-radius: 50%;
+}
+.card.files {
+    box-shadow: 0px 3px 10px 1px #e3e3e3;
+}
+
+.students{
+    background: #fb4400;
+    color: #fff;
+    text-align: center;
+    padding: 45px 0;
+    border-radius: 10px;
+    height: 100%;
+}
+.students label{
+    display: block;
+    margin:0;
+}
+.images_group img {
+    width: 20%;
+    border-radius: 50%;
+    margin-left: -8px;
 }
 
     .gold-star{
@@ -131,11 +153,11 @@
         <div class="row no-gutters">
             @include('userprofile::users.sidebar')
             <div class="col-md-9 col-lg-10">
-                <div class="main-user-content m-4">
+                <div class="main-user-content">
                     <div class="p-5 user-info courses">
                             <div class="row">
-                                <div class="col-4 col-md-3 col-lg-3 mb-4 px-3 image">
-                                    <div class="card p-4" style="width: 100%; border-radius: 10px; border: 1px solid #f2f2f2">
+                                <div class="col-12 col-md-6 col-lg-4 mb-4 px-5 image">
+                                    <div class="card p-5" style="width: 100%; border-radius: 10px; border: 1px solid #f2f2f2">
                                         @if($image)
                                           <img class="card-img-top" src="{{CustomAsset('upload/thumb200/'.$image->file)}}">
                                         @endif
@@ -152,13 +174,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-8 col-md-9 col-lg-9 mb-4 px-3 info">
-                                    <div class="px-4" style="width: 100%;">
+                                <div class="col-12 col-md-6 col-lg-8 mb-4 px-3 info">
+                                    <div class="px-4 rate_course" style="width: 100%;">
                                         <div class="card-body p-0">
                                             <small>Dashboard / My Course / {{$course->trans_title}}</small>
                                             <h1 style="font-weight: 700;    margin: 5px 0 10px;">{{$course->trans_title}}</h1>
-                                            <div class="star_rating">
+                                        <div class="star_rating">
                                                 <label class="total_rate">{{round($total_rate,1)}}</label>
+<<<<<<< HEAD
                                                 <div>
                                                         <span class="star review_star1" data-num="1"><i class="fas fa-star"></i></span>
                                                         <span class="star review_star2" data-num="2"><i class="fas fa-star"></i></span>
@@ -189,120 +212,151 @@
                                                 </div>
                                             </div>
 
+=======
+                                                <fieldset class="rating star">
+                                                    <input type="radio" id="field6_star5" name="rating2" value="5" /><label class = "full" for="field6_star5"></label>
+                                                    <input type="radio" id="field6_star4" name="rating2" value="4" /><label class = "full" for="field6_star4"></label>
+                                                    <input type="radio" id="field6_star3" name="rating2" value="3" /><label class = "full part-star" for="field6_star3"></label>
+                                                    <input type="radio" id="field6_star2" name="rating2" value="2" /><label class = "full" for="field6_star2"></label>
+                                                    <input type="radio" id="field6_star1" name="rating2" value="1" /><label class = "full" for="field6_star1"></label>
+                                                </fieldset>
+>>>>>>> 6ee838249b99cc4be013b30ea500bed1a368d702
+                                        </div>
+                                        <div class="dropdown">
+                                        </div>
+
+                                       </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-8 mb-3 p-3">
+                                    <p class="description px-4">{{$course->trans_excerpt}}</p>
+                                </div>
+                                @if($video)
+                                    <div class="col-12 col-md-12 col-lg-4 mb-3 py-3 px-0">
+                                        <video style="border: 1px solid gainsboro; border-radius: 15px;" width="100%" height="200px" controls>
+                                            <source src="{{CustomAsset('upload/video/'.$video->file)}}">
+                                        </video>
+                                    </div>
+                                @endif
+                                @if ($course->contents)
+                                <div class="col-12 col-md-12 col-lg-12 mb-3 p-3">
+                                    <h2 class="title ">Content</h2>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 mb-3 p-3 col-xl-7">
+                                    <div class="row m-0">
+                                        @foreach($course->contents as $key => $section)
+                                            <div class="col-12 col-md-12 col-lg-12 mb-3 p-0 col-xl-12">
+                                                <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
+                                                    <p class="learning_file" style="padding-left:30px;">{{$section->title}}</p>
+                                                    <div class="learning_file mb-3" style="padding-left:55px;">
+                                                        {!!  $section->details->excerpt??null !!}
+                                                    </div>
+                                                    @isset($section->contents)
+                                                    <div class="my-links">
+                                                        @foreach($section->contents as $k => $content)
+                                                            <?php
+                                                                $class = 'fas fa-file';
+                                                                switch($content->post_type){
+                                                                case "video" :  $class = 'fas fa-video';    break;
+                                                                case "presentation" :  $class = 'fas fa-file-powerpoint';   break;
+                                                                case "exam" :  $class = 'fas fa-question-circle';  break;
+                                                                }
+                                                            ?>
+                                                            <a  @if( ( isset($section->contents[($k-1)]->user_contents[0]) || ( isset($course->contents[($key-1)])  && isset($course->contents[($key-1)]->contents[ (count($course->contents[($key-1)]->contents) - 1)]->user_contents[0]) && $k == 0  ) )  || ($key == 0 && $k == 0)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif    class="d-block">
+                                                                <i  class="{{$class}} mr-2"></i>  {{$content->title}}
+                                                            </a>
+                                                        @endforeach
+                                                    </div>
+                                                    @endisset
+
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="col-12 col-md-12 col-lg-12 mb-3 p-3 col-xl-5">
+                                    <div class="row m-0">
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            <div class="card px-5 py-4 pb-5 activity" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden; height:97%;">
+                                                <h3 class="title">Activity</h3>
+                                                <ul class="p-0">
+                                                    <li class="row">
+                                                    <div class="col-md-1 col-lg-1 col-1 p-0 dot">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                        <div class="col-md-11 col-lg-11 col-11 p-0">
+                                                            <span>
+                                                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia similique animi ea. Ut, beatae voluptatem.
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="row">
+                                                        <div class="col-md-1 col-lg-1 col-1 p-0 dot">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                        <div class="col-md-11 col-lg-11 col-11 p-0">
+                                                            <span>
+                                                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia similique animi ea. Ut, beatae voluptatem.
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="row">
+                                                    <div class="col-md-1 col-lg-1 col-1 p-0 dot">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                        <div class="col-md-11 col-lg-11 col-11 p-0">
+                                                            <span>
+                                                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia similique animi ea. Ut, beatae voluptatem.
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="row">
+                                                    <div class="col-md-1 col-lg-1 col-1 p-0 dot">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                        <div class="col-md-11 col-lg-11 col-11 p-0">
+                                                            <span>
+                                                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia similique animi ea. Ut, beatae voluptatem.
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-7 col-lg-7 pr-0 mb-3">
+                                            <div class="card p-4 pr-1" style="height: 100%;">
+                                                <h4 style="font-weight:700;">Course Group</h4>
+                                                <label style="font-size: 11px; color: gray;">Lean Six Sigma Yellow belt training provides insight to the </label>
+                                                <div class="images_group pl-3">
+
+                                                    <img class="img-fluid" src="{{CustomAsset('/images/person1.png')}}" alt="Card image cap">
+                                                    <img class="img-fluid" src="{{CustomAsset('/images/person2.png')}}" alt="Card image cap">
+                                                    <img class="img-fluid" src="{{CustomAsset('/images/person3.png')}}" alt="Card image cap">
+                                                    <img class="img-fluid" src="{{CustomAsset('/images/person4.png')}}" alt="Card image cap">
+                                                    <img class="img-fluid" src="{{CustomAsset('/images/person15.png')}}" alt="Card image cap">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-5 col-lg-5 mb-3">
+                                            <div class="students">
+                                                <label style="font-size:20px;">New Student</label>
+                                                <label style="font-size:25px; font-weight:700;">12</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-8 col-lg-8 mb-3 p-3">
-                                    <p class="description">{{$course->trans_excerpt}}</p>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-lg-4 mb-3 py-3 px-0">
-                                    @if($video)
-                                        <video style="border: 1px solid gainsboro; border-radius: 15px;" width="100%" height="200px" controls>
-                                            <source src="{{CustomAsset('upload/video/'.$video->file)}}">
-                                        </video>
-                                    @endif
-                                </div>
-
-                                <div class="col-12 col-md-12 col-lg-12 mb-3 p-3">
-                                    <h2 class="title">Content</h2>
-                                </div>
-
-                                <div class="col-12 col-md-7 col-lg-7 mb-3 p-3">
-                                    <div class="row m-0">
-                                            @foreach($course->contents as $key => $section)
-
-                                                <div class="col-12 col-md-12 col-lg-12 mb-3 p-0">
-                                                    <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
-                                                        <p class="learning_file" style="padding-left:30px;">{{$section->title}}</p>
-                                                        <div class="learning_file mb-3" style="padding-left:55px;">
-                                                            {!!  $section->details->excerpt??null !!}
-                                                        </div>
-                                                        @isset($section->contents)
-                                                           <div class="my-links">
-                                                               @foreach($section->contents as $k => $content)
-                                                                   <?php
-                                                                    $class = 'fas fa-file';
-                                                                      switch($content->post_type){
-                                                                       case "video" :  $class = 'fas fa-video';    break;
-                                                                       case "presentation" :  $class = 'fas fa-file-powerpoint';   break;
-                                                                       case "exam" :  $class = 'fas fa-question-circle';  break;
-                                                                      }
-                                                                   ?>
-                                                                   <a  @if( ( isset($section->contents[($k-1)]->user_contents[0]) || ( isset($course->contents[($key-1)])  && isset($course->contents[($key-1)]->contents[ (count($course->contents[($key-1)]->contents) - 1)]->user_contents[0]) && $k == 0  ) )  || ($key == 0 && $k == 0)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif    class="d-block">
-                                                                     <i  class="{{$class}} mr-2"></i>  {{$content->title}}
-                                                                   </a>
-
-{{--                                                                       <p class="learning_file" style="padding-left:70px;">--}}
-{{--                                                                           {{ $content->details->excerpt??null}}--}}
-{{--                                                                       </p>--}}
-                                                               @endforeach
-                                                           </div>
-                                                        @endisset
-
-                                                    </div>
-                                                </div>
-                                            @endforeach
-
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-5 col-lg-5 mb-3 p-3">
-                                    <div class="card px-5 py-4 activity" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden; height:97%;">
-                                        <h3 class="title">Activity</h3>
-                                        <ul class="p-0">
-                                            <li class="row">
-                                            <div class="col-md-1 col-lg-1 col-1 p-0">
-                                                    <div class="circle"></div>
-                                                </div>
-                                                <div class="col-md-11 col-lg-11 col-11 p-0">
-                                                    <span>
-                                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia similique animi ea. Ut, beatae voluptatem.
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li class="row">
-                                                <div class="col-md-1 col-lg-1 col-1 p-0">
-                                                    <div class="circle"></div>
-                                                </div>
-                                                <div class="col-md-11 col-lg-11 col-11 p-0">
-                                                    <span>
-                                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia similique animi ea. Ut, beatae voluptatem.
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li class="row">
-                                            <div class="col-md-1 col-lg-1 col-1 p-0">
-                                                    <div class="circle"></div>
-                                                </div>
-                                                <div class="col-md-11 col-lg-11 col-11 p-0">
-                                                    <span>
-                                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia similique animi ea. Ut, beatae voluptatem.
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li class="row">
-                                            <div class="col-md-1 col-lg-1 col-1 p-0">
-                                                    <div class="circle"></div>
-                                                </div>
-                                                <div class="col-md-11 col-lg-11 col-11 p-0">
-                                                    <span>
-                                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia similique animi ea. Ut, beatae voluptatem.
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
                             </div>
+                        </div>
                         <!-- </div> -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
     <script>
 

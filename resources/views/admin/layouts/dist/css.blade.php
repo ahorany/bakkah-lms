@@ -10,6 +10,7 @@
 <!-- {{-- <link rel="stylesheet" href="{{CustomAsset(env('APP_ASSET').ADMIN.'-dist/select2/select2.min.css')}}"> --}} -->
 <!-- <link rel="stylesheet" href="{{CustomAsset(env('APP_ASSET').ADMIN.'-dist/select2/select2-bootstrap4.min.css')}}"> -->
 <link rel="stylesheet" href="{{CustomAsset('front-dist/css/lms.css')}}">
+<link rel="stylesheet" href="{{CustomAsset('front-dist/css/lms_crm.css')}}">
 <!-- {{--<link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/admin.css')}}">--}} -->
 <!-- <link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/all.css')}}"> -->
 <!-- {{--<link rel="stylesheet" href="{{CustomAsset(env('APP_ASSET').ADMIN.'-dist/css/admin-rtl.css')}}">--}} -->
