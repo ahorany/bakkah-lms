@@ -17,6 +17,8 @@
         'attr'=>'maxlength="1000"',
     ])!!}
 
+    {!!Builder::Select('group_id', 'group', $groups, null, ['col'=>'col-md-12','model_title' => 'name']) !!}
+
     {{Builder::SetPrefix('training.')}}
     {!!Builder::Textarea('en_accredited_notes', 'en_accredited_notes', null, [
         'row'=>8,
@@ -73,6 +75,8 @@
 {{--            {!! Builder::Input('material_cost', 'material_cost', null, ['attr' => 'digit']) !!}--}}
 
             {!!Builder::Select('partner_id', 'partners', $partners, null, ['col'=>'col-md-12']) !!}
+
+
 
             <hr>
             <?php $type_id = \App\Constant::where('id', 370)->get(); ?>

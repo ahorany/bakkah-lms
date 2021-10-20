@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Training\Content;
 use App\Models\Training\Course;
+use App\Models\Training\Group;
 use Exception;
 use App\Traits\ImgTrait;
 use App\Traits\JsonTrait;
@@ -151,11 +152,15 @@ class User extends Authenticatable implements MustVerifyEmail
     /////// LMS //////////
 
     public function courses(){
-        return $this->belongsToMany(Course::class,'courses_registration','user_id');
+        return $this->belongsToMany(Course::class,'courses_registration','user_id')->withPivot('user_id' ,'course_id','rate', 'progress');
     }
 
     public function user_contents(){
         return $this->belongsToMany(Content::class,'user_contents','user_id','content_id');
+    }
+
+    public function groups(){
+        return $this->belongsToMany(Group::class,'user_groups','user_id','group_id');
     }
 
 }

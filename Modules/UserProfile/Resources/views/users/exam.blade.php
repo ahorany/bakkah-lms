@@ -138,6 +138,7 @@ label.navigation {
                                         <th scope="col">Your Start Time</th>
                                         <th scope="col">Your End Time</th>
                                         <th scope="col">Review</th>
+                                        <th scope="col">Details</th>
                                         <th scope="col">Time taken</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mark</th>
@@ -160,6 +161,7 @@ label.navigation {
                                             $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
                                             ?>
                                             <td>@if($attempt->status == 1)<a href="{{CustomRoute('user.review.exam',$attempt->id)}}">Review</a>@else ---- @endif</td>
+                                            <td>@if($attempt->status == 1)<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}">View Result Details</a>@else ---- @endif</td>
                                             <td>{{$diff??'0 seconds'}}</td>
                                             <td class="text-bold {{$attempt->status == 1 ? 'text-success' : 'text-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</td>
                                             <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>

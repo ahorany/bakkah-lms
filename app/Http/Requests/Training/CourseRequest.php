@@ -58,6 +58,8 @@ class CourseRequest extends FormRequest
             'type_id'=>'',
             'show_in_website'=>'',
             'active'=>'',
+            'group_id'=>'required|exists:groups,id',
+
         ];
     }
 }

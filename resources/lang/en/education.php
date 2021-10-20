@@ -27,4 +27,6 @@ return [
     'Sign In' => 'Sign In',
     'New user?' => 'New user?',
     'Exam' => 'Exam',
+    'Password' => 'Password',
+    'Email or Username' => 'Email or Username',
 ];

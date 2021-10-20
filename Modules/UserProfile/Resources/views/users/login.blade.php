@@ -23,6 +23,7 @@ input.form-control::placeholder {
     top: 15px;
     left: 20px;
     color: #222222;
+    width: max-content;
 }
 
 </style>
@@ -37,16 +38,6 @@ input.form-control::placeholder {
                     <p>{{ __('education.New user?') }} <a href="#">Create an account</a> </p>
                     {{-- <p>{{__('education.Welcome! Please, fill email and password to sign in into your account.')}}</p> --}}
                 </div>
-                @if(request()->has('redirectTo'))
-                    <input type="hidden" name="redirectTo" value="{{ request()->redirectTo }}">
-                @endif
-
-                @if(request()->has('redirect'))
-                    <input type="hidden" name="redirect" value="{{ request()->redirect }}">
-                    <input type="hidden" name="action" value="wishlist">
-                    <input type="hidden" name="option" value="{{ request()->option }}">
-                    <input type="hidden" name="session_id" value="{{ request()->session_id }}">
-                @endif
 
                 <div class="form-group position-relative">
                     <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('education.Email or Username') }}" class="form-control @error('email') is-invalid @enderror">
@@ -72,12 +63,8 @@ input.form-control::placeholder {
                     <div>
                         <input id="save" type="checkbox" name="checkbox">
                         <label style="color: #222222; margin: 0;" for="save">Keep me signed in</label>
-                        {{-- <label style="color: #767676; margin: 0;" for="save">Save Password</label> --}}
                     </div>
-                    {{-- <a style="color: #242a2e" href="{{ url('password/reset') }}" class="my-3">{{ __('education.Forgot Your Password?') }}</a> --}}
                 </div>
-
-                {{-- <a href="{{ url('password/reset') }}" class="d-block my-3">{{ __('education.Forgot Your Password?') }}</a> --}}
 
                 <button class="btn btn-primary btn-block mb-3">{{__('education.Sign In')}}</button>
 
@@ -97,9 +84,6 @@ input.form-control::placeholder {
                 </div>
 
             </form>
-            {{-- <div ">
-                <img src="" />
-            </div> --}}
         </div>
         </div>
     </div>

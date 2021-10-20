@@ -8,6 +8,7 @@ use App\Http\Requests\Training\CourseRequest;
 use App\Models\Admin\Partner;
 use App\Models\Training\Course;
 use App\Constant;
+use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
 // use Illuminate\Support\Str;
 
@@ -49,12 +50,12 @@ class CourseController extends Controller
     }
 
     public function create(){
-
+        $groups = Group::all();
         $partners = Partner::GetPartners('partners', -1, false, 1, 0);
         $certificate_types = Constant::where('parent_id', 323)->get();
         // $params = $this->_create_edit_params();
         // , ['certificate_types'=>$params['certificate_types']]
-        return Active::Create(compact('partners', 'certificate_types'));
+        return Active::Create(compact('partners', 'certificate_types','groups'));
     }
 
     public function store(CourseRequest $request){
@@ -80,7 +81,9 @@ class CourseController extends Controller
     public function edit(Course $course){
         $partners = Partner::GetPartners('partners', -1, false, 1, 0);
         $certificate_types = Constant::where('parent_id', 323)->get();
-        return Active::Edit(['eloquent'=>$course, 'partners'=>$partners, 'certificate_types'=>$certificate_types]);
+        $groups = Group::all();
+
+        return Active::Edit(['eloquent'=>$course, 'groups' => $groups, 'partners'=>$partners, 'certificate_types'=>$certificate_types]);
     }
 
     public function update(CourseRequest $request, Course $course){
@@ -98,6 +101,7 @@ class CourseController extends Controller
         \App\Models\SEO\Seo::seo($course);
         return Active::Updated($course->trans_title);
     }
+
 
     public function destroy(Course $course){
         Course::where('id', $course->id)->SoftTrash();

@@ -64,6 +64,17 @@
                             </div>
                         </div>
 
+                    <div class="form-group">
+                        <label>Unit </label>
+                        <select v-model="unit_id" class="form-control">
+                            <option value="-1">Choose unit</option>
+                            <option v-for="unit in compo_units" :value="unit.id" v-text="unit.title"></option>
+                        </select>
+{{--                        <div v-show="'mark' in errors">--}}
+{{--                            <span style="color: red;font-size: 13px">@{{ errors.mark }}</span>--}}
+{{--                        </div>--}}
+                    </div>
+
                        <div class="mt-5">
                            <div class="mb-2" v-show="'answers' in errors">
                                <span style="color: red;font-size: 13px">@{{ errors.answers }}</span>
@@ -105,13 +116,16 @@
 @push('vue')
 <script>
 	window.content = {!! json_encode($content??[]) !!}
+    window.units = {!! json_encode($units??[]) !!}
 
 	var contents = new Vue({
             el: '#questions',
             data: {
                 title: '',
                 mark: 0,
+                unit_id: -1,
                 content: window.content,
+                units: window.units,
                 model_type: 'question',
                 save_type: 'add',
                 // content_id : '',
@@ -119,16 +133,32 @@
                 correct: false,
                 errors: {},
                 answers: [],
+                compo_units : [],
+                compo_title : '',
                 base_url: window.location.origin,
             },
             created: function () {
-                console.log(this.content)
+                console.log(this.getLeafNodes(this.units));
+                console.log(this.compo_units)
             },
             methods: {
-
+                getLeafNodes :  function (nodes, result = []){
+                    for(var i = 0, length = nodes.length; i < length; i++){
+                        this.compo_title == '' ?   this.compo_title += nodes[i].title : this.compo_title += ' > ' + nodes[i].title ;
+                        if(!nodes[i].s || nodes[i].s.length === 0){
+                            this.compo_units.push( {id : nodes[i].id , title :  this.compo_title} );
+                            this.compo_title = '';
+                            result.push(nodes[i]);
+                        }else{
+                            result = this.getLeafNodes(nodes[i].s, result);
+                        }
+                    }
+                return result;
+            },
                 OpenModal: function (type) {
                     // clear
                     this.title = '';
+                    this.unit_id = -1;
                     this.mark = 0;
                     this.answers = [];
                     this.question_id = null;
@@ -153,6 +183,7 @@
                             self.answers = question.answers
                             self.title = question.title;
                             self.mark = question.mark;
+                            self.unit_id = question.unit_id ? question.unit_id : -1;
                         }
                         return true;
                     });
@@ -239,6 +270,7 @@
                         {
                             'title': self.title,
                             'mark': self.mark,
+                            'unit_id': self.unit_id,
                             'exam_id': self.content.id,
                             'answers': self.answers,
                             'question_id': self.question_id,
@@ -282,6 +314,7 @@
 
             Clear: function () {
                 this.title = '';
+                this.unit_id = -1
                 this.answers.forEach(function (answer) {
                     answer.title = ''
                 });
@@ -291,5 +324,7 @@
 
 
 	});
+
+
 </script>
 @endpush

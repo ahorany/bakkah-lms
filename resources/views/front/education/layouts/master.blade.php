@@ -22,6 +22,8 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
     <link rel="stylesheet" href="{{CustomAsset(FRONT.'-dist/css/all.css')}}">
      <link rel="stylesheet" href="{{CustomAsset(FRONT.'-dist/all.css')}}">
+<link rel="stylesheet" href="{{CustomAsset('front-dist/css/lms_crm.css')}}">
+<link rel="stylesheet" href="{{CustomAsset('front-dist/css/lms.css')}}">
 
     @if(LaravelLocalization::getCurrentLocaleDirection()=='rtl')
         <link rel="stylesheet" href="{{CustomAsset(FRONT.'-dist/rtl.min.css')}}">

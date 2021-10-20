@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Training\Group;
+use App\Models\Training\UserGroup;
 use DB;
 use App\User;
 use App\Constant;
@@ -13,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\GroupUse;
 
 class UserController extends Controller
 {
@@ -102,6 +105,7 @@ class UserController extends Controller
         $activity_level = Constant::where('parent_id', 412)->get();
         $level_of_education = Constant::where('parent_id', 416)->get();
         $session_can_handle = Constant::where('parent_id', 421)->get();
+        $groups = Group::all();
 
         $user_type = '';
         if ($post_type == 'users') {
@@ -132,7 +136,8 @@ class UserController extends Controller
             'level_of_education' => $level_of_education,
             'session_can_handle' => $session_can_handle,
             'user_type' => $user_type,
-            'roles' => $roles
+            'roles' => $roles,
+            'groups' => $groups,
         ]);
     }
 
@@ -140,6 +145,12 @@ class UserController extends Controller
     {
 
         $validated = $request->validated();
+//        return $validated;
+        $groups = [];
+        foreach ($validated['group_id'] as $key => $group){
+            $groups[] = $key ;
+        }
+
         $validated['name'] = null;
         $validated['trainer_courses_for_certifications'] = null;
         $validated['created_by'] = auth()->user()->id;
@@ -179,6 +190,9 @@ class UserController extends Controller
             'note' => request()->note,
         ]);
 
+        $user->groups()->attach($groups);
+
+
         $this->uploadsPDF($profile, 'cv', null);
         $this->uploadsPDF($profile, 'certificates', null);
         $this->uploadsPDF($profile, 'financial_info', null);
@@ -205,7 +219,10 @@ class UserController extends Controller
         $activity_level = Constant::where('parent_id', 412)->get();
         $level_of_education = Constant::where('parent_id', 416)->get();
         $session_can_handle = Constant::where('parent_id', 421)->get();
+        $groups = Group::all();
+        $user_groups = UserGroup::where('user_id',$user->id)->get();
 
+//        return $user_groups;
         $user_type = '';
         if ($post_type == 'users') {
             $user_type = 41;
@@ -234,7 +251,9 @@ class UserController extends Controller
             'level_of_education' => $level_of_education,
             'session_can_handle' => $session_can_handle,
             'user_type' => $user_type,
-            'roles' => $roles
+            'roles' => $roles,
+            'groups' => $groups,
+            'user_groups' => $user_groups,
         ]);
     }
 
@@ -242,6 +261,11 @@ class UserController extends Controller
     {
 
         $validated = $request->validated();
+//        return $validated;
+        $groups = [];
+        foreach ($validated['group_id'] as $key => $group){
+            $groups[] = $key ;
+        }
         $validated['name'] = null;
         $validated['trainer_courses_for_certifications'] = null;
         $validated['updated_by'] = auth()->user()->id;
@@ -261,6 +285,7 @@ class UserController extends Controller
         }
 
         $user->roles()->sync(request()->roles);
+        $user->groups()->sync($groups);
 
         User::UploadFile($user, ['method' => 'update']);
         User::SetMorph($user->id);
