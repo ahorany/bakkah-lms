@@ -34,7 +34,7 @@
     <link rel="icon" href="{{CustomAsset('images/logo_50.png')}}" sizes="32x32" />
 
      <script src="{{CustomAsset('js/vue.min.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
 
 {{--    @include(FRONT.'.social_scripts.header')--}}
 

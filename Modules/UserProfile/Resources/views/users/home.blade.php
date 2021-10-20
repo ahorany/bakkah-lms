@@ -297,42 +297,7 @@ g.highcharts-axis.highcharts-yaxis ,
                             @endforeach
                         </div>
                     </div>
-<<<<<<< HEAD
-                    <div style="background: #fff;" class="container mx-5 py-5 ">
-                        <div class="row">
-                            <div class="col-6">
-                                <h4 class="mb-0">Latest video watched</h4>
-                            @if($last_video)
-                                    <video controls class="w-100 my-5">
-                                        <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
-                                    </video>
-                                @endif
-                            </div>
-                            <div class="col-6">
-                                <h4 class="mb-5">Next videos</h4>
 
-                                @foreach($next_videos as $next_video)
-                                  <div class="my-2"><i class="fas fa-video mr-2"></i> <a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="px-5 pb-5 user-badge">
-                        <h4 class="mb-0">
-                            {{ __('education.Badges') }}
-                        </h4>
-                        <small class="num m-0 mt-2 mb-4 d-block" style="color:gray;">Your Latest Achievements</small>
-                        <div class="card my-badge p-4" style="display:flex; flex-direction:row; flex-wrap: wrap;">
-                            <div style="text-align: center; width: 6%; margin: 5px 10px;">
-                                <img class="img-fluid" src="{{CustomAsset('/images/lms1.png')}}" alt="Card image cap">
-                            </div>
-                            <div style="text-align: center; width: 6%; margin: 5px 10px;">
-                                <img class="img-fluid" src="{{CustomAsset('/images/lms2.png')}}" alt="Card image cap">
-                            </div>
-                            <div style="text-align: center; width: 6%; margin: 5px 10px;">
-                                <img class="img-fluid" src="{{CustomAsset('/images/lms3.png')}}" alt="Card image cap">
-=======
                     <dic class="details user-course">
                         <div class="row m-0 mb-4">
                             <div class="col-md-6 col-12 col-lg-6 pr-0">
@@ -348,8 +313,7 @@ g.highcharts-axis.highcharts-yaxis ,
                                                         <img class="img-fluid" src="{{CustomAsset('/images/lms1.png')}}" alt="Card image cap">
                                                     </div>
                                                     <div class="badge_icons col-md-2 col-lg-2 col-3 mb-4">
-                                                        <img class="img-fluid" src="{{CustomAsset('/images/lms2.png')}}" alt="Card image cap">
-                                                    </div>
+                                                        <img class="img-fluid" src="{{CustomAsset('/images/lms2.png')}}" alt="Card image cap"></div>
                                                     <div class="badge_icons col-md-2 col-lg-2 col-3 mb-4">
                                                         <img class="img-fluid" src="{{CustomAsset('/images/lms3.png')}}" alt="Card image cap">
                                                     </div>
@@ -385,7 +349,7 @@ g.highcharts-axis.highcharts-yaxis ,
                                         </div>
                                     </div>
                                 </div>
->>>>>>> 6ee838249b99cc4be013b30ea500bed1a368d702
+
                             </div>
                             <div class="col-md-6 col-12 col-lg-6">
                                 <div class="px-4 user-badge">
@@ -459,9 +423,11 @@ g.highcharts-axis.highcharts-yaxis ,
                                           {{ __('education.Last Video View') }}
                                       </h4>
                                       <div class="video">
-                                          <video controls>
-                                            <source src="https://www.youtube.com/watch?v=GVJp58ZjZbg" type="video/mp4">
-                                          </video>
+                                          @if($last_video)
+                                              <video controls>
+                                                  <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
+                                              </video>
+                                          @endif
                                       </div>
                                   </div>
                               </div>
@@ -474,54 +440,22 @@ g.highcharts-axis.highcharts-yaxis ,
                                           {{ __('education.Next Video') }}
                                       </h4>
                                       <div class="videos_list pt-3">
-                                          <div class="row m-0 mb-3 pb-2" style="border-bottom: 1px solid #707070;">
-                                            <div class="col-md-1 col-1 col-lg-1 px-0">
-                                              <img style="width:100%;" class="img-fluid" src="{{CustomAsset('/images/play_button.png')}}" alt="Card image cap">
-                                            </div>
+                                          @foreach($next_videos as $next_video)
+
+                                             <div class="row m-0 mb-3 pb-2"  @if(!$loop->last)style="border-bottom: 1px solid #707070;" @endif>
+                                                  <div class="col-md-1 col-1 col-lg-1 px-0">
+                                                    <img style="width:100%;" class="img-fluid" src="{{CustomAsset('/images/play_button.png')}}" alt="Card image cap">
+                                                   </div>
                                             <div class="col-md-9 col-9 col-lg-9 text-left">
-                                              <label class="m-0 top">Lean Six Sigma Yellow belt training</label>
+                                              <label class="m-0 top"><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a></label>
                                               <label class="m-0 bottom">Assess your Knowledge - Pre-Learning</label>
                                             </div>
                                             <div class="col-md-2 col-2 col-lg-2 text-right">
                                               <label class="py-3 m-0">6:24</label>
                                             </div>
                                           </div>
-                                          <div class="row m-0 mb-3 pb-2" style="border-bottom: 1px solid #707070;">
-                                            <div class="col-md-1 col-1 col-lg-1 px-0">
-                                              <img style="width:100%;" class="img-fluid" src="{{CustomAsset('/images/play_button.png')}}" alt="Card image cap">
-                                            </div>
-                                            <div class="col-md-9 col-9 col-lg-9 text-left">
-                                              <label class="m-0 top">Lean Six Sigma Yellow belt training</label>
-                                              <label class="m-0 bottom">Assess your Knowledge - Pre-Learning</label>
-                                            </div>
-                                            <div class="col-md-2 col-2 col-lg-2 text-right">
-                                              <label class="py-3 m-0">6:24</label>
-                                            </div>
-                                          </div>
-                                          <div class="row m-0 mb-3 pb-2" style="border-bottom: 1px solid #707070;">
-                                            <div class="col-md-1 col-1 col-lg-1 px-0">
-                                              <img style="width:100%;" class="img-fluid" src="{{CustomAsset('/images/play_button.png')}}" alt="Card image cap">
-                                            </div>
-                                            <div class="col-md-9 col-9 col-lg-9 text-left">
-                                              <label class="m-0 top">Lean Six Sigma Yellow belt training</label>
-                                              <label class="m-0 bottom">Assess your Knowledge - Pre-Learning</label>
-                                            </div>
-                                            <div class="col-md-2 col-2 col-lg-2 text-right">
-                                              <label class="py-3 m-0">6:24</label>
-                                            </div>
-                                          </div>
-                                          <div class="row m-0 mb-3 pb-0">
-                                            <div class="col-md-1 col-1 col-lg-1 px-0">
-                                              <img style="width:100%;" class="img-fluid" src="{{CustomAsset('/images/play_button.png')}}" alt="Card image cap">
-                                            </div>
-                                            <div class="col-md-9 col-9 col-lg-9 text-left">
-                                              <label class="m-0 top">Lean Six Sigma Yellow belt training</label>
-                                              <label class="m-0 bottom">Assess your Knowledge - Pre-Learning</label>
-                                            </div>
-                                            <div class="col-md-2 col-2 col-lg-2 text-right">
-                                              <label class="py-3 m-0">6:24</label>
-                                            </div>
-                                          </div>
+                                          @endforeach
+
                                       </div>
                                   </div>
                               </div>

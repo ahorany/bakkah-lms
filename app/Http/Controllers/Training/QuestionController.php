@@ -76,7 +76,7 @@ class QuestionController extends Controller
             'title' => \request()->title,
             'mark' => \request()->mark,
             'exam_id' => \request()->exam_id,
-            'unit_id' => \request()->unit_id,
+            'unit_id' => \request()->unit_id != -1 ? \request()->unit_id  : null ,
         ]);
 
        $mark = DB::select(DB::raw("SELECT SUM(mark) as mark FROM questions WHERE exam_id =".\request()->exam_id));

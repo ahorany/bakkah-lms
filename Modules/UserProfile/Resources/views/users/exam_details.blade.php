@@ -93,8 +93,8 @@ label.navigation {
                                     @foreach($unit_marks as $data)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$data->title?? 'Other'}}</td>
-                                            <td >{{$data->marks}}</td>
+                                            <td>{{$data->unit_title?? 'Other'}}</td>
+                                            <td >{{$data->marks .' / ' . $data->total_marks}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

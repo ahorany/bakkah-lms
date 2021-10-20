@@ -48,12 +48,28 @@ class UserProfileController extends Controller
 
     public function attempt_details ($user_exams_id){
 //        $user_exams_id = 183;
-       $unit_marks =  DB::select(DB::raw("SELECT units.title  , SUM(user_answers.mark) as marks FROM user_exams
-                INNER JOIN user_answers ON user_exams.id = user_answers.user_exam_id
-                INNER JOIN questions ON questions.id = user_answers.question_id
-                LEFT JOIN units ON units.id = questions.unit_id
-                WHERE user_exams.id = $user_exams_id
-                GROUP BY questions.unit_id , units.title
+
+       $unit_marks =  DB::select(DB::raw("SELECT units_total_marks.unit_id as id , user_answers_units_marks.marks , units_total_marks.total_marks  ,units_total_marks.unit_title  FROM (
+                                                   SELECT unit_id ,unit_title, SUM(total_table.marks) as total_marks FROM (
+                                                     SELECT  DISTINCT questions.id , questions.unit_id as unit_id , units.title as unit_title, questions.mark as marks FROM user_exams
+                                                       INNER JOIN exams ON user_exams.exam_id = exams.id
+                                                       INNER JOIN questions ON exams.content_id = questions.exam_id
+                                                        LEFT JOIN units ON units.id = questions.unit_id
+                                                         WHERE user_exams.id = $user_exams_id
+                                                         AND exams.deleted_at IS null
+                                                             ) as total_table
+                                                         GROUP BY unit_id
+                                                        ) as units_total_marks
+
+                                                INNER JOIN (SELECT units.id as unit_id
+                                                               , SUM(user_answers.mark) as marks FROM user_exams
+                                                                INNER JOIN user_answers ON user_exams.id = user_answers.user_exam_id
+                                                                INNER JOIN questions ON questions.id = user_answers.question_id
+                                                                LEFT JOIN units ON units.id = questions.unit_id
+                                                                WHERE user_exams.id = ".$user_exams_id."
+                                                                GROUP BY  questions.unit_id , units.title) as user_answers_units_marks
+                                                                ON units_total_marks.unit_id = user_answers_units_marks.unit_id
+
        "));
 
 //       dd($unit_marks);
@@ -659,7 +675,7 @@ class UserProfileController extends Controller
 
     public function logout(Request $request) {
         Auth::logout();
-        return redirect('/');
+        return redirect(route('user.login'));
     }
 
 
