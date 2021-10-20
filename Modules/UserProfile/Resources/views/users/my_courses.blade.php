@@ -163,9 +163,9 @@
                                         @endif
                                         <div class="card-body text-center p-0 py-2">
                                             <div class="progress" style="height:5px;">
-                                                <div class="progress-bar" role="progressbar" style="background: #fb4400;width: 65%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar" role="progressbar" style="background: #fb4400; width: {{$course->users[0]->pivot->progress??0}}%;" aria-valuenow="{{$course->users[0]->pivot->progress??0}}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
-                                            <small class="num m-0 mt-1" style="color:gray;">100% Complete</small>
+                                            <small class="num m-0 mt-1" style="color:gray;">{{$course->users[0]->pivot->progress??0}}%</small>
                                         </div>
                                     </div>
                                 </div>
