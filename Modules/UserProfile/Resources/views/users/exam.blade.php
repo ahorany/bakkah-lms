@@ -119,7 +119,7 @@ table.table {
                                     </div>
                                 </div>
 
-                            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                                <div class="col-12 col-sm-12 col-md-8 col-lg-8">
 
                                 <div class="card pt-3 pl-3 h-100" >
                                     <h5 class="card-title">Exam Description</h5>
@@ -132,7 +132,7 @@ table.table {
                             </div>
 
 
-                            <div class="col-12 mt-5">
+                              <div class="col-12 mt-5">
                                 <table class="table">
                                     <thead>
                                     <tr>
