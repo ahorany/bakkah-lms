@@ -1,11 +1,15 @@
 <style>
-#navbar{
-    overflow: hidden;
+.userarea-wrapper aside{
+    padding: 0 !important;
 }
+
 .userarea-wrapper aside li a.active {
     background: #707070;
     border-color: #707070;
     color: #fff;
+}
+.user-float{
+    display: none !important;
 }
 </style>
 <div class="menu-overlay"></div>
@@ -72,10 +76,6 @@
                             </li>
                         @endauth
 
-
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" href="{{route('user.logout')}}"><i style="color: #a3a3a3;" class="fas fa-sign-out-alt"></i> <span class="mx-1 logout">{{__('education.Logout')}}</span></a>--}}
-{{--                        </li>--}}
 
                     </ul>
                 </div>

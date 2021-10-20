@@ -239,6 +239,9 @@ g.highcharts-axis.highcharts-yaxis ,
     width: 100%;
     height: 83px;
 }
+.home .top a {
+    color: #000;
+}
 
 </style>
     <?php
@@ -288,13 +291,10 @@ g.highcharts-axis.highcharts-yaxis ,
                                         @endisset
                                         <div class="card-body text-center p-0">
                                             <h3 class="card-title mb-2" style="font-weight: 700;"><a style="color: #000;" href="{{CustomRoute('user.course_details',$course->id)}}">{{$course->trans_title}}</a></h3>
-                                            <div class="rate">
-                                                <div class="line"></div>
-                                                <small class="num m-0 mt-2" style="color:gray;">{{$course->pivot->progress??0}}% Complete</small>
-                                                <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" style="width: {{$course->pivot->progress??0}}%;" aria-valuenow="{{$course->pivot->progress}}" aria-valuemin="0" aria-valuemax="100">{{$course->pivot->progress}}%</div>
-                                                </div>
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" role="progressbar" style="background: #fb4400; width: {{$course->pivot->progress??0}}%;" aria-valuenow="{{$course->pivot->progress}}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
+                                            <small class="num m-0 mt-1" style="color:gray;">{{$course->pivot->progress}}%</small>
                                         </div>
                                     </div>
                                 </div>
@@ -343,9 +343,10 @@ g.highcharts-axis.highcharts-yaxis ,
                                                         <h6>Awards Level</h6>
                                                         <p>Congratulations! you are at 82.</p>
                                                         <div class="num_level position-relative">
-                                                            <span class="border"></span>
-                                                            <span></span>
-                                                            <small>82/90</small>
+                                                            <div class="progress" style="height:5px;">
+                                                              <div class="progress-bar" role="progressbar" style="background: #fb4400; width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                          </div>
+                                                          <small class="num m-0 mt-1" style="color:gray;">82/90</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -658,7 +659,6 @@ var chart = new Highcharts.Chart({
     data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
   }]
 });
-
 
     </script>
 

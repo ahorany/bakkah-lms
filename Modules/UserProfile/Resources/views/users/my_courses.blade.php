@@ -161,15 +161,11 @@
                                         @if($image)
                                           <img class="card-img-top" src="{{CustomAsset('upload/thumb200/'.$image->file)}}">
                                         @endif
-                                        <div class="card-body text-center p-0">
-                                            <div class="rate">
-                                                <div class="line"></div>
-                                                <small class="num m-0 mt-2" style="color:gray;">{{$course->users[0]->pivot->progress??0}}% Complete</small>
+                                        <div class="card-body text-center p-0 py-2">
+                                            <div class="progress" style="height:5px;">
+                                                <div class="progress-bar" role="progressbar" style="background: #fb4400;width: 65%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
-
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: {{$course->users[0]->pivot->progress??0}}%;" aria-valuenow="{{$course->users[0]->pivot->progress??0}}" aria-valuemin="0" aria-valuemax="100">{{$course->users[0]->pivot->progress??0}}%</div>
-                                            </div>
+                                            <small class="num m-0 mt-1" style="color:gray;">100% Complete</small>
                                         </div>
                                     </div>
                                 </div>
@@ -181,7 +177,7 @@
                                             <h1 style="font-weight: 700;    margin: 5px 0 10px;">{{$course->trans_title}}</h1>
                                             <div class="star_rating">
                                                 <label class="total_rate">{{round($total_rate,1)}}</label>
-                                                <div>
+                                                <div class="py-2">
                                                         <span class="star review_star1" data-num="1"><i class="fas fa-star"></i></span>
                                                         <span class="star review_star2" data-num="2"><i class="fas fa-star"></i></span>
                                                         <span class="star review_star3" data-num="3" ><i class="fas fa-star"></i></span>
