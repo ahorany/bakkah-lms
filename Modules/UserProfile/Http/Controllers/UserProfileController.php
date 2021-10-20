@@ -47,7 +47,20 @@ class UserProfileController extends Controller
     }
 
     public function attempt_details ($user_exams_id){
-//        $user_exams_id = 183;
+        $exam = UserExam::whereId($user_exams_id)
+            ->where('user_id',\auth()->id())
+            ->where('status',1)
+            ->with(['exam' => function($q){
+                return $q->select('id','content_id')->with(['content' => function($query){
+                    $query->select('id','title');
+                }]);
+            }])
+            ->first();
+
+        if ( !$exam  ) abort(404);
+
+       $exam_title =  $exam->exam->content->title;
+       $exam_id =  $exam->exam->content->id;
 
        $unit_marks =  DB::select(DB::raw("SELECT units_total_marks.unit_id as id , user_answers_units_marks.marks , units_total_marks.total_marks  ,units_total_marks.unit_title  FROM (
                                                    SELECT unit_id ,unit_title, SUM(total_table.marks) as total_marks FROM (
@@ -73,7 +86,7 @@ class UserProfileController extends Controller
        "));
 
 //       dd($unit_marks);
-        return view('userprofile::users.exam_details',compact('unit_marks'));
+        return view('userprofile::users.exam_details',compact('unit_marks','exam_title','exam_id'));
 
     }
 
@@ -112,12 +125,6 @@ class UserProfileController extends Controller
         return view('userprofile::users.exam',compact('exam'));
     }
 
-    public function exams(){
-        return view('userprofile::users.exam-front');
-    }
-    // public function file(){
-    //     return view('userprofile::users.exam-front');
-    // }
 
     public function add_answers(){
       $user_exam =  UserExam::whereId(\request()->user_exam_id)
@@ -248,7 +255,6 @@ class UserProfileController extends Controller
 
         */
     }
-
 
     public function preview_exam($exam_id){
         $page_type = 'exam';
@@ -483,9 +489,6 @@ class UserProfileController extends Controller
         return view('userprofile::users.my_courses',compact('courses'));
     }
 
-    public function exercise() {
-        return view('userprofile::users.exercise');
-    }
 
 
     public function home() {
@@ -507,14 +510,28 @@ class UserProfileController extends Controller
         $next_videos = DB::select(DB::raw("SELECT id ,title  FROM contents
             WHERE id > ".$last_video->id."
             AND post_type = 'video'
-            AND deleted_at IS NULL"));
+            AND deleted_at IS NULL LIMIT 4"));
 
 //dd($next_videos);
-        return view('userprofile::users.home',compact('courses','last_video','next_videos'));
+
+
+       $complete_courses =  DB::select(DB::raw("SELECT COUNT(id) as courses_count,
+                                                        case when (progress=100) then 1
+                                                             when (progress<100 OR progress is null) then 0
+                                                        end as status
+                                                        FROM courses_registration
+                                                        WHERE user_id = ".\auth()->id()."
+                                                        GROUP BY user_id, status
+                                                        ORDER By status
+"));
+
+
+
+
+        return view('userprofile::users.home',compact('complete_courses','courses','last_video','next_videos'));
     }
 
 
-//////////////////////////////////////
 
     public function logout(Request $request) {
         Auth::logout();
@@ -643,9 +660,39 @@ class UserProfileController extends Controller
         $user = User::with(['upload'])->findOrFail(auth()->user()->id);
         $genders = Constant::where('parent_id', 42)->get();
         $countries = Constant::where('post_type', 'countries')->get();
-//         return $user;
         return view('userprofile::users.info',compact('user', 'genders', 'countries'));
     }
+
+    public function update($id,Request $request){
+
+        $request->validate([
+            'email' => 'required|email',
+            'en_name' => 'required',
+            'ar_name' => 'required',
+            'language' => 'required',
+            'gender_id' => 'required|exists:constants,id',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'email'     => $request->email,
+            'name'      => json_encode(["en" => $request->en_name, "ar" => $request->ar_name]),
+            'headline'  => $request->headline,
+            'lang'      => $request->language,
+            'bio'       => $request->bio,
+            'mobile'    => $request->mobile,
+            'gender_id' => $request->gender_id,
+        ]);
+
+        User::UploadFile($user, ['method'=>'update']);
+
+        return redirect()->back();
+    }
+
+//////////////////////////////////////
+
+
 
     //    public function dashboard() {
 //        //$user = User::find(auth()->user()->id);
@@ -710,37 +757,6 @@ class UserProfileController extends Controller
 //    }
 
 
-
-    public function update($id,Request $request){
-
-        $request->validate([
-            'new_password' => 'nullable|min:8|confirmed',
-        ]);
-
-        $user = User::findOrFail($id);
-        $password = $user->password;
-
-        if (Hash::check($request->password, $password)) {
-            $password = Hash::make($request->new_password);
-        }
-
-
-
-        $user->update([
-            'email'     => $request->email,
-            'name'      => json_encode(["en" => $request->en_name, "ar" => $request->ar_name]),
-            'headline'  => $request->headline,
-            'lang'      => $request->language,
-            'bio'       => $request->bio,
-            'mobile'    => $request->mobile,
-            'gender_id' => $request->gender_id,
-            'password'  => $password
-        ]);
-
-        User::UploadFile($user, ['method'=>'update']);
-
-        return redirect()->back();
-    }
 
 
 

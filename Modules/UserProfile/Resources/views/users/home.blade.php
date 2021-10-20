@@ -256,7 +256,7 @@ g.highcharts-axis.highcharts-yaxis ,
                             <div class="col-md-8 col-12 col-lg-8">
                                 <div class="left py-5">
                                     <h2 class="mb-3">{{auth()->user()->trans_name}}</h2>
-                                    <p>Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement, tools and techniques of  Six Sigma. In this course, you’ll understand how </p>
+                                    <p>{{auth()->user()->bio}}</p>
                                     {{-- <a href="#" class="btn">Resume Course</a> --}}
                                 </div>
                             </div>
@@ -381,7 +381,7 @@ g.highcharts-axis.highcharts-yaxis ,
                                           <img style="width:15%;" class="img-fluid" src="{{CustomAsset('/images/icon1.png')}}" alt="Card image cap">
                                           <div class="pl-3 text-center">
                                             <p class="m-0">Course Completed</p>
-                                            <p class="m-0" style="font-weight: bold; font-size: 37px;">02</p>
+                                            <p class="m-0" style="font-weight: bold; font-size: 37px;">{{str_pad($complete_courses[1]->courses_count, 2, '0', STR_PAD_LEFT) }}</p>
                                           </div>
                                         </div>
                                       </div>
@@ -390,7 +390,7 @@ g.highcharts-axis.highcharts-yaxis ,
                                           <img style="width:15%;" class="img-fluid" src="{{CustomAsset('/images/icon2.png')}}" alt="Card image cap">
                                           <div class="pl-3 text-center">
                                             <p class="m-0">Course in Progress</p>
-                                            <p class="m-0" style="font-weight: bold; font-size: 37px;">01</p>
+                                            <p class="m-0" style="font-weight: bold; font-size: 37px;">{{str_pad($complete_courses[0]->courses_count, 2, '0', STR_PAD_LEFT)}}</p>
                                           </div>
                                         </div>
                                       </div>
@@ -448,11 +448,11 @@ g.highcharts-axis.highcharts-yaxis ,
                                                    </div>
                                             <div class="col-md-9 col-9 col-lg-9 text-left">
                                               <label class="m-0 top"><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a></label>
-                                              <label class="m-0 bottom">Assess your Knowledge - Pre-Learning</label>
+{{--                                              <label class="m-0 bottom">Assess your Knowledge - Pre-Learning</label>--}}
                                             </div>
-                                            <div class="col-md-2 col-2 col-lg-2 text-right">
-                                              <label class="py-3 m-0">6:24</label>
-                                            </div>
+{{--                                            <div class="col-md-2 col-2 col-lg-2 text-right">--}}
+{{--                                              <label class="py-3 m-0">6:24</label>--}}
+{{--                                            </div>--}}
                                           </div>
                                           @endforeach
 

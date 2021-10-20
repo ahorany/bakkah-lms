@@ -51,10 +51,16 @@
                                             <div class="form-group">
                                                 <label for="en_name">{{__('education.english_name')}}</label>
                                                 <input name="en_name" value="{{json_decode(auth()->user()->name)->en}}" type="text" id="en_name" class="form-control">
+                                                @error('en_name')
+                                                <small class="text-danger">{{$message}}</small>
+                                                @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label for="ar_name">{{__('education.arabic_name')}}</label>
                                                 <input name="ar_name" value="{{json_decode(auth()->user()->name)->ar}}" type="text" id="ar_name" class="form-control">
+                                                @error('ar_name')
+                                                <small class="text-danger">{{$message}}</small>
+                                                @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label for="headline">{{__('education.Headline')}}</label>
@@ -72,10 +78,10 @@
                                                 <label for="language">{{__('education.Language')}}</label>
                                                 <select name="language" value="{{auth()->user()->language}}" class="form-control @error('language') is-invalid @enderror ">
                                                     <option value="-1">{{__('education.choose')}}</option>
-                                                    <option value="en" {{(old('language', auth()->user()->language)=='en')?'selected="selected"':''}}>English</option>
-                                                    <option value="ar" {{(old('language', auth()->user()->language)=='ar')?'selected="selected"':''}}>Arabic</option>
+                                                    <option value="en" {{(old('language', auth()->user()->lang)=='en')?'selected="selected"':''}}>English</option>
+                                                    <option value="ar" {{(old('language', auth()->user()->lang)=='ar')?'selected="selected"':''}}>Arabic</option>
                                                 </select>
-                                                @error('gender_id')
+                                                @error('language')
                                                     <small class="text-danger">{{$message}}</small>
                                                 @enderror
                                             </div>

@@ -76,9 +76,12 @@ label.navigation {
             <div class="col-md-9 col-lg-10">
                 <div class="main-user-content m-4">
                     <div class="card p-5 user-info">
-                        <h4 class="mb-4"><i class="fas fa-graduation-cap"></i> {{ __('education.Exam') }}</h4>
-                        <div class="row">
+                        <div class="clearfix">
+                            <h4 class="mb-4 float-left"><i class="fas fa-graduation-cap"></i> {{$exam_title}}</h4>
+                            <a href="{{CustomRoute('user.exam',$exam_id)}}" class="mb-4 btn btn-primary float-right"><i class="fa fa-arrow-left"></i> back</a>
+                        </div>
 
+                        <div class="row">
                             <div class="col-12 mt-5">
                                 <table class="table">
                                     <caption>Exam Details</caption>
@@ -89,12 +92,20 @@ label.navigation {
                                         <th scope="col">Mark</th>
                                     </tr>
                                     </thead>
+
                                     <tbody>
                                     @foreach($unit_marks as $data)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$data->unit_title?? 'Other'}}</td>
-                                            <td >{{$data->marks .' / ' . $data->total_marks}}</td>
+                                            <td>
+                                                {{$data->marks .' / ' . $data->total_marks}}
+                                                <?php  $progress = ($data->marks / $data->total_marks) * 100; $progress = round($progress,2)   ?>
+                                                <div class="progress mt-2 w-50">
+                                                    <div class="progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress??0}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>
+                                                </div>
+                                            </td>
+
                                         </tr>
                                     @endforeach
                                     </tbody>
