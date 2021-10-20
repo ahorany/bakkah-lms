@@ -126,8 +126,7 @@
                     </div>
 				</div>
 
-                <template v-if="model_type == 'exam' ">
-
+                <template v-if="model_type == 'exam'">
 
                     <div  class="modal-diff-content">
                         <label>Duration (minutes)</label>
