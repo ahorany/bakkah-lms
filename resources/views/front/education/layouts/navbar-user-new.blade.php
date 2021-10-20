@@ -71,7 +71,7 @@
                                     <a style="background: #fb4400;" class="m-0 nav-link">
                                         <span class="d-block py-2" style="color: #fff;">{{__('education.Welcome,')}} {{ auth()->user()->trans_name }}</span>
                                     </a>
-                                    <a class="nav-link dropdown-item {{\Request::url()==route('user.home')?'active':''}}" href="{{route('user.home')}}"><i class="far fa-user"></i> <span class="mx-1">{{__('education.home')}}</span></a>
+                                    {{-- <a class="nav-link dropdown-item {{\Request::url()==route('user.home')?'active':''}}" href="{{route('user.home')}}"><i class="far fa-user"></i> <span class="mx-1">{{__('education.home')}}</span></a> --}}
                                     <a class="nav-link dropdown-item {{\Request::url()==route('user.info')?'active':''}}" href="{{route('user.info')}}"><i class="far fa-user"></i> <span class="mx-1">{{__('education.info')}}</span></a>
                                     <a class="nav-link dropdown-item" href="{{route('user.change_password')}}"><i class="fas fa-lock"></i> <span class="mx-1">{{__('education.Change Password')}}</span></a>
                                     <a class="nav-link dropdown-item" href="{{route('user.logout')}}"><i style="color: #a3a3a3;" class="fas fa-sign-out-alt"></i> <span class="mx-1">{{__('education.Logout')}}</span></a>
