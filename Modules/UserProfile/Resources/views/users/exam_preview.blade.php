@@ -94,7 +94,7 @@
                             <div  class="col-md-9 col-lg-9 col-12 questions">
                                     <template v-for="(question, index) in paginated" >
                                         {{-- <div v-text="question.mark + 'marks'"></div> --}}
-                                      <div :ref="'question'+question.id" :id="'question'+question.id" :key="index" class="card position-relative p-5 mb-4 exam" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
+                                      <div :ref="'question'+question.id" :id="'question'+question.id" :key="index" class="card position-relative p-5 mb-4 exam " style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
                                         <div class="position-absolute number_question">
                                             <span class="d-block" v-text="'Q' + (index+indexStart+1)" ></span>
                                             <span class="d-block" v-text="question.mark + ' marks'" ></span>

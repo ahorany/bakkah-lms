@@ -3,6 +3,9 @@
     padding: 0 !important;
 }
 
+/*#navbar{*/
+/*    overflow: hidden;*/
+/*}*/
 .userarea-wrapper aside li a.active {
     background: #707070;
     border-color: #707070;
@@ -18,7 +21,7 @@
         <div class="row m-0" style="align-items: center">
             <div class="col-md-3 col-lg-2 p-0">
                 <span itemprop="headline" class="d-block">
-                    @auth
+                     @auth
                         <a class="navbar-brand d-block m-0" href="{{route('user.home')}}" title="{{__('education.header_title')}}">
                             <img src="{{CustomAsset('images/logo1.png')}}" alt="{{__('education.header_title')}}">
                         </a>
