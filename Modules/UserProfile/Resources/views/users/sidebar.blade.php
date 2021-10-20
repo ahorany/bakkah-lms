@@ -9,7 +9,7 @@
             @endforeach
 
 
-             <li><a href="{{ route('user.logout') }}"><i class="fas fa-sign-out-alt"></i> <span>{{__('education.Logout')}} </span></a></li>
+             {{-- <li><a href="{{ route('user.logout') }}"><i class="fas fa-sign-out-alt"></i> <span>{{__('education.Logout')}} </span></a></li> --}}
         </ul>
     </aside>
     <div class="user-float"><i class="far fa-user"></i></div>

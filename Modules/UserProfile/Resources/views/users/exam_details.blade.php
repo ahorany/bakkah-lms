@@ -83,7 +83,7 @@ label.navigation {
 
                         <div class="row">
                             <div class="col-12 mt-5">
-                                <table class="table text-center">
+                                <table class="table">
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>

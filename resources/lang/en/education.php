@@ -28,5 +28,6 @@ return [
     'New user?' => 'New user?',
     'Exam' => 'Exam',
     'Password' => 'Password',
+    'info' => 'Info',
     'Email or Username' => 'Email or Username',
 ];
