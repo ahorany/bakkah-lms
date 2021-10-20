@@ -41,9 +41,8 @@
                                     <?php
                                         $url = '';
                                         if(auth()->user()->upload) {
-                                            // $url = auth()->user()->upload->file;
-                                            // $url = CustomAsset('upload/full/'. $url);
-                                            $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+                                             $url = auth()->user()->upload->file;
+                                             $url = CustomAsset('upload/full/'. $url);
                                         }else {
                                             $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
                                         }

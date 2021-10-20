@@ -64,7 +64,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group h-100">
                                                 <label for="bio">{{__('education.Bio')}}</label>
-                                                <input value="{{auth()->user()->bio}}" name="bio" type="text" id="bio" class="form-control">
+                                              <textarea rows="4"  name="bio"  id="bio" class="form-control">{{auth()->user()->bio}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -89,7 +89,7 @@
 
                                         </div>
 
-                                        <div class="row border-dash-top border-dash-bottom my-4 py-4">
+                                        <div class="row border-dash-top  my-4 py-4">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>{{__('education.Gender')}}</label>
@@ -111,133 +111,9 @@
                                                 <input name="mobile" value="{{auth()->user()->mobile}}" type="mobile" id="mobile" class="form-control">
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="company">{{__('education.Company')}}</label>
-                                                <input name="company" value="{{$user->company}}" type="text" id="company" class="form-control">
-                                            </div>
-                                        </div> --}}
-                                        {{-- <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="job_title">{{__('education.Job Title')}}</label>
-                                                <input name="job_title" value="{{$user->job_title}}" type="text" id="job_title" class="form-control">
-                                            </div>
-                                        </div> --}}
-
-                                        {{-- <div class="col-lg-6 col-md-6">
-                                            <div class="form-group">
-                                                <label>{{__('education.Country')}}</label><br>
-                                                <select name="country_id" class="form-control @error('country_id') is-invalid @enderror">
-                                                    <option value="-1">{{__('education.choose')}}</option>
-                                                    @foreach($countries as $country)
-                                                        <option value="{{$country->id}}" {{(old('country_id', $user->country_id)==$country->id)?'selected="selected"':''}}>{{$country->trans_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('country_id')
-                                                    <small class="text-danger">{{$message}}</small>
-                                                @enderror
-                                            </div>
-                                        </div> --}}
-
                                     </div>
-                                            <div class="row mb-3" id="newRow">
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group">
-                                                                <label for="experience">{{__('education.Work Experience')}}</label>
-                                                                <span id="addRow" style="cursor: pointer;" class="plus-input">+</span></label>
-                                                            </div>
-                                                        </div>
-                                                        @foreach ($user->experiences as $experience)
-                                                        <div class="col-lg-6 col-md-6">
-                                                            <div class="form-group">
-                                                                <input name="experience[]" value="{{old('experience', $experience->name??null)}}" type="text" class="form-control mb-3">
-                                                            </div>
-                                                        </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
 
-                                            </div>
-
-                                    <div class="row border-dash-top mt-4 pt-4">
-{{--
-                                        <div class="col-12">
-                                            <h5 class="mb-4">{{ __('education.Change Password') }}</h5>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="password">{{__('education.Password')}}</label>
-                                                <input type="password" name="password" id="password" class="form-control" autocomplete="new-password">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="new-password">{{__('education.New Password')}}</label>
-                                                <input type="password" name="new_password" id="new-password" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="retype-password">{{__('education.Re-type New Password')}}</label>
-                                                <input type="password" name="new_password_confirmation" id="retype-password" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <hr>
-                                        </div> --}}
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="retype-password">{{__('education.Twitter')}}</label>
-                                                <div class="input-group twitter">
-                                                    <div class="input-group-prepend">
-                                                    <span style="background:#02bcdf; color:#fff" class="input-group-text"><i class="fab fa-twitter"></i></span>
-                                                    </div>
-                                                    <input name="socials[twitter]" type="text" value="{{old('socials.twitter', $user->socials->where('type', 'twitter')->first()->link??null)}}" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="retype-password">{{__('education.Linkedin')}}</label>
-                                                <div class="input-group twitter">
-                                                    <div class="input-group-prepend">
-                                                    <span style="background:#0181cc; color:#fff" class="input-group-text"><i class="fab fa-linkedin-in"></i></span>
-                                                    </div>
-                                                    <input name="socials[linkedin]" value="{{old('socials.linkedin', $user->socials->where('type', 'linkedin')->first()->link??null)}}" type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="retype-password">{{__('education.Facebook')}}</label>
-                                                <div class="input-group twitter">
-                                                    <div class="input-group-prepend">
-                                                    <span style="background:#0181cc; color:#fff" class="input-group-text"><i class="fab fa-facebook-f"></i></span>
-                                                    </div>
-                                                    <input name="socials[facebook]" value="{{old('socials.facebook', $user->socials->where('type', 'facebook')->first()->link??null)}}" type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="retype-password">{{__('education.Youtube')}}</label>
-                                                <div class="input-group twitter">
-                                                    <div class="input-group-prepend">
-                                                    <span style="background:#d60000; color:#fff" class="input-group-text"><i class="fab fa-youtube"></i></span>
-                                                    </div>
-                                                    <input name="socials[youtube]" value="{{old('socials.youtube', $user->socials->where('type', 'youtube')->first()->link??null)}}" type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="row  mt-4 pt-4">
 
                                         <div class="col-12 text-center mt-4">
                                             <button class="btn btn-primary">{{ __('education.Save Changes') }}</button>

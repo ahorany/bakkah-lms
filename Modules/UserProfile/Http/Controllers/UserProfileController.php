@@ -487,30 +487,12 @@ class UserProfileController extends Controller
         return view('userprofile::users.exercise');
     }
 
-//////////////////////////////////////
-
-
-    public function dashboard() {
-        //$user = User::find(auth()->user()->id);
-        $user = auth()->user();
-        //$latestCart = Cart
-//        dd($user->upload->file??null);
-        return view('userprofile::users.index',compact('user'));
-    }
-
-    public function info() {
-        $user = User::with(['upload', 'socials','experiences'])->findOrFail(auth()->user()->id);
-        $genders = Constant::where('parent_id', 42)->get();
-        $countries = Constant::where('post_type', 'countries')->get();
-        // return $user;
-        return view('userprofile::users.info',compact('user', 'genders', 'countries'));
-    }
 
     public function home() {
         $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
             return $q->where('post_type','image');
         }])->first();
-       $video = DB::select(DB::raw("SELECT user_contents.id , uploads.file FROM user_contents
+        $video = DB::select(DB::raw("SELECT user_contents.id , uploads.file FROM user_contents
                 INNER JOIN contents ON  contents.id = user_contents.content_id
                 INNER JOIN uploads  ON  contents.id = uploads.uploadable_id
             WHERE user_contents.user_id = ".\auth()->id()."
@@ -522,7 +504,7 @@ class UserProfileController extends Controller
 
         $last_video = $video[0];
 
-       $next_videos = DB::select(DB::raw("SELECT id ,title  FROM contents
+        $next_videos = DB::select(DB::raw("SELECT id ,title  FROM contents
             WHERE id > ".$last_video->id."
             AND post_type = 'video'
             AND deleted_at IS NULL"));
@@ -531,147 +513,8 @@ class UserProfileController extends Controller
         return view('userprofile::users.home',compact('courses','last_video','next_videos'));
     }
 
-    public function referral() {
-        return view('userprofile::users.referral');
-    }
 
-    public function complaintView($type) {
-        $user = Auth::user();
-        $courses = [];
-        // return $type;
-        if($user->carts->count() > 0) {
-            foreach ($user->carts as $cart){
-                $courses = Cart::where('course_id','!=',$cart->course->id)->with('course.uploads','session.trainingOption')->get();
-            }
-        }
-        if($type == 'my_complaints'){
-            $questions = ProfileQuestion::where('post_type','learn_complaints')->with('profile_answers.profile_question_users')->get();
-        }else{
-            $questions = ProfileQuestion::where('post_type','learn_refunds')->with('profile_answers.profile_question_users')->get();
-        }
-
-        return view('userprofile::users.complaint',compact('questions','user','type'));
-    }
-
-    public function complaintStore(ProfileRequest $request){
-        $post_type = '';
-        ($request->post_type == 'my_complaints') ? $post_type = 'learn_complaints' : $post_type = 'learn_refunds' ;
-        $profile = ProfileQuestionUser::updateOrCreate([
-            'user_id' => auth()->user()->id,
-            'course_id' => $request->courses,
-            'profile_answer_id' => $request->answer,
-            'profile_answer_text' => $request->reason,
-            'profile_question_id' => $request->question_id,
-            'post_type' => $post_type,
-        ]);
-
-        if($profile) {
-            session()->flash('success', __('education.Complaint has been sent successfully.'));
-        }else {
-            session()->flash('error', __('education.Failed to send complaint. Please send again.'));
-        }
-        return redirect()->route('user.my_complaints',$request->post_type);
-    }
-
-    public function myComplaints($type){
-        $user = Auth::user();
-        if($type == 'my_complaints'){
-            $complaints = ProfileQuestionUser::where('post_type','learn_complaints')->with('products')->get();
-        }else{
-            $complaints = ProfileQuestionUser::where('post_type','learn_refunds')->with('products')->get();
-        }
-        return view('userprofile::users.my_complaints',compact('complaints','user','type'));
-    }
-
-    public function change_password() {
-        return view('userprofile::users.change_password');
-    }
-
-    public function save_password() {
-
-        request()->validate([
-            'old_password' => 'required|password|min:7|max:16',
-            'new_password' => 'required|min:7|max:16',
-            'password_confirmation' => 'required|min:7|max:16|same:new_password',
-        ]);
-        $user = User::find(auth()->user()->id);
-        $password = $user->password;
-
-        if(Hash::check(request()->old_password, $password) &&(request()->new_password == request()->password_confirmation)){
-            $password = Hash::make(request()->new_password);
-        }
-
-        $user->update([
-            'password' => $password,
-        ]);
-        return view('userprofile::users.home');
-    }
-
-    public function update($id,Request $request){
-
-        $request->validate([
-            'new_password' => 'nullable|min:8|confirmed',
-            'socials.*' => 'nullable',
-            'experience' => 'nullable'
-        ]);
-
-        $user = User::findOrFail($id);
-        $password = $user->password;
-
-        if (Hash::check($request->password, $password)) {
-            $password = Hash::make($request->new_password);
-        }
-
-        // $social->updateOrCreate([
-        //     'link' => $request->socials->twitter,
-        //     'user_id' => auth()->user()->id,
-        // ]);
-            // dd($request->experience);
-        // $request->experience =  array_filter($request->experience, 'strlen');
-
-        $user->update([
-            'email'     => $request->email,
-            'name'      => json_encode(["en" => $request->en_name, "ar" => $request->ar_name]),
-            'headline'  => $request->headline,
-            'lang'      => $request->language,
-            'bio'       => $request->bio,
-            'mobile'    => $request->mobile,
-            'gender_id' => $request->gender_id,
-            'password'  => $password
-        ]);
-
-        User::UploadFile($user, ['method'=>'update']);
-
-        foreach($request->socials as $type => $link) {
-            if($link) {
-                Social::updateOrCreate([
-                    'user_id'=>$id,
-                    'type' => $type
-                ], [
-                    'user_id' => $id,
-                    'type' => $type,
-                    'link' => $link
-                ]);
-            }
-        }
-
-        if($request->experience != '')
-        {
-            foreach($request->experience as $experience) {
-                Experience::updateOrCreate([
-                    'user_id'=>$id,
-                    'name' => $experience
-                ], [
-                    'user_id' => $id,
-                    'name' => $experience,
-                ]);
-        }
-        }
-
-
-        return redirect()->back();
-    }
-
+//////////////////////////////////////
 
     public function logout(Request $request) {
         Auth::logout();
@@ -764,12 +607,142 @@ class UserProfileController extends Controller
         return redirect()->route('user.home');
     }
 
-    // public function file() {
-    //     return view('userprofile::users.file');
-    // }
 
-    // public function resetSubmit() {
-    //     dd(request()->all());
-    // }
+    public function change_password() {
+        return view('userprofile::users.change_password');
+    }
+
+    public function save_password() {
+
+        request()->validate([
+            'old_password' => 'required|min:7|max:16',
+            'new_password' => 'required|min:7|max:16',
+            'password_confirmation' => 'required|min:7|max:16|same:new_password',
+        ]);
+
+
+        $user = User::find(auth()->user()->id);
+        $password = $user->password;
+
+        if(Hash::check(request()->old_password, $password) &&(request()->new_password == request()->password_confirmation)){
+            $password = Hash::make(request()->new_password);
+        }
+
+        $user->update([
+            'password' => $password,
+        ]);
+
+        return redirect(route('user.home'));
+//        return view('userprofile::users.home');
+    }
+
+
+
+
+    public function info() {
+        $user = User::with(['upload'])->findOrFail(auth()->user()->id);
+        $genders = Constant::where('parent_id', 42)->get();
+        $countries = Constant::where('post_type', 'countries')->get();
+//         return $user;
+        return view('userprofile::users.info',compact('user', 'genders', 'countries'));
+    }
+
+    //    public function dashboard() {
+//        //$user = User::find(auth()->user()->id);
+//        $user = auth()->user();
+//        //$latestCart = Cart
+////        dd($user->upload->file??null);
+//        return view('userprofile::users.index',compact('user'));
+//    }
+
+
+
+//    public function referral() {
+//        return view('userprofile::users.referral');
+//    }
+//
+//    public function complaintView($type) {
+//        $user = Auth::user();
+//        $courses = [];
+//        // return $type;
+//        if($user->carts->count() > 0) {
+//            foreach ($user->carts as $cart){
+//                $courses = Cart::where('course_id','!=',$cart->course->id)->with('course.uploads','session.trainingOption')->get();
+//            }
+//        }
+//        if($type == 'my_complaints'){
+//            $questions = ProfileQuestion::where('post_type','learn_complaints')->with('profile_answers.profile_question_users')->get();
+//        }else{
+//            $questions = ProfileQuestion::where('post_type','learn_refunds')->with('profile_answers.profile_question_users')->get();
+//        }
+//
+//        return view('userprofile::users.complaint',compact('questions','user','type'));
+//    }
+
+//    public function complaintStore(ProfileRequest $request){
+//        $post_type = '';
+//        ($request->post_type == 'my_complaints') ? $post_type = 'learn_complaints' : $post_type = 'learn_refunds' ;
+//        $profile = ProfileQuestionUser::updateOrCreate([
+//            'user_id' => auth()->user()->id,
+//            'course_id' => $request->courses,
+//            'profile_answer_id' => $request->answer,
+//            'profile_answer_text' => $request->reason,
+//            'profile_question_id' => $request->question_id,
+//            'post_type' => $post_type,
+//        ]);
+//
+//        if($profile) {
+//            session()->flash('success', __('education.Complaint has been sent successfully.'));
+//        }else {
+//            session()->flash('error', __('education.Failed to send complaint. Please send again.'));
+//        }
+//        return redirect()->route('user.my_complaints',$request->post_type);
+//    }
+
+//    public function myComplaints($type){
+//        $user = Auth::user();
+//        if($type == 'my_complaints'){
+//            $complaints = ProfileQuestionUser::where('post_type','learn_complaints')->with('products')->get();
+//        }else{
+//            $complaints = ProfileQuestionUser::where('post_type','learn_refunds')->with('products')->get();
+//        }
+//        return view('userprofile::users.my_complaints',compact('complaints','user','type'));
+//    }
+
+
+
+    public function update($id,Request $request){
+
+        $request->validate([
+            'new_password' => 'nullable|min:8|confirmed',
+        ]);
+
+        $user = User::findOrFail($id);
+        $password = $user->password;
+
+        if (Hash::check($request->password, $password)) {
+            $password = Hash::make($request->new_password);
+        }
+
+
+
+        $user->update([
+            'email'     => $request->email,
+            'name'      => json_encode(["en" => $request->en_name, "ar" => $request->ar_name]),
+            'headline'  => $request->headline,
+            'lang'      => $request->language,
+            'bio'       => $request->bio,
+            'mobile'    => $request->mobile,
+            'gender_id' => $request->gender_id,
+            'password'  => $password
+        ]);
+
+        User::UploadFile($user, ['method'=>'update']);
+
+        return redirect()->back();
+    }
+
+
+
 
 }
