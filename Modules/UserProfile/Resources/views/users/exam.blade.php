@@ -83,7 +83,7 @@ table.table {
                         <div class="row">
                             <?php $users_exams_count = count($exam->exam->users_exams) ?>
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-3">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <h5 class="card-title">Exam title : {{$exam->title}}</h5>
