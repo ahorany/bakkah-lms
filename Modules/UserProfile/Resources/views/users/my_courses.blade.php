@@ -149,7 +149,7 @@
 ?>
 
 
-    <div class="userarea-wrapper">
+    <div class="userarea-wrapper course">
         <div class="row no-gutters">
             @include('userprofile::users.sidebar')
             <div class="col-md-9 col-lg-10">
@@ -194,7 +194,7 @@
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Reviews
                                                 </button>
-                                                <div class="dropdown-menu flex" aria-labelledby="dropdownMenuButton">
+                                                <div class="dropdown-menu flex" style="width: max-content" aria-labelledby="dropdownMenuButton">
                                                     <div class="p-2">
                                                             <span class="star_review star1" data-num="1"><i class="fas fa-star"></i></span>
                                                             <span class="star_review star2" data-num="2"><i class="fas fa-star"></i></span>
@@ -235,8 +235,8 @@
                                     </div>
                                 @endif
                                 @if ($course->contents)
-                                <div class="col-12 col-md-12 col-lg-12 mb-3 p-3">
-                                    <h2 class="title ">Content</h2>
+                                <div class="col-12 col-md-12 col-lg-12 m-0 p-0 px-3">
+                                    <h2 class="title m-0">Content</h2>
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 mb-3 p-3 col-xl-7">
@@ -382,7 +382,7 @@
                     num = (parseInt(num) / 10) * 100;
                     element = element.next()
                     element.addClass('part-star');
-                    element.css('background',`linear-gradient(to left, transparent ${100 - num}%, #e8b30f ${num}%)`);
+                    element.css('background',`linear-gradient(to left, #303d47 ${100 - num}%, #e8b30f ${num}%)`);
             }
         }
         $( document ).ready(function() {

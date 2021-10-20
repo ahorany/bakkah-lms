@@ -69,8 +69,11 @@ label.navigation {
 .done_question{
     background: #efefef !important;
 }
+table.table {
+    text-align: center;
+}
 </style>
-    <div class="userarea-wrapper">
+    <div class="userarea-wrapper exam">
         <div class="row no-gutters">
             @include('userprofile::users.sidebar')
             <div class="col-md-9 col-lg-10">
@@ -80,8 +83,8 @@ label.navigation {
                         <div class="row">
                             <?php $users_exams_count = count($exam->exam->users_exams) ?>
 
-                                <div class="col-12 col-md-4">
-                                    <div class="card">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                    <div class="card h-100">
                                         <div class="card-body">
                                             <h5 class="card-title">Exam title : {{$exam->title}}</h5>
                                             <p class="card-title">Start date : {{$exam->exam->start_date}}</p>
@@ -116,9 +119,9 @@ label.navigation {
                                     </div>
                                 </div>
 
-                            <div class="col-12 col-md-8">
+                            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
 
-                                <div class="card pt-3 pl-3" >
+                                <div class="card pt-3 pl-3 h-100" >
                                     <h5 class="card-title">Exam Description</h5>
 
                                     <div class="card-body">
@@ -131,7 +134,6 @@ label.navigation {
 
                             <div class="col-12 mt-5">
                                 <table class="table">
-                                    <caption>List of Attempts</caption>
                                     <thead>
                                     <tr>
                                         <th scope="col"># Attempt</th>
@@ -156,22 +158,21 @@ label.navigation {
                                             $date2 = new DateTime($attempt->end_attempt);
                                             $interval = $date1->diff($date2);
                                             $diff = '';
-//
 
                                             $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
                                             ?>
-                                            <td>@if($attempt->status == 1)<a href="{{CustomRoute('user.review.exam',$attempt->id)}}">Review</a>@else ---- @endif</td>
-                                            <td>@if($attempt->status == 1)<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}">View Result Details</a>@else ---- @endif</td>
+                                            <td>@if($attempt->status == 1)<a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge badge-info p-2">Review</a>@else ---- @endif</td>
+                                            <td>@if($attempt->status == 1)<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge badge-info p-2">View Result Details</a>@else ---- @endif</td>
                                             <td>{{$diff??'0 seconds'}}</td>
-                                            <td class="text-bold {{$attempt->status == 1 ? 'text-success' : 'text-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</td>
+                                            <td class="text-bold">
+                                                <span class="{{$attempt->status == 1 ? 'badge badge-success' : 'badge badge-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</span>
+                                            </td>
                                             <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
-
-
                 </div>
             </div>
         </div>

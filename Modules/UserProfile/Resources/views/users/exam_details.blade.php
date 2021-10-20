@@ -80,8 +80,7 @@ label.navigation {
                         <div class="row">
 
                             <div class="col-12 mt-5">
-                                <table class="table">
-                                    <caption>Exam Details</caption>
+                                <table class="table text-center">
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>

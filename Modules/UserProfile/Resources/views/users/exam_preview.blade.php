@@ -16,9 +16,9 @@
             background: #fb4400;
             border-bottom-left-radius: 15px;
             color: #fff;
-            font-size: 30px;
+            /* font-size: 30px; */
             font-weight: 700;
-            width: 100px;
+            width: 85px;
             height: 100px;
             padding: 30px 0;
         }
@@ -77,8 +77,12 @@
             color:#fff;
             background: #da4f49 !important;
         }
+        .exam-preview .col-md-3.col-lg-2.col-12.px-0 {
+            position: static!important;
+            margin: 60px 0 30px;
+        }
     </style>
-    <div class="userarea-wrapper">
+    <div class="userarea-wrapper exam-preview">
         <div class="row no-gutters">
             @include('userprofile::users.sidebar')
             <div class="col-md-9 col-lg-10" id="exam">
@@ -87,11 +91,14 @@
                         <small>Dashboard / Exams / {{$exam->title}}</small>
                         <h1 style="font-weight: 700; margin: 5px 0 10px;">{{$exam->title}}</h1>
                         <div class="row">
-                            <div  class="col-md-9 col-lg-10 col-12 questions">
+                            <div  class="col-md-9 col-lg-9 col-12 questions">
                                     <template v-for="(question, index) in paginated" >
-                                        <div v-text="question.mark + 'marks'"></div>
+                                        {{-- <div v-text="question.mark + 'marks'"></div> --}}
                                       <div :ref="'question'+question.id" :id="'question'+question.id" :key="index" class="card position-relative p-5 mb-4 exam" style="width: 100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;">
-                                        <div class="position-absolute number_question" v-text="'Q' + (index+indexStart+1)"></div>
+                                        <div class="position-absolute number_question">
+                                            <span class="d-block" v-text="'Q' + (index+indexStart+1)" ></span>
+                                            <span class="d-block" v-text="question.mark + ' marks'" ></span>
+                                        </div>
                                         <p class="question" v-text="question.title"></p>
                                         <label>Select one:</label>
 
@@ -147,24 +154,17 @@
 
 
                                     <div class="row m-0 my-2">
-                                            <div class="col-md-4 col-4 col-lg-4 p-0">
+                                            <div class="col-md-6 col-6 col-lg-6 p-0">
                                                 <template v-if="save_status && page_type == 'exam' ">
                                                    <input type="submit" @click.prevent="save()"  value="Submit">
                                                 </template>
                                             </div>
 
-                                        <div class="col-md-4 col-4 col-lg-4 text-center p-0 py-2">
-                                            <template v-if="page_type == 'exam' && !without_timer">
-                                                <div  class="time">
-                                                    <span>
-                                                        <i class="far fa-clock"></i>
-                                                        <span id="demo"></span>
-                                                    </span>
-                                                </div>
-                                            </template>
+                                        {{-- <div class="col-md-4 col-4 col-lg-4 text-center p-0 py-2">
 
-                                        </div>
-                                        <div class="col-md-4 col-4 col-lg-4 text-right p-0 py-1">
+
+                                        </div> --}}
+                                        <div class="col-md-6 col-6 col-lg-6 text-right p-0 py-1">
                                             <div class="arrow">
                                                 <template v-if="prev_status">
                                                   <i @click.prevent="prev()"  class="fas fa-angle-left"></i>
@@ -181,11 +181,22 @@
 
                             </div>
 
-                            <div class="col-md-3 col-lg-2 col-12 px-0">
+                            <div class="col-md-3 col-lg-3 col-12 px-0">
                                 <div class="card py-4 navigation" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #d6d6d6; overflow: hidden;"  >
                                     <div class="row m-0">
+
                                         <div  class="col-md-12 col-lg-12 col-12 mb-3">
                                             <h5 class="title">Quiz Navigation</h5>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-12 mb-3 text-center p-0">
+                                            <template v-if="page_type == 'exam' && !without_timer">
+                                                <div style="background: #ffe13e; background: #00bcb3; color: #fff;" class="time">
+                                                    <span>
+                                                        <i class="far fa-clock"></i>
+                                                        <span id="demo"></span>
+                                                    </span>
+                                                </div>
+                                            </template>
                                         </div>
                                         <template v-if="page_type == 'exam' "  v-for="(question, index) in exam.questions">
                                             <div :key="question.id"  class="col-md-4 col-lg-4 col-4 text-center px-1">

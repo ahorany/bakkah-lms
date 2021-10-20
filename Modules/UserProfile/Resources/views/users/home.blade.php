@@ -235,6 +235,10 @@ g.highcharts-axis.highcharts-yaxis ,
 #divCal tr {
     height: 40px !important;
 }
+.navbar-brand img {
+    width: 100%;
+    height: 83px;
+}
 
 </style>
     <?php
@@ -372,7 +376,7 @@ g.highcharts-axis.highcharts-yaxis ,
                               </div>
                           </div>
 
-                          <div class="col-md-6 col-12 col-lg-6 mb-2" style="display: flex; align-items: center;">
+                          <div class="col-md-6 col-12 col-lg-6 mb-2" style="display: flex;">
                               <div class="px-4 user-badge">
                                   <div class="row">
 
