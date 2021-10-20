@@ -27,9 +27,9 @@ input.form-control::placeholder {
 }
 
 </style>
-<div style="background-image:url('{{CustomAsset('images/background.png')}}'); background-repeat: no-repeat; background-size: cover; padding: 150px 0;">
+<div class="login" style="background-image:url('{{CustomAsset('images/background.png')}}'); background-repeat: no-repeat; background-size: cover; padding: 4.5% 0;">
     <div class="row m-0 justify-content-center">
-        <div class="col-md-7 form-login">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 form-login">
             <div class="pb-4" style="background-image:url('{{CustomAsset('images/card.png')}}');background-repeat: no-repeat; background-size: cover; background-position:right;">
             <form action="{{route('user.loginSubmit')}}" method="POST" style="width:50%; padding:20px 65px;">
                 @csrf

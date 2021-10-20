@@ -1,4 +1,8 @@
 @media (min-width: 1200px){
+
+    .home .level.d-flex img {
+        width: 27%;
+    }
     .my-courses {
         border-radius: 0 !important;
     }
@@ -7,7 +11,7 @@
     }
     .navbar-brand img {
         width: 100%;
-        height: 76px !important;
+        height: 83px !important;
         margin: 0;
     }
     .navbar .container-fluid.pl-0 {
@@ -64,9 +68,7 @@
     .exams .time img{
         width: 6%;
     }
-    .rate_course{
-        padding: 0 !important;
-    }
+
     .rate_course h1{
         font-size: 20px !important;
     }
@@ -86,15 +88,22 @@
     }
 }
 @media (min-width: 991px) and (max-width: 1200px){
+
+    .level.d-flex .p-4.pr-0 {
+        padding: 0 !important;
+    }
+    .level.d-flex img.img-fluid {
+        width: 70px !important;
+    }
+    /* .home .row.m-0 .col-md-6.col-12.col-lg-6.mb-2{
+        align-items: unset !important;
+    } */
+    /***************************/
     .home .card.my-badge.px-5.pt-5.pb-0.my-courses {
         padding: 25px !important;
     }
     .col-12.col-md-4.col-lg-3.my-2.p-4 {
         padding: 5px !important;
-    }
-    div.navigation{
-        padding: 0 !important;
-        height: 60px !important;
     }
     .my-courses {
         border-radius: 0 !important;
@@ -158,9 +167,7 @@
     .exams .time img{
         width: 6%;
     }
-    .rate_course{
-        padding: 0 !important;
-    }
+
     .rate_course h1{
         font-size: 20px !important;
     }
@@ -180,6 +187,13 @@
     }
 }
 @media (min-width: 767px) and (max-width: 991px){
+    .level.d-flex .p-4.pr-0 {
+        padding: 0 !important;
+    }
+    .level.d-flex img.img-fluid {
+        width: 70px !important;
+    }
+    /***************************/
     .statistics.d-flex {
         display: block !important;
         text-align: center;
@@ -198,10 +212,10 @@
     .col-12.col-md-4.col-lg-3.my-2.p-4 {
         padding: 5px !important;
     }
-    div.navigation{
+    /* div.navigation{
         padding: 0 !important;
         height: 60px !important;
-    }
+    } */
     .my-courses {
         border-radius: 0 !important;
     }
@@ -265,9 +279,7 @@
     .exams .time img{
         width: 6%;
     }
-    .rate_course{
-        padding: 0 !important;
-    }
+
     .rate_course h1{
         font-size: 20px !important;
     }
@@ -297,6 +309,24 @@
     }
 }
 @media (min-width: 551px) and (max-width: 767px){
+    .exam-preview .col-md-3.col-lg-3.col-12.px-0 {
+        padding: 70px 15px !important;
+    }
+    .file .card-body.py-0 {
+        padding: 0 !important;
+    }
+    .p-5.user-info.file {
+        padding: 0 !important;
+    }
+    .course .star_rating div {
+        padding: 7px 0;
+    }
+    .login form{
+        width: 60% !important;
+        padding: 20px !important;
+        background-position: left;
+    }
+    /********************************************************************/
     .my-courses {
         border-radius: 0 !important;
     }
@@ -359,9 +389,6 @@
     .exams .time img{
         width: 6%;
     }
-    .rate_course{
-        padding: 0 !important;
-    }
     .rate_course h1{
         font-size: 20px !important;
     }
@@ -391,12 +418,43 @@
     }
 }
 @media (min-width: 360px) and (max-width: 551px){
+
+    .exam-preview .col-md-3.col-lg-3.col-12.px-0 {
+        padding: 70px 15px !important;
+    }
+    .file video {
+        width: 100%;
+    }
+    .p-5.user-info.file {
+        padding: 0 !important;
+    }
+    .course .star_rating div {
+        padding: 7px 0;
+    }
+    .course .row.m-0 .col-12.col-md-12.col-lg-12 {
+        padding: 0;
+    }
+    .course .col-12.col-md-12.col-lg-12.mb-3.p-3.col-xl-7 {
+        margin: 0 !important;
+    }
+    .course .p-5.user-info.courses {
+        padding: 25px !important;
+    }
+    .course .col-12.col-md-7.col-lg-7.pr-0{
+        padding: 0 !important;
+    }
+    .course .col-12.col-md-5.col-lg-5.mb-3 {
+        padding: 0;
+    }
+    .login form{
+        width: 100% !important;
+        background: white;
+        padding: 20px !important;
+    }
     .home .col-md-6.col-12.col-lg-6.pr-0 {
         padding: 15px !important;
     }
-    .col-12.col-md-7.col-lg-7.pr-0 {
-        padding: 0 15px !important;
-    }
+    /*******************************************/
     .col-12.col-md-6.col-lg-4.mb-4.px-5.image {
         padding: 0 !important;
     }
@@ -462,16 +520,14 @@
     .exams .time img{
         width: 6%;
     }
-    .rate_course{
-        padding: 0 !important;
-    }
+
     .rate_course h1{
         font-size: 20px !important;
     }
     label.total_rate {
         width: 35px;
         height: 35px;
-        padding: 8px 14px !important;
+        padding: 8px !important;
     }
     .col-12.col-md-5.col-lg-5.mb-3.p-3 .row .col-12.col-md-12.col-lg-12,
     .col-12.col-md-5.col-lg-5.mb-3.p-3 .row .col-12.col-md-7.col-lg-7.pr-0,
@@ -494,11 +550,14 @@
     }
 }
 @media (min-width: 290px) and (max-width: 360px){
+    .course .star_rating div {
+        padding: 7px 0;
+    }
     .home .col-md-6.col-12.col-lg-6.pr-0 {
         padding: 15px !important;
     }
-    .col-12.col-md-7.col-lg-7.pr-0 {
-        padding: 0 15px !important;
+    .course .col-12.col-md-7.col-lg-7.pr-0{
+        padding: 0 !important;
     }
     .col-12.col-md-6.col-lg-4.mb-4.px-5.image {
         padding: 0 !important;
@@ -565,16 +624,14 @@
     .exams .time img{
         width: 6%;
     }
-    .rate_course{
-        padding: 0 !important;
-    }
+
     .rate_course h1{
         font-size: 20px !important;
     }
     label.total_rate {
         width: 35px;
         height: 35px;
-        padding: 8px 14px !important;
+        padding: 8 !important;
     }
     .col-12.col-md-5.col-lg-5.mb-3.p-3 .row .col-12.col-md-12.col-lg-12,
     .col-12.col-md-5.col-lg-5.mb-3.p-3 .row .col-12.col-md-7.col-lg-7.pr-0,
