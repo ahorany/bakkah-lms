@@ -2,7 +2,9 @@
 .userarea-wrapper aside{
     padding: 0 !important;
 }
-
+button.navbar-toggler {
+    display: none;
+}
 /*#navbar{*/
 /*    overflow: hidden;*/
 /*}*/
