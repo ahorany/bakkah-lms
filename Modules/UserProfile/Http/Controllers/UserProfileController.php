@@ -682,7 +682,7 @@ class UserProfileController extends Controller
     public function login()
     {
         if(Auth::check()){
-            return redirect('/');
+            return redirect(route('user.home'));
         }
         return view('userprofile::users.login');
     }
@@ -715,7 +715,7 @@ class UserProfileController extends Controller
     public function register()
     {
         if(Auth::check()){
-            return redirect('/');
+            return redirect(route('user.home'));
         }
         return view('userprofile::users.register');
     }
