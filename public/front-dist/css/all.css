@@ -5575,12 +5575,12 @@ p.or {
     color: #7c7c7c;
 }
 
-.user-info input.form-control, .user-info select.form-control, .user-info textarea.form-control {
+.user-info input.form-control, .user-info select.form-control {
     background: #f2f2f2;
     color: #7b7b7b;
 }
 
-textarea#bio {
+input#bio {
     height: 82%;
 }
 

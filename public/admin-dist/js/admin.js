@@ -1,10 +1,10 @@
-$('tr').hover(function(){
-  var data_id = $(this).attr('data-id');
-  $('.BtnGroupRows[data-id="'+data_id+'"]'+' .btn-table').css('visibility', 'visible');
-}, function(){
-  var data_id = $(this).attr('data-id');
-  $('.BtnGroupRows[data-id="'+data_id+'"]'+' .btn-table').css('visibility', 'hidden');
-});
+// $('tr').hover(function(){
+//   var data_id = $(this).attr('data-id');
+//   $('.BtnGroupRows[data-id="'+data_id+'"]'+' .btn-table').css('visibility', 'visible');
+// }, function(){
+//   var data_id = $(this).attr('data-id');
+//   $('.BtnGroupRows[data-id="'+data_id+'"]'+' .btn-table').css('visibility', 'hidden');
+// });
 
 $('[data-date="date"]').datepicker({
     dateFormat: 'yy-mm-dd',

@@ -2209,8 +2209,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\BakkahLMS\public\front-dist\js\popper.min.js */"./public/front-dist/js/popper.min.js");
-module.exports = __webpack_require__(/*! E:\BakkahLMS\public\front-dist\js\owl.carousel.min.js */"./public/front-dist/js/owl.carousel.min.js");
+__webpack_require__(/*! E:\test\BakkahLMS\public\front-dist\js\popper.min.js */"./public/front-dist/js/popper.min.js");
+module.exports = __webpack_require__(/*! E:\test\BakkahLMS\public\front-dist\js\owl.carousel.min.js */"./public/front-dist/js/owl.carousel.min.js");
 
 
 /***/ })

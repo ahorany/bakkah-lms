@@ -8,13 +8,14 @@
     {!!Builder::TableAllPosts($count, $courses->count())!!}
   </div>
   <div class="card-body table-responsive p-0">
-    <table class="table table-hover table-condensed">
+    <table class="table table-hover table-condensed text-center">
       <thead>
         <tr>
             <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
-            <th class="d-none d-sm-table-cell user-td">{{__('admin.user')}}</th>
             <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th>
+            <th class="img-table d-none d-sm-table-cell">{{__('admin.action')}}</th>
+            <th class="d-none d-sm-table-cell user-td">{{__('admin.user')}}</th>
         </tr>
       </thead>
       <tbody>
@@ -25,17 +26,21 @@
         </td>
         <td>
             <span style="display: block;">{{$post->trans_title}}</span>
-            {!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
+            
+        </td>
+        <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
+        
+        <td>{!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
                'post'=>$post->id,
             ])!!}
         </td>
-        <td class="d-none d-sm-table-cell">
+        <td class="d-sm-table-cell" style="font-size: 13px;">
           <span class="author">
             {!!$post->published_at!!}<br>
           </span>
         </td>
-        <td class="d-none d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
       </tr>
+        
       @endforeach
       </tbody>
     </table>

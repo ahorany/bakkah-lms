@@ -522,19 +522,19 @@ class Builder {
 	}
 
 	static function softDelete($title, $id){
-		return self::GridButton('delete', $title, $id, 'danger', 'trash', 'softDelete', 0);
+		return self::GridButton('delete', $title, $id, 'outline-danger', 'trash', 'softDelete', 0);
 	}
 
 	static function Destroy($title, $id){
-		return self::GridButton('delete', $title, $id, 'danger', 'trash', 'destroy', 0);
+		return self::GridButton('delete', $title, $id, 'outline-danger', 'trash', 'destroy', 0);
     }
 
 	static function Archive($title, $id){
-		return self::GridButton('archive', $title, $id, 'primary', 'archive', 'destroy', 1);
+		return self::GridButton('archive', $title, $id, 'outline-primary', 'archive', 'destroy', 1);
 	}
 
 	static function softArchive($title, $id){
-		return self::GridButton('archive', $title, $id, 'primary', 'archive', 'softDelete', 1);
+		return self::GridButton('archive', $title, $id, 'outline-primary', 'archive', 'softDelete', 1);
 	}
 
 	static function Restore($title, $id){
@@ -543,31 +543,31 @@ class Builder {
 
 	// $name, $title, $id, $class, $icon, $route, $trashed_status=0
 	static function RoleDetails($title, $id){
-		return self::GridHref('role_details', $title, $id, 'btn-sm btn-primary', 'user-tag', 'role_details');
+		return self::GridHref('role_details', $title, $id, 'btn-sm btn-outline-primary', 'user-tag', 'role_details');
 	}
 
 	static function Edit($title, $id){
-		return self::GridHref('edit', $title, $id, 'btn-sm btn-primary', 'pencil-alt', 'edit');
+		return self::GridHref('edit', $title, $id, 'btn-sm btn-outline-primary', 'pencil-alt', 'edit');
 	}
 
     static function Dublicate($title, $id){
-		return self::GridHref('duplicate', $title, $id, 'btn-sm btn-primary duplicate', 'pencil-alt', 'duplicate','#duplicateRow');
+		return self::GridHref('duplicate', $title, $id, 'btn-sm btn-outline-primary duplicate', 'pencil-alt', 'duplicate','#duplicateRow');
 	}
 
     static function Replicate($title, $id){
-		return self::GridHref('replicate', $title, $id, 'btn-sm btn-primary replicate', 'pencil-alt', 'replicate','#replicateRow');
+		return self::GridHref('replicate', $title, $id, 'btn-sm btn-outline-primary replicate', 'pencil-alt', 'replicate','#replicateRow');
 	}
 
     static function Attendance($title, $id){
-		return self::GridHref('attendance', $title, $id, 'btn-sm btn-info', 'users', 'attendance');
+		return self::GridHref('attendance', $title, $id, 'btn-sm btn-outline-info', 'users', 'attendance');
 	}
 
 	static function show($title, $id){
-		return self::GridHref('show', $title, $id, 'btn-sm btn-primary', 'eye', 'show');
+		return self::GridHref('show', $title, $id, 'btn-sm btn-outline-primary', 'eye', 'show');
 	}
 
 	static function Open($title, $id){
-		return self::GridHref('open', $title, $id, 'btn-sm btn-primary', 'folder-open', 'open');
+		return self::GridHref('open', $title, $id, 'btn-sm btn-outline-primary', 'folder-open', 'open');
 	}
 
 	static function Trans($title, $id){
@@ -575,11 +575,11 @@ class Builder {
 	}
 
 	static function EditPassword($title, $id){
-		return self::GridHref('edit_password', $title, $id, 'btn-sm btn-primary', 'key', 'edit_password');
+		return self::GridHref('edit_password', $title, $id, 'btn-sm btn-outline-primary', 'key', 'edit_password');
 	}
 
 	static function Tracks($title, $id){
-		return self::GridHref('tracks', $title, $id, 'btn-sm btn-primary', 'key', 'tracks');
+		return self::GridHref('tracks', $title, $id, 'btn-sm btn-outline-primary', 'key', 'tracks');
 	}
 
 	static function BtnGroupTable($use_create=true, $array=array()){
