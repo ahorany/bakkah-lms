@@ -527,10 +527,7 @@ class UserProfileController extends Controller
 
 
         return view('userprofile::users.home',compact('complete_courses','courses','last_video','next_videos'));
-<<<<<<< HEAD
 
-=======
->>>>>>> ce1cb5e842110d13755b7981a67961647830a180
     }
 
     public function logout(Request $request) {
