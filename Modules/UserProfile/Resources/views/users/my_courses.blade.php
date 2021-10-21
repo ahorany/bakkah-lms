@@ -59,6 +59,7 @@
   .courses .description{
     color: #4c4c4c;
     font-size: 17px;
+    padding-left:0 !important;
   }
 
   .courses .title{
@@ -157,7 +158,7 @@
                     <div class="p-5 user-info courses">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-4 mb-4 px-5 image">
-                                    <div class="card p-5" style="width: 100%; border-radius: 10px; border: 1px solid #f2f2f2">
+                                    <div class="card p-4" style="width: 100%; border-radius: 10px; border: 1px solid #f2f2f2">
                                         @if($image)
                                           <img class="card-img-top" src="{{CustomAsset('upload/thumb200/'.$image->file)}}">
                                         @endif
@@ -170,7 +171,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-8 mb-4 px-3 info">
+                                <div class="col-12 col-md-6 col-lg-8 mb-4 px-5 info">
                                     <div class="px-4 rate_course" style="width: 100%;">
                                         <div class="card-body p-0">
                                             <small>Dashboard / My Course / {{$course->trans_title}}</small>
@@ -185,7 +186,6 @@
                                                         <span class="star review_star5" data-num="5" ><i class="fas fa-star"></i></span>
                                                 </div>
                                        </div>
-{{--                                            <button class="resume">Resume Course</button>--}}
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Reviews
@@ -197,30 +197,16 @@
                                                             <span class="star_review star3" data-num="3"><i class="fas fa-star"></i></span>
                                                             <span class="star_review star4" data-num="4"><i class="fas fa-star"></i></span>
                                                             <span class="star_review star5" data-num="5"><i class="fas fa-star"></i></span>
-{{--                                                            <input type="radio" id="field6_star5" name="rating2" value="5" /><label class = "star_review full" for="field6_star5"></label>--}}
-{{--                                                            <input type="radio" id="field6_star4" name="rating2" value="4" /><label class = "star_review full" for="field6_star4"></label>--}}
-{{--                                                            <input type="radio" id="field6_star3" name="rating2" value="3" /><label class = "star_review full" for="field6_star3"></label>--}}
-{{--                                                            <input type="radio" id="field6_star2" name="rating2" value="2" /><label class = "star_review full" for="field6_star2"></label>--}}
-{{--                                                            <input type="radio" id="field6_star1" name="rating2" value="1" /><label class = "star_review full" for="field6_star1"></label>--}}
                                                     </div>
 
                                                 </div>
                                             </div>
 
-{{--=======--}}
-{{--                                                <fieldset class="rating star">--}}
-{{--                                                    <input type="radio" id="field6_star5" name="rating2" value="5" /><label class = "full" for="field6_star5"></label>--}}
-{{--                                                    <input type="radio" id="field6_star4" name="rating2" value="4" /><label class = "full" for="field6_star4"></label>--}}
-{{--                                                    <input type="radio" id="field6_star3" name="rating2" value="3" /><label class = "full part-star" for="field6_star3"></label>--}}
-{{--                                                    <input type="radio" id="field6_star2" name="rating2" value="2" /><label class = "full" for="field6_star2"></label>--}}
-{{--                                                    <input type="radio" id="field6_star1" name="rating2" value="1" /><label class = "full" for="field6_star1"></label>--}}
-{{--                                                </fieldset>--}}
-{{-->>>>>>> 6ee838249b99cc4be013b30ea500bed1a368d702--}}
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-8 mb-3 p-3">
+                                <div class="col-12 col-md-12 col-lg-8 mb-3 p-5">
                                     <p class="description px-4">{{$course->trans_excerpt}}</p>
                                 </div>
                                 @if($video)
@@ -231,17 +217,17 @@
                                     </div>
                                 @endif
                                 @if ($course->contents)
-                                <div class="col-12 col-md-12 col-lg-12 m-0 p-0 px-3">
+                                <div class="col-12 col-md-12 col-lg-12 m-0 p-0 px-5">
                                     <h2 class="title m-0">Content</h2>
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 mb-3 p-3 col-xl-7">
+                                <div class="col-12 col-md-12 col-lg-12 mb-3 p-3 col-xl-7 px-5">
                                     <div class="row m-0">
                                         @foreach($course->contents as $key => $section)
                                             <div class="col-12 col-md-12 col-lg-12 mb-3 p-0 col-xl-12">
                                                 <div class="card files" style="border: 1.5px solid #e6e6e6; border-radius: 10px; padding: 15px 0; overflow:hidden;">
                                                     <p class="learning_file" style="padding-left:30px;">{{$section->title}}</p>
-                                                    <div class="learning_file mb-3" style="padding-left:55px;">
+                                                    <div class="learning_file mb-3" style="padding-left:30px;">
                                                         {!!  $section->details->excerpt??null !!}
                                                     </div>
                                                     @isset($section->contents)
