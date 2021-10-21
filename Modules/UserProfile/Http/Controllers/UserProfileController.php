@@ -504,7 +504,6 @@ class UserProfileController extends Controller
         AND contents.deleted_at IS NULL
         ORDER BY user_contents.id DESC LIMIT 1"));
 
-<<<<<<< HEAD
         $last_video = $video[0]??null;
         $next_videos = [];
         if($last_video){
@@ -513,10 +512,6 @@ class UserProfileController extends Controller
             AND post_type = 'video'
             AND deleted_at IS NULL LIMIT 4"));
         }
-
-
-//dd($next_videos);
-
 
        $complete_courses =  DB::select(DB::raw("SELECT COUNT(id) as courses_count,
                                                         case when (progress=100) then 1
@@ -532,25 +527,6 @@ class UserProfileController extends Controller
 
 
         return view('userprofile::users.home',compact('complete_courses','courses','last_video','next_videos'));
-=======
-        $last_video = $video[0];
-
-        $next_videos = DB::select(DB::raw("SELECT id ,title  FROM contents
-        WHERE id > ".$last_video->id."
-        AND post_type = 'video'
-        AND deleted_at IS NULL LIMIT 4"));
-
-        $complete_courses =  DB::select(DB::raw("SELECT COUNT(id) as courses_count,
-            case when (progress=100) then 1
-                    when (progress<100 OR progress is null) then 0
-            end as status
-            FROM courses_registration
-            WHERE user_id = ".\auth()->id()."
-            GROUP BY user_id, status
-            ORDER By status")
-        );
-        return view('userprofile::users.home',compact('complete_courses', 'courses', 'last_video', 'next_videos'));
->>>>>>> 9753d148006a4a3c0dc235d02c466d936e15c10c
     }
 
     public function logout(Request $request) {
