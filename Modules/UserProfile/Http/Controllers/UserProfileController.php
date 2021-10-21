@@ -490,22 +490,21 @@ class UserProfileController extends Controller
         return view('userprofile::users.my_courses',compact('courses'));
     }
 
-
-
     public function home() {
+
         $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
             return $q->where('post_type','image');
         }])->first();
         $video = DB::select(DB::raw("SELECT user_contents.id , uploads.file FROM user_contents
-                INNER JOIN contents ON  contents.id = user_contents.content_id
-                INNER JOIN uploads  ON  contents.id = uploads.uploadable_id
-            WHERE user_contents.user_id = ".\auth()->id()."
-            AND uploads.uploadable_type = 'App\\\\Models\\\\Training\\\\Content'
-            AND contents.post_type = 'video'
-            AND contents.deleted_at IS NULL
-            ORDER BY user_contents.id DESC LIMIT 1
-            "));
+            INNER JOIN contents ON  contents.id = user_contents.content_id
+            INNER JOIN uploads  ON  contents.id = uploads.uploadable_id
+        WHERE user_contents.user_id = ".\auth()->id()."
+        AND uploads.uploadable_type = 'App\\\\Models\\\\Training\\\\Content'
+        AND contents.post_type = 'video'
+        AND contents.deleted_at IS NULL
+        ORDER BY user_contents.id DESC LIMIT 1"));
 
+<<<<<<< HEAD
         $last_video = $video[0]??null;
         $next_videos = [];
         if($last_video){
@@ -533,9 +532,26 @@ class UserProfileController extends Controller
 
 
         return view('userprofile::users.home',compact('complete_courses','courses','last_video','next_videos'));
+=======
+        $last_video = $video[0];
+
+        $next_videos = DB::select(DB::raw("SELECT id ,title  FROM contents
+        WHERE id > ".$last_video->id."
+        AND post_type = 'video'
+        AND deleted_at IS NULL LIMIT 4"));
+
+        $complete_courses =  DB::select(DB::raw("SELECT COUNT(id) as courses_count,
+            case when (progress=100) then 1
+                    when (progress<100 OR progress is null) then 0
+            end as status
+            FROM courses_registration
+            WHERE user_id = ".\auth()->id()."
+            GROUP BY user_id, status
+            ORDER By status")
+        );
+        return view('userprofile::users.home',compact('complete_courses', 'courses', 'last_video', 'next_videos'));
+>>>>>>> 9753d148006a4a3c0dc235d02c466d936e15c10c
     }
-
-
 
     public function logout(Request $request) {
         Auth::logout();
