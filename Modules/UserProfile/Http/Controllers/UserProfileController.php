@@ -513,10 +513,6 @@ class UserProfileController extends Controller
             AND deleted_at IS NULL LIMIT 4"));
         }
 
-
-//dd($next_videos);
-
-
        $complete_courses =  DB::select(DB::raw("SELECT COUNT(id) as courses_count,
                                                         case when (progress=100) then 1
                                                              when (progress<100 OR progress is null) then 0
@@ -531,7 +527,10 @@ class UserProfileController extends Controller
 
 
         return view('userprofile::users.home',compact('complete_courses','courses','last_video','next_videos'));
+<<<<<<< HEAD
 
+=======
+>>>>>>> ce1cb5e842110d13755b7981a67961647830a180
     }
 
     public function logout(Request $request) {

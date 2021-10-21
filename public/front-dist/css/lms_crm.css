@@ -11,6 +11,46 @@
 body {
     font-family: 'Lato-Regular';
 }
+nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
+    height: 78px !important;
+    border: none !important;
+}
+.content-wrapper {
+    background: #eef5f9 !important;
+}
+aside.main-sidebar.sidebar-dark-primary.elevation-4 {
+    background: #fff;
+    box-shadow: none !important;
+}
+.nav-sidebar>.nav-item.has-treeview>.nav-link:hover{
+    color:#26c6da;
+}
+.nav-sidebar>.nav-item.has-treeview>.nav-link.active{
+    background: #26c6da;
+}
+.nav-sidebar>.nav-item.has-treeview>.nav-link.active:hover{
+    color: #fff;
+}
+.nav-sidebar>.nav-item.has-treeview>.nav-treeview>li a:hover{
+    color: #26c6da;
+}
+/* .nav-sidebar li.menu-open>a.nav-link.active {
+    background: #26c6da !important;
+    font-weight: bold;
+}
+.nav-sidebar li.menu-open>ul li a.active {
+    font-weight: bold;
+}
+.nav-sidebar li.nav-item.has-treeview>a.active {
+    background: #26c6da !important;
+}
+.nav-sidebar li.nav-item.has-treeview>a:hover{
+    color: #26c6da !important;
+}
+.nav-sidebar li.menu-open>ul li a.active:hover {
+    color: #000 !important;
+} */
+
 
 .course_info {
     display: flex;
