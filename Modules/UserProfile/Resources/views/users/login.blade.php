@@ -35,7 +35,7 @@ input.form-control::placeholder {
                 @csrf
                 <div class="my-4">
                     <h2 class="mb-4">{{ __('education.Sign In') }}</h2>
-                    <p>{{ __('education.New user?') }} <a href="#">Create an account</a> </p>
+                    <p>{{ __('education.New user?') }} <a href="{{CustomRoute('user.register')}}">Create an account</a> </p>
                     {{-- <p>{{__('education.Welcome! Please, fill email and password to sign in into your account.')}}</p> --}}
                 </div>
 
@@ -68,20 +68,20 @@ input.form-control::placeholder {
 
                 <button class="btn btn-primary btn-block mb-3">{{__('education.Sign In')}}</button>
 
-                <hr class="mt-5">
-                <p class="or">OR Sign In With</p>
+{{--                <hr class="mt-5">--}}
+{{--                <p class="or">OR Sign In With</p>--}}
 
-                <div class="social-media text-center my-4">
+{{--                <div class="social-media text-center my-4">--}}
 
-                    <a href="#" style="color: #000; border: 1px solid #000;"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" style="color: #000; border: 1px solid #000;"><i class="fab fa-twitter"></i></a>
-                    <a href="#" style="color: #000; border: 1px solid #000;"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" style="color: #000; border: 1px solid #000;"><i class="fab fa-google-plus-g"></i></a>
-                    {{-- <a href="#" style="background: #3b5999"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" style="background: #55acee"><i class="fab fa-twitter"></i></a>
-                    <a href="#" style="background: #3c83d9"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" style="background: #fb4d3e"><i class="fab fa-google-plus-g"></i></a> --}}
-                </div>
+{{--                    <a href="#" style="color: #000; border: 1px solid #000;"><i class="fab fa-facebook-f"></i></a>--}}
+{{--                    <a href="#" style="color: #000; border: 1px solid #000;"><i class="fab fa-twitter"></i></a>--}}
+{{--                    <a href="#" style="color: #000; border: 1px solid #000;"><i class="fab fa-linkedin-in"></i></a>--}}
+{{--                    <a href="#" style="color: #000; border: 1px solid #000;"><i class="fab fa-google-plus-g"></i></a>--}}
+{{--                    --}}{{-- <a href="#" style="background: #3b5999"><i class="fab fa-facebook-f"></i></a>--}}
+{{--                    <a href="#" style="background: #55acee"><i class="fab fa-twitter"></i></a>--}}
+{{--                    <a href="#" style="background: #3c83d9"><i class="fab fa-linkedin-in"></i></a>--}}
+{{--                    <a href="#" style="background: #fb4d3e"><i class="fab fa-google-plus-g"></i></a> --}}
+{{--                </div>--}}
 
             </form>
         </div>

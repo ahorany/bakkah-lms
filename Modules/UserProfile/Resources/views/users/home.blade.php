@@ -294,7 +294,7 @@ g.highcharts-axis.highcharts-yaxis ,
                                             <div class="progress" style="height:5px;">
                                                 <div class="progress-bar" role="progressbar" style="background: #fb4400; width: {{$course->pivot->progress??0}}%;" aria-valuenow="{{$course->pivot->progress}}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
-                                            <small class="num m-0 mt-1" style="color:gray;">{{$course->pivot->progress}}%</small>
+                                            <small class="num m-0 mt-1" style="color:gray;">{{$course->pivot->progress??0}}%</small>
                                         </div>
                                     </div>
                                 </div>
@@ -386,7 +386,7 @@ g.highcharts-axis.highcharts-yaxis ,
                                           <img style="width:15%;" class="img-fluid" src="{{CustomAsset('/images/icon1.png')}}" alt="Card image cap">
                                           <div class="pl-3 text-center">
                                             <p class="m-0">Course Completed</p>
-                                            <p class="m-0" style="font-weight: bold; font-size: 37px;">{{str_pad($complete_courses[1]->courses_count, 2, '0', STR_PAD_LEFT) }}</p>
+                                            <p class="m-0" style="font-weight: bold; font-size: 37px;">{{ isset($complete_courses[1]) ? str_pad($complete_courses[1]->courses_count, 2, '0', STR_PAD_LEFT) : 0 }}</p>
                                           </div>
                                         </div>
                                       </div>
@@ -395,7 +395,7 @@ g.highcharts-axis.highcharts-yaxis ,
                                           <img style="width:15%;" class="img-fluid" src="{{CustomAsset('/images/icon2.png')}}" alt="Card image cap">
                                           <div class="pl-3 text-center">
                                             <p class="m-0">Course in Progress</p>
-                                            <p class="m-0" style="font-weight: bold; font-size: 37px;">{{str_pad($complete_courses[0]->courses_count, 2, '0', STR_PAD_LEFT)}}</p>
+                                            <p class="m-0" style="font-weight: bold; font-size: 37px;">{{isset($complete_courses[0]) ? str_pad($complete_courses[0]->courses_count, 2, '0', STR_PAD_LEFT) : 0}}</p>
                                           </div>
                                         </div>
                                       </div>

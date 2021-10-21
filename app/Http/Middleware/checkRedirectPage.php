@@ -23,7 +23,6 @@ class checkRedirectPage
         if($redirect){
            return redirect()->away($redirect->destination_url);
         }
-
         return $next($request);
     }
 }

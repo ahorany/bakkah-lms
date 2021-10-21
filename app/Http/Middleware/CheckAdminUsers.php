@@ -17,7 +17,7 @@ class CheckAdminUsers
     {
         //dd(auth()->user()->user_type);
         if(auth()->user()->user_type == 41) {
-            return redirect()->route('user.my_courses');
+            return redirect()->route('user.home');
         }
         return $next($request);
     }

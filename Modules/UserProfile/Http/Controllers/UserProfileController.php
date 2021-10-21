@@ -353,7 +353,9 @@ class UserProfileController extends Controller
             $q->where('users.id',\auth()->id());
         })->with(['users' => function($query){
             $query->where('user_id',\auth()->id());
-        },'course_rate','uploads' => function($query){
+        },'course_rate' => function($query){
+             return $query->where('user_id',\auth()->id());
+        },'uploads' => function($query){
             return $query->where(function ($q){
                 $q->where('post_type','intro_video')->orWhere('post_type','image');
             });
@@ -365,7 +367,6 @@ class UserProfileController extends Controller
         if (!$course){
             abort(404);
         }
-
 
 
         $total_rate = DB::select(DB::raw('SELECT AVG(rate) as total_rate FROM `courses_registration` WHERE course_id =' .$course->id));
@@ -505,12 +506,15 @@ class UserProfileController extends Controller
             ORDER BY user_contents.id DESC LIMIT 1
             "));
 
-        $last_video = $video[0];
-
-        $next_videos = DB::select(DB::raw("SELECT id ,title  FROM contents
+        $last_video = $video[0]??null;
+        $next_videos = [];
+        if($last_video){
+            $next_videos = DB::select(DB::raw("SELECT id ,title  FROM contents
             WHERE id > ".$last_video->id."
             AND post_type = 'video'
             AND deleted_at IS NULL LIMIT 4"));
+        }
+
 
 //dd($next_videos);
 
@@ -592,11 +596,9 @@ class UserProfileController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if($user) {
-
             if(is_null($user->password)) {
                 $user->update(['password' => Hash::make($request->password)]);
             }
-
         }else {
 
             $user = User::create([
@@ -612,14 +614,6 @@ class UserProfileController extends Controller
 
 
         Auth::login($user);
-
-        if(request()->has('redirectTo')) {
-            return redirect()->route('education.cart');
-        }
-
-        if(request()->has('action') && request()->action == 'wishlist') {
-            return redirect(request()->redirect);
-        }
 
         return redirect()->route('user.home');
     }
