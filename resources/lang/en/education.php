@@ -42,4 +42,8 @@ return [
     'Mobile' => 'Mobile',
     'Gender' => 'Gender',
     'Save Changes' => 'Save Changes',
+    'Full Name' => 'Full Name',
+    'Register' => 'Register',
+    'Sign Up' => 'Sign Up',
+    'do you have an account?' => 'Do You Have an Account?',
 ];

@@ -20,7 +20,7 @@ button.navbar-toggler {
 <div class="menu-overlay"></div>
 <nav id="navbar" class="navbar navbar-expand-xl navbar-light bg-white p-0">
     <div class="container-fluid p-0 d-block">
-        <div class="row m-0" style="align-items: center">
+        <div class="row m-0" style="align-items: center; height:76px !important;">
             <div class="col-md-3 col-lg-2 p-0">
                 <span itemprop="headline" class="d-block">
                      @auth
