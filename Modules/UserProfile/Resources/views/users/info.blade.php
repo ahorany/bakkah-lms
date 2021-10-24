@@ -64,13 +64,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="headline">{{__('education.Headline')}}</label>
-                                                <input name="headline" value="{{old('headline',auth()->user()->headline)}}" type="text" id="headline" class="form-control">
+                                                <input name="headline" value="{{auth()->user()->headline}}" type="text" id="headline" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group h-100">
                                                 <label for="bio">{{__('education.Bio')}}</label>
-                                              <textarea rows="4"  name="bio"  id="bio" class="form-control">{{old('bio',auth()->user()->bio)}}</textarea>
+                                              <textarea rows="4"  name="bio"  id="bio" class="form-control">{{auth()->user()->bio}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -114,7 +114,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="mobile">{{__('education.Mobile')}}</label>
-                                                <input name="mobile" value="{{old('mobile',auth()->user()->mobile)}}"  type="mobile" id="mobile" class="form-control">
+                                                <input name="mobile" value="{{auth()->user()->mobile}}" type="mobile" id="mobile" class="form-control">
                                             </div>
                                         </div>
                                     </div>

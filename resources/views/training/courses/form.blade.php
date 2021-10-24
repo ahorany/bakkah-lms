@@ -53,8 +53,9 @@
     <div class="card card-default">
         <div class="card-header">{{__('admin.contents')}}</div>
         <div class="card-body">
-        <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents">Add to contents</a>
-        <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents">Add to Units</a>
+        <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents mb-2 ">Add to contents</a>
+        <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents mb-2">Add to Units</a>
+        <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents mb-2">Add Users</a>
 
         </div>
     </div>

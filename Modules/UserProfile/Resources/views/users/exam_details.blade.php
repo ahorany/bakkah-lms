@@ -98,10 +98,10 @@ label.navigation {
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$data->unit_title?? 'Other'}}</td>
                                             <td>
-                                                {{$data->marks .' / ' . $data->total_marks}}
+                                                {{ ($data->marks??0) .' / ' . $data->total_marks}}
                                                 <?php  $progress = ($data->marks / $data->total_marks) * 100; $progress = round($progress,2)   ?>
                                                 <div class="progress mt-2 w-50">
-                                                    <div class="progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress??0}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>
+                                                    <div class="progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>
                                                 </div>
                                             </td>
 

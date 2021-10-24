@@ -1,6 +1,6 @@
 <div class="menu-overlay"></div>
 <nav id="navbar" class="navbar navbar-expand-xl navbar-light bg-white p-0">
-    <div class="container-fluid" style="height:76px !important;">
+    <div class="container-fluid">
         <h1 itemprop="headline">
             <a class="navbar-brand" href="{{route('education.index')}}" title="{{__('education.header_title')}}">
                 <img src="{{CustomAsset('images/logo.png')}}" alt="{{__('education.header_title')}}">

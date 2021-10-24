@@ -41,6 +41,8 @@
                                 <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' >
                                @endisset
                         @endif
+                        
+                        <iframe style="height:400px"  frameborder='0' src='{{CustomAsset('upload/files/files/'.$content->upload->file)}}' >
                     </div>
                 </div>
             </div>

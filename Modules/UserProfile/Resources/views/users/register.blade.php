@@ -27,15 +27,15 @@ input.form-control::placeholder {
 }
 
 </style>
-<div class="login" style="background-image:url('{{CustomAsset('images/background.png')}}'); background-repeat: no-repeat; background-size: cover; padding: 3.7% 0;">
+<div class="login" style="background-image:url('{{CustomAsset('images/background.png')}}'); background-repeat: no-repeat; background-size: cover;">
     <div class="row m-0 justify-content-center">
         <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 form-login">
-            <div class="pb-4" style="background-image:url('{{CustomAsset('images/card.png')}}');background-repeat: no-repeat; background-size: cover; background-position:right;">
+            <div class="pb-4" style="background-image:url('{{CustomAsset('images/card.png')}}');background-repeat: no-repeat; background-size: cover; background-position:right; transform: translate(0, 25%);">
             <form action="{{route('user.registerSubmit')}}" method="POST" style="width:50%; padding:20px 65px;">
                 @csrf
                 <div class="my-4">
                     <h2>{{__('education.Sign Up')}}</h2>
-                   <p>{{ __('education.do you have an account?') }} <a href="{{CustomRoute('user.login')}}">Create an account</a> </p>
+                   <p>{{ __('education.do you have an account?') }} <a href="{{CustomRoute('user.login')}}">Login</a> </p>
                     {{-- <p>{{__('education.Welcome! Please, fill email and password to sign in into your account.')}}</p> --}}
                 </div>
 

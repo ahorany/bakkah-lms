@@ -50,7 +50,7 @@
                             <div class="card-body py-0">
 
                                  @isset($content->upload->file)
-                                        @if($content->post_type == 'video' )
+                                           @if($content->post_type == 'video' )
                                                 <video controls>
                                                     <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">
                                                 </video>
@@ -59,12 +59,26 @@
                                                       <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
                                                 </audio>
                                             @elseif($content->post_type == 'presentation' )
-                                                  <iframe style="" width="100%" height="500px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
-                                            @elseif($content->post_type == 'scorm' )
-                                                 <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
+                                     @if($content->upload->extension == 'pdf' )
+                                         <iframe width="100%" height="500px"   
+                                         src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                                      @else
+                                         <iframe style="" width="100%" height="500px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                                     @endif
+                                                
+                                     @elseif($content->post_type == 'scorm' )
+                                         @if($content->upload->extension == 'pdf' )
+                                         <iframe width="100%" height="500px"   
+                                         src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
+                                      @else
+                                         <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
+                                     @endif
+                                                 
+                                                 
                                             @else
                                                 <iframe style="" width="100%" height="500px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
                                         @endif
+
 
                                     @endisset
 
@@ -72,7 +86,6 @@
                                             <?php
                                                  if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
                                                      $video_id = $match[1]??null;
-//                                                     dd($video_id);
                                                  }
                                             ?>
 
@@ -80,10 +93,6 @@
                                                <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
                                         @endif
 
-
-
-
-                                        {{--                                <iframe src="https://www.alwatanvoice.com/arabic/index.html"  webkitallowfullscreen=""></iframe>--}}
                             </div>
 
 

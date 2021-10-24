@@ -24,17 +24,19 @@ class ContentController extends Controller
         $contents = Content::where('course_id',$course_id)
             ->whereNull('parent_id')
             ->with(['contents' => function($q){
-                $q->with(['details','exam']);
+                $q->with(['upload','details','exam'])->orderBy('id');
             },'details','exams'])
+            ->orderBy('id')
 //            ->latest()
             ->get();
+//        return $contents;
         return view('training.courses.contents.index', compact('course', 'contents'));
     }
 
     public function delete_content()
     {
         $content_id = request()->content_id;
-         Content::where('id',$content_id)->delete();
+        Content::where('id',$content_id)->delete();
         return response()->json([ 'status' => 'success']);
     }
 
@@ -53,13 +55,13 @@ class ContentController extends Controller
         }
 
         $content = Content::create([
-                'title'      => request()->title,
-                'course_id'  =>request()->course_id,
-                'post_type'  => 'section',
+            'title'      => request()->title,
+            'course_id'  =>request()->course_id,
+            'post_type'  => 'section',
         ]);
 
         $content->details()->create([
-                'excerpt'    =>  request()->excerpt,
+            'excerpt'    =>  request()->excerpt,
         ]);
 
         $content = Content::whereId($content->id)->with(['details','contents'])->first();
@@ -129,7 +131,7 @@ class ContentController extends Controller
                 case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:20000' ; break;
                 case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
                 case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,docx'; break;
-                case 'scorm': $mimes = '|mimes:pdf,doxc'; break;
+                case 'scorm': $mimes = '|mimes:pdf,docx'; break;
                 default : $mimes = '';;
             }
 
@@ -185,6 +187,7 @@ class ContentController extends Controller
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
                 'parent_id'  => request()->content_id,
+                'status' => request()->status == true ? 1 : 0,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
             $content->details()->create([
@@ -209,23 +212,27 @@ class ContentController extends Controller
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
                 'url'        => request()->url,
+                'status' => request()->status == true ? 1 : 0,
                 'parent_id'  => request()->content_id,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
 
-            $path = '';
-            switch (request()->type){
-                case 'video': $path = public_path('upload/files/videos'); break;
-                case 'audio': $path = public_path('upload/files/audios'); break;
-                case 'presentation': $path = public_path('upload/files/presentations'); break;
-                case 'scorm': $path = public_path('upload/files/scorms'); break;
-                default : $path = public_path('upload/files/files');
+            if(!request()->url){
+                  $path = '';
+                        switch (request()->type){
+                            case 'video': $path = public_path('upload/files/videos'); break;
+                            case 'audio': $path = public_path('upload/files/audios'); break;
+                            case 'presentation': $path = public_path('upload/files/presentations'); break;
+                            case 'scorm': $path = public_path('upload/files/scorms'); break;
+                            default : $path = public_path('upload/files/files');
+                        }
+
+                        Content::UploadFile($content,['folder_path' => $path]);
             }
 
-            Content::UploadFile($content,['folder_path' => $path]);
         }
 
-        $content = Content::whereId($content->id)->with(['details','exam'])->first();
+        $content = Content::whereId($content->id)->with(['upload','details','exam'])->first();
         return response()->json([ 'status' => 'success','data' => $content]);
     }
 
@@ -236,7 +243,7 @@ class ContentController extends Controller
             case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:20000' ; break;
             case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
             case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,docx'; break;
-            case 'scorm': $mimes = '|mimes:pdf,doxc'; break;
+            case 'scorm': $mimes = '|mimes:pdf,docx'; break;
             default : $mimes = '';;
         }
 
@@ -299,6 +306,7 @@ class ContentController extends Controller
         if (\request()->type == 'exam') {
             $content = Content::whereId(request()->content_id)->update([
                 'title' => request()->title,
+                'status' => request()->status == true ? 1 : 0,
             ]);
             ContentDetails::where('content_id', request()->content_id)->update([
                 'excerpt' => request()->excerpt,
@@ -318,6 +326,7 @@ class ContentController extends Controller
                 ->update([
                     'title' => request()->title,
                     'url' => request()->url,
+                    'status' => request()->status == true ? 1 : 0,
                 ]);
 
 
@@ -342,7 +351,11 @@ class ContentController extends Controller
                 Content::UploadFile(Content::where('id', request()->content_id)->first(), ['method' => 'update', 'folder_path' => $path]);
             }
         }
-        return response()->json([ 'status' => 'success']);
+
+        $content = Content::whereId(request()->content_id)->with(['upload','details','exam'])->first();
+        return response()->json([ 'status' => 'success','data' => $content]);
+
+//        return response()->json([ 'status' => 'success']);
     }
 
 

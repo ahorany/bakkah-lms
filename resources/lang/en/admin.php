@@ -83,4 +83,5 @@ return [
     'course_id'=>'Course',
     'training_option_id'=>'Delivery Method',
     'action'=>'Action',
+    'Enabeld Status' => 'Enabeld Status'
 ];

@@ -79,4 +79,6 @@ return [
     'search form'=>'Search Form',
     'course_id'=>'Course',
     'training_option_id'=>'Delivery Method',
+    'Enabeld Status' => 'Enabeld Status'
+
 ];

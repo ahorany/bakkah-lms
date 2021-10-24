@@ -185,8 +185,6 @@
                 </div>
 
 
-
-
                 <div v-else-if="model_type != 'video'" class="modal-diff-content">
                     <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
                     <div v-show="'file' in errors">
@@ -232,6 +230,21 @@
                     </div>
                 </div>
 
+                <div v-if="model_type != 'section' && model_type != 'exam' && file_url" class="form-group form-check child">
+                    <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status">
+                    <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label>
+
+                    <div>
+                        <p>Files : </p>
+                        <div><i class="fa fa-file"></i> <a :href="file_url" v-text="file_title"></a></div>
+                    </div>
+
+                </div>
+
+
+
+
+
 			</div>
 
 			<div class="modal-footer">
@@ -257,15 +270,20 @@
 <script src="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.min.js" type="text/javascript"></script>
 <script>
     window.contents = {!! json_encode($contents??[]) !!}
+    window.public_path = {!! json_encode(CustomAsset('upload')??'') !!}
 	var contents = new Vue({
 		el:'#contents',
 		data:{
             contents: window.contents,
+            public_path: window.public_path,
             course_id:'{{$course->id}}',
             section_id : '',
             content_id : '',
             title: '',
 			excerpt : '',
+            file_title : '',
+            file_url : '',
+            status : false,
             start_date : '',
             end_date : '',
             duration : 0,
@@ -300,6 +318,9 @@
 		    clear : function(){
                 this.title = '';
                 this.excerpt = '';
+                this.file_url = '';
+                this.file_title = '';
+                this.status = false;
                 this.url = '';
                 this.start_date = '';
                 this.end_date 	= '';
@@ -367,6 +388,7 @@
                          section.contents.forEach(function (content) {
                             if(content.id == content_id) {
                                     self.title = content.title;
+                                    self.status = content.status;
                                     self.excerpt =  content.details ?  content.details.excerpt : '';
                                     // self.duration =  content.duration ?  content.details.duration : '';
                                      content.exam ? self.start_date = moment(content.exam.start_date).format('YYYY-MM-DDTHH:mm')  : '';
@@ -374,10 +396,38 @@
                                      content.exam ? self.duration = content.exam.duration : 0;
                                      content.exam ? self.pagination = content.exam.pagination : 1;
                                      content.exam ? self.attempt_count = content.exam.attempt_count :1;
-                                    self.model_type = content.post_type;
-                                    self.url = content.url;
+                                     self.model_type = content.post_type;
+                                     self.url = content.url;
 
-                                    console.log(content)
+                                   if(content.upload){
+                                       let path = '';
+                                       switch (self.model_type) {
+                                           case 'video':
+                                               path = self.public_path + '/files/videos';
+                                               break;
+                                           case 'audio':
+                                               path = self.public_path + '/files/audios';
+                                               break;
+                                           case 'presentation':
+                                               path = self.public_path + '/files/presentations';
+                                               break;
+                                           case 'scorm':
+                                               path = self.public_path + '/files/scorms';
+                                               break;
+                                           default :
+                                               path = self.public_path + '/files/files';
+                                       }
+
+                                       self.file_url =  path + '/' + content.upload.file;
+                                       self.file_title =  content.upload.name;
+                                   }else if(content.url){
+                                       self.file_url =  content.url;
+                                       self.file_title =  content.url;
+                                   }
+
+
+
+                                console.log(content)
 
                             }
                         })
@@ -525,6 +575,7 @@
                 formData.append('title', self.title);
                 formData.append('excerpt', self.excerpt);
                 formData.append('url', self.url);
+                formData.append('status', self.status);
                 formData.append('type', self.model_type);
                 formData.append('file', self.file);
                 formData.append('start_date', self.start_date);
@@ -577,6 +628,7 @@
                             section.contents.forEach(function (content) {
                                 if(content.id == self.content_id) {
                                     content.title = self.title;
+                                    content.status = self.status;
                                     if(content.details ){
                                         content.details.excerpt = self.excerpt
                                     }
@@ -611,6 +663,54 @@
                                     self.errors[property] = self.errors[property][0];
                                 }
                             }else{
+                                self.contents.forEach(function (section) {
+                                    if(section.id == response.data.data.parent_id){
+                                        section.contents.forEach(function (content) {
+                                            if(content.id == response.data.data.id) {
+                                                 content.title =  response.data.data.title;
+                                                 content.status =  response.data.data.status;
+
+                                                 content.url = response.data.data.url;
+
+                                                if(response.data.data.upload){
+                                                    let path = '';
+                                                    switch (self.model_type) {
+                                                        case 'video':
+                                                            path = self.public_path + '/files/videos';
+                                                            break;
+                                                        case 'audio':
+                                                            path = self.public_path + '/files/audios';
+                                                            break;
+                                                        case 'presentation':
+                                                            path = self.public_path + '/files/presentations';
+                                                            break;
+                                                        case 'scorm':
+                                                            path = self.public_path + '/files/scorms';
+                                                            break;
+                                                        default :
+                                                            path = self.public_path + '/files/files';
+                                                    }
+
+                                                    console.log(content.upload == null)
+                                                    content.upload  = content.upload == null  ? {} : content.upload;
+                                                    console.log(content)
+                                                    content.upload.file =  path + '/' + response.data.data.upload.file;
+                                                    content.upload.name =  response.data.data.upload.name;
+                                                }else if(response.data.data.url){
+                                                      content.url = response.data.data.url;
+                                                      content.url = response.data.data.url;
+                                                }
+
+
+
+                                                console.log(content)
+
+                                            }
+                                        })
+                                    }
+                                    return true ;
+                                });
+
 
                                 this.errors = {};
                                 $('#ContentModal').modal('hide')
