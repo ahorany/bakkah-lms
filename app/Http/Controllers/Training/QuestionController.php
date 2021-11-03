@@ -40,17 +40,16 @@ class QuestionController extends Controller
 
         $units = $this->buildTree($units);
 
-//        return $units;
         return view('training.courses.contents.exam', compact('content','units'));
     }
 
     public function add_question(){
 //        return \request();
         // validation
-
         $rules = [
             "title"   => "required|string",
             "mark"   => "required|numeric",
+            "feedback"   => "",
             'exam_id' => 'required|exists:contents,id',
         ];
 
@@ -75,6 +74,7 @@ class QuestionController extends Controller
         $question = Question::updateOrCreate(['id' => \request()->question_id],[
             'title' => \request()->title,
             'mark' => \request()->mark,
+            'feedback' => \request()->feedback,
             'exam_id' => \request()->exam_id,
             'unit_id' => \request()->unit_id != -1 ? \request()->unit_id  : null ,
         ]);

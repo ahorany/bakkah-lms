@@ -19,6 +19,17 @@ use Illuminate\Support\Facades\Validator;
 class CourseUserController extends Controller
 {
 
+    public function update_user_expire_date(){
+        $user_id = \request()->user_id;
+        $course_id = \request()->course_id;
+        $expire_date = \request()->expire_date;
+        $user =  User::findOrFail($user_id);
+        $course =  Course::findOrFail($course_id);
+        CourseRegistration::where('user_id',$user->id)->where('course_id',$course->id)->update([
+            'expire_date' => $expire_date
+        ]);
+        return response(['status'=>'success']);
+    }
     public function course_users()
     {
         $course_id = request()->course_id;
@@ -76,7 +87,8 @@ class CourseUserController extends Controller
                 ],
                 [
                     'user_id' => $key,
-                    'course_id' => $course->id
+                    'course_id' => $course->id,
+                    'expire_date' => request()->expire_date,
                 ]);
             }else if ($value == false){
                 CourseRegistration::where('user_id',$key)->where('course_id',$course->id)->delete();

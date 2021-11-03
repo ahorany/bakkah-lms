@@ -69,6 +69,8 @@ label.navigation {
 .done_question{
     background: #efefef !important;
 }
+
+
 </style>
     <div class="userarea-wrapper">
         <div class="row no-gutters">
@@ -98,8 +100,8 @@ label.navigation {
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$data->unit_title?? 'Other'}}</td>
                                             <td>
-                                                {{ ($data->marks??0) .' / ' . $data->total_marks}}
-                                                <?php  $progress = ($data->marks / $data->total_marks) * 100; $progress = round($progress,2)   ?>
+                                                {{ ($data->unit_marks??0) .' / ' . $data->total_marks}}
+                                                <?php  $progress = ($data->unit_marks / $data->total_marks) * 100; $progress = round($progress,2)   ?>
                                                 <div class="progress mt-2 w-50">
                                                     <div class="progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>
                                                 </div>

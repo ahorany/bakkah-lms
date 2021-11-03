@@ -53,9 +53,11 @@ class CourseController extends Controller
         $groups = Group::all();
         $partners = Partner::GetPartners('partners', -1, false, 1, 0);
         $certificate_types = Constant::where('parent_id', 323)->get();
+        $delivery_methods = Constant::where('parent_id', 10)->get();
+
         // $params = $this->_create_edit_params();
         // , ['certificate_types'=>$params['certificate_types']]
-        return Active::Create(compact('partners', 'certificate_types','groups'));
+        return Active::Create(compact('partners', 'certificate_types','groups','delivery_methods'));
     }
 
     public function store(CourseRequest $request){
@@ -82,8 +84,9 @@ class CourseController extends Controller
         $partners = Partner::GetPartners('partners', -1, false, 1, 0);
         $certificate_types = Constant::where('parent_id', 323)->get();
         $groups = Group::all();
+        $delivery_methods = Constant::where('parent_id', 10)->get();
 
-        return Active::Edit(['eloquent'=>$course, 'groups' => $groups, 'partners'=>$partners, 'certificate_types'=>$certificate_types]);
+        return Active::Edit(['eloquent'=>$course, 'delivery_methods' => $delivery_methods, 'groups' => $groups, 'partners'=>$partners, 'certificate_types'=>$certificate_types]);
     }
 
     public function update(CourseRequest $request, Course $course){

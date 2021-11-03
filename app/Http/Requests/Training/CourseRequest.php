@@ -59,6 +59,7 @@ class CourseRequest extends FormRequest
             'show_in_website'=>'',
             'active'=>'',
             'group_id'=>'required|exists:groups,id',
+            'training_option_id'=>'required|exists:constants,id',
 
         ];
     }

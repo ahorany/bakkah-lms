@@ -23,6 +23,7 @@ Route::group([
         Route::post('/search_user_course', 'CourseUserController@search_user_course')->name('search_user_course');
         Route::post('/add_users_course', 'CourseUserController@add_users_course')->name('add_users_course');
         Route::post('/course_users/delete', 'CourseUserController@delete_user_course')->name('delete_user_course');
+        Route::post('/course_users/update', 'CourseUserController@update_user_expire_date')->name('update_user_expire_date');
 
         Route::get('/contents', 'ContentController@contents')->name('contents');
         Route::post('/add_section', 'ContentController@add_section')->name('add_section');

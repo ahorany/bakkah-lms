@@ -144,6 +144,7 @@ table.table {
                                         <th scope="col">Time taken</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mark</th>
+                                        <th scope="col">Progress</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -167,7 +168,16 @@ table.table {
                                             <td class="text-bold">
                                                 <span class="{{$attempt->status == 1 ? 'badge badge-success' : 'badge badge-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</span>
                                             </td>
+
+
+
                                             <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
+                                            <td>
+                                                <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
+                                                <div class="progress mt-2 w-50">
+                                                    <div class="progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

@@ -32,6 +32,7 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
+            <th scope="col">Expire Date</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
@@ -40,6 +41,12 @@
                 <th scope="row" v-text="index + 1"></th>
                 <td v-text="trans_title(user.name)"></td>
                 <td v-text="user.email"></td>
+                <td>
+                    <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
+{{--                    <input v-model="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')"   type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">--}}
+                    <button @click="updateUserExpireDate(user.id)" class="btn btn-sm btn-outline-info btn-table" ><i class="fa fa"></i> Update</button>
+
+                </td>
                 <td>
 {{--                    <form action="{{CustomRoute('training.delete_user_course',[$course->id,$user->id])}}">--}}
                         <button @click="deleteUser(user.id)" class="btn btn-sm btn-outline-danger btn-table" ><i class="fa fa-trash"></i> Delete</button>
@@ -104,7 +111,13 @@
 
                     </tbody>
                 </table>
-			</div>
+
+                <div>
+                    <label class="form-group">Expire Date </label>
+                    <input   type="datetime-local" v-model="expire_date" name="expire_date" class="form-control" placeholder="Expire date">
+                </div>
+
+            </div>
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-outline-danger" data-dismiss="modal">
@@ -135,10 +148,20 @@
         data : {
             course : window.course,
             lang : window.lang,
+            expire_date : '' ,
             search_username : '' ,
             search_email    : '' ,
             search_users    : [] ,
+            users_expire_date    : {} ,
             add_users : {},
+        },
+        created(){
+		    let self = this
+           this.course.users.forEach(function (user,index) {
+               self.users_expire_date[user.id] = user.pivot.expire_date;
+           })
+
+            console.log(self.users_expire_date)
         },
         methods : {
                 OpenModal : function(){
@@ -185,6 +208,7 @@
                         {
                             'users' : self.add_users ,
                             'course_id' : self.course.id ,
+                            'expire_date' : self.expire_date ,
                         }
                     )
                         .then(response => {
@@ -229,6 +253,26 @@
                },
                 trans_title : function (data) {
                    return JSON.parse(data)[this.lang];
+                },
+                updateUserExpireDate: function (user_id) {
+                    let user_expire_date = this.users_expire_date[user_id];
+                    let self = this;
+                    axios.post("{{route('training.update_user_expire_date')}}",
+                        {
+                            'course_id' : self.course.id ,
+                            'user_id'   : user_id ,
+                            'expire_date'   : user_expire_date ,
+                        }
+                    )
+                        .then(response => {
+                            console.log(response)
+                            // self.search_users = response.data.users;
+                            // $('#ContentModal').modal('hide')
+
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        });
                 }
             }
 	});

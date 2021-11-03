@@ -1,4 +1,6 @@
 @extends(ADMIN.'.general.form')
+<link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/jquery.datetimepicker.css')}}">
+
 {!!Builder::SetPostType($post_type)!!}
 {{Builder::SetFolder($folder)}}
 
@@ -15,8 +17,11 @@
         'attr'=>'maxlength="1000"',
     ])!!}
 
+
+
     {!!Builder::CheckBox('active', 'active', null, ['col'=>'col-md-6'])!!}
 
+    {!!Builder::DateTime('expire_date', 'expire_date')!!}
 
 @endsection
 
@@ -30,3 +35,14 @@
 	@include(ADMIN.'.Html.image')
 @endsection
 
+<script src="{{CustomAsset(ADMIN.'-dist/js/jquery.datetimepicker.js')}}"></script>
+
+
+<script>
+    $(function(){
+        $('[data-date="datetime"]').datetimepicker({
+            format:'Y-m-d H:i',
+            dayOfWeekStart : 6,
+        });
+    });
+</script>

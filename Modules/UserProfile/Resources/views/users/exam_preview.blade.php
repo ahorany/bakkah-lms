@@ -128,6 +128,12 @@
                                                       <div class="text-success" v-for="answer in correct_answers(question)">
                                                           @{{  answer.title }}
                                                       </div>
+
+                                                  </div>
+
+                                                  <div v-if="question.feedback" class="mt-3">
+                                                      <h3>Feedback : </h3>
+                                                      <p class="p-2">@{{  question.feedback }}</p>
                                                   </div>
                                               </template>
 
@@ -141,6 +147,11 @@
                                                           <div class="text-success" v-for="answer in correct_answers(question)">
                                                               @{{  answer.title }}
                                                           </div>
+                                                  </div>
+
+                                                  <div v-if="question.feedback" class="mt-3">
+                                                      <h3>Feedback : </h3>
+                                                      <p class="p-2">@{{  question.feedback }}</p>
                                                   </div>
                                               </template>
 
@@ -231,7 +242,6 @@
 
 
 @section('scripts')
-
     <script>
 
         window.exam = {!! json_encode($exam??[]) !!}
@@ -258,6 +268,8 @@
                 minutes: 0,
                 seconds: 0,
                 question_id: null,
+                request_answers : null,
+                request_question : null,
             },
 
             computed: {
@@ -488,7 +500,7 @@
                             }
                         }
 
-                    }, 900);
+                    }, 1000);
         },
                 save : function(){
                     if(this.page_type != 'exam') {
@@ -505,6 +517,8 @@
                     }
 
                     this.answers[question_id] = answer_id
+                    this.request_question = question_id
+                    this.request_answers = answer_id
                     this.nextSaveAnswers();
                 },
                 searchMultiAnswers : function(question_id,answer_id){
@@ -552,19 +566,27 @@
                         }
                     }
 
+                    this.request_question = question_id
+                    this.request_answers =   this.answers[question_id];
+
                     this.nextSaveAnswers();
                 },
                 nextSaveAnswers : function (status = null) {
+                    let self = this;
+
                     if(this.page_type != 'exam') {
                         return ;
                     }
 
-                    let self = this;
-                    let data = {
-                        answers : self.answers,
-                        user_exam_id : self.user_exam_id,
-                        status : status
-                    }
+
+                       let  data = {
+                            question_id : self.request_question,
+                            answer : self.request_answers,
+                            user_exam_id : self.user_exam_id,
+                            status : status
+                        }
+
+
 
                     axios.post("{{route('user.exam.add_answers')}}",
                         data
@@ -573,6 +595,8 @@
                             if(response.data.status == 'success'){
                                 window.location.replace(response.data.redirect_route);
                             }
+
+                            self.request_answers = []
                         })
                         .catch(e => {
                             console.log(e)

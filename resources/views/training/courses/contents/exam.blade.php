@@ -89,6 +89,16 @@
                                  </div>
                                </div>
 
+                    <div class="form-group">
+                        <label>Feedback </label>
+                        <textarea  v-model="feedback" name="feedback" class="form-control w-100" placeholder="feedback"></textarea>
+                        {{--                            <input type="text" v-model="title" name="title" class="form-control" placeholder="title">--}}
+                        <div v-show="'feedback' in errors">
+                            <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
+                        </div>
+                    </div>
+
+
 				</div>
 
 			</div>
@@ -122,6 +132,7 @@
             el: '#questions',
             data: {
                 title: '',
+                feedback: '',
                 mark: 0,
                 unit_id: -1,
                 content: window.content,
@@ -158,6 +169,7 @@
                 OpenModal: function (type) {
                     // clear
                     this.title = '';
+                    this.feedback = '';
                     this.unit_id = -1;
                     this.mark = 0;
                     this.answers = [];
@@ -182,6 +194,7 @@
                         if (question.id == question_id) {
                             self.answers = question.answers
                             self.title = question.title;
+                            self.feedback = question.feedback;
                             self.mark = question.mark;
                             self.unit_id = question.unit_id ? question.unit_id : -1;
                         }
@@ -270,6 +283,7 @@
                         {
                             'title': self.title,
                             'mark': self.mark,
+                            'feedback': self.feedback,
                             'unit_id': self.unit_id,
                             'exam_id': self.content.id,
                             'answers': self.answers,
@@ -298,11 +312,11 @@
                                     // console.log(this.content.questions)
                                 }
                                 this.title = '';
+                                this.feedback = '';
                                 this.mark = 0;
                                 this.content_id = '';
                                 this.type = '';
                                 self.errors = {};
-
                                 $('#ContentModal').modal('hide')
                             }
 

@@ -32,7 +32,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         {{-- @foreach($user_pages as $aside) --}}
-        @foreach($asides as $aside)
+        @foreach($user_pages as $aside)
         <?php
           $has_treeview = is_null($aside->route_name) ? 'has-treeview' : '';
           $active = ($aside->id==session('infastructure_parent_id')) ? 'active' : '';

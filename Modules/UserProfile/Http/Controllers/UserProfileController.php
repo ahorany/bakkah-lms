@@ -10,6 +10,7 @@ use App\Models\Training\Question;
 use App\Models\Training\UserAnswer;
 use App\Models\Training\UserContent;
 use App\Models\Training\UserExam;
+use App\Models\Training\UserQuestion;
 use App\User;
 use App\Constant;
 use App\Http\Requests\ProfileRequest;
@@ -63,59 +64,15 @@ class UserProfileController extends Controller
        $exam_id =  $exam->exam->content->id;
 
        $unit_marks =  DB::select(DB::raw("
-                       SELECT id , unit_title ,SUM(marks) as marks  , sum(total_marks) as total_marks  FROM (
-            SELECT units_total_marks.unit_id as id , user_answers_units_marks.marks , units_total_marks.total_marks  ,units_total_marks.unit_title   
-            FROM (
-                SELECT unit_id ,unit_title, SUM(total_table.marks) as total_marks FROM (
-                     SELECT  DISTINCT questions.id , questions.unit_id as unit_id , units.title as unit_title, questions.mark as marks FROM user_exams
-                    INNER JOIN exams ON user_exams.exam_id = exams.id
-                    INNER JOIN questions ON exams.content_id = questions.exam_id
-                    LEFT JOIN units ON units.id = questions.unit_id
-                    WHERE user_exams.id = $user_exams_id
-                    AND exams.deleted_at IS null
-                ) as total_table
-                GROUP BY unit_id
-            ) as units_total_marks
-            
-            LEFT JOIN (SELECT units.id as unit_id
-                       , SUM(user_answers.mark) as marks FROM user_exams
-                       INNER JOIN user_answers ON user_exams.id = user_answers.user_exam_id
-                       INNER JOIN questions ON questions.id = user_answers.question_id
-                       LEFT JOIN units ON units.id = questions.unit_id
-                       WHERE user_exams.id = $user_exams_id
-                       GROUP BY  questions.unit_id , units.title) as user_answers_units_marks
-                              ON units_total_marks.unit_id = user_answers_units_marks.unit_id
-                              
-              UNION                
-              
-              SELECT units_total_marks.unit_id as id , user_answers_units_marks.marks , units_total_marks.total_marks  ,units_total_marks.unit_title  
-            FROM (
-                SELECT unit_id ,unit_title, SUM(total_table.marks) as total_marks FROM (
-                     SELECT  DISTINCT questions.id , questions.unit_id as unit_id , units.title as unit_title, questions.mark as marks FROM user_exams
-                    INNER JOIN exams ON user_exams.exam_id = exams.id
-                    INNER JOIN questions ON exams.content_id = questions.exam_id
-                    LEFT JOIN units ON units.id = questions.unit_id
-                    WHERE user_exams.id = $user_exams_id
-                    AND exams.deleted_at IS null
-                ) as total_table
-                GROUP BY unit_id
-            ) as units_total_marks
-            
-            RIGHT JOIN (SELECT units.id as unit_id
-                       , SUM(user_answers.mark) as marks FROM user_exams
-                       INNER JOIN user_answers ON user_exams.id = user_answers.user_exam_id
-                       INNER JOIN questions ON questions.id = user_answers.question_id
-                       LEFT JOIN units ON units.id = questions.unit_id
-                       WHERE user_exams.id = $user_exams_id
-                       GROUP BY  questions.unit_id , units.title) as user_answers_units_marks
-                              ON units_total_marks.unit_id = user_answers_units_marks.unit_id
-            )
-            as t
-            GROUP BY t.id
-
+            SELECT units.title as unit_title, questions.unit_id as unit_id , SUM(user_questions.mark) as unit_marks , SUM(questions.mark) as total_marks
+            from questions
+            left join user_questions ON user_questions.question_id = questions.id
+            and user_questions.user_exam_id = $user_exams_id
+            LEFT JOIN units ON questions.unit_id = units.id
+            where questions.exam_id = $exam_id
+            GROUP BY questions.unit_id
        "));
 
-    //   dd($unit_marks);
         return view('userprofile::users.exam_details',compact('unit_marks','exam_title','exam_id'));
 
     }
@@ -135,6 +92,9 @@ class UserProfileController extends Controller
 
         return response()->json(['status' => 'success','data' => $total_rate ]);
     }
+
+
+    // exam page
     public function exam($exam_id){
         $exam = Content::whereId($exam_id)
             ->with(['exam' => function($q){
@@ -156,71 +116,95 @@ class UserProfileController extends Controller
     }
 
 
+    // add user answers exam
+
     public function add_answers(){
-      $user_exam =  UserExam::whereId(\request()->user_exam_id)
-          ->where('user_id',\auth()->id())->where('status',0)->first();
-      if (!$user_exam) abort(404);
+        $user_exam =  UserExam::whereId(\request()->user_exam_id)
+            ->where('user_id',\auth()->id())->where('status',0)->first();
+        if (!$user_exam) abort(404);
 
-         // save answers
-        foreach (\request()->answers as $key => $value){
-            if (!is_null($value)){
+        if(\request()->has('answer')){
+            if(\request()->answer){
+                if(is_array(\request()->answer)) {
+                    UserAnswer::where( 'user_exam_id' , \request()->user_exam_id)->
+                    where('question_id',request()->question_id)->delete();
 
-                if(is_array($value)){
-                     UserAnswer::where( 'user_exam_id' , \request()->user_exam_id)->
-                           where('question_id',$key)->delete();
-
-                    $question = Question::select('id','mark')->where('id',$key)->withCount(['answers' => function($q){
+                    $question = Question::select('id','mark')->where('id',request()->question_id)->with(['answers' => function($q){
                         return $q->where('check_correct',1);
                     }])->first();
 
-                    foreach ($value as $answer){
-                         $answer_db = Answer::select('id','check_correct')->where('id',$answer)->first();
+                    $count_correct_answers = 0;
+                    foreach (\request()->answer as $answer){
+                        foreach ($question->answers as $question_answer){
+                            if($question_answer->id == $answer){
+                                $count_correct_answers++;
+                            }
+                        }
+                        UserAnswer::create([
+                            'answer_id' => $answer,
+                            'question_id' => request()->question_id,
+                            'user_exam_id' => \request()->user_exam_id,
+                        ]);
+                    }
 
-                         UserAnswer::create([
-                             'answer_id' => $answer,
-                             'question_id' => $key,
-                             'user_exam_id' => \request()->user_exam_id,
-                             'mark' => $answer_db->check_correct == 0 ? 0 : ( $question->mark / $question->answers_count )
-                         ]);
+                    $mark = 0;
+                    if(count(\request()->answer) > count($question->answers) ){
+                        $mark = 0;
+                    }else if($count_correct_answers == count($question->answers) ){
+                        $mark = $question->mark;
+                    }else{
+                        $mark = $question->mark / count($question->answers);
+                        $mark = $mark * $count_correct_answers;
+                    }
 
-                        $user_answers =  DB::select(DB::raw('SELECT COUNT(answer_id) as user_answers FROM `user_answers` where user_exam_id = '.\request()->user_exam_id .' and question_id = '.$key));
-                        $user_answers = $user_answers[0]->user_answers??0;
-                         if($user_answers > $question->answers_count){
-                             UserAnswer::where('user_exam_id',\request()->user_exam_id)->where('question_id',$key)->update(['mark' => 0]);
-                         }
-                     }
-                 }
-                 else{
-                     $question = Question::select('id','mark')->where('id',$key)->first();
-                     $answer_db = Answer::select('id','check_correct')->where('id',$value)->first();
+                    UserQuestion::updateOrCreate([
+                        'question_id' => \request()->question_id,
+                        'user_exam_id' => \request()->user_exam_id,
+                    ],[
+                        'question_id' => \request()->question_id,
+                        'user_exam_id' => \request()->user_exam_id,
+                        'mark' => $mark
+                    ]);
 
-                     UserAnswer::updateOrCreate([
-                         'question_id' => $key,
-                         'user_exam_id' => \request()->user_exam_id,
-                     ],[
-                         'answer_id' => $value,
-                         'question_id' => $key,
-                         'user_exam_id' => \request()->user_exam_id,
-                         'mark' => ($answer_db->check_correct == 1 ? $question->mark : 0 )
-                     ]);
-                 }
+                }else{
+                    $question = Question::select('id','mark')->where('id',\request()->question_id)->first();
+                    $answer_db = Answer::select('id','check_correct')->where('id',\request()->answer)->first();
+
+                    UserAnswer::updateOrCreate([
+                        'question_id' => \request()->question_id,
+                        'user_exam_id' => \request()->user_exam_id,
+                    ],[
+                        'answer_id' => \request()->answer,
+                        'question_id' => \request()->question_id,
+                        'user_exam_id' => \request()->user_exam_id,
+                    ]);
+
+
+                    UserQuestion::updateOrCreate([
+                        'question_id' => \request()->question_id,
+                        'user_exam_id' => \request()->user_exam_id,
+                    ],[
+                        'question_id' => \request()->question_id,
+                        'user_exam_id' => \request()->user_exam_id,
+                        'mark' => ($answer_db->check_correct == 1 ? $question->mark : 0 )
+                    ]);
+                }
             }
+
         }
 
+
+        // save answers
         if (\request()->status == 'save'){
             $this->saveAndCalcMark($user_exam);
             return response(['status' => 'success' , 'redirect_route' => route('user.exam',$user_exam->exam->content_id)]);
         }
     }
-
     private function saveAndCalcMark($user_exam){
-
-//        $user_exam = UserExam::whereId(\request()->user_exam_id)
-//            ->select('id','exam_id')->with('exam')->first();
         $user_exam_id = \request()->user_exam_id;
 
-                $grade =  DB::select( DB::raw("SELECT SUM(mark) as grade
-                                FROM `user_answers`
+        $grade =  DB::select( DB::raw("SELECT SUM(mark) as grade
+                                FROM `user_questions`
                                 WHERE user_exam_id = ". $user_exam_id ."
                                 "));
         $user_exam->update([
@@ -228,64 +212,9 @@ class UserProfileController extends Controller
             'end_attempt' => Carbon::now(),
             'mark' => $grade[0]->grade??0
         ]);
-        // mark
-//        $grade =  DB::select( DB::raw("SELECT SUM(questions.mark) as grade
-//                                FROM `user_answers`
-//                                    INNER JOIN answers ON user_answers.answer_id = answers.id
-//                                    INNER JOIN questions ON questions.id = answers.question_id
-//                                WHERE user_exam_id = ". $user_exam_id ."
-//                                AND answers.check_correct = 1"));
-//
-//        UserExam::where('id',$user_exam_id)->update([
-//            'end_attempt' => Carbon::now(),
-//            'mark' => $grade[0]->grade??0
-//        ]);
-
-//        $grade =  DB::select( DB::raw("SELECT questions.mark, correct_answer.total
-//                    from questions
-//                    inner join (
-//                        SELECT user_answers.question_id
-//                        , (COUNT(user_answers.question_id) / COUNT(answers.question_id)) as total
-//
-//                        FROM user_answers
-//                        INNER JOIN answers ON user_answers.answer_id = answers.id
-//                        WHERE user_exam_id = ".$user_exam_id."
-//                        AND answers.check_correct = 1
-//                        GROUP BY user_answers.question_id
-//                    ) as correct_answer on questions.id = correct_answer.question_id"));
-//
-//        dd($grade);
-
-        // new sql
-        /* final query
-           SELECT sum(t.total) FROM( SELECT user_answers.question_id , questions.mark * (COUNT(user_answers.question_id) / COUNT(answers.question_id)) as total  FROM user_answers
-                INNER JOIN answers ON user_answers.answer_id = answers.id
-                INNER JOIN questions ON questions.id = answers.question_id
-         WHERE user_exam_id = 134
-         AND answers.check_correct = 1
-         GROUP BY user_answers.question_id) as t
-        */
-        /*
-           SELECT user_answers.question_id , questions.mark * (COUNT(user_answers.question_id) / COUNT(answers.question_id))  FROM user_answers
-                INNER JOIN answers ON user_answers.answer_id = answers.id
-                INNER JOIN questions ON questions.id = answers.question_id
-         WHERE user_exam_id = 134
-         AND answers.check_correct = 1
-         GROUP BY user_answers.question_id
-
-         * */
-
-        /*
-               SELECT SUM(questions.mark) as grade
-            FROM `user_answers`
-                INNER JOIN answers ON user_answers.answer_id = answers.id
-                INNER JOIN questions ON questions.id = answers.question_id
-            WHERE user_exam_id = 41
-            AND answers.check_correct = 1
-
-        */
     }
 
+    // start exam attempt
     public function preview_exam($exam_id){
         $page_type = 'exam';
         $exam = Content::whereId($exam_id)
@@ -296,7 +225,7 @@ class UserProfileController extends Controller
                       $q->where('end_date','>',Carbon::now())->orWhere('end_date',null);
                 });
             },'questions.answers:id,title,question_id','questions' => function($q){
-                $q->withCount(['answers' => function ($query){
+                $q->select('id','title','mark','exam_id','unit_id')->withCount(['answers' => function ($query){
                     $query->where('check_correct' ,1);
                 }]);
             }])->first();
@@ -362,6 +291,12 @@ class UserProfileController extends Controller
         }
     }
 
+    private function checkDurationExam($exam_duration){
+        $start_user_attepmt = Carbon::now();
+        $d = Carbon::parse($start_user_attepmt)
+            ->addSeconds($exam_duration * 60)
+            ->format('Y-m-d H:i:s');;
+    }
 
     public function review_exam($exam_id){
         $page_type = 'review';

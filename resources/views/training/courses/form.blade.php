@@ -6,6 +6,9 @@
 {{Builder::SetPublishName('publish')}}
 
 @section('col9')
+    @isset($eloquent->id)
+      <div class="col-12 mb-3">Courese ID: <span class="bg-dark text-white px-2 py-1" style="border-radius: 5px">{{$eloquent->id}}</span></div>
+    @endisset
 	{!!Builder::Input('en_title', 'en_title', null, ['col'=>'col-md-6'])!!}
 	{!!Builder::Input('ar_title', 'ar_title', null, ['col'=>'col-md-6'])!!}
     {!!Builder::Textarea('en_excerpt', 'en_excerpt', null, [
@@ -64,6 +67,8 @@
     <div class="card card-default">
         <div class="card-header">{{__('admin.options')}}</div>
         <div class="card-body">
+            {!! Builder::Select('training_option_id', 'constant_id', $delivery_methods, null, ['col'=>'col-md-12']) !!}
+
             {!!Builder::Input('rating', 'rating', null, ['col'=>'col-md-12'])!!}
             {!!Builder::Input('reviews', 'reviews', null, ['col'=>'col-md-12'])!!}
             {!!Builder::Input('en_short_title', 'en_short_title', null)!!}
