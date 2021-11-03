@@ -164,13 +164,13 @@ class Course extends Model
 		$this->attributes['disclaimer'] = $data;
     }
 
-    public function trainingOption(){
-        return $this->hasOne(TrainingOption::class, 'course_id');//->latest()
-    }
-
-    public function trainingOptions(){
-        return $this->hasMany(TrainingOption::class, 'course_id');
-    }
+//    public function trainingOption(){
+//        return $this->hasOne(TrainingOption::class, 'course_id');//->latest()
+//    }
+//
+//    public function trainingOptions(){
+//        return $this->hasMany(TrainingOption::class, 'course_id');
+//    }
 
     public function carts(){
         return $this->hasMany(Cart::class);
@@ -291,6 +291,10 @@ class Course extends Model
 
     public function course_rate(){
         return $this->hasOne(CourseRegistration::class,'course_id');
+    }
+
+    public function training_option(){
+        return $this->belongsTo(Constant::class,'training_option_id');
     }
 
 

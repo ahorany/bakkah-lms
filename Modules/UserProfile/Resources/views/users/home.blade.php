@@ -290,7 +290,7 @@ g.highcharts-axis.highcharts-yaxis ,
                                         <img class="card-img-top" src="{{CustomAsset('images/bakkah.png')}}" alt="Card image cap"> --}}
                                         @endisset
                                         <div class="card-body text-center p-0">
-                                            <h3 class="card-title mb-2" style="font-weight: 700;"><a style="color: #000;" href="{{CustomRoute('user.course_details',$course->id)}}">{{$course->trans_title}}</a></h3>
+                                            <h3 class="card-title mb-2" style="font-weight: 700;"><a style="color: #000;" href="{{CustomRoute('user.course_details',$course->id)}}">{{$course->trans_title  . ($course->training_option ?  '-' . $course->training_option->trans_name : '') }}</a></h3>
                                             <div class="progress" style="height:5px;">
                                                 <div class="progress-bar" role="progressbar" style="background: #fb4400; width: {{$course->pivot->progress??0}}%;" aria-valuenow="{{$course->pivot->progress}}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>

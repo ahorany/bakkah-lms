@@ -461,9 +461,12 @@ class UserProfileController extends Controller
 
     public function home() {
 
-        $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
-            return $q->where('post_type','image');
+        $courses =  User::where('id',\auth()->id())->with(['courses' => function($q){
+            return $q->with(['training_option' , 'upload' => function($q){
+                return $q->where('post_type','image');
+            }]);
         }])->first();
+//        return ( $courses->courses[2]->training_option->trans_name );
         $video = DB::select(DB::raw("SELECT user_contents.id , uploads.file FROM user_contents
             INNER JOIN contents ON  contents.id = user_contents.content_id
             INNER JOIN uploads  ON  contents.id = uploads.uploadable_id
