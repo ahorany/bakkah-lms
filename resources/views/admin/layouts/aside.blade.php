@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a class="sidebar-close d-md-none" href="#"><i class="fas fa-times"></i></a>
   <!-- Brand Logo -->
-  <a href="{{route('admin.home')}}" class="brand-link" style="border: none; padding-left: 26px;padding-right: 26px;background-color:#fb4400;">
+  <a href="{{route('user.home')}}" class="brand-link" style="border: none; padding-left: 26px;padding-right: 26px;background-color:#fb4400;">
 
     {{--<img src="{{CustomAsset('upload/logo_50.png')}}" alt="{{__('app.app_title')}}" title="{{__('app.app_title')}}" class="brand-image img-circle elevation-3">--}}
     <span class="brand-text font-weight-light">
@@ -36,7 +36,9 @@
         <?php
           $has_treeview = is_null($aside->route_name) ? 'has-treeview' : '';
           $active = ($aside->id==session('infastructure_parent_id')) ? 'active' : '';
+
           $menu_open = $active=='active'?'menu-open':'';
+
         ?>
         {{-- @if(isset(auth()->user()->roles)) --}}
         <li class="nav-item {{$has_treeview}} {{$menu_open}}"><!--menu-open-->
@@ -60,6 +62,14 @@
             @endif
         </li>
         @endforeach
+
+
+          @foreach($user_sidebar_courses->courses as $item)
+              <li class="nav-item  "><!--menu-open-->
+                 <a class="nav-link {{url()->full() == CustomRoute('user.course_details',$item->id)  ? 'active' : '' }}" href="{{CustomRoute('user.course_details',$item->id)}}"><i class="fas fa-tachometer-alt"></i> <p>{{$item->trans_title}}</p></a>
+              </li>
+          @endforeach
+
 
       </ul>
     </nav>

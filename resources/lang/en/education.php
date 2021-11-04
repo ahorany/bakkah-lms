@@ -40,6 +40,9 @@ return [
     'Language' => 'Language',
     'email' => 'Email',
     'Mobile' => 'Mobile',
+    'Sign Up' => 'Sign Up',
+    'Full Name' => 'Full Name',
+    'Register' => 'Register',
     'Gender' => 'Gender',
     'Save Changes' => 'Save Changes',
 ];

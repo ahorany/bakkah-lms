@@ -5,7 +5,7 @@
     Made with <i class="fas fa-heart"></i> by IT Department
   </div>
   <!-- Default to the left -->
-  <strong>Copyright &copy; <?php echo date('Y') ?> <a href="{{CustomRoute('admin.home')}}">{{__('education.app_title')}}</a>.</strong> All rights reserved.
+  <strong>Copyright &copy; <?php echo date('Y') ?> <a href="{{CustomRoute('user.home')}}">{{__('education.app_title')}}</a>.</strong> All rights reserved.
 </footer>
 
 @stack('vue')

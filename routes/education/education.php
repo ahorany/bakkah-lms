@@ -1,6 +1,5 @@
 <?php
 use App\Http\Controllers\Front\Education\EducationController;
-use Modules\UserProfile\Http\Controllers\UserProfileController;
 
 Route::group([
     'prefix'=>LaravelLocalization::setLocale(),
@@ -9,12 +8,12 @@ Route::group([
 
     Route::group(['as' => 'education.'], function () {
 
-        Route::get('/', [UserProfileController::class, 'login'])->name('login');
+        Route::get('/', [\App\Http\Controllers\Front\UserProfileController::class, 'home'])->name('login');
 
-        Route::group(['prefix' => 'sessions'], function () {
-
-            Route::get('/{category?}', [EducationController::class, 'sessions'])->name('courses');
-
-        });
+//        Route::group(['prefix' => 'sessions'], function () {
+//
+//            Route::get('/{category?}', [EducationController::class, 'sessions'])->name('courses');
+//
+//        });
     });
 });

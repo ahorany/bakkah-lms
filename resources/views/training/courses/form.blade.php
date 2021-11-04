@@ -56,10 +56,9 @@
     <div class="card card-default">
         <div class="card-header">{{__('admin.contents')}}</div>
         <div class="card-body">
-        <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents mb-2 ">Add to contents</a>
-        <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents mb-2">Add to Units</a>
-        <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="btn btn-success add_contents mb-2">Add Users</a>
-
+            <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="btn btn-outline-success add_contents mb-2 ">Contents</a>
+            <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="btn btn-outline-success add_contents mb-2">Units</a>
+            <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="btn btn-outline-success add_contents mb-2">Users</a>
         </div>
     </div>
     @endif
@@ -67,7 +66,7 @@
     <div class="card card-default">
         <div class="card-header">{{__('admin.options')}}</div>
         <div class="card-body">
-            {!! Builder::Select('training_option_id', 'constant_id', $delivery_methods, null, ['col'=>'col-md-12']) !!}
+            {!! Builder::Select('training_option_id', 'training_option_id', $delivery_methods, null, ['col'=>'col-md-12']) !!}
 
             {!!Builder::Input('rating', 'rating', null, ['col'=>'col-md-12'])!!}
             {!!Builder::Input('reviews', 'reviews', null, ['col'=>'col-md-12'])!!}

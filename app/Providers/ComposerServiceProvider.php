@@ -27,10 +27,10 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         //front.education
-        view()->composer('userprofile::users.sidebar', EducationComposer::class);
+        view()->composer('front.pages.sidebar', EducationComposer::class);
 
         //front.consulting
-        view()->composer(FRONT.'.consulting.layouts.master', ConsultingComposer::class);
+//        view()->composer(FRONT.'.consulting.layouts.master', ConsultingComposer::class);
 
         //admin
         view()->composer(ADMIN.'.layouts.aside', AsideComposer::class);

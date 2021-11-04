@@ -16,7 +16,7 @@ $title1 = '<i class="'.$icon.'"></i> '.$title.$trash_title;
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="{{route('admin.home')}}">{{__('admin.home')}}</a></li>
+          <li class="breadcrumb-item"><a href="{{route('user.home')}}">{{__('admin.home')}}</a></li>
           {{--@if ($__env->yieldContent('page_title'))--}}
           <li class="breadcrumb-item active">{!!$title!!}{{--@yield('page_title')--}}</li>
           {{--@endif--}}

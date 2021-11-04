@@ -18,6 +18,8 @@ return [
     'explore'=>'تصفح',
     'courses'=>'الدورات',
     'Logout' => 'خروج',
-    'Exam' => 'Exam'
+    'Exam' => 'Exam',
+    'My Courses'  => 'My Courses',
+
 
 ];

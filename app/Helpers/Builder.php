@@ -70,6 +70,9 @@ class Builder {
 		$psth_to__check = str_replace(Request::root().'/',"", $href);
 
 		$active = ($sidebar->id==session('infastructure_id')) ? 'active' : $active;
+//        $active = (session('infastructure_id') != 'user') ? 'active' : '';
+//        dump(session('infastructure_id'));
+
 		$div .= '<a href="'.$href.'" class="nav-link '.$active.'">';
 
 			$div .= '<i class="nav-icon '.($sidebar->icon??'fas fa-chart-pie').'"></i>';

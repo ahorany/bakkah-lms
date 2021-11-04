@@ -79,6 +79,7 @@ class Kernel extends HttpKernel
         'checkRedirectPage'     => \App\Http\Middleware\checkRedirectPage::class,
         'check_page' => CheckPageMiddleware::class,
         'apiToken' => CheckApiKey::class,
+        'checkUserType' => \App\Http\Middleware\CheckUserType::class,
 
     ];
 

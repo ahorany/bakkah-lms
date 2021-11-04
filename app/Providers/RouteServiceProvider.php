@@ -9,7 +9,7 @@ class RouteServiceProvider extends ServiceProvider
 {
     protected $namespace = 'App\Http\Controllers';
 
-    public const HOME = '/admin/home';
+    public const HOME = '/user/home';
 
     public function boot()
     {
@@ -19,15 +19,12 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
         $this->mapWebRoutes();
         $this->mapEducationRoutes();
-
         $this->mapAdminRoutes();
-
         $this->mapTrainingRoutes();
-        // $this->mapEvaluationRoutes();
-        // $this->mapCertificatesRoutes();
+        $this->mapFrontRoutes();
+
     }
 
     protected function mapWebRoutes()
@@ -35,6 +32,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+    }
+
+    protected function mapFrontRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/front.php'));
     }
 
     protected function mapEducationRoutes()
@@ -46,7 +50,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapAdminRoutes()
     {
-        Route::middleware(['web', 'localeSessionRedirect', 'checkUser'])
+        Route::middleware(['web', 'localeSessionRedirect']) ///////
              ->namespace($this->namespace.'\Admin')
              ->group(base_path('routes/admin/admin.php'));
     }

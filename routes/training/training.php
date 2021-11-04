@@ -2,7 +2,7 @@
 
 Route::group([
 	// 'middleware'=>'auth',
-    'middleware' => ['auth', 'twofactor'],
+    'middleware' => ['auth', 'twofactor','checkUserType'],
 	'prefix'=>LaravelLocalization::setLocale(),
 ], function(){
 

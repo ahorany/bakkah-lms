@@ -23,14 +23,14 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4 {
     box-shadow: none !important;
 }
 .nav-sidebar>.nav-item.has-treeview>.nav-link:hover{
-    color:#26c6da;
+    /*color:#26c6da;*/
 }
 .nav-sidebar>.nav-item.has-treeview>.nav-link.active{
-    background: #26c6da;
+    background: #007bff;
 }
-.nav-sidebar>.nav-item.has-treeview>.nav-link.active:hover{
-    color: #fff;
-}
+/*.nav-sidebar>.nav-item.has-treeview>.nav-link.active:hover{*/
+/*    color: #fff;*/
+/*}*/
 .nav-sidebar>.nav-item.has-treeview>.nav-treeview>li a:hover{
     color: #26c6da;
 }

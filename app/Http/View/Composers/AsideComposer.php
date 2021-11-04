@@ -3,6 +3,7 @@
 namespace App\Http\View\Composers;
 use App\Infastructure;
 use App\Infrastructure;
+use App\User;
 use Illuminate\View\View;
 
 class AsideComposer
@@ -39,5 +40,9 @@ class AsideComposer
         $view->with('infastructures', $infastructures);
         $view->with('user_pages', $user_pages);
         $view->with('user_pages_child', $user_pages_child);
+
+
+        $user_sidebar_courses = User::whereId(auth()->id())->with(['courses'])->first();
+        $view->with('user_sidebar_courses', $user_sidebar_courses);
 	}
 }
