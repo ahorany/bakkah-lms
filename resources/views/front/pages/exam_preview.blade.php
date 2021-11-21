@@ -99,7 +99,7 @@
                                             <span class="d-block" v-text="'Q' + (index+indexStart+1)" ></span>
                                             <span class="d-block" v-text="question.mark + ' marks'" ></span>
                                         </div>
-                                        <p class="question" v-text="question.title"></p>
+                                        <p class="question" v-html="question.title"></p>
                                         <label>Select one:</label>
 
                                           <template v-if="page_type == 'exam'">

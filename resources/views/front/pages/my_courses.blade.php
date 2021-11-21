@@ -335,7 +335,6 @@
                 </div>
             </div>
         </div>
-
     <script>
 
         function rate() {
