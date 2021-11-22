@@ -11,6 +11,8 @@ Route::group([
         Route::resource('courses', 'CourseController');
         Route::patch('/courses/{course}/restore', 'CourseController@restore')->name('courses.restore');
 
+
+
         Route::resource('training_options', 'TrainingOptionController');
         Route::patch('/training_options/{training_option}/restore', 'TrainingOptionController@restore')->name('training_options.restore');
 
@@ -40,6 +42,7 @@ Route::group([
         Route::post('/add_answer', 'QuestionController@add_answer')->name('add_answer');
         Route::get('/delete_answer', 'QuestionController@delete_answer')->name('delete_answer');
         Route::post('/update_answer', 'QuestionController@update_answer')->name('update_answer');
+        Route::post('courses/importQuestions', 'QuestionController@importQuestions')->name('importQuestions');
 
         Route::resource('groups', 'GroupController');
         Route::patch('/groups/{group}/restore', 'GroupController@restore')->name('groups.restore');

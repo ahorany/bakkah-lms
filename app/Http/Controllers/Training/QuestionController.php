@@ -13,7 +13,9 @@ use App\Models\Training\Unit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\QuestionsImport;
+use App\Helpers\Active;
 class QuestionController extends Controller
 {
     private function buildTree($elements, $parentId = 0) {
@@ -169,6 +171,28 @@ class QuestionController extends Controller
             'check_correct' => \request()->check_correct ? 1 : 0,
         ]);
         return response()->json([ 'status' => 'success']);
+    }
+
+
+    public function importQuestions()
+    {
+
+       if(request()->file('file') != '')
+       {
+            Active::Flash('Imported', __('flash.imported'), 'success');
+
+            Excel::import(new QuestionsImport,request()->file('file'));
+            Active::Flash('Imported', __('flash.imported'), 'success');
+            return redirect()->route('training.courses.index', [
+                'attendent_status'=> 499,
+            ]);
+            // return back();
+       }
+       else
+       {
+            Active::Flash('Not Imported', __('flash.not_imported'), 'danger');
+            return back();
+       }
     }
 
 

@@ -10,6 +10,8 @@ use App\Models\Training\Course;
 use App\Constant;
 use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
+
+
 // use Illuminate\Support\Str;
 
 class CourseController extends Controller
@@ -252,4 +254,8 @@ class CourseController extends Controller
             }
         }
     }
+
+
+
+
 }
