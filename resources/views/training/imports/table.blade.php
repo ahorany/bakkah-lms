@@ -1,5 +1,11 @@
 
-
+<form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="col-md-5">
+    @csrf
+        {!!Builder::File('file', 'file', null, ['col'=>'col-md-8'])!!}
+        {!!Builder::Submit('importQuestions', 'import_questions', 'btn-success mx-1 export-btn py-1 px-2', null, [
+            'icon'=>'far fa-file-excel',
+        ])!!}
+</form>
 
 <div class="card">
   <div class="card-header">
