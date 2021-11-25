@@ -9,6 +9,7 @@ use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
 use App\Models\Training\Exam;
 use App\Models\Training\Question;
+use App\Models\Training\QuestionUnit;
 use App\Models\Training\Unit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
@@ -32,8 +33,9 @@ class QuestionController extends Controller
     }
 
     public function add_questions($exam_id){
-        $content = Content::where('id',$exam_id)->with(['questions.answers'])->latest()->first();
+        $content = Content::where('id',$exam_id)->with(['questions.answers','questions.units'])->latest()->first();
         /////
+//        return $content;
         $course_id = $content->course_id;
         $units = Unit::where('course_id',$course_id)->with(['subunits'])->get();
 
@@ -44,7 +46,7 @@ class QuestionController extends Controller
     }
 
     public function add_question(){
-//        return \request();
+//        return \request()->units_select;
         // validation
         $rules = [
             "title"   => "required|string",
@@ -76,8 +78,20 @@ class QuestionController extends Controller
             'mark' => \request()->mark,
             'feedback' => \request()->feedback,
             'exam_id' => \request()->exam_id,
-            'unit_id' => \request()->unit_id != -1 ? \request()->unit_id  : null ,
+//            'unit_id' => \request()->unit_id != -1 ? \request()->unit_id  : null ,
         ]);
+
+        QuestionUnit::where('question_id', $question->id)->delete();
+        foreach (\request()->units_select as $unit){
+            if($unit != -1){
+                QuestionUnit::create([
+                    'unit_id' => $unit,
+                    'question_id' => $question->id,
+                ]);
+            }
+        }
+
+
 
        $mark = DB::select(DB::raw("SELECT SUM(mark) as mark FROM questions WHERE exam_id =".\request()->exam_id));
 
@@ -99,9 +113,9 @@ class QuestionController extends Controller
         }
 
         if(\request()->save_type == 'add'){
-            $question = Question::where('id',$question->id)->with(['answers'])->first();
+            $question = Question::where('id',$question->id)->with(['answers','units'])->first();
         }else{
-            $question = Question::where('id',\request()->question_id)->with(['answers'])->first();
+            $question = Question::where('id',\request()->question_id)->with(['answers','units'])->first();
         }
            return response()->json(['data' => $question]);
     }

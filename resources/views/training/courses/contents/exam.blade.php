@@ -77,7 +77,7 @@
 
                     <div class="form-group">
                         <label>Unit </label>
-                        <select v-model="unit_id" class="form-control">
+                        <select multiple v-model="units_select" class="form-control">
                             <option value="-1">Choose unit</option>
                             <option v-for="unit in compo_units" :value="unit.id" v-text="unit.title"></option>
                         </select>
@@ -147,6 +147,7 @@
                 feedback: '',
                 mark: 0,
                 unit_id: -1,
+                units_select : [],
                 content: window.content,
                 units: window.units,
                 model_type: 'question',
@@ -174,7 +175,7 @@
                             ['clean']
                         ],
                     },
-                }
+                },
             },
             created: function () {
                 console.log(this.getLeafNodes(this.units));
@@ -190,10 +191,10 @@
                 },
                 getLeafNodes :  function (nodes, result = []){
                     for(var i = 0, length = nodes.length; i < length; i++){
-                        this.compo_title == '' ?   this.compo_title += nodes[i].title : this.compo_title += ' > ' + nodes[i].title ;
+                        // this.compo_title == '' ?   this.compo_title += nodes[i].title : this.compo_title += ' > ' + nodes[i].title ;
                         if(!nodes[i].s || nodes[i].s.length === 0){
-                            this.compo_units.push( {id : nodes[i].id , title :  this.compo_title} );
-                            this.compo_title = '';
+                            this.compo_units.push( {id : nodes[i].id , title :  nodes[i].title} );
+                            // this.compo_title = '';
                             result.push(nodes[i]);
                         }else{
                             result = this.getLeafNodes(nodes[i].s, result);
@@ -205,7 +206,7 @@
                     // clear
                     this.title = '';
                     this.feedback = '';
-                    this.unit_id = -1;
+                    this.units_select = [];
                     this.mark = 0;
                     this.answers = [];
                     this.question_id = null;
@@ -231,7 +232,14 @@
                             self.title = question.title;
                             self.feedback = question.feedback;
                             self.mark = question.mark;
-                            self.unit_id = question.unit_id ? question.unit_id : -1;
+                            self.units_select = [];
+                            if(question.units){
+                                question.units.forEach(function (unit) {
+                                    self.units_select.push(unit.id)
+                                });
+                            }
+
+                            // self.unit_id = question.unit_id ? question.unit_id : -1;
                         }
                         return true;
                     });
@@ -319,7 +327,7 @@
                             'title': self.title,
                             'mark': self.mark,
                             'feedback': self.feedback,
-                            'unit_id': self.unit_id,
+                            'units_select': self.units_select,
                             'exam_id': self.content.id,
                             'answers': self.answers,
                             'question_id': self.question_id,
