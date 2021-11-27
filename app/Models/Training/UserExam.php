@@ -25,6 +25,10 @@ class UserExam extends Model
         return $this->belongsToMany(Answer::class,'user_answers','user_exam_id','answer_id');
     }
 
+    public function user_questions(){
+        return $this->belongsToMany(Question::class,'user_questions','user_exam_id','question_id')->withPivot('user_exam_id' ,'question_id','mark');
+    }
+
 
 
 }

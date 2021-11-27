@@ -65,7 +65,7 @@ class UserProfileController extends Controller
             GROUP BY questions.unit_id
        "));
 
-        return view('front.pages.exam_details',compact('unit_marks','exam_title','exam_id'));
+        return view('pages.exam_details',compact('unit_marks','exam_title','exam_id'));
 
     }
 
@@ -106,7 +106,7 @@ class UserProfileController extends Controller
             'content_id' => $exam_id,
         ]);
 
-        return view('front.pages.exam',compact('exam'));
+        return view('pages.exam',compact('exam'));
     }
 
 
@@ -118,48 +118,46 @@ class UserProfileController extends Controller
             ->where('user_id',\auth()->id())->where('status',0)->first();
         if (!$user_exam) abort(404);
 
-        if(\request()->has('answer')){
-            if(\request()->answer){
+        if(\request()->has('answer') && \request()->status != 'save'){
                 if(is_array(\request()->answer)) {
-                    UserAnswer::where( 'user_exam_id' , \request()->user_exam_id)->
-                    where('question_id',request()->question_id)->delete();
+                        UserAnswer::where( 'user_exam_id' , \request()->user_exam_id)->
+                        where('question_id',request()->question_id)->delete();
+                        $question = Question::select('id','mark')->where('id',request()->question_id)->with(['answers' => function($q){
+                            return $q->where('check_correct',1);
+                        }])->first();
 
-                    $question = Question::select('id','mark')->where('id',request()->question_id)->with(['answers' => function($q){
-                        return $q->where('check_correct',1);
-                    }])->first();
-
-                    $count_correct_answers = 0;
-                    foreach (\request()->answer as $answer){
-                        foreach ($question->answers as $question_answer){
-                            if($question_answer->id == $answer){
-                                $count_correct_answers++;
+                        $count_correct_answers = 0;
+                        foreach (\request()->answer as $answer){
+                            foreach ($question->answers as $question_answer){
+                                if($question_answer->id == $answer){
+                                    $count_correct_answers++;
+                                }
                             }
+                            UserAnswer::create([
+                                'answer_id' => $answer,
+                                'question_id' => request()->question_id,
+                                'user_exam_id' => \request()->user_exam_id,
+                            ]);
                         }
-                        UserAnswer::create([
-                            'answer_id' => $answer,
-                            'question_id' => request()->question_id,
-                            'user_exam_id' => \request()->user_exam_id,
-                        ]);
-                    }
 
-                    $mark = 0;
-                    if(count(\request()->answer) > count($question->answers) ){
                         $mark = 0;
-                    }else if($count_correct_answers == count($question->answers) ){
-                        $mark = $question->mark;
-                    }else{
-                        $mark = $question->mark / count($question->answers);
-                        $mark = $mark * $count_correct_answers;
-                    }
+                        if(count(\request()->answer) > count($question->answers) ){
+                            $mark = 0;
+                        }else if($count_correct_answers == count($question->answers) ){
+                            $mark = $question->mark;
+                        }else{
+                            $mark = $question->mark / count($question->answers);
+                            $mark = $mark * $count_correct_answers;
+                        }
 
-                    UserQuestion::updateOrCreate([
-                        'question_id' => \request()->question_id,
-                        'user_exam_id' => \request()->user_exam_id,
-                    ],[
-                        'question_id' => \request()->question_id,
-                        'user_exam_id' => \request()->user_exam_id,
-                        'mark' => $mark
-                    ]);
+                        UserQuestion::updateOrCreate([
+                            'question_id' => \request()->question_id,
+                            'user_exam_id' => \request()->user_exam_id,
+                        ],[
+                            'question_id' => \request()->question_id,
+                            'user_exam_id' => \request()->user_exam_id,
+                            'mark' => $mark
+                        ]);
 
                 }else{
                     $question = Question::select('id','mark')->where('id',\request()->question_id)->first();
@@ -184,7 +182,6 @@ class UserProfileController extends Controller
                         'mark' => ($answer_db->check_correct == 1 ? $question->mark : 0 )
                     ]);
                 }
-            }
 
         }
 
@@ -254,7 +251,7 @@ class UserProfileController extends Controller
                     $exam->exam->duration = ($exam->exam->duration * 60) -  ($d1 - $d2);
                 }
 
-            return view('front.pages.exam_preview',compact('exam','start_user_attepmt','page_type','without_timer'));
+            return view('pages.exam_preview',compact('exam','start_user_attepmt','page_type','without_timer'));
         }
 
 
@@ -279,7 +276,7 @@ class UserProfileController extends Controller
             }else{
                 $exam->exam->duration *= 60;
             }
-            return view('front.pages.exam_preview',compact('exam','start_user_attepmt','page_type','without_timer'));
+            return view('pages.exam_preview',compact('exam','start_user_attepmt','page_type','without_timer'));
 
         }else{
             abort(404);
@@ -296,14 +293,16 @@ class UserProfileController extends Controller
     public function review_exam($exam_id){
         $page_type = 'review';
 
+
         $exam = UserExam::whereId($exam_id)
             ->where('user_id',\auth()->id())
             ->where('status',1)
-            ->with(['exam.content.questions.answers','user_answers'])
+            ->with(['exam.content.questions.answers','user_answers','user_questions'])
             ->first();
 
+
         if ( !$exam  ) abort(404);
-        return view('front.pages.exam_preview',compact('exam','page_type'));
+        return view('pages.review',compact('exam','page_type'));
 
     }
 
@@ -339,7 +338,7 @@ class UserProfileController extends Controller
         $total_rate = $total_rate[0]->total_rate;
 
 
-        return view('front.pages.my_courses',compact('course','total_rate'));
+        return view('pages.course_details',compact('course','total_rate'));
 //        return view('front.pages.course_details',compact('course'));
 
     }
@@ -446,15 +445,15 @@ class UserProfileController extends Controller
         $previous = ($previous[0]??null);
 
 
-        return view('front.pages.file',compact('content','previous','next'));
+        return view('pages.file',compact('content','previous','next'));
     }
 
-    public function my_courses() {
-        $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
-            return $q->where('post_type','image')->where('locale',app()->getLocale());
-        }])->first();
-        return view('front.pages.my_courses',compact('courses'));
-    }
+//    public function my_courses() {
+//        $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
+//            return $q->where('post_type','image')->where('locale',app()->getLocale());
+//        }])->first();
+//        return view('front.pages.my_courses',compact('courses'));
+//    }
 
     public function home() {
 
@@ -495,13 +494,13 @@ class UserProfileController extends Controller
 
 
 
-        return view('front.pages.home',compact('complete_courses','courses','last_video','next_videos'));
+        return view('home',compact('complete_courses','courses','last_video','next_videos'));
 
     }
 
     public function logout(Request $request) {
         Auth::logout();
-        return redirect(route('user.login'));
+        return redirect(route('login'));
     }
 
 
@@ -543,7 +542,7 @@ class UserProfileController extends Controller
         if(Auth::check()){
             return redirect(route('user.home'));
         }
-        return view('front.pages.register');
+        return view('auth.register');
     }
 
     public function registerSubmit(Request $request)
@@ -582,7 +581,7 @@ class UserProfileController extends Controller
 
 
     public function change_password() {
-        return view('front.pages.change_password');
+        return view('pages.change_password');
     }
 
     public function save_password() {
@@ -616,7 +615,7 @@ class UserProfileController extends Controller
         $user = User::with(['upload'])->findOrFail(auth()->user()->id);
         $genders = Constant::where('parent_id', 42)->get();
         $countries = Constant::where('post_type', 'countries')->get();
-        return view('front.pages.info',compact('user', 'genders', 'countries'));
+        return view('pages.info',compact('user', 'genders', 'countries'));
     }
 
     public function update($id,Request $request){

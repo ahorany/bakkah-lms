@@ -1,4 +1,5 @@
-@extends(FRONT.'.education.layouts.master')
+@extends('layouts.auth')
+
 @section('content')
     <div class="main-content py-5 text-center">
         <h1 class="main-color boldfont display-1 mb-3">{{__('education.Opps!')}}</h1>
