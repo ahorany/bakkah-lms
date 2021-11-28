@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Training;
 
 use App\Models\Training\Group;
 use App\Models\Training\UserGroup;
@@ -21,6 +21,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
+        Active::$namespace = 'crm';
         Active::$folder = 'users';
     }
 

@@ -18,14 +18,14 @@ Route::group([
 ], function(){
 
 	Route::group(['prefix'=>'user', 'as'=>'admin.'], function(){
-
-        Route::resource('users', 'UserController');
-        Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
-        Route::get('/users/{user}/change-password', 'UserController@changePassword')->name('users.changePassword');
-        Route::patch('/users/{user}/change-password', 'UserController@savePassword')->name('users.savePassword');
-
-        Route::resource('roles', 'RoleController');
-        Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
+//
+//        Route::resource('users', 'UserController');
+//        Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
+//        Route::get('/users/{user}/change-password', 'UserController@changePassword')->name('users.changePassword');
+//        Route::patch('/users/{user}/change-password', 'UserController@savePassword')->name('users.savePassword');
+//
+//        Route::resource('roles', 'RoleController');
+//        Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
 
         Route::resource('details', 'DetailController');
         Route::patch('/details/{detail}/restore', 'AccordionController@restore')->name('details.restore');

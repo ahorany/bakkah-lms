@@ -1,4 +1,4 @@
-@extends(ADMIN.'.general.form')
+@extends('layouts.crm.form')
 <link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/jquery.datetimepicker.css')}}">
 
 {!!Builder::SetPostType($post_type)!!}
@@ -26,13 +26,13 @@
 @endsection
 
 
-@section('seo')
-    @include(ADMIN.'.SEO.form', ['post'=>$eloquent??null])
-@endsection
+{{--@section('seo')--}}
+{{--    @include(ADMIN.'.SEO.form', ['post'=>$eloquent??null])--}}
+{{--@endsection--}}
 
 @section('image')
 	<?php $image_title = __('admin.image'); ?>
-	@include(ADMIN.'.Html.image')
+	@include('Html.image')
 @endsection
 
 <script src="{{CustomAsset(ADMIN.'-dist/js/jquery.datetimepicker.js')}}"></script>
