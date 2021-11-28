@@ -13,9 +13,9 @@
         <tr>
             <th class="col-md-1">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
-            {{-- <th class="img-table d-none d-sm-table-cell">{{__('admin.action')}}</th> --}}
             <th class="img-table d-none d-sm-table-cell col-md-1">{{__('admin.image')}}</th>
             <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th>
+            <th scope="col">{{__('admin.action')}}</th>
         </tr>
       </thead>
       <tbody>
@@ -26,11 +26,12 @@
         </td>
         <td>
             <span style="display: block;" class="title">{{$post->trans_title}}</span>
-            {!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
-                'post'=>$post->id,
-            ])!!}
+
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
+        <td class="d-sm-table-cell">{!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
+            'post'=>$post->id,
+        ])!!}</td>
         <td class="d-sm-table-cell" style="font-size: 13px;">
           <span class="author">
             {!!$post->published_at!!}<br>
