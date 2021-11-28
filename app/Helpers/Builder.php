@@ -66,25 +66,28 @@ class Builder {
           $args = array_merge($args, json_decode($sidebar->route_param, true));
         }
 
-		$href = !is_null($sidebar->route_name)?route($sidebar->route_name, $args):'#';
-		$psth_to__check = str_replace(Request::root().'/',"", $href);
+        if(Route::has($sidebar->route_name)){
 
-		$active = ($sidebar->id==session('infastructure_id')) ? 'active' : $active;
-//        $active = (session('infastructure_id') != 'user') ? 'active' : '';
-//        dump(session('infastructure_id'));
+            $href = !is_null($sidebar->route_name)?route($sidebar->route_name, $args):'#';
+            $psth_to__check = str_replace(Request::root().'/',"", $href);
 
-		$div .= '<a href="'.$href.'" class="nav-link '.$active.'">';
+            $active = ($sidebar->id==session('infastructure_id')) ? 'active' : $active;
+    //        $active = (session('infastructure_id') != 'user') ? 'active' : '';
+    //        dump(session('infastructure_id'));
 
-			$div .= '<i class="nav-icon '.($sidebar->icon??'fas fa-chart-pie').'"></i>';
-			// $div .= '<i class="nav-icon fas fa-th"></i>';
-	        $div .= '<p>';
-	       	$div .= $sidebar->trans_title;
+            $div .= '<a href="'.$href.'" class="nav-link '.$active.'">';
 
-	       	if(is_null($sidebar->route_name))
-	       	  $div .= '<i class="right fas fa-angle-left"></i>';
+                $div .= '<i class="nav-icon '.($sidebar->icon??'fas fa-chart-pie').'"></i>';
+                // $div .= '<i class="nav-icon fas fa-th"></i>';
+                $div .= '<p>';
+                $div .= $sidebar->trans_title;
 
-	        $div .= '</p>';
-        $div .= '</a>';
+                if(is_null($sidebar->route_name))
+                $div .= '<i class="right fas fa-angle-left"></i>';
+
+                $div .= '</p>';
+            $div .= '</a>';
+        }
         return $div;
 	}
 
