@@ -29,7 +29,7 @@
     </div>
 
 	<div  class="card" v-for="(content,index) in contents">
-		<div class="card-header" >
+		<div class="card-body" >
             <div class="clearfix">
                 <div class="row my-3">
                     <div class="col-md-8 col-lg-8">
@@ -38,33 +38,29 @@
                     <div class="col-md-4 col-lg-4 text-right">
                         <div class="BtnGroupRows" data-id="150">
 
-                            <button @click="OpenSectionEditModal(content.id)"  class="btn btn-sm btn-outline-warning" >
+                            <button @click="OpenSectionEditModal(content.id)"  class="edit btn-sm btn-outline-warning" >
                                 <i class="fa fa-pencil-alt"></i> Edit</button>
 
-                            <button @click="deleteSection(content.id)"  class="btn btn-sm btn-outline-danger" >
+                            <button @click="deleteSection(content.id)"  class="delete btn-sm btn-outline-danger" >
                                 <i class="fa fa-trash"></i> Delete</button>
                         </div>
                     </div>
                     <div class="mt-3 col-md-12 col-lg-12">
                         <div>
-                            <button type="button" @click="OpenModal('video',content.id)" class="btn btn-outline-info btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
-                            <button type="button" @click="OpenModal('audio',content.id)" class="btn btn-outline-info btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                            <button type="button" @click="OpenModal('presentation',content.id)" class="btn btn-outline-info btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
-                            <button type="button" @click="OpenModal('scorm',content.id)" class="btn btn-outline-info btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
-                            <button  type="button" @click="OpenModal('exam',content.id)" class="btn btn-outline-info btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
+                            <button type="button" @click="OpenModal('video',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
+                            <button type="button" @click="OpenModal('audio',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+                            <button type="button" @click="OpenModal('presentation',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
+                            <button type="button" @click="OpenModal('scorm',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
+                            <button  type="button" @click="OpenModal('exam',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
                         </div>
                     </div>
 
                 </div>
 
 
-
-
-
             </div>
 
             <div v-if="content.details" class="my-2" v-html="content.details.excerpt">}</div>
-
 
 
             <table class="table">
@@ -174,8 +170,7 @@
 
 
 				<div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content">
-{{--                        <textarea  v-model="excerpt"  class="form-control"  rows="5" placeholder="Details"></textarea>--}}
-{{--                    <editor v-model="excerpt" theme="snow"></editor>--}}
+
                     <editor v-model="excerpt" theme="snow" :options="options" :placeholder="'Details'"></editor>
 
 

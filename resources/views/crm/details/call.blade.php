@@ -7,12 +7,12 @@
                 ?>
                 <ul class="list-unstyled">
                     @foreach($constants as $constant)
-                        <li>
+                        <li class="mb-3">
                             {{$constant->trans_name??null}}
                             @if($eloquent->detail()->where('constant_id', $constant->id)->count()==0)
                                 <a target="_blank" href="{{route('admin.details.create', ['master_id'=>$eloquent->id, 'constant_id'=>$constant->id])}}" class="btn btn-outline-primary btn-xs">{{__('admin.add')}}</a>
                             @else
-                                <a target="_blank" href="{{route('admin.details.edit', ['detail'=>$eloquent->details()->where('constant_id', $constant->id)->first()->id])}}" class="btn btn-outline-primary btn-xs">{{__('admin.edit')}}</a>
+                                <a target="_blank" href="{{route('admin.details.edit', ['detail'=>$eloquent->details()->where('constant_id', $constant->id)->first()->id])}}" class="edit btn-sm btn-outline-primary btn-xs">{{__('admin.edit')}}</a>
                             @endif
                         </li>
                     @endforeach

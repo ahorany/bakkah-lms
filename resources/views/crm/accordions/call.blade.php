@@ -11,7 +11,7 @@
                     @foreach($post_morphs as $post_morph)
                         <li>
                             {{$post_morph->constant->trans_name??null}}
-                            <a target="_blank" href="{{route('admin.accordions.index')}}?master_id={{$post_morph->id}}" class="btn btn-outline-primary btn-xs">
+                            <a target="_blank" href="{{route('admin.accordions.index')}}?master_id={{$post_morph->id}}" class="{{($post_morph->accordions()->count()!=0) ? 'edit btn-sm': 'btn' }} btn-outline-primary btn-xs">
                                 @if($post_morph->accordions()->count()==0)
                                     {{__('admin.add')}}
                                 @else
