@@ -17,7 +17,7 @@
     color: gold;
     border: 1px solid gold;
 }
-.courses .BtnGroupRows a:hover , .edit:hover{
+.courses .BtnGroupRows a:hover , .edit:hover , .btn-outline-primary:not(:disabled):not(.disabled):active{
     background: gold;
     color: #000;
 }
@@ -63,7 +63,6 @@
 .inputs .form-group {
     margin: 0 0 15px !important;
 }
-
 .card-default{
     margin-bottom: 10px;
 }
