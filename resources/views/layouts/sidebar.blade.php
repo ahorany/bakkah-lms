@@ -61,7 +61,6 @@
                         @foreach($user_pages_child as $infa_child)
                             @if ($infa_child->parent_id == $aside->id)
                                 <li class="nav-item">
-                                    {{-- @dd($infa_child) --}}
                                     {!!Builder::SidebarHref($infa_child, null, '')!!}
                                 </li>
                             @endif
