@@ -11,6 +11,7 @@ use App\Constant;
 use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
 use App\Imports\QuestionsImport;
+use App\Imports\ResultsImport;
 use App\Imports\CoursesImport;
 use App\Imports\UsersImport;
 use App\Imports\UsersCoursesImport;
@@ -60,6 +61,13 @@ class ImportController extends Controller
         // dd(request()->all());
         return $this->import(new QuestionsImport);
     }
+
+    public function importResults()
+    {
+        // dd(request()->all());
+        return $this->import(new ResultsImport);
+    }
+
 
 
     public function import($import)
