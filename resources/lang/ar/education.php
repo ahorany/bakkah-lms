@@ -18,6 +18,7 @@ return [
     'explore'=>'تصفح',
     'courses'=>'الدورات',
     'Logout' => 'خروج',
-    'Exam' => 'Exam',
-    'My Courses'  => 'My Courses',
+    'Exam' => 'اختبار',
+    'My Courses'  => 'دوراتي',
+    'Add a Review' => "أضف تقييم"
 ];

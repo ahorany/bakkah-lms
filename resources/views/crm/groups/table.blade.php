@@ -12,7 +12,6 @@
             <th class="">{{__('admin.name')}}</th>
             <th class="">{{__('admin.title')}}</th>
             <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th>
-            <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th>
             <th class="img-table d-none d-sm-table-cell">{{__('admin.action')}}</th>
             <th class="d-none d-sm-table-cell user-td">{{__('admin.user')}}</th>
 
