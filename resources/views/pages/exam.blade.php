@@ -93,7 +93,7 @@
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-3">
                                     <div class="card h-100">
-                                        <div class="card-body">
+                                        <div class="card-body" style="padding: 15px 30px;">
                                             <h5>Exam title : {{$exam->title}}</h5>
                                             <p>Start date : {{$exam->exam->start_date}}</p>
                                             <p>End date : {!!$exam->exam->end_date??'<span style="font-size:19px">∞</span>'!!}</p>
@@ -129,7 +129,7 @@
 
                                 <div class="col-12 col-sm-12 col-md-8 col-lg-8">
 
-                                <div class="card pt-3 pl-3 h-100" >
+                                <div class="card pt-3 pl-3 h-100" style="padding: 15px 30px;">
                                     <h5 class="card-title">Exam Description</h5>
 
                                     <div class="card-body">

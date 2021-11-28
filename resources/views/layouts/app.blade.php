@@ -12,14 +12,11 @@
 
     @yield('useHead')
 
-
     <link rel="icon" href="{{CustomAsset('assets/images/logo.png')}}">
-
     <link rel="stylesheet" href="{{CustomAsset('assets/css/bootstrap-grid.min.css')}}">
     <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}">
 
     @yield('style')
-
 </head>
 
 <body>
@@ -31,7 +28,7 @@
 
 @include("layouts.sidebar")
 
-        <main class="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-3 p-sm-5" id="main-vue-element">
+        <main class="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-3 p-sm-3" id="main-vue-element">
             @yield('content')
         </main>
     </div>
