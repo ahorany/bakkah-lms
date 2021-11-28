@@ -3,12 +3,12 @@
 @section('content')
 
     <style>
-        .btn-table {
+        table .btn-table {
             border: none !important;
             font-size: 12px;
             padding: 5px;
         }
-        td .title{
+        table td .title{
             padding: 5px;
         }
     </style>
