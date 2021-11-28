@@ -12,14 +12,11 @@
 
     @yield('useHead')
 
-
     <link rel="icon" href="{{CustomAsset('assets/images/logo.png')}}">
-
     <link rel="stylesheet" href="{{CustomAsset('assets/css/bootstrap-grid.min.css')}}">
     <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}">
 
     @yield('style')
-
 </head>
 
 <body>

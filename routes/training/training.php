@@ -61,6 +61,7 @@ Route::group([
 
 
         Route::post('courses/importQuestions', 'ImportController@importQuestions')->name('importQuestions');
+        Route::post('courses/importResults', 'ImportController@importResults')->name('importResults');
 
 
         Route::resource('groups', 'GroupController');
