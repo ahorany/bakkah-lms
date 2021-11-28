@@ -20,6 +20,4 @@ return [
     'Logout' => 'خروج',
     'Exam' => 'Exam',
     'My Courses'  => 'My Courses',
-
-
 ];

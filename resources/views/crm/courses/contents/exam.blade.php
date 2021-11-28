@@ -34,6 +34,27 @@
                         <input type="hidden" name="content_id" value="{{$content->id}}">
                     </div>
                 </div>
+
+        </form>
+
+
+        <form action="{{ route('training.importResults') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+            @csrf
+                <div class="col-md-6 px-0">
+                    <div class="add-question-file">
+                        {!!Builder::File('file', 'file', null, [])!!}
+                    </div>
+                </div>
+                <div class="col-md-6 px-0">
+                    <div class="import-question-file">
+                        {!! Builder::Submit('importResults', 'importResults', 'save btn-sm btn-success mx-1 export-btn py-1 px-2', null, [
+                            'icon'=>'far fa-file-excel',
+                        ]) !!}
+                        <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="info btn btn-warning btn-md" role="button"> Sample </a>
+                        <input type="hidden" name="content_id" value="{{$content->id}}">
+                    </div>
+                </div>
+
         </form>
 
 	<div  class="card" v-for="(question,index) in content.questions">
