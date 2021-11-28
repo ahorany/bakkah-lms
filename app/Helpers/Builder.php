@@ -553,15 +553,15 @@ class Builder {
 	}
 
 	static function Edit($title, $id){
-		return self::GridHref('edit', $title, $id, 'btn-sm btn-outline-primary', 'pencil-alt', 'edit');
+		return self::GridHref('edit', $title, $id, 'btn-sm btn-outline-primary', 'pencil', 'edit');
 	}
 
     static function Dublicate($title, $id){
-		return self::GridHref('duplicate', $title, $id, 'btn-sm btn-outline-primary duplicate', 'pencil-alt', 'duplicate','#duplicateRow');
+		return self::GridHref('duplicate', $title, $id, 'btn-sm btn-outline-primary duplicate', 'pencil', 'duplicate','#duplicateRow');
 	}
 
     static function Replicate($title, $id){
-		return self::GridHref('replicate', $title, $id, 'btn-sm btn-outline-primary replicate', 'pencil-alt', 'replicate','#replicateRow');
+		return self::GridHref('replicate', $title, $id, 'btn-sm btn-outline-primary replicate', 'pencil', 'replicate','#replicateRow');
 	}
 
     static function Attendance($title, $id){
