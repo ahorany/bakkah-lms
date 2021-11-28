@@ -30,7 +30,7 @@ class ContentController extends Controller
 //            ->latest()
             ->get();
 //        return $contents;
-        return view('training.courses.contents.index', compact('course', 'contents'));
+        return view('crm.courses.contents.index', compact('course', 'contents'));
     }
 
     public function delete_content()

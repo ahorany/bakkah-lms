@@ -28,7 +28,7 @@ class UnitController extends Controller
         if (!$course) abort(404);
 
         $units = $this->buildTree($course->units);
-        return view('training.courses.units.index',compact('course','units'));
+        return view('crm.courses.units.index',compact('course','units'));
     }
 
     private function buildTree($elements, $parentId = 0) {

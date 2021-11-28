@@ -18,7 +18,7 @@ class CourseController extends Controller
 {
     public function __construct()
     {
-        Active::$namespace = 'training';
+        Active::$namespace = 'crm';
         Active::$folder = 'courses';
     }
 
@@ -48,6 +48,7 @@ class CourseController extends Controller
 
         $count = $courses->count();
         $courses = $courses->page();
+
         return Active::Index(compact('courses', 'count', 'post_type', 'trash', 'categories'));
     }
 
