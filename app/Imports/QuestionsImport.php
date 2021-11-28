@@ -28,48 +28,52 @@ class QuestionsImport implements ToCollection, WithHeadingRow
         // dd($rows);
         foreach ($rows as $row)
         {
-            DB::table('questions')->insert([
-                [
-
-                    'title'             => $row['question_text'],
-                    'mark'              => $row['default_garde'],
-                    'exam_id'           => request()->content_id,
-                    'feedback'          => $row['general_feedback'],
-                    'question_type'     => $row['question_type'],
-                    'question_name'     => $row['question_name'],
-                    'penalty'           => $row['penalty'],
-                    'hidden'            => $row['hidden'],
-                    'single'            => $row['single'],
-                    'shuffle'           => $row['shuffle'],
-                    'answering_number'  => $row['answering_number'],
-                    'instruction'       => $row['instruction'],
-                    'correct_feedback'  => $row['correct_feedback'],
-                    'partially_feedback'=> $row['partially'],
-                    'incorrect_feedback'=> $row['incorrect'],
-                ],
-            ]);
-
-            $question_id = DB::getPdo()->lastInsertId();
-
-
-            for($i=1;$i<=4;$i++)
+            if($row['question_text'] != '')
             {
-                $check_correct = 0;
-                if($row['fraction'] == '100' && $i == 1)
-                    $check_correct = 1;
-                else if($row['fraction2'] == '100' && $i == 2)
-                    $check_correct = 1;
-                if($row['fraction_3'] == '100' && $i == 3)
-                    $check_correct = 1;
-                elseif($row['fraction_4'] == '100' && $i == 3)
-                    $check_correct = 1;
+                DB::table('questions')->insert([
+                    [
 
-                Answer::create([
-                    'title'             => $row['answer'.$i],
-                    'question_id'       => $question_id,
-                    'check_correct'     => $check_correct,
+                        'title'             => $row['question_text'],
+                        'mark'              => $row['default_garde'],
+                        'exam_id'           => request()->content_id,
+                        'feedback'          => $row['general_feedback'],
+                        'question_type'     => $row['question_type'],
+                        'question_name'     => $row['question_name'],
+                        'penalty'           => $row['penalty'],
+                        'hidden'            => $row['hidden'],
+                        'single'            => $row['single'],
+                        'shuffle'           => $row['shuffle'],
+                        'answering_number'  => $row['answering_number'],
+                        'instruction'       => $row['instruction'],
+                        'correct_feedback'  => $row['correct_feedback'],
+                        'partially_feedback'=> $row['partially'],
+                        'incorrect_feedback'=> $row['incorrect'],
+                    ],
                 ]);
+
+                $question_id = DB::getPdo()->lastInsertId();
+
+
+                for($i=1;$i<=4;$i++)
+                {
+                    $check_correct = 0;
+                    if($row['fraction'] == '100' && $i == 1)
+                        $check_correct = 1;
+                    else if($row['fraction2'] == '100' && $i == 2)
+                        $check_correct = 1;
+                    if($row['fraction_3'] == '100' && $i == 3)
+                        $check_correct = 1;
+                    elseif($row['fraction_4'] == '100' && $i == 3)
+                        $check_correct = 1;
+
+                    Answer::create([
+                        'title'             => $row['answer'.$i],
+                        'question_id'       => $question_id,
+                        'check_correct'     => $check_correct,
+                    ]);
+                }
             }
+
 
         }
 

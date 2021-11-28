@@ -46,17 +46,6 @@
             </form>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6" >
-            <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="col-md-5">
-                @csrf
-                    {!!Builder::File('file', 'file', null, ['col'=>'col-md-8'])!!}
-                    {!!Builder::Submit('importQuestions', 'import_questions', 'btn-success mx-1 export-btn py-1 px-2', null, [
-                        'icon'=>'far fa-file-excel',
-                    ])!!}
-                    <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="btn btn-warning btn-md" role="button"> Sample </a>
-            </form>
-        </div>
-    </div>
+
 </div>
 @endsection
