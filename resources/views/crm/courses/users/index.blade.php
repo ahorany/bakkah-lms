@@ -18,8 +18,12 @@
     <div class="course_info">
         <label class="m-0">{{$course->trans_title}}</label>
        <div>
-           <button type="button" @click="OpenModal()" class="btn btn-outline-dark mx-2">
-           <i class="far fa-plus-square mr-2"></i> {{__('admin.add_users')}}
+           <button type="button" @click="OpenModal('trainee')" class="btn btn-outline-dark mx-2">
+           <i class="far fa-plus-square mr-2"></i> {{__('admin.add_trainee')}}
+           </button>
+
+           <button type="button" @click="OpenModal('instructor')" class="btn btn-outline-dark mx-2">
+               <i class="far fa-plus-square mr-2"></i> {{__('admin.add_instructor')}}
            </button>
        </div>
     </div>
@@ -141,7 +145,7 @@
         window.lang = '{!!app()->getLocale()!!}'
         window.course = {!! json_encode($course??[]) !!}
 	var contents = new Vue({
-		el:'#contents',
+        el:'#main-vue-element',
         data : {
             course : window.course,
             lang : window.lang,
@@ -151,6 +155,7 @@
             search_users    : [] ,
             users_expire_date    : {} ,
             add_users : {},
+            type_user : 'trainee',
         },
         created(){
 		    let self = this
@@ -161,7 +166,8 @@
             console.log(self.users_expire_date)
         },
         methods : {
-                OpenModal : function(){
+                OpenModal : function(type){
+                    this.type_user = type;
                     $('#ContentModal').modal('show')
                 },
                 search: function () {
@@ -206,6 +212,7 @@
                             'users' : self.add_users ,
                             'course_id' : self.course.id ,
                             'expire_date' : self.expire_date ,
+                            'type' : self.type_user ,
                         }
                     )
                         .then(response => {
