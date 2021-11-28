@@ -1,8 +1,3 @@
-<style>
-    .btn-table {
-        border: none !important;
-    }
-</style>
 <div class="card courses">
   <div class="card-header">
       {{-- {!!Builder::SetBtnParam([
@@ -30,7 +25,7 @@
           <span class="td-title">{{$loop->iteration}}</span>
         </td>
         <td>
-            <span style="display: block;">{{$post->trans_title}}</span>
+            <span style="display: block;" class="title">{{$post->trans_title}}</span>
             {!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
                 'post'=>$post->id,
             ])!!}
