@@ -95,12 +95,9 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
-                                <i class="fas fa-times"></i> {{__('admin.close')}}</button>
-                            <button @click="clear()" type="reset" class="btn btn-outline-info" @click="Clear()">
-                                <i  class="fas fa-eraser"></i> {{__('admin.clear')}}</button>
-                            <button type="button"  @click="save()" class="btn btn-outline-success">
-                                <i class="fa fa-save"></i> {{__('admin.save')}}</button>
+                            <button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
+                            <button @click="clear()" type="reset" class="info btn btn-outline-info" @click="Clear()">{{__('admin.clear')}}</button>
+                            <button type="button"  @click="save()" class="save btn btn-outline-success">{{__('admin.save')}}</button>
 
                         </div>
                     </div>
@@ -111,9 +108,9 @@
         </div>
 
         <div  class="course_info">
-            <label class="m-0">{{$course->trans_title}}</label>
+            {{-- <label class="m-0">{{$course->trans_title}}</label> --}}
             <div>
-                <button type="button" @click="OpenModal()" class="btn btn-outline-dark mx-3">
+                <button type="button" @click="OpenModal()" class="btn btn-outline-dark">
                     <i class="fa fa-plus"></i>  {{__('admin.add_unit')}}
                 </button>
                 <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="btn btn-outline-light">
@@ -124,7 +121,7 @@
         </div>
 
         <div  class="card">
-            <div class="card-header p-0" >
+            <div class="card-body p-0" >
                 <div class="clearfix mb-1 p-3 m-0">
                     <ul class='tree'>
                         <li @click.stop="open = (!open)" >{{$course->trans_title}} Units

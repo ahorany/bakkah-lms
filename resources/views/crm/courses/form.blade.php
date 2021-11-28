@@ -7,7 +7,6 @@
 
 @section('col9')
     @isset($eloquent->id)
-    {{-- @dd($eloquent) --}}
       <div class="col-12 mb-3">Courese Name: <span class="bg-dark text-white px-2 py-1" style="border-radius: 5px">{{$eloquent->trans_title}}</span></div>
     @endisset
 
@@ -66,9 +65,9 @@
             <div class="card card-default contents">
                 <div class="card-header">{{__('admin.contents')}}</div>
                 <div class="card-body">
-                    <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="btn btn-outline-success add_contents mb-2 ">Contents</a>
-                    <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="btn btn-outline-success add_contents mb-2">Units</a>
-                    <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="btn btn-outline-success add_contents mb-2">Users</a>
+                    <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="save btn btn-outline-success add_contents mb-2 ">Contents</a>
+                    <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="save btn btn-outline-success add_contents mb-2">Units</a>
+                    <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="save btn btn-outline-success add_contents mb-2">Users</a>
                 </div>
             </div>
         @endif
@@ -84,7 +83,7 @@
                 {!!Builder::Input('ar_short_title', 'ar_short_title', null)!!}
                 {!!Builder::Input('order', 'order', null)!!}
 
-                {!!Builder::Select('partner_id', 'partners', $partners, null, ['col'=>'col-md-12']) !!}
+                {{-- {!!Builder::Select('partner_id', 'partners', $partners, null, ['col'=>'col-md-12']) !!} --}}
 
                 <?php $type_id = \App\Constant::where('id', 370)->get(); ?>
                 {{-- {!! Builder::Select('type_id', 'type_id', $type_id, null, ['col'=>'col-md-12']) !!}
@@ -103,14 +102,14 @@
 
         @include('crm.accordions.call', ['eloquent'=>$eloquent??null])
 
-        <div class="card card-default mb-2">
+        {{-- <div class="card card-default mb-2">
             <div class="card-header">{{__('admin.brochure')}}</div>
             <div class="card-body">
                 {!!Builder::File('en_pdf', 'en_pdf')!!}
                 {!!Builder::File('ar_pdf', 'ar_pdf')!!}
                 {!!Builder::PDFForm()!!}
             </div>
-        </div>
+        </div> --}}
         <div class="card card-default">
             <div class="card-header">{{__('admin.intro_video')}}</div>
             <div class="card-body">
