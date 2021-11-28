@@ -104,4 +104,6 @@ return [
     'import_questions' => 'Import Questions',
     'detail' => 'Details',
     'accordion' => 'Accordion',
+    'add_trainee' => 'Add Trainee',
+    'add_instructor' => 'Add Instructor',
 ];
