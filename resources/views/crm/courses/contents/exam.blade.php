@@ -50,7 +50,7 @@
                         {!! Builder::Submit('importResults', 'importResults', 'save btn-sm btn-success mx-1 export-btn py-1 px-2', null, [
                             'icon'=>'far fa-file-excel',
                         ]) !!}
-                        <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="info btn btn-warning btn-md" role="button"> Sample </a>
+                        <a href="{{CustomAsset('samples/learnerAnswers.xlsx')}}" download class="info btn btn-warning btn-md" role="button"> Sample </a>
                         <input type="hidden" name="content_id" value="{{$content->id}}">
                     </div>
                 </div>
