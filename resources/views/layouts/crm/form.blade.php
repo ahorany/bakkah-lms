@@ -1,8 +1,9 @@
-<div class="col-md-12">
-	@include('Html.alert')
-	@include('Html.errors')
+<div class="row">
+    <div class="col-md-12">
+        @include('Html.alert')
+        @include('Html.errors')
+    </div>
 </div>
-
 <div class="row">
 	<div class="col-md-9">
 		@csrf

@@ -90,6 +90,7 @@ return [
     'cv' => 'CV',
     'certificates' => 'Certificates',
     'Group' => 'Group',
-    'import_questions' => 'Import Questions'
-
+    'import_questions' => 'Import Questions',
+    'detail' => 'Details',
+    'accordion' => 'Accordion',
 ];
