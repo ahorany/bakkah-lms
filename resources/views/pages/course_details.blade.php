@@ -129,7 +129,7 @@
 {{--                            </a>--}}
 {{--                        </div>--}}
                  @foreach($course->contents as $key => $section)
-                        <div class="card learning-file mt-5">
+                        <div class="card learning-file mt-4">
                             <h2>{{$section->title}}</h2>
                             <div style="margin: 0px 40px;">{!!  $section->details->excerpt??null !!}</div>
                             @isset($section->contents)
@@ -200,7 +200,7 @@
                </div>
 
                     <div class="col-lg-4">
-                        <div class="card p-30 activity">
+                        <div class="card p-30 activity mt-4">
                             <h2>Activity</h2>
 {{--                            <ul>--}}
 {{--                                <li>Lean Six Sigma Yellow belt training provides insight to the methodology for process--}}

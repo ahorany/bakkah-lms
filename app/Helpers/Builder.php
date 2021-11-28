@@ -79,7 +79,7 @@ class Builder {
 
                 $div .= '<i class="nav-icon '.($sidebar->icon??'fas fa-chart-pie').'"></i>';
                 // $div .= '<i class="nav-icon fas fa-th"></i>';
-                $div .= '<p>';
+                $div .= '<p class="m-0">';
                 $div .= $sidebar->trans_title;
 
                 if(is_null($sidebar->route_name))
@@ -614,7 +614,7 @@ class Builder {
 		  <div class="card-body">';
 		$btn .= '<div class="BtnGroupForm">';
 			if($hasBack)// used in users.form_old.blade.php
-				$btn .= self::List(self::$post_type, 'back', 'btn-default', 'arrow-left');
+				$btn .= self::List(self::$post_type, 'back', 'btn-default info mr-1', 'arrow-left');
 
 			if(is_null(self::$eloquent))
 				$btn .= self::Submit('submit', self::$getPublishName, 'btn-primary', 'save');
