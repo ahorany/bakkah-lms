@@ -34,7 +34,7 @@ class CourseUserController extends Controller
     {
         $course_id = request()->course_id;
         $course = Course::with(['upload', 'users'])->where('id',$course_id)->first();
-        return view('training.courses.users.index', compact('course'));
+        return view('crm.courses.users.index', compact('course'));
     }
 
     public function delete_user_course(){
