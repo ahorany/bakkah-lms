@@ -3,7 +3,7 @@ $Infastructure = \App\Infastructure::where('post_type', $const_type)
   ->where('route_name', 'admin.constants.index')->first();
 ?>
 @if(isset($Infastructure->icon))
-<div class="card card-default">
+<div class="card card-default mb-2">
   <div class="card-header"><i class="{{$Infastructure->icon}}"></i> {{$Infastructure->trans_title}}</div>
   <div class="card-body">
   	<?php
@@ -33,11 +33,13 @@ $Infastructure = \App\Infastructure::where('post_type', $const_type)
                 $value = $eloquent->postMorph()->where('constant_id', $constant->id)->first()->id??0;
   			}
   			?>
-  			{!!Builder::CheckBox($constant->id, $value, [
-  				'title'=>$constant->trans_name,
-  				'db_trans'=>true,
-  				'input_name'=>'constant[]',
-  			])!!}
+  			<div>
+                {!!Builder::CheckBox($constant->id, $value, [
+                    'title'=>$constant->trans_name,
+                    'db_trans'=>true,
+                    'input_name'=>'constant[]',
+                ])!!}
+            </div>
   		</li>
   	@endforeach
   	</ul>

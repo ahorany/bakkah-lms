@@ -1,7 +1,4 @@
-
-
-
-<div class="card">
+<div class="card courses">
   <div class="card-header">
       {{-- {!!Builder::SetBtnParam([
           'ppm'=>1,

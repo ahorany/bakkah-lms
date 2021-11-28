@@ -15,7 +15,7 @@
         padding-right: 0 !important;
     }
     </style>
-    <form id="post-search" class="form-inline" method="get" action="{{route('training.courses.index')}}">
+    <form id="post-search" class="courses form-inline mb-4" method="get" action="{{route('training.courses.index')}}">
             <div class="col-md-12">
 
                 <div class="card card-default">
@@ -29,15 +29,17 @@
                                 {!! Builder::Hidden('post_type', $post_type) !!}
                                 {!! Builder::Hidden('trash') !!}
 
-                                {!! Builder::Input('course_search', 'course_search', request()->course_search, ['col'=>'col-md-5']) !!}
+                                {!! Builder::Input('course_search', 'course_search', request()->course_search, ['col'=>'col-md-4']) !!}
 
                                 {!! Builder::Select('category_id', 'category_id', $categories, request()->category_id??-1, [
-                                    'col'=>'col-md-5',
+                                    'col'=>'col-md-4',
                                 ]) !!}
 
-                                {!! Builder::SelectForCheckBox('show_in_website', request()->show_in_website?1:0, ['col'=>'col-md-2']) !!}
+                                <div class="col-md-4 py-4">
+                                    {!! Builder::SelectForCheckBox('show_in_website', request()->show_in_website?1:0, []) !!}
+                                </div>
 
-                                <div style="margin-left:25px;margin-top: 5px;"> {{-- class="col-md-6"  --}}
+                                <div style="margin-top: 5px;"> {{-- class="col-md-6"  --}}
                                     {!! Builder::Submit('search', 'search', 'btn-primary', 'search') !!}
                                     {{-- {!! Builder::Submit('clear', 'clear', 'btn-default', 'eraser') !!}
                                     --}}
