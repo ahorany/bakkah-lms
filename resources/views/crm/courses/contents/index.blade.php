@@ -16,12 +16,11 @@
 {{--    {!!Builder::Tinymce('details', 'details')!!}--}}
 
     <div class="course_info">
-        <label class="m-0"><!-- Course name :  -->{{$course->trans_title}}</label>
+        {{-- <label class="m-0"><!-- Course name :  -->{{$course->trans_title}}</label> --}}
        <div>
-           <button type="button" @click="OpenModal('section',null)" class="btn btn-outline-dark mx-2">
-           <i class="far fa-plus-square mr-2"></i> {{__('admin.add_section')}}
+           <button type="button" @click="OpenModal('section',null)" class="btn btn-outline-dark">{{__('admin.add_section')}}
            </button>
-           <a href="{{route('training.units',['course_id'=>$course->id])}}"  class="btn btn-outline-light">
+           <a href="{{route('training.units',['course_id'=>$course->id])}}" class="btn btn-outline-light">
                {{__('admin.units')}}
            </a>
        </div>
@@ -72,7 +71,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Type</th>
                         <th scope="col">Action</th>
-                        <th>import</th>
+                        {{-- <th>import</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -85,26 +84,21 @@
                         </td>
                         <td>
                             <div class="BtnGroupRows buttons" data-id="150">
-                                <a v-if="entry.post_type == 'exam'"  class="btn btn-sm btn-outline-primary" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "> <i class="fa fa-plus"></i><!-- Add Questions  --> </a>
-                                <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-outline-warning" >
-                                    <i class="fa fa-pencil-alt"></i><!-- Edit --> </button>
-                                <button v-else @click="OpenEditModal(content.id,entry.id)"  class="btn btn-sm btn-outline-warning" >
-                                    <i class="fa fa-pencil-alt"></i><!-- Edit --> </button>
+                                <a v-if="entry.post_type == 'exam'"  class="add btn-sm btn-outline-primary" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id ">Add<!-- Add Questions  --> </a>
+                                <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm btn-outline-warning" >
+                                    Edit<!-- Edit --> </button>
+                                <button v-else @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm btn-outline-warning" >
+                                    Edit<!-- Edit --> </button>
 
-                                <button @click="deleteContent(content.id,entry.id)"  class="btn btn-sm btn-outline-danger" >
-                                    <i class="fa fa-trash"></i><!-- Delete --> </button>
+                                <button @click="deleteContent(content.id,entry.id)"  class="delete btn-sm btn-outline-danger" >
+                                    Delete<!-- Delete --> </button>
                                     <!--  -->
 
                             </div>
                         </td>
-                        <td>
-
-                        </td>
                     </tr>
                 </tbody>
             </table>
-
-
 			<br>
 		</div>
 	</div>
@@ -245,18 +239,12 @@
                 </div>
 
 
-
-
-
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-outline-danger" data-dismiss="modal">
-					<i class="fas fa-times"></i> {{__('admin.close')}}</button>
-				<button type="reset" class="btn btn-outline-info" @click="clear()">
-					<i class="fas fa-eraser"></i> {{__('admin.clear')}}</button>
-				<button type="button"  @click="save()" class="btn btn-outline-success">
-					<i class="fa fa-save"></i> {{__('admin.save')}}</button>
+				<button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
+				<button type="reset" class="info btn btn-outline-info" @click="clear()">{{__('admin.clear')}}</button>
+				<button type="button"  @click="save()" class="save btn btn-outline-success">{{__('admin.save')}}</button>
 
 			</div>
 		</div>

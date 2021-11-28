@@ -120,12 +120,9 @@
             </div>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-outline-danger" data-dismiss="modal">
-					<i class="fas fa-times"></i> {{__('admin.close')}}</button>
-				<button type="reset" class="btn btn-outline-info" >
-					<i class="fas fa-eraser"></i> {{__('admin.clear')}}</button>
-				<button type="button"  class="btn btn-outline-success" @click="save()">
-					<i class="fa fa-save"></i> {{__('admin.save')}}</button>
+				<button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
+				<button type="reset" class="info btn btn-outline-info" >{{__('admin.clear')}}</button>
+				<button type="button"  class="save btn btn-outline-success" @click="save()">{{__('admin.save')}}</button>
 
 			</div>
 		</div>

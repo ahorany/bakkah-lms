@@ -38,15 +38,27 @@
 .info:hover{
     background: #0dcaf0;
     color: #fff;
+    text-decoration: none;
 }
-.contents a{
+.add {
+    background: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+.add:hover{
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+}
+.save{
     color: green;
     border: 1px solid green;
     background-color: transparent;
 }
-.contents a:hover{
+.save:hover{
     background: green;
     color: #fff;
+    text-decoration: none;
 }
 .inputs .form-group {
     margin: 0 0 15px;
@@ -61,3 +73,27 @@ em u {
     color: #000;
     text-decoration: none;
 }
+#ContentModal .modal-content
+{
+    width: 75% !important;
+}
+#ContentModal .modal-content .progress{
+    display: none;
+}
+.import-question-file {
+    padding: 29px 0 0;
+    text-align: right;
+}
+.col-md-12.file {
+    padding: 0;
+}
+.text-success {
+    color: #2db683 !important;
+}
+.modal-dialog.modal-lg {
+    max-width: 100% !important;
+}
+/* .question p{
+    font-size: 20px;
+    font-family: 'Lato Regular';
+} */
