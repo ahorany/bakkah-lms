@@ -4,6 +4,87 @@
     <title>{{__('education.My Courses')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
+@section('style')
+<style>
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+        table tr {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        padding: .35em;
+    }
+
+        table th,
+        table td {
+        padding: .625em;
+        text-align: center;
+    }
+
+        table th {
+        font-size: .85em;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    @media screen and (max-width: 1150px) {
+        table {
+            border: 0;
+        }
+
+        table caption {
+            font-size: 1.3em;
+        }
+
+        table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        table tr {
+            border-bottom: 3px solid #ddd;
+            display: block;
+            margin-bottom: .625em;
+        }
+
+        table td {
+            border-bottom: 1px solid #ddd;
+            display: block;
+            font-size: .8em;
+            text-align: right;
+        }
+
+        table td::before {
+            /*
+            * aria-label has no advantage, it won't be read inside a table
+            content: attr(aria-label);
+            */
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        table td:last-child {
+            border-bottom: 0;
+        }
+    }
+
+</style>
+@endsection
+
 @section('content')
             <div class="card p-5 user-info">
                         <h4 class="mb-4"><i class="fas fa-graduation-cap"></i> {{ __('education.Exam') }}</h4>
@@ -101,9 +182,14 @@
                                             <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                                             <td>
                                                 <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
-                                                <div class="progress mt-2 w-50">
-                                                    <div class="progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>
+                                                {{-- <div class="progress">
+                                                    <div class=" progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div> --}}
+
+                                                <div class="progress">
+                                                    <div style="mx-auto width: {{$progress}}%;" class="bar @if($progress < 50) bg-danger @endif" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>
                                                 </div>
+                                                <small>{{$progress}}% Complete</small>
                                             </td>
                                         </tr>
                                     @endforeach
