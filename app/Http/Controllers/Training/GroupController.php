@@ -17,7 +17,7 @@ class GroupController extends Controller
 {
     public function __construct()
     {
-        Active::$namespace = 'training';
+        Active::$namespace = 'crm';
         Active::$folder = 'groups';
     }
 

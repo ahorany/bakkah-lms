@@ -3,6 +3,6 @@
 @section('edit')
 	{{Builder::SetEloquent($eloquent)}}
     {{Builder::SetNameSpace('training.')}}
-	{{Builder::SetObject('group')}}
+	{{Builder::SetObject('course')}}
 	@include('crm.'.$folder.'.form')
 @endsection

@@ -26,7 +26,7 @@ class ImportController extends Controller
 {
     public function __construct()
     {
-        Active::$namespace  = 'training';
+        Active::$namespace  = 'crm';
         Active::$folder     = 'imports';
     }
 

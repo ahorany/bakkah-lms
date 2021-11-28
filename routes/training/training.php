@@ -8,6 +8,15 @@ Route::group([
 
 	Route::group(['prefix'=>'training', 'as'=>'training.'], function(){
 
+        Route::resource('users', 'UserController');
+        Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
+        Route::get('/users/{user}/change-password', 'UserController@changePassword')->name('users.changePassword');
+        Route::patch('/users/{user}/change-password', 'UserController@savePassword')->name('users.savePassword');
+
+        Route::resource('roles', 'RoleController');
+        Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
+
+
         Route::resource('courses', 'CourseController');
         Route::patch('/courses/{course}/restore', 'CourseController@restore')->name('courses.restore');
 

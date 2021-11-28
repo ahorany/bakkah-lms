@@ -2,13 +2,16 @@
 
 @section('table')
 
-{{--    @include('training.'.$folder.'.search')--}}
-
 	{{Builder::SetTrash($trash)}}
 	{{Builder::SetFolder($folder)}}
-	{{Builder::SetPrefix('training.')}}
+    {{Builder::SetPrefix('training.')}}
     {{Builder::SetNameSpace('training.')}}
-	{{Builder::SetObject('group')}}
+	{{Builder::SetPostType($post_type)}}
+    {{Builder::SetObject('user')}}
+
+
+
+    @include('crm.'.$folder.'.search')
 
 	@include('crm.'.$folder.'.table')
 

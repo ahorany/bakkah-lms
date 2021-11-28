@@ -186,10 +186,11 @@
                                                     <div class=" progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div> --}}
 
-                                                <div class="progress">
-                                                    <div style="mx-auto width: {{$progress}}%;" class="bar @if($progress < 50) bg-danger @endif" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>
-                                                </div>
+{{--                                                <div class="progress">--}}
+{{--                                                    <div style=" width: {{$progress}}%;" class="mx-auto bar @if($progress < 50) bg-danger @endif" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>--}}
+{{--                                                </div>--}}
                                                 <small>{{$progress}}% Complete</small>
+
                                             </td>
                                         </tr>
                                     @endforeach

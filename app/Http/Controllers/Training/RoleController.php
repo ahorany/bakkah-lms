@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Training;
 
 use App\Helpers\Active;
 use Illuminate\Http\Request;
@@ -13,7 +13,8 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-    	Active::$folder = 'roles';
+        Active::$namespace = 'crm';
+        Active::$folder = 'roles';
     }
 
     public function index()
