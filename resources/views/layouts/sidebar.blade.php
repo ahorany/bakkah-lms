@@ -1,20 +1,22 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-3 col-xl-2 d-md-block bg-light sidebar collapse">
     <div class="position-sticky pt-3">
 
+        <?php
+        $url = '';
+        if(auth()->user()->upload) {
+            $url = auth()->user()->upload->file;
+            $url = CustomAsset('upload/full/'. $url);
+        }else {
+            $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+        }
+        ?>
+        @if (file_exists($url))
         <div class="person-wrapper">
-            <?php
-            $url = '';
-            if(auth()->user()->upload) {
-                $url = auth()->user()->upload->file;
-                $url = CustomAsset('upload/full/'. $url);
-            }else {
-                $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
-            }
-            ?>
             <img src="{{$url}}" alt="">
             <h2>{{auth()->user()->trans_name}}</h2>
             <hr>
         </div>
+        @endif
 
         <ul class="nav flex-column">
             <li class="nav-item">
@@ -43,6 +45,31 @@
                 </li>
             @endforeach
 
+
+            @foreach($user_pages as $aside)
+            <?php
+              $has_treeview = is_null($aside->route_name) ? 'has-treeview' : '';
+              $active = ($aside->id==session('infastructure_parent_id')) ? 'active' : '';
+              $menu_open = $active=='active'?'menu-open':'';
+            ?>
+            <li class="nav-item {{$has_treeview}} {{$menu_open}}"><!--menu-open-->
+
+                {!!Builder::SidebarHref($aside, '#', $active)!!}
+
+                @if($has_treeview=='has-treeview')
+                    <ul class="nav nav-treeview">
+
+                        @foreach($user_pages_child as $infa_child)
+                            @if ($infa_child->parent_id == $aside->id)
+                                <li class="nav-item">
+                                    {!!Builder::SidebarHref($infa_child, null, '')!!}
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                @endif
+            </li>
+            @endforeach
 
 {{--            @foreach($user_sidebar_courses->courses as $item)--}}
 {{--                <li class="nav-item  "><!--menu-open-->--}}
