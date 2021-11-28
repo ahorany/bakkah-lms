@@ -25,26 +25,31 @@ class QuestionsImport implements ToCollection, WithHeadingRow
     {
 
         // dd(request()->all());
+        dd($rows);
         foreach ($rows as $row)
         {
-            $question_id =  Question::create([
-                'title'             => $row['question_text'],
-                'mark'              => $row['default_garde'],
-                'exam_id'           => $row['idnumber'],
-                'feedback'          => $row['general_feedback'],
-                'question_type'     => $row['question_type'],
-                'question_name'     => $row['question_name'],
-                'penalty'           => $row['penalty'],
-                'hidden'            => $row['hidden'],
-                'single'            => $row['single'],
-                'shuffle'           => $row['shuffle'],
-                'answering_number'  => $row['answering_number'],
-                'instruction'       => $row['instruction'],
-                'correct_feedback'  => $row['correct_feedback'],
-                'partially_feedback'=> $row['partially'],
-                'incorrect_feedback'=> $row['incorrect'],
+            DB::table('questions')->insert([
+                [
 
+                    'title'             => $row['question_text'],
+                    'mark'              => $row['default_garde'],
+                    'exam_id'           => request()->content_id,
+                    'feedback'          => $row['general_feedback'],
+                    'question_type'     => $row['question_type'],
+                    'question_name'     => $row['question_name'],
+                    'penalty'           => $row['penalty'],
+                    'hidden'            => $row['hidden'],
+                    'single'            => $row['single'],
+                    'shuffle'           => $row['shuffle'],
+                    'answering_number'  => $row['answering_number'],
+                    'instruction'       => $row['instruction'],
+                    'correct_feedback'  => $row['correct_feedback'],
+                    'partially_feedback'=> $row['partially'],
+                    'incorrect_feedback'=> $row['incorrect'],
+                ],
             ]);
+
+            $question_id = DB::getPdo()->lastInsertId();
 
 
             for($i=1;$i<=4;$i++)
@@ -61,8 +66,8 @@ class QuestionsImport implements ToCollection, WithHeadingRow
 
                 Answer::create([
                     'title'             => $row['answer'.$i],
-                    'question_id'        => $question_id->id,
-                    'check_correct'     =>$check_correct,
+                    'question_id'       => $question_id,
+                    'check_correct'     => $check_correct,
                 ]);
             }
 

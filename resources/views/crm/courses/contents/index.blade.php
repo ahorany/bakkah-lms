@@ -55,6 +55,9 @@
                         </div>
                     </div>
 
+
+
+
                 </div>
 
 
@@ -73,6 +76,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Type</th>
                         <th scope="col">Action</th>
+                        <th>import</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -94,7 +98,11 @@
                                 <button @click="deleteContent(content.id,entry.id)"  class="btn btn-sm btn-outline-danger" >
                                     <i class="fa fa-trash"></i><!-- Delete --> </button>
                                     <!--  -->
+
                             </div>
+                        </td>
+                        <td>
+
                         </td>
                     </tr>
                 </tbody>
