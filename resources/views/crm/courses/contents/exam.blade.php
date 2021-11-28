@@ -18,6 +18,16 @@
         </button>
     </div>
 
+        <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="col-md-5">
+            @csrf
+                {!!Builder::File('file', 'file', null, ['col'=>'col-md-8'])!!}
+                {!!Builder::Submit('importQuestions', 'import_questions', 'btn-success mx-1 export-btn py-1 px-2', null, [
+                    'icon'=>'far fa-file-excel',
+                ])!!}
+                <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="btn btn-warning btn-md" role="button"> Sample </a>
+                <input type="hidden" name="content_id" value="{{$content->id}}">
+        </form>
+
 	<div  class="card" v-for="(question,index) in content.questions">
 		<div class="card-header p-0" >
             <div class="clearfix mb-1 p-3 m-0">
