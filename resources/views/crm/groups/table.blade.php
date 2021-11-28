@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card courses">
   <div class="card-header">
 
     {!!Builder::BtnGroupTable()!!}
@@ -11,8 +11,9 @@
             <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
             <th class="">{{__('admin.title')}}</th>
-            <th class="d-none d-sm-table-cell user-td">{{__('admin.user')}}</th>
             <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th>
+            <th class="img-table d-none d-sm-table-cell">{{__('admin.action')}}</th>
+            <th class="d-none d-sm-table-cell user-td">{{__('admin.user')}}</th>
 
         </tr>
       </thead>
@@ -24,21 +25,24 @@
         </td>
         <td>
             <span style="display: block;">{{$group->name}}</span>
-            {!!Builder::BtnGroupRows($group->name, $group->id, [], [
-               'post'=>$group->id,
-            ])!!}
+
         </td>
 
           <td>
               <span style="display: block;">{{$group->title}}</span>
           </td>
+
+          <td class="d-none d-sm-table-cell">{!!Builder::UploadRow($group)!!}</td>
+          <td class="d-none d-sm-table-cell">{!!Builder::BtnGroupRows($group->name, $group->id, [], [
+            'post'=>$group->id,
+         ])!!}</td>
+
         <td class="d-none d-sm-table-cell">
           <span class="author">
             {!!$group->published_at!!}<br>
           </span>
         </td>
 
-          <td class="d-none d-sm-table-cell">{!!Builder::UploadRow($group)!!}</td>
 
       </tr>
       @endforeach

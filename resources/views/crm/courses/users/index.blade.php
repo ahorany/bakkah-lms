@@ -16,15 +16,24 @@
 {{--    {!!Builder::Tinymce('details', 'details')!!}--}}
 
     <div class="course_info">
+<<<<<<< HEAD
         <label class="m-0">{{$course->trans_title}}</label>
        <div>
+           <button type="button" @click="OpenModal('trainee')" class="btn btn-outline-dark mx-2">
+           <i class="far fa-plus-square mr-2"></i> {{__('admin.add_trainee')}}
+           </button>
+
+           <button type="button" @click="OpenModal('instructor')" class="btn btn-outline-dark mx-2">
+               <i class="far fa-plus-square mr-2"></i> {{__('admin.add_instructor')}}
+=======
+
+        <div>
            <button type="button" @click="OpenModal()" class="btn btn-outline-dark mx-2">
            <i class="far fa-plus-square mr-2"></i> {{__('admin.add_users')}}
+>>>>>>> 0d1287655d7fe5cca5b87e94f93362402415522f
            </button>
        </div>
     </div>
-
-
 
     <table class="table table-striped">
         <thead>
@@ -43,14 +52,11 @@
                 <td v-text="user.email"></td>
                 <td>
                     <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
-{{--                    <input v-model="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')"   type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">--}}
-                    <button @click="updateUserExpireDate(user.id)" class="btn btn-sm btn-outline-info btn-table" ><i class="fa fa"></i> Update</button>
 
                 </td>
                 <td>
-{{--                    <form action="{{CustomRoute('training.delete_user_course',[$course->id,$user->id])}}">--}}
-                        <button @click="deleteUser(user.id)" class="btn btn-sm btn-outline-danger btn-table" ><i class="fa fa-trash"></i> Delete</button>
-{{--                    </form>--}}
+                    <button @click="updateUserExpireDate(user.id)" class="info btn-sm btn-outline-info btn-table" ><i class="fa fa"></i> Update</button>
+                    <button @click="deleteUser(user.id)" class="delete btn-sm btn-outline-danger btn-table" ><i class="fa fa-trash"></i> Delete</button>
                 </td>
             </tr>
 
@@ -141,7 +147,7 @@
         window.lang = '{!!app()->getLocale()!!}'
         window.course = {!! json_encode($course??[]) !!}
 	var contents = new Vue({
-		el:'#contents',
+        el:'#main-vue-element',
         data : {
             course : window.course,
             lang : window.lang,
@@ -151,6 +157,7 @@
             search_users    : [] ,
             users_expire_date    : {} ,
             add_users : {},
+            type_user : 'trainee',
         },
         created(){
 		    let self = this
@@ -161,7 +168,8 @@
             console.log(self.users_expire_date)
         },
         methods : {
-                OpenModal : function(){
+                OpenModal : function(type){
+                    this.type_user = type;
                     $('#ContentModal').modal('show')
                 },
                 search: function () {
@@ -206,6 +214,7 @@
                             'users' : self.add_users ,
                             'course_id' : self.course.id ,
                             'expire_date' : self.expire_date ,
+                            'type' : self.type_user ,
                         }
                     )
                         .then(response => {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Training;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Role;
 use App\Models\Training\Answer;
 use App\Models\Training\Content;
 use App\Models\Training\ContentDetails;
@@ -73,11 +74,14 @@ class CourseUserController extends Controller
     }
 
     public function add_users_course(){
+//        return \request();
         $course = Course::find(\request()->course_id);
 
         if(!$course){
             return response()->json([ 'status' => 'fail']);
         }
+
+       $type_id =  (Role::where("name", 'like', '%'.request()->type.'%')->first())->id;
 
         foreach (\request()->users as $key =>  $value){
             if ($value == true){
@@ -89,6 +93,7 @@ class CourseUserController extends Controller
                     'user_id' => $key,
                     'course_id' => $course->id,
                     'expire_date' => request()->expire_date,
+                    'role_id' => $type_id,
                 ]);
             }else if ($value == false){
                 CourseRegistration::where('user_id',$key)->where('course_id',$course->id)->delete();
