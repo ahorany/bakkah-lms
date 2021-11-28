@@ -12,7 +12,7 @@
             }
             ?>
             <img src="{{$url}}" alt="">
-            <h2>{{auth()->user()->trans_name}}</h2>
+            <h2 style="font-size: 1.2rem;">{{auth()->user()->trans_name}}</h2>
             <hr>
         </div>
 

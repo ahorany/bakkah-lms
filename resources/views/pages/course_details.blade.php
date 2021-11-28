@@ -40,47 +40,73 @@
                         <h1>{{$course->trans_title}}</h1>
 
                         <div class="rating">
-                            <span lass="total_rate">{{round($total_rate,1)}}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
-                                viewBox="0 0 17.43 16.6">
-                                <path id="Path_39" data-name="Path 39"
-                                    d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
-                                    transform="translate(-74.153 -183.355)" fill="#fb4400" />
-                            </svg>
+                            <span class="total_rate" v-text="total_rate"></span>
+                            <template v-for="item in 5">
+                                <template v-if="item <= stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
+                                         viewBox="0 0 17.43 16.6">
+                                        <path id="Path_39" data-name="Path 39"
+                                              d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
+                                              transform="translate(-74.153 -183.355)" fill="#fb4400" />
+                                    </svg>
+                                </template>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
-                                viewBox="0 0 17.43 16.6">
-                                <path id="Path_39" data-name="Path 39"
-                                    d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
-                                    transform="translate(-74.153 -183.355)" fill="#fb4400" />
-                            </svg>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
-                                viewBox="0 0 17.43 16.6">
-                                <path id="Path_39" data-name="Path 39"
-                                    d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
-                                    transform="translate(-74.153 -183.355)" fill="#fb4400" />
-                            </svg>
+                                    <template v-if="item > stars && (item == half_star)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="Group_32" data-name="Group 32"  width="17.43"
+                                             height="16.6" viewBox="0 0 17.43 16.6">
+                                            <path id="Path_43" data-name="Path 43"
+                                                   d="M160.391,199.955l-5.375-2.706-5.394,2.66.91-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.758,5.35,5.929,1.018L159.528,194Z"
+                                                  transform="translate(-146.334 -183.355)" fill="#c6c6c6" />
+                                            <path id="Path_44" data-name="Path 44"
+                                                  d="M155.025,183.4l-2.753,5.228-5.938.966,4.2,4.313-.91,5.948,5.394-2.66.009,0Z"
+                                                  transform="translate(-146.334 -183.298)" fill="#fb4400" />
+                                        </svg>
+                                    </template>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" id="Group_32" data-name="Group 32"  width="17.43"
-                                height="16.6" viewBox="0 0 17.43 16.6">
-                                <path id="Path_43" data-name="Path 43"
-                                    d="M160.391,199.955l-5.375-2.706-5.394,2.66.91-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.758,5.35,5.929,1.018L159.528,194Z"
-                                    transform="translate(-146.334 -183.355)" fill="#c6c6c6" />
-                                <path id="Path_44" data-name="Path 44"
-                                    d="M155.025,183.4l-2.753,5.228-5.938.966,4.2,4.313-.91,5.948,5.394-2.66.009,0Z"
-                                    transform="translate(-146.334 -183.298)" fill="#fb4400" />
-                            </svg>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
-                                viewBox="0 0 17.43 16.6">
-                                <path id="Path_42" data-name="Path 42"
-                                    d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
-                                    transform="translate(-128.289 -183.355)" fill="#c6c6c6" />
-                            </svg>
+                                    <template v-if="item > stars && (item != (half_star))">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
+                                             viewBox="0 0 17.43 16.6">
+                                            <path id="Path_42" data-name="Path 42"
+                                                  d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
+                                                  transform="translate(-128.289 -183.355)" fill="#c6c6c6" />
+                                        </svg>
+                                    </template>
+                                </template>
+
+
+
+
+
+
+
 
                         </div>
-{{--                        <a href="#" class="btn btn-primary px-4">Resume Course</a>--}}
+
+                        <div>
+                            <template v-for="item in 5">
+                                <span @click="review(item)" v-if="item <= rate">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
+                                         viewBox="0 0 17.43 16.6">
+                                        <path id="Path_39" data-name="Path 39"
+                                              d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
+                                              transform="translate(-74.153 -183.355)" fill="#fb4400" />
+                                    </svg>
+                                </span>
+
+                                <span @click="review(item)" v-if="item > rate">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
+                                            viewBox="0 0 17.43 16.6">
+                                           <path id="Path_42" data-name="Path 42"
+                                           d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
+                                           transform="translate(-128.289 -183.355)" fill="#c6c6c6" />
+                                    </svg>
+                                </span>
+
+                            </template>
+                        </div>
+                        {{--   <a href="#" class="btn btn-primary px-4">Resume Course</a>--}}
                     </div>
                 </div>
 
@@ -240,6 +266,88 @@
 
 @section('script')
     <script>
+        window.total_rate = {!! json_encode($total_rate) !!}
+        window.rate =  @json($course->course_rate->rate)
+
+
+        new Vue({
+            'el' : '#main-vue-element',
+            'data' : {
+                total_rate: window.total_rate,
+                stars : 0,
+                half_star  : 0,
+                rate  : window.rate,
+            },
+            created(){
+                this.getTotalRate()
+                this.setTotalRateStars()
+            },
+            methods : {
+                getTotalRate : function(){
+                     this.total_rate = parseFloat(this.total_rate).toFixed(2);
+                     return this.total_rate;
+                },
+                setTotalRateStars : function(){
+                    this.half_star = 0;
+                    let total_as_int = parseInt(this.total_rate)
+                    this.stars = total_as_int
+                    if(total_as_int < this.total_rate){
+                        this.half_star = this.stars + 1
+                    }
+                },
+                review : function (item) {
+                   // alert(item)
+                    let self = this;
+                    var data = {
+                        'course_id' : {{$course->id}},
+                        'rate' : item
+                    }
+
+                    this.rate = item
+                    axios.post("{{route('user.rate')}}",
+                        data
+                    )
+                        .then(response => {
+                             self.total_rate =  response.data.data;
+                             self.getTotalRate();
+                             self.setTotalRateStars();
+                            console.log(response.data)
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        });
+
+
+
+                    {{--$.ajax({--}}
+                    {{--    type: "POST",--}}
+                    {{--    url: @json(CustomRoute('user.rate')),--}}
+                    {{--    data: {--}}
+                    {{--        'course_id' : {{$course->id}},--}}
+                    {{--        '_token' : @json(csrf_token()),--}}
+                    {{--        'rate' : rate--}}
+                    {{--    },--}}
+                    {{--    success: function(response){--}}
+                    {{--        console.log(response)--}}
+                    {{--        $('.total_rate').text(parseFloat(response.data).toFixed(1))--}}
+                    {{--        total_review()--}}
+                    {{--    },--}}
+                    {{--});--}}
+
+
+
+                }
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+        <script>
         var btn = document.querySelector('.video-btn');
         var modal = document.querySelector('.modal');
         var content = document.querySelector('.modal-content');

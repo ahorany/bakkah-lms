@@ -335,8 +335,7 @@ class UserProfileController extends Controller
 
 
         $total_rate = DB::select(DB::raw('SELECT AVG(rate) as total_rate FROM `courses_registration` WHERE course_id =' .$course->id));
-        $total_rate = $total_rate[0]->total_rate;
-
+        $total_rate = $total_rate[0]->total_rate??0;
 
         return view('pages.course_details',compact('course','total_rate'));
 //        return view('front.pages.course_details',compact('course'));
