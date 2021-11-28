@@ -10,13 +10,13 @@
             $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
         }
         ?>
-        @if (file_exists($url))
+        {{-- @if (file_exists($url)) --}}
         <div class="person-wrapper">
             <img src="{{$url}}" alt="">
             <h2 style="font-size: 1.2rem;">{{auth()->user()->trans_name}}</h2>
             <hr>
         </div>
-        @endif
+        {{-- @endif --}}
 
         <ul class="nav flex-column">
             <li class="nav-item">

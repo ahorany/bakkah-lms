@@ -45,4 +45,5 @@ return [
     'Register' => 'Register',
     'Gender' => 'Gender',
     'Save Changes' => 'Save Changes',
+    'My Courses' => 'My Courses',
 ];
