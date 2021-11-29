@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card courses">
     <div class="card-header">
       {!!Builder::BtnGroupTable()!!}
       {!!Builder::TableAllPosts($count, $roles->count())!!}
@@ -9,7 +9,8 @@
           <tr>
               <th class="">{{__('admin.index')}}</th>
               <th class="">{{__('admin.name')}}</th>
-              <th style="width: 80%" class="">{{__('admin.pages')}}</th>
+              <th class="">{{__('admin.pages')}}</th>
+              <th class="d-none d-sm-table-cell">{{__('admin.action')}}</th>
           </tr>
         </thead>
         <tbody>
@@ -20,15 +21,16 @@
           </td>
           <td>
               <span style="display: block;">{{$role->trans_name}}</span>
-              {!!Builder::BtnGroupRows($role->trans_name, $role->id, [], [
-                'post'=>$role->id,
-             ])!!}
+
           </td>
           <td>
               @foreach ($role->infrastructures as $page)
                 <span style="font-size: 70%; padding: 3px 6px;" class="badge badge-success mb-1">{{ $page->trans_title }}</span>
               @endforeach
           </td>
+          <td class="d-none d-sm-table-cell">{!!Builder::BtnGroupRows($role->trans_name, $role->id, [], [
+            'post'=>$role->id,
+         ])!!}</td>
         </tr>
         @endforeach
         </tbody>

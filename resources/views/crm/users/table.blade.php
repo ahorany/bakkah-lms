@@ -1,4 +1,11 @@
-<div class="card">
+@section('style')
+<style>
+    .card-header span{
+        color: #fff !important;
+    }
+</style>
+@endsection
+<div class="card courses">
   <div class="card-header">
     {!!Builder::BtnGroupTable()!!}
     {!!Builder::TableAllPosts($count, $users->count())!!}
@@ -14,8 +21,8 @@
             <th class="">{{__('admin.job_title')}}</th>
             <th class="">{{__('admin.company')}}</th>
             <th class="">{{__('admin.gender_id')}}</th>
-            {{--<th class="d-none d-sm-table-cell">{{__('admin.user')}}</th>--}}
             <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th>
+            <th class="d-none d-sm-table-cell">{{__('admin.action')}}</th>
         </tr>
       </thead>
       <tbody>
@@ -26,9 +33,7 @@
         </td>
         <td>
             <span style="display: block;">{{$post->trans_name}}</span>
-            {!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
-               'post'=>$post->id,
-            ])!!}
+
         </td>
         <td>
             <span class="td-title">{{$post->email??null}}</span>
@@ -51,6 +56,9 @@
           </span>
         </td>--}}
         <td class="d-none d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
+        <td class="d-none d-sm-table-cell">{!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
+            'post'=>$post->id,
+         ])!!}</td>
       </tr>
       @endforeach
       </tbody>

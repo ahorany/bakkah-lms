@@ -15,7 +15,7 @@
     padding-right: 0 !important;
 }
 </style>
-<form class="mb-5" id="post-search" method="get" action="{{route('training.roles.index')}}">
+<form class="mb-4" id="post-search" method="get" action="{{route('training.roles.index')}}">
     <div class="card card-default">
         <div class="card-header">
             <b>{{__('admin.search form')}}</b>
@@ -33,7 +33,7 @@
                         </div>
                     </div>
 
-                    <div style="margin-left:25px;margin-top: 2px;"> {{-- class="col-md-6"  --}}
+                    <div style="margin-top: 5px;"> {{-- class="col-md-6"  --}}
                         {!! Builder::Submit('search', 'search', 'btn-primary', 'search') !!}
                         {{-- {!! Builder::Submit('clear', 'clear', 'btn-default', 'eraser') !!} --}}
                     </div>

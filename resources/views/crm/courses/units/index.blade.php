@@ -79,13 +79,13 @@
 
                                 <div v-if="counter <= 2" class="mt-5">
 
-                                    <button @click.prevent="addSubUnitBox()" class="btn btn-primary mb-3">Add Subunit +</button>
+                                    <button @click.prevent="addSubUnitBox()" class="btn btn-primary mb-3">Add Sub Unit +</button>
                                     <div class="mb-2" v-show="'subunits' in errors">
                                         <span style="color: red;font-size: 13px">@{{ errors.subunits }}</span>
                                     </div>
                                     <div v-for="(subunit,index) in subunits" class="form-group">
-                                        <input class="w-75" type="text" v-model="subunit.title" name="title"  placeholder="title">
-                                        <button @click.stop="deleteUnit(course.units,subunit.id,index)"  class="btn btn-sm btn-outline-danger mx-3" >
+                                        <input class="w-75 form-control" style="display: inline-block;" type="text" v-model="subunit.title" name="title" placeholder="title">
+                                        <button @click.stop="deleteUnit(course.units,subunit.id,index)" class="btn btn-sm btn-outline-danger mx-3">
                                             <i class="fa fa-trash"></i><!-- Delete --> </button>
                                     </div>
                                 </div>

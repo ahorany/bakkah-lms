@@ -12,4 +12,6 @@
 
 	@include('crm.'.$folder.'.table')
 
+	{{-- @include('crm.'.$folder.'.search') --}}
+
 @endsection
