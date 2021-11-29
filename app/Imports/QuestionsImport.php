@@ -35,7 +35,6 @@ class QuestionsImport implements ToCollection, WithHeadingRow
             {
                 DB::table('questions')->insert([
                     [
-
                         'title'             => $row['question_text'],
                         'mark'              => $row['default_garde'],
                         'exam_id'           => request()->content_id,
