@@ -4,7 +4,9 @@
           'ppm'=>1,
           'ppm111'=>2,
       ])!!} --}}
-    {!!Builder::BtnGroupTable()!!}
+      @if(!checkUserIsTrainee())
+       {!!Builder::BtnGroupTable()!!}
+      @endif
     {!!Builder::TableAllPosts($count, $courses->count())!!}
   </div>
   <div class="card-body table-responsive p-0">
@@ -34,10 +36,19 @@
               {!!$post->published_at!!}<br>
             </span>
           </td>
-        <td class="d-sm-table-cell text-right">{!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
-            'post'=>$post->id,
-        ])!!}</td>
 
+          <td class="d-sm-table-cell text-right">
+              @if(!checkUserIsTrainee())
+                {!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
+                    'post'=>$post->id,
+                ])!!}
+              @endif
+
+                  <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="btn-sm btn-warning m-1">Contents</a>
+                  <a href="{{route('training.units',['course_id'=>$post->id])}}" class=" btn-sm btn-success add_contents m-1">Units</a>
+                  <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class=" btn-sm btn-info add_contents m-1">Users</a>
+
+          </td>
       </tr>
 
       @endforeach
