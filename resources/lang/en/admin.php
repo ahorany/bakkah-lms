@@ -106,4 +106,5 @@ return [
     'accordion' => 'Accordion',
     'add_trainee' => 'Add Trainee',
     'add_instructor' => 'Add Instructor',
+    'add' => 'Add',
 ];
