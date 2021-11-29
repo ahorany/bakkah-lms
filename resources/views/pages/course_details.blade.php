@@ -118,9 +118,12 @@
                 </div>
 
                 <div class="row my-4">
-                    <div class="col-lg-8 col-xl-9">
-                        <p class="lead light">{{$course->trans_excerpt}}</p>
-                    </div>
+                    @if ($course->trans_excerpt > 0)
+                        <div class="col-lg-8 col-xl-9">
+                            <p class="lead light">{{$course->trans_excerpt}}</p>
+                        </div>
+                    @endif
+
                     @if($video)
                       <div class="col-lg-4 col-xl-3">
                         <div class="card h-100 justify-content-center align-items-center p-5 video-btn">
@@ -144,8 +147,7 @@
                 </div>
          @endif
 
-
-        @if ($course->contents)
+        @if (count($course->contents) > 0)
           <div class="row mt-3 course-content">
                     <div class="col-12">
                         <h3>CONTENT</h3>
