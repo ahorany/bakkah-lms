@@ -1,5 +1,6 @@
 @extends('layouts.crm.create')
 
 @section('create')
-	@include('crm.'.$folder.'.form')
+    {{Builder::SetNameSpace('training.')}}
+    @include('crm.'.$folder.'.form')
 @endsection

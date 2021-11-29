@@ -39,18 +39,18 @@
         {!! Builder::Password('password_confirmation', 'password_confirmation', null, ['type' => 'password', 'col' => 'col-md-6']) !!}
     @endif
 
-    <div class="col-md-12">
-        <div class="form-group">
-            <label>{{__('admin.Group')}}</label>
-        </div>
-        @foreach($groups as $group)
-            <div class="form-group form-check child">
-                <input class="form-check-input child" id="{{$group->id}}" type="checkbox" @isset($user_groups) @foreach($user_groups as $user_group) @if($user_group->group_id == $group->id) checked="true" @endif @endforeach  @endisset name="group_id[{{$group->id}}]">
-                <label class="form-check-label" for="{{$group->id}}">{{$group->name}}</label>
-            </div>
-        @endforeach
+{{--    <div class="col-md-12">--}}
+{{--        <div class="form-group">--}}
+{{--            <label>{{__('admin.Group')}}</label>--}}
+{{--        </div>--}}
+{{--        @foreach($groups as $group)--}}
+{{--            <div class="form-group form-check child">--}}
+{{--                <input class="form-check-input child" id="{{$group->id}}" type="checkbox" @isset($user_groups) @foreach($user_groups as $user_group) @if($user_group->group_id == $group->id) checked="true" @endif @endforeach  @endisset name="group_id[{{$group->id}}]">--}}
+{{--                <label class="form-check-label" for="{{$group->id}}">{{$group->name}}</label>--}}
+{{--            </div>--}}
+{{--        @endforeach--}}
 
-    </div>
+{{--    </div>--}}
 
 
     @if ($post_type != 'users')
