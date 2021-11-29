@@ -8,6 +8,13 @@ Route::group([
 
 	Route::group(['prefix'=>'training', 'as'=>'training.'], function(){
 
+        Route::get('/imports', 'ImportController@imports')->name('imports');
+        Route::post('courses/importCourses', 'ImportController@importCourses')->name('importCourses');
+        Route::post('courses/importUsers', 'ImportController@importUsers')->name('importUsers');
+        Route::post('courses/importUsersCourses', 'ImportController@importUsersCourses')->name('importUsersCourses');
+        Route::post('courses/importUsersGroups', 'ImportController@importUsersGroups')->name('importUsersGroups');
+
+
         Route::resource('users', 'UserController');
         Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
         Route::get('/users/{user}/change-password', 'UserController@changePassword')->name('users.changePassword');
@@ -51,13 +58,6 @@ Route::group([
         Route::post('/add_answer', 'QuestionController@add_answer')->name('add_answer');
         Route::get('/delete_answer', 'QuestionController@delete_answer')->name('delete_answer');
         Route::post('/update_answer', 'QuestionController@update_answer')->name('update_answer');
-
-
-        Route::get('/imports', 'ImportController@imports')->name('imports');
-        Route::post('courses/importCourses', 'ImportController@importCourses')->name('importCourses');
-        Route::post('courses/importUsers', 'ImportController@importUsers')->name('importUsers');
-        Route::post('courses/importUsersCourses', 'ImportController@importUsersCourses')->name('importUsersCourses');
-        Route::post('courses/importUsersGroups', 'ImportController@importUsersGroups')->name('importUsersGroups');
 
 
         Route::post('courses/importQuestions', 'ImportController@importQuestions')->name('importQuestions');
