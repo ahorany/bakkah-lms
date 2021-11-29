@@ -6,7 +6,7 @@
 
 @section('content')
 
-  <div class="card">
+  <div class="card px-5">
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <form class="p-3" method="POST" action="{{ route('user.save_password') }}">
+                    <form class="p-5" method="POST" action="{{ route('user.save_password') }}">
                         @csrf
 
                         <div class="text-center mb-4">

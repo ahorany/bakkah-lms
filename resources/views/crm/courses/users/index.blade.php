@@ -23,15 +23,27 @@
 <div class="toLoad" id="contents">
 
     <div class="course_info">
-        {{-- <label class="m-0">{{$course->trans_title}}</label> --}}
-       <div>
-           <button type="button" @click="OpenModal('trainee')" class="btn btn-outline-dark mx-2">
-           <i class="far fa-plus-square mr-2"></i> {{__('admin.add_trainee')}}
-           </button>
+        <div class="card p-3 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class="add btn-sm">
+                    <i class="far fa-plus-square mr-2"></i> {{__('admin.add_trainee')}}
+                    </button>
 
-           <button type="button" @click="OpenModal('instructor')" class="btn btn-outline-dark mx-2">
-               <i class="far fa-plus-square mr-2"></i> {{__('admin.add_instructor')}}
-            </button>
+                    <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="add btn-sm">
+                    <i class="far fa-plus-square mr-2"></i> {{__('admin.add_instructor')}}
+                    </button>
+                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="add btn-sm mr-1">
+                        {{__('admin.contents')}}
+                    </a>
+                    <a href="{{route('training.units',['course_id'=>$course->id])}}" class="add btn-sm">Units</a>
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="back">
+                        <a href="{{route('training.courses.edit',[$course->id])}}" class="info btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <table class="table table-striped">
@@ -89,7 +101,7 @@
                         <input name="email" placeholder="Email.." class="form-control"  v-model="search_email" />
                     </div>
 
-                    <div style="margin-left:25px;margin-top: 5px;">
+                    <div style="margin-left:0px;margin-top: 5px;">
                         <button @click.prevent="search()" type="submit" name="search" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Search</button>
                     </div>
                 </div>
@@ -128,7 +140,6 @@
                     <button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
                     <button type="reset" class="info btn btn-outline-info" >{{__('admin.clear')}}</button>
                     <button type="button"  class="save btn btn-outline-success" @click="save()">{{__('admin.save')}}</button>
-
                 </div>
             </div>
         </div>

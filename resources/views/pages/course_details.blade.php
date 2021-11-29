@@ -117,35 +117,34 @@
                     </div>
                 </div>
 
-                <div class="row my-4">
-                    @if ($course->trans_excerpt > 0)
+                @if ($course->trans_excerpt)
+                    <div class="row my-4">
                         <div class="col-lg-8 col-xl-9">
                             <p class="lead light">{{$course->trans_excerpt}}</p>
                         </div>
-                    @endif
 
-                    @if($video)
-                      <div class="col-lg-4 col-xl-3">
-                        <div class="card h-100 justify-content-center align-items-center p-5 video-btn">
-                            <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"
-                                    viewBox="0 0 26.818 30.542">
-                                    <path id="Path_92" data-name="Path 92" d="M1586.871,1164.139V1133.6l26.818,15.165Z"
-                                        transform="translate(-1586.871 -1133.597)" fill="#fff" />
-                                </svg>
-                            </button>
+                        @if($video)
+                        <div class="col-lg-4 col-xl-3">
+                            <div class="card h-100 justify-content-center align-items-center p-5 video-btn">
+                                <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"
+                                        viewBox="0 0 26.818 30.542">
+                                        <path id="Path_92" data-name="Path 92" d="M1586.871,1164.139V1133.6l26.818,15.165Z"
+                                            transform="translate(-1586.871 -1133.597)" fill="#fff" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
+                        @endif
                     </div>
-                    @endif
-                </div>
-
-         @if($video)
+                @endif
+            @if($video)
                 <div class="modal">
                     <div class="modal-content">
                         <div class="modal-close">x</div>
                         <video width="100%" oncontextmenu="return false;" controls="controls" controlslist="nodownload" src="{{CustomAsset('upload/video/'.$video->file)}}" class="embed-responsive-item"></video>
                     </div>
                 </div>
-         @endif
+            @endif
 
         @if (count($course->contents) > 0)
           <div class="row mt-3 course-content">

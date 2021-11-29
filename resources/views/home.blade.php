@@ -17,30 +17,33 @@
         </div>
     </div>
 
-    <div class="card p-30 mb-5">
-        <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
-        <div class="row">
-            @forelse($courses->courses as $course)
-             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
-                 <a href="{{CustomRoute('user.course_details',$course->id)}}">
-                   <div class="text-center course-image p-30">
-                    @isset($course->upload->file)
-                        <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" >
-                    @endisset
+    @if (count($courses->courses) > 0)
+        <div class="card p-30 mb-5">
+            <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
+            <div class="row">
+                @forelse($courses->courses as $course)
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
+                    <a href="{{CustomRoute('user.course_details',$course->id)}}">
+                    <div class="text-center course-image p-30">
+                        @isset($course->upload->file)
+                            <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" >
+                        @endisset
 
 
-                    <div class="progress">
-                        <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
+                        <div class="progress">
+                            <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
+                        </div>
+                        <small>{{$course->pivot->progress??0}}% Complete</small>
                     </div>
-                    <small>{{$course->pivot->progress??0}}% Complete</small>
+                    </a>
                 </div>
-                 </a>
+                @empty
+                <p>Not found any course!!</p>
+                @endforelse
             </div>
-            @empty
-               <p>Not found any course!!</p>
-            @endforelse
         </div>
-    </div>
+    @endif
+
 
 {{--    <div class="row mb-5">--}}
 {{--        <div class="col-xl-6 d-flex flex-column justify-content-between mb-4 mb-xl-0">--}}
@@ -261,6 +264,7 @@
 
 
     <div class="row mb-5">
+        @if($last_video)
         <div class="col-lg-6 mb-5 mb-lg-0">
             <div class="card h-100 p-30">
                 <h3>{{ __('education.Last Video View') }}</h3>
@@ -272,13 +276,14 @@
 {{--                        </svg>--}}
 {{--                    </button>--}}
 {{--                </div>--}}
-                @if($last_video)
                     <video controls>
                         <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
                     </video>
-                @endif
+
             </div>
         </div>
+        @endif
+        @if(count($next_videos) >0 )
         <div class="col-lg-6">
             <div class="card p-30">
                 <h3>{{ __('education.Next Video') }}</h3>
@@ -299,11 +304,12 @@
                 </ul>
             </div>
         </div>
+        @endif
     </div>
 
     <div class="row mb-5">
 
-        <div class="col-xl-6">
+        <div class="col-lg-6">
             <div class="card h-100 justify-content-center p-30">
 
                 <div class="d-flex flex-column flex-sm-row flex-wrap">
@@ -363,13 +369,14 @@
 
             </div>
         </div>
-        <div class="col-xl-6 mb-5 mb-xl-0">
+        <div class="col-lg-6 mb-5 mb-xl-0">
             {{--            <div class="card p-30">--}}
             {{--                <div class="line-chart">--}}
             {{--                    <h3>Learning Time Overview</h3>--}}
             {{--                    <canvas class="w-100" id="myChart" height="250"></canvas>--}}
             {{--                </div>--}}
             {{--            </div>--}}
+        </div>
     </div>
 
 @endsection
