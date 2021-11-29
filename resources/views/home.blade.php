@@ -260,14 +260,14 @@
 {{--    </div>--}}
 
     <div class="row mb-5">
-        <div class="col-xl-6 mb-5 mb-xl-0">
+{{--        <div class="col-xl-6 mb-5 mb-xl-0">--}}
 {{--            <div class="card p-30">--}}
 {{--                <div class="line-chart">--}}
 {{--                    <h3>Learning Time Overview</h3>--}}
 {{--                    <canvas class="w-100" id="myChart" height="250"></canvas>--}}
 {{--                </div>--}}
 {{--            </div>--}}
-        </div>
+{{--        </div>--}}
         <div class="col-xl-6">
             <div class="card h-100 justify-content-center p-30">
 
@@ -331,8 +331,10 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6 mb-5 mb-lg-0">
+        @if($last_video)
+           <div class="col-lg-6 mb-5 mb-lg-0">
             <div class="card h-100 p-30">
+
                 <h3>{{ __('education.Last Video View') }}</h3>
 {{--                <div class="h-100 d-flex justify-content-center align-items-center video-btn">--}}
 {{--                    <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"--}}
@@ -342,33 +344,36 @@
 {{--                        </svg>--}}
 {{--                    </button>--}}
 {{--                </div>--}}
-                @if($last_video)
+
                     <video controls>
                         <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
                     </video>
-                @endif
             </div>
+
         </div>
-        <div class="col-lg-6">
+        @endif
+        @if(count($next_videos))
+          <div class="col-lg-6">
             <div class="card p-30">
-                <h3>{{ __('education.Next Video') }}</h3>
-                <ul class="video-list">
-                    @foreach($next_videos as $next_video)
-                      <li>
-                        <div class="play">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17.325" height="19.732" viewBox="0 0 17.325 19.732">
-                                <path id="Path_92" data-name="Path 92" d="M1586.871,1153.329V1133.6l17.325,9.8Z" transform="translate(-1586.871 -1133.597)" fill="#fff"/>
-                              </svg>
-                        </div>
-                        <div class="text">
-                            <h5><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </h5>
-{{--                            <p>Assess your Knowledge - Pre-Learning</p>--}}
-                        </div>
-                    </li>
-                    @endforeach
-                </ul>
+                    <h3>{{ __('education.Next Video') }}</h3>
+                    <ul class="video-list">
+                        @foreach($next_videos as $next_video)
+                          <li>
+                            <div class="play">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17.325" height="19.732" viewBox="0 0 17.325 19.732">
+                                    <path id="Path_92" data-name="Path 92" d="M1586.871,1153.329V1133.6l17.325,9.8Z" transform="translate(-1586.871 -1133.597)" fill="#fff"/>
+                                  </svg>
+                            </div>
+                            <div class="text">
+                                <h5><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </h5>
+    {{--                            <p>Assess your Knowledge - Pre-Learning</p>--}}
+                            </div>
+                        </li>
+                        @endforeach
+                    </ul>
             </div>
         </div>
+        @endif
     </div>
 @endsection
 

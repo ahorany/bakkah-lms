@@ -89,11 +89,16 @@ class UserProfileController extends Controller
     // exam page
     public function exam($exam_id){
         $exam = Content::whereId($exam_id)
-            ->with(['exam' => function($q){
+            ->with(['course','exam' => function($q){
                 return $q->with(['users_exams' => function($q){
                     return $q->where('user_id',auth()->id());
                 }]);
             }])->first();
+
+        $user_course_register = CourseRegistration::where('course_id',$exam->course->id)->where('user_id',\auth()->id())->first();
+        if(!$user_course_register){
+            abort(404);
+        }
 
         if (!$exam->exam) abort(404);
 
@@ -210,7 +215,7 @@ class UserProfileController extends Controller
     public function preview_exam($exam_id){
         $page_type = 'exam';
         $exam = Content::whereId($exam_id)
-            ->with(['exam' => function($q){
+            ->with(['course','exam' => function($q){
                 return $q->with(['users_exams' => function($query){
                     return $query->where('user_id',\auth()->id())->with('user_answers');
                 }])->where('start_date','<=',Carbon::now())->where(function ($q){
@@ -221,6 +226,11 @@ class UserProfileController extends Controller
                     $query->where('check_correct' ,1);
                 }]);
             }])->first();
+
+      $user_course_register = CourseRegistration::where('course_id',$exam->course->id)->where('user_id',\auth()->id())->first();
+        if(!$user_course_register){
+            abort(404);
+        }
 
         if (!$exam->exam || (count($exam->questions) == 0) ) abort(404);
 
@@ -308,8 +318,6 @@ class UserProfileController extends Controller
 
 
     public function course_details($course_id){
-        session()->put('infastructure_id','user'); // delete active class from sidebar when click course
-//dump(session('infastructure_id'));
         $course = Course::where('id',$course_id)->whereHas('users',function ($q){
             $q->where('users.id',\auth()->id());
         })->with(['users' => function($query){
@@ -338,19 +346,22 @@ class UserProfileController extends Controller
         $total_rate = $total_rate[0]->total_rate??0;
 
         return view('pages.course_details',compact('course','total_rate'));
-//        return view('front.pages.course_details',compact('course'));
-
     }
 
     public function course_preview($content_id){
         $content = Content::whereId($content_id)
-            ->with(['upload','course.users' => function($q){
-                $q->where('users.id',\auth()->id());
-            }])->first();
+            ->with(['upload','course' ])->first();
 
         if (!$content){
             abort(404);
         }
+
+        $user_course_register = CourseRegistration::where('course_id',$content->course->id)->where('user_id',\auth()->id())->first();
+        if(!$user_course_register){
+            abort(404);
+        }
+
+
 
 
         UserContent::firstOrCreate([
@@ -447,12 +458,6 @@ class UserProfileController extends Controller
         return view('pages.file',compact('content','previous','next'));
     }
 
-//    public function my_courses() {
-//        $courses =  User::where('id',\auth()->id())->with(['courses.upload' => function($q){
-//            return $q->where('post_type','image')->where('locale',app()->getLocale());
-//        }])->first();
-//        return view('front.pages.my_courses',compact('courses'));
-//    }
 
     public function home() {
 
@@ -502,81 +507,47 @@ class UserProfileController extends Controller
         return redirect(route('login'));
     }
 
-
-//    public function login()
+//    public function register()
 //    {
 //        if(Auth::check()){
 //            return redirect(route('user.home'));
 //        }
-//        return view('front.pages.login');
+//        return view('auth.register');
 //    }
 //
-//    public function loginSubmit(Request $request)
+//    public function registerSubmit(Request $request)
 //    {
-//        $data = Validator::validate($request->all(), [
-//            'email' => 'required|email',
-//            'password' => 'required'
+//        $request->validate([
+//            'en_name' => 'required',
+//            'email' => 'required|email|unique:users,email',
+//            'mobile' => 'required',
+//            'password' => 'required|confirmed'
 //        ]);
 //
-//        if (Auth::attempt($data)) {
+//        $user = User::where('email', $request->email)->first();
 //
-//
-//            if(request()->has('redirectTo')) {
-//                return redirect()->route('education.cart');
+//        if($user) {
+//            if(is_null($user->password)) {
+//                $user->update(['password' => Hash::make($request->password)]);
 //            }
+//        }else {
 //
-//            return redirect()->route('user.home');
-//
+//            $user = User::create([
+//                'name' => $request->en_name,
+//                'email' => $request->email,
+//                'mobile' => $request->mobile,
+//                'password' => Hash::make($request->password),
+//                'user_type' => 41
+//            ]);
 //        }
 //
-//        throw ValidationException::withMessages([
-//            'email' => [trans('auth.failed')],
-//        ]);
 //
-//        return back();
+//
+//
+//        Auth::login($user);
+//
+//        return redirect()->route('user.home');
 //    }
-
-    public function register()
-    {
-        if(Auth::check()){
-            return redirect(route('user.home'));
-        }
-        return view('auth.register');
-    }
-
-    public function registerSubmit(Request $request)
-    {
-        $request->validate([
-            'en_name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'mobile' => 'required',
-            'password' => 'required|confirmed'
-        ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if($user) {
-            if(is_null($user->password)) {
-                $user->update(['password' => Hash::make($request->password)]);
-            }
-        }else {
-
-            $user = User::create([
-                'name' => $request->en_name,
-                'email' => $request->email,
-                'mobile' => $request->mobile,
-                'password' => Hash::make($request->password),
-                'user_type' => 41
-            ]);
-        }
-
-
-
-
-        Auth::login($user);
-
-        return redirect()->route('user.home');
-    }
 
 
     public function change_password() {
@@ -606,7 +577,6 @@ class UserProfileController extends Controller
         return redirect(route('user.home'));
 //        return view('front.pages.home');
     }
-
 
 
 
