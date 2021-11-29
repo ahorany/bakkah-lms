@@ -21,7 +21,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        Active::$namespace = 'crm';
+        Active::$namespace = 'training';
         Active::$folder = 'users';
     }
 
@@ -261,10 +261,10 @@ class UserController extends Controller
 
         $validated = $request->validated();
 //        return $validated;
-        $groups = [];
-        foreach ($validated['group_id'] as $key => $group){
-            $groups[] = $key ;
-        }
+//        $groups = [];
+//        foreach ($validated['group_id'] as $key => $group){
+//            $groups[] = $key ;
+//        }
         $validated['name'] = null;
         $validated['trainer_courses_for_certifications'] = null;
         $validated['updated_by'] = auth()->user()->id;

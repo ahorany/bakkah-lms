@@ -2,5 +2,5 @@
 
 @section('create')
     {{Builder::SetNameSpace('training.')}}
-    @include('crm.'.$folder.'.form')
+	@include('training.'.$folder.'.form')
 @endsection
