@@ -1,5 +1,5 @@
 @extends('layouts.crm.create')
 
 @section('create')
-	@include('crm.'.$folder.'.form')
+	@include('training.'.$folder.'.form')
 @endsection
