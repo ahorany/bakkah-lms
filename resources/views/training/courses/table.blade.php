@@ -16,7 +16,7 @@
             <th class="col-md-1">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
             <th class="img-table d-none d-sm-table-cell col-md-1">{{__('admin.image')}}</th>
-            <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th>
+            {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
             <th class="text-center" scope="col">{{__('admin.action')}}</th>
         </tr>
       </thead>
@@ -31,11 +31,11 @@
 
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
-        <td class="d-sm-table-cell" style="font-size: 13px;">
+        {{-- <td class="d-sm-table-cell" style="font-size: 13px;">
             <span class="author">
               {!!$post->published_at!!}<br>
             </span>
-          </td>
+        </td> --}}
 
           <td class="d-sm-table-cell text-right">
               @if(!checkUserIsTrainee())
@@ -43,11 +43,11 @@
                     'post'=>$post->id,
                 ])!!}
               @endif
-
-                  <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="btn-sm btn-warning m-1">Contents</a>
-                  <a href="{{route('training.units',['course_id'=>$post->id])}}" class=" btn-sm btn-success add_contents m-1">Units</a>
-                  <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class=" btn-sm btn-info add_contents m-1">Users</a>
-
+                <div class="my-2">
+                    <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="btn-sm save">Contents</a>
+                    <a href="{{route('training.units',['course_id'=>$post->id])}}" class="btn-sm save">Units</a>
+                    <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class="btn-sm save">Users</a>
+                </div>
           </td>
       </tr>
 
