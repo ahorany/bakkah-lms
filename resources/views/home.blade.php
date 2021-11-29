@@ -10,7 +10,6 @@
             <div class="col-lg-8">
                 <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
                 <p class="lead">{{auth()->user()->bio}} </p>
-{{--                <a href="#" class="btn btn-primary px-5">Resume Course</a>--}}
             </div>
             <div class="col-lg-4 mt-4 mt-lg-0">
                 <img src="{{CustomAsset('assets/images/dash.png')}}" alt="">
@@ -18,30 +17,33 @@
         </div>
     </div>
 
-    <div class="card p-30 mb-5">
-        <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
-        <div class="row">
-            @forelse($courses->courses as $course)
-             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
-                 <a href="{{CustomRoute('user.course_details',$course->id)}}">
-                   <div class="text-center course-image p-30">
-                    @isset($course->upload->file)
-                        <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" >
-                    @endisset
+    @if (count($courses->courses) > 0)
+        <div class="card p-30 mb-5">
+            <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
+            <div class="row">
+                @forelse($courses->courses as $course)
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
+                    <a href="{{CustomRoute('user.course_details',$course->id)}}">
+                    <div class="text-center course-image p-30">
+                        @isset($course->upload->file)
+                            <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" >
+                        @endisset
 
 
-                    <div class="progress">
-                        <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
+                        <div class="progress">
+                            <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
+                        </div>
+                        <small>{{$course->pivot->progress??0}}% Complete</small>
                     </div>
-                    <small>{{$course->pivot->progress??0}}% Complete</small>
+                    </a>
                 </div>
-                 </a>
+                @empty
+                <p>Not found any course!!</p>
+                @endforelse
             </div>
-            @empty
-               <p>Not found any course!!</p>
-            @endforelse
         </div>
-    </div>
+    @endif
+
 
 {{--    <div class="row mb-5">--}}
 {{--        <div class="col-xl-6 d-flex flex-column justify-content-between mb-4 mb-xl-0">--}}
@@ -259,16 +261,55 @@
 {{--        </div>--}}
 {{--    </div>--}}
 
+
+
     <div class="row mb-5">
-        <div class="col-xl-6 mb-5 mb-xl-0">
-{{--            <div class="card p-30">--}}
-{{--                <div class="line-chart">--}}
-{{--                    <h3>Learning Time Overview</h3>--}}
-{{--                    <canvas class="w-100" id="myChart" height="250"></canvas>--}}
+        @if($last_video)
+        <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="card h-100 p-30">
+                <h3>{{ __('education.Last Video View') }}</h3>
+{{--                <div class="h-100 d-flex justify-content-center align-items-center video-btn">--}}
+{{--                    <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"--}}
+{{--                            viewBox="0 0 26.818 30.542">--}}
+{{--                            <path id="Path_92" data-name="Path 92" d="M1586.871,1164.139V1133.6l26.818,15.165Z"--}}
+{{--                                transform="translate(-1586.871 -1133.597)" fill="#fff" />--}}
+{{--                        </svg>--}}
+{{--                    </button>--}}
 {{--                </div>--}}
-{{--            </div>--}}
+                    <video controls>
+                        <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
+                    </video>
+
+            </div>
         </div>
-        <div class="col-xl-6">
+        @endif
+        @if(count($next_videos) >0 )
+        <div class="col-lg-6">
+            <div class="card p-30">
+                <h3>{{ __('education.Next Video') }}</h3>
+                <ul class="video-list">
+                    @foreach($next_videos as $next_video)
+                      <li>
+                        <div class="play">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17.325" height="19.732" viewBox="0 0 17.325 19.732">
+                                <path id="Path_92" data-name="Path 92" d="M1586.871,1153.329V1133.6l17.325,9.8Z" transform="translate(-1586.871 -1133.597)" fill="#fff"/>
+                              </svg>
+                        </div>
+                        <div class="text">
+                            <h5><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </h5>
+{{--                            <p>Assess your Knowledge - Pre-Learning</p>--}}
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endif
+    </div>
+
+    <div class="row mb-5">
+
+        <div class="col-lg-6">
             <div class="card h-100 justify-content-center p-30">
 
                 <div class="d-flex flex-column flex-sm-row flex-wrap">
@@ -328,48 +369,16 @@
 
             </div>
         </div>
+        <div class="col-lg-6 mb-5 mb-xl-0">
+            {{--            <div class="card p-30">--}}
+            {{--                <div class="line-chart">--}}
+            {{--                    <h3>Learning Time Overview</h3>--}}
+            {{--                    <canvas class="w-100" id="myChart" height="250"></canvas>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-6 mb-5 mb-lg-0">
-            <div class="card h-100 p-30">
-                <h3>{{ __('education.Last Video View') }}</h3>
-{{--                <div class="h-100 d-flex justify-content-center align-items-center video-btn">--}}
-{{--                    <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"--}}
-{{--                            viewBox="0 0 26.818 30.542">--}}
-{{--                            <path id="Path_92" data-name="Path 92" d="M1586.871,1164.139V1133.6l26.818,15.165Z"--}}
-{{--                                transform="translate(-1586.871 -1133.597)" fill="#fff" />--}}
-{{--                        </svg>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-                @if($last_video)
-                    <video controls>
-                        <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
-                    </video>
-                @endif
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card p-30">
-                <h3>{{ __('education.Next Video') }}</h3>
-                <ul class="video-list">
-                    @foreach($next_videos as $next_video)
-                      <li>
-                        <div class="play">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17.325" height="19.732" viewBox="0 0 17.325 19.732">
-                                <path id="Path_92" data-name="Path 92" d="M1586.871,1153.329V1133.6l17.325,9.8Z" transform="translate(-1586.871 -1133.597)" fill="#fff"/>
-                              </svg>
-                        </div>
-                        <div class="text">
-                            <h5><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </h5>
-{{--                            <p>Assess your Knowledge - Pre-Learning</p>--}}
-                        </div>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    </div>
 @endsection
 
 

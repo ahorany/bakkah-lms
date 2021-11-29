@@ -10,7 +10,6 @@
     {{Builder::SetObject('user')}}
 
 
-
     @include('crm.'.$folder.'.search')
 
 	@include('crm.'.$folder.'.table')

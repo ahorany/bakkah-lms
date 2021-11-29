@@ -46,7 +46,7 @@ class UserRequest extends FormRequest
             'trainer_courses_for_certifications'=>'max:500',
             'password'=>'nullable|min:8|confirmed',
             'role_id' => '',
-            'group_id' => '',
+//            'group_id' => '',
         ];
         // if(request('_method')!='PATCH'){
         //     $args = array_merge($args, [

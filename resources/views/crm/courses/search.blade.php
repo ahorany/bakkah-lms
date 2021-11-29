@@ -17,7 +17,7 @@
         padding-right: 0 !important;
     }
     </style>
-    <form id="post-search" class="courses form-inline" method="get" action="{{route('training.courses.index')}}">
+    <form id="post-search" class="courses form-inline mb-4" method="get" action="{{route('training.courses.index')}}">
             <div class="col-md-12">
 
                 <div class="card card-default">

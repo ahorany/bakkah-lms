@@ -15,16 +15,21 @@
 <div class="toLoad" id="contents">
 {{--    {!!Builder::Tinymce('details', 'details')!!}--}}
 
-    <div class="course_info">
-        {{-- <label class="m-0"><!-- Course name :  -->{{$course->trans_title}}</label> --}}
-       <div>
-           <button type="button" @click="OpenModal('section',null)" class="btn btn-outline-dark">{{__('admin.add_section')}}
-           </button>
-           <a href="{{route('training.units',['course_id'=>$course->id])}}" class="btn btn-outline-light">
-               {{__('admin.units')}}
-           </a>
-       </div>
+    <div  class="course_info mb-3 card p-3">
+        <div class="row">
+        <div class="col-md-6">
+            <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="add btn-sm">{{__('admin.add_section')}}
+            </button>
+                <a href="{{route('training.units',['course_id'=>$course->id])}}" class="add btn-sm">Units</a>
+                <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="add btn-sm">Users</a>
+        </div>
 
+        <div class="col-md-6 text-right">
+            <div class="back">
+                    <a href="{{route('training.courses.edit',[$course->id])}}" class="info btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+            </div>
+        </div>
+        </div>
     </div>
 
 	<div  class="card" v-for="(content,index) in contents">

@@ -61,7 +61,7 @@
 
                             @isset($content->upload->file)
                                 @if($content->post_type == 'video' )
-                                    <video controls>
+                                    <video controls class="w-100">
                                         <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">
                                     </video>
                                 @elseif($content->post_type == 'audio' )

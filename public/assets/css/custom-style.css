@@ -2,7 +2,6 @@
     flex-direction: row;
 }
 .courses .card-header {
-    /* background: darkslategray; */
     background: #848484;
 }
 .courses.form-inline .form-group .form-control
@@ -13,22 +12,24 @@
     color: #fff !important;
 }
 .courses .BtnGroupRows a , .edit {
-    background: transparent;
-    color: gold;
-    border: 1px solid gold;
+    background: #ffc107;
+    color: #000;
+    border: 1px solid #ffc107;
 }
-.courses .BtnGroupRows a:hover , .edit:hover , .btn-outline-primary:not(:disabled):not(.disabled):active{
-    background: gold;
+
+.btn-outline-primary:not(:disabled):not(.disabled):active{
+    background: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgb(255 193 7 / 50%);
     color: #000;
 }
-.courses .BtnGroupRows form button , .delete {
-    background: transparent;
-    color: #dc3545;
-    border: 1px solid #dc3545;
+.btn-outline-primary.focus, .btn-outline-primary:focus,
+.btn-outline-primary:not(:disabled):not(.disabled):active:focus{
+    box-shadow: 0 0 0 0.2rem rgb(255 193 7 / 50%);
 }
-.courses .BtnGroupRows form button:hover , .delete:hover{
+.courses .BtnGroupRows form button , .delete {
     background: #dc3545;
     color: #fff;
+    border: 1px solid #dc3545;
 }
 .info {
     background: transparent;
@@ -96,4 +97,10 @@ em u {
 }
 .modal-dialog.modal-lg {
     max-width: 100% !important;
+}
+.text-center.course-image {
+    min-height: 197.35px !important;
+}
+.q-card label{
+    box-shadow: 0 3px 6px rgb(0 0 0 / 10%);
 }
