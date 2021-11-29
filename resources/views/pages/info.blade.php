@@ -112,7 +112,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="email">{{__('education.email')}}</label>
-                                                <input name="email" value="{{auth()->user()->email}}" type="text" id="email" class="form-control">
+                                                <input disabled="true" name="email" value="{{auth()->user()->email}}" type="text" id="email" class="form-control">
                                             </div>
                                         </div>
 

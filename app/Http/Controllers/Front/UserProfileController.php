@@ -590,7 +590,7 @@ class UserProfileController extends Controller
     public function update($id,Request $request){
 
         $request->validate([
-            'email' => 'required|email',
+//            'email' => 'required|email',
             'en_name' => 'required',
             'ar_name' => 'required',
             'language' => 'required',
@@ -600,7 +600,7 @@ class UserProfileController extends Controller
         $user = User::findOrFail($id);
 
         $user->update([
-            'email'     => $request->email,
+//            'email'     => $request->email,
             'name'      => json_encode(["en" => $request->en_name, "ar" => $request->ar_name]),
             'headline'  => $request->headline,
             'lang'      => $request->language,
