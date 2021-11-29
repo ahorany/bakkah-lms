@@ -29,7 +29,7 @@ class ResultsImport implements ToCollection, WithHeadingRow
             ],
         ]);
 
-        // dd(request()->all());die();
+        dd(request()->all());die();
         $exam_id = Exam::where('content_id', request()->content_id)->first();
         // dd($rows);
         foreach ($rows as $row)
