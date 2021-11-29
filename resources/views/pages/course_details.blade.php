@@ -88,10 +88,10 @@
                             </a>
 
                             <div class="dropdown d-none" style="left: 0; width: max-content !important;">
-                                <div>
+                                <div class="p-2">
                                     <template v-for="item in 5">
                                         <span @click="review(item)" v-if="item <= rate">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
                                                  viewBox="0 0 17.43 16.6">
                                                 <path id="Path_39" data-name="Path 39"
                                                       d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
@@ -100,7 +100,7 @@
                                         </span>
 
                                         <span @click="review(item)" v-if="item > rate">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
                                                     viewBox="0 0 17.43 16.6">
                                                    <path id="Path_42" data-name="Path 42"
                                                    d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
