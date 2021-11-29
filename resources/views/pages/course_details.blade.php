@@ -118,9 +118,12 @@
                 </div>
 
                 <div class="row my-4">
-                    <div class="col-lg-8 col-xl-9">
-                        <p class="lead light">{{$course->trans_excerpt}}</p>
-                    </div>
+                    @if ($course->trans_excerpt > 0)
+                        <div class="col-lg-8 col-xl-9">
+                            <p class="lead light">{{$course->trans_excerpt}}</p>
+                        </div>
+                    @endif
+
                     @if($video)
                       <div class="col-lg-4 col-xl-3">
                         <div class="card h-100 justify-content-center align-items-center p-5 video-btn">
@@ -144,8 +147,7 @@
                 </div>
          @endif
 
-
-        @if ($course->contents)
+        @if (count($course->contents) > 0)
           <div class="row mt-3 course-content">
                     <div class="col-12">
                         <h3>CONTENT</h3>
@@ -162,7 +164,7 @@
 {{--                            </a>--}}
 {{--                        </div>--}}
                  @foreach($course->contents as $key => $section)
-                        <div class="card learning-file mt-4">
+                        <div class="card learning-file mb-3">
                             <h2>{{$section->title}}</h2>
                             <div style="margin: 0px 40px;">{!!  $section->details->excerpt??null !!}</div>
                             @isset($section->contents)
@@ -233,7 +235,7 @@
                </div>
 
                     <div class="col-lg-4">
-                        <div class="card p-30 activity mt-4">
+                        <div class="card p-30 activity">
                             <h2>Activity</h2>
 {{--                            <ul>--}}
 {{--                                <li>Lean Six Sigma Yellow belt training provides insight to the methodology for process--}}

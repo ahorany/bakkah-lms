@@ -40,6 +40,12 @@
             object-fit: cover;
             cursor: pointer;
         }
+        .form-group{
+            margin-bottom: 20px;
+        }
+        .form-control#bio{
+            height: 83%;
+        }
     </style>
 
 @endsection
@@ -116,9 +122,6 @@
                                             </div>
                                         </div>
 
-                                        </div>
-
-                                        <div class="row border-dash-top  my-4 py-4">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>{{__('education.Gender')}}</label>
@@ -140,7 +143,32 @@
                                                 <input name="mobile" value="{{auth()->user()->mobile}}" type="mobile" id="mobile" class="form-control">
                                             </div>
                                         </div>
-                                    </div>
+
+                                        </div>
+
+                                    {{-- <div class="row border-dash-top  my-4 py-4">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>{{__('education.Gender')}}</label>
+                                                <select name="gender_id" value="{{auth()->user()->gender_id}}" class="form-control @error('gender_id') is-invalid @enderror ">
+                                                    <option value="-1">{{__('education.choose')}}</option>
+                                                    @foreach($genders as $gender)
+                                                        <option value="{{$gender->id}}" {{(old('gender_id', $user->gender_id)==$gender->id)?'selected="selected"':''}}>{{$gender->trans_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('gender_id')
+                                                    <small class="text-danger">{{$message}}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="mobile">{{__('education.Mobile')}}</label>
+                                                <input name="mobile" value="{{auth()->user()->mobile}}" type="mobile" id="mobile" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div> --}}
 
                                     <div class="row  mt-4 pt-4">
 

@@ -28,7 +28,7 @@
     <div class="row">
         <div class="col-xl-9 col-lg-8 mb-4 mb-lg-0">
             @foreach($exam->exam->content->questions as $question)
-             <div class="card  p-30 q-card">
+             <div class="card p-30 q-card {{($loop->last) ? ' ' : 'mb-3'}}">
                 <div class="q-number">
                     Q{{$loop->iteration}}/{{count($exam->exam->content->questions)}}
                     <small>({{$question->mark}} Marks)</small>

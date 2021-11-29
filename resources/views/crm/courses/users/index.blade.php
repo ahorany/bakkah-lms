@@ -21,7 +21,6 @@
     <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
 <div class="toLoad" id="contents">
-{{--    {!!Builder::Tinymce('details', 'details')!!}--}}
 
     <div class="course_info">
         {{-- <label class="m-0">{{$course->trans_title}}</label> --}}
@@ -32,113 +31,108 @@
 
            <button type="button" @click="OpenModal('instructor')" class="btn btn-outline-dark mx-2">
                <i class="far fa-plus-square mr-2"></i> {{__('admin.add_instructor')}}
+            </button>
+        </div>
 
-        {{-- <div>
-           <button type="button" @click="OpenModal()" class="btn btn-outline-dark mx-2">
-           <i class="far fa-plus-square mr-2"></i> {{__('admin.add_users')}}
-           </button>
-       </div> --}}
-    </div>
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Expire Date</th>
-            <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(user,index) in course.users">
-                <th scope="row" v-text="index + 1"></th>
-                <td v-text="trans_title(user.name)"></td>
-                <td v-text="user.email"></td>
-                <td>
-                    <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
-
-                </td>
-                <td>
-                    <button @click="updateUserExpireDate(user.id)" class="info btn-sm btn-outline-info btn-table" ><i class="fa fa"></i> Update</button>
-                    <button @click="deleteUser(user.id)" class="delete btn-sm btn-outline-danger btn-table" ><i class="fa fa-trash"></i> Delete</button>
-                </td>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Expire Date</th>
+                <th scope="col">Action</th>
             </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(user,index) in course.users">
+                    <th scope="row" v-text="index + 1"></th>
+                    <td v-text="trans_title(user.name)"></td>
+                    <td v-text="user.email"></td>
+                    <td>
+                        <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
 
-        </tbody>
-    </table>
+                    </td>
+                    <td>
+                        <button @click="updateUserExpireDate(user.id)" class="info btn-sm btn-outline-info btn-table" ><i class="fa fa"></i> Update</button>
+                        <button @click="deleteUser(user.id)" class="delete btn-sm btn-outline-danger btn-table" ><i class="fa fa-trash"></i> Delete</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
 
 
 
 
 
-	<div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Add Users</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-
-
-
-            <div class="container mt-2">
-                <div class="form-group">
-                    <label>Name </label>
-                    <input name="username" placeholder="Name.." class="form-control" v-model="search_username"/>
+        <div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Users</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
 
-                <div class="form-group">
-                    <label>Email </label>
-                    <input name="email" placeholder="Email.." class="form-control"  v-model="search_email" />
+
+
+                <div class="container mt-2">
+                    <div class="form-group">
+                        <label>Name </label>
+                        <input name="username" placeholder="Name.." class="form-control" v-model="search_username"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email </label>
+                        <input name="email" placeholder="Email.." class="form-control"  v-model="search_email" />
+                    </div>
+
+                    <div style="margin-left:25px;margin-top: 5px;">
+                        <button @click.prevent="search()" type="submit" name="search" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Search</button>
+                    </div>
                 </div>
 
-                <div style="margin-left:25px;margin-top: 5px;">
-                    <button @click.prevent="search()" type="submit" name="search" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Search</button>
+
+                <div class="modal-body" style="overflow: auto;height: 200px;">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Choose</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(search_user,index) in search_users">
+                            <td v-text="trans_title(search_user.name)"></td>
+                            <td v-text="search_user.email"></td>
+                            <td>
+                                <div class="form-group"><input @change="addUser(search_user.id,$event)" :checked="isCheckedUser(search_user.id)" type="checkbox" class="mx-3" style="display: inline-block;"></div>
+                            </td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+
+                    <div>
+                        <label class="form-group">Expire Date </label>
+                        <input   type="datetime-local" v-model="expire_date" name="expire_date" class="form-control" placeholder="Expire date">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
+                    <button type="reset" class="info btn btn-outline-info" >{{__('admin.clear')}}</button>
+                    <button type="button"  class="save btn btn-outline-success" @click="save()">{{__('admin.save')}}</button>
+
                 </div>
             </div>
-
-
-			<div class="modal-body" style="overflow: auto;height: 200px;">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Choose</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(search_user,index) in search_users">
-                        <td v-text="trans_title(search_user.name)"></td>
-                        <td v-text="search_user.email"></td>
-                        <td>
-                            <div class="form-group"><input @change="addUser(search_user.id,$event)" :checked="isCheckedUser(search_user.id)" type="checkbox" class="mx-3" style="display: inline-block;"></div>
-                        </td>
-                    </tr>
-
-
-                    </tbody>
-                </table>
-
-                <div>
-                    <label class="form-group">Expire Date </label>
-                    <input   type="datetime-local" v-model="expire_date" name="expire_date" class="form-control" placeholder="Expire date">
-                </div>
-
-            </div>
-
-			<div class="modal-footer">
-				<button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
-				<button type="reset" class="info btn btn-outline-info" >{{__('admin.clear')}}</button>
-				<button type="button"  class="save btn btn-outline-success" @click="save()">{{__('admin.save')}}</button>
-
-			</div>
-		</div>
-	</div>
-</div>
+        </div>
+    </div>
 </div>
 
 @endsection
