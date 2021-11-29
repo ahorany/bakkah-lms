@@ -13,7 +13,7 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-        Active::$namespace = 'crm';
+        Active::$namespace = 'training';
         Active::$folder = 'roles';
     }
 

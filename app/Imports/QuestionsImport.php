@@ -3,6 +3,7 @@ namespace App\Imports;
 
 use App\Models\Training\Question;
 use App\Models\Training\Answer;
+use App\Models\Training\Exam;
 // use App\Models\Training\Session;
 
 use App\Models\Training\Attendant;
@@ -26,13 +27,14 @@ class QuestionsImport implements ToCollection, WithHeadingRow
 
         // dd(request()->all());
         // dd($rows);
+        $mark = 0;
         foreach ($rows as $row)
         {
+
             if($row['question_text'] != '')
             {
                 DB::table('questions')->insert([
                     [
-
                         'title'             => $row['question_text'],
                         'mark'              => $row['default_garde'],
                         'exam_id'           => request()->content_id,
@@ -73,9 +75,13 @@ class QuestionsImport implements ToCollection, WithHeadingRow
                     ]);
                 }
             }
-
+            $mark += $row['default_garde'];
 
         }
+        $exam_id = Exam::where('content_id', request()->content_id)->first();
+        DB::table('exams')
+        ->where('id',  $exam_id->id)
+        ->update(['exam_mark' => $mark]);
 
     }
 

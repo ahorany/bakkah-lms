@@ -4,5 +4,5 @@
 	{{Builder::SetEloquent($eloquent)}}
     {{Builder::SetNameSpace('training.')}}
 	{{Builder::SetObject('course')}}
-	@include('crm.'.$folder.'.form')
+	@include('training.'.$folder.'.form')
 @endsection

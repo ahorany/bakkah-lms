@@ -25,7 +25,7 @@
           <span class="td-title">{{$loop->iteration}}</span>
         </td>
         <td>
-            <span style="display: block;" class="title">{{$post->trans_title}}</span>
+            <span style="display: block;" class="title">{{$post->trans_title}}  &nbsp;&nbsp;&nbsp;&nbsp; {{$post->code}}</span>
 
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>

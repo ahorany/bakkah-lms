@@ -27,7 +27,7 @@ class ImportController extends Controller
 {
     public function __construct()
     {
-        Active::$namespace  = 'crm';
+        Active::$namespace  = 'training';
         Active::$folder     = 'imports';
     }
 
@@ -65,6 +65,7 @@ class ImportController extends Controller
     public function importResults()
     {
         // dd(request()->all());
+
         return $this->import(new ResultsImport);
     }
 

@@ -43,7 +43,7 @@ class QuestionController extends Controller
 
         $units = $this->buildTree($units);
 
-        return view('crm.courses.contents.exam', compact('content','units'));
+        return view('training.courses.contents.exam', compact('content','units'));
     }
 
     public function add_question(){

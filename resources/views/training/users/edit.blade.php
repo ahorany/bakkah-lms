@@ -4,6 +4,6 @@
 
 	{{Builder::SetEloquent($eloquent)}}
 	{{Builder::SetObject('user')}}
-	@include('crm.'.$folder.'.form')
+	@include('training.'.$folder.'.form')
 
 @endsection

@@ -106,6 +106,11 @@ return [
     'accordion' => 'Accordion',
     'add_trainee' => 'Add Trainee',
     'add_instructor' => 'Add Instructor',
+    'importResults' => 'Import Results',
+    'importCourses' => 'Import Courses',
+    'importUsers' => 'Import Users',
+    'importUsersCourses' => 'Impor tUsers Courses',
+    'importUsersGroups' => 'Import Users Groups',
     'add' => 'Add',
     'importResults' => 'Import Results',
 ];

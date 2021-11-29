@@ -23,7 +23,7 @@
                 'attr'=>'maxlength="1000"',
             ])!!}
 
-            {!!Builder::Select('group_id', 'group', $groups, null, ['col'=>'col-md-12','model_title' => 'name']) !!}
+{{--            {!!Builder::Select('group_id', 'group', $groups, null, ['col'=>'col-md-12','model_title' => 'name']) !!}--}}
 
             {{Builder::SetPrefix('training.')}}
             {!!Builder::Textarea('en_accredited_notes', 'en_accredited_notes', null, [
@@ -98,9 +98,15 @@
 
         @include('Html.checkbox_const', ['const_type'=>'language'])
 
+<<<<<<< HEAD:resources/views/crm/courses/form.blade.php
         {{-- @include('crm.details.call', ['eloquent'=>$eloquent??null]) --}}
 
         {{-- @include('crm.accordions.call', ['eloquent'=>$eloquent??null]) --}}
+=======
+        @include('training.details.call', ['eloquent'=>$eloquent??null])
+
+        @include('training.accordions.call', ['eloquent'=>$eloquent??null])
+>>>>>>> 5abb2ee8f1066df9199983ff018714cb9d9216ab:resources/views/training/courses/form.blade.php
 
         {{-- <div class="card card-default mb-2">
             <div class="card-header">{{__('admin.brochure')}}</div>
