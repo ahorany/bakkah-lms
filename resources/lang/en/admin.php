@@ -106,18 +106,10 @@ return [
     'accordion' => 'Accordion',
     'add_trainee' => 'Add Trainee',
     'add_instructor' => 'Add Instructor',
-<<<<<<< HEAD
     'importResults' => 'Import Results',
     'importCourses' => 'Import Courses',
     'importUsers' => 'Import Users',
     'importUsersCourses' => 'Impor tUsers Courses',
     'importUsersGroups' => 'Import Users Groups',
-
-
-
-
-
-=======
     'add' => 'Add',
->>>>>>> 4bbaf310cb0513fac3b7b7952821665e9d4fe6a6
 ];
