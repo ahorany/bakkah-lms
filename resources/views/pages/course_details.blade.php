@@ -17,6 +17,7 @@
                 $image = $file;
             }
         }
+
     }
     ?>
 
@@ -180,8 +181,8 @@
                                         ?>
                                         <li>
                                             <a @if( ( isset($section->contents[($k-1)]->user_contents[0]) || ( isset($course->contents[($key-1)])  && isset($course->contents[($key-1)]->contents[ (count($course->contents[($key-1)]->contents) - 1)]->user_contents[0]) && $k == 0  ) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
-{{--<span width="28.126" height="28.127">{!!  file_get_contents(CustomAsset('icons/'.$content->post_type.'.svg')) !!}</span>--}}
-                                                         <img width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
+                                                <img width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
+                                                {{--                                                <img width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">--}}
 
                                                 {{--                                                <svg xmlns="http://www.w3.org/2000/svg" width="28.126" height="28.127"--}}
 {{--                                                    viewBox="0 0 28.126 28.127">--}}
