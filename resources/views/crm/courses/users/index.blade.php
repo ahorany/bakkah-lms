@@ -1,23 +1,30 @@
 @extends('layouts.crm.index')
 
-@section('table')
-    <style>
-        .course_info button {
-            padding: .375rem .75rem !important;
-        }
+@section('style')
+<style>
+    .course_info button {
+        padding: .375rem .75rem !important;
+    }
 
-        .ql-container.ql-snow{
-            height: 200px;
-        }
-    </style>
+    .ql-container.ql-snow{
+        height: 200px;
+    }
+
+    input.form-control {
+        color: gray;
+    }
+</style>
+@endsection
+
+@section('table')
+
     <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
 <div class="toLoad" id="contents">
 {{--    {!!Builder::Tinymce('details', 'details')!!}--}}
 
     <div class="course_info">
-<<<<<<< HEAD
-        <label class="m-0">{{$course->trans_title}}</label>
+        {{-- <label class="m-0">{{$course->trans_title}}</label> --}}
        <div>
            <button type="button" @click="OpenModal('trainee')" class="btn btn-outline-dark mx-2">
            <i class="far fa-plus-square mr-2"></i> {{__('admin.add_trainee')}}
@@ -25,14 +32,12 @@
 
            <button type="button" @click="OpenModal('instructor')" class="btn btn-outline-dark mx-2">
                <i class="far fa-plus-square mr-2"></i> {{__('admin.add_instructor')}}
-=======
 
-        <div>
+        {{-- <div>
            <button type="button" @click="OpenModal()" class="btn btn-outline-dark mx-2">
            <i class="far fa-plus-square mr-2"></i> {{__('admin.add_users')}}
->>>>>>> 0d1287655d7fe5cca5b87e94f93362402415522f
            </button>
-       </div>
+       </div> --}}
     </div>
 
     <table class="table table-striped">
