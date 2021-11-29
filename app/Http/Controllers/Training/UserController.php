@@ -151,7 +151,6 @@ class UserController extends Controller
 //        foreach ($validated['group_id'] as $key => $group){
 //            $groups[] = $key ;
 //        }
-
         $validated['name'] = null;
         $validated['trainer_courses_for_certifications'] = null;
         $validated['created_by'] = auth()->user()->id;
@@ -192,12 +191,11 @@ class UserController extends Controller
         ]);
 
 //        $user->groups()->attach($groups);
-
-
         $this->uploadsPDF($profile, 'cv', null);
         $this->uploadsPDF($profile, 'certificates', null);
         $this->uploadsPDF($profile, 'financial_info', null);
 
+        Active::$namespace = 'training';
         return Active::Inserted($user->trans_name,[
             'post_type' => $post_type,
         ]);
