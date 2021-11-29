@@ -98,9 +98,9 @@
 
         @include('Html.checkbox_const', ['const_type'=>'language'])
 
-        @include('crm.details.call', ['eloquent'=>$eloquent??null])
+        {{-- @include('crm.details.call', ['eloquent'=>$eloquent??null]) --}}
 
-        @include('crm.accordions.call', ['eloquent'=>$eloquent??null])
+        {{-- @include('crm.accordions.call', ['eloquent'=>$eloquent??null]) --}}
 
         {{-- <div class="card card-default mb-2">
             <div class="card-header">{{__('admin.brochure')}}</div>

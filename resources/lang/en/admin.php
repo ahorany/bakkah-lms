@@ -107,4 +107,5 @@ return [
     'add_trainee' => 'Add Trainee',
     'add_instructor' => 'Add Instructor',
     'add' => 'Add',
+    'importResults' => 'Import Results',
 ];

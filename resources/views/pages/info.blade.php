@@ -170,9 +170,9 @@
                                         </div>
                                     </div> --}}
 
-                                    <div class="row  mt-4 pt-4">
+                                    <div class="row">
 
-                                        <div class="col-12 text-center mt-4">
+                                        <div class="col-12">
                                             <button class="btn btn-primary">{{ __('education.Save Changes') }}</button>
                                         </div>
 

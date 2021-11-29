@@ -12,6 +12,8 @@
 
     input.form-control {
         color: gray;
+        font-size: 14px;
+        width: 75%;
     }
 </style>
 @endsection
@@ -26,17 +28,17 @@
         <div class="card p-3 mb-3">
             <div class="row">
                 <div class="col-md-6">
-                    <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class="add btn-sm">
-                    <i class="far fa-plus-square mr-2"></i> {{__('admin.add_trainee')}}
+                    <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                        <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_trainee')}}
                     </button>
 
-                    <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="add btn-sm">
-                    <i class="far fa-plus-square mr-2"></i> {{__('admin.add_instructor')}}
+                    <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                        <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_instructor')}}
                     </button>
-                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="add btn-sm mr-1">
+                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="group_buttons btn-sm mr-1">
                         {{__('admin.contents')}}
                     </a>
-                    <a href="{{route('training.units',['course_id'=>$course->id])}}" class="add btn-sm">Units</a>
+                    <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons btn-sm">Units</a>
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="back">
@@ -66,8 +68,8 @@
 
                     </td>
                     <td>
-                        <button @click="updateUserExpireDate(user.id)" class="info btn-sm btn-outline-info btn-table" ><i class="fa fa"></i> Update</button>
-                        <button @click="deleteUser(user.id)" class="delete btn-sm btn-outline-danger btn-table" ><i class="fa fa-trash"></i> Delete</button>
+                        <button @click="updateUserExpireDate(user.id)" class="info btn-sm " style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa"></i> Update</button>
+                        <button @click="deleteUser(user.id)" class="delete btn-sm" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
                     </td>
                 </tr>
 
