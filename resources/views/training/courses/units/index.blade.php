@@ -110,13 +110,13 @@
         <div  class="course_info mb-3 card p-3">
             <div class="row">
                 <div class="col-md-6">
-                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="add btn-sm">
-                        <i class="fa fa-plus"></i>  {{__('admin.add_unit')}}
+                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                        <i class="fa fa-plus"></i> {{__('admin.add_unit')}}
                     </button>
-                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="add btn-sm mr-1">
+                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="group_buttons btn-sm mr-1">
                         {{__('admin.contents')}}
                     </a>
-                    <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="add btn-sm">Users</a>
+                    <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons btn-sm">Users</a>
                 </div>
 
                 <div class="col-md-6 text-right">
@@ -185,9 +185,9 @@
             template: `
                          <li @click.stop="open = (!open)">@{{item.title }} <i class="fas fa-sort-down"></i>
 
-                                  <button @click.stop="$root.deleteUnit(course.units,item.id)"  class="btn text-danger btn-sm" >
+                                  <button @click.stop="$root.deleteUnit(course.units,item.id)" class="btn text-danger btn-sm" >
                                            <i class="fa fa-trash"></i></button>
-                                  <button @click.stop="$root.edit(item,item.id)" type="button" class="btn text-info  btn-sm" id="answer" ><i class="fa fa-pencil-alt"></i></button>
+                                  <button @click.stop="$root.edit(item,item.id)" type="button" class="btn text-info btn-sm" id="answer" ><i class="fa fa-pencil" style="color:#000;" aria-hidden="true"></i></button>
 
                              <tree-item-contents v-show="open" v-if="item.s" :items="item.s"/>
                            </li>`

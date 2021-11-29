@@ -87,14 +87,14 @@
 
 @section('content')
             <div class="card p-5 user-info">
-                        <h4 class="mb-4"><i class="fas fa-graduation-cap"></i> {{ __('education.Exam') }}</h4>
+                        <h2 class="mb-4"><i class="fas fa-graduation-cap"></i> {{ __('education.Exam') }}</h2>
                         <div class="row">
                             <?php $users_exams_count = count($exam->exam->users_exams) ?>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-3">
                                     <div class="card h-100">
                                         <div class="card-body" style="padding: 15px 30px;">
-                                            <h5>Exam title : {{$exam->title}}</h5>
+                                            <h4>Exam title : {{$exam->title}}</h4>
                                             <p>Start date : {{$exam->exam->start_date}}</p>
                                             <p>End date : {!!$exam->exam->end_date??'<span style="font-size:19px">∞</span>'!!}</p>
                                             <p>Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
@@ -130,7 +130,7 @@
                                 <div class="col-12 col-sm-12 col-md-8 col-lg-8">
 
                                 <div class="card pt-3 pl-3 h-100" style="padding: 15px 30px;">
-                                    <h5 class="card-title">Exam Description</h5>
+                                    <h4 class="card-title">Exam Description</h4>
 
                                     <div class="card-body">
                                         <p class="card-text">{!!  $exam->details->excerpt == 'null' ? '' : $exam->details->excerpt  !!}</p>

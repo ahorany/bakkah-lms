@@ -18,10 +18,10 @@
     <div  class="course_info mb-3 card p-3">
         <div class="row">
         <div class="col-md-6">
-            <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="add btn-sm">{{__('admin.add_section')}}
+            <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
             </button>
-                <a href="{{route('training.units',['course_id'=>$course->id])}}" class="add btn-sm">Units</a>
-                <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="add btn-sm">Users</a>
+                <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons btn-sm">Units</a>
+                <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons btn-sm">Users</a>
         </div>
 
         <div class="col-md-6 text-right">

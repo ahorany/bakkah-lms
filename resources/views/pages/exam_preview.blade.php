@@ -75,7 +75,7 @@
                                 <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
                                 <small v-text=" '(' + (question.mark) + ' Marks)'"></small>
                             </div>
-                            <h3 v-html="question.title"></h3>
+                            <h2 v-html="question.title" style="padding-right: 7%;"></h2>
 
                            <template v-if="page_type == 'exam'">
                                 <label :for="answer.title + '_' + answer.id + '_' + answer.question_id"  v-if="question.answers_count == 1" v-for="answer in question.answers" class="custom-radio" > @{{ answer.title }}
@@ -192,32 +192,8 @@
                                     <li @click="searchAndOpenQuestion(question.id)" :key="question.id" >
                                         <b v-text="index+1"></b>
                                         <div  class="icon empty" :style="{'background': answers[question.id]  ? '#83827d':''}"></div>
-
-                                        {{--                                        <div class="icon correct">--}}
-{{--                                            --}}
-{{--                                            <svg xmlns="http://www.w3.org/2000/svg" width="20.248" height="15.247" viewBox="0 0 20.248 15.247">--}}
-{{--                                            <path id="Path_121" data-name="Path 121" d="M252.452,339.764l-11,11-6.414-6.414" transform="translate(-233.618 -338.35)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="4"/>--}}
-{{--                                          </svg>--}}
-{{--                                        </div>--}}
                                     </li>
                                 </template>
-
-{{--                                <li>--}}
-{{--                                    <b>02</b>--}}
-{{--                                    <div class="icon incorrect">--}}
-{{--                                        <svg xmlns="http://www.w3.org/2000/svg" width="14.472" height="14.472" viewBox="0 0 14.472 14.472">--}}
-{{--                                            <g id="Group_127" data-name="Group 127" transform="translate(-235.537 -259.17)">--}}
-{{--                                              <line id="Line_9" data-name="Line 9" x2="12.738" y2="12.738" transform="translate(236.404 260.037)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2.453"/>--}}
-{{--                                              <line id="Line_10" data-name="Line 10" x1="12.738" y2="12.738" transform="translate(236.404 260.037)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2.453"/>--}}
-{{--                                            </g>--}}
-{{--                                          </svg>--}}
-{{--                                    </div>--}}
-{{--                                </li>--}}
-{{--                                <li>--}}
-{{--                                    <b>03</b>--}}
-{{--                                    <div class="icon empty"></div>--}}
-{{--                                </li>--}}
-
                             </ol>
                         </div>
                     </div>

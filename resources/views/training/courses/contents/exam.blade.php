@@ -11,51 +11,52 @@
 
     <div class="toLoad" id="questions">
 
-    <div class="course_info">
-        <label class="m-0">@{{content.title}}</label>
-        <button type="button" @click="OpenModal('question')" class="btn btn-outline-dark">
-            <i class="fa fa-plus"></i>  {{__('admin.add_question')}}
+    <div class="course_info card p-3 mb-3">
+        {{-- <label class="m-0">@{{content.title}}</label> --}}
+        <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons" style="width: max-content;">
+            <i class="fa fa-plus"></i> {{__('admin.add_question')}}
         </button>
     </div>
 
-        <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
-            @csrf
-                <div class="col-md-6 px-0">
-                    <div class="add-question-file">
-                        {!!Builder::File('file', 'file', null, [])!!}
+        <div class="card p-3 mb-3">
+            <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+                @csrf
+                    <div class="col-md-6 px-0">
+                        <div class="add-question-file">
+                            {!!Builder::File('file', 'file', null, [])!!}
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 px-0">
-                    <div class="import-question-file">
-                        {!!Builder::Submit('importQuestions', 'import_questions', 'save btn-sm btn-success mx-1 export-btn py-1 px-2', null, [
-                            'icon'=>'far fa-file-excel',
-                        ])!!}
-                        <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="info btn btn-warning btn-md" role="button"> Sample </a>
-                        <input type="hidden" name="content_id" value="{{$content->id}}">
+                    <div class="col-md-6 px-0">
+                        <div class="import-question-file">
+                            {!!Builder::Submit('importQuestions', 'import_questions', 'save btn-sm btn-success mx-1 export-btn py-1 px-2', null, [
+                                'icon'=>'far fa-file-excel',
+                            ])!!}
+                            <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="info btn btn-warning btn-md" role="button"> Sample </a>
+                            <input type="hidden" name="content_id" value="{{$content->id}}">
+                        </div>
                     </div>
-                </div>
 
-        </form>
-
-
-        <form action="{{ route('training.importResults') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
-            @csrf
-                <div class="col-md-6 px-0">
-                    <div class="add-question-file">
-                        {!!Builder::File('file', 'file', null, [])!!}
+            </form>
+            <hr>
+            <form action="{{ route('training.importResults') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+                @csrf
+                    <div class="col-md-6 px-0">
+                        <div class="add-question-file">
+                            {!!Builder::File('file', 'file', null, [])!!}
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 px-0">
-                    <div class="import-question-file">
-                        {!! Builder::Submit('importResults', 'importResults', 'save btn-sm btn-success mx-1 export-btn py-1 px-2', null, [
-                            'icon'=>'far fa-file-excel',
-                        ]) !!}
-                        <a href="{{CustomAsset('samples/learnerAnswers.xlsx')}}" download class="info btn btn-warning btn-md" role="button"> Sample </a>
-                        <input type="hidden" name="content_id" value="{{$content->id}}">
+                    <div class="col-md-6 px-0">
+                        <div class="import-question-file">
+                            {!! Builder::Submit('importResults', 'importResults', 'save btn-sm btn-success mx-1 export-btn py-1 px-2', null, [
+                                'icon'=>'far fa-file-excel',
+                            ]) !!}
+                            <a href="{{CustomAsset('samples/learnerAnswers.xlsx')}}" download class="info btn btn-warning btn-md" role="button"> Sample </a>
+                            <input type="hidden" name="content_id" value="{{$content->id}}">
+                        </div>
                     </div>
-                </div>
 
-        </form>
+            </form>
+        </div>
 
 	<div  class="card" v-for="(question,index) in content.questions">
 		<div class="card-body p-0 " >
@@ -67,12 +68,11 @@
                 <h3 class="BtnGroupRows float-left"  v-html="question.title"></h3>
 
                 <div class="BtnGroupRows float-right" data-id="150">
-                    <button type="button" @click="OpenEditModal(question.id)" class="edit btn-sm btn-outline-info btn-sm px-3" id="answer" >Edit</button>
-                    <button @click="deleteQuestion(question.id)" class="delete btn-sm btn-outline-danger" >Delete<!-- Delete --> </button>
+                    <button type="button" @click="OpenEditModal(question.id)" class="edit btn-sm px-3" id="answer" ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+                    <button @click="deleteQuestion(question.id)" class="delete btn-sm btn-outline-danger" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
                 </div>
 
             </div>
-
 
 		</div>
 	</div>
@@ -116,9 +116,9 @@
                             <option value="-1">Choose unit</option>
                             <option v-for="unit in compo_units" :value="unit.id" v-text="unit.title"></option>
                         </select>
-{{--                        <div v-show="'mark' in errors">--}}
-{{--                            <span style="color: red;font-size: 13px">@{{ errors.mark }}</span>--}}
-{{--                        </div>--}}
+                       {{-- <div v-show="'mark' in errors">
+                           <span style="color: red;font-size: 13px">@{{ errors.mark }}</span>
+                       </div> --}}
                     </div>
 
                        <div class="mt-5">
@@ -130,8 +130,8 @@
                            <div v-for="(answer,index) in answers" class="form-group">
                                    {{-- <input class="mx-3 form-control" type="checkbox" v-model="answer.check_correct"  :checked="answer.check_correct" style="display: inline-block" > --}}
                                    <input class="w-75 form-control" type="text" v-model="answer.title" name="title"  placeholder="title" style="display: inline-block;">
-                               <button  @click="deleteAnswer(question_id,answer.id,index)" class="delete btn-sm btn-outline-danger mx-3" >
-                                       Delete<!-- Delete --> </button>
+                               <button  @click="deleteAnswer(question_id,answer.id,index)" class="delete btn-sm btn-outline-danger mx-3" ><i class="fa fa-trash" aria-hidden="true"></i>
+                                 Delete<!-- Delete --> </button>
                                  </div>
                                </div>
 
@@ -159,9 +159,7 @@
 	</div>
 </div>
 
-
 </div>
-
 
 @endsection
 
