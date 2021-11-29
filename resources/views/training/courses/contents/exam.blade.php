@@ -66,8 +66,6 @@
                 </div>
                 <h3 class="BtnGroupRows float-left"  v-html="question.title"></h3>
 
-
-
                 <div class="BtnGroupRows float-right" data-id="150">
                     <button type="button" @click="OpenEditModal(question.id)" class="edit btn-sm btn-outline-info btn-sm px-3" id="answer" >Edit</button>
                     <button @click="deleteQuestion(question.id)" class="delete btn-sm btn-outline-danger" >Delete<!-- Delete --> </button>

@@ -22,14 +22,9 @@ class ResultsImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
-        DB::table('user_exams')->insert([
-            [
-                'user_id'       => 70,
-                'exam_id'       => 70,
-            ],
-        ]);
 
-        dd(request()->all());die();
+
+        // dd(request()->all());die();
         $exam_id = Exam::where('content_id', request()->content_id)->first();
         // dd($rows);
         foreach ($rows as $row)
@@ -45,11 +40,12 @@ class ResultsImport implements ToCollection, WithHeadingRow
                     [
                         'user_id'       => $user_id->id,
                         'exam_id'       => $exam_id->id,
+                        'status'        => 1,
                     ],
                 ]);
 
-                dump($user_id->id);
-                dd($exam_id->id);
+                // dump($user_id->id);
+                // dd($exam_id->id);
 
                 $user_exams_id = DB::getPdo()->lastInsertId();
                 $question_count = 0;
@@ -60,7 +56,7 @@ class ResultsImport implements ToCollection, WithHeadingRow
                     else
                         break;
                 }
-                $mark = 100/$question_count;
+
                 $mark_total = 0;
                 for($i=1;$i<=$question_count;$i++)
                 {
@@ -68,12 +64,13 @@ class ResultsImport implements ToCollection, WithHeadingRow
                     {
                         $question_id = Question::where('question_name', 'Q'.$i)->where('exam_id', request()->content_id)->first();
                         // dd($question_id->id);
-                        $correct_answer = Answer::where('question_id',$question_id)->where('check_correct',1)->first();
+                        $correct_answer = Answer::where('question_id',$question_id->id)->where('check_correct',1)->first();
+                        // dd($correct_answer);
                          DB::table('user_answers')->insert([
                             [
                                 'user_exam_id'  => $user_exams_id,
                                 'question_id'   => $question_id->id,
-                                'answer_id'     =>  $correct_answer->id,
+                                'answer_id'     => $correct_answer->id,
                             ],
                         ]);
 
@@ -81,11 +78,12 @@ class ResultsImport implements ToCollection, WithHeadingRow
                             [
                                 'user_exam_id'       => $user_exams_id,
                                 'question_id'       => $question_id->id,
-                                'mark'              => $mark,
+                                'mark'              => $question_id->mark,
                             ],
                         ]);
+                        $mark_total += $question_id->mark;
                     }
-                    $mark_total += $mark;
+
                 }
 
                 DB::table('user_exams')

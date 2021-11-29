@@ -65,6 +65,7 @@ class ImportController extends Controller
     public function importResults()
     {
         // dd(request()->all());
+
         return $this->import(new ResultsImport);
     }
 
