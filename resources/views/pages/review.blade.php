@@ -28,12 +28,12 @@
     <div class="row">
         <div class="col-xl-9 col-lg-8 mb-4 mb-lg-0">
             @foreach($exam->exam->content->questions as $question)
-             <div class="card p-30 q-card {{($loop->last) ? ' ' : 'mb-3'}}">
+             <div id="question_{{$loop->iteration}}" class="card p-30 q-card {{($loop->last) ? ' ' : 'mb-3'}}">
                 <div class="q-number">
                     Q{{$loop->iteration}}/{{count($exam->exam->content->questions)}}
                     <small>({{$question->mark}} Marks)</small>
                 </div>
-                <h3>{!! $question->title!!}</h3>
+                <h3 style="padding-right: 7%;">{!! $question->title!!}</h3>
                  @foreach($question->answers as $answer)
                      <label class="custom-radio"> {{$answer->title}}
                          <input type="checkbox" disabled="true" @foreach($exam->user_answers as $user_answer) @if($user_answer->id == $answer->id ) @if($answer->check_correct == 0) checked class="incorrect-radio" @else checked @endif   @endif @endforeach>
@@ -56,7 +56,7 @@
                  @endif
 
                   <div>
-                     <span>Answers correct : </span>
+                     <h4 class="mb-0">Answers correct : </h4>
                      @foreach($question->answers as $answer)
                          @if($answer->check_correct == 1)
                              <div style="color: #2a9055" >
@@ -67,12 +67,11 @@
                 </div>
 
                  @if($question->feedback)
-                     <div  class="mt-3">
-                         <h3>Feedback : </h3>
-                         <p class="p-2">{{  $question->feedback }}</p>
+                     <div>
+                         <h4 class="mb-0">Feedback : </h4>
+                         <p class="mb-0">{{  $question->feedback }}</p>
                      </div>
                  @endif
-
 
              </div>
             @endforeach
@@ -108,25 +107,27 @@
 
                         ?>
                         <li>
-                            <b>{{$loop->iteration}}</b>
-                            @if($count_correct_answers == $count_correct_user_answers && $count_all_user_answers == $count_correct_answers)
-                            <div class="icon correct">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20.248" height="15.247" viewBox="0 0 20.248 15.247">
-                                    <path id="Path_121" data-name="Path 121" d="M252.452,339.764l-11,11-6.414-6.414" transform="translate(-233.618 -338.35)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="4"/>
-                                </svg>
-                            </div>
-                             @elseif( ($count_correct_answers > $count_correct_user_answers && $count_correct_user_answers !=0) )
-                                <div class="icon empty"></div>
-                             @else
-                                <div class="icon incorrect">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14.472" height="14.472" viewBox="0 0 14.472 14.472">
-                                        <g id="Group_127" data-name="Group 127" transform="translate(-235.537 -259.17)">
-                                            <line id="Line_9" data-name="Line 9" x2="12.738" y2="12.738" transform="translate(236.404 260.037)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2.453"/>
-                                            <line id="Line_10" data-name="Line 10" x1="12.738" y2="12.738" transform="translate(236.404 260.037)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2.453"/>
-                                        </g>
+                            <a href="#question_{{$loop->iteration}}">
+                                <b style="color: #000;">{{$loop->iteration}}</b>
+                                @if($count_correct_answers == $count_correct_user_answers && $count_all_user_answers == $count_correct_answers)
+                                <div class="icon correct">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20.248" height="15.247" viewBox="0 0 20.248 15.247">
+                                        <path id="Path_121" data-name="Path 121" d="M252.452,339.764l-11,11-6.414-6.414" transform="translate(-233.618 -338.35)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="4"/>
                                     </svg>
                                 </div>
-                             @endif
+                                @elseif( ($count_correct_answers > $count_correct_user_answers && $count_correct_user_answers !=0) )
+                                    <div class="icon empty"></div>
+                                @else
+                                    <div class="icon incorrect">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14.472" height="14.472" viewBox="0 0 14.472 14.472">
+                                            <g id="Group_127" data-name="Group 127" transform="translate(-235.537 -259.17)">
+                                                <line id="Line_9" data-name="Line 9" x2="12.738" y2="12.738" transform="translate(236.404 260.037)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2.453"/>
+                                                <line id="Line_10" data-name="Line 10" x1="12.738" y2="12.738" transform="translate(236.404 260.037)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2.453"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                @endif
+                            </a>
                         </li>
                     @endforeach
 
