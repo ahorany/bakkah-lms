@@ -41,15 +41,17 @@
                      </label>
                  @endforeach
 
-                @foreach($exam->user_questions as $q)
+             <?php $lock = false; ?>
+             @foreach($exam->user_questions as $q)
                     @if($q->id == $question->id)
+                        <?php $lock = true; ?>
                          <div>
                             {{ $q->pivot->mark . '/' . $q->mark }} Marks
                         </div>
                      @endif
                  @endforeach
 
-                 @if(count($exam->user_questions) > 0)
+                 @if(count($exam->user_questions) > 0 && !$lock)
                      {{ '0' . '/' . $question->mark }} Marks
                  @endif
 
