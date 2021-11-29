@@ -17,7 +17,9 @@
     </button>
 
     <ul class="navbar-nav">
-        <li><a href="{{route('user.info')}}" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="28.474" height="28.474"
+        {{-- <li>
+            <a href="{{route('user.info')}}" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28.474" height="28.474"
                                               viewBox="0 0 28.474 28.474">
                     <g id="Icon_feather-settings" data-name="Icon feather-settings"
                        transform="translate(-0.75 -0.75)">
@@ -31,22 +33,8 @@
                               stroke-linejoin="round" stroke-width="1.5" />
                     </g>
                 </svg>
-            </a></li>
-{{--        <li class="has-dropdown new">--}}
-{{--            <a href="" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="23.148" height="26.56"--}}
-{{--                                             viewBox="0 0 23.148 26.56">--}}
-{{--                    <path id="Path_113" data-name="Path 113"--}}
-{{--                          d="M22.962,22.748a1.1,1.1,0,0,1-.969.492H15.337a3.838,3.838,0,0,1-7.606,0H1.077a1.1,1.1,0,0,1-.969-.492,1.109,1.109,0,0,1,0-1.091l3.166-6.84V8.3A8.267,8.267,0,1,1,19.8,8.3v6.518l3.173,6.854A1.1,1.1,0,0,1,22.962,22.748ZM11.534,25.454a2.764,2.764,0,0,0,2.7-2.213h-5.4A2.764,2.764,0,0,0,11.534,25.454Zm7.217-10.281a.075.075,0,0,0,0-.009.576.576,0,0,1-.025-.1.566.566,0,0,1-.022-.111s0-.006,0-.009V8.3a7.165,7.165,0,1,0-14.33,0V14.94s0,.006,0,.009a.552.552,0,0,1-.022.111.571.571,0,0,1-.025.1s0,.007,0,.009L1.1,22.134H21.974Z"--}}
-{{--                          transform="translate(0.039)" />--}}
-{{--                </svg>--}}
-{{--            </a>--}}
-{{--            <div class="dropdown d-none">--}}
-{{--                <ul>--}}
-{{--                    <li><a href="#">Lorem ipsum dolor sit amet.</a></li>--}}
-{{--                    <li><a href="#">Lorem, ipsum dolor.</a></li>--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-{{--        </li>--}}
+            </a>
+        </li> --}}
         <li  class="has-dropdown user">
             <a onclick="this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link" href="#">
                 <?php

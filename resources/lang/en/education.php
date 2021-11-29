@@ -47,4 +47,8 @@ return [
     'Save Changes' => 'Save Changes',
     'My Courses' => 'My Courses',
     'Add a Review' => 'Add a Review',
+    'choose' => 'Choose',
+    'Name' => 'Name',
+    'Login' => 'Login',
+    'You Have Account?' => 'You Have Account?',
 ];
