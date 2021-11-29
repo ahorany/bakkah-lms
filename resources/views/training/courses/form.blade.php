@@ -98,15 +98,9 @@
 
         @include('Html.checkbox_const', ['const_type'=>'language'])
 
-<<<<<<< HEAD:resources/views/crm/courses/form.blade.php
-        {{-- @include('crm.details.call', ['eloquent'=>$eloquent??null]) --}}
+        {{-- @include('training.details.call', ['eloquent'=>$eloquent??null]) --}}
 
-        {{-- @include('crm.accordions.call', ['eloquent'=>$eloquent??null]) --}}
-=======
-        @include('training.details.call', ['eloquent'=>$eloquent??null])
-
-        @include('training.accordions.call', ['eloquent'=>$eloquent??null])
->>>>>>> 5abb2ee8f1066df9199983ff018714cb9d9216ab:resources/views/training/courses/form.blade.php
+        {{-- @include('training.accordions.call', ['eloquent'=>$eloquent??null]) --}}
 
         {{-- <div class="card card-default mb-2">
             <div class="card-header">{{__('admin.brochure')}}</div>

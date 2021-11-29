@@ -43,7 +43,7 @@
                         <div class="BtnGroupRows" data-id="150">
 
                             <button @click="OpenSectionEditModal(content.id)"  class="edit btn-sm btn-outline-warning" >
-                                <i class="fa fa-pencil-alt"></i> Edit</button>
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
 
                             <button @click="deleteSection(content.id)"  class="delete btn-sm btn-outline-danger" >
                                 <i class="fa fa-trash"></i> Delete</button>
@@ -58,13 +58,7 @@
                             <button  type="button" @click="OpenModal('exam',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
                         </div>
                     </div>
-
-
-
-
                 </div>
-
-
             </div>
 
             <div v-if="content.details" class="my-2" v-html="content.details.excerpt">}</div>
@@ -89,16 +83,13 @@
                         </td>
                         <td>
                             <div class="BtnGroupRows buttons" data-id="150">
-                                <a v-if="entry.post_type == 'exam'"  class="add btn-sm btn-outline-primary" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id ">Add<!-- Add Questions  --> </a>
-                                <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm btn-outline-warning" >
-                                    Edit<!-- Edit --> </button>
-                                <button v-else @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm btn-outline-warning" >
-                                    Edit<!-- Edit --> </button>
+                                <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm" > <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
+                                <button v-else @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm" >
+                                    <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
 
-                                <button @click="deleteContent(content.id,entry.id)"  class="delete btn-sm btn-outline-danger" >
-                                    Delete<!-- Delete --> </button>
+                                <button @click="deleteContent(content.id,entry.id)"  class="delete btn-sm" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
                                     <!--  -->
-
+                                    <a v-if="entry.post_type == 'exam'"  class="primary-add btn-sm" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Add<!-- Add Questions  --> </a>
                             </div>
                         </td>
                     </tr>
