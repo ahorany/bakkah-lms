@@ -542,8 +542,6 @@ class UserProfileController extends Controller
        }
 
 
-
-
        Auth::login($user);
 
        return redirect()->route('user.home');
