@@ -93,4 +93,9 @@ return [
     'import_questions' => 'Import Questions',
     'detail' => 'Details',
     'accordion' => 'Accordion',
+    'importResults' => 'Import Results',
+    'importCourses' => 'Import Courses',
+    'importUsers' => 'Import Users',
+    'importUsersCourses' => 'Impor tUsers Courses',
+    'importUsersGroups' => 'Import Users Groups',
 ];

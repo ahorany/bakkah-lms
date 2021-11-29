@@ -38,6 +38,7 @@ class CoursesImport implements ToCollection, WithHeadingRow
                  'excerpt'=>$row['description'],
                  'reference_course_id'=>$row['course_id'],
                  'PDUs'=>$row['pdu'],
+                 'code'=>$row['code'],
 
                 ],
             ]);
