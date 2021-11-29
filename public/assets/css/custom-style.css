@@ -113,6 +113,16 @@ em u {
     text-decoration: none;
     background: #f8f2ff;
 }
+.primary-add{
+    background: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    padding: 6px 10px;
+}
+.primary-add:hover{
+    text-decoration: none;
+    color: #fff;;
+}
 
 @media (max-width: 767px) {
     main#main-vue-element {

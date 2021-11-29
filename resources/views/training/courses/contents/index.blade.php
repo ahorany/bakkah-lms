@@ -83,14 +83,13 @@
                         </td>
                         <td>
                             <div class="BtnGroupRows buttons" data-id="150">
-                                <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm btn-outline-warning" > <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
-                                <button v-else @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm btn-outline-warning" >
+                                <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm" > <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
+                                <button v-else @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm" >
                                     <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
 
-                                <button @click="deleteContent(content.id,entry.id)"  class="delete btn-sm btn-outline-danger" >
-                                    Delete<!-- Delete --> </button>
+                                <button @click="deleteContent(content.id,entry.id)"  class="delete btn-sm" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
                                     <!--  -->
-                                    <a v-if="entry.post_type == 'exam'"  class="add btn-sm btn-outline-primary" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id ">Add<!-- Add Questions  --> </a>
+                                    <a v-if="entry.post_type == 'exam'"  class="primary-add btn-sm" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Add<!-- Add Questions  --> </a>
                             </div>
                         </td>
                     </tr>
