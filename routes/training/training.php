@@ -8,7 +8,22 @@ Route::group([
 
 	Route::group(['prefix'=>'training', 'as'=>'training.'], function(){
 
-        Route::get('/imports', 'ImportController@imports')->name('imports');
+        Route::group([
+            'middleware' => ['CheckInstructorType'],
+        ], function(){
+            Route::get('/imports', 'ImportController@imports')->name('imports');
+
+            Route::resource('users', 'UserController');
+            Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
+            Route::get('/users/{user}/change-password', 'UserController@changePassword')->name('users.changePassword');
+            Route::patch('/users/{user}/change-password', 'UserController@savePassword')->name('users.savePassword');
+
+            Route::resource('roles', 'RoleController');
+            Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
+        });
+
+
+
         Route::post('courses/importCourses', 'ImportController@importCourses')->name('importCourses');
         Route::post('courses/importUsers', 'ImportController@importUsers')->name('importUsers');
         Route::post('courses/importUsersCourses', 'ImportController@importUsersCourses')->name('importUsersCourses');
@@ -18,21 +33,13 @@ Route::group([
         Route::post('courses/importResults', 'ImportController@importResults')->name('importResults');
 
 
-        Route::resource('users', 'UserController');
-        Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
-        Route::get('/users/{user}/change-password', 'UserController@changePassword')->name('users.changePassword');
-        Route::patch('/users/{user}/change-password', 'UserController@savePassword')->name('users.savePassword');
-
-        Route::resource('roles', 'RoleController');
-        Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
-
 
         Route::resource('courses', 'CourseController');
         Route::patch('/courses/{course}/restore', 'CourseController@restore')->name('courses.restore');
 
 
-        Route::resource('training_options', 'TrainingOptionController');
-        Route::patch('/training_options/{training_option}/restore', 'TrainingOptionController@restore')->name('training_options.restore');
+//        Route::resource('training_options', 'TrainingOptionController');
+//        Route::patch('/training_options/{training_option}/restore', 'TrainingOptionController@restore')->name('training_options.restore');
 
         Route::get('/units', 'UnitController@index')->name('units');
         Route::get('/delete_unit', 'UnitController@delete_unit')->name('delete_unit');

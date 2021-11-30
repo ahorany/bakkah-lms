@@ -80,6 +80,7 @@ class Kernel extends HttpKernel
         'check_page' => CheckPageMiddleware::class,
         'apiToken' => CheckApiKey::class,
         'checkUserType' => \App\Http\Middleware\CheckUserType::class,
+        'CheckInstructorType' => \App\Http\Middleware\CheckInstructorType::class,
 
     ];
 
