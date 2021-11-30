@@ -26,7 +26,7 @@
 
         <div class="col-md-6 text-right">
             <div class="back">
-                    <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
             </div>
         </div>
         </div>
