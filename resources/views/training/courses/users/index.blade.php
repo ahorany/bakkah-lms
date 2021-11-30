@@ -109,22 +109,22 @@
 
                 <div class="container mt-2">
                     <div class="form-group">
-                        <label>Name </label>
-                        <input name="username" placeholder="Name.." class="form-control" v-model="search_username"/>
+                        <label>Name: </label>
+                        <input name="username" placeholder="Name.." class="form-control d-inline-block" v-model="search_username"/>
                     </div>
 
                     <div class="form-group">
-                        <label>Email </label>
-                        <input name="email" placeholder="Email.." class="form-control"  v-model="search_email" />
+                        <label>Email: </label>
+                        <input name="email" placeholder="Email.." class="form-control d-inline-block"  v-model="search_email" />
                     </div>
 
-                    <div style="margin-left:0px;margin-top: 5px;">
-                        <button @click.prevent="search()" type="submit" name="search" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Search</button>
+                    <div style="margin-left:40px;margin-top: 5px;">
+                        <button @click.prevent="search()" type="submit" name="search" class="main-color"><i class="fa fa-search"></i> Search</button>
                     </div>
                 </div>
 
 
-                <div class="modal-body" style="overflow: auto;height: 200px;">
+                <div class="modal-body" style="overflow: auto;height: 150px;">
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -142,21 +142,20 @@
                             </td>
                         </tr>
 
-
                         </tbody>
                     </table>
 
                     <div>
-                        <label class="form-group">Expire Date </label>
-                        <input   type="datetime-local" v-model="expire_date" name="expire_date" class="form-control" placeholder="Expire date">
+                        <label class="form-group">Expire Date: </label>
+                        <input   type="datetime-local" v-model="expire_date" name="expire_date" class="form-control d-inline-block" placeholder="Expire date">
                     </div>
 
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
-                    <button type="reset" class="info btn btn-outline-info" >{{__('admin.clear')}}</button>
-                    <button type="button"  class="save btn btn-outline-success" @click="save()">{{__('admin.save')}}</button>
+                    <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
+                    <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
+                    <button type="button"  class="green" @click="save()">{{__('admin.save')}}</button>
                 </div>
             </div>
         </div>

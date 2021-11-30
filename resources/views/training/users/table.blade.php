@@ -25,7 +25,7 @@
             <th class="">{{__('admin.company')}}</th>
             <th class="">{{__('admin.gender_id')}}</th>
             <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th>
-            <th class="d-none d-sm-table-cell text-center">{{__('admin.action')}}</th>
+            <th class="d-none d-sm-table-cell text-center" style="width: 12%;">{{__('admin.action')}}</th>
         </tr>
       </thead>
       <tbody>
@@ -59,7 +59,7 @@
           </span>
         </td>--}}
         <td class="d-none d-sm-table-cell px-1">{!!Builder::UploadRow($post)!!}</td>
-        <td class="d-none d-sm-table-cell text-center px-1" style="width: 10%;">
+        <td class="d-none d-sm-table-cell text-center px-1">
             {!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
                 'post'=>$post->id,
             ])!!}
