@@ -58,6 +58,10 @@ class CourseUserController extends Controller
         if(checkUserIsTrainee()){
             abort(404);
         }
+        $user_type = 2;
+        if(\request()->user_type == 'trainee'){
+            $user_type = 3;
+        }
        $users = User::query();
 
        $lock = true;
@@ -76,6 +80,11 @@ class CourseUserController extends Controller
                 $query->where('name', 'like', '%'.request()->name.'%');
             });
         }
+
+        $users->with(['roles' => function($q) use($user_type){
+            return  $q->where('role_id',$user_type);
+        }]);
+
 
         if($lock){
             $users = $users->get();
@@ -117,7 +126,7 @@ class CourseUserController extends Controller
                 CourseRegistration::where('user_id',$key)->where('course_id',$course->id)->delete();
             }
         }
-        $course = Course::with(['users'])->where('id',$course->id)->first();
+        $course = Course::with(['users.roles'])->where('id',$course->id)->first();
 
         return response()->json([ 'status' => 'success' ,'course' => $course]);
 
