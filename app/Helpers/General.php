@@ -21,8 +21,9 @@ use App\Models\Training\Cart;
 use App\Models\Training\CartMaster;
 use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 function checkUserIsTrainee(){
-    if(\auth()->user()->role_id == 2 ){
+    if(isset(\auth()->user()->roles()->first()->id) && \auth()->user()->roles()->first()->id == 2 ){
         return true;
     }
     return false;
