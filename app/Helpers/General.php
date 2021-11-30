@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 function checkUserIsTrainee(){
-    if(\auth()->user()->role_id == 2 ){
+    if(\auth()->user()->roles()->first()->id == 2 ){
         return true;
     }
     return false;
