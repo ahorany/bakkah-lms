@@ -150,7 +150,7 @@
 
                             <div class="d-flex algin-items-center justify-content-between mt-4">
                                 <template v-if="save_status && page_type == 'exam' ">
-                                   <button class="btn btn-outline-primary" @click.prevent="save()">Submit</button>
+                                   <button class="btn" @click.prevent="save()">Submit</button>
                                 </template>
 
                                 <div class="navigation">
