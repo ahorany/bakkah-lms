@@ -81,6 +81,7 @@ class CourseController extends Controller
     }
 
     public function store(CourseRequest $request){
+
         if(checkUserIsTrainee()){
             abort(404);
         }

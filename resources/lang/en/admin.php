@@ -112,5 +112,5 @@ return [
     'importUsersCourses' => 'Impor tUsers Courses',
     'importUsersGroups' => 'Import Users Groups',
     'add' => 'Add',
-    'importResults' => 'Import Results',
+    'code' => 'Code',
 ];

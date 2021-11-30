@@ -98,4 +98,5 @@ return [
     'importUsers' => 'Import Users',
     'importUsersCourses' => 'Impor tUsers Courses',
     'importUsersGroups' => 'Import Users Groups',
+    'code' => 'Code',
 ];
