@@ -179,6 +179,7 @@
 
                                             <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                                             <td>
+                                                @if($exam->exam->exam_mark && $exam->exam->exam_mark == 0)
                                                 <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
                                                 {{-- <div class="progress">
                                                     <div class=" progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100"></div>
@@ -188,7 +189,7 @@
 {{--                                                    <div style=" width: {{$progress}}%;" class="mx-auto bar @if($progress < 50) bg-danger @endif" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>--}}
 {{--                                                </div>--}}
                                                 <small>{{$progress}}% Complete</small>
-
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
