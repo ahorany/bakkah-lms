@@ -32,7 +32,7 @@
         </div>
     </div>
 
-	<div  class="card" v-for="(content,index) in contents">
+	<div  class="card mb-2" v-for="(content,index) in contents">
 		<div class="card-body" >
             <div class="clearfix">
                 <div class="row my-3">
