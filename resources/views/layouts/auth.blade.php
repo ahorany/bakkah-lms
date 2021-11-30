@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="{{CustomAsset('assets/css/bootstrap-grid.min.css')}}">
     <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}">
 </head>
 <body>
    @yield('content')
