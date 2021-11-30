@@ -281,6 +281,9 @@ ol.answers li{
 .ql-container.ql-snow{
     height: 150px;
 }
+.table td, .table th{
+    vertical-align: middle !important;
+}
 
 @media (max-width: 1025px) {
     .change-password .card .card-body{
