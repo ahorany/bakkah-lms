@@ -59,6 +59,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
+                <th scope="col">Type</th>
                 @if(!checkUserIsTrainee())
                     <th scope="col">Expire Date</th>
                     <th scope="col">Action</th>
@@ -70,7 +71,8 @@
                     <th scope="row" v-text="index + 1"></th>
                     <td v-text="trans_title(user.name)"></td>
                     <td v-text="user.email"></td>
-                    @if(!checkUserIsTrainee())
+                    <td v-text="(user.pivot != null) ? (user.pivot.role_id == 2 ? 'instructor' : 'trainee') : ''"></td>
+                @if(!checkUserIsTrainee())
                         <td>
                             <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
 
@@ -93,7 +95,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Users</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add @{{ type_user }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -200,6 +202,7 @@
                         {
                             'name' : self.search_username ,
                             'email'    : self.search_email ,
+                            'type_user'    : self.type_user ,
                         }
                         )
                         .then(response => {
@@ -282,6 +285,9 @@
                 trans_title : function (data) {
                    return JSON.parse(data)[this.lang];
                 },
+                // trans_name : function (data) {
+                //    return JSON.parse(data)[this.lang];
+                //  },
                 updateUserExpireDate: function (user_id) {
                     let user_expire_date = this.users_expire_date[user_id];
                     let self = this;

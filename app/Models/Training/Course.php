@@ -278,7 +278,7 @@ class Course extends Model
     ///////////// lms //////////////
 
     public function users(){
-        return $this->belongsToMany(User::class,'courses_registration','course_id')->withPivot('user_id' ,'course_id','rate', 'progress','expire_date');
+        return $this->belongsToMany(User::class,'courses_registration','course_id')->withPivot('user_id' ,'course_id','role_id','rate', 'progress','expire_date');
     }
 
 

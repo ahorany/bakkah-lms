@@ -150,9 +150,9 @@ em u {
 #ContentModal .modal-content{
     width: 75% !important;
 }
-#ContentModal .modal-content .progress{
-    display: none;
-}
+/*#ContentModal .modal-content .progress{*/
+/*    display: none;*/
+/*}*/
 .import-question-file {
     padding: 29px 0 0;
     text-align: right;
