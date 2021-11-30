@@ -105,6 +105,7 @@
 
 
 
+<<<<<<< HEAD
                     <div class="container mt-2">
                         <div class="form-group">
                             <label>Name </label>
@@ -156,6 +157,57 @@
                         <button type="reset" class="info btn btn-outline-info" >{{__('admin.clear')}}</button>
                         <button type="button"  class="save btn btn-outline-success" @click="save()">{{__('admin.save')}}</button>
                     </div>
+=======
+                <div class="container mt-2">
+                    <div class="form-group">
+                        <label>Name: </label>
+                        <input name="username" placeholder="Name.." class="form-control d-inline-block" v-model="search_username"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email: </label>
+                        <input name="email" placeholder="Email.." class="form-control d-inline-block"  v-model="search_email" />
+                    </div>
+
+                    <div style="margin-left:40px;margin-top: 5px;">
+                        <button @click.prevent="search()" type="submit" name="search" class="main-color"><i class="fa fa-search"></i> Search</button>
+                    </div>
+                </div>
+
+
+                <div class="modal-body" style="overflow: auto;height: 150px;">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Choose</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(search_user,index) in search_users">
+                            <td v-text="trans_title(search_user.name)"></td>
+                            <td v-text="search_user.email"></td>
+                            <td>
+                                <div class="form-group"><input @change="addUser(search_user.id,$event)" :checked="isCheckedUser(search_user.id)" type="checkbox" class="mx-3" style="display: inline-block;"></div>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <div>
+                        <label class="form-group">Expire Date: </label>
+                        <input   type="datetime-local" v-model="expire_date" name="expire_date" class="form-control d-inline-block" placeholder="Expire date">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
+                    <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
+                    <button type="button"  class="green" @click="save()">{{__('admin.save')}}</button>
+>>>>>>> 56e760e459915ff755fe0015691672724ea72b85
                 </div>
             </div>
         </div>
