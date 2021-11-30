@@ -26,14 +26,10 @@ class UsersImport implements ToCollection, WithHeadingRow
                 'ar'=>$row['firstname'].' '.$row['lastname'],
             ], JSON_UNESCAPED_UNICODE);
 
-
-            $user_type = 41;
-            if($row['user_type'] == 'SuperAdmin')
-                $user_type = 315;
-
             $gender = 43;
             if($row['gender'] == 'female')
-                $user_type = 44;
+                $gender = 44;
+
             $expire_date = null;
             if($row['deactivation_date'] != '')
             {
@@ -47,7 +43,7 @@ class UsersImport implements ToCollection, WithHeadingRow
                  'name' => $data,
                  'username_lms'=>$row['login'],
                  'email'=>$row['email'],
-                 'user_type'=>$user_type,
+                //  'user_type'=>$user_type,
                  'reference_user_id' =>$row['user_id'],
                  'bio'=>$row['bio'],
                  'locale'=>$row['language'],
@@ -57,9 +53,25 @@ class UsersImport implements ToCollection, WithHeadingRow
                 ],
             ]);
 
-            // $id = DB::getPdo()->lastInsertId();
+            $user_id = DB::getPdo()->lastInsertId();
+            $role_id = 0;
+            if($row['user_type'] == 'SuperAdmin' || $row['user_type']  == 'Admin-Type')
+                $role_id = 1;
+            elseif($row['user_type'] == 'Manager')
+                $role_id = 4;
+            elseif($row['user_type'] == 'Trainer-Type')
+                $role_id = 2;
+            elseif($row['user_type'] == 'Trainee-Type')
+                $role_id = 3;
 
+            DB::table('role_user')->insert([
+                [
 
+                    'user_id' => $user_id,
+                    'role_id'=>$role_id,
+
+                ],
+            ]);
         }
 
     }

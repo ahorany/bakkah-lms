@@ -99,4 +99,5 @@ return [
     'importUsersCourses' => 'Impor tUsers Courses',
     'importUsersGroups' => 'Import Users Groups',
     'code' => 'Code',
+    'users_count'=>'Users Count',
 ];

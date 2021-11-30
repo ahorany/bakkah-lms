@@ -113,4 +113,5 @@ return [
     'importUsersGroups' => 'Import Users Groups',
     'add' => 'Add',
     'code' => 'Code',
+    'users_count'=>'Users Count',
 ];
