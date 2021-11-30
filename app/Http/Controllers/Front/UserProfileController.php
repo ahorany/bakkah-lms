@@ -466,8 +466,8 @@ class UserProfileController extends Controller
                 return $q->where('post_type','image');
             }]);
         }])->first();
-//        return ( $courses->courses[2]->training_option->trans_name );
-        $video = DB::select(DB::raw("SELECT user_contents.id , uploads.file FROM user_contents
+
+        $video = DB::select(DB::raw("SELECT user_contents.id , contents.id as content_id, uploads.file FROM user_contents
             INNER JOIN contents ON  contents.id = user_contents.content_id
             INNER JOIN uploads  ON  contents.id = uploads.uploadable_id
         WHERE user_contents.user_id = ".\auth()->id()."
@@ -479,10 +479,13 @@ class UserProfileController extends Controller
         $last_video = $video[0]??null;
         $next_videos = [];
         if($last_video){
-            $next_videos = DB::select(DB::raw("SELECT id ,title  FROM contents
-            WHERE id > ".$last_video->id."
-            AND post_type = 'video'
-            AND deleted_at IS NULL LIMIT 4"));
+            $next_videos = DB::select(DB::raw("SELECT contents.id ,contents.title  FROM contents
+           INNER JOIN courses_registration ON courses_registration.course_id = contents.course_id
+            WHERE contents.id > ".$last_video->content_id."
+            AND contents.post_type = 'video'
+            AND courses_registration.user_id =". \auth()->id() ."
+            AND contents.deleted_at IS NULL LIMIT 4
+            "));
         }
 
        $complete_courses =  DB::select(DB::raw("SELECT COUNT(id) as courses_count,
