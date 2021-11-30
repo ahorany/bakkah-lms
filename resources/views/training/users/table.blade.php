@@ -3,6 +3,9 @@
     .card-header span{
         color: #fff !important;
     }
+    .img-thumbnail{
+        width: 60%;;
+    }
 </style>
 @endsection
 <div class="card courses">
@@ -11,7 +14,7 @@
     {!!Builder::TableAllPosts($count, $users->count())!!}
   </div>
   <div class="card-body table-responsive p-0">
-    <table class="table table-hover table-condensed">
+    <table class="table table-hover table-condensed text-center">
       <thead>
         <tr>
             <th class="">{{__('admin.index')}}</th>
@@ -29,25 +32,25 @@
       @foreach($users as $post)
       <tr data-id="{{$post->id}}">
         <td>
-          <span class="td-title">{{$loop->iteration}}</span>
+          <span class="td-title px-1">{{$loop->iteration}}</span>
         </td>
-        <td>
+        <td class="px-1">
             <span style="display: block;">{{$post->trans_name}}</span>
 
         </td>
-        <td>
+        <td class="px-1">
             <span class="td-title">{{$post->email??null}}</span>
         </td>
-        <td>
+        <td class="px-1">
             <span class="td-title">{{$post->mobile??null}}</span>
         </td>
-        <td>
+        <td class="px-1">
             <span class="td-title">{{$post->job_title??null}}</span>
         </td>
-        <td>
+        <td class="px-1">
             <span class="td-title">{{$post->company??null}}</span>
         </td>
-        <td>
+        <td class="px-1">
             <span class="td-title">{{$post->gender->en_name??null}}</span>
         </td>
         {{--<td class="d-none d-sm-table-cell">
@@ -55,10 +58,12 @@
             {!!$post->published_at!!}
           </span>
         </td>--}}
-        <td class="d-none d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
-        <td class="d-none d-sm-table-cell text-right">{!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
-            'post'=>$post->id,
-         ])!!}</td>
+        <td class="d-none d-sm-table-cell px-1">{!!Builder::UploadRow($post)!!}</td>
+        <td class="d-none d-sm-table-cell text-center px-1" style="width: 10%;">
+            {!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
+                'post'=>$post->id,
+            ])!!}
+         </td>
       </tr>
       @endforeach
       </tbody>

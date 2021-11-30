@@ -50,6 +50,8 @@ return [
     'choose' => 'Choose',
     'Name' => 'Name',
     'Login' => 'Login',
+    'Company' => 'Company',
+    'Job Title' => 'Job Title',
     'You Have Account?' => 'You Have Account?',
     'Back To Home' => 'Back To Home',
     "We can't seem to find the page you're looking for." => "We can't seem to find the page you're looking for.",
