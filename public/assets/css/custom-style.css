@@ -267,7 +267,14 @@ ol.answers li{
     height: 150px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1025px) {
+    .change-password .card .card-body{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+@media (max-width: 768px) {
     main#main-vue-element {
         padding: 15px 25px !important;
     }
@@ -282,5 +289,12 @@ ol.answers li{
     .signin .signin-form {
         width: 85% !important;
         padding: 50px 25px !important;
+    }
+    .change-password .card {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .change-password input.form-control {
+        font-size: 12px;
     }
 }
