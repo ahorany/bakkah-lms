@@ -358,14 +358,14 @@
 
             </div>
         </div>
-        <div class="col-lg-6 mb-5 mb-xl-0">
-            {{--            <div class="card p-30">--}}
-            {{--                <div class="line-chart">--}}
-            {{--                    <h3>Learning Time Overview</h3>--}}
-            {{--                    <canvas class="w-100" id="myChart" height="250"></canvas>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
-        </div>
+        {{-- <div class="col-lg-6 mb-5 mb-xl-0">
+            <div class="card p-30">
+                <div class="line-chart">
+                    <h3>Learning Time Overview</h3>
+                    <canvas class="w-100" id="myChart" height="250"></canvas>
+                </div>
+            </div>
+        </div> --}}
     </div>
 
 @endsection

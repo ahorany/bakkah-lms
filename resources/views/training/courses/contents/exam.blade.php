@@ -28,10 +28,10 @@
                     </div>
                     <div class="col-md-6 px-0">
                         <div class="import-question-file">
-                            {!!Builder::Submit('importQuestions', 'import_questions', 'save btn-sm btn-success mx-1 export-btn py-1 px-2', null, [
+                            {!!Builder::Submit('importQuestions', 'import_questions', 'save btn export-btn btn-success', null, [
                                 'icon'=>'far fa-file-excel',
                             ])!!}
-                            <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="info btn btn-warning btn-md" role="button"> Sample </a>
+                            <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="info btn" role="button"> Sample </a>
                             <input type="hidden" name="content_id" value="{{$content->id}}">
                         </div>
                     </div>
@@ -47,10 +47,10 @@
                     </div>
                     <div class="col-md-6 px-0">
                         <div class="import-question-file">
-                            {!! Builder::Submit('importResults', 'importResults', 'save btn-sm btn-success mx-1 export-btn py-1 px-2', null, [
+                            {!! Builder::Submit('importResults', 'importResults', 'save btn-sm btn-success export-btn', null, [
                                 'icon'=>'far fa-file-excel',
                             ]) !!}
-                            <a href="{{CustomAsset('samples/learnerAnswers.xlsx')}}" download class="info btn btn-warning btn-md" role="button"> Sample </a>
+                            <a href="{{CustomAsset('samples/learnerAnswers.xlsx')}}" download class="info btn" role="button"> Sample </a>
                             <input type="hidden" name="content_id" value="{{$content->id}}">
                         </div>
                     </div>

@@ -109,7 +109,7 @@ return [
     'importResults' => 'Import Results',
     'importCourses' => 'Import Courses',
     'importUsers' => 'Import Users',
-    'importUsersCourses' => 'Impor tUsers Courses',
+    'importUsersCourses' => 'Import Users Courses',
     'importUsersGroups' => 'Import Users Groups',
     'add' => 'Add',
     'code' => 'Code',
