@@ -91,49 +91,47 @@
                         <div class="row">
                             <?php $users_exams_count = count($exam->exam->users_exams) ?>
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-3">
-                                    <div class="card h-100">
-                                        <div class="card-body" style="padding: 15px 30px;">
-                                            <h4>Exam title : {{$exam->title}}</h4>
-                                            <p>Start date : {{$exam->exam->start_date}}</p>
-                                            <p>End date : {!!$exam->exam->end_date??'<span style="font-size:19px">∞</span>'!!}</p>
-                                            <p>Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
-                                            <p>Exam attempt count : {!! $exam->exam->attempt_count == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->attempt_count!!}</p>
-                                            <p>Your attempts  : {{$users_exams_count}}</p>
-                                            <p>Mark  : {{$exam->exam->exam_mark}} </p>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-3">
+                                <div class="card h-100" style="box-shadow: none; border: 1px solid gainsboro;">
+                                    <div class="card-body" style="padding: 15px 30px;">
+                                        <h4>Exam title : {{$exam->title}}</h4>
+                                        <p>Start date : {{$exam->exam->start_date}}</p>
+                                        <p>End date : {!!$exam->exam->end_date??'<span style="font-size:19px">∞</span>'!!}</p>
+                                        <p>Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
+                                        <p>Exam attempt count : {!! $exam->exam->attempt_count == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->attempt_count!!}</p>
+                                        <p>Your attempts  : {{$users_exams_count}}</p>
+                                        <p>Mark  : {{$exam->exam->exam_mark}} </p>
 
 
-                                           @if(count($exam->questions) == 0)
-                                                    <p class="text-danger">Not Ready Now</p>
-                                            @else
-                                                @if( \Carbon\Carbon::create($exam->exam->end_date)  > \Carbon\Carbon::now() || is_null($exam->exam->end_date) )
-                                                    @if($users_exams_count == 0)
-                                                        <p class="text-warning">No Attempts</p>
-                                                        <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start Attempt</a>
-                                                    @elseif($exam->exam->users_exams[$users_exams_count-1]->status == 0)
-                                                        <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Return to Exam</a>
+                                        @if(count($exam->questions) == 0)
+                                                <p class="text-danger">Not Ready Now</p>
+                                        @else
+                                            @if( \Carbon\Carbon::create($exam->exam->end_date)  > \Carbon\Carbon::now() || is_null($exam->exam->end_date) )
+                                                @if($users_exams_count == 0)
+                                                    <p class="text-warning">No Attempts</p>
+                                                    <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start Attempt</a>
+                                                @elseif($exam->exam->users_exams[$users_exams_count-1]->status == 0)
+                                                    <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Return to Exam</a>
 
-                                                    @elseif( ( $exam->exam->attempt_count == 0) || ($users_exams_count < $exam->exam->attempt_count && $exam->exam->users_exams[$users_exams_count-1]->status == 1))
-                                                        <a onclick="confirmNewAttempt()" href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start New Attempt</a>
-                                                    @else
-                                                        <p class="text-danger">All your attempts are over</p>
-                                                    @endif
+                                                @elseif( ( $exam->exam->attempt_count == 0) || ($users_exams_count < $exam->exam->attempt_count && $exam->exam->users_exams[$users_exams_count-1]->status == 1))
+                                                    <a onclick="confirmNewAttempt()" href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start New Attempt</a>
                                                 @else
-                                                    <p class="text-danger">Expired Time</p>
+                                                    <p class="text-danger">All your attempts are over</p>
                                                 @endif
-
+                                            @else
+                                                <p class="text-danger">Expired Time</p>
                                             @endif
-                                        </div>
+
+                                        @endif
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-
-                                <div class="card pt-3 pl-3 h-100" style="padding: 15px 30px;">
+                            <div class="col-12 col-sm-12 col-md-8 col-lg-8 mb-3">
+                                <div class="card pt-3 pl-3 h-100" style="padding: 15px 30px; box-shadow: none; border: 1px solid gainsboro;">
                                     <h4 class="card-title">Exam Description</h4>
-
                                     <div class="card-body">
-                                        <p class="card-text">{!!  $exam->details->excerpt == 'null' ? '' : $exam->details->excerpt  !!}</p>
+                                        <p class="card-text">{!!  $exam->details->excerpt == 'null' ? 'There is no description for this exam.' : $exam->details->excerpt  !!}</p>
                                     </div>
                                 </div>
 

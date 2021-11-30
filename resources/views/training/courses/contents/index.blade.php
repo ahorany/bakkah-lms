@@ -26,7 +26,7 @@
 
         <div class="col-md-6 text-right">
             <div class="back">
-                    <a href="{{route('training.courses.edit',[$course->id])}}" class="info btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
             </div>
         </div>
         </div>
@@ -42,20 +42,20 @@
                     <div class="col-md-4 col-lg-4 text-right">
                         <div class="BtnGroupRows" data-id="150">
 
-                            <button @click="OpenSectionEditModal(content.id)"  class="edit btn-sm btn-outline-warning" >
+                            <button @click="OpenSectionEditModal(content.id)"  class="yellow" >
                                 <i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
 
-                            <button @click="deleteSection(content.id)"  class="delete btn-sm btn-outline-danger" >
+                            <button @click="deleteSection(content.id)"  class="red" >
                                 <i class="fa fa-trash"></i> Delete</button>
                         </div>
                     </div>
                     <div class="mt-3 col-md-12 col-lg-12">
                         <div>
-                            <button type="button" @click="OpenModal('video',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
-                            <button type="button" @click="OpenModal('audio',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                            <button type="button" @click="OpenModal('presentation',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
-                            <button type="button" @click="OpenModal('scorm',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
-                            <button  type="button" @click="OpenModal('exam',content.id)" class="info btn-sm btn-outline-info btn-sm px-3" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
+                            <button type="button" @click="OpenModal('video',content.id)" class="cyan" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
+                            <button type="button" @click="OpenModal('audio',content.id)" class="cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+                            <button type="button" @click="OpenModal('presentation',content.id)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
+                            <button type="button" @click="OpenModal('scorm',content.id)" class="cyan" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
+                            <button  type="button" @click="OpenModal('exam',content.id)" class="cyan" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
                         </div>
                     </div>
                 </div>
@@ -83,13 +83,13 @@
                         </td>
                         <td>
                             <div class="BtnGroupRows buttons" data-id="150">
-                                <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm" > <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
-                                <button v-else @click="OpenEditModal(content.id,entry.id)"  class="edit btn-sm" >
+                                <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
+                                <button v-else @click="OpenEditModal(content.id,entry.id)"  class="yellow" >
                                     <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
 
-                                <button @click="deleteContent(content.id,entry.id)"  class="delete btn-sm" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
+                                <button @click="deleteContent(content.id,entry.id)"  class="red" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
                                     <!--  -->
-                                    <a v-if="entry.post_type == 'exam'"  class="primary-add btn-sm" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Add<!-- Add Questions  --> </a>
+                                    <a v-if="entry.post_type == 'exam'"  class="cyan" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Add<!-- Add Questions  --> </a>
                             </div>
                         </td>
                     </tr>
@@ -238,9 +238,9 @@
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
-				<button type="reset" class="info btn btn-outline-info" @click="clear()">{{__('admin.clear')}}</button>
-				<button type="button"  @click="save()" class="save btn btn-outline-success">{{__('admin.save')}}</button>
+				<button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
+				<button type="reset" class="cyan" @click="clear()">{{__('admin.clear')}}</button>
+				<button type="button"  @click="save()" class="green">{{__('admin.save')}}</button>
 
 			</div>
 		</div>

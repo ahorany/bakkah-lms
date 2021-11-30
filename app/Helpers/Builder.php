@@ -426,7 +426,7 @@ class Builder {
 	static function Submit($name, $title, $class='btn-primary', $icon=null, $array=[]){
 		$type = $array['type']??'submit';
         $icon_fa=$array['icon']??'fa fa-'.$icon;
-		return '<button type="'.$type.'" name="'.$name.'" class="btn btn-sm '.$class.'"><i class="'.$icon_fa.'"></i> '.self::title($title, false, 'admin.').'</button>';
+		return '<button type="'.$type.'" name="'.$name.'" class=" '.$class.'"><i class="'.$icon_fa.'"></i> '.self::title($title, false, 'admin.').'</button>';
 	}
 
 	/*
@@ -446,13 +446,13 @@ class Builder {
 
 	static function Href($name, $post_type, $class, $icon, $route=null){
 		$name1 = !is_null($name)?__('admin.'.$name):null;
-		return '<a name="'.$name.'" href="'.$route.'" class="btn btn-sm '.$class.'" title="'.$name1.' '.__('admin.'.$post_type).'"><i class="fa fa-'.$icon.'"></i> '.$name1.'</a>';
+		return '<a name="'.$name.'" href="'.$route.'" class=" '.$class.'" title="'.$name1.' '.__('admin.'.$post_type).'"><i class="fa fa-'.$icon.'"></i> '.$name1.'</a>';
 	}
 
 	static function Create($post_type){
 		// $args = self::SetPage($args);
 		$route = self::Route(self::$folder.'.create', $post_type);//.self::getPage();
-		return self::Href('create', $post_type, 'btn-sm btn-primary', 'plus', $route);
+		return self::Href('create', $post_type, 'primary', 'plus', $route);
 	}
 
 	// To define buttons
@@ -599,7 +599,7 @@ class Builder {
 					$btn .= self::Create(self::$post_type);
 			}
 			else
-				$btn .= self::List(self::$post_type, 'list', 'btn-sm btn-success', 'list');
+				$btn .= self::List(self::$post_type, 'list', 'primary', 'list');
 			// ////////////////////////////////////
 			if(is_null(self::$trash) && count($array)==0)
 				$array = ['Trash'];
@@ -616,12 +616,12 @@ class Builder {
 		  <div class="card-body">';
 		$btn .= '<div class="BtnGroupForm">';
 			if($hasBack)// used in users.form_old.blade.php
-				$btn .= self::List(self::$post_type, 'back', 'btn-default info mr-1', 'arrow-left');
+				$btn .= self::List(self::$post_type, 'back', 'cyan mr-1', 'arrow-left');
 
 			if(is_null(self::$eloquent))
-				$btn .= self::Submit('submit', self::$getPublishName, 'btn-primary', 'save');
+				$btn .= self::Submit('submit', self::$getPublishName, 'main-color', 'save');
 			else{
-				$btn .= self::Submit('submit', 'update', 'btn-primary', 'save');
+				$btn .= self::Submit('submit', 'update', 'main-color', 'save');
 			}
 
 		$btn .= '</div>';
