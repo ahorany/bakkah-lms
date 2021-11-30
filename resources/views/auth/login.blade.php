@@ -57,7 +57,7 @@
 
                     <button class="btn btn-primary bold w-100 py-2">{{__('education.Sign In')}}</button>
 
-                    <p class="divider bold text-center"><span>Or Sign In With</span></p>
+{{--                    <p class="divider bold text-center"><span>Or Sign In With</span></p>--}}
 
 {{--                    <div class="social-media text-center">--}}
 {{--                        <a href="#">--}}

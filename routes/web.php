@@ -10,7 +10,7 @@ Route::group([
     // Route::get('/', 'Front\HomeController@index')->name('web.home');
     Route::get('/sitemap/sitemap', 'Front\HomeController@sitemap')->name('web.sitemap');
 
-    Auth::routes(['verify' => true]);
+    Auth::routes(['register' => false]);
 });
 
 Route::get('/clear-cache', function(){
