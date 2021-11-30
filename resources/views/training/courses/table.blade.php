@@ -1,3 +1,6 @@
+<?php
+use App\Models\Training\CourseRegistration;
+?>
 <div class="card courses">
   <div class="card-header">
       {{-- {!!Builder::SetBtnParam([
@@ -15,6 +18,7 @@
         <tr>
             <th class="col-md-1">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
+            <th class="">{{__('admin.users_count')}}</th>
             <th class="img-table d-none d-sm-table-cell col-md-1">{{__('admin.image')}}</th>
             {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
             <th class="text-center col-md-3" scope="col">{{__('admin.action')}}</th>
@@ -28,6 +32,35 @@
         </td>
         <td>
             <span style="display: block;" class="title">{{$post->trans_title}}  &nbsp;&nbsp;&nbsp;&nbsp; {{$post->code}}</span>
+        </td>
+        <td>
+            <?php
+
+                $trainee_count =   DB::table('courses_registration')
+                    ->where('courses_registration.course_id',$post->id)
+                    ->join('role_user', function ($join) {
+                        $join->on('courses_registration.user_id', '=', 'role_user.user_id');
+                    })
+                    ->groupBy('role_user.role_id')
+                    ->select(DB::raw('COUNT(*) as counts'),'role_user.role_id as role_id')->get();
+
+            ?>
+            @foreach($trainee_count as $c)
+                @php
+                    if($c->role_id == 1)
+                        $role_id = 'Admin';
+                    elseif($c->role_id == 2)
+                        $role_id = 'Instructor';
+                    elseif($c->role_id == 3)
+                        $role_id = 'Trainee';
+                    elseif($c->role_id == 4)
+                        $role_id = 'Manager';
+
+                @endphp
+                <span class="badge badge-success">{{$role_id}} {{$c->counts}}</span>
+            @endforeach
+
+             {{-- <span class="badge badge-success">Trainees {{$trainee_count}}</span> --}}
 
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
