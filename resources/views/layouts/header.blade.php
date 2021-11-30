@@ -38,13 +38,17 @@
         <li  class="has-dropdown user">
             <a onclick="this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link" href="#">
                 <?php
-                $url = '';
-                if(auth()->user()->upload) {
-                    $url = auth()->user()->upload->file;
-                    $url = CustomAsset('upload/full/'. $url);
-                }else {
-                    $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
-                }
+                    $url = '';
+                    if(auth()->user()->upload) {
+                        if ($url == ''){
+                            $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+                        }else{
+                            $url = auth()->user()->upload->file;
+                            $url = CustomAsset('upload/full/'. $url);
+                        }
+                    }else {
+                        $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+                    }
                 ?>
                 <img style="width:40px;height:40px;object-fit:cover;border-radius: 50%;" src="{{$url}}" />
 
@@ -56,9 +60,9 @@
 
             <div class="dropdown d-none">
                 <ul>
-                    <li><a href="{{route('user.info')}}"><i class="far fa-user"></i> <span class="mx-1">{{__('education.info')}}</span></a></li>
-                    <li><a href="{{route('user.change_password')}}"><i class="fas fa-lock"></i> <span class="mx-1">{{__('education.Change Password')}}</a></li>
-                    <li><a href="{{route('user.logout')}}"><i class="fas fa-sign-out-alt"></i> <span class="mx-1">{{__('education.Logout')}}</a></li>
+                    <li><a href="{{route('user.info')}}"><i class="fa fa-user-o" aria-hidden="true"></i> <span class="mx-1">{{__('education.info')}}</span></a></li>
+                    <li><a href="{{route('user.change_password')}}"><i class="fa fa-lock" aria-hidden="true"></i> <span class="mx-1">{{__('education.Change Password')}}</a></li>
+                    <li><a href="{{route('user.logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> <span class="mx-1">{{__('education.Logout')}}</a></li>
                 </ul>
             </div>
         </li>

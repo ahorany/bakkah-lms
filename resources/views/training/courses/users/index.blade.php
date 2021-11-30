@@ -71,7 +71,11 @@
                     <th scope="row" v-text="index + 1"></th>
                     <td v-text="trans_title(user.name)"></td>
                     <td v-text="user.email"></td>
-                    <td v-text="(user.pivot != null) ? (user.pivot.role_id == 2 ? 'instructor' : 'trainee') : ''"></td>
+                    <td>
+                        <span v-if="user.pivot != null && user.pivot.role_id == 2" class="badge-pink"> Instructor </span>
+                        <span v-if="user.pivot != null && user.pivot.role_id == 3" class="badge-blue"> Trainee </span>
+                    </td>
+
                 @if(!checkUserIsTrainee())
                         <td>
                             <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
