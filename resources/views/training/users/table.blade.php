@@ -56,7 +56,7 @@
           </span>
         </td>--}}
         <td class="d-none d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
-        <td class="d-none d-sm-table-cell text-right">{!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
+        <td class="d-none d-sm-table-cell text-right pl-0">{!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
             'post'=>$post->id,
          ])!!}</td>
       </tr>

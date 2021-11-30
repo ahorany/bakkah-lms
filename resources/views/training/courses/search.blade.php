@@ -31,11 +31,11 @@
                                 {!! Builder::Hidden('post_type', $post_type) !!}
                                 {!! Builder::Hidden('trash') !!}
 
-                                {!! Builder::Input('course_search', 'course_search', request()->course_search, ['col'=>'col-md-4']) !!}
+                                {!! Builder::Input('course_search', 'course_search', request()->course_search, ['col'=>'col-md-12']) !!}
 
-                                {!! Builder::Select('category_id', 'category_id', $categories, request()->category_id??-1, [
+                                {{-- {!! Builder::Select('category_id', 'category_id', $categories, request()->category_id??-1, [
                                     'col'=>'col-md-4',
-                                ]) !!}
+                                ]) !!} --}}
 
                                 {{-- <div class="col-md-4 py-4">
                                     {!! Builder::SelectForCheckBox('show_in_website', request()->show_in_website?1:0, []) !!}

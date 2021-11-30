@@ -5,18 +5,19 @@
 @endsection
 
 @section('content')
+    {{-- @dd(auth()->user()->bio) --}}
     <div class="card p-30 mb-5">
         <div class="row align-items-center">
             <div class="col-lg-8">
                 <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
                 <p class="lead">{{auth()->user()->bio}} </p>
             </div>
-            <div class="col-lg-4 mt-4 mt-lg-0">
-                <img src="{{CustomAsset('assets/images/dash.png')}}" alt="">
+
+            <div class="col-lg-4 mt-4 mt-lg-0 text-center">
+                <img src="{{CustomAsset('assets/images/dash.png')}}" {{(auth()->user()->bio == null) ? 'style='.' width:'.'60%;' : '' }} alt="">
             </div>
         </div>
     </div>
-
     @if (count($courses->courses) > 0)
         <div class="card p-30 mb-5">
             <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>

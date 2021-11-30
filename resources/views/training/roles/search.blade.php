@@ -27,7 +27,7 @@
                     {!! Builder::Hidden('post_type', $post_type) !!}
                     {!! Builder::Hidden('trash') !!}
 
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <input type="text" name="user_search"  class="form-control" placeholder="Role Name" value="{{request()->user_search??null}}" class="form-control">
                         </div>
