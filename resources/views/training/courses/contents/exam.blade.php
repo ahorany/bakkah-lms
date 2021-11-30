@@ -125,10 +125,14 @@
                            <div class="mb-2" v-show="'answers' in errors">
                                <span style="color: red;font-size: 13px">@{{ errors.answers }}</span>
                            </div>
-                           <button @click.prevent="addAnswerBox()" class="btn btn-primary mb-3">Add Answers +</button>
+                           <button @click.prevent="addAnswerBox()" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add Answers</button>
 
                            <div v-for="(answer,index) in answers" class="form-group">
-                                   {{-- <input class="mx-3 form-control" type="checkbox" v-model="answer.check_correct"  :checked="answer.check_correct" style="display: inline-block" > --}}
+                            <label class="container-check" style="display: inline-block;">
+                                <input class="mx-3" type="checkbox" v-model="answer.check_correct"  :checked="answer.check_correct" style="display: inline-block" >
+                                <span class="checkmark"></span>
+                              </label>
+
                                    <input class="w-75 form-control" type="text" v-model="answer.title" name="title"  placeholder="title" style="display: inline-block;">
                                <button  @click="deleteAnswer(question_id,answer.id,index)" class="delete btn-sm btn-outline-danger mx-3" ><i class="fa fa-trash" aria-hidden="true"></i>
                                  Delete<!-- Delete --> </button>
