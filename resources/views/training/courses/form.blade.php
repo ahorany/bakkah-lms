@@ -65,9 +65,9 @@
             <div class="card card-default contents">
                 <div class="card-header">{{__('admin.contents')}}</div>
                 <div class="card-body">
-                    <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="save btn btn-outline-success add_contents mb-2 ">Contents</a>
-                    <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="save btn btn-outline-success add_contents mb-2">Units</a>
-                    <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="save btn btn-outline-success add_contents mb-2">Users</a>
+                    <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="green">Contents</a>
+                    <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="green">Units</a>
+                    <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="green">Users</a>
                 </div>
             </div>
         @endif

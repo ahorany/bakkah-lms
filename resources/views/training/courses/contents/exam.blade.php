@@ -28,10 +28,10 @@
                     </div>
                     <div class="col-md-6 px-0">
                         <div class="import-question-file">
-                            {!!Builder::Submit('importQuestions', 'import_questions', 'save btn export-btn btn-success', null, [
+                            {!!Builder::Submit('importQuestions', 'import_questions', 'green', null, [
                                 'icon'=>'far fa-file-excel',
                             ])!!}
-                            <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="info btn" role="button"> Sample </a>
+                            <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="cyan" role="button"> Sample </a>
                             <input type="hidden" name="content_id" value="{{$content->id}}">
                         </div>
                     </div>
@@ -47,10 +47,10 @@
                     </div>
                     <div class="col-md-6 px-0">
                         <div class="import-question-file">
-                            {!! Builder::Submit('importResults', 'importResults', 'save btn-sm btn-success export-btn', null, [
+                            {!! Builder::Submit('importResults', 'importResults', 'green', null, [
                                 'icon'=>'far fa-file-excel',
                             ]) !!}
-                            <a href="{{CustomAsset('samples/learnerAnswers.xlsx')}}" download class="info btn" role="button"> Sample </a>
+                            <a href="{{CustomAsset('samples/learnerAnswers.xlsx')}}" download class="cyan" role="button"> Sample </a>
                             <input type="hidden" name="content_id" value="{{$content->id}}">
                         </div>
                     </div>
@@ -58,22 +58,20 @@
             </form>
         </div>
 
-	<div  class="card" v-for="(question,index) in content.questions">
-		<div class="card-body p-0 " >
+	<div  class="card mb-1" v-for="(question,index) in content.questions">
+		<div class="card-body p-0" >
             <div class="clearfix mb-1 p-3 m-0">
-                <div class="text-success">
+                <div class="text-success float-left">
                     <span>( @{{question.mark}} marks )</span>
                     <span>( @{{question.answers.length}} answers )</span>
                 </div>
-                <h3 class="BtnGroupRows float-left"  v-html="question.title"></h3>
-
-                <div class="BtnGroupRows float-right" data-id="150">
-                    <button type="button" @click="OpenEditModal(question.id)" class="edit btn-sm px-3" id="answer" ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
-                    <button @click="deleteQuestion(question.id)" class="delete btn-sm btn-outline-danger" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
+                <div class="BtnGroupRows float-right mb-3" data-id="150">
+                    <button type="button" @click="OpenEditModal(question.id)" class="yellow" id="answer" ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+                    <button @click="deleteQuestion(question.id)" class="red" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
                 </div>
-
+                <div style="clear: both;"></div>
+                <h3 style="font-size: 20px"  v-html="question.title"></h3>
             </div>
-
 		</div>
 	</div>
 
@@ -125,7 +123,7 @@
                            <div class="mb-2" v-show="'answers' in errors">
                                <span style="color: red;font-size: 13px">@{{ errors.answers }}</span>
                            </div>
-                           <button @click.prevent="addAnswerBox()" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add Answers</button>
+                           <button @click.prevent="addAnswerBox()" class="main-color mb-3"><i class="fa fa-plus"></i> Add Answers</button>
 
                            <div v-for="(answer,index) in answers" class="form-group">
                             <label class="container-check" style="display: inline-block;">
@@ -134,7 +132,7 @@
                               </label>
 
                                    <input class="w-75 form-control" type="text" v-model="answer.title" name="title"  placeholder="title" style="display: inline-block;">
-                               <button  @click="deleteAnswer(question_id,answer.id,index)" class="delete btn-sm btn-outline-danger mx-3" ><i class="fa fa-trash" aria-hidden="true"></i>
+                               <button  @click="deleteAnswer(question_id,answer.id,index)" class="red mx-3" ><i class="fa fa-trash" aria-hidden="true"></i>
                                  Delete<!-- Delete --> </button>
                                  </div>
                                </div>
@@ -154,9 +152,9 @@
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
-				<button type="reset" class="info btn btn-outline-info" @click="Clear()">{{__('admin.clear')}}</button>
-				<button type="button"  @click="save()" class="save btn btn-outline-success">{{__('admin.save')}}</button>
+				<button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
+				<button type="reset" class="cyan" @click="Clear()">{{__('admin.clear')}}</button>
+				<button type="button"  @click="save()" class="green">{{__('admin.save')}}</button>
 
 			</div>
 		</div>

@@ -44,9 +44,9 @@
                 ])!!}
               @endif
                 <div class="my-2">
-                    <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="btn-sm save">Contents</a>
-                    <a href="{{route('training.units',['course_id'=>$post->id])}}" class="btn-sm save">Units</a>
-                    <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class="btn-sm save">Users</a>
+                    <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="green">Contents</a>
+                    <a href="{{route('training.units',['course_id'=>$post->id])}}" class="green">Units</a>
+                    <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class="green">Users</a>
                 </div>
           </td>
       </tr>

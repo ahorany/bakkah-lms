@@ -1,22 +1,121 @@
+/* Buttons Style */
+
+.main-color {
+    background: transparent;
+    color: #fb4400;
+    border: 1px solid #fb4400;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.main-color:hover {
+    background: #fb4400;
+    text-decoration: none;
+    color: #fff;
+}
+
+.yellow {
+    background: transparent;
+    color: #000;
+    border: 1px solid #ffc107;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.yellow:hover {
+    background: #ffc107;
+    text-decoration: none;
+}
+
+.red{
+    background: transparent;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.red:hover {
+    background: #dc3545;
+    color: #fff;
+    text-decoration: none;
+}
+
+.green{
+    background: transparent;
+    color: green;
+    border: 1px solid green;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.green:hover {
+    background: green;
+    color: #fff;
+    text-decoration: none;
+}
+
+.cyan{
+    background: transparent;
+    color: #0dcaf0;
+    border: 1px solid #0dcaf0;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.cyan:hover {
+    background: #0dcaf0;
+    color: #fff;
+    text-decoration: none;
+}
+
+.primary{
+    background: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.primary:hover {
+    text-decoration: none;
+}
+
+.group_buttons {
+    background: transparent;
+    color: #009eb8;
+    border: 1px solid #ebd7ff;
+}
+.group_buttons:hover{
+    text-decoration: none;
+    background: #f6feff;
+}
+
+/* End Buttons Style */
+
 .navbar-nav{
     flex-direction: row;
 }
 .courses .card-header {
     background: #848484;
 }
-.courses.form-inline .form-group .form-control
-{
+.courses.form-inline .form-group .form-control{
     width: 100% !important;
 }
 .courses .card-header span, .card-header a {
     color: #fff !important;
 }
-.courses .BtnGroupRows a , .edit {
+.courses .BtnGroupRows a  {
     background: #ffc107;
     color: #000;
     border: 1px solid #ffc107;
 }
-
 .btn-outline-primary:not(:disabled):not(.disabled):active{
     background: #ffc107;
     box-shadow: 0 0 0 0.2rem rgb(255 193 7 / 50%);
@@ -26,40 +125,10 @@
 .btn-outline-primary:not(:disabled):not(.disabled):active:focus{
     box-shadow: 0 0 0 0.2rem rgb(255 193 7 / 50%);
 }
-.courses .BtnGroupRows form button , .delete {
+.courses .BtnGroupRows form button{
     background: #dc3545;
     color: #fff;
     border: 1px solid #dc3545;
-}
-.info {
-    background: transparent;
-    color: #0dcaf0;
-    border: 1px solid #0dcaf0;
-}
-.info:hover{
-    background: #0dcaf0;
-    color: #fff;
-    text-decoration: none;
-}
-.add {
-    background: transparent;
-    color: #007bff;
-    border: 1px solid #007bff;
-}
-.add:hover{
-    background: #007bff;
-    color: #fff;
-    text-decoration: none;
-}
-.save{
-    color: green;
-    border: 1px solid green;
-    background-color: transparent;
-}
-.save:hover{
-    background: green;
-    color: #fff;
-    text-decoration: none;
 }
 .main-button{
     background: #fb4400;
@@ -78,8 +147,7 @@ em u {
     color: #000;
     text-decoration: none;
 }
-#ContentModal .modal-content
-{
+#ContentModal .modal-content{
     width: 75% !important;
 }
 #ContentModal .modal-content .progress{
@@ -102,33 +170,6 @@ em u {
 .text-center.course-image {
     min-height: 197.35px !important;
 }
-.q-card label{
-    box-shadow: 0 3px 6px rgb(0 0 0 / 10%);
-}
-.group_buttons {
-    background: transparent;
-    color: #009eb8;
-    border: 1px solid #ebd7ff;
-}
-.group_buttons:hover{
-    text-decoration: none;
-    background: #f6feff;
-}
-.primary-add{
-    background: #007bff;
-    color: #fff;
-    border: 1px solid #007bff;
-    padding: 6px 10px;
-}
-.primary-add:hover{
-    text-decoration: none;
-    color: #fff;;
-}
-
-.ql-container.ql-snow{
-    height: 150px;
-}
-
 
 /* checkbox */
 
@@ -193,6 +234,21 @@ em u {
 
 /* End Checkbox */
 
+.q-card h3 {
+    font-size: 20px;
+}
+.q-card label{
+    box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
+}
+ol.answers li .icon.empty {
+    background: #82bafe;
+}
+ol.answers li{
+    cursor: pointer;
+}
+.ql-container.ql-snow{
+    height: 150px;
+}
 
 @media (max-width: 767px) {
     main#main-vue-element {

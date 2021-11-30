@@ -34,7 +34,7 @@
                         </div>
 
                         <div style="margin-left:0px;margin-top: 5px;"> {{-- class="col-md-6"  --}}
-                            {!! Builder::Submit('search', 'search', 'btn-primary', 'search') !!}
+                            {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
                             {{-- {!! Builder::Submit('clear', 'clear', 'btn-default', 'eraser') !!} --}}
                         </div>
                     </div>
