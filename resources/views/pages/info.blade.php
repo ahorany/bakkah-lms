@@ -146,6 +146,29 @@
                                                 <label for="mobile">{{__('education.Mobile')}}</label>
                                                 <input name="mobile" value="{{auth()->user()->mobile}}" type="mobile" id="mobile" class="form-control">
                                             </div>
+                                            @error('mobile')
+                                                <small class="text-danger">{{$message}}</small>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="company">{{__('education.Company')}}</label>
+                                                <input name="company" value="{{auth()->user()->company}}" type="text" id="company" class="form-control">
+                                            </div>
+                                            @error('company')
+                                                <small class="text-danger">{{$message}}</small>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="job_title">{{__('education.Job Title')}}</label>
+                                                <input name="job_title" value="{{auth()->user()->job_title}}" type="text" id="job_title" class="form-control">
+                                            </div>
+                                            @error('job_title')
+                                                <small class="text-danger">{{$message}}</small>
+                                            @enderror
                                         </div>
 
                                         </div>

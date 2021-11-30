@@ -73,7 +73,7 @@
                     <td v-text="user.email"></td>
                     <td>
                         <span v-if="user.pivot != null && user.pivot.role_id == 2" class="badge-pink"> Instructor </span>
-                        <span v-if="user.pivot != null && user.pivot.role_id == 3" class="badge-blue"> Trainee </span>
+                        <span v-if="user.pivot != null && user.pivot.role_id == 3" class="badge-green"> Trainee </span>
                     </td>
 
                 @if(!checkUserIsTrainee())

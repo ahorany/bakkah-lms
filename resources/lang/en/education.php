@@ -50,5 +50,7 @@ return [
     'choose' => 'Choose',
     'Name' => 'Name',
     'Login' => 'Login',
+    'Company' => 'Company',
+    'Job Title' => 'Job Title',
     'You Have Account?' => 'You Have Account?',
 ];
