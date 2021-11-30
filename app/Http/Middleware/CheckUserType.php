@@ -15,7 +15,7 @@ class CheckUserType
      */
     public function handle($request, Closure $next)
     {
-        if( auth()->user()->roles()->first()->id == 3 ){
+        if(isset(\auth()->user()->roles()->first()->id) && auth()->user()->roles()->first()->id == 3 ){
             abort(404);
         }
 
