@@ -21,6 +21,10 @@ class CourseUserController extends Controller
 {
 
     public function update_user_expire_date(){
+        if(checkUserIsTrainee()){
+            abort(404);
+        }
+
         $user_id = \request()->user_id;
         $course_id = \request()->course_id;
         $expire_date = \request()->expire_date;
@@ -39,6 +43,9 @@ class CourseUserController extends Controller
     }
 
     public function delete_user_course(){
+        if(checkUserIsTrainee()){
+            abort(404);
+        }
         $user_id = \request()->user_id;
         $course_id = \request()->course_id;
         $user =  User::findOrFail($user_id);
@@ -48,6 +55,9 @@ class CourseUserController extends Controller
     }
 
     public function search_user_course(){
+        if(checkUserIsTrainee()){
+            abort(404);
+        }
        $users = User::query();
 
        $lock = true;
@@ -74,6 +84,9 @@ class CourseUserController extends Controller
     }
 
     public function add_users_course(){
+        if(checkUserIsTrainee()){
+            abort(404);
+        }
 //        return \request();
         $course = Course::find(\request()->course_id);
 

@@ -17,7 +17,7 @@
             <th class="">{{__('admin.name')}}</th>
             <th class="img-table d-none d-sm-table-cell col-md-1">{{__('admin.image')}}</th>
             {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
-            <th class="text-center" scope="col">{{__('admin.action')}}</th>
+            <th class="text-center col-md-3" scope="col">{{__('admin.action')}}</th>
         </tr>
       </thead>
       <tbody>

@@ -30,7 +30,17 @@ class CourseController extends Controller
                 abort(404);
             }
         }
-        $courses = Course::with(['upload', 'user']);
+
+//        dd(auth()->user()->id);
+        if(checkUserIsTrainee()){
+            $courses = Course::with(['upload'])->whereHas('users', function($q){
+                return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',2);
+            });
+        }else{
+            $courses = Course::with(['upload', 'user']);
+        }
+
+
         $categories = Constant::where('post_type', 'course')->get();
 
         if(!is_null(request()->course_search)) {
@@ -71,6 +81,7 @@ class CourseController extends Controller
     }
 
     public function store(CourseRequest $request){
+
         if(checkUserIsTrainee()){
             abort(404);
         }

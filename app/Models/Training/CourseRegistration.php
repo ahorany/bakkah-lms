@@ -12,4 +12,5 @@ class CourseRegistration extends Model
     protected $guarded = [];
     protected $table = 'courses_registration';
 
+
 }
