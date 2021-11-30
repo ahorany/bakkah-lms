@@ -507,46 +507,46 @@ class UserProfileController extends Controller
         return redirect(route('login'));
     }
 
-   public function register()
-   {
-       if(Auth::check()){
-           return redirect(route('user.home'));
-       }
-       return view('auth.register');
-   }
-
-   public function registerSubmit(Request $request)
-   {
-       $request->validate([
-           'en_name' => 'required',
-           'email' => 'required|email|unique:users,email',
-           'mobile' => 'required',
-           'password' => 'required|confirmed'
-       ]);
-
-       $user = User::where('email', $request->email)->first();
-
-       if($user) {
-           if(is_null($user->password)) {
-               $user->update(['password' => Hash::make($request->password)]);
-           }
-       }else {
-
-           $user = User::create([
-               'name' => $request->en_name,
-               'email' => $request->email,
-               'mobile' => $request->mobile,
-               'password' => Hash::make($request->password),
-               'user_type' => 41
-           ]);
-       }
-
-
-       Auth::login($user);
-
-       return redirect()->route('user.home');
-   }
-
+//   public function register()
+//   {
+//       if(Auth::check()){
+//           return redirect(route('user.home'));
+//       }
+//       return view('auth.register');
+//   }
+//
+//   public function registerSubmit(Request $request)
+//   {
+//       $request->validate([
+//           'en_name' => 'required',
+//           'email' => 'required|email|unique:users,email',
+//           'mobile' => 'required',
+//           'password' => 'required|confirmed'
+//       ]);
+//
+//       $user = User::where('email', $request->email)->first();
+//
+//       if($user) {
+//           if(is_null($user->password)) {
+//               $user->update(['password' => Hash::make($request->password)]);
+//           }
+//       }else {
+//
+//           $user = User::create([
+//               'name' => $request->en_name,
+//               'email' => $request->email,
+//               'mobile' => $request->mobile,
+//               'password' => Hash::make($request->password),
+//               'user_type' => 41
+//           ]);
+//       }
+//
+//
+//       Auth::login($user);
+//
+//       return redirect()->route('user.home');
+//   }
+//
 
     public function change_password() {
         return view('pages.change_password');

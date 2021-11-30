@@ -94,7 +94,12 @@ class CourseUserController extends Controller
             return response()->json([ 'status' => 'fail']);
         }
 
-       $type_id =  (Role::where("name", 'like', '%'.request()->type.'%')->first())->id;
+//       $type_id =  (Role::where("name", 'like', '%'.request()->type.'%')->first())->id;
+        if(request()->type == 'instructor'){
+            $type_id = 2;
+        }else{
+            $type_id = 3;
+        }
 
         foreach (\request()->users as $key =>  $value){
             if ($value == true){

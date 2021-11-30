@@ -159,7 +159,7 @@ class UserController extends Controller
         //dd($validated);
         $user = User::create($validated);
 
-        $user->roles()->attach(request()->roles);
+        $user->roles()->attach([request()->role]);
 
         $post_type = request()->post_type;
         //User::SetMorph($user->id);
@@ -283,7 +283,7 @@ class UserController extends Controller
             ]);
         }
 
-        $user->roles()->sync(request()->roles);
+        $user->roles()->sync([request()->role]);
 //        $user->groups()->sync($groups);
 
         User::UploadFile($user, ['method' => 'update']);

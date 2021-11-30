@@ -15,9 +15,14 @@ class CheckUserType
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->user_type == 41) {
-           abort(404);
+        if( auth()->user()->roles()->first()->id == 3 ){
+            abort(404);
         }
+
+//        if(auth()->user()->user_type == 41) {
+//            abort(404);
+//        }
+
         return $next($request);
     }
 }

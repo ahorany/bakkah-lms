@@ -39,7 +39,14 @@
         {!! Builder::Password('password_confirmation', 'password_confirmation', null, ['type' => 'password', 'col' => 'col-md-6']) !!}
     @endif
 
-{{--    <div class="col-md-12">--}}
+
+
+    {!! Builder::Select('role', 'role', $roles, null, [
+   'col' => 'col-md-6',
+   'model_title' => 'trans_name',
+]) !!}
+
+    {{--    <div class="col-md-12">--}}
 {{--        <div class="form-group">--}}
 {{--            <label>{{__('admin.Group')}}</label>--}}
 {{--        </div>--}}
