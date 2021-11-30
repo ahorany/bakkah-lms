@@ -41,7 +41,7 @@
 
 
 
-    {!! Builder::Select('role', 'role', $roles, null, [
+    {!! Builder::Select('role', 'role', $roles, $role_id??null, [
    'col' => 'col-md-6',
    'model_title' => 'trans_name',
 ]) !!}

@@ -18,7 +18,7 @@
         <div class="person-wrapper">
             <img src="{{$url}}" alt="">
             <h2 style="font-size: 1.2rem;">{{auth()->user()->trans_name}}</h2>
-            <h4 style="color: #73726c">{{auth()->user()->roles()->select('roles.name')->first()->trans_name}}</h4>
+            <h4 style="color: #73726c">{{auth()->user()->roles()->select('roles.name')->first()->trans_name??null}}</h4>
             <hr>
         </div>
         {{-- @endif --}}
