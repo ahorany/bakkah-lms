@@ -114,6 +114,21 @@
     background: #f6feff;
 }
 
+.white {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.white:hover {
+    background: #fff;
+    color: #000 !important;
+    text-decoration: none;
+}
+
 /* End Buttons Style */
 
 .navbar-nav{
