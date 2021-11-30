@@ -35,7 +35,6 @@
                             <input type="hidden" name="content_id" value="{{$content->id}}">
                         </div>
                     </div>
-
             </form>
             <hr>
             <form action="{{ route('training.importResults') }}" method="POST" enctype="multipart/form-data" class="row mx-0">

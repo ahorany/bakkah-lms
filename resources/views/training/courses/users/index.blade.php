@@ -46,7 +46,7 @@
                 @if(!checkUserIsTrainee())
                     <div class="col-md-6 text-right">
                         <div class="back">
-                            <a href="{{route('training.courses.edit',[$course->id])}}" class="info btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                            <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                         </div>
                     </div>
                  @endif
@@ -76,8 +76,8 @@
 
                         </td>
                         <td>
-                            <button @click="updateUserExpireDate(user.id)" class="info btn-sm " style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa"></i> Update</button>
-                            <button @click="deleteUser(user.id)" class="delete btn-sm" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
+                            <button @click="updateUserExpireDate(user.id)" class="primary" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa"></i> Update</button>
+                            <button @click="deleteUser(user.id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
                         </td>
                     @endif
                 </tr>

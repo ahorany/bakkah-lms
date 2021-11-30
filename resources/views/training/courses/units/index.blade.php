@@ -75,8 +75,6 @@
                                 </div>
 
 
-
-
                                 <div v-if="counter <= 2" class="mt-5">
 
                                     <button @click.prevent="addSubUnitBox()" class="btn btn-primary mb-3">Add Sub Unit +</button>
@@ -95,9 +93,9 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="delete btn btn-outline-danger" data-dismiss="modal">{{__('admin.close')}}</button>
-                            <button @click="clear()" type="reset" class="info btn btn-outline-info" @click="Clear()">{{__('admin.clear')}}</button>
-                            <button type="button"  @click="save()" class="save btn btn-outline-success">{{__('admin.save')}}</button>
+                            <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
+                            <button @click="clear()" type="reset" class="cyan" @click="Clear()">{{__('admin.clear')}}</button>
+                            <button type="button"  @click="save()" class="green">{{__('admin.save')}}</button>
 
                         </div>
                     </div>
@@ -183,7 +181,7 @@
               }
             },
             template: `
-                         <li @click.stop="open = (!open)">@{{item.title }} <i class="fas fa-sort-down"></i>
+                         <li @click.stop="open = (!open)">@{{item.title }} <i class="fa fa-chevron-down" aria-hidden="true"></i>
 
                                   <button @click.stop="$root.deleteUnit(course.units,item.id)" class="btn text-danger btn-sm" >
                                            <i class="fa fa-trash"></i></button>
