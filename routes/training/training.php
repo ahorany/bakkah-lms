@@ -21,7 +21,9 @@ Route::group([
             Route::resource('roles', 'RoleController');
             Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
 
-            Route::get('/usersReport', 'ReportController@index')->name('usersReport');
+            Route::get('/usersReport', 'ReportController@user_report')->name('usersReport');
+            Route::get('/courseReport', 'ReportController@courseReport')->name('courseReport');
+
 
 
             Route::get('/group_users', 'GroupUserController@group_users')->name('group_users');

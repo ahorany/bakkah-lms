@@ -11,11 +11,25 @@
 
     <div class="toLoad" id="questions">
 
-    <div class="course_info card p-3 mb-3">
-        {{-- <label class="m-0">@{{content.title}}</label> --}}
+    {{-- <div class="course_info card p-3 mb-3">
         <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons" style="width: max-content;">
             <i class="fa fa-plus"></i> {{__('admin.add_question')}}
         </button>
+    </div> --}}
+
+    <div  class="course_info mb-3 card p-3">
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons" style="width: max-content;">
+                    <i class="fa fa-plus"></i> {{__('admin.add_question')}}
+                </button>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="back">
+                    <a href="{{route('training.contents',['course_id'=>$content->course_id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+            </div>
+        </div>
     </div>
 
         <div class="card p-3 mb-3">

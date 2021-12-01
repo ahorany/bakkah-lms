@@ -86,7 +86,59 @@ class UserController extends Controller
 
         // dd($users);
         // $posts = User::with('upload');
-        return Active::Index(compact('users', 'count', 'post_type', 'trash'));
+        $learners_no  = DB::table('role_user')->where('role_user.role_id',3);
+        if (!is_null(request()->user_search)) {
+            $learners_no = $learners_no->join('users','users.id','role_user.user_id');
+            $learners_no = $learners_no->where(function ($query) {
+                $query->where('users.name', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.email', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.mobile', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.job_title', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.company', 'like', '%' . request()->user_search . '%');
+            });
+        }
+        $learners_no = $learners_no->count();
+        // dd($learners_no);
+
+        $complete_courses_no = DB::table('courses_registration')->where('progress',100);
+        if (!is_null(request()->user_search)) {
+            $complete_courses_no = $complete_courses_no->join('users','users.id','courses_registration.user_id');
+            $complete_courses_no = $complete_courses_no->where(function ($query) {
+                $query->where('users.name', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.email', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.mobile', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.job_title', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.company', 'like', '%' . request()->user_search . '%');
+            });
+        }
+        $complete_courses_no = $complete_courses_no->count();
+
+        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('progress','>',0);
+        if (!is_null(request()->user_search)) {
+            $courses_in_progress = $courses_in_progress->join('users','users.id','courses_registration.user_id');
+            $courses_in_progress = $courses_in_progress->where(function ($query) {
+                $query->where('users.name', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.email', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.mobile', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.job_title', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.company', 'like', '%' . request()->user_search . '%');
+            });
+        }
+        $courses_in_progress = $courses_in_progress->count();
+        $courses_not_started = DB::table('courses_registration')->where('progress',0);
+        if (!is_null(request()->user_search)) {
+            $courses_not_started = $courses_not_started->join('users','users.id','courses_registration.user_id');
+            $courses_not_started = $courses_not_started->where(function ($query) {
+                $query->where('users.name', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.email', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.mobile', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.job_title', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.company', 'like', '%' . request()->user_search . '%');
+            });
+        }
+        $courses_not_started = $courses_not_started->count();
+
+        return Active::Index(compact('users', 'count', 'post_type', 'trash','learners_no','complete_courses_no','courses_in_progress','courses_not_started'));
     }
 
     public function create()

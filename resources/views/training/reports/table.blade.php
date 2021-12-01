@@ -3,7 +3,7 @@ use App\Models\Training\CourseRegistration;
 // dd($users);
 ?>
 
-@include('training.'.$folder.'.dashboard')
+@include('training.users.dashboard')
 <div class="card users">
   {{-- <div class="card-header"></div> --}}
 

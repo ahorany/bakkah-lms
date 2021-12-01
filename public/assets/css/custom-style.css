@@ -1,157 +1,29 @@
 .bg-two {
     background: #6a6a6a;
 }
-/* Buttons Style */
-.badge-blue{
-    background: #8dabf7;
-    color: #fff;
-    padding: 0px 10px;
-    font-size: smaller;
-    border-radius: 3px;
-}
-.badge-pink{
-    background: #b18db5;
-    color: #fff;
-    padding: 0px 10px;
-    font-size: smaller;
-    border-radius: 3px;
-}
-.badge-green{
-    background: #b0ac27;
-    color: #fff;
-    padding: 0px 10px;
-    font-size: smaller;
-    border-radius: 3px;
-}
-.main-color {
-    background: transparent;
-    color: #fb4400;
-    border: 1px solid #fb4400;
-    padding: 4px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-}
-.main-color:hover {
-    background: #fb4400;
-    text-decoration: none;
-    color: #fff;
-}
 
-.yellow {
-    background: transparent;
-    color: #000;
-    border: 1px solid #ffc107;
-    padding: 4px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
+.card {
+    box-shadow: 0 0 20px rgb(127 170 203 / 5%);
 }
-.yellow:hover {
-    background: #ffc107;
-    text-decoration: none;
-}
-
-.red{
-    background: transparent;
-    color: #dc3545;
-    border: 1px solid #dc3545;
-    padding: 4px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-}
-.red:hover {
-    background: #dc3545;
-    color: #fff;
-    text-decoration: none;
-}
-
-.green{
-    background: transparent;
-    color: green;
-    border: 1px solid green;
-    padding: 4px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-}
-.green:hover {
-    background: green;
-    color: #fff;
-    text-decoration: none;
-}
-
-.cyan{
-    background: transparent;
-    color: #0dcaf0;
-    border: 1px solid #0dcaf0;
-    padding: 4px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-}
-.cyan:hover {
-    background: #0dcaf0;
-    color: #fff;
-    text-decoration: none;
-}
-
-.primary{
-    background: #007bff;
-    color: #fff;
-    border: 1px solid #007bff;
-    padding: 4px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-}
-.primary:hover {
-    text-decoration: none;
-}
-
-.group_buttons {
-    background: transparent;
-    color: #009eb8;
-    border: 1px solid #ebd7ff;
-}
-.group_buttons:hover{
-    text-decoration: none;
-    background: #f6feff;
-}
-
-.white {
-    background: transparent;
-    color: #fff;
-    border: 1px solid #fff;
-    padding: 4px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-}
-.white:hover {
-    background: #fff;
-    color: #000 !important;
-    text-decoration: none;
-}
-
-/* End Buttons Style */
-
 .navbar-nav{
     flex-direction: row;
 }
 .courses .card-header {
-    background: #6a6a6a;
+    background: #f2f2f2;
 }
 .card-header {
-    background: #6a6a6a;
+    background: #f2f2f2;
+    color: #000 !important;
 }
 .courses.form-inline .form-group .form-control{
     width: 100% !important;
 }
-.courses .card-header span, .card-header a {
-    color: #fff !important;
+.courses .card-header span{
+    color: #000 !important;
 }
+/* .card-header a{
+    color: #fff !important;
+} */
 .courses .BtnGroupRows a  {
     background: #ffc107;
     color: #000;
@@ -300,6 +172,12 @@ ol.answers li{
     width: 30%;
     margin: 0 auto;
 }
+.lms-header ul.navbar-nav li.user a svg{
+    margin: 0;
+}
+.shadow{
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 3%) !important;
+}
 
 @media (max-width: 1025px) {
     .change-password .card .card-body{
@@ -331,4 +209,148 @@ ol.answers li{
     .change-password input.form-control {
         font-size: 12px;
     }
+    .course-cards.card-report.justify-content-center {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        margin: 0 0 10px;
+    }
 }
+
+
+/* Buttons Style */
+.badge-blue{
+    background: #8dabf7;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.badge-pink{
+    background: #b18db5;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.badge-green{
+    background: #b0ac27;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.main-color {
+    background: transparent;
+    color: #fb4400;
+    border: 1px solid #fb4400;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.main-color:hover {
+    background: #fb4400;
+    text-decoration: none;
+    color: #fff;
+}
+
+.yellow {
+    background: transparent;
+    color: #000;
+    border: 1px solid #ffc107;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.yellow:hover {
+    background: #ffc107;
+    text-decoration: none;
+}
+
+.red{
+    background: transparent;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.red:hover {
+    background: #dc3545;
+    color: #fff;
+    text-decoration: none;
+}
+
+.green{
+    background: transparent;
+    color: green;
+    border: 1px solid green;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.green:hover {
+    background: green;
+    color: #fff;
+    text-decoration: none;
+}
+
+.cyan{
+    background: transparent;
+    color: #0dcaf0;
+    border: 1px solid #0dcaf0;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.cyan:hover {
+    background: #0dcaf0;
+    color: #fff;
+    text-decoration: none;
+}
+
+.primary{
+    background: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.primary:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.group_buttons {
+    background: transparent;
+    color: #009eb8;
+    border: 1px solid #ebd7ff;
+}
+.group_buttons:hover{
+    text-decoration: none;
+    background: #f6feff;
+}
+
+.white {
+    background: transparent;
+    color: #000 !important;
+    border: 1px solid #000;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.white:hover {
+    background: #000;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* End Buttons Style */
