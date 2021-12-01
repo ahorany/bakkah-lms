@@ -18,7 +18,7 @@
         <div class="person-wrapper">
             <img src="{{$url}}" alt="">
             <h2 style="font-size: 1.2rem;" class="mb-0">{{auth()->user()->trans_name}}</h2>
-            <medium style="color: #73726c; font-weight: 700;">{{auth()->user()->roles()->select('roles.name')->first()->trans_name??null}}</medium>
+            <medium style="color: #73726c; font-weight: 700;">{{$user_role_name}}</medium>
             <hr>
         </div>
         {{-- @endif --}}

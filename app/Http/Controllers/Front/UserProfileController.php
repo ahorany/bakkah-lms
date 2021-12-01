@@ -318,6 +318,7 @@ class UserProfileController extends Controller
 
 
     public function course_details($course_id){
+        session()->put('infastructure_id',-1);
         $course = Course::where('id',$course_id)->whereHas('users',function ($q){
             $q->where('users.id',\auth()->id());
         })->with(['users' => function($query){
@@ -460,6 +461,7 @@ class UserProfileController extends Controller
 
 
     public function home() {
+        session()->put('infastructure_id',-1);
 
         $courses =  User::where('id',\auth()->id())->with(['courses' => function($q){
             return $q->with(['training_option' , 'upload' => function($q){
