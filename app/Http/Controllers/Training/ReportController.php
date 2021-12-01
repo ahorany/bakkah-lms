@@ -24,20 +24,26 @@ class ReportController extends Controller
 
     public function index(){
 
+        // dd(request()->all());
         $users = User::join('role_user','users.id','=','role_user.user_id')
                         ->join('roles','roles.id','role_user.role_id');
 
-        // if(isset(request()->title) && !is_null(request()->title))
-        // {
-        //     $projects = $projects->where('title', 'like', '%'.request()->title.'%');
-        // }
+        if (!is_null(request()->user_search)) {
+            $users = $users->where(function ($query) {
+                $query->where('users.name', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.email', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.mobile', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.job_title', 'like', '%' . request()->user_search . '%')
+                    ->orWhere('users.company', 'like', '%' . request()->user_search . '%');
+            });
+        }
+
         $trash = GetTrash();
         $count = $users->count();
         $post_type = GetPostType();
 
         $users = $users->select('users.*', 'roles.name as role_name')->page(null, 'users.');
 
-        // $projects = $users->select('users.*', 'roles.name')->get();
         $learners_no  = DB::table('role_user')->where('role_id',3)->count();
         $complete_courses_no = DB::table('courses_registration')->where('progress',100)->count();
         $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->count();

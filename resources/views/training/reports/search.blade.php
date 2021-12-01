@@ -5,7 +5,7 @@
     .form-inline .form-group label {
         font-weight: normal !important;
     }
-    .form-inline .custom-control-label{
+    .form-inline .custom-control-label {
         display: inline-block;
     }
     .form-inline .form-group .form-control {
@@ -17,7 +17,7 @@
         padding-right: 0 !important;
     }
     </style>
-    <form id="post-search" class="courses form-inline mb-4" method="get" action="{{route('training.courses.index')}}">
+    <form id="post-search" class="courses form-inline mb-4" method="get" action="{{route('training.usersReport')}}">
             <div class="col-md-12">
 
                 <div class="card card-default">
@@ -31,9 +31,9 @@
                                 {!! Builder::Hidden('post_type', $post_type) !!}
                                 {!! Builder::Hidden('trash') !!}
 
-                                {!!Builder::Select2('users', 'users', $all_users, null, [
-                                  'col'=>'col-md-6', 'model_title'=>'trans_name',
-                                ])!!}
+                                <div class="form-group">
+                                    <input type="text" name="user_search"  class="form-control" placeholder="Name, Email, Mobile, Job Title, Comapny" value="{{request()->user_search??null}}" class="form-control">
+                                </div>
 
 
                                 <div style="margin-top: 5px;"> {{-- class="col-md-6"  --}}
