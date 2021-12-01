@@ -20,6 +20,19 @@ Route::group([
 
             Route::resource('roles', 'RoleController');
             Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
+
+
+
+            Route::get('/group_users', 'GroupUserController@group_users')->name('group_users');
+            Route::post('/search_user_group', 'GroupUserController@search_user_group')->name('search_user_group');
+            Route::post('/add_users_group', 'GroupUserController@add_users_group')->name('add_users_group');
+            Route::post('/group_users/delete', 'GroupUserController@delete_user_group')->name('delete_user_group');
+
+
+            Route::get('/group_courses', 'GroupCourseController@group_courses')->name('group_courses');
+            Route::post('/search_course_group', 'GroupCourseController@search_course_group')->name('search_course_group');
+            Route::post('/add_course_group', 'GroupCourseController@add_course_group')->name('add_courses_group');
+            Route::post('/group_courses/delete', 'GroupCourseController@delete_course_group')->name('delete_course_group');
         });
 
 

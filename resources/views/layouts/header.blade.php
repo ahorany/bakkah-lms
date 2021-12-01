@@ -54,13 +54,18 @@
                 <ul class="postition-relative">
                     <li class="p-3 dropdown-item borderBottom" style="background: #f4f4f4; border-bottom: 1px solid gainsboro;">
                         <div>
+<<<<<<< HEAD
                             <h2 style="font-size: 1.2rem;" class="mb-0">{{auth()->user()->trans_name}}</h2>
                             <small style="color: #73726c; font-weight:700;">{{auth()->user()->roles()->select('roles.name')->first()->trans_name??null}}</small>
+=======
+                            <h2 style="font-size: 1.2rem;" class="mb-1">{{auth()->user()->trans_name}}</h2>
+                            <small style="color: #73726c; font-weight:700;">{{$user_role_name}}</small>
+>>>>>>> c0c1bf59fb8af9e981d41e8c741c5bb8bd5eb2cc
                         </div>
                     </li>
-                    <li><a href="{{route('user.info')}}"><i class="fa fa-user-o" aria-hidden="true"></i> <span class="mx-1">{{__('education.info')}}</span></a></li>
-                    <li><a href="{{route('user.change_password')}}"><i class="fa fa-lock" aria-hidden="true"></i> <span class="mx-1">{{__('education.Change Password')}}</a></li>
-                    <li><a href="{{route('user.logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> <span class="mx-1">{{__('education.Logout')}}</a></li>
+                    <li><a href="{{route('user.info')}}"> <span class="mx-1">{{__('education.info')}}</span></a></li>
+                    <li><a href="{{route('user.change_password')}}"> <span class="mx-1">{{__('education.Change Password')}}</a></li>
+                    <li><a href="{{route('user.logout')}}"> <span class="mx-1">{{__('education.Logout')}}</a></li>
                 </ul>
             </div>
         </li>

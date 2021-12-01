@@ -38,9 +38,16 @@
               {!!$group->published_at!!}<br>
             </span>
           </td>
-          <td class="d-none d-sm-table-cell text-right">{!!Builder::BtnGroupRows($group->name, $group->id, [], [
+          <td class="d-none d-sm-table-cell text-center">
+              {!!Builder::BtnGroupRows($group->name, $group->id, [], [
             'post'=>$group->id,
-         ])!!}</td>
+         ])!!}
+
+              <div class="my-2">
+                 <a class="green" href="{{route('training.group_users',['group_id' => $group->id])}}">users</a>
+                 <a class="green" href="{{route('training.group_courses',['group_id' => $group->id])}}">courses</a>
+              </div>
+          </td>
       </tr>
       @endforeach
       </tbody>
