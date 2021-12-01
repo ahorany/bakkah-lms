@@ -21,9 +21,7 @@ Route::group([
             Route::resource('roles', 'RoleController');
             Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
 
-<<<<<<< HEAD
             Route::get('/usersReport', 'ReportController@index')->name('usersReport');
-=======
 
 
             Route::get('/group_users', 'GroupUserController@group_users')->name('group_users');
@@ -36,7 +34,6 @@ Route::group([
             Route::post('/search_course_group', 'GroupCourseController@search_course_group')->name('search_course_group');
             Route::post('/add_course_group', 'GroupCourseController@add_course_group')->name('add_courses_group');
             Route::post('/group_courses/delete', 'GroupCourseController@delete_course_group')->name('delete_course_group');
->>>>>>> b0f277e2b5a1d5506fd6ed3528d15f3b6105b876
         });
 
 
