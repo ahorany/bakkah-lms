@@ -21,10 +21,11 @@
             <th class="">{{__('admin.name')}}</th>
             <th class="">{{__('admin.email')}}</th>
             <th class="">{{__('admin.mobile')}}</th>
-            <th class="">{{__('admin.job_title')}}</th>
+            {{-- <th class="">{{__('admin.job_title')}}</th> --}}
+            <th class="">{{__('admin.role')}}</th>
             <th class="">{{__('admin.company')}}</th>
-            <th class="">{{__('admin.gender_id')}}</th>
-            <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th>
+            {{-- <th class="">{{__('admin.gender_id')}}</th> --}}
+            {{-- <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th> --}}
             <th class="d-none d-sm-table-cell text-center" style="width: 12%;">{{__('admin.action')}}</th>
         </tr>
       </thead>
@@ -44,21 +45,15 @@
         <td class="px-1">
             <span class="td-title">{{$post->mobile??null}}</span>
         </td>
+        {{-- <td class="px-1"> <span class="td-title">{{$post->job_title??null}}</span> </td> --}}
         <td class="px-1">
-            <span class="td-title">{{$post->job_title??null}}</span>
+            <span class="td-title {{($post->roles[0]->id == 1) ? 'badge-blue' : (($post->roles[0]->id == 2) ? 'badge-pink' : (($post->roles[0]->id == 3) ? 'badge-green' : ''))}} ">{{$post->roles[0]->trans_name??null}}</span>
         </td>
         <td class="px-1">
             <span class="td-title">{{$post->company??null}}</span>
         </td>
-        <td class="px-1">
-            <span class="td-title">{{$post->gender->en_name??null}}</span>
-        </td>
-        {{--<td class="d-none d-sm-table-cell">
-          <span class="author">
-            {!!$post->published_at!!}
-          </span>
-        </td>--}}
-        <td class="d-none d-sm-table-cell px-1">{!!Builder::UploadRow($post)!!}</td>
+        {{-- <td class="px-1"> <span class="td-title">{{$post->gender->en_name??null}}</span> </td> --}}
+        {{-- <td class="d-none d-sm-table-cell px-1">{!!Builder::UploadRow($post)!!}</td> --}}
         <td class="d-none d-sm-table-cell text-center px-1">
             {!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
                 'post'=>$post->id,

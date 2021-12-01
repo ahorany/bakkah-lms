@@ -60,6 +60,12 @@
 
             <div class="dropdown d-none">
                 <ul>
+                    <li class="p-3 dropdown-item" style="border-bottom: 4px solid #fb4400; background: #f1f6ff;">
+                        <div>
+                            <h2 style="font-size: 1.2rem;" class="mb-1">{{auth()->user()->trans_name}}</h2>
+                            <small style="color: #73726c; font-weight:700;">{{auth()->user()->roles()->select('roles.name')->first()->trans_name??null}}</small>
+                        </div>
+                    </li>
                     <li><a href="{{route('user.info')}}"><i class="fa fa-user-o" aria-hidden="true"></i> <span class="mx-1">{{__('education.info')}}</span></a></li>
                     <li><a href="{{route('user.change_password')}}"><i class="fa fa-lock" aria-hidden="true"></i> <span class="mx-1">{{__('education.Change Password')}}</a></li>
                     <li><a href="{{route('user.logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> <span class="mx-1">{{__('education.Logout')}}</a></li>
