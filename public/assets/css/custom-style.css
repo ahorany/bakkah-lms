@@ -138,8 +138,10 @@
     flex-direction: row;
 }
 .courses .card-header {
-    /* background: #848484; */
-    background: #23354b;
+    background: #6a6a6a;
+}
+.card-header {
+    background: #6a6a6a;
 }
 .courses.form-inline .form-group .form-control{
     width: 100% !important;

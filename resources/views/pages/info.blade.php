@@ -65,7 +65,7 @@
                                         $url = CustomAsset('upload/full/'. $url);
                                     // }
                                 }else {
-                                    $url = 'https://ui-avatars.com/api/?background=23354b&color=fff&name=' . auth()->user()->trans_name;
+                                    $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
                                 }
                             ?>
                             <div class="d-md-flex">
