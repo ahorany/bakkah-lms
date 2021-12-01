@@ -7,20 +7,20 @@ trait TrashTrait
 {
 	use softDeletes;
 
-	public function scopeByTrash($query)
+	public function scopeByTrash($query, $alias='')
 	{
 	    if(isset($_GET['trash']) && !empty($_GET['trash'])){
-	        return $query->where('trashed_status', 0)->onlyTrashed();
+	        return $query->where($alias.'trashed_status', 0)->onlyTrashed();
 	    }
 	    else{
-	        return $query->whereNull('trashed_status');
+	        return $query->whereNull($alias.'trashed_status');
 	    }
 	    return $query;
 	}
 
-	public function scopePage($query, $paginate=null)
+	public function scopePage($query, $paginate=null, $alias='')
 	{
-	    return $query->latest('updated_at')->ByTrash()->paginate($paginate??PAGINATE);
+	    return $query->latest($alias.'updated_at')->ByTrash($alias)->paginate($paginate??PAGINATE);
 	}
 
 	public function setDeletedAtAttribute()
