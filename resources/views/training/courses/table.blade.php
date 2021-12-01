@@ -43,10 +43,7 @@ use App\Models\Training\CourseRegistration;
                     if($c->role_id == 2)
                        echo '<span class="badge-pink mr-1">Instructors '.$c->counts.'</span>';
                     elseif($c->role_id == 3)
-<<<<<<< HEAD
 
-=======
->>>>>>> fc66e2f4a787f0a80d5089c7bbbba68b858a957d
                         echo '<span class="badge-blue mr-1">Trainees '.$c->counts.'</span>';
                 ?>
         </td>
