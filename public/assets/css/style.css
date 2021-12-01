@@ -334,7 +334,7 @@ ol {
 }
 
 .bg-light {
-  background: #f3f3f3;
+  background: #f3f3f3 !important;
 }
 
 .bg-white {

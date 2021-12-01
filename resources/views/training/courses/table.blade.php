@@ -21,7 +21,7 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.users_count')}}</th>
             <th class="img-table d-none d-sm-table-cell col-md-1">{{__('admin.image')}}</th>
             {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
-            <th class="text-center col-md-3" scope="col">{{__('admin.action')}}</th>
+            <th class="col-md-3 text-right" scope="col">{{__('admin.action')}}</th>
         </tr>
       </thead>
       <tbody>
@@ -53,7 +53,7 @@ use App\Models\Training\CourseRegistration;
             </span>
         </td> --}}
 
-          <td class="d-sm-table-cell text-center">
+          <td class="d-sm-table-cell text-right">
               @if(!checkUserIsTrainee())
                 {!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
                     'post'=>$post->id,

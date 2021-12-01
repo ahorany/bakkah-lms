@@ -111,73 +111,70 @@
                     </div>
 
                     <div class="modal-body">
-                        <div class="col-md-12 p-0">
-                            <div class="form-group">
-                                <label>Title </label>
-                                <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
-                                <div v-show="'title' in errors">
-                                    <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
-                                </div>
-                            </div>
-                        </div>
-
                         <template v-if="model_type == 'exam'">
-
-                            <div  class="modal-diff-content">
-                                <label>Duration (minutes)</label>
-                                <input  type="number" v-model="duration" name="duration" class="form-control" placeholder="duration">
-                                <div v-show="'duration' in errors">
-                                    <span style="color: red;font-size: 13px">@{{ errors.duration }}</span>
+                            <div class="row">
+                                <div class="col-md-6 col-6">
+                                    <div class="form-group">
+                                        <label class="m-0">Title </label>
+                                        <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
+                                        <div v-show="'title' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="modal-diff-content form-group">
+                                        <label class="m-0">Duration (minutes)</label>
+                                        <input type="number" v-model="duration" name="duration" class="form-control" placeholder="duration">
+                                        <div v-show="'duration' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.duration }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="modal-diff-content form-group">
+                                        <label class="m-0">Attempt Count</label>
+                                        <input type="number" v-model="attempt_count" name="attempt_count" class="form-control" placeholder="attempt_count">
+                                        <div v-show="'attempt_count' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.attempt_count }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="modal-diff-content form-group">
+                                        <label class="m-0">Pagination Number</label>
+                                        <input type="number" v-model="pagination" name="pagination" class="form-control" placeholder="pagination">
+                                        <div v-show="'pagination' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.pagination }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="modal-diff-content form-group">
+                                        <label class="m-0">Start Date </label>
+                                        <input type="datetime-local" v-model="start_date" name="start_date" class="form-control" placeholder="start date">
+                                        <div v-show="'start_date' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.start_date }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div  class="modal-diff-content form-group">
+                                        <label class="m-0">End Date </label>
+                                        <input  type="datetime-local" v-model="end_date" name="end_date" class="form-control" placeholder="end date">
+                                        <div v-show="'end_date' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.end_date }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-
-                            <div  class="modal-diff-content">
-                                <label>Attempt Count</label>
-                                <input  type="number" v-model="attempt_count" name="attempt_count" class="form-control" placeholder="attempt_count">
-                                <div v-show="'attempt_count' in errors">
-                                    <span style="color: red;font-size: 13px">@{{ errors.attempt_count }}</span>
-                                </div>
-                            </div>
-
-                            <div  class="modal-diff-content">
-                                <label>Pagination Number</label>
-                                <input  type="number" v-model="pagination" name="pagination" class="form-control" placeholder="pagination">
-                                <div v-show="'pagination' in errors">
-                                    <span style="color: red;font-size: 13px">@{{ errors.pagination }}</span>
-                                </div>
-                            </div>
-
-
-                            <div  class="modal-diff-content">
-                                <label>Start Date </label>
-                                <input   type="datetime-local" v-model="start_date" name="start_date" class="form-control" placeholder="start date">
-                                <div v-show="'start_date' in errors">
-                                    <span style="color: red;font-size: 13px">@{{ errors.start_date }}</span>
-                                </div>
-                            </div>
-
-                            <div  class="modal-diff-content">
-                                <label>End Date </label>
-                                <input  type="datetime-local" v-model="end_date" name="end_date" class="form-control" placeholder="end date">
-                                <div v-show="'end_date' in errors">
-                                    <span style="color: red;font-size: 13px">@{{ errors.end_date }}</span>
-                                </div>
-                            </div>
-
                         </template>
-
-
-                        <div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content">
-
+                        <div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content my-2">
                             <editor v-model="excerpt" theme="snow" :options="options" :placeholder="'Details'"></editor>
-
-
                            <div v-show="'excerpt' in errors">
                                 <span style="color: red;font-size: 13px">@{{ errors.excerpt }}</span>
                             </div>
                         </div>
-
 
                         <div v-else-if="model_type != 'video'" class="modal-diff-content">
                             <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
@@ -235,14 +232,12 @@
 
                         </div>
 
-
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
                         <button type="reset" class="cyan" @click="clear()">{{__('admin.clear')}}</button>
                         <button type="button"  @click="save()" class="green">{{__('admin.save')}}</button>
-
                     </div>
                 </div>
             </div>
