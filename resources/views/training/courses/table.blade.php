@@ -41,9 +41,9 @@ use App\Models\Training\CourseRegistration;
                     ->select(DB::raw('COUNT(*) as counts'),'role_id')->get();
                 foreach($trainee_count as $c)
                     if($c->role_id == 2)
-                       echo '<span class="badge-pink">Instructor '.$c->counts.'</span>';
+                       echo '<span class="badge-pink mr-1">Instructors '.$c->counts.'</span>';
                     elseif($c->role_id == 3)
-                        echo '<span class="badge-blue">Trainee '.$c->counts.'</span>';
+                        echo '<span class="badge-blue mr-1">Trainees '.$c->counts.'</span>';
                 ?>
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>

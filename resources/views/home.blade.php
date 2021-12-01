@@ -26,9 +26,24 @@
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
                     <a href="{{CustomRoute('user.course_details',$course->id)}}">
                     <div class="text-center course-image p-30">
-                        
+                        <?php
+                        $url = '';
+                        // dd($course);
+                        if($course->upload != null) {
+                            // if ($url == ''){
+                            //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+                            // }else{
+                                $url = $course->upload->file;
+                                $url = CustomAsset('upload/full/'. $url);
+                            // }
+                        }else {
+                            $url = 'https://ui-avatars.com/api/?background=23354b&color=fff&name=' . $course->trans_title;
+                        }
+                    ?>
                         @isset($course->upload->file)
                             <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" height="150px" >
+                        @else
+                            <img src="{{CustomAsset($url)}}" height="150px" >
                         @endisset
 
 

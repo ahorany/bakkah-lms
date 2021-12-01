@@ -65,7 +65,7 @@
                                         $url = CustomAsset('upload/full/'. $url);
                                     // }
                                 }else {
-                                    $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+                                    $url = 'https://ui-avatars.com/api/?background=23354b&color=fff&name=' . auth()->user()->trans_name;
                                 }
                             ?>
                             <div class="d-md-flex">
@@ -85,14 +85,14 @@
                                                 <label for="en_name">{{__('education.english_name')}}</label>
                                                 <input name="en_name" value="{{json_decode(auth()->user()->name)->en}}" type="text" id="en_name" class="form-control">
                                                 @error('en_name')
-                                                <small class="text-danger">{{$message}}</small>
+                                                <small class="text-danger" style="color: red;">{{$message}}</small>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label for="ar_name">{{__('education.arabic_name')}}</label>
                                                 <input name="ar_name" value="{{json_decode(auth()->user()->name)->ar}}" type="text" id="ar_name" class="form-control">
                                                 @error('ar_name')
-                                                <small class="text-danger">{{$message}}</small>
+                                                <small class="text-danger" style="color: red;">{{$message}}</small>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
@@ -115,7 +115,7 @@
                                                     <option value="ar" {{(old('language', auth()->user()->lang)=='ar')?'selected="selected"':''}}>Arabic</option>
                                                 </select>
                                                 @error('language')
-                                                    <small class="text-danger">{{$message}}</small>
+                                                    <small class="text-danger" style="color: red;">{{$message}}</small>
                                                 @enderror
                                             </div>
                                         </div>
@@ -136,7 +136,7 @@
                                                     @endforeach
                                                 </select>
                                                 @error('gender_id')
-                                                    <small class="text-danger">{{$message}}</small>
+                                                    <small class="text-danger" style="color: red;">{{$message}}</small>
                                                 @enderror
                                             </div>
                                         </div>
@@ -146,9 +146,6 @@
                                                 <label for="mobile">{{__('education.Mobile')}}</label>
                                                 <input name="mobile" value="{{auth()->user()->mobile}}" type="mobile" id="mobile" class="form-control">
                                             </div>
-                                            @error('mobile')
-                                                <small class="text-danger">{{$message}}</small>
-                                            @enderror
                                         </div>
 
                                         <div class="col-lg-6">
@@ -156,9 +153,6 @@
                                                 <label for="company">{{__('education.Company')}}</label>
                                                 <input name="company" value="{{auth()->user()->company}}" type="text" id="company" class="form-control">
                                             </div>
-                                            @error('company')
-                                                <small class="text-danger">{{$message}}</small>
-                                            @enderror
                                         </div>
 
                                         <div class="col-lg-6">
@@ -166,9 +160,6 @@
                                                 <label for="job_title">{{__('education.Job Title')}}</label>
                                                 <input name="job_title" value="{{auth()->user()->job_title}}" type="text" id="job_title" class="form-control">
                                             </div>
-                                            @error('job_title')
-                                                <small class="text-danger">{{$message}}</small>
-                                            @enderror
                                         </div>
 
                                         </div>

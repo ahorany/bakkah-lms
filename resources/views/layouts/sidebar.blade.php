@@ -11,7 +11,7 @@
                     $url = CustomAsset('upload/full/'. $url);
                 // }
             }else {
-                $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+                $url = 'https://ui-avatars.com/api/?background=23354b&color=fff&name=' . auth()->user()->trans_name;
             }
         ?>
         {{-- @if (file_exists($url)) --}}
@@ -59,6 +59,7 @@
             </li>
             @endforeach
 
+            {{-- @dd($user_sidebar_courses->courses) --}}
             @foreach($user_sidebar_courses->courses as $item)
                 <li class="nav-item">
                     <a class="nav-link {{ (url()->full() == CustomRoute('user.course_details',$item->id)) && (url()->full() != CustomRoute('user.home'))  ? 'active' : '' }}" href="{{CustomRoute('user.course_details',$item->id) }}">
