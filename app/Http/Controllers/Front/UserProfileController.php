@@ -613,6 +613,7 @@ class UserProfileController extends Controller
             'company' => $request->company,
             'job_title' => $request->job_title,
         ]);
+        // dd($request);
 
         User::UploadFile($user, ['method'=>'update']);
 
