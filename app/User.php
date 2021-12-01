@@ -35,7 +35,7 @@ class User extends Authenticatable
         , 'date_time', 'mobile', 'country', 'city','mail_subscribe', 'ref_id'
         , 'password_lms', 'username_lms', 'country_id'
         , 'trainer_courses_for_certifications', 'locale'
-        , 'two_factor_code', 'two_factor_expires_at','headline','lang','bio'
+        , 'two_factor_code', 'two_factor_expires_at','headline','lang','bio','last_login'
     ];
 
     /**
