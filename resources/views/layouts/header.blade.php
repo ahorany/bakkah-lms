@@ -39,7 +39,7 @@
                             $url = CustomAsset('upload/full/'. $url);
                         // }
                     }else {
-                        $url = 'https://ui-avatars.com/api/?background=23354b&color=fff&name=' . auth()->user()->trans_name;
+                        $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
                     }
                 ?>
                 <img style="width:40px;height:40px;object-fit:cover;border-radius: 50%;" src="{{$url}}" />
@@ -54,13 +54,8 @@
                 <ul class="postition-relative">
                     <li class="p-3 dropdown-item borderBottom" style="background: #f4f4f4; border-bottom: 1px solid gainsboro;">
                         <div>
-<<<<<<< HEAD
-                            <h2 style="font-size: 1.2rem;" class="mb-0">{{auth()->user()->trans_name}}</h2>
-                            <small style="color: #73726c; font-weight:700;">{{auth()->user()->roles()->select('roles.name')->first()->trans_name??null}}</small>
-=======
-                            <h2 style="font-size: 1.2rem;" class="mb-1">{{auth()->user()->trans_name}}</h2>
+                            <h2 style="font-size: 1.2rem; margin-bottom: 0;">{{auth()->user()->trans_name}}</h2>
                             <small style="color: #73726c; font-weight:700;">{{$user_role_name}}</small>
->>>>>>> c0c1bf59fb8af9e981d41e8c741c5bb8bd5eb2cc
                         </div>
                     </li>
                     <li><a href="{{route('user.info')}}"> <span class="mx-1">{{__('education.info')}}</span></a></li>

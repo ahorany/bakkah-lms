@@ -11,13 +11,13 @@
                     $url = CustomAsset('upload/full/'. $url);
                 // }
             }else {
-                $url = 'https://ui-avatars.com/api/?background=23354b&color=fff&name=' . auth()->user()->trans_name;
+                $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
             }
         ?>
         {{-- @if (file_exists($url)) --}}
         <div class="person-wrapper">
             <img src="{{$url}}" alt="">
-            <h2 style="font-size: 1.2rem;" class="mb-0">{{auth()->user()->trans_name}}</h2>
+            <h2 style="font-size: 20px; margin-bottom: 0;">{{auth()->user()->trans_name}}</h2>
             <medium style="color: #73726c; font-weight: 700;">{{$user_role_name}}</medium>
             <hr>
         </div>

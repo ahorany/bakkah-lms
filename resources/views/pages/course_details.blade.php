@@ -32,7 +32,7 @@
                         $url = CustomAsset('upload/full/'. $url);
                     // }
                 }else {
-                    $url = 'https://ui-avatars.com/api/?background=23354b&color=fff&name=' . $course->trans_title;
+                    $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . $course->trans_title;
                 }
             ?>
             @if($image != null)

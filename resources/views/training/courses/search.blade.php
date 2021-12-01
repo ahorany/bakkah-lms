@@ -31,8 +31,12 @@
                                 {!! Builder::Hidden('post_type', $post_type) !!}
                                 {!! Builder::Hidden('trash') !!}
 
-                                {!! Builder::Input('course_search', 'course_search', request()->course_search, ['col'=>'col-md-12']) !!}
-
+                                {{-- {!! Builder::Input('course_search', 'course_search', request()->course_search, ['col'=>'col-md-12']) !!} --}}
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" name="course_search"  class="form-control" placeholder="Name, Email, Mobile, Job Title, Comapny" value="{{request()->course_search??null}}" class="form-control">
+                                    </div>
+                                </div>
                                 {{-- {!! Builder::Select('category_id', 'category_id', $categories, request()->category_id??-1, [
                                     'col'=>'col-md-4',
                                 ]) !!} --}}
