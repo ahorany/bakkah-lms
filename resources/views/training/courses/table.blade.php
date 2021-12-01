@@ -43,13 +43,8 @@ use App\Models\Training\CourseRegistration;
                     if($c->role_id == 2)
                        echo '<span class="badge-pink mr-1">Instructors '.$c->counts.'</span>';
                     elseif($c->role_id == 3)
-<<<<<<< HEAD
-                        echo '<span class="badge-blue">Trainee '.$c->counts.'</span>';
-            ?>
-=======
                         echo '<span class="badge-blue mr-1">Trainees '.$c->counts.'</span>';
                 ?>
->>>>>>> b0f277e2b5a1d5506fd6ed3528d15f3b6105b876
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
         {{-- <td class="d-sm-table-cell" style="font-size: 13px;">
