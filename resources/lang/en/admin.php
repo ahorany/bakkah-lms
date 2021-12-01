@@ -114,5 +114,5 @@ return [
     'add' => 'Add',
     'code' => 'Code',
     'users_count'=>'Users Count',
-    'role'=>'role',
+    'role'=>'Role',
 ];
