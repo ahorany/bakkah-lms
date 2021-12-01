@@ -21,8 +21,14 @@ Route::group([
             Route::resource('roles', 'RoleController');
             Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> f028fb29b4b51a9408da52f73a51c59498b2feea
             Route::get('/usersReport', 'ReportController@index')->name('usersReport');
 
+>>>>>>> 41310ced45d985c12a2aeea1199b2b4de1818417
 
             Route::get('/group_users', 'GroupUserController@group_users')->name('group_users');
             Route::post('/search_user_group', 'GroupUserController@search_user_group')->name('search_user_group');

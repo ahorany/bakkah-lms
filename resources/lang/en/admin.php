@@ -120,6 +120,5 @@ return [
     'learners'=>'Learners',
     'completed_courses'=>'Completed Courses',
     'courses_in_progress'=>'Courses In Progress',
-
     'course'=>'course',
 ];
