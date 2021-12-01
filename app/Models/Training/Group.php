@@ -23,5 +23,9 @@ class Group extends Model
         return $this->belongsToMany(Course::class,'course_groups','group_id')->withPivot('course_id' ,'group_id');
     }
 
+    public function course_registration(){
+        return $this->belongsToMany(CourseRegistration::class,'course_registration_groups','group_id','course_registration_id')->withPivot('course_registration_id' ,'group_id');
+    }
+
 
 }

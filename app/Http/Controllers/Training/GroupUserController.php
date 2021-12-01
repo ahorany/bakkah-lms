@@ -29,6 +29,11 @@ class GroupUserController extends Controller
     }
 
     public function search_user_group(){
+        $user_type = 2;
+        if(\request()->user_type == 'trainee'){
+            $user_type = 3;
+        }
+
        $users = User::query();
 
        $lock = true;
@@ -49,9 +54,19 @@ class GroupUserController extends Controller
         }
 
 
+
         if($lock){
+            if($user_type == 2 ){
+                $users->whereHas('roles' , function($q) use($user_type){
+                    $q->where('role_id','!=',3);
+                });
+            }
+
+
+//            dd($users->toSql());
             $users = $users->get();
         }
+
         return response()->json([ 'status' => 'success' ,'users' => $users]);
     }
 
@@ -60,6 +75,12 @@ class GroupUserController extends Controller
 
         if(!$group){
             return response()->json([ 'status' => 'fail']);
+        }
+
+        if(request()->type == 'instructor'){
+            $type_id = 2;
+        }else{
+            $type_id = 3;
         }
 
         foreach (\request()->users as $key =>  $value){
@@ -71,6 +92,7 @@ class GroupUserController extends Controller
                 [
                     'user_id' => $key,
                     'group_id' => $group->id,
+                    'role_id' => $type_id,
                 ]);
             }else if ($value == false){
                 GroupUser::where('user_id',$key)->where('group_id',$group->id)->delete();
