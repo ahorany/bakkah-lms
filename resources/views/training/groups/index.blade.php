@@ -10,7 +10,7 @@
     {{Builder::SetNameSpace('training.')}}
 	{{Builder::SetObject('group')}}
 
-	@include('crm.'.$folder.'.table')
+	@include('training.'.$folder.'.table')
 
 	{{-- @include('crm.'.$folder.'.search') --}}
 

@@ -71,7 +71,8 @@ class Builder {
             $href = !is_null($sidebar->route_name)?route($sidebar->route_name, $args):'#';
             $psth_to__check = str_replace(Request::root().'/',"", $href);
 
-            $active = ($sidebar->id==session('infastructure_id')) ? 'active' : $active;
+            $active = ($sidebar->id == session('infastructure_id')) ? 'active' : $active;
+//            $active = ($sidebar->id== (url()->full() == route($sidebar->route_name, $args)) ) && (url()->full() != CustomRoute('user.home'))  ? 'active' : $active;
     //        $active = (session('infastructure_id') != 'user') ? 'active' : '';
     //        dump(session('infastructure_id'));
 

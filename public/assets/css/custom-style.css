@@ -2,20 +2,23 @@
 .badge-blue{
     background: #8dabf7;
     color: #fff;
-    padding: 1px 9px;
-    border-radius: 10px;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
 }
 .badge-pink{
     background: #b18db5;
     color: #fff;
-    padding: 1px 9px;
-    border-radius: 10px;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
 }
 .badge-green{
     background: #b0ac27;
     color: #fff;
-    padding: 1px 9px;
-    border-radius: 10px;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
 }
 .main-color {
     background: transparent;
@@ -135,7 +138,8 @@
     flex-direction: row;
 }
 .courses .card-header {
-    background: #848484;
+    /* background: #848484; */
+    background: #23354b;
 }
 .courses.form-inline .form-group .form-control{
     width: 100% !important;
@@ -283,6 +287,9 @@ ol.answers li{
 }
 .table td, .table th{
     vertical-align: middle !important;
+}
+.navbar-brand{
+    box-shadow: none;
 }
 
 @media (max-width: 1025px) {

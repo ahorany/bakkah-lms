@@ -115,10 +115,14 @@ return [
     'code' => 'Code',
     'users_count'=>'Users Count',
     'role'=>'Role',
+<<<<<<< HEAD
     'user_type'=>'User Type',
     'assigned_courses'=>'Assigned Courses',
     'learners'=>'Learners',
     'completed_courses'=>'Completed Courses',
     'courses_in_progress'=>'Courses In Progress',
 
+=======
+    'course'=>'course',
+>>>>>>> b0f277e2b5a1d5506fd6ed3528d15f3b6105b876
 ];

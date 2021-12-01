@@ -21,6 +21,7 @@
 </head>
 
 <body>
+<?php  $user_role_name = auth()->user()->roles()->select('roles.name')->first()->trans_name??null; ?>
 
 @include("layouts.header")
 

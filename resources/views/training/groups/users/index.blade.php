@@ -27,31 +27,27 @@
         <div class="card p-3 mb-3">
             <div class="row">
                 <div class="col-md-6">
-                    @if(!checkUserIsTrainee())
-                        <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
-                            <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_trainee')}}
-                        </button>
 
-                        <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
-                            <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_instructor')}}
+                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Group Name : {{$group->name}}</span>
+
+                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                            <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.user')}}
                         </button>
-                    @endif
-                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="group_buttons btn-sm mr-1">
-                        {{__('admin.contents')}}
-                    </a>
-                    <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons btn-sm">Units</a>
                 </div>
 
-                @if(!checkUserIsTrainee())
-                    <div class="col-md-6 text-right">
-                        <div class="back">
-                            <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                        </div>
+
+                <div class="col-md-6 text-right">
+                    <div class="back">
+                        <a href="{{route('training.groups.index')}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                     </div>
-                 @endif
+                </div>
+
+
+
+
             </div>
         </div>
-          <template v-if="course">
+          <template v-if="group">
 
             <table class="table table-striped">
                 <thead>
@@ -59,45 +55,29 @@
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Type</th>
-                    @if(!checkUserIsTrainee())
-                        <th scope="col">Expire Date</th>
-                        <th scope="col">Action</th>
-                    @endif
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(user,index) in course.users">
+                    <tr v-for="(user,index) in group.users">
                         <th scope="row" v-text="index + 1"></th>
                         <td v-text="trans_title(user.name)"></td>
                         <td v-text="user.email"></td>
+
                         <td>
-                            <span v-if="user.pivot != null && user.pivot.role_id == 2" class="badge-pink"> Instructor </span>
-                            <span v-if="user.pivot != null && user.pivot.role_id == 3" class="badge-green"> Trainee </span>
+                            <button @click="deleteUser(user.id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
                         </td>
-
-                    @if(!checkUserIsTrainee())
-                            <td>
-                                <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
-
-                            </td>
-                            <td>
-                                <button @click="updateUserExpireDate(user.id)" class="primary" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa"></i> Update</button>
-                                <button @click="deleteUser(user.id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
-                            </td>
-                        @endif
                     </tr>
 
                 </tbody>
             </table>
 
 
-            @if(!checkUserIsTrainee())
               <div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add @{{ type_user }}</h5>
+{{--                        <h5 class="modal-title" id="exampleModalLabel">Add @{{ type_user }}</h5>--}}
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -143,11 +123,6 @@
                         </tbody>
                     </table>
 
-                    <div>
-                        <label class="form-group">Expire Date: </label>
-                        <input   type="datetime-local" v-model="expire_date" name="expire_date" class="form-control d-inline-block" placeholder="Expire date">
-                    </div>
-
                 </div>
 
                 <div class="modal-footer">
@@ -157,7 +132,6 @@
                 </div>
             </div>
         </div>
-             @endif
            </template>
 
     </div>
@@ -170,11 +144,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.min.js" type="text/javascript"></script>
 <script>
         window.lang = '{!!app()->getLocale()!!}'
-        window.course = {!! json_encode($course??[]) !!}
+        window.group = {!! json_encode($group??[]) !!}
 	var contents = new Vue({
         el:'#main-vue-element',
         data : {
-            course : window.course,
+            group : window.group,
             lang : window.lang,
             expire_date : '' ,
             search_username : '' ,
@@ -182,28 +156,26 @@
             search_users    : [] ,
             users_expire_date    : {} ,
             add_users : {},
-            type_user : 'trainee',
         },
         created(){
 		    let self = this
-           this.course.users.forEach(function (user,index) {
-               self.users_expire_date[user.id] = user.pivot.expire_date;
-           })
-
-            console.log(self.users_expire_date)
+           // this.group.users.forEach(function (user,index) {
+           //     self.users_expire_date[user.id] = user.pivot.expire_date;
+           // })
+           //
+            console.log(self.group)
         },
         methods : {
-                OpenModal : function(type){
-                    this.type_user = type;
+                OpenModal : function(){
                     $('#ContentModal').modal('show')
                 },
                 search: function () {
                     let self = this;
-                    axios.post("{{route('training.search_user_course')}}",
+                    axios.post("{{route('training.search_user_group')}}",
                         {
                             'name' : self.search_username ,
                             'email'    : self.search_email ,
-                            'type_user'    : self.type_user ,
+                            // 'type_user'    : self.type_user ,
                         }
                         )
                         .then(response => {
@@ -218,7 +190,7 @@
                 },
                 isCheckedUser : function (user_id) {
                     let self = this;
-                     let user = self.course.users.filter(function (user,index) {
+                     let user = self.group.users.filter(function (user,index) {
                           return user.id == user_id;
                      })
                        if(user && user.length == 0){
@@ -235,10 +207,10 @@
                 },
                 save : function(){
                     let self = this;
-                    axios.post("{{route('training.add_users_course')}}",
+                    axios.post("{{route('training.add_users_group')}}",
                         {
                             'users' : self.add_users ,
-                            'course_id' : self.course.id ,
+                            'group_id' : self.group.id ,
                             'expire_date' : self.expire_date ,
                             'type' : self.type_user ,
                         }
@@ -247,7 +219,7 @@
                             console.log(response.data)
                             if(response.data.status == 'success'){
                                 self.add_users = {};
-                                self.course = response.data.course;
+                                self.group = response.data.group;
                                 $('#ContentModal').modal('hide')
                             }
 
@@ -261,21 +233,18 @@
                     let self = this;
                     if(confirm('Are you sure ?')){
 
-                        self.course.users = self.course.users.filter(function (user,index) {
+                        self.group.users = self.group.users.filter(function (user,index) {
                               return (user.id != user_id)
                         })
 
-                        axios.post("{{route('training.delete_user_course')}}",
+                        axios.post("{{route('training.delete_user_group')}}",
                             {
-                                'course_id' : self.course.id ,
+                                'group_id' : self.group.id ,
                                 'user_id'   : user_id ,
                             }
                         )
                             .then(response => {
                                 console.log(response)
-                                // self.search_users = response.data.users;
-                                // $('#ContentModal').modal('hide')
-
                             })
                             .catch(e => {
                                 console.log(e)
@@ -286,29 +255,6 @@
                 trans_title : function (data) {
                    return JSON.parse(data)[this.lang];
                 },
-                // trans_name : function (data) {
-                //    return JSON.parse(data)[this.lang];
-                //  },
-                updateUserExpireDate: function (user_id) {
-                    let user_expire_date = this.users_expire_date[user_id];
-                    let self = this;
-                    axios.post("{{route('training.update_user_expire_date')}}",
-                        {
-                            'course_id' : self.course.id ,
-                            'user_id'   : user_id ,
-                            'expire_date'   : user_expire_date ,
-                        }
-                    )
-                        .then(response => {
-                            console.log(response)
-                            // self.search_users = response.data.users;
-                            // $('#ContentModal').modal('hide')
-
-                        })
-                        .catch(e => {
-                            console.log(e)
-                        });
-                }
             }
 	});
 </script>

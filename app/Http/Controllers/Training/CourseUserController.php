@@ -51,7 +51,7 @@ class CourseUserController extends Controller
         $user =  User::findOrFail($user_id);
         $course =  Course::findOrFail($course_id);
         CourseRegistration::where('user_id',$user->id)->where('course_id',$course->id)->delete();
-        return response('status','success');
+        return response()->json(['status' => 'success']);
     }
 
     public function search_user_course(){
