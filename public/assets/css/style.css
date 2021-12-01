@@ -635,6 +635,7 @@ nav#sidebarMenu ul li a svg path {
 }
 .lms-header ul.navbar-nav li.user a {
   justify-content: space-between;
+  text-decoration: none;
 }
 
 .lms-header ul.navbar-nav li.user a svg {

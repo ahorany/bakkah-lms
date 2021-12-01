@@ -31,7 +31,7 @@ class UserController extends Controller
         $post_type = GetPostType('users');
         $trash = GetTrash();
 
-        $users = User::with('upload');
+        $users = User::with(['upload','roles']);
 
         if (!is_null(request()->user_search)) {
             $users = $users->where(function ($query) {
