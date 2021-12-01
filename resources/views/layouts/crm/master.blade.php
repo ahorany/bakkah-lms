@@ -24,7 +24,17 @@
     <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}">
 
     @yield('style')
+<style>
+    /*h1, h2, h3, h4, h5, h6 {*/
 
+    /*}*/
+
+    .person-wrapper h2{
+        margin-top: 20px !important;
+        font-weight: 600 !important;
+        margin-bottom: 5px !important;
+    }
+</style>
 </head>
 
 <body>
