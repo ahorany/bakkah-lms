@@ -39,7 +39,8 @@ class ReportController extends Controller
         $learners_no  = DB::table('role_user')->where('role_id',3)->count();
         $complete_courses_no = DB::table('courses_registration')->where('progress',100)->count();
         $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->count();
-        return Active::Index(compact( 'users', 'post_type', 'trash','count','learners_no','complete_courses_no','courses_in_progress'));
+        $all_users =  User::all();
+        return Active::Index(compact( 'users', 'post_type', 'trash','count','learners_no','complete_courses_no','courses_in_progress','all_users'));
 
     }
 

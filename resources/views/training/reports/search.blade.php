@@ -31,7 +31,9 @@
                                 {!! Builder::Hidden('post_type', $post_type) !!}
                                 {!! Builder::Hidden('trash') !!}
 
-                                {!! Builder::Input('course_search', 'course_search', request()->course_search, ['col'=>'col-md-12']) !!}
+                                {!!Builder::Select2('users', 'users', $all_users, null, [
+                                  'col'=>'col-md-6', 'model_title'=>'trans_name',
+                                ])!!}
 
 
                                 <div style="margin-top: 5px;"> {{-- class="col-md-6"  --}}
