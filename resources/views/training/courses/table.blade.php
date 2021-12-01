@@ -35,33 +35,16 @@ use App\Models\Training\CourseRegistration;
         </td>
         <td>
             <?php
-
                 $trainee_count =   DB::table('courses_registration')
-                    ->where('courses_registration.course_id',$post->id)
-                    ->join('role_user', function ($join) {
-                        $join->on('courses_registration.user_id', '=', 'role_user.user_id');
-                    })
-                    ->groupBy('role_user.role_id')
-                    ->select(DB::raw('COUNT(*) as counts'),'role_user.role_id as role_id')->get();
-
-            ?>
-            @foreach($trainee_count as $c)
-                @php
-                    if($c->role_id == 1)
-                        $role_id = 'Admin';
-                    elseif($c->role_id == 2)
-                        $role_id = 'Instructor';
+                    ->where('course_id',$post->id)
+                    ->groupBy('role_id')
+                    ->select(DB::raw('COUNT(*) as counts'),'role_id')->get();
+                foreach($trainee_count as $c)
+                    if($c->role_id == 2)
+                       echo '<span class="badge-pink">Instructor '.$c->counts.'</span>';
                     elseif($c->role_id == 3)
-                        $role_id = 'Trainee';
-                    elseif($c->role_id == 4)
-                        $role_id = 'Manager';
-
-                @endphp
-                <span class="badge badge-success">{{$role_id}} {{$c->counts}}</span>
-            @endforeach
-
-             {{-- <span class="badge badge-success">Trainees {{$trainee_count}}</span> --}}
-
+                        echo '<span class="badge-blue">Trainee '.$c->counts.'</span>';
+                ?>
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
         {{-- <td class="d-sm-table-cell" style="font-size: 13px;">
