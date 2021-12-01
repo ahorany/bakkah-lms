@@ -34,7 +34,9 @@ class ReportController extends Controller
         $trash = GetTrash();
         $count = $users->count();
         $post_type = GetPostType();
+
         $users = $users->select('users.*', 'roles.name as role_name')->page(null, 'users.');
+
         // $projects = $users->select('users.*', 'roles.name')->get();
         $learners_no  = DB::table('role_user')->where('role_id',3)->count();
         $complete_courses_no = DB::table('courses_registration')->where('progress',100)->count();
