@@ -1,3 +1,6 @@
+.bg-two {
+    background: #6a6a6a;
+}
 /* Buttons Style */
 .badge-blue{
     background: #8dabf7;
@@ -292,6 +295,10 @@ ol.answers li{
 }
 .navbar-brand{
     box-shadow: none;
+}
+.card-report{
+    width: 30%;
+    margin: 0 auto;
 }
 
 @media (max-width: 1025px) {
