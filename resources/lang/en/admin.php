@@ -120,5 +120,15 @@ return [
     'learners'=>'Learners',
     'completed_courses'=>'Completed Courses',
     'courses_in_progress'=>'Courses In Progress',
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> 73061c9240ba910ee121f776c5738cf2630f4d35
+>>>>>>> fc66e2f4a787f0a80d5089c7bbbba68b858a957d
+>>>>>>> 59bcff3edfd69e420107e1b4713659da35ccbdbc
     'course'=>'course',
 ];
