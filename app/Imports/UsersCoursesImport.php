@@ -35,6 +35,7 @@ class UsersCoursesImport implements ToCollection, WithHeadingRow
                      'progress'=>$row['completionpercentage'],
                      'score'=>$row['score'],
                      'expire_date' =>$user->expire_date,
+
                     ],
                 ]);
 
