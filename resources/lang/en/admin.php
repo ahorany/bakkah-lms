@@ -121,6 +121,10 @@ return [
     'completed_courses'=>'Completed Courses',
     'courses_in_progress'=>'Courses In Progress',
     'course'=>'course',
+<<<<<<< HEAD
+    'courses_not_started'=>'Courses Not Started',
+=======
     'users'=>'Users',
     'last_login'=>'Last Login',
+>>>>>>> 1c45861e23118a7e01ec45306347d575562d99d0
 ];

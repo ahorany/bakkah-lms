@@ -22,33 +22,28 @@ class ReportController extends Controller
         Active::$folder = 'reports';
     }
 
-    public function index(){
+    public function user_report()
+    {
 
-        // dd(request()->all());
-        $users = User::join('role_user','users.id','=','role_user.user_id')
-                        ->join('roles','roles.id','role_user.role_id');
+        $user_id = request()->id;
+        $learners_no         = DB::table('role_user')->where('role_id',3)->where('user_id',$user_id)->count();
+        $complete_courses_no = DB::table('courses_registration')->where('user_id',$user_id)->where('progress',100)->count();
+        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('user_id',$user_id)->count();
+        $courses_not_started = DB::table('courses_registration')->where('progress',0)->where('user_id',$user_id)->count();
+        $overview = 1;
+        return view('training.reports.user_report',compact('user_id','learners_no','complete_courses_no','courses_in_progress','courses_not_started','overview'));
 
-        if (!is_null(request()->user_search)) {
-            $users = $users->where(function ($query) {
-                $query->where('users.name', 'like', '%' . request()->user_search . '%')
-                    ->orWhere('users.email', 'like', '%' . request()->user_search . '%')
-                    ->orWhere('users.mobile', 'like', '%' . request()->user_search . '%')
-                    ->orWhere('users.job_title', 'like', '%' . request()->user_search . '%')
-                    ->orWhere('users.company', 'like', '%' . request()->user_search . '%');
-            });
-        }
+    }
 
-        $trash = GetTrash();
-        $count = $users->count();
-        $post_type = GetPostType();
 
-        $users = $users->select('users.*', 'roles.name as role_name')->page(null, 'users.');
+    public function courseReport()
+    {
+        $user_id = request()->id;
+        $courses         = DB::table('courses')
+                                ->join('courses_registration','courses.id','courses_registration.course_id')
+                                ->where('user_id',$user_id)->get();
 
-        $learners_no  = DB::table('role_user')->where('role_id',3)->count();
-        $complete_courses_no = DB::table('courses_registration')->where('progress',100)->count();
-        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->count();
-        $all_users =  User::all();
-        return Active::Index(compact( 'users', 'post_type', 'trash','count','learners_no','complete_courses_no','courses_in_progress','all_users'));
+        return view('training.reports.user_report',compact('user_id','courses'));
 
     }
 
