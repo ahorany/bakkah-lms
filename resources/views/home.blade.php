@@ -26,8 +26,9 @@
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
                     <a href="{{CustomRoute('user.course_details',$course->id)}}">
                     <div class="text-center course-image p-30">
+                        
                         @isset($course->upload->file)
-                            <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" >
+                            <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" height="150px" >
                         @endisset
 
 

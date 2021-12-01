@@ -103,12 +103,12 @@
                                         <p>Mark  : {{$exam->exam->exam_mark}} </p>
 
 
-                                        @if(count($exam->questions) == 0)
+                                        @if(count($exam->questions) == 0 || (\Carbon\Carbon::create($exam->exam->start_date)  > \Carbon\Carbon::now() && !is_null($exam->exam->start_date)))
                                                 <p class="text-danger">Not Ready Now</p>
                                         @else
                                             @if( \Carbon\Carbon::create($exam->exam->end_date)  > \Carbon\Carbon::now() || is_null($exam->exam->end_date) )
                                                 @if($users_exams_count == 0)
-                                                    <p class="text-warning">No Attempts</p>
+                                                    <p style="color: darkred">No Attempts</p>
                                                     <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Start Attempt</a>
                                                 @elseif($exam->exam->users_exams[$users_exams_count-1]->status == 0)
                                                     <a href="{{CustomRoute('user.preview.exam',$exam->id)}}" class="btn btn-primary">Return to Exam</a>

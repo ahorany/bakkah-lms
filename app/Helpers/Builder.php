@@ -446,7 +446,7 @@ class Builder {
 
 	static function Href($name, $post_type, $class, $icon, $route=null){
 		$name1 = !is_null($name)?__('admin.'.$name):null;
-		return '<a name="'.$name.'" href="'.$route.'" class=" '.$class.'" title="'.$name1.' '.__('admin.'.$post_type).'"><i class="fa fa-'.$icon.'"></i> '.$name1.'</a>';
+		return '<a name="'.$name.'" href="'.$route.'" class="mr-1 '.$class.'" title="'.$name1.' '.__('admin.'.$post_type).'"><i class="fa fa-'.$icon.'"></i> '.$name1.'</a>';
 	}
 
 	static function Create($post_type){
@@ -458,7 +458,7 @@ class Builder {
 	// To define buttons
 	static function TrashOrArchiveOrSchedule($post_type, $type='trash', $icon='trash'){
 		$route = self::Route(self::$folder.'.'.self::$getIndex, $post_type, ['trash'=>$type]);
-		$class = self::$trash==$type?'btn-sm btn-table':'btn-sm btn-default';
+		$class = self::$trash==$type?'btn-sm btn-table':'white';
 		return self::Href($type, $post_type, $class, $icon, $route);
 	}
 

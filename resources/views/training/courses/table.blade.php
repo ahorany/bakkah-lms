@@ -53,17 +53,19 @@ use App\Models\Training\CourseRegistration;
             </span>
         </td> --}}
 
-          <td class="d-sm-table-cell text-right">
+          <td class="d-sm-table-cell text-center">
               @if(!checkUserIsTrainee())
                 {!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
                     'post'=>$post->id,
                 ])!!}
               @endif
+              @if(!request()->has('trash') && request()->trash != "trash")
                 <div class="my-2">
                     <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="green">Contents</a>
                     <a href="{{route('training.units',['course_id'=>$post->id])}}" class="green">Units</a>
                     <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class="green">Users</a>
                 </div>
+              @endif
           </td>
       </tr>
 

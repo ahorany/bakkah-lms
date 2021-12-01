@@ -57,22 +57,25 @@
             </form>
         </div>
 
-	<div  class="card mb-1" v-for="(question,index) in content.questions">
-		<div class="card-body p-0" >
-            <div class="clearfix mb-1 p-3 m-0">
-                <div class="text-success float-left">
-                    <span>( @{{question.mark}} marks )</span>
-                    <span>( @{{question.answers.length}} answers )</span>
+        <template v-if="questions">
+            <div  class="card mb-1" v-for="(question,index) in content.questions">
+                <div class="card-body p-0" >
+                    <div class="clearfix mb-1 p-3 m-0">
+                        <div class="text-success float-left">
+                            <span>( @{{question.mark}} marks )</span>
+                            <span>( @{{question.answers.length}} answers )</span>
+                        </div>
+                        <div class="BtnGroupRows float-right mb-3" data-id="150">
+                            <button type="button" @click="OpenEditModal(question.id)" class="yellow" id="answer" ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+                            <button @click="deleteQuestion(question.id)" class="red" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <h3 style="font-size: 20px"  v-html="question.title"></h3>
+                    </div>
                 </div>
-                <div class="BtnGroupRows float-right mb-3" data-id="150">
-                    <button type="button" @click="OpenEditModal(question.id)" class="yellow" id="answer" ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
-                    <button @click="deleteQuestion(question.id)" class="red" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
-                </div>
-                <div style="clear: both;"></div>
-                <h3 style="font-size: 20px"  v-html="question.title"></h3>
             </div>
-		</div>
-	</div>
+
+        </template>
 
 	<div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg" role="document">

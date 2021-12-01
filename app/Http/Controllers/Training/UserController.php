@@ -49,35 +49,35 @@ class UserController extends Controller
         //     });
         // }
         $user_type = '';
-        if (!is_null(request()->post_type) && request()->post_type == 'users') {
-            //$post_type = GetPostType('trainers');
-            $users = $users->where('user_type', 41)->orWhereNull('user_type');
-            $user_type = 41;
-        }
-
-        if (!is_null(request()->post_type) && request()->post_type == 'trainers') {
-            //$post_type = GetPostType('trainers');
-            $users = $users->where('user_type', 326);
-            $user_type = 326;
-        }
-
-        if (!is_null(request()->post_type) && request()->post_type == 'employees') {
-            //$post_type = GetPostType('employees');
-            $users = $users->orWhere('user_type', 315);
-            $user_type = 315;
-        }
-
-        if (!is_null(request()->post_type) && request()->post_type == 'developers') {
-            //$post_type = GetPostType('employees');
-            $users = $users->where('user_type', 402);
-            $user_type = 402;
-        }
-
-        if (!is_null(request()->post_type) && request()->post_type == 'on-demand-team') {
-            //$post_type = GetPostType('employees');
-            $users = $users->where('user_type', 403);
-            $user_type = 403;
-        }
+//        if (!is_null(request()->post_type) && request()->post_type == 'users') {
+//            //$post_type = GetPostType('trainers');
+//            $users = $users->where('user_type', 41)->orWhereNull('user_type');
+//            $user_type = 41;
+//        }
+//
+//        if (!is_null(request()->post_type) && request()->post_type == 'trainers') {
+//            //$post_type = GetPostType('trainers');
+//            $users = $users->where('user_type', 326);
+//            $user_type = 326;
+//        }
+//
+//        if (!is_null(request()->post_type) && request()->post_type == 'employees') {
+//            //$post_type = GetPostType('employees');
+//            $users = $users->orWhere('user_type', 315);
+//            $user_type = 315;
+//        }
+//
+//        if (!is_null(request()->post_type) && request()->post_type == 'developers') {
+//            //$post_type = GetPostType('employees');
+//            $users = $users->where('user_type', 402);
+//            $user_type = 402;
+//        }
+//
+//        if (!is_null(request()->post_type) && request()->post_type == 'on-demand-team') {
+//            //$post_type = GetPostType('employees');
+//            $users = $users->where('user_type', 403);
+//            $user_type = 403;
+//        }
 
         // dump($users->toSql());
 
@@ -222,22 +222,24 @@ class UserController extends Controller
         $user_groups = UserGroup::where('user_id',$user->id)->get();
 
 //        return $user_groups;
-        $user_type = '';
-        if ($post_type == 'users') {
-            $user_type = 41;
-        }
-        if ($post_type == 'trainers') {
-            $user_type = 326;
-        }
-        if ($post_type == 'employees') {
-            $user_type = 315;
-        }
-        if ($post_type == 'developers') {
-            $user_type = 402;
-        }
-        if ($post_type == 'on-demand-team') {
-            $user_type = 403;
-        }
+//        $user_type = '';
+//        if ($post_type == 'users') {
+//            $user_type = 41;
+//        }
+//        if ($post_type == 'trainers') {
+//            $user_type = 326;
+//        }
+//        if ($post_type == 'employees') {
+//            $user_type = 315;
+//        }
+//        if ($post_type == 'developers') {
+//            $user_type = 402;
+//        }
+//        if ($post_type == 'on-demand-team') {
+//            $user_type = 403;
+//        }
+
+        $role_id = $user->roles()->select('roles.id')->first()->id??-1;
 
         return Active::Edit([
             'eloquent' => $user,
@@ -249,8 +251,9 @@ class UserController extends Controller
             'activity_level' => $activity_level,
             'level_of_education' => $level_of_education,
             'session_can_handle' => $session_can_handle,
-            'user_type' => $user_type,
+//            'user_type' => $user_type,
             'roles' => $roles,
+            'role_id' => $role_id,
 //            'groups' => $groups,
 //            'user_groups' => $user_groups,
         ]);

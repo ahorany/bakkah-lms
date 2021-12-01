@@ -3,13 +3,13 @@
 
         <?php
             $url = '';
-            if(auth()->user()->upload) {
-                if ($url == ''){
-                    $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
-                }else{
+            if(auth()->user()->upload->file) {
+                // if ($url == ''){
+                //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+                // }else{
                     $url = auth()->user()->upload->file;
                     $url = CustomAsset('upload/full/'. $url);
-                }
+                // }
             }else {
                 $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
             }
@@ -18,6 +18,7 @@
         <div class="person-wrapper">
             <img src="{{$url}}" alt="">
             <h2 style="font-size: 1.2rem;">{{auth()->user()->trans_name}}</h2>
+            <h4 style="color: #73726c">{{auth()->user()->roles()->select('roles.name')->first()->trans_name??null}}</h4>
             <hr>
         </div>
         {{-- @endif --}}

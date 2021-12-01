@@ -75,7 +75,7 @@
                                 </div>
 
 
-                                <div v-if="counter <= 2" class="mt-5">
+                                <div class="mt-5">
 
                                     <button @click.prevent="addSubUnitBox()" class="btn btn-primary mb-3">Add Sub Unit +</button>
                                     <div class="mb-2" v-show="'subunits' in errors">
@@ -204,7 +204,7 @@
                          <li @click.stop="open = (!open)" class="last" v-else>@{{child.title }}
                               <button @click.stop="$root.deleteUnit(course.units,child.id)"  class="btn btn-sm text-danger" >
                                        <i class="fa fa-trash"></i></button>
-                              <button @click.stop="$root.edit(child,child.id)" type="button" class="btn text-info btn-sm px-3" id="answer" ><i class="fa fa-pencil-alt"></i></button>
+                              <button @click.stop="$root.edit(child,child.id)" type="button" class="btn text-info btn-sm px-3" id="answer" ><i style="color:#000;" class="fa fa-pencil"></i></button>
                            </li></template></ul>`
          })
 

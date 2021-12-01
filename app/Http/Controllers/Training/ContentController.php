@@ -171,6 +171,7 @@ class ContentController extends Controller
 
     public function add_content(){
         $validate = $this->contentValidation(request()->type);
+//        return \request();
 
         if($validate){
             return response()->json(['errors' => $validate]);
@@ -180,14 +181,12 @@ class ContentController extends Controller
         $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE parent_id= $parent_id  "));
 
         if(\request()->type == 'exam'){
-
-
             $content = Content::create([
                 'title'      => request()->title,
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
                 'parent_id'  => request()->content_id,
-                'status' => request()->status == true ? 1 : 0,
+                'status' => request()->status == 'true' ? 1 : 0,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
             $content->details()->create([
@@ -212,7 +211,7 @@ class ContentController extends Controller
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
                 'url'        => request()->url,
-                'status' => request()->status == true ? 1 : 0,
+                'status' => request()->status == 'true' ? 1 : 0,
                 'parent_id'  => request()->content_id,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
@@ -306,7 +305,7 @@ class ContentController extends Controller
         if (\request()->type == 'exam') {
             $content = Content::whereId(request()->content_id)->update([
                 'title' => request()->title,
-                'status' => request()->status == true ? 1 : 0,
+                'status' => request()->status == 'true' ? 1 : 0,
             ]);
             ContentDetails::where('content_id', request()->content_id)->update([
                 'excerpt' => request()->excerpt,
@@ -326,7 +325,7 @@ class ContentController extends Controller
                 ->update([
                     'title' => request()->title,
                     'url' => request()->url,
-                    'status' => request()->status == true ? 1 : 0,
+                    'status' => request()->status == 'true' ? 1 : 0,
                 ]);
 
 

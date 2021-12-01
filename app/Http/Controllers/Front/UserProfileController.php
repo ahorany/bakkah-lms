@@ -595,6 +595,8 @@ class UserProfileController extends Controller
             'en_name' => 'required',
             'ar_name' => 'required',
             'language' => 'required',
+            'company' => 'required',
+            'job_title' => 'required',
             'gender_id' => 'required|exists:constants,id',
         ]);
 
@@ -608,7 +610,10 @@ class UserProfileController extends Controller
             'bio'       => $request->bio,
             'mobile'    => $request->mobile,
             'gender_id' => $request->gender_id,
+            'company' => $request->company,
+            'job_title' => $request->job_title,
         ]);
+        // dd($request);
 
         User::UploadFile($user, ['method'=>'update']);
 
