@@ -34,7 +34,6 @@
                                 {!! Builder::Input('course_search', 'course_search', request()->course_search, ['col'=>'col-md-12']) !!}
 
 
-
                                 <div style="margin-top: 5px;"> {{-- class="col-md-6"  --}}
                                     {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
 
