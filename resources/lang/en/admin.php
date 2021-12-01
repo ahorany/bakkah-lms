@@ -115,4 +115,5 @@ return [
     'code' => 'Code',
     'users_count'=>'Users Count',
     'role'=>'Role',
+    'course'=>'course',
 ];
