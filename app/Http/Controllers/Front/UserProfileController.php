@@ -597,8 +597,6 @@ class UserProfileController extends Controller
             'en_name' => 'required',
             'ar_name' => 'required',
             'language' => 'required',
-            'company' => 'required',
-            'job_title' => 'required',
             'gender_id' => 'required|exists:constants,id',
         ]);
 
