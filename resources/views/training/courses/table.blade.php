@@ -44,7 +44,7 @@ use App\Models\Training\CourseRegistration;
                        echo '<span class="badge-pink">Instructor '.$c->counts.'</span>';
                     elseif($c->role_id == 3)
                         echo '<span class="badge-blue">Trainee '.$c->counts.'</span>';
-                ?>
+            ?>
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
         {{-- <td class="d-sm-table-cell" style="font-size: 13px;">

@@ -101,4 +101,9 @@ return [
     'code' => 'Code',
     'users_count'=>'Users Count',
     'role'=>'Role',
+    'user_type'=>'نوع المستخدم',
+    'assigned_courses'=>'Assigned Courses',
+    'learners'=>'Learners',
+    'completed_courses'=>'Completed Courses',
+    'courses_in_progress'=>'Courses In Progress',
 ];

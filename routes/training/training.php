@@ -20,6 +20,8 @@ Route::group([
 
             Route::resource('roles', 'RoleController');
             Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
+
+            Route::get('/usersReport', 'ReportController@index')->name('usersReport');
         });
 
 
@@ -71,6 +73,9 @@ Route::group([
 
         Route::resource('groups', 'GroupController');
         Route::patch('/groups/{group}/restore', 'GroupController@restore')->name('groups.restore');
+
+
+
 
     });
 });
