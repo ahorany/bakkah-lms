@@ -300,6 +300,9 @@ ol.answers li{
     width: 30%;
     margin: 0 auto;
 }
+.lms-header ul.navbar-nav li.user a svg{
+    margin: 0;
+}
 
 @media (max-width: 1025px) {
     .change-password .card .card-body{
@@ -330,5 +333,11 @@ ol.answers li{
     }
     .change-password input.form-control {
         font-size: 12px;
+    }
+    .course-cards.card-report.justify-content-center {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        margin: 0 0 10px;
     }
 }

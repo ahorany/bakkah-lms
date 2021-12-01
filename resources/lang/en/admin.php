@@ -122,4 +122,5 @@ return [
     'courses_in_progress'=>'Courses In Progress',
     'course'=>'course',
     'users'=>'Users',
+    'last_login'=>'Last Login',
 ];

@@ -70,7 +70,7 @@
                             <tr>
                                 <th scope="col">Title</th>
                                 <th scope="col">Type</th>
-                                <th scope="col">Action</th>
+                                <th scope="col" class="text-right">Action</th>
                                 {{-- <th>import</th> --}}
                             </tr>
                         </thead>
@@ -82,7 +82,7 @@
                                 <td>
                                     <span>@{{entry.post_type}}</span>
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">
                                         <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
                                         <button v-else @click="OpenEditModal(content.id,entry.id)"  class="yellow" >
