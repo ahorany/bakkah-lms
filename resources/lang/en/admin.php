@@ -121,5 +121,5 @@ return [
     'completed_courses'=>'Completed Courses',
     'courses_in_progress'=>'Courses In Progress',
     'course'=>'course',
-    'users'=>'Users',
+    'courses_not_started'=>'Courses Not Started',
 ];

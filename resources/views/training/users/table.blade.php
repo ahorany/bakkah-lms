@@ -1,3 +1,6 @@
+<?php
+use App\Models\Training\CourseRegistration;
+?>
 @section('style')
 <style>
     .card-header span{
@@ -8,6 +11,7 @@
     }
 </style>
 @endsection
+@include('training.users.dashboard')
 <div class="card courses">
   <div class="card-header">
     {!!Builder::BtnGroupTable()!!}
@@ -26,6 +30,7 @@
             <th class="">{{__('admin.company')}}</th>
             {{-- <th class="">{{__('admin.gender_id')}}</th> --}}
             {{-- <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th> --}}
+            <th class="col-md-2 col-2">{{__('admin.assigned_courses')}}</th>
             <th class="d-none d-sm-table-cell text-center" style="width: 12%;">{{__('admin.action')}}</th>
         </tr>
       </thead>
@@ -56,10 +61,17 @@
         </td>
         {{-- <td class="px-1"> <span class="td-title">{{$post->gender->en_name??null}}</span> </td> --}}
         {{-- <td class="d-none d-sm-table-cell px-1">{!!Builder::UploadRow($post)!!}</td> --}}
+        <td>
+            <?php
+                $assigned_courses = CourseRegistration::where('user_id',$post->id)->count();
+            ?>
+            <span style="display: block;" class="title">  {{ $assigned_courses }}</span>
+        </td>
         <td class="d-none d-sm-table-cell text-center px-1">
             {!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
                 'post'=>$post->id,
             ])!!}
+            <a href="{{route('training.usersReport',['id'=>$post->id])}}" target="blank" class="btn btn-sm btn-outline-primary btn-table" ><i class="fa fa-pencil"></i> Report</a>
          </td>
       </tr>
       @endforeach
