@@ -28,10 +28,15 @@ use App\Models\Training\CourseRegistration;
             {{-- <th class="">{{__('admin.job_title')}}</th> --}}
             <th class="">{{__('admin.role')}}</th>
             <th class="">{{__('admin.company')}}</th>
+            <th class="">{{__('admin.last_login')}}</th>
             {{-- <th class="">{{__('admin.gender_id')}}</th> --}}
             {{-- <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th> --}}
+<<<<<<< HEAD
             <th class="col-md-2 col-2">{{__('admin.assigned_courses')}}</th>
             <th class="d-none d-sm-table-cell text-center" style="width: 12%;">{{__('admin.action')}}</th>
+=======
+            <th class="d-none d-sm-table-cell text-center" style="width: 15%;">{{__('admin.action')}}</th>
+>>>>>>> 1c45861e23118a7e01ec45306347d575562d99d0
         </tr>
       </thead>
       <tbody>
@@ -58,6 +63,9 @@ use App\Models\Training\CourseRegistration;
         </td>
         <td class="px-1">
             <span class="td-title">{{$post->company??null}}</span>
+        </td>
+        <td class="px-1">
+            <span class="td-title">{{$post->last_login??'Not logged in'}}</span>
         </td>
         {{-- <td class="px-1"> <span class="td-title">{{$post->gender->en_name??null}}</span> </td> --}}
         {{-- <td class="d-none d-sm-table-cell px-1">{!!Builder::UploadRow($post)!!}</td> --}}

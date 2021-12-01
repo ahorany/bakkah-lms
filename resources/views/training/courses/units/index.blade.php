@@ -75,9 +75,9 @@
                                 </div>
 
 
-                                <div class="mt-5">
+                                <div class="mt-1">
 
-                                    <button @click.prevent="addSubUnitBox()" class="btn btn-primary mb-3">Add Sub Unit +</button>
+                                    <button @click.prevent="addSubUnitBox()" class="main-color"><i class="fa fa-plus" aria-hidden="true"></i> Add Sub Unit</button>
                                     <div class="mb-2" v-show="'subunits' in errors">
                                         <span style="color: red;font-size: 13px">@{{ errors.subunits }}</span>
                                     </div>
@@ -119,7 +119,7 @@
 
                 <div class="col-md-6 text-right">
                     <div class="back">
-                        <a href="{{route('training.courses.edit',[$course->id])}}" class="info btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                        <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                     </div>
                 </div>
             </div>
