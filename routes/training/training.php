@@ -21,6 +21,15 @@ Route::group([
             Route::resource('roles', 'RoleController');
             Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> f028fb29b4b51a9408da52f73a51c59498b2feea
+=======
+>>>>>>> 8e5cd39fa7bad43caaa8117ac768888f2d1cd13e
+            Route::get('/usersReport', 'ReportController@index')->name('usersReport');
 
 
             Route::get('/group_users', 'GroupUserController@group_users')->name('group_users');
@@ -84,6 +93,9 @@ Route::group([
 
         Route::resource('groups', 'GroupController');
         Route::patch('/groups/{group}/restore', 'GroupController@restore')->name('groups.restore');
+
+
+
 
     });
 });

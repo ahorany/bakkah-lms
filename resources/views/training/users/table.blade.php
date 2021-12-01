@@ -47,7 +47,9 @@
         </td>
         {{-- <td class="px-1"> <span class="td-title">{{$post->job_title??null}}</span> </td> --}}
         <td class="px-1">
-            <span class="td-title {{($post->roles[0]->id == 1) ? 'badge-blue' : (($post->roles[0]->id == 2) ? 'badge-pink' : (($post->roles[0]->id == 3) ? 'badge-green' : ''))}} ">{{$post->roles[0]->trans_name??null}}</span>
+            @if(isset($post->roles[0]))
+                <span class="td-title {{($post->roles[0]->id == 1) ? 'badge-blue' : (($post->roles[0]->id == 2) ? 'badge-pink' : (($post->roles[0]->id == 3) ? 'badge-green' : ''))}} ">{{$post->roles[0]->trans_name??null}}</span>
+            @endif
         </td>
         <td class="px-1">
             <span class="td-title">{{$post->company??null}}</span>
