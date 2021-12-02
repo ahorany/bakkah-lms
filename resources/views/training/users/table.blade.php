@@ -31,14 +31,8 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.last_login')}}</th>
             {{-- <th class="">{{__('admin.gender_id')}}</th> --}}
             {{-- <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th> --}}
-<<<<<<< HEAD
-
-            <th class="col-md-2 col-2">{{__('admin.assigned_courses')}}</th>
-            <th class="d-none d-sm-table-cell text-center" style="width: 12%;">{{__('admin.action')}}</th>
-=======
             <th class="">{{__('admin.assigned_courses')}}</th>
             <th class="" style="width: 12%;">{{__('admin.action')}}</th>
->>>>>>> c319dd7a8adcd3d51cb23c53b64da603d4b0f3f2
         </tr>
       </thead>
       <tbody>
@@ -70,13 +64,8 @@ use App\Models\Training\CourseRegistration;
             <span class="td-title">{{$post->last_login??'Not logged in'}}</span>
         </td>
         {{-- <td class="px-1"> <span class="td-title">{{$post->gender->en_name??null}}</span> </td> --}}
-<<<<<<< HEAD
-        {{-- <td class="d-none d-sm-table-cell px-1">{!!Builder::UploadRow($post)!!}</td>           --}}
-        <td>
-=======
         {{-- <td class="d-none d-sm-table-cell px-1">{!!Builder::UploadRow($post)!!}</td> --}}
         <td class="px-1">
->>>>>>> c319dd7a8adcd3d51cb23c53b64da603d4b0f3f2
             <?php
                 $assigned_courses = CourseRegistration::where('user_id',$post->id)->count();
             ?>
@@ -86,11 +75,7 @@ use App\Models\Training\CourseRegistration;
             {!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
                 'post'=>$post->id,
             ])!!}
-<<<<<<< HEAD
             <a href="{{route('training.usersReportOverview',['id'=>$post->id])}}" target="blank" class="btn btn-sm btn-outline-primary btn-table" ><i class="fa fa-pencil"></i> Report</a>
-=======
-            <a href="{{route('training.usersReport',['id'=>$post->id])}}" target="blank" class="my-2 green" ><i class="fa fa-pencil"></i> Report</a>
->>>>>>> c319dd7a8adcd3d51cb23c53b64da603d4b0f3f2
          </td>
       </tr>
       @endforeach
