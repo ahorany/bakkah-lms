@@ -168,15 +168,15 @@ ol.answers li{
 .navbar-brand{
     box-shadow: none;
 }
-.card-report{
-    width: 30%;
-    margin: 0 auto;
-}
-.lms-header ul.navbar-nav li.user a svg{
-    margin: 0;
+.card-report {
+    width: 24%;
+    margin: 5px auto;
 }
 .shadow{
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 2%) !important;
+}
+.lms-header ul.navbar-nav > li {
+    margin: 0 30px;
 }
 
 @media (max-width: 1025px) {
@@ -229,6 +229,25 @@ ol.answers li{
     .lms-header ul.navbar-nav li a.nav-link {
         width: 40px;
         height: 40px;
+    }
+    .course-cards > div {
+        display: inline-block;
+    }
+    .lms-header a.navbar-brand {
+        padding: 12px 10px !important;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 576px){
+    .navbar .navbar-toggler {
+        top: 20%;
+        left: 30%;
+        width: 30px;
+        height: 25px;
+        padding: 1px 6px;
+    }
+    .lms-header a.navbar-brand {
+        padding: 12px 17.4px !important;
     }
 }
 
