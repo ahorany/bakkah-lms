@@ -373,7 +373,10 @@ ol.answers li{
     text-decoration: none;
     background: #f6feff;
 }
-
+.group_buttons:active {
+    background: #62a0a7;
+    color: #fff;
+}
 .white {
     background: transparent;
     color: #000 !important;
@@ -390,3 +393,12 @@ ol.answers li{
 }
 
 /* End Buttons Style */
+
+.progress-bar
+{
+    background: #fb4400;
+}
+.lms-header ul.navbar-nav li.user a svg
+{
+    margin: 0;
+}

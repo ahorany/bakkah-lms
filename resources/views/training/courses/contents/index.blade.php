@@ -198,10 +198,10 @@
                         <div v-else class="modal-diff-content">
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active btn btn-outline-info" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
+                                    <a class="nav-link active cyan" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-info" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">Url</a>
+                                    <a class="nav-link cyan" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">Url</a>
                                 </li>
 
                             </ul>
