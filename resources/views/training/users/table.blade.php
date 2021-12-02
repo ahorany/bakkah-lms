@@ -31,6 +31,8 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.last_login')}}</th>
             {{-- <th class="">{{__('admin.gender_id')}}</th> --}}
             {{-- <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th> --}}
+
+            <th class="d-none d-sm-table-cell text-center" style="width: 15%;">{{__('admin.action')}}</th>
             <th class="col-md-2 col-2">{{__('admin.assigned_courses')}}</th>
             <th class="d-none d-sm-table-cell text-center" style="width: 12%;">{{__('admin.action')}}</th>
         </tr>
