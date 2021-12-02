@@ -8,6 +8,11 @@ Route::group([
 ], function(){
 
     // Route::get('/', 'Front\HomeController@index')->name('web.home');
+    Route::get('/vsscorm1', function(){
+
+        return view('scorm');
+        dd('test');
+    });
     Route::get('/sitemap/sitemap', 'Front\HomeController@sitemap')->name('web.sitemap');
 
     Auth::routes(['register' => false]);
