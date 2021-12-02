@@ -61,11 +61,9 @@
 
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
-
-                        @include('scorm')
-                        {{-- <video controls class="w-100">
+                        <video controls class="w-100">
                             <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">
-                        </video> --}}
+                        </video>
                     @elseif($content->post_type == 'audio' )
                         <audio controls>
                             <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
@@ -83,10 +81,11 @@
                             <iframe width="100%" height="500px"
                                     src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
-                            <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
+                            <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID=1" name="API" style="display: none;"></iframe>
+                            <iframe src="{{CustomAsset('scorm/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                            {{-- @include('scorm') --}}
+                            {{-- <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe> --}}
                         @endif
-
-
                     @else
                         <iframe style="" width="100%" height="500px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
                     @endif
