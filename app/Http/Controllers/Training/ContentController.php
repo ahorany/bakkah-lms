@@ -170,6 +170,7 @@ class ContentController extends Controller
     }
 
     public function add_content(){
+
         $validate = $this->contentValidation(request()->type);
 //        return \request();
 

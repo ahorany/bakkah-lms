@@ -540,6 +540,7 @@
             },
 
             saveContent: function(){
+
                 let self = this;
                 let formData = new FormData();
                 let config = {
@@ -571,6 +572,7 @@
                 formData.append('attempt_count', self.attempt_count);
 
                 if(self.save_type == 'add'){
+
                     axios.post("{{route('training.add_content')}}",
                         formData
                         ,config)
@@ -597,6 +599,7 @@
 
                         })
                         .catch(e => {
+                            console.log('errors')
                             console.log(e)
                         });
                 }else{
