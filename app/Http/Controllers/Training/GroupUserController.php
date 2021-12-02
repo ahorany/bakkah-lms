@@ -77,7 +77,7 @@ class GroupUserController extends Controller
             return response()->json([ 'status' => 'fail']);
         }
 
-        if(request()->type == 'instructor'){
+        if(request()->type_user == 'instructor'){
             $type_id = 2;
         }else{
             $type_id = 3;
