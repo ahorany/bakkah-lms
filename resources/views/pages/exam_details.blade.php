@@ -89,7 +89,7 @@
     <div class="card p-5 user-info">
                         <div class="clearfix">
                             <h4 class="mb-4 float-left"><i class="fas fa-graduation-cap"></i> {{$exam_title}}</h4>
-                            <a href="{{CustomRoute('user.exam',$exam_id)}}" class="mb-4 btn btn-primary float-right"><i class="fa fa-arrow-left"></i> back</a>
+                            <a href="{{CustomRoute('user.exam',$exam_id)}}" class="mb-4 main-color float-right"><i class="fa fa-arrow-left"></i> back</a>
                         </div>
 
                         <div class="row">

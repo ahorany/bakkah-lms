@@ -37,14 +37,15 @@ use App\Models\Training\CourseRegistration;
             <span class="td-title">{{$post->pass_mark}}</span>
         </td>
         <td class="px-1">
-            <span class="badge badge-secondary">{{$post->mark}}</span>
+            <span class="badge badge-info">{{$post->mark}}</span>
+        </td>
+        <td class="px-1">
             @if($post->mark >= $post->pass_mark)
                 <span class="badge badge-success">{{__('admin.pass')}}</span>
             @else
                 <span class="badge badge-danger">{{__('admin.fail')}}</span>
             @endif
         </td>
-
       </tr>
       @endforeach
       </tbody>

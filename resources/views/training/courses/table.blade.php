@@ -1,7 +1,17 @@
 <?php
 use App\Models\Training\CourseRegistration;
 ?>
+<<<<<<< HEAD
 @include('training.reports.courses.dashboard')
+=======
+@section('style')
+<style>
+    .card-header span{
+        color: #fff !important;
+    }
+</style>
+@endsection
+>>>>>>> c319dd7a8adcd3d51cb23c53b64da603d4b0f3f2
 <div class="card courses">
   <div class="card-header">
       {{-- {!!Builder::SetBtnParam([
@@ -17,13 +27,18 @@ use App\Models\Training\CourseRegistration;
     <table class="table table-hover table-condensed">
       <thead>
         <tr>
-            <th class="col-md-1">{{__('admin.index')}}</th>
+            <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
+<<<<<<< HEAD
             <th class="">{{__('admin.assigned_learners')}}</th>
             <th class="">{{__('admin.pdu')}}</th>
             <th class="img-table d-none d-sm-table-cell col-md-1">{{__('admin.image')}}</th>
+=======
+            <th class="">{{__('admin.users_count')}}</th>
+            <th class="img-table d-sm-table-cell">{{__('admin.image')}}</th>
+>>>>>>> c319dd7a8adcd3d51cb23c53b64da603d4b0f3f2
             {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
-            <th class="col-md-3 text-right" scope="col">{{__('admin.action')}}</th>
+            <th class="d-sm-table-cell text-right">{{__('admin.action')}}</th>
         </tr>
       </thead>
       <tbody>
@@ -44,13 +59,18 @@ use App\Models\Training\CourseRegistration;
                     ->select(DB::raw('COUNT(*) as counts'),'role_id')->get();
                 foreach($trainee_count as $c)
                     if($c->role_id == 2)
-                       echo '<span class="badge-pink mr-1">Instructors '.$c->counts.'</span>';
+                       echo '<span class="badge-pink mb-1 mr-1 d-block" style="width: max-content;">Instructors: '.$c->counts.'</span>';
                     elseif($c->role_id == 3)
+<<<<<<< HEAD
                         echo '<span class="badge-blue mr-1">Trainees '.$c->counts.'</span>';
             ?>
         </td>
         <td>
             <span class="td-title">{{$post->PDUs}}</span>
+=======
+                        echo '<span class="badge-blue mb-1 mr-1 d-block" style="width: max-content;">Trainees" '.$c->counts.'</span>';
+                ?>
+>>>>>>> c319dd7a8adcd3d51cb23c53b64da603d4b0f3f2
         </td>
 
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
