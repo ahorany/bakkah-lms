@@ -111,6 +111,15 @@
                     </div>
 
                     <div class="modal-body">
+                        <div v-if="model_type != 'exam'" class="col-md-12 p-0">
+                            <div class="form-group">
+                                <label>Title </label>
+                                <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
+                                <div v-show="'title' in errors">
+                                    <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
+                                </div>
+                            </div>
+                        </div>
                         <template v-if="model_type == 'exam'">
                             <div class="row">
                                 <div class="col-md-6 col-6">
