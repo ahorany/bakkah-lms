@@ -30,9 +30,14 @@
 
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Group Name : {{$group->name}}</span>
 
-                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
-                            <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.user')}}
+                    <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                            <i class="fa fa-plus" aria-hidden="true"></i> add trainee
                         </button>
+
+
+                    <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                        <i class="fa fa-plus" aria-hidden="true"></i> add instructor
+                    </button>
                 </div>
 
 
@@ -77,7 +82,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-{{--                        <h5 class="modal-title" id="exampleModalLabel">Add @{{ type_user }}</h5>--}}
+                        <h5 class="modal-title" id="exampleModalLabel">Add @{{ type_user }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -156,6 +161,7 @@
             search_users    : [] ,
             users_expire_date    : {} ,
             add_users : {},
+            type_user : 'trainee',
         },
         created(){
 		    let self = this
@@ -166,7 +172,8 @@
             console.log(self.group)
         },
         methods : {
-                OpenModal : function(){
+                OpenModal : function(type){
+                    this.type_user = type;
                     $('#ContentModal').modal('show')
                 },
                 search: function () {
@@ -175,7 +182,7 @@
                         {
                             'name' : self.search_username ,
                             'email'    : self.search_email ,
-                            // 'type_user'    : self.type_user ,
+                            'user_type' : self.type_user ,
                         }
                         )
                         .then(response => {
@@ -212,7 +219,7 @@
                             'users' : self.add_users ,
                             'group_id' : self.group.id ,
                             'expire_date' : self.expire_date ,
-                            'type' : self.type_user ,
+                            'user_type' : self.type_user ,
                         }
                     )
                         .then(response => {
