@@ -15,6 +15,18 @@
         font-size: 14px;
         width: 75%;
     }
+
+    @media (max-width: 1100px){
+        table{
+            display: block;
+            overflow-x: scroll;
+        }
+    }
+    /* @media (min-width: 1110px){
+        table{
+            display: table;
+        }
+    } */
 </style>
 @endsection
 
@@ -26,26 +38,26 @@
         <div class="course_info">
         <div class="card p-3 mb-3">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-9 col-9">
                     @if(!checkUserIsTrainee())
-                        <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                        <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
                             <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_trainee')}}
                         </button>
 
-                        <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                        <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
                             <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_instructor')}}
                         </button>
                     @endif
-                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="group_buttons btn-sm mr-1">
+                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="group_buttons mb-1 btn-sm mr-1">
                         {{__('admin.contents')}}
                     </a>
-                    <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons btn-sm">Units</a>
+                    <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Units</a>
                 </div>
 
                 @if(!checkUserIsTrainee())
-                    <div class="col-md-6 text-right">
+                    <div class="col-md-3 col-3 text-right">
                         <div class="back">
-                            <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                            <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                         </div>
                     </div>
                  @endif

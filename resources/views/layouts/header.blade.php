@@ -1,11 +1,10 @@
 @section('style')
 <style>
-    .borderBottom {
+    /* .borderBottom {
         border-bottom: 2px solid #f51c40;
         position: absolute;
-        /* top: 50%; */
         bottom: 0;
-    }
+    } */
 </style>
 @endsection
 <header class="navbar navbar-dark sticky-top bg-white flex-md-nowrap p-0 shadow lms-header">
@@ -48,7 +47,7 @@
                 ?>
                 <img style="width:40px;height:40px;object-fit:cover;border-radius: 50%;" src="{{$url}}" />
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: -15px;" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
                     <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"
                           transform="translate(10.125) rotate(90)" fill="#363636" />
                 </svg>

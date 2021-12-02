@@ -1,6 +1,7 @@
 <?php
 use App\Models\Training\CourseRegistration;
 ?>
+@include('training.reports.courses.dashboard')
 <div class="card courses">
   <div class="card-header">
       {{-- {!!Builder::SetBtnParam([
@@ -16,12 +17,13 @@ use App\Models\Training\CourseRegistration;
     <table class="table table-hover table-condensed">
       <thead>
         <tr>
-            <th class="col-md-1">{{__('admin.index')}}</th>
+            <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
-            <th class="">{{__('admin.users_count')}}</th>
+            <th class="">{{__('admin.assigned_learners')}}</th>
+            <th class="">{{__('admin.pdu')}}</th>
             <th class="img-table d-none d-sm-table-cell col-md-1">{{__('admin.image')}}</th>
             {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
-            <th class="col-md-3 text-right" scope="col">{{__('admin.action')}}</th>
+            <th class="d-sm-table-cell text-right">{{__('admin.action')}}</th>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +35,7 @@ use App\Models\Training\CourseRegistration;
         <td>
             <span style="display: block;" class="title">{{$post->trans_title}}  &nbsp;&nbsp;&nbsp;&nbsp; {{$post->code}}</span>
         </td>
+
         <td>
             <?php
                 $trainee_count =   DB::table('courses_registration')
@@ -41,11 +44,15 @@ use App\Models\Training\CourseRegistration;
                     ->select(DB::raw('COUNT(*) as counts'),'role_id')->get();
                 foreach($trainee_count as $c)
                     if($c->role_id == 2)
-                       echo '<span class="badge-pink mr-1">Instructors '.$c->counts.'</span>';
+                       echo '<span class="badge-pink mb-1 mr-1 d-block" style="width: max-content;">Instructors: '.$c->counts.'</span>';
                     elseif($c->role_id == 3)
                         echo '<span class="badge-blue mr-1">Trainees '.$c->counts.'</span>';
-                ?>
+            ?>
         </td>
+        <td>
+            <span class="td-title">{{$post->PDUs}}</span>
+        </td>
+
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
         {{-- <td class="d-sm-table-cell" style="font-size: 13px;">
             <span class="author">
@@ -59,6 +66,7 @@ use App\Models\Training\CourseRegistration;
                     'post'=>$post->id,
                 ])!!}
               @endif
+              <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="btn btn-sm btn-outline-primary btn-table" ><i class="fa fa-pencil"></i> Report</a>
               @if(!request()->has('trash') && request()->trash != "trash")
                 <div class="my-2">
                     <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="green">Contents</a>

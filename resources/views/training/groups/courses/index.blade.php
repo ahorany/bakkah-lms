@@ -26,19 +26,19 @@
         <div class="course_info">
         <div class="card p-3 mb-3">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-9 col-9">
 
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Group Name : {{$group->name}}</span>
 
-                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
                             <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.course')}}
                         </button>
                 </div>
 
 
-                <div class="col-md-6 text-right">
+                <div class="col-md-3 col-3 text-right">
                     <div class="back">
-                        <a href="{{route('training.groups.index')}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                        <a href="{{route('training.groups.index')}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                     </div>
                 </div>
 
