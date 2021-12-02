@@ -11,10 +11,10 @@ use App\Models\Training\CourseRegistration;
         <table class="table table-hover table-condensed text-center">
         <thead>
             <tr>
-                <th class="col-md-1 col-1">{{__('admin.index')}}</th>
-                <th class="col-md-7 col-7">{{__('admin.name')}}</th>
-                <th class="col-md-2 col-2">{{__('admin.user_type')}}</th>
-                <th class="col-md-2 col-2">{{__('admin.assigned_courses')}}</th>
+                <th class="">{{__('admin.index')}}</th>
+                <th class="">{{__('admin.name')}}</th>
+                <th class="">{{__('admin.user_type')}}</th>
+                <th class="">{{__('admin.assigned_courses')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +24,7 @@ use App\Models\Training\CourseRegistration;
             <span class="td-title">{{$loop->iteration}}</span>
             </td>
             <td>
-                <span style="display: block;" class="title">{{$post->trans_name}} </span>
+                <span style="display: block;"  class="td-title">{{$post->trans_name}} </span>
             </td>
             @php
                 $role_name = \App\Helpers\Lang::TransTitle($post->role_name);
@@ -37,7 +37,7 @@ use App\Models\Training\CourseRegistration;
                 <?php
                     $assigned_courses = CourseRegistration::where('user_id',$post->id)->count();
                 ?>
-                <span style="display: block;" class="title">  {{ $assigned_courses }}</span>
+                <span style="display: block;"  class="td-title">  {{ $assigned_courses }}</span>
             </td>
 
         </tr>
