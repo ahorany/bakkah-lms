@@ -11,7 +11,7 @@
             margin-left: 10px;
         }
         ul.tree li {
-            margin: 0 30px;
+            margin: 0 0px;
             padding: 0 10px;
             line-height: 20px;
             color: #369;
@@ -77,13 +77,13 @@
 
                                 <div class="mt-1">
 
-                                    <button @click.prevent="addSubUnitBox()" class="main-color"><i class="fa fa-plus" aria-hidden="true"></i> Add Sub Unit</button>
+                                    <button @click.prevent="addSubUnitBox()" class="main-color mb-3"><i class="fa fa-plus" aria-hidden="true"></i> Add Sub Unit</button>
                                     <div class="mb-2" v-show="'subunits' in errors">
                                         <span style="color: red;font-size: 13px">@{{ errors.subunits }}</span>
                                     </div>
                                     <div v-for="(subunit,index) in subunits" class="form-group">
                                         <input class="w-75 form-control" style="display: inline-block;" type="text" v-model="subunit.title" name="title" placeholder="title">
-                                        <button @click.stop="deleteUnit(course.units,subunit.id,index)" class="btn btn-sm btn-outline-danger mx-3">
+                                        <button @click.stop="deleteUnit(course.units,subunit.id,index)" class="red">
                                             <i class="fa fa-trash"></i><!-- Delete --> </button>
                                     </div>
                                 </div>
@@ -107,19 +107,19 @@
 
         <div  class="course_info mb-3 card p-3">
             <div class="row">
-                <div class="col-md-6">
-                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons btn-sm">
+                <div class="col-md-9 col-9">
+                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
                         <i class="fa fa-plus"></i> {{__('admin.add_unit')}}
                     </button>
-                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="group_buttons btn-sm mr-1">
+                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="group_buttons mb-1 btn-sm mr-1">
                         {{__('admin.contents')}}
                     </a>
-                    <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons btn-sm">Users</a>
+                    <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Users</a>
                 </div>
 
-                <div class="col-md-6 text-right">
+                <div class="col-md-3 col-3 text-right">
                     <div class="back">
-                        <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                        <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                     </div>
                 </div>
             </div>

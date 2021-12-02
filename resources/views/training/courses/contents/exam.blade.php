@@ -19,14 +19,14 @@
 
     <div  class="course_info mb-3 card p-3">
         <div class="row">
-            <div class="col-md-6">
-                <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons" style="width: max-content;">
+            <div class="col-md-9 col-9">
+                <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
                     <i class="fa fa-plus"></i> {{__('admin.add_question')}}
                 </button>
             </div>
-            <div class="col-md-6 text-right">
+            <div class="col-md-3 col-3 text-right">
                 <div class="back">
-                    <a href="{{route('training.contents',['course_id'=>$content->course_id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    <a href="{{route('training.contents',['course_id'=>$content->course_id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                 </div>
             </div>
         </div>
@@ -135,7 +135,7 @@
                        </div> --}}
                     </div>
 
-                       <div class="mt-5">
+                       <div class="mt-4">
                            <div class="mb-2" v-show="'answers' in errors">
                                <span style="color: red;font-size: 13px">@{{ errors.answers }}</span>
                            </div>
@@ -148,7 +148,7 @@
                               </label>
 
                                    <input class="w-75 form-control" type="text" v-model="answer.title" name="title"  placeholder="title" style="display: inline-block;">
-                               <button  @click="deleteAnswer(question_id,answer.id,index)" class="red mx-3" ><i class="fa fa-trash" aria-hidden="true"></i>
+                               <button  @click="deleteAnswer(question_id,answer.id,index)" class="red my-1" style="vertical-align: bottom;"><i class="fa fa-trash" aria-hidden="true"></i>
                                  Delete<!-- Delete --> </button>
                                  </div>
                                </div>

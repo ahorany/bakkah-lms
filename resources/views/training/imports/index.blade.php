@@ -1,7 +1,7 @@
 @extends('layouts.crm.index')
 
 @section('table')
-<div style="background-color:white;">
+<div >
     <div class="row">
         <div class="col-md-6" >
             <div class="card p-3 mb-3">

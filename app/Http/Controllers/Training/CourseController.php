@@ -31,7 +31,7 @@ class CourseController extends Controller
             }
         }
 
-//        dd(auth()->user()->id);
+        //dd(auth()->user()->id);
         if(checkUserIsTrainee()){
             $courses = Course::with(['upload'])->whereHas('users', function($q){
                 return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',2);
@@ -40,33 +40,38 @@ class CourseController extends Controller
             $courses = Course::with(['upload', 'user']);
         }
 
-
-        $categories = Constant::where('post_type', 'course')->get();
-
-        if(!is_null(request()->course_search)) {
-            $courses = $courses->where(function($query){
-                $query->where('title', 'like', '%'.request()->course_search.'%')
-                ->orWhere('slug', 'like', '%'.request()->course_search.'%');
-            });
-        }
-        if(request()->has('category_id') && request()->category_id!=-1){
-            $courses = $courses->whereHas('postMorphs', function (Builder $query){
-                $query->where('constant_id', request()->category_id);
-            });
+        if (!is_null(request()->course_search)) {
+            $courses = $this->SearchCond($courses);
         }
 
-        // if(request()->has('show_in_website')){
-            $show_in_website = request()->has('show_in_website')?1:0;
-            $courses = $courses->where('show_in_website', $show_in_website);
-        // }
+
+        // $categories = Constant::where('post_type', 'course')->get();
 
         $count = $courses->count();
         $courses = $courses->page();
 
-        return Active::Index(compact('courses', 'count', 'post_type', 'trash', 'categories'));
+        /*
+          $courses = DB::table('courses')->where('progress',0);
+        if (!is_null(request()->course_search)) {
+            $courses = $courses->join('users','users.id','courses_registration.user_id');
+            $courses = $this->SearchCond($courses);
+        }
+        $courses = $courses->count();
+        */
+        return Active::Index(compact('courses', 'count', 'post_type', 'trash'));
+    }
+
+
+    private function SearchCond($eloquent){
+
+        $eloquent1 = $eloquent->where(function ($query) {
+            $query->where('courses.title', 'like', '%' . request()->course_search . '%');
+        });
+        return $eloquent1;
     }
 
     public function create(){
+
         if(checkUserIsTrainee()){
             abort(404);
         }

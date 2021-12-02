@@ -17,16 +17,16 @@
 
     <div  class="course_info mb-3 card p-3">
         <div class="row">
-        <div class="col-md-6">
-            <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
+        <div class="col-md-9 col-9">
+            <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
             </button>
-                <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons btn-sm">Units</a>
-                <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons btn-sm">Users</a>
+                <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Units</a>
+                <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Users</a>
         </div>
           @if(!checkUserIsTrainee())
-             <div class="col-md-6 text-right">
+             <div class="col-md-3 col-3 text-right">
             <div class="back">
-                <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
             </div>
         </div>
           @endif
@@ -198,10 +198,10 @@
                         <div v-else class="modal-diff-content">
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active btn btn-outline-info" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
+                                    <a class="nav-link active cyan" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-info" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">Url</a>
+                                    <a class="nav-link cyan" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">Url</a>
                                 </li>
 
                             </ul>
