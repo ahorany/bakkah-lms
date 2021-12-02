@@ -23,91 +23,92 @@
     }
 
     ?>
-                <div class="dash-header">
-                    <ol class="breadcrumb">
-                        <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
-                        <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-                        <li>{{ $content->course->trans_title }}</li>
-                    </ol>
-                    <h1>{{ $content->course->trans_title }}</h1>
+    <div class="dash-header">
+        <ol class="breadcrumb">
+            <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
+            <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
+            <li>{{ $content->course->trans_title }}</li>
+        </ol>
+        <h1>{{ $content->course->trans_title }}</h1>
+    </div>
+
+    <div class="row mt-3">
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="m-0">{{ $content->course->trans_title }}</h3>
+                <div class="d-flex align-items-center">
+                    @if($previous)
+                        <button onclick="location.href =  '{{$previous_url}}'"><svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                            <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
+                            </svg>
+                            </button>
+                    @endif
+                    <span class="mx-1 mx-sm-3">{{ $content->title }}</span>
+
+                        @if($next)
+                        <button onclick="location.href = '{{$next_url}}'"><svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                            <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
+                            </svg>
+                            </button>
+                    @endif
                 </div>
-
-                <div class="row mt-3">
-
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h3 class="m-0">{{ $content->course->trans_title }}</h3>
-                            <div class="d-flex align-items-center">
-                                @if($previous)
-                                    <button onclick="location.href =  '{{$previous_url}}'"><svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                                        <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
-                                      </svg>
-                                      </button>
-                                @endif
-                                <span class="mx-1 mx-sm-3">{{ $content->title }}</span>
-
-                                  @if($next)
-                                    <button onclick="location.href = '{{$next_url}}'"><svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                                        <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
-                                      </svg>
-                                      </button>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="card-body p-30">
+            </div>
+            <div class="card-body p-30">
 {{--                            <iframe height="700" width="100%" src="https://bakkah.com/public/upload/pdf/2021-09-28-03-49-18-en_pdf-مجلة بكه للتعليم العدد 7.pdf" frameborder="0"></iframe>--}}
-                            <!-- <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src=https://bakkah.com/public/upload/pdf/2021-09-28-03-49-18-en_pdf-مجلة بكه للتعليم العدد 7.pdf' > -->
+                <!-- <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src=https://bakkah.com/public/upload/pdf/2021-09-28-03-49-18-en_pdf-مجلة بكه للتعليم العدد 7.pdf' > -->
 
 
-                            @isset($content->upload->file)
-                                @if($content->post_type == 'video' )
-                                    <video controls class="w-100">
-                                        <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">
-                                    </video>
-                                @elseif($content->post_type == 'audio' )
-                                    <audio controls>
-                                        <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
-                                    </audio>
-                                @elseif($content->post_type == 'presentation' )
-                                    @if($content->upload->extension == 'pdf' )
-                                        <iframe width="100%" height="500px"
-                                                src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
-                                    @else
-                                        <iframe style="" width="100%" height="500px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
-                                    @endif
+                @isset($content->upload->file)
+                    @if($content->post_type == 'video' )
+                        <video controls class="w-100">
+                            <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">
+                        </video>
+                    @elseif($content->post_type == 'audio' )
+                        <audio controls>
+                            <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
+                        </audio>
+                    @elseif($content->post_type == 'presentation' )
+                        @if($content->upload->extension == 'pdf' )
+                            <iframe width="100%" height="500px"
+                                    src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                        @else
+                            <iframe style="" width="100%" height="500px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                        @endif
 
-                                @elseif($content->post_type == 'scorm' )
-                                    @if($content->upload->extension == 'pdf' )
-                                        <iframe width="100%" height="500px"
-                                                src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
-                                    @else
-                                        <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
-                                    @endif
-
-
-                                @else
-                                    <iframe style="" width="100%" height="500px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
-                                @endif
-
-
-                            @endisset
-
-                            @if($content->post_type == 'video' && $content->url)
-                                <?php
-                                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
-                                    $video_id = $match[1]??null;
-                                }
-                                ?>
+                    @elseif($content->post_type == 'scorm' )
+                        @if($content->upload->extension == 'pdf' )
+                            <iframe width="100%" height="500px"
+                                    src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
+                        @else
+                            <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID=1" name="API" style="display: none;"></iframe>
+                            <iframe src="{{CustomAsset('scorm/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                            {{-- @include('scorm') --}}
+                            {{-- <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe> --}}
+                        @endif
+                    @else
+                        <iframe style="" width="100%" height="500px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
+                    @endif
 
 
-                                <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
-                            @endif
+                @endisset
+
+                @if($content->post_type == 'video' && $content->url)
+                    <?php
+                    if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
+                        $video_id = $match[1]??null;
+                    }
+                    ?>
 
 
-                        </div>
+                    <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
+                @endif
 
-                    </div>
+
+            </div>
+
+        </div>
 
 
-                </div>
+    </div>
 @endsection

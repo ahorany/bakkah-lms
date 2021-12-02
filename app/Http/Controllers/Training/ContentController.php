@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Zip;
 class ContentController extends Controller
 {
 
@@ -131,7 +131,7 @@ class ContentController extends Controller
                 case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:100000' ; break;
                 case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
                 case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,docx'; break;
-                case 'scorm': $mimes = '|mimes:pdf,docx'; break;
+                case 'scorm': $mimes = '|mimes:pdf,docx,zip'; break;
                 default : $mimes = '';;
             }
 
@@ -228,6 +228,10 @@ class ContentController extends Controller
                         }
 
                         Content::UploadFile($content,['folder_path' => $path]);
+
+                        if(request()->type){
+                           $this->unzipFile($path.'/'.request()->file->getClientOriginalName());
+                        }
             }
 
         }
@@ -359,9 +363,16 @@ class ContentController extends Controller
     }
 
 
+public function unzipFile($path){
+    $fileName = date('Y-m-d-H-i-s') . '_' . trim(request()->file->getClientOriginalName());
 
-
-
+    $zip = new \ZipArchive();
+    $x = $zip->open(public_path("upload/files/scorms/$fileName"));
+    if ($x === true) {
+        $zip->extractTo(public_path("upload/files/scorms/").time());
+        $zip->close();
+   }
+}
 
 
 

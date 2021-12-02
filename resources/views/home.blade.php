@@ -13,6 +13,8 @@
                 <p class="lead">{{auth()->user()->bio}} </p>
             </div>
 
+            {{-- @include('scorm') --}}
+
             <div class="col-lg-4 mt-4 mt-lg-0 text-center">
                 <img src="{{CustomAsset('assets/images/dash.png')}}" {{(auth()->user()->bio == null) ? 'style='.' width:'.'60%;' : '' }} alt="">
             </div>
