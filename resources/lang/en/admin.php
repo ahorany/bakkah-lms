@@ -137,6 +137,9 @@ return [
     'result'=>'Result',
     'fail'=>'Fail',
     'pass'=>'Pass',
-
+    'assigned_learners'=>'Assigned Learners',
+    'courses'=>'Courses',
+    'completed'=>'Completed',
+    'passed'=>'Passed',
 
 ];

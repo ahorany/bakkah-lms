@@ -11,7 +11,6 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.date')}}</th>
             <th class="">{{__('admin.exam_mark')}}</th>
             <th class="">{{__('admin.exam_pass')}}</th>
-            <th class="">{{__('admin.attempt_mark')}}</th>
             <th class="">{{__('admin.result')}}</th>
 
         </tr>

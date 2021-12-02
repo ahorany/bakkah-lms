@@ -119,4 +119,8 @@ return [
     'exam_pass'=>'Exam Pass Mark',
     'attempt_mark'=>'Attempt Mark',
     'result'=>'Result',
+    'assigned_learners'=>'Assigned Learners',
+    'courses'=>'Courses',
+    'completed'=>'Completed',
+    'passed'=>'Passed',
 ];
