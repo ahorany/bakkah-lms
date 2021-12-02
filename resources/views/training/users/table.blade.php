@@ -11,7 +11,7 @@ use App\Models\Training\CourseRegistration;
     }
 </style>
 @endsection
-@include('training.users.dashboard')
+@include('training.reports.dashboard')
 <div class="card courses">
   <div class="card-header">
     {!!Builder::BtnGroupTable()!!}

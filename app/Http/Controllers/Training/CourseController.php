@@ -31,7 +31,7 @@ class CourseController extends Controller
             }
         }
 
-//        dd(auth()->user()->id);
+        //dd(auth()->user()->id);
         if(checkUserIsTrainee()){
             $courses = Course::with(['upload'])->whereHas('users', function($q){
                 return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',2);

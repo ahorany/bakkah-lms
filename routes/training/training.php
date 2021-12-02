@@ -23,6 +23,9 @@ Route::group([
 
             Route::get('/usersReport', 'ReportController@user_report')->name('usersReport');
             Route::get('/courseReport', 'ReportController@courseReport')->name('courseReport');
+            Route::get('/testReport', 'ReportController@testReport')->name('testReport');
+
+
 
 
 

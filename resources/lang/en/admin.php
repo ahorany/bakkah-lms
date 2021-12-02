@@ -124,4 +124,19 @@ return [
     'courses_not_started'=>'Courses Not Started',
     'users'=>'Users',
     'last_login'=>'Last Login',
+    'progress'=>'Progress',
+    'score'=>'Score',
+    'enrolled_on'=>'Enrolled On',
+    'completion_date'=>'Completion Date',
+    'pdu'=>'PDU',
+    'test'=>'Test',
+    'date'=>'Date',
+    'exam_mark'=>'Exam Mark',
+    'exam_pass'=>'Exam Pass Mark',
+    'attempt_mark'=>'Attempt Mark',
+    'result'=>'Result',
+    'fail'=>'Fail',
+    'pass'=>'Pass',
+
+
 ];

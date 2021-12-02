@@ -18,13 +18,12 @@ class ReportController extends Controller
 {
     public function __construct()
     {
-        Active::$namespace = 'training';
-        Active::$folder = 'reports';
+        Active::$namespace  = 'training';
+        Active::$folder     = 'reports';
     }
 
     public function user_report()
     {
-
         $user_id = request()->id;
         $learners_no         = DB::table('role_user')->where('role_id',3)->where('user_id',$user_id)->count();
         $complete_courses_no = DB::table('courses_registration')->where('user_id',$user_id)->where('progress',100)->count();
@@ -39,12 +38,28 @@ class ReportController extends Controller
     public function courseReport()
     {
         $user_id = request()->id;
-        $courses         = DB::table('courses')
-                                ->join('courses_registration','courses.id','courses_registration.course_id')
-                                ->where('user_id',$user_id)->get();
-
+        $courses  = DB::table('courses')
+                        ->join('courses_registration','courses.id','courses_registration.course_id')
+                        ->where('user_id',$user_id)->get();
+        // dd($courses);
         return view('training.reports.user_report',compact('user_id','courses'));
 
+    }
+
+    public function testReport()
+    {
+        $user_id = request()->id;
+        $tests  = DB::table('contents')
+                        ->join('exams','exams.content_id','contents.id')
+                        ->join('user_exams','user_exams.exam_id','exams.id')
+                        ->join('courses','courses.id','contents.course_id')
+                        ->where('user_exams.user_id',$user_id)
+                        ->select('user_exams.id','contents.title as content_title','courses.title as course_title','user_exams.time','exams.exam_mark','exams.pass_mark','user_exams.mark')
+                        ->orderBy('user_exams.time')
+                        ->get();
+        // dd($tests);
+
+        return view('training.reports.user_report',compact('user_id','tests'));
     }
 
 
