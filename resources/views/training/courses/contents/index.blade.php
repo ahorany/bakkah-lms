@@ -111,6 +111,15 @@
                     </div>
 
                     <div class="modal-body">
+                        <div v-if="model_type != 'exam'" class="col-md-12 p-0">
+                            <div class="form-group">
+                                <label>Title </label>
+                                <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
+                                <div v-show="'title' in errors">
+                                    <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
+                                </div>
+                            </div>
+                        </div>
                         <template v-if="model_type == 'exam'">
                             <div class="row">
                                 <div class="col-md-6 col-6">
@@ -540,6 +549,7 @@
             },
 
             saveContent: function(){
+
                 let self = this;
                 let formData = new FormData();
                 let config = {
@@ -571,6 +581,7 @@
                 formData.append('attempt_count', self.attempt_count);
 
                 if(self.save_type == 'add'){
+
                     axios.post("{{route('training.add_content')}}",
                         formData
                         ,config)
@@ -597,6 +608,7 @@
 
                         })
                         .catch(e => {
+                            console.log('errors')
                             console.log(e)
                         });
                 }else{
