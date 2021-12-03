@@ -229,8 +229,8 @@ class ContentController extends Controller
 
                         Content::UploadFile($content,['folder_path' => $path]);
 
-                        if(request()->type){
-                           $this->unzipFile($path.'/'.request()->file->getClientOriginalName());
+                        if(request()->type == "scorm"){
+                           $this->unzipScormFile();
                         }
             }
 
@@ -247,8 +247,8 @@ class ContentController extends Controller
             case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:100000' ; break;
             case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
             case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,docx'; break;
-            case 'scorm': $mimes = '|mimes:pdf,docx'; break;
-            default : $mimes = '';;
+            case 'scorm': $mimes = '|mimes:pdf,docx,zip'; break;
+            default : $mimes = '';
         }
 
         if ($mimes != ''){
@@ -353,6 +353,9 @@ class ContentController extends Controller
             }
             if (request()->file('file') != null) {
                 Content::UploadFile(Content::where('id', request()->content_id)->first(), ['method' => 'update', 'folder_path' => $path]);
+                if(request()->type == "scorm"){
+                    $this->unzipScormFile();
+                }
             }
         }
 
@@ -363,20 +366,21 @@ class ContentController extends Controller
     }
 
 
-public function unzipFile($path){
-    $fileName = date('Y-m-d-H-i-s') . '_' . trim(request()->file->getClientOriginalName());
-    $fileName = str_replace(' ','_',$fileName);
-    $fileName = str_replace(['(',')'],'_',$fileName);
-    $fileName = trim(strtolower($fileName));
-    $name=explode('.',$fileName)[0];
-    $zip = new \ZipArchive();
-    $x = $zip->open(public_path("upload/files/scorms/$fileName"));
-    if ($x === true) {
-        $zip->extractTo(public_path("upload/files/scorms/").$name);
-        $zip->close();
-   }
-    unlink(public_path("upload/files/scorms/$fileName"));
-}
+    private function unzipScormFile(){
+        $fileName = date('Y-m-d-H-i-s') . '_' . trim(request()->file->getClientOriginalName());
+        $fileName = str_replace(' ','_',$fileName);
+        $fileName = str_replace(['(',')'],'_',$fileName);
+        $fileName = trim(strtolower($fileName));
+        $name=explode('.',$fileName)[0];
+
+        $zip = new \ZipArchive();
+        $x = $zip->open(public_path("upload/files/scorms/$fileName"));
+        if ($x === true) {
+            $zip->extractTo(public_path("upload/files/scorms/").$name);
+            $zip->close();
+       }
+//        unlink(public_path("upload/files/scorms/$fileName"));
+    }
 
 
 
