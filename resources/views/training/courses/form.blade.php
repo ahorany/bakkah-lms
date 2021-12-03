@@ -7,7 +7,7 @@
 
 @section('col9')
     @isset($eloquent->id)
-      <div class="col-12 mb-3">Courese Name: <span class="bg-dark text-white px-2 py-1" style="border-radius: 5px">{{$eloquent->trans_title}}</span></div>
+      <div class="col-12 mb-3">Courese ID: <span class="bg-dark text-white px-2 py-1" style="border-radius: 5px">{{$eloquent->id}}</span></div>
     @endisset
 
     <div class="col-12">
