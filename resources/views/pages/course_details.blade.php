@@ -19,7 +19,6 @@
         }
     }
     ?>
-
     <div class="dash-header course-header d-flex align-items-md-center flex-column flex-md-row">
         <div class="text-center course-image w-30 mb-4 mb-md-0">
             <?php
@@ -50,9 +49,9 @@
             <ol class="breadcrumb">
                 <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
                 <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-                <li> {{$course->trans_title}}</li>
+                <li style="text-transform: capitalize;"> {{$course->trans_title}}</li>
             </ol>
-            <h1>{{$course->trans_title}}</h1>
+            <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
 
             <div class="rating">
                 <span class="total_rate" v-text="total_rate"></span>
@@ -177,8 +176,8 @@
                                         <li>
                                             <a @if( ( isset($section->contents[($k-1)]->user_contents[0]) || ( isset($course->contents[($key-1)])  && isset($course->contents[($key-1)]->contents[ (count($course->contents[($key-1)]->contents) - 1)]->user_contents[0]) && $k == 0  ) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
                                                 <img width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
-
-                                                <span> {{$content->title}}</span> </a>
+                                                <span> {{$content->title}}</span>
+                                            </a>
                                         </li>
                                     @endforeach
                                 </ul>

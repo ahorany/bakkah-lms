@@ -88,6 +88,7 @@ class UserProfileController extends Controller
 
     // exam page
     public function exam($exam_id){
+
         $exam = Content::whereId($exam_id)
             ->with(['course','exam' => function($q){
                 return $q->with(['users_exams' => function($q){

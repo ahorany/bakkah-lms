@@ -21,22 +21,27 @@
             $previous_url =  CustomRoute('user.exam',$previous->id);
         }
     }
-
     ?>
     <div class="dash-header">
         <ol class="breadcrumb">
             <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
             <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-            <li>{{ $content->course->trans_title }}</li>
+            <li style="text-transform:capitalize;">
+                <a href="{{route('user.course_details', ['course_id'=>$content->course->id])}}">{{ $content->course->trans_title }}</a>
+            </li>
+            <li>
+                <strong style="text-transform: capitalize;">{{$content->title}}</strong>
+            </li>
         </ol>
-        <h1>{{ $content->course->trans_title }}</h1>
+        <br>
+        {{-- <h1 style="text-transform:capitalize;">{{ $content->course->trans_title }}</h1> --}}
     </div>
 
     <div class="row mt-3">
 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="m-0">{{ $content->course->trans_title }}</h3>
+                <h3 class="m-0" style="text-transform:capitalize;">{{ $content->course->trans_title }}</h3>
                 <div class="d-flex align-items-center">
                     @if($previous)
                         <button onclick="location.href =  '{{$previous_url}}'"><svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
@@ -44,7 +49,7 @@
                             </svg>
                             </button>
                     @endif
-                    <span class="mx-1 mx-sm-3">{{ $content->title }}</span>
+                    <span class="mx-1 mx-sm-3" style="text-transform:capitalize;">{{ $content->title }}</span>
 
                         @if($next)
                         <button onclick="location.href = '{{$next_url}}'"><svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
@@ -105,16 +110,9 @@
                         $video_id = $match[1]??null;
                     }
                     ?>
-
-
                     <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
                 @endif
-
-
             </div>
-
         </div>
-
-
     </div>
 @endsection

@@ -38,12 +38,11 @@
                     <div class="clearfix">
                         <div class="row my-3">
                             <div class="col-md-8 col-lg-8">
-                                <h3  class="BtnGroupRows" style="font-size: 22px;">@{{content.title}}</h3>
+                                <h3 class="BtnGroupRows text-capitalize" style="font-size: 22px;">@{{content.title}}</h3>
                             </div>
                             <div class="col-md-4 col-lg-4 text-right">
                                 <div class="BtnGroupRows" data-id="150">
-
-                                    <button @click="OpenSectionEditModal(content.id)"  class="yellow" >
+                                    <button @click="OpenSectionEditModal(content.id)" class="yellow">
                                         <i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
 
                                     <button @click="deleteSection(content.id)"  class="red" >
@@ -63,8 +62,6 @@
                     </div>
 
                     <div v-if="content.details" class="my-2" v-html="content.details.excerpt">}</div>
-
-
                     <table class="table">
                         <thead>
                             <tr>
@@ -75,7 +72,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-if="content.contents"  v-for="(entry, index) in content.contents"  >
+                            <tr v-if="content.contents" v-for="(entry, index) in content.contents" class="text-capitalize">
                                 <td>
                                     <span>@{{entry.title}}</span>
                                 </td>
@@ -84,13 +81,16 @@
                                 </td>
                                 <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">
-                                        <button v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id,entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
-                                        <button v-else @click="OpenEditModal(content.id,entry.id)"  class="yellow" >
-                                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit<!-- Edit --> </button>
 
-                                        <button @click="deleteContent(content.id,entry.id)"  class="red" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
-                                            <!--  -->
-                                            <a v-if="entry.post_type == 'exam'"  class="cyan" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
+                                        <a class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
+                                            <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                                        </a>
+                                        <button title="Edit" v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id, entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+                                        <button title="Edit" v-else @click="OpenEditModal(content.id, entry.id)"  class="yellow" >
+                                            <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+
+                                        <button title="Delete" @click="deleteContent(content.id,entry.id)"  class="red"><i class="fa fa-trash" aria-hidden="true"></i> </button>
+                                        <a v-if="entry.post_type == 'exam'"  class="cyan" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
                                     </div>
                                 </td>
                             </tr>
@@ -104,7 +104,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">@{{ model_type }}</h5>
+                        <h5 class="modal-title text-capitalize" id="exampleModalLabel">@{{ model_type }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -231,6 +231,7 @@
                         </div>
 
                         <div v-if="model_type != 'section'" class="form-group form-check child">
+
                             <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status">
                             <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label>
 
@@ -238,7 +239,6 @@
                                 <p>Files : </p>
                                 <div><i class="fa fa-file"></i> <a :href="file_url" v-text="file_title"></a></div>
                             </div>
-
                         </div>
 
                     </div>
