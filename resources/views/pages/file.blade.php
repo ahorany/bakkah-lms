@@ -82,8 +82,8 @@
                             src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
                             <?php
-                            $user_id = sprintf("%'.07d", auth()->user()->id);
-                            $content_id = sprintf("%'.07d", $content->id);
+                            $user_id = sprintf("%'.09d", auth()->user()->id);
+                            $content_id = sprintf("%'.09d", $content->id);
                             $SCOInstanceID = '1'.$user_id.'2'.$content_id;
                             ?>
                             <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}" name="API" style="display: none;"></iframe>
