@@ -45,7 +45,7 @@
                         $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
                     }
                 ?>
-                <img style="width:40px;height:40px;object-fit:cover;border-radius: 50%;" src="{{$url}}" />
+                <img style="width:40px;height:40px;object-fit:cover;border-radius: 50%;" src="{{$url}}" alt=" " />
 
                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: -15px;" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
                     <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"

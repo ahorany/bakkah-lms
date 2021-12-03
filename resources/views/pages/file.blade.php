@@ -79,10 +79,15 @@
                     @elseif($content->post_type == 'scorm' )
                         @if($content->upload->extension == 'pdf' )
                             <iframe width="100%" height="500px"
-                                    src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
+                            src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
-                            <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID=1" name="API" style="display: none;"></iframe>
-                            <iframe src="{{CustomAsset('upload/files/scorms/1638529438/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                            <?php
+                            $user_id = sprintf("%'.07d", auth()->user()->id);
+                            $content_id = sprintf("%'.07d", $content->id);
+                            $SCOInstanceID = '1'.$user_id.'2'.$content_id;
+                            ?>
+                            <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}" name="API" style="display: none;"></iframe>
+                            <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
                             {{-- <iframe src="{{CustomAsset('scorm/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe> --}}
                             {{-- @include('scorm') --}}
                             {{-- <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe> --}}
