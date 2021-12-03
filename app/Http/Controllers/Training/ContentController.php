@@ -365,13 +365,17 @@ class ContentController extends Controller
 
 public function unzipFile($path){
     $fileName = date('Y-m-d-H-i-s') . '_' . trim(request()->file->getClientOriginalName());
-
+    $fileName = str_replace(' ','_',$fileName);
+    $fileName = str_replace(['(',')'],'_',$fileName);
+    $fileName = trim(strtolower($fileName));
+    $name=explode('.',$fileName)[0];
     $zip = new \ZipArchive();
     $x = $zip->open(public_path("upload/files/scorms/$fileName"));
     if ($x === true) {
-        $zip->extractTo(public_path("upload/files/scorms/").time());
+        $zip->extractTo(public_path("upload/files/scorms/").$name);
         $zip->close();
    }
+    unlink(public_path("upload/files/scorms/$fileName"));
 }
 
 
