@@ -89,16 +89,11 @@
 <div class="card p-5 user-info">
 
         <div class="dash-header">
-            <ol class="breadcrumb">
-                <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
-                <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-                <li style="text-transform:capitalize;">
-                    <a href="{{route('user.course_details', ['course_id'=>$exam->course->id])}}">{{ $exam->course->trans_title }}</a>
-                </li>
-                <li>
-                    <strong>{{ __('education.Exam') }}</strong>
-                </li>
-            </ol>
+            @include('pages.templates.breadcrumb', [
+                'course_id'=>$exam->course->id,
+                'course_title'=>$exam->course->trans_title,
+                'content_title'=>__('education.Exam'),
+            ])
             <br>
             {{-- <h1 style="text-transform:capitalize;">{{ $exam->course->trans_title }}</h1> --}}
         </div>

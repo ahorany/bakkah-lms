@@ -23,16 +23,11 @@
     }
     ?>
     <div class="dash-header">
-        <ol class="breadcrumb">
-            <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
-            <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-            <li style="text-transform:capitalize;">
-                <a href="{{route('user.course_details', ['course_id'=>$content->course->id])}}">{{ $content->course->trans_title }}</a>
-            </li>
-            <li>
-                <strong style="text-transform: capitalize;">{{$content->title}}</strong>
-            </li>
-        </ol>
+        @include('pages.templates.breadcrumb', [
+            'course_id'=>$content->course->id,
+            'course_title'=>$content->course->trans_title,
+            'content_title'=>$content->title,
+        ])
         <br>
         {{-- <h1 style="text-transform:capitalize;">{{ $content->course->trans_title }}</h1> --}}
     </div>

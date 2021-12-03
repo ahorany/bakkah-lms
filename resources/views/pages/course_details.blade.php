@@ -46,11 +46,12 @@
             <small>{{$course->users[0]->pivot->progress??0}}% Complete</small>
         </div>
         <div class="mx-md-4">
-            <ol class="breadcrumb">
-                <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
-                <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-                <li style="text-transform: capitalize;"> {{$course->trans_title}}</li>
-            </ol>
+
+            @include('pages.templates.breadcrumb', [
+                'course_id'=>$course->id,
+                'course_title'=>$course->trans_title,
+            ])
+
             <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
 
             <div class="rating">
