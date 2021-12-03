@@ -75,7 +75,7 @@ use App\Models\Training\CourseRegistration;
             {!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
                 'post'=>$post->id,
             ])!!}
-            <a href="{{route('training.usersReportOverview',['id'=>$post->id])}}" target="blank" class="btn btn-sm btn-outline-primary btn-table" ><i class="fa fa-pencil"></i> Report</a>
+            <a href="{{route('training.usersReportOverview',['id'=>$post->id])}}" target="blank" class="cyan my-1" ><i class="fa fa-pencil"></i> Report</a>
          </td>
       </tr>
       @endforeach

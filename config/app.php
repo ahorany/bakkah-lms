@@ -179,7 +179,7 @@ return [
         App\Providers\ComposerServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-        ZanySoft\Zip\ZipServiceProvider::class,
+        // ZanySoft\Zip\ZipServiceProvider::class,
 
     ],
 
@@ -233,7 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'Zip' => ZanySoft\Zip\ZipFacade::class,
+        // 'Zip' => ZanySoft\Zip\ZipFacade::class,
 
     ],
 

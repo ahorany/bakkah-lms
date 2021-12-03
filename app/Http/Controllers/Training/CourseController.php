@@ -23,6 +23,7 @@ class CourseController extends Controller
     }
 
     public function index(){
+
         $post_type = 'course';
         $trash = GetTrash();
         if($trash){
@@ -58,7 +59,13 @@ class CourseController extends Controller
         }
         $courses = $courses->count();
         */
-        return Active::Index(compact('courses', 'count', 'post_type', 'trash'));
+        $assigned_learners = 0;
+        $courses_in_progress = 0;
+        $courses_not_started = 0;
+        return Active::Index(compact('courses', 'count', 'post_type', 'trash'
+        , 'assigned_learners'
+        , 'courses_in_progress'
+        , 'courses_not_started'));
     }
 
 

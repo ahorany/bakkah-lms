@@ -27,7 +27,7 @@ use App\Models\Training\CourseRegistration;
        <td class="px-1">
 
         <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: {{$post->progress}}%;" aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">{{$post->progress}}%</div>
+            <div class="progress-bar bg-success" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
           </div>
         </td>
         {{--  <td class="px-1">
