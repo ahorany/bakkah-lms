@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-/* 
+/*
 
 VS SCORM 1.2 RTE - subs.php
 Rev 2009-11-30-01
@@ -18,7 +18,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, 
+Foundation, Inc., 51 Franklin Street, Fifth Floor,
 Boston, MA 02110-1301, USA.
 
 */
@@ -64,7 +64,7 @@ function readElement($VarName) {
 
 }
 
-function writeElement($VarName,$VarValue) { 
+function writeElement($VarName,$VarValue) {
 
 	global $mysqli;
 	global $SCOInstanceID;
@@ -154,7 +154,7 @@ function initializeSCO() {
 	// new session so clear pre-existing session time
 	writeElement('cmi.core.session_time','');
 
-	// create the javascript code that will be used to set up the javascript cache, 
+	// create the javascript code that will be used to set up the javascript cache,
 	$initializeCache = "var cache = new Object();\n";
 
 	$result = $mysqli -> query("select VarName,VarValue from scormvars where (SCOInstanceID=$SCOInstanceID)");

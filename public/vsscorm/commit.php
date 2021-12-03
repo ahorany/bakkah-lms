@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-/* 
+/*
 
 VS SCORM 1.2 RTE - commit.php
 Rev 2009-11-30-01
@@ -18,7 +18,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, 
+Foundation, Inc., 51 Franklin Street, Fifth Floor,
 Boston, MA 02110-1301, USA.
 
 */
