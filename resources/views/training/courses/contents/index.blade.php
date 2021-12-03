@@ -90,7 +90,7 @@
 
                                         <button @click="deleteContent(content.id,entry.id)"  class="red" ><i class="fa fa-trash" aria-hidden="true"></i> Delete<!-- Delete --> </button>
                                             <!--  -->
-                                            <a v-if="entry.post_type == 'exam'"  class="cyan" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Add<!-- Add Questions  --> </a>
+                                            <a v-if="entry.post_type == 'exam'"  class="cyan" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
                                     </div>
                                 </td>
                             </tr>
@@ -230,7 +230,7 @@
                             </div>
                         </div>
 
-                        <div v-if="model_type != 'section' && model_type != 'exam' " class="form-group form-check child">
+                        <div v-if="model_type != 'section'" class="form-group form-check child">
                             <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status">
                             <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label>
 
