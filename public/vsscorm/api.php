@@ -27,7 +27,7 @@ Boston, MA 02110-1301, USA.
 require "subs.php";
 
 // input data
-$SCOInstanceID = $_REQUEST['SCOInstanceID'] * 1;
+$SCOInstanceID = $_REQUEST['SCOInstanceID'];// * 1;
 
 //  read database login information and connect
 require "config.php";
