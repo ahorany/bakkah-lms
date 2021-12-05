@@ -66,10 +66,12 @@ class ReportController extends Controller
     public function coursesReportOverview()
     {
         $course_id = request()->id;
-        $assigned_learners = DB::table('courses_registration')->where('course_id',$course_id)->count();
+        $assigned_learners = DB::table('courses_registration')->where('course_id',$course_id)->where('role_id',3)->count();
+        $assigned_instructors = DB::table('courses_registration')->where('course_id',$course_id)->where('role_id',2)->count();
 
+        $count = 1;
         $overview = 1;
-        return view('training.reports.courses.course_report',compact('course_id','overview','assigned_learners'));
+        return view('training.reports.courses.course_report',compact('course_id','overview','assigned_learners','count','assigned_instructors'));
 
     }
 

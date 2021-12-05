@@ -41,6 +41,10 @@ Route::group([
             Route::post('/search_course_group', 'GroupCourseController@search_course_group')->name('search_course_group');
             Route::post('/add_course_group', 'GroupCourseController@add_course_group')->name('add_courses_group');
             Route::post('/group_courses/delete', 'GroupCourseController@delete_course_group')->name('delete_course_group');
+
+            Route::get('/exam/preview-content/{content_id}', 'ContentController@exam_preview_content')->name('exam.preview.content');
+
+
         });
 
 

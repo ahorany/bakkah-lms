@@ -387,6 +387,11 @@ class ContentController extends Controller
 //        unlink(public_path("upload/files/scorms/$fileName"));
     }
 
+    public function exam_preview_content($exam_id){
+        $exam =  Content::where('id',$exam_id)->with(['exam','questions.answers'])->first();
+        return view('training.courses.contents.preview.exam', compact('exam'));
+    }
+
 
 
 }

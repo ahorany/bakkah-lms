@@ -1,5 +1,5 @@
 @extends('layouts.crm.form')
-<link rel="stylesheet" href="{{CustomAsset(ADMIN.'-dist/css/jquery.datetimepicker.css')}}">
+<link rel="stylesheet" href="{{CustomAsset('assets/css/jquery.datetimepicker.css')}}">
 
 {!!Builder::SetPostType($post_type)!!}
 {{Builder::SetFolder($folder)}}
@@ -35,14 +35,17 @@
 	@include('Html.image')
 @endsection
 
-<script src="{{CustomAsset(ADMIN.'-dist/js/jquery.datetimepicker.js')}}"></script>
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{CustomAsset('assets/js/jquery.datetimepicker.js')}}"></script>
 
 
-<script>
-    $(function(){
-        $('[data-date="datetime"]').datetimepicker({
-            format:'Y-m-d H:i',
-            dayOfWeekStart : 6,
+    <script>
+        $(function(){
+            $('[data-date="datetime"]').datetimepicker({
+                format:'Y-m-d H:i',
+                dayOfWeekStart : 6,
+            });
         });
-    });
-</script>
+    </script>
+@endsection
