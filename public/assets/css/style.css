@@ -743,6 +743,7 @@ ol.breadcrumb li a {
 
 .card-header button svg {
   height: 15px;
+  filter: invert(1);
 }
 
 p.time-remaining {

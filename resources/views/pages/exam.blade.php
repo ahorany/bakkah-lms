@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('useHead')
-    <title>{{__('education.My Courses')}} | {{ __('home.DC_title') }}</title>
+    <title>{{$exam->course->trans_title}} {{ __('education.Exam') }} | {{ __('home.DC_title') }}</title>
 @endsection
 
 @section('style')

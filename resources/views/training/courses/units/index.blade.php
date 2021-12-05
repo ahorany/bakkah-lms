@@ -1,5 +1,9 @@
 @extends('layouts.crm.index')
 
+@section('useHead')
+    <title>{{__('education.Course Units')}} | {{ __('home.DC_title') }}</title>
+@endsection
+
 @section('table')
     <style>
         ul.tree, ul.tree ul {

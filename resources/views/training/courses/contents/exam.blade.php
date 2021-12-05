@@ -1,5 +1,9 @@
 @extends('layouts.crm.index')
 
+@section('useHead')
+    <title>{{__('education.Exam Questions')}} | {{ __('home.DC_title') }}</title>
+@endsection
+
 @section('table')
     <style>
         .ql-container.ql-snow{

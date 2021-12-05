@@ -2,6 +2,10 @@
 
 @section('title', __('admin.roles') . ' | ' . env('APP_NAME'))
 
+@section('useHead')
+    <title>{{__('education.Roles')}} | {{ __('home.DC_title') }}</title>
+@endsection
+
 @section('table')
     {{Builder::SetTrash($trash)}}
     {{Builder::SetFolder($folder)}}
