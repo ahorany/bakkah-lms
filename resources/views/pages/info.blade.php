@@ -76,6 +76,9 @@
                     </div>
                     <img id="image_preview" src="{{ $url }}">
                     <input type="file" name="file" id="file" style="display: none">
+                    @error('file')
+                        <small class="text-danger" style="color: red;">{{$message}}</small>
+                    @enderror
                 </div>
 
                 <div class="text mx-4">

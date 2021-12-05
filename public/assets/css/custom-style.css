@@ -426,3 +426,17 @@ ol.answers li{
 {
     margin: 0;
 }
+svg#back{
+    fill: #fb4400;
+}
+a:hover svg#back{
+    fill: #fff;
+    background: #fb4400;
+}
+.icon-report{
+    fill: #fff !important;
+}
+.icon-report image{
+    filter: invert(1);
+}
+

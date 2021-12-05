@@ -602,6 +602,7 @@ class UserProfileController extends Controller
 //            'email' => 'required|email',
             'en_name' => 'required',
             'ar_name' => 'required',
+            'file' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'language' => 'required',
             'gender_id' => 'required|exists:constants,id',
         ]);

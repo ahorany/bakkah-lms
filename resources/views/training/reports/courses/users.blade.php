@@ -15,36 +15,22 @@ use App\Models\Training\CourseRegistration;
         </tr>
       </thead>
       <tbody>
-      @foreach($users as $post)
-      <tr data-id="{{$post->id}}">
-        <td>
-          <span class="td-title px-1">{{$loop->iteration}}</span>
-        </td>
-        <td class="px-1">
-            <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span>
+        @foreach($users as $post)
+            <tr data-id="{{$post->id}}">
+                <td>
+                <span class="td-title px-1">{{$loop->iteration}}</span>
+                </td>
+                <td class="px-1">
+                    <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span>
 
-        </td>
-       <td class="px-1">
-
-        <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
-          </div>
-        </td>
-        {{--  <td class="px-1">
-            <span class="badge badge-warning">{{$post->score}}</span>
-        </td>
-        <td class="px-1">
-            <span class="td-title">{{$post->created_at}}</span>
-        </td>
-        <td class="px-1">
-            <span class="td-title"></span>
-        </td>
-        <td class="px-1">
-            <span class="td-title">{{$post->PDUs}}</span>
-        </td> --}}
-
-      </tr>
-      @endforeach
+                </td>
+                <td class="px-1">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
+                    </div>
+                </td>
+            </tr>
+        @endforeach
       </tbody>
     </table>
   </div>

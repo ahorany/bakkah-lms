@@ -53,9 +53,6 @@
                     </div>
                 </div>
 
-
-
-
             </div>
         </div>
           <template v-if="group">
@@ -66,7 +63,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" class="text-right">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,7 +72,7 @@
                         <td v-text="trans_title(user.name)"></td>
                         <td v-text="user.email"></td>
 
-                        <td>
+                        <td class="text-right">
                             <button @click="deleteUser(user.id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
                         </td>
                     </tr>
@@ -94,20 +91,21 @@
                         </button>
                     </div>
 
-
-
-                <div class="container mt-2">
-                    <div class="form-group">
-                        <label>Name: </label>
-                        <input name="username" placeholder="Name.." class="form-control d-inline-block" v-model="search_username"/>
+                <div class="container row mx-0 mt-2">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Name: </label>
+                            <input name="username" placeholder="Name.." class="w-100 form-control d-inline-block" v-model="search_username"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Email: </label>
+                            <input name="email" placeholder="Email.." class="w-100 form-control d-inline-block"  v-model="search_email" />
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Email: </label>
-                        <input name="email" placeholder="Email.." class="form-control d-inline-block"  v-model="search_email" />
-                    </div>
-
-                    <div style="margin-left:40px;margin-top: 5px;">
+                    <div>
                         <button @click.prevent="search()" type="submit" name="search" class="main-color"><i class="fa fa-search"></i> Search</button>
                     </div>
                 </div>

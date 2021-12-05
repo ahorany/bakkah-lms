@@ -58,14 +58,14 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" class="text-right">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(course,index) in group.courses">
                         <th scope="row" v-text="index + 1"></th>
                         <td v-text="trans_title(course.title)"></td>
-                        <td>
+                        <td class="text-right">
                             <button @click="deleteCourse(course.id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
                         </td>
                     </tr>
