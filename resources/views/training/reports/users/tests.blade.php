@@ -33,9 +33,9 @@ use App\Models\Training\CourseRegistration;
         <td class="px-1">
             <span class="td-title">{{$post->exam_mark}}</span>
         </td>
-        <td class="px-1">
+        {{-- <td class="px-1">
             <span class="td-title">{{$post->pass_mark}}</span>
-        </td>
+        </td> --}}
         <td class="px-1">
             <span class="badge badge-info">{{$post->mark}}</span>
         </td>

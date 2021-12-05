@@ -51,11 +51,11 @@
                             </div>
                             <div class="mt-3 col-md-12 col-lg-12">
                                 <div>
-                                    <button type="button" @click="OpenModal('video',content.id)" class="cyan" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
-                                    <button type="button" @click="OpenModal('audio',content.id)" class="cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                                    <button type="button" @click="OpenModal('presentation',content.id)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
-                                    <button type="button" @click="OpenModal('scorm',content.id)" class="cyan" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
-                                    <button  type="button" @click="OpenModal('exam',content.id)" class="cyan" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
+                                    <button type="button" @click="OpenModal('video',content.id)" class="badge cyan" id="video" ><i class="fa fa-video-camera" aria-hidden="true"></i> {{__('admin.video')}}</button>
+                                    <button type="button" @click="OpenModal('audio',content.id)" class="badge cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+                                    <button type="button" @click="OpenModal('presentation',content.id)" class="badge cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
+                                    <button type="button" @click="OpenModal('scorm',content.id)" class="badge cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
+                                    <button  type="button" @click="OpenModal('exam',content.id)" class="badge cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -77,20 +77,28 @@
                                     <span>@{{entry.title}}</span>
                                 </td>
                                 <td>
-                                    <span>@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'scorm'" class="badge badge-secondary">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'video'" class="badge badge-primary">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'audio'" class="badge badge-warning">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'presentation'" class="badge badge-success">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'exam'" class="badge badge-info">@{{entry.post_type}}</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">
-
-                                        <a class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
+                                        <a v-if="entry.post_type == 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + entry.id" :target="entry.id">
                                             <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                                         </a>
+                                        <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
+
+                                        <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
+                                            <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                                        </a>
+
                                         <button title="Edit" v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id, entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> </button>
                                         <button title="Edit" v-else @click="OpenEditModal(content.id, entry.id)"  class="yellow" >
                                             <i class="fa fa-pencil" aria-hidden="true"></i> </button>
 
                                         <button title="Delete" @click="deleteContent(content.id,entry.id)"  class="red"><i class="fa fa-trash" aria-hidden="true"></i> </button>
-                                        <a v-if="entry.post_type == 'exam'"  class="cyan" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
                                     </div>
                                 </td>
                             </tr>
@@ -176,6 +184,17 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="modal-diff-content form-group">
+                                        <label class="m-0">Pass Mark</label>
+                                        <input type="number" v-model="pass_mark" name="pass_mark" class="form-control" placeholder="pass mark">
+                                        <div v-show="'pass_mark' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.pass_mark }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </template>
                         <div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content my-2">
@@ -280,6 +299,7 @@
             start_date : '',
             end_date : '',
             duration : 0,
+            pass_mark : 0,
             attempt_count : 1,
             pagination : 1,
             file : '',
@@ -318,6 +338,7 @@
                 this.start_date = '';
                 this.end_date 	= '';
                 this.duration 	= 0;
+                this.pass_mark 	= 0;
                 this.pagination = 1;
                 this.progress 	= '0%';
                 this.errors = {};
@@ -389,6 +410,7 @@
                                      content.exam ? self.duration = content.exam.duration : 0;
                                      content.exam ? self.pagination = content.exam.pagination : 1;
                                      content.exam ? self.attempt_count = content.exam.attempt_count :1;
+                                     content.exam ? self.pass_mark = content.exam.pass_mark : 0;
                                      self.model_type = content.post_type;
                                      self.url = content.url;
 
@@ -579,6 +601,7 @@
                 formData.append('duration', self.duration);
                 formData.append('pagination', self.pagination);
                 formData.append('attempt_count', self.attempt_count);
+                formData.append('pass_mark', self.pass_mark);
 
                 if(self.save_type == 'add'){
 
@@ -638,6 +661,7 @@
                                        content.exam.duration =self.duration;
                                        content.exam.pagination =self.pagination;
                                        content.exam.attempt_count =self.attempt_count;
+                                       content.exam.pass_mark =self.pass_mark;
 
 
                                     }

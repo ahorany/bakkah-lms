@@ -117,25 +117,33 @@
 
 
 
-                <div class="container mt-2">
-                    <div class="form-group">
-                        <label>Name: </label>
-                        <input name="username" placeholder="Name.." class="form-control d-inline-block" v-model="search_username"/>
+                <div class="container row mx-0 mt-2">
+
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Name: </label>
+                            <input name="username" placeholder="Name.." class="w-100 form-control d-inline-block" v-model="search_username"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Email: </label>
+                            <input name="email" placeholder="Email.." class="w-100 form-control d-inline-block"  v-model="search_email" />
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Email: </label>
-                        <input name="email" placeholder="Email.." class="form-control d-inline-block"  v-model="search_email" />
-                    </div>
-
-                    <div style="margin-left:40px;margin-top: 5px;">
+                    <div>
                         <button @click.prevent="search()" type="submit" name="search" class="main-color"><i class="fa fa-search"></i> Search</button>
                     </div>
                 </div>
 
+                <div class="modal-body" style="overflow: auto;height: 200px;">
+                    <div class="p-3">
+                        <label class="form-group">Expire Date: </label>
+                        <input   type="datetime-local" v-model="expire_date" name="expire_date" class="w-100 form-control d-inline-block" placeholder="Expire date">
+                    </div>
 
-                <div class="modal-body" style="overflow: auto;height: 150px;">
-                    <table class="table table-striped">
+                    <table class="table table-striped mx-3">
                         <thead>
                         <tr>
                             <th scope="col">Name</th>
@@ -154,12 +162,6 @@
 
                         </tbody>
                     </table>
-
-                    <div>
-                        <label class="form-group">Expire Date: </label>
-                        <input   type="datetime-local" v-model="expire_date" name="expire_date" class="form-control d-inline-block" placeholder="Expire date">
-                    </div>
-
                 </div>
 
                 <div class="modal-footer">
