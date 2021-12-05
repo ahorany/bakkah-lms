@@ -359,7 +359,12 @@ class UserProfileController extends Controller
         }
 
         $user_course_register = CourseRegistration::where('course_id',$content->course->id)->where('user_id',\auth()->id())->first();
-        if(!$user_course_register){
+
+        $role_auth_is_admin = \auth()->user()->roles()->first();
+//        if($role_auth_is_admin && $role_auth_is_admin->id == 1){
+//
+//        }
+        if(!$user_course_register && ($role_auth_is_admin && $role_auth_is_admin->id != 1)){
             abort(404);
         }
 
