@@ -311,6 +311,9 @@ class UserProfileController extends Controller
             ->with(['exam.content.questions.answers','user_answers','user_questions'])
             ->first();
 
+        if( $exam->exam && $exam->exam->end_date > Carbon::now() ){
+            abort(404);
+        }
 
         if ( !$exam  ) abort(404);
         return view('pages.review',compact('exam','page_type'));

@@ -88,6 +88,7 @@
                                     <span v-if="entry.post_type == 'audio'" class="badge badge-warning">@{{entry.post_type}}</span>
                                     <span v-if="entry.post_type == 'presentation'" class="badge badge-success">@{{entry.post_type}}</span>
                                     <span v-if="entry.post_type == 'exam'" class="badge badge-info">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'exam'" class="badge badge-secondary">Questions Count : ( @{{entry.questions_count}} )</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">
