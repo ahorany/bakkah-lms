@@ -10,7 +10,7 @@ use App\Models\Training\Course;
 use App\Constant;
 use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
-
+use DB;
 
 // use Illuminate\Support\Str;
 
@@ -59,13 +59,24 @@ class CourseController extends Controller
         }
         $courses = $courses->count();
         */
-        $assigned_learners = 0;
-        $courses_in_progress = 0;
-        $courses_not_started = 0;
-        return Active::Index(compact('courses', 'count', 'post_type', 'trash'
-        , 'assigned_learners'
-        , 'courses_in_progress'
-        , 'courses_not_started'));
+        $assigned_learners = DB::table('courses_registration')->where('role_id',3);
+        if(!is_null(request()->course_search)) {
+            $assigned_learners = $assigned_learners->join('courses','courses.id','courses_registration.course_id');
+
+            $assigned_learners = $this->SearchCond($assigned_learners);
+        }
+        $assigned_learners = $assigned_learners->count();
+
+        $assigned_instructors = DB::table('courses_registration')->where('role_id',2);
+        if(!is_null(request()->course_search)) {
+            $assigned_instructors = $assigned_instructors->join('courses','courses.id','courses_registration.course_id');
+
+            $assigned_instructors = $this->SearchCond($assigned_instructors);
+        }
+        $assigned_instructors = $assigned_instructors->count();
+        // $courses_in_progress = 0;
+        // $courses_not_started = 0;
+        return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors'));
     }
 
 

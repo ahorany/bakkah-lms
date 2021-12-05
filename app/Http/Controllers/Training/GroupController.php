@@ -12,6 +12,7 @@ use App\Constant;
 use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
 // use Illuminate\Support\Str;
+use DB;
 
 class GroupController extends Controller
 {
@@ -27,7 +28,11 @@ class GroupController extends Controller
         $groups = Group::query();
         $count = $groups->count();
         $groups = $groups->page();
-        return Active::Index(compact('groups', 'count', 'post_type', 'trash'));
+
+        $assigned_users     = DB::table('user_groups')->count(DB::raw('DISTINCT user_id'));
+        $assigned_courses   = DB::table('course_groups')->count(DB::raw('DISTINCT course_id'));
+
+        return Active::Index(compact('groups', 'count', 'post_type', 'trash','assigned_users','assigned_courses'));
     }
 
     public function create(){

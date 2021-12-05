@@ -123,4 +123,6 @@ return [
     'courses'=>'Courses',
     'completed'=>'Completed',
     'passed'=>'Passed',
+    'assigned_instructors'=>'Assigned Instructors',
+
 ];
