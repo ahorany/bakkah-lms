@@ -24,14 +24,13 @@ class GroupUserController extends Controller
     public function delete_user_group(){
         $user_id = \request()->user_id;
         $group_id = \request()->group_id;
-//        $user =  User::findOrFail($user_id);
-        $user = User::where('id',$user_id)->with(['roles'])->first();
-        if(!$user){
+        $user =  User::findOrFail($user_id);
+        $group =  Group::findOrFail($group_id);
+        $group_user = GroupUser::where('group_id',$group_id)->where('user_id',$user_id)->first();
+        if(!$group_user){
             abort(404);
         }
-        $group =  Group::findOrFail($group_id);
-        $user_role_id = $user->roles ? $user->roles[0]->id : null;
-        $this->delete_user_from_course_registration($group->id,$user_id,$user_role_id);
+        $this->delete_user_from_course_registration($group->id,$user_id,$group_user->role_id);
 
         GroupUser::where('user_id',$user->id)->where('group_id',$group->id)->delete();
         return response()->json(['status' => 'success']);
@@ -117,7 +116,7 @@ class GroupUserController extends Controller
             return response()->json([ 'status' => 'fail']);
         }
 
-        if(request()->type_user == 'instructor'){
+        if(request()->user_type == 'instructor'){
             $type_id = 2;
         }else{
             $type_id = 3;

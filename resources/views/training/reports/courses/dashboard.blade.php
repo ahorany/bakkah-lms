@@ -5,6 +5,7 @@
 
             <div class="d-flex flex-column flex-sm-row flex-wrap">
 
+<<<<<<< HEAD
                 @if(isset($courses_in_progress))
                 <div class="course-cards card-report bg-main justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report" id="bg-one" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
@@ -18,6 +19,14 @@
                             <path d="M46.19,32.61c-0.74,0-1.47,0.04-2.21-0.01c-1.01-0.06-1.8-0.95-1.82-1.97c-0.01-1.03,0.79-1.97,1.82-2   c1.48-0.05,2.97-0.05,4.45,0c1.02,0.03,1.79,0.93,1.81,1.96c0.02,1.04-0.78,1.92-1.81,2.02c-0.1,0.01-0.2,0.02-0.3,0.03   c-0.65,0-1.3,0-1.95,0C46.19,32.63,46.19,32.62,46.19,32.61z"/>
                         </g>
                     </svg>
+=======
+
+                @if(isset($courses_in_progress))
+                <div class="course-cards card-report bg-third justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="62.387" viewBox="0 0 71.3 62.387">
+                        <path id="Icon_open-task" data-name="Icon open-task" d="M0,0V62.387H62.387v-32L53.475,39.3V53.475H8.912V8.912h32L49.821,0ZM62.387,0,35.65,26.737l-8.912-8.912-8.912,8.912L35.65,44.562,71.3,8.912Z" fill="#fff"></path>
+                      </svg>
+>>>>>>> f74c018b1dd147b072ae4803b5de9d996eda9772
                     <div>
                         <span>{{__('admin.courses_in_progress')}}</span>
                         <b>{{$courses_in_progress}}</b>

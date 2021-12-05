@@ -43,7 +43,9 @@
         <div class="card p-3 mb-3">
             <div class="row">
                 <div class="col-md-9 col-9">
-                    @if(!checkUserIsTrainee())
+                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
+
+                @if(!checkUserIsTrainee())
                         <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
                             <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_trainee')}}
                         </button>
