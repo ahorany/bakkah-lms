@@ -284,6 +284,7 @@ ol.answers li{
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
+    font-weight: 500;
 }
 .main-color:hover {
     background: #fb4400;
@@ -299,6 +300,7 @@ ol.answers li{
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
+    font-weight: 500;
 }
 .yellow:hover {
     background: #ffc107;
@@ -313,6 +315,7 @@ ol.answers li{
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
+    font-weight: 500;
 }
 .red:hover {
     background: #dc3545;
@@ -328,6 +331,7 @@ ol.answers li{
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
+    font-weight: 500;
 }
 .green:hover {
     background: green;
@@ -343,6 +347,7 @@ ol.answers li{
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
+    font-weight: 500;
 }
 .cyan:hover {
     background: #0dcaf0;
@@ -358,6 +363,7 @@ ol.answers li{
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
+    font-weight: 500;
 }
 .primary:hover {
     text-decoration: none;
@@ -368,6 +374,7 @@ ol.answers li{
     background: transparent;
     color: #009eb8;
     border: 1px solid #ebd7ff;
+    font-weight: 500;
 }
 .group_buttons:hover{
     text-decoration: none;
@@ -385,6 +392,7 @@ ol.answers li{
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
+    font-weight: 500;
 }
 .white:hover {
     background: #000;
@@ -400,6 +408,7 @@ ol.answers li{
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
+    font-weight: 500;
 }
 .primary-outline:hover {
     text-decoration: none;
