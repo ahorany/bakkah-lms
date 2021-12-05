@@ -141,5 +141,9 @@ return [
     'courses'=>'Courses',
     'completed'=>'Completed',
     'passed'=>'Passed',
+    'assigned_instructors'=>'Assigned Instructors',
+    'groups'=>'Groups',
+    'assigned_users'=>'Assigned Users',
+
 
 ];

@@ -1,3 +1,4 @@
+@include('training.reports.groups.dashboard')
 <div class="card courses">
   <div class="card-header">
 
@@ -8,12 +9,13 @@
     <table class="table table-hover table-condensed">
       <thead>
         <tr>
-            <th class="">{{__('admin.index')}}</th>
-            <th class="">{{__('admin.name')}}</th>
-            <th class="">{{__('admin.title')}}</th>
-            <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}}</th>
-            <th class="d-none d-sm-table-cell user-td">{{__('admin.user')}}</th>
-            <th class="img-table d-none d-sm-table-cell text-center">{{__('admin.action')}}</th>
+
+            <th class="">{{__('admin.index')}} </th>
+            <th class="">{{__('admin.name')}} </th>
+            <th class="">{{__('admin.title')}} </th>
+            <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}} </th>
+            <th class="d-none d-sm-table-cell user-td">{{__('admin.user')}} </th>
+            <th class="img-table d-none d-sm-table-cell text-center">{{__('admin.action')}} </th>
 
         </tr>
       </thead>
