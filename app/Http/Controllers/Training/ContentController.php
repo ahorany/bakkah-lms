@@ -13,7 +13,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
-use Zip;
 class ContentController extends Controller
 {
 
@@ -124,6 +123,7 @@ class ContentController extends Controller
                 'attempt_count'=>'nullable|numeric|gt:-1',
                 'start_date'  => $start_date,
                 'end_date'     => $end_date,
+                'pass_mark' => "required"
             ];
         }else{
             $mimes ='';
@@ -204,6 +204,8 @@ class ContentController extends Controller
                 'duration' => request()->duration??0,
                 'pagination' => request()->pagination??1,
                 'attempt_count' => request()->attempt_count??0,
+                'pass_mark' =>  request()->pass_mark,
+
             ]);
 
         }else{
@@ -285,6 +287,8 @@ class ContentController extends Controller
                 'attempt_count'=>'nullable|numeric|gt:-1',
                 'start_date'  => $start_date,
                 'end_date'     => $end_date,
+                'pass_mark'     => 'required',
+
             ];
         }
 
@@ -323,6 +327,7 @@ class ContentController extends Controller
                 'pagination' => request()->pagination??1,
                 'attempt_count' => request()->attempt_count??0,
                 'updated_by' => auth()->id(),
+                'pass_mark' =>  request()->pass_mark,
             ]);
 
         } else {
