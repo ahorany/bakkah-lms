@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('useHead')
-    <title>{{__('education.Reset Password')}} | {{ __('home.DC_title') }}</title>
+    <title>{{__('education.Change Password')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
 @section('content')

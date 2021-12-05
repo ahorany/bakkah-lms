@@ -18,6 +18,7 @@ class GroupUserController extends Controller
     {
         $group_id = request()->group_id;
         $group = Group::with(['upload', 'users'])->where('id',$group_id)->first();
+        // return $group;
         return view('training.groups.users.index', compact('group'));
     }
 

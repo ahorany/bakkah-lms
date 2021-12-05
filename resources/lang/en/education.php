@@ -57,7 +57,7 @@ return [
     "We can't seem to find the page you're looking for." => "We can't seem to find the page you're looking for.",
     "Opps!" => 'Opps!',
     "Users" => 'Users',
-    "User Reports" => 'User Reports',
+    "User Reports" => 'Course Reports Reports',
     "User Tests" => 'User Tests',
     "User Courses" => 'User Courses',
     "Roles" => 'Roles',
@@ -80,4 +80,9 @@ return [
     "Create Group" => 'Create Group',
     "Edit Group" => 'Edit Group',
     "Groups" => 'Groups',
+    "Course Tests" => 'Course Tests',
+    "Course Reports" => 'Course Reports',
+    "Course Users" => 'Course Users',
+    "My Info" => 'My Info',
+    "Change Password" => 'Change Password',
 ];

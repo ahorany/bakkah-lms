@@ -62,6 +62,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Type</th>
                     <th scope="col">Email</th>
                     <th scope="col" class="text-right">Action</th>
                 </tr>
@@ -70,6 +71,10 @@
                     <tr v-for="(user,index) in group.users">
                         <th scope="row" v-text="index + 1"></th>
                         <td v-text="trans_title(user.name)"></td>
+                        <td>
+                            <span v-if="user.pivot.role_id == 3" class="badge-green">Trainee</span>
+                            <span v-if="user.pivot.role_id == 2" class="badge-pink">Instructor</span>
+                        </td>
                         <td v-text="user.email"></td>
 
                         <td class="text-right">

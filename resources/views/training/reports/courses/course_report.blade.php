@@ -1,5 +1,9 @@
 @extends('layouts.crm.index')
 
+@section('useHead')
+    <title>{{__('education.Course Reports')}} | {{ __('home.DC_title') }}</title>
+@endsection
+
 @section('table')
 
     <div  class="course_info mb-3 card p-3">
