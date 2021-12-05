@@ -66,12 +66,12 @@ use App\Models\Training\CourseRegistration;
                     'post'=>$post->id,
                 ])!!}
               @endif
-              <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="badge cyan my-1" ><i class="fa fa-pencil"></i> Report</a>
+              <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="cyan my-1" ><i class="fa fa-pencil"></i> Report</a>
               @if(!request()->has('trash') && request()->trash != "trash")
                 <div class="my-1">
-                    <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="badge green">Contents</a>
-                    <a href="{{route('training.units',['course_id'=>$post->id])}}" class="badge green">Units</a>
-                    <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class="badge green">Users</a>
+                    <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="green">Contents</a>
+                    <a href="{{route('training.units',['course_id'=>$post->id])}}" class="green">Units</a>
+                    <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class="green">Users</a>
                 </div>
               @endif
           </td>

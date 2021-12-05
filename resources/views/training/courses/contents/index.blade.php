@@ -81,15 +81,15 @@
                                 </td>
                                 <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">
-                                        <a v-if="entry.post_type == 'exam'"  class="badge primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
-                                        <a class="badge cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
+                                        <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
+                                        <a class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
                                             <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                                         </a>
-                                        <button title="Edit" v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id, entry.id)"  class="badge yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> </button>
-                                        <button title="Edit" v-else @click="OpenEditModal(content.id, entry.id)"  class="badge yellow" >
+                                        <button title="Edit" v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id, entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+                                        <button title="Edit" v-else @click="OpenEditModal(content.id, entry.id)"  class="yellow" >
                                             <i class="fa fa-pencil" aria-hidden="true"></i> </button>
 
-                                        <button title="Delete" @click="deleteContent(content.id,entry.id)"  class="badge red"><i class="fa fa-trash" aria-hidden="true"></i> </button>
+                                        <button title="Delete" @click="deleteContent(content.id,entry.id)"  class="red"><i class="fa fa-trash" aria-hidden="true"></i> </button>
                                     </div>
                                 </td>
                             </tr>
