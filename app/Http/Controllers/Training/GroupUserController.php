@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Training;
 
 use App\Http\Controllers\Controller;
+use App\Models\Training\CourseRegistration;
 use App\Models\Training\Group;
+use App\Models\Training\GroupCourse;
 use App\Models\Training\GroupUser;
 use App\User;
 
@@ -22,8 +24,15 @@ class GroupUserController extends Controller
     public function delete_user_group(){
         $user_id = \request()->user_id;
         $group_id = \request()->group_id;
-        $user =  User::findOrFail($user_id);
+//        $user =  User::findOrFail($user_id);
+        $user = User::where('id',$user_id)->with(['roles'])->first();
+        if(!$user){
+            abort(404);
+        }
         $group =  Group::findOrFail($group_id);
+        $user_role_id = $user->roles ? $user->roles[0]->id : null;
+        $this->delete_user_from_course_registration($group->id,$user_id,$user_role_id);
+
         GroupUser::where('user_id',$user->id)->where('group_id',$group->id)->delete();
         return response()->json(['status' => 'success']);
     }
@@ -70,6 +79,37 @@ class GroupUserController extends Controller
         return response()->json([ 'status' => 'success' ,'users' => $users]);
     }
 
+
+    private function add_user_with_all_group_courses_in_course_registration($user_id,$role_id,$group_id,$group_expire_date){
+         $group_courses = GroupCourse::where('group_id',$group_id)->get();
+         foreach ($group_courses as $group_course){
+             CourseRegistration::updateOrCreate([
+                 'user_id' => $user_id,
+                 'course_id' => $group_course->course_id,
+                 'role_id' => $role_id,
+             ],[
+                 'user_id' => $user_id,
+                 'course_id' => $group_course->course_id,
+                 'role_id' => $role_id,
+                 'expire_date' => $group_expire_date,
+             ]);
+         }
+
+    }
+
+    private function delete_user_from_course_registration($group_id,$user_id,$role_id)
+    {
+        $group_courses = GroupCourse::where('group_id',$group_id)->get();
+
+        foreach ($group_courses as $group_course ){
+            CourseRegistration::where('user_id',$user_id)
+                ->where('course_id',$group_course->course_id)
+                ->where('role_id' , $role_id)->delete();
+        }
+
+    }
+
+
     public function add_users_group(){
         $group = Group::find(\request()->group_id);
 
@@ -94,14 +134,15 @@ class GroupUserController extends Controller
                     'group_id' => $group->id,
                     'role_id' => $type_id,
                 ]);
+
+                $this->add_user_with_all_group_courses_in_course_registration($key,$type_id,$group->id,$group->expire_date);
             }else if ($value == false){
+                $this->delete_user_from_course_registration($group->id,$key,$type_id);
                 GroupUser::where('user_id',$key)->where('group_id',$group->id)->delete();
             }
         }
         $group = Group::with(['users'])->where('id',$group->id)->first();
 
         return response()->json([ 'status' => 'success' ,'group' => $group]);
-
-
     }
 }

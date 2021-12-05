@@ -54,7 +54,7 @@ class GroupCourseController extends Controller
         return response()->json([ 'status' => 'success' ,'courses' => $courses]);
     }
 
-    private function add_group_users_in_course_registration($group_id , $course_id){
+    private function add_group_users_in_course_registration($group_id , $course_id,$group_expire_date){
          $group_users = GroupUser::where('group_id',$group_id)->get();
          foreach ($group_users as $group_user ){
              $course_registration = CourseRegistration::updateOrCreate([
@@ -65,8 +65,8 @@ class GroupCourseController extends Controller
                  'user_id' => $group_user->user_id,
                  'course_id' => $course_id,
                  'role_id' => $group_user->role_id,
+                 'expire_date' => $group_expire_date,
              ]);
-
          }
     }
 
@@ -76,7 +76,8 @@ class GroupCourseController extends Controller
 
         foreach ($group_users as $group_user ){
              CourseRegistration::where('user_id',$group_user->user_id)
-                 ->where('course_id',$course_id)->delete();
+                 ->where('course_id',$course_id)
+                 ->where('role_id' , $group_user->role_id)->delete();
         }
 
     }
@@ -99,7 +100,7 @@ class GroupCourseController extends Controller
                     'group_id' => $group->id,
                 ]);
 
-                $this->add_group_users_in_course_registration($group->id , $key);
+                $this->add_group_users_in_course_registration($group->id , $key,$group->expire_date);
 
             }else if ($value == false){
                 $this->delete_group_users_from_course_registration($group->id,$key);
