@@ -501,7 +501,8 @@ class UserProfileController extends Controller
 
        $complete_courses =  DB::select(DB::raw("SELECT COUNT(id) as courses_count,
                                                         case when (progress=100) then 1
-                                                             when (progress<100 OR progress is null) then 0
+                                                             when ( progress= 0 OR progress is null) then 2
+                                                             when (progress<100 AND progress != 0) then 0
                                                         end as status
                                                         FROM courses_registration
                                                         WHERE user_id = ".\auth()->id()."
