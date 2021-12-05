@@ -314,7 +314,6 @@
             @endif
         </div>
     @endif
-<<<<<<< HEAD
     <?php
     function getReportNumber($complete_courses,$status){
         if($complete_courses){
@@ -328,12 +327,9 @@
     }
 
     ?>
-    <div class="row mb-5">
-=======
+
 
     <div class="row mb-5 home-section">
->>>>>>> 0b542d4152d1b263c0d127cdb00ad941f52d01c8
-
         <div class="col-lg-6">
             <div class="card h-100 justify-content-center p-30">
 
@@ -346,14 +342,9 @@
                             </g>
                         </svg>
                         <div>
-<<<<<<< HEAD
 
                             <span>Course Completed</span>
                             <b>{{ getReportNumber($complete_courses,1)  }}</b>
-=======
-                            <span>{{__('admin.completed_courses')}}</span>
-                            <b>{{ isset($complete_courses[1]) ? str_pad($complete_courses[1]->courses_count, 2, '0', STR_PAD_LEFT) : 0 }}</b>
->>>>>>> 0b542d4152d1b263c0d127cdb00ad941f52d01c8
                         </div>
                     </div>
 
@@ -370,7 +361,6 @@
                             </g>
                         </svg>
                         <div>
-<<<<<<< HEAD
                             <span>Course in Progress</span>
                             <b>{{ getReportNumber($complete_courses,0)  }}</b>
                         </div>
@@ -409,12 +399,6 @@
                             <b>{{count($courses->courses)}}</b>
                         </div>
                     </div>
-=======
-                            <span>{{__('admin.courses_in_progress')}}</span>
-                            <b>{{isset($complete_courses[0]) ? str_pad($complete_courses[0]->courses_count, 2, '0', STR_PAD_LEFT) : 0}}</b>
-                        </div>
-                    </div>
->>>>>>> 0b542d4152d1b263c0d127cdb00ad941f52d01c8
                 </div>
             </div>
         </div>

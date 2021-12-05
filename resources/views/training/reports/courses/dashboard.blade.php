@@ -5,14 +5,10 @@
 
             <div class="d-flex flex-column flex-sm-row flex-wrap">
 
-<<<<<<< HEAD
-                @if(isset($courses_in_progress))
-                <div class="course-cards card-report bg-bg-one justify-content-center">
-=======
+
 
                 @if(isset($courses_in_progress))
                 <div class="course-cards card-report bg-main justify-content-center">
->>>>>>> d4181b7b08e2594aeea1d20e7e10724031ceeb48
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report" id="bg-one" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                         <g>
                             <path d="M30.56,8.45c0.71,0.3,1.31,0.72,1.49,1.53c0.03,0.14,0.06,0.28,0.06,0.42c0,2.72,0.01,5.45,0,8.17   c-0.01,1.03-0.77,1.82-1.83,1.96c-0.88,0.12-1.83-0.5-2.09-1.39c-0.08-0.28-0.12-0.6-0.12-0.89c-0.01-2.38,0.03-4.76-0.02-7.14   c-0.03-1.25,0.34-2.19,1.56-2.67C29.92,8.45,30.24,8.45,30.56,8.45z"/>
