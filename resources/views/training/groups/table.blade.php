@@ -6,16 +6,16 @@
     {!!Builder::TableAllPosts($count, $groups->count())!!}
   </div>
   <div class="card-body table-responsive p-0">
-    <table class="table table-hover table-condensed">
+    <table class="table table-hover table-condensed text-center">
       <thead>
         <tr>
 
             <th class="">{{__('admin.index')}} </th>
             <th class="">{{__('admin.name')}} </th>
             <th class="">{{__('admin.title')}} </th>
-            <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}} </th>
-            <th class="d-none d-sm-table-cell user-td">{{__('admin.user')}} </th>
-            <th class="img-table d-none d-sm-table-cell text-center">{{__('admin.action')}} </th>
+            {{-- <th class="">{{__('admin.image')}} </th>
+            <th class="">{{__('admin.user')}} </th> --}}
+            <th class="text-right">{{__('admin.action')}} </th>
 
         </tr>
       </thead>
@@ -34,13 +34,13 @@
               <span style="display: block;">{{$group->title}}</span>
           </td>
 
-          <td class="d-none d-sm-table-cell">{!!Builder::UploadRow($group)!!}</td>
-          <td class="d-none d-sm-table-cell">
+          {{-- <td class="">{!!Builder::UploadRow($group)!!}</td>
+          <td class="">
             <span class="author">
               {!!$group->published_at!!}<br>
             </span>
-          </td>
-          <td class="d-none d-sm-table-cell text-center">
+          </td> --}}
+          <td class="text-right">
               {!!Builder::BtnGroupRows($group->name, $group->id, [], [
             'post'=>$group->id,
          ])!!}

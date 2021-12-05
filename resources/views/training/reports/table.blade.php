@@ -39,9 +39,7 @@ use App\Models\Training\CourseRegistration;
                 ?>
                 <span style="display: block;"  class="td-title">  {{ $assigned_courses }}</span>
             </td>
-
         </tr>
-
         @endforeach
         </tbody>
         </table>
