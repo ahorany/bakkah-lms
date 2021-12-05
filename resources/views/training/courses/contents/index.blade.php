@@ -77,7 +77,11 @@
                                     <span>@{{entry.title}}</span>
                                 </td>
                                 <td>
-                                    <span>@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'scorm'" class="badge badge-secondary">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'video'" class="badge badge-primary">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'audio'" class="badge badge-warning">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'presentation'" class="badge badge-success">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'exam'" class="badge badge-info">@{{entry.post_type}}</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">
