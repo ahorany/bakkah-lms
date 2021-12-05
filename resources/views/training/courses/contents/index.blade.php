@@ -22,6 +22,8 @@
     <div  class="course_info mb-3 card p-3">
         <div class="row">
         <div class="col-md-9 col-9">
+            <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
+
             <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
             </button>
                 <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Units</a>
