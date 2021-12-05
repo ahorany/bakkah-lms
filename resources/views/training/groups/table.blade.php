@@ -46,8 +46,8 @@
          ])!!}
 
               <div class="my-2">
-                 <a class="green" href="{{route('training.group_users',['group_id' => $group->id])}}">users</a>
-                 <a class="green" href="{{route('training.group_courses',['group_id' => $group->id])}}">courses</a>
+                 <a class="green" href="{{route('training.group_users',['group_id' => $group->id])}}">Users</a>
+                 <a class="green" href="{{route('training.group_courses',['group_id' => $group->id])}}">Courses</a>
               </div>
           </td>
       </tr>

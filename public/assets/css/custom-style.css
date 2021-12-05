@@ -1,5 +1,8 @@
-.bg-two {
+.bg-one {
     background: #6a6a6a;
+}
+.bg-two {
+    background: #fc991e;
 }
 .card {
     box-shadow: 0 0 20px rgb(127 170 203 / 5%);
@@ -20,9 +23,6 @@
 .courses .card-header span{
     color: #000 !important;
 }
-/* .card-header a{
-    color: #fff !important;
-} */
 .courses .BtnGroupRows a  {
     background: #ffc107;
     color: #000;

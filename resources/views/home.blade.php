@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('useHead')
-    <title>{{__('education.My Courses')}} | {{ __('home.DC_title') }}</title>
+    <title>{{__('education.home')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
 @section('content')
@@ -32,18 +32,18 @@
                         $url = '';
                         // dd($course);
                         if($course->upload != null) {
-                            // if ($url == ''){
-                            //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+                            // if (file_exists($course->upload->file) == false){
+                            //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . $course->trans_title;
                             // }else{
                                 $url = $course->upload->file;
-                                $url = CustomAsset('upload/full/'. $url);
+                                $url = CustomAsset('upload/thumb200/'. $url);
                             // }
                         }else {
                             $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . $course->trans_title;
                         }
                     ?>
                         @isset($course->upload->file)
-                            <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" height="150px" >
+                            <img src="{{CustomAsset($url)}}" height="150px" >
                         @else
                             <img src="{{CustomAsset($url)}}" height="150px" >
                         @endisset

@@ -2,8 +2,6 @@
 
 @section('table')
 
-
-
     <div  class="course_info mb-3 card p-3">
         <div class="row">
             <div class="col-md-6">

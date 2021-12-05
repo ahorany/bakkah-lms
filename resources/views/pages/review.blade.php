@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('useHead')
-    <title>{{__('education.My Courses')}} | {{ __('home.DC_title') }}</title>
+    <title>{{$exam->exam->content->title}} {{ __('education.Review Exam') }} | {{ __('home.DC_title') }}</title>
 @endsection
 
 @section('style')
@@ -13,13 +13,12 @@
     </style>
 @endsection
 
-
 @section('content')
     <div class="dash-header">
         <ol class="breadcrumb">
             <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
             <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-            <li>{{$exam->title}}</li>
+            <li>{{$exam->exam->content->title}}</li>
         </ol>
         <h1>{{$exam->title}}</h1>
     </div>

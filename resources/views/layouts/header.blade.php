@@ -35,7 +35,7 @@
                 <?php
                     $url = '';
                     if(auth()->user()->upload) {
-                        // if ($url == ''){
+                        // if (file_exists(auth()->user()->upload->file) == false){
                         //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
                         // }else{
                             $url = auth()->user()->upload->file;

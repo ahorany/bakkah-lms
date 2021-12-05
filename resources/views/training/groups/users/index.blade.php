@@ -1,5 +1,9 @@
 @extends('layouts.crm.index')
 
+@section('useHead')
+    <title>{{$group->name}} {{ __('education.Users') }} | {{ __('home.DC_title') }}</title>
+@endsection
+
 @section('style')
 <style>
     .course_info button {
@@ -31,13 +35,15 @@
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Group Name : {{$group->name}}</span>
 
                     <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class=" mb-1 group_buttons btn-sm">
-                            <i class="fa fa-plus" aria-hidden="true"></i> add trainee
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add Trainee
                     </button>
 
 
-                    <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="group_buttons  mb-1 btn-sm">
-                        <i class="fa fa-plus" aria-hidden="true"></i> add instructor
+                    <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add Instructor
                     </button>
+
+                    <a class="group_buttons mb-1 btn-sm" href="{{route('training.group_courses',['group_id' => $group->id])}}">Courses</a>
                 </div>
 
 
