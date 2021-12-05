@@ -51,11 +51,11 @@
                             </div>
                             <div class="mt-3 col-md-12 col-lg-12">
                                 <div>
-                                    <button type="button" @click="OpenModal('video',content.id)" class="cyan" id="video" ><i class="fa fa-video"></i> {{__('admin.video')}}</button>
-                                    <button type="button" @click="OpenModal('audio',content.id)" class="cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                                    <button type="button" @click="OpenModal('presentation',content.id)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint"></i> {{__('admin.presentaion')}}</button>
-                                    <button type="button" @click="OpenModal('scorm',content.id)" class="cyan" id="scorm" ><i class="fa fa-file-powerpoint"></i> {{__('admin.scorm')}}</button>
-                                    <button  type="button" @click="OpenModal('exam',content.id)" class="cyan" id="exam" ><i class="fa fa-file-powerpoint"></i> {{__('admin.exam')}}</button>
+                                    <button type="button" @click="OpenModal('video',content.id)" class="badge cyan" id="video" ><i class="fa fa-video-camera" aria-hidden="true"></i> {{__('admin.video')}}</button>
+                                    <button type="button" @click="OpenModal('audio',content.id)" class="badge cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+                                    <button type="button" @click="OpenModal('presentation',content.id)" class="badge cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
+                                    <button type="button" @click="OpenModal('scorm',content.id)" class="badge cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
+                                    <button  type="button" @click="OpenModal('exam',content.id)" class="badge cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -77,12 +77,21 @@
                                     <span>@{{entry.title}}</span>
                                 </td>
                                 <td>
-                                    <span>@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'scorm'" class="badge badge-secondary">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'video'" class="badge badge-primary">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'audio'" class="badge badge-warning">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'presentation'" class="badge badge-success">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'exam'" class="badge badge-info">@{{entry.post_type}}</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">
+<<<<<<< HEAD
 
                                         <a v-if="entry.post_type == 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + entry.id" :target="entry.id">
+=======
+                                        <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
+                                        <a class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
+>>>>>>> 73250a07049e9276ef8bc4bab248e21dd12007de
                                             <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                                         </a>
                                         <button title="Edit" v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id, entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> </button>
@@ -90,7 +99,6 @@
                                             <i class="fa fa-pencil" aria-hidden="true"></i> </button>
 
                                         <button title="Delete" @click="deleteContent(content.id,entry.id)"  class="red"><i class="fa fa-trash" aria-hidden="true"></i> </button>
-                                        <a v-if="entry.post_type == 'exam'"  class="cyan" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
                                     </div>
                                 </td>
                             </tr>
