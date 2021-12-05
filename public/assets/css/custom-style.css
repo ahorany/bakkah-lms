@@ -467,4 +467,6 @@ a:hover svg#back{
 .icon-report image{
     filter: invert(1);
 }
-
+.home-section .course-cards{
+    width: 23%;
+}
