@@ -175,6 +175,17 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="modal-diff-content form-group">
+                                        <label class="m-0">Pass Mark</label>
+                                        <input type="number" v-model="pass_mark" name="pass_mark" class="form-control" placeholder="pass mark">
+                                        <div v-show="'pass_mark' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.pass_mark }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </template>
                         <div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content my-2">
@@ -279,6 +290,7 @@
             start_date : '',
             end_date : '',
             duration : 0,
+            pass_mark : 0,
             attempt_count : 1,
             pagination : 1,
             file : '',
@@ -317,6 +329,7 @@
                 this.start_date = '';
                 this.end_date 	= '';
                 this.duration 	= 0;
+                this.pass_mark 	= 0;
                 this.pagination = 1;
                 this.progress 	= '0%';
                 this.errors = {};
@@ -388,6 +401,7 @@
                                      content.exam ? self.duration = content.exam.duration : 0;
                                      content.exam ? self.pagination = content.exam.pagination : 1;
                                      content.exam ? self.attempt_count = content.exam.attempt_count :1;
+                                     content.exam ? self.pass_mark = content.exam.pass_mark : 0;
                                      self.model_type = content.post_type;
                                      self.url = content.url;
 
@@ -578,6 +592,7 @@
                 formData.append('duration', self.duration);
                 formData.append('pagination', self.pagination);
                 formData.append('attempt_count', self.attempt_count);
+                formData.append('pass_mark', self.pass_mark);
 
                 if(self.save_type == 'add'){
 
@@ -637,6 +652,7 @@
                                        content.exam.duration =self.duration;
                                        content.exam.pagination =self.pagination;
                                        content.exam.attempt_count =self.attempt_count;
+                                       content.exam.pass_mark =self.pass_mark;
 
 
                                     }
