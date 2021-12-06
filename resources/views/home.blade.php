@@ -11,16 +11,13 @@
             <div class="col-lg-8">
                 <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
                 <p class="lead">
-                    {{-- {{auth()->user()->bio}} --}}
                     Welcome to Bakkah Learning Management System!
-
+                    <br>
                     We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for students of all backgrounds and abilities.
 
                     A lot of Knowledge & fun are waiting for you, so let's get started.
                 </p>
             </div>
-
-            {{-- @include('scorm') --}}
 
             <div class="col-lg-4 mt-4 mt-lg-0 text-center">
                 <img src="{{CustomAsset('assets/images/dash.png')}}" {{(auth()->user()->bio == null) ? 'style='.' width:'.'60%;' : '' }} alt="">
@@ -416,26 +413,25 @@
                     </div>
                 </div>
             @endif
-
-
-            <div class="col-lg-6 course_info">
-                <div class="card p-30 activity">
-                    <h2>Activity</h2>
-                    <ul>
-                        <?php $lang = app()->getLocale(); ?>
-                        @foreach($activities as $activity)
-                            <li><a href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-                                <div>Start Date: {{$activity->start_date}}</div>
-                                <div>End Date: {{$activity->end_date}}</div>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-
         </div>
     @endif
 
+    <div class="row">
+        <div class="col-lg-6 course_info">
+            <div class="card p-30 activity">
+                <h2>Activity</h2>
+                <ul>
+                    <?php $lang = app()->getLocale(); ?>
+                    @foreach($activities as $activity)
+                        <li><a href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                            <div>Start Date: {{$activity->start_date}}</div>
+                            <div>End Date: {{$activity->end_date}}</div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
