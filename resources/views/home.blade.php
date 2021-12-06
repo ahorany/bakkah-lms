@@ -134,9 +134,9 @@
                         }
                     ?>
                         @isset($course->upload->file)
-                            <img src="{{CustomAsset($url)}}" height="150px" >
+                            <img src="{{$url}}" height="150px" >
                         @else
-                            <img src="{{CustomAsset($url)}}" height="150px" >
+                            <img src="{{$url}}" height="150px" >
                         @endisset
 
 
