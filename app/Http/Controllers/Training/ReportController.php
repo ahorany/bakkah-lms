@@ -120,7 +120,7 @@ class ReportController extends Controller
                  ->where('cr1.progress',100);
         })
         ->join('courses_registration as cr2','cr2.user_id','user_groups.user_id')
-        ->count('cr1.course_id');
+        ->count(DB::raw('DISTINCT cr1.id'));
         $overview = 1;
         return view('training.reports.groups.group_report',compact('group_id','overview','assigned_users','count','assigned_courses','completed_courses'));
 

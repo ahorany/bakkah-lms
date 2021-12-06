@@ -75,9 +75,16 @@ class CourseController extends Controller
         }
         $assigned_instructors = $assigned_instructors->count();
 
-        // $courses_in_progress = 0;
-        // $courses_not_started = 0;
-        return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors'));
+
+        $completed_learners = DB::table('courses_registration')->where('role_id',3)->where('progress',100);
+        if(!is_null(request()->course_search)) {
+            $completed_learners = $completed_learners->join('courses','courses.id','courses_registration.course_id');
+
+            $completed_learners = $this->SearchCond($completed_learners);
+        }
+        $completed_learners = $completed_learners->count();
+        // dd($completed_learners);
+        return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors','completed_learners'));
     }
 
 
