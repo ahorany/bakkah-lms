@@ -350,7 +350,20 @@ class UserProfileController extends Controller
         $total_rate = DB::select(DB::raw('SELECT AVG(rate) as total_rate FROM `courses_registration` WHERE course_id =' .$course->id));
         $total_rate = $total_rate[0]->total_rate??0;
 
-        return view('pages.course_details',compact('course','total_rate'));
+        $date_now = Carbon::now();
+
+        $activities = DB::select(DB::raw("SELECT contents.id as content_id,contents.post_type as type,
+                                                exams.start_date as start_date,exams.end_date as end_date,
+                                                courses.title as course_title,contents.title as content_title FROM contents
+                                    INNER JOIN exams ON exams.content_id = contents.id
+                                    INNER JOIN courses ON contents.course_id = courses.id
+                                    WHERE
+                                    contents.post_type=\"exam\"
+                                    AND
+                                    contents.deleted_at IS NULL
+                                    AND exams.end_date > '$date_now'
+                          "));
+        return view('pages.course_details',compact('course','total_rate','activities'));
     }
 
     public function course_preview($content_id){
@@ -509,10 +522,21 @@ class UserProfileController extends Controller
                                                         ORDER By status
 "));
 
+        $date_now = Carbon::now();
 
+        $activities = DB::select(DB::raw("SELECT contents.id as content_id,contents.post_type as type,
+                                                exams.start_date as start_date,exams.end_date as end_date,
+                                                courses.title as course_title,contents.title as content_title FROM contents
+                                    INNER JOIN exams ON exams.content_id = contents.id
+                                    INNER JOIN courses ON contents.course_id = courses.id
+                                    WHERE
+                                    contents.post_type=\"exam\"
+                                    AND
+                                    contents.deleted_at IS NULL
+                                    AND exams.end_date > '$date_now'
+                          "));
 
-
-        return view('home',compact('complete_courses','courses','last_video','next_videos'));
+        return view('home',compact('complete_courses','courses','last_video','next_videos','activities'));
 
     }
 
