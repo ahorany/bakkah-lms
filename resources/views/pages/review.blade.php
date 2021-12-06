@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <div class="dash-header">
+    <div class="dash-header course_info">
         <ol class="breadcrumb">
             <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
             <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>

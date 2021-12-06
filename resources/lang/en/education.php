@@ -85,4 +85,6 @@ return [
     "Course Users" => 'Course Users',
     "My Info" => 'My Info',
     "Change Password" => 'Change Password',
+    "Next" => 'Next',
+    "Previous" => 'Previous',
 ];
