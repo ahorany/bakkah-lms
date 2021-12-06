@@ -351,17 +351,21 @@ class UserProfileController extends Controller
         $total_rate = $total_rate[0]->total_rate??0;
 
         $date_now = Carbon::now();
+        $user_id = \auth()->id();
 
         $activities = DB::select(DB::raw("SELECT contents.id as content_id,contents.post_type as type,
                                                 exams.start_date as start_date,exams.end_date as end_date,
                                                 courses.title as course_title,contents.title as content_title FROM contents
                                     INNER JOIN exams ON exams.content_id = contents.id
                                     INNER JOIN courses ON contents.course_id = courses.id
+                                    INNER JOIN courses_registration ON courses_registration.course_id = courses.id
                                     WHERE
                                     contents.post_type=\"exam\"
                                     AND
                                     contents.deleted_at IS NULL
-                                    AND exams.end_date > '$date_now'
+                                    AND
+                                     courses_registration.user_id = $user_id
+                                    AND (exams.end_date > '$date_now' OR exams.end_date IS NULL)
                           "));
         return view('pages.course_details',compact('course','total_rate','activities'));
     }
@@ -523,17 +527,21 @@ class UserProfileController extends Controller
 "));
 
         $date_now = Carbon::now();
+        $user_id = \auth()->id();
 
         $activities = DB::select(DB::raw("SELECT contents.id as content_id,contents.post_type as type,
                                                 exams.start_date as start_date,exams.end_date as end_date,
                                                 courses.title as course_title,contents.title as content_title FROM contents
                                     INNER JOIN exams ON exams.content_id = contents.id
                                     INNER JOIN courses ON contents.course_id = courses.id
+                                    INNER JOIN courses_registration ON courses_registration.course_id = courses.id
                                     WHERE
                                     contents.post_type=\"exam\"
                                     AND
                                     contents.deleted_at IS NULL
-                                    AND exams.end_date > '$date_now'
+                                    AND
+                                     courses_registration.user_id = $user_id
+                                    AND (exams.end_date > '$date_now' OR exams.end_date IS NULL)
                           "));
 
         return view('home',compact('complete_courses','courses','last_video','next_videos','activities'));
