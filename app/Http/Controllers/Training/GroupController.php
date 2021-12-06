@@ -31,6 +31,7 @@ class GroupController extends Controller
 
         $assigned_users     = DB::table('user_groups')->count(DB::raw('DISTINCT user_id'));
         $assigned_courses   = DB::table('course_groups')->count(DB::raw('DISTINCT course_id'));
+
         $completed_courses  = DB::table('user_groups')
         ->join('course_groups', function ($join) {
             $join->on('course_groups.group_id', '=', 'user_groups.group_id')
@@ -41,7 +42,7 @@ class GroupController extends Controller
                  ->where('cr1.progress',100);
         })
         ->join('courses_registration as cr2','cr2.user_id','user_groups.user_id')
-        ->count('cr1.course_id');
+        ->count(DB::raw('DISTINCT cr1.id'));
 
         // dd($completed_courses);
         return Active::Index(compact('groups', 'count', 'post_type', 'trash','assigned_users','assigned_courses','completed_courses'));
