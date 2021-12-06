@@ -124,5 +124,6 @@ return [
     'completed'=>'Completed',
     'passed'=>'Passed',
     'assigned_instructors'=>'Assigned Instructors',
+    'completed_learners' => 'Completed Learners',
 
 ];

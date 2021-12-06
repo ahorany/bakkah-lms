@@ -23,7 +23,7 @@
         @include('training.reports.groups.users')
     @endif
 
-    @if(isset($tests))
+    @if(isset($courses))
         @include('training.reports.groups.courses')
     @endif
 

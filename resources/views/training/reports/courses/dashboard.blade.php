@@ -5,7 +5,17 @@
 
             <div class="d-flex flex-column flex-sm-row flex-wrap">
 
+<<<<<<< HEAD
                 @if(isset($completed_learners))
+=======
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> 00eb61c9530817bc4a51e1d47a9feeddec5868da
+
+                @if(isset($count))
+>>>>>>> ac5558e7ce74f369129a3267b121174a8c53d6fc
                 <div class="course-cards card-report bg-third justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report" id="bg-two" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                         <g>
