@@ -30,6 +30,10 @@ Route::group([
             Route::get('/coursesReportUser', 'ReportController@coursesReportUser')->name('coursesReportUser');
             Route::get('/coursesReportTest', 'ReportController@coursesReportTest')->name('coursesReportTest');
 
+            Route::get('/groupReportOverview', 'ReportController@groupReportOverview')->name('groupReportOverview');
+            Route::get('/groupsReportUser', 'ReportController@groupsReportUser')->name('groupsReportUser');
+            Route::get('/groupsReporcourse', 'ReportController@groupsReporcourse')->name('groupsReporcourse');
+
 
             Route::get('/group_users', 'GroupUserController@group_users')->name('group_users');
             Route::post('/search_user_group', 'GroupUserController@search_user_group')->name('search_user_group');

@@ -74,6 +74,7 @@ class CourseController extends Controller
             $assigned_instructors = $this->SearchCond($assigned_instructors);
         }
         $assigned_instructors = $assigned_instructors->count();
+
         // $courses_in_progress = 0;
         // $courses_not_started = 0;
         return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors'));
