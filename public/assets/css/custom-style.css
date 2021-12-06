@@ -187,100 +187,7 @@ ol.answers li{
 .lms-header ul.navbar-nav > li {
     margin: 0 30px;
 }
-
-@media (max-width: 1025px) {
-    .change-password .card .card-body{
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-}
-
-@media (max-width: 768px) {
-
-    .dash-header h1 {
-        font-size: 25px;
-    }
-    main#main-vue-element {
-        padding: 15px 25px !important;
-    }
-    .card.p-5.user-info {
-        padding: 15px !important;
-    }
-    .signin .logo {
-        right: 15% !important;
-        left: unset !important;
-        top: 10% !important;
-    }
-    .signin .signin-form {
-        width: 85% !important;
-        padding: 50px 25px !important;
-    }
-    .change-password .card {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    .change-password input.form-control {
-        font-size: 12px;
-    }
-    .course-cards.card-report.justify-content-center {
-        display: inline-block;
-        width: 100%;
-        text-align: center;
-        margin: 0 0 10px;
-    }
-    .navbar .navbar-toggler {
-        top: 20%;
-        left: 80px;
-        width: 30px;
-        height: 25px;
-        padding: 1px 6px;
-    }
-    .navbar-dark .navbar-brand {
-        color: #fff;
-        width: max-content;
-    }
-    .lms-header ul.navbar-nav li a.nav-link {
-        width: 40px;
-        height: 40px;
-    }
-    .course-cards > div {
-        display: inline-block;
-    }
-    .lms-header a.navbar-brand {
-        padding: 12px 10px !important;
-    }
-    /***********************/
-    /* main#main-vue-element {
-        padding: 15px 0 !important;
-    } */
-    .home-section {
-        margin-bottom: 15px !important;
-    }
-    .home-section .col-lg-6.mb-5.mb-lg-0{
-        margin-bottom: 0px !important;
-    }
-    .home-section .text-center.course-image.p-30 {
-        margin: 0 !important;
-        width: 100%;
-    }
-    .back_button{
-        width: 30% !important;
-    }
-}
-
-@media (max-width: 768px) and (min-width: 576px){
-    .navbar .navbar-toggler {
-        top: 20%;
-        left: 200px;
-        width: 30px;
-        height: 25px;
-        padding: 1px 6px;
-    }
-    .lms-header a.navbar-brand {
-        padding: 12px 17.4px !important;
-    }
-}
-
+/*************************************************************************************************************/
 
 /* Buttons Style */
 .badge-blue{
@@ -446,6 +353,8 @@ ol.answers li{
 
 /* End Buttons Style */
 
+/**************************************************************************************************************/
+
 .progress-bar
 {
     background: #fb4400;
@@ -467,6 +376,145 @@ a:hover svg#back{
 .icon-report image{
     filter: invert(1);
 }
-.home-section .course-cards{
+.course-cards{
     width: 23%;
+    justify-content: center;
 }
+button.next_prev {
+    padding: 5px 10px;
+    width: 75px;
+    margin: 0 5px;
+    border: 1px solid;
+    text-align: center;
+}
+button.next_prev:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/******************************************************************************************************************/
+
+/* Media Query */
+
+@media (max-width: 1025px) {
+    .change-password .card .card-body{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .dash-header h1 {
+        font-size: 25px;
+    }
+    main#main-vue-element {
+        padding: 15px 25px !important;
+    }
+    .card.p-5.user-info {
+        padding: 20px !important;
+    }
+    .signin .logo {
+        right: 15% !important;
+        left: unset !important;
+        top: 10% !important;
+    }
+    .signin .signin-form {
+        width: 85% !important;
+        padding: 50px 25px !important;
+    }
+    .change-password .card {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .change-password input.form-control {
+        font-size: 12px;
+    }
+    /* .course-cards.card-report.justify-content-center {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        margin: 0 0 10px;
+    } */
+    .navbar .navbar-toggler {
+        top: 20%;
+        left: 80px;
+        width: 30px;
+        height: 25px;
+        padding: 1px 6px;
+    }
+    .navbar-dark .navbar-brand {
+        color: #fff;
+        width: max-content;
+    }
+    .lms-header ul.navbar-nav li a.nav-link {
+        width: 40px;
+        height: 40px;
+    }
+    .course-cards > div {
+        display: inline-block;
+    }
+    .lms-header a.navbar-brand {
+        padding: 12px 10px !important;
+    }
+    .home-section {
+        margin-bottom: 15px !important;
+    }
+    .home-section .col-lg-6.mb-5.mb-lg-0{
+        margin-bottom: 0px !important;
+    }
+    .home-section .text-center.course-image.p-30 {
+        margin: 0 !important;
+        width: 100%;
+    }
+    /* .back_button {
+        width: 15% !important;
+    } */
+    .course-cards {
+        width: 48% !important;
+    }
+    main#main-vue-element{
+        padding: 0 !important;
+    }
+    .course_details .course-image{
+        box-shadow: none !important;
+    }
+    .course_info {
+        padding: 1% 5% !important;
+    }
+    /* .col-12.course_info {
+        padding: 0 35px !important;
+    } */
+    .course_info.mb-3.card.p-3 {
+        border: none;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 576px){
+    .navbar .navbar-toggler {
+        top: 20%;
+        left: 200px;
+        width: 30px;
+        height: 25px;
+        padding: 1px 6px;
+    }
+    .lms-header a.navbar-brand {
+        padding: 12px 17.4px !important;
+    }
+    .text-center.course-image.w-30.mb-4.mb-md-0 {
+        width: 100%;
+        border-radius: 0 !important;
+    }
+}
+
+@media (max-width: 576px){
+    .course-cards {
+        width: 100% !important;
+    }
+    /* .back_button {
+        width: 20% !important;
+    } */
+}
+
+/* End Media Query */

@@ -6,7 +6,7 @@
 
 @section('table')
 <div >
-    <div class="row">
+    <div class="row py-2">
         <div class="col-md-6" >
             <div class="card p-3 mb-3">
                 <form action="{{ route('training.importCourses') }}" method="POST" enctype="multipart/form-data">

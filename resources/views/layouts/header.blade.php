@@ -31,7 +31,7 @@
     </span> --}}
     <ul class="navbar-nav mx-0">
         <li  class="has-dropdown user">
-            <a onclick="this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link" href="#">
+            <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link" href="#">
                 <?php
                     $url = '';
                     if(auth()->user()->upload) {
@@ -119,3 +119,5 @@
         </li>
     </ul>
 </header>
+
+

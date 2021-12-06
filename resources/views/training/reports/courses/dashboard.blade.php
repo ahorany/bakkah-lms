@@ -6,6 +6,10 @@
             <div class="d-flex flex-column flex-sm-row flex-wrap">
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 00eb61c9530817bc4a51e1d47a9feeddec5868da
 
                 @if(isset($count))
                 <div class="course-cards card-report bg-third justify-content-center">
