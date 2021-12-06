@@ -394,12 +394,15 @@ button.next_prev {
     padding: 5px 10px;
     width: 75px;
     margin: 0 5px;
-    border: 1px solid;
+    border: 1px solid #7c9290;
+    color: #7c9290;
     text-align: center;
+    border-radius: 30px;
 }
 button.next_prev:hover {
-    background-color: #000;
+    background-color: #7c9290;
     color: #fff;
+    border: transparent;
 }
 
 /******************************************************************************************************************/
