@@ -144,6 +144,7 @@ return [
     'assigned_instructors'=>'Assigned Instructors',
     'groups'=>'Groups',
     'assigned_users'=>'Assigned Users',
+    'completed_learners' => 'Completed Learners',
 
 
 ];

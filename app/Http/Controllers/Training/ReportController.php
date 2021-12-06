@@ -68,10 +68,10 @@ class ReportController extends Controller
         $course_id = request()->id;
         $assigned_learners = DB::table('courses_registration')->where('course_id',$course_id)->where('role_id',3)->count();
         $assigned_instructors = DB::table('courses_registration')->where('course_id',$course_id)->where('role_id',2)->count();
-
+        $completed_learners = DB::table('courses_registration')->where('role_id',3)->where('progress',100)->count();
         $count = 1;
         $overview = 1;
-        return view('training.reports.courses.course_report',compact('course_id','overview','assigned_learners','count','assigned_instructors'));
+        return view('training.reports.courses.course_report',compact('completed_learners','course_id','overview','assigned_learners','count','assigned_instructors'));
 
     }
 
@@ -130,11 +130,13 @@ class ReportController extends Controller
     {
 
         $group_id = request()->id;
-        $users   = DB::table('courses_registration')
-                        ->where('group_id',$group_id)
-                        ->join('users','users.id','courses_registration.user_id')
-                        ->select('users.id','users.name','courses_registration.progress')
-                        ->orderBy('users.id')
+        // dd($group_id);
+        $users   = DB::table('user_groups')
+                        ->join('users','users.id','user_groups.user_id')
+                        ->join('role_user','role_user.user_id','users.id')
+                        ->join('roles','roles.id','role_user.role_id')
+                        ->where('user_groups.group_id',$group_id)
+                        ->select('users.id','users.name','roles.name as role_name','users.last_login')
                         ->get();
         // dd($users);
         return view('training.reports.groups.group_report',compact('group_id','users'));
@@ -145,13 +147,13 @@ class ReportController extends Controller
     {
 
         $group_id = request()->id;
-        $tests  = DB::table('contents')
-                        ->join('exams','exams.content_id','contents.id')
-                        ->join('courses','courses.id','contents.group_id')
-                        ->where('courses.id',$group_id)
-                        ->select('exams.id','contents.title as content_title')
+        $courses  = DB::table('course_groups')
+                        ->join('courses','courses.id','course_groups.course_id')
+                        ->where('course_groups.group_id',$group_id)
+                        ->select('courses.id','courses.title','courses.PDUs')
                         ->get();
-        return view('training.reports.groups.group_report',compact('group_id','tests'));
+        // dd($courses);
+        return view('training.reports.groups.group_report',compact('group_id','courses'));
 
     }
 

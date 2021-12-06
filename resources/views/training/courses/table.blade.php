@@ -20,6 +20,8 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
             <th class="">{{__('admin.assigned_learners')}}</th>
+            <th class="">{{__('admin.completed_learners')}}</th>
+
             <th class="">{{__('admin.pdu')}}</th>
             <th class="">{{__('admin.image')}}</th>
             {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
@@ -48,6 +50,16 @@ use App\Models\Training\CourseRegistration;
                     elseif($c->role_id == 3)
                         echo '<span class="badge-blue mr-1">Trainees '.$c->counts.'</span>';
             ?>
+        </td>
+        <td>
+            <?php
+            $completed_learners = DB::table('courses_registration')
+                                    ->where('course_id',$post->id)
+                                    ->where('role_id',3)
+                                    ->where('progress',100)->count();
+            ?>
+
+             <span class="td-title">{{$completed_learners}}</span>
         </td>
         <td>
             <span class="td-title">{{$post->PDUs}}</span>
