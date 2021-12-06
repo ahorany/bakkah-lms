@@ -494,16 +494,17 @@ class UserProfileController extends Controller
             }]);
         }])->first();
 
-        $video = DB::select(DB::raw("SELECT user_contents.id , contents.id as content_id, uploads.file FROM user_contents
+        $video = DB::select(DB::raw("SELECT user_contents.id ,contents.url as url, contents.id as content_id, uploads.file FROM user_contents
             INNER JOIN contents ON  contents.id = user_contents.content_id
-            INNER JOIN uploads  ON  contents.id = uploads.uploadable_id
+            LEFT JOIN uploads  ON  contents.id = uploads.uploadable_id
         WHERE user_contents.user_id = ".\auth()->id()."
-        AND uploads.uploadable_type = 'App\\\\Models\\\\Training\\\\Content'
+        AND (uploads.uploadable_type = 'App\\\\Models\\\\Training\\\\Content' OR contents.url IS NOT NULL)
         AND contents.post_type = 'video'
         AND contents.deleted_at IS NULL
         ORDER BY user_contents.id DESC LIMIT 1"));
 
         $last_video = $video[0]??null;
+//        dd($last_video);
         $next_videos = [];
         if($last_video){
             $next_videos = DB::select(DB::raw("SELECT contents.id ,contents.title  FROM contents

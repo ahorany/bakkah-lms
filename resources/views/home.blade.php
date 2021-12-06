@@ -391,9 +391,19 @@
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="card h-100 p-30">
                     <h3>{{ __('education.Last Video View') }}</h3>
-                    <video controls controlsList="nodownload">
-                        <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
-                    </video>
+                    @if($last_video->url == null)
+                        <video controls controlsList="nodownload">
+                            <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
+                        </video>
+                    @else
+                        <?php
+                        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $last_video->url, $match)) {
+                            $video_id = $match[1]??null;
+                        }
+                        ?>
+                        <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
+
+                    @endif
                 </div>
             </div>
 

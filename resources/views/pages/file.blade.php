@@ -112,6 +112,7 @@
                     }
                     ?>
                     <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
+
                 @endif
             </div>
         </div>
