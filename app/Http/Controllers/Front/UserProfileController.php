@@ -394,7 +394,6 @@ class UserProfileController extends Controller
 
         $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
                                                             FROM contents
-
                                                             WHERE   course_id =". $content->course_id ." AND parent_id IS NOT NULL AND  deleted_at IS NULL"));
         $contents_count = $contents_count[0]->contents_count??0;
 
