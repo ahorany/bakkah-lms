@@ -13,9 +13,6 @@
                         <span>{{__('admin.courses')}}</span>
                         <b>{{$count}}</b>
                     </div>
-<<<<<<< HEAD
-
-=======
                 </div>
 
                 <div class="course-cards card-report bg-third justify-content-center">
@@ -31,7 +28,6 @@
                         <b>{{$completed_learners}}</b>
 
                     </div>
->>>>>>> ebfa83d626e052ac7948ca1fc4cede51691b6ded
                 </div>
             @endif
 
