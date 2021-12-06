@@ -10,7 +10,14 @@
         <div class="row align-items-center">
             <div class="col-lg-8">
                 <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
-                <p class="lead">{{auth()->user()->bio}} </p>
+                <p class="lead">
+                    {{-- {{auth()->user()->bio}} --}}
+                    Welcome to Bakkah Learning Management System!
+
+                    We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for students of all backgrounds and abilities.
+
+                    A lot of Knowledge & fun are waiting for you, so let's get started :)
+                </p>
             </div>
 
             {{-- @include('scorm') --}}
