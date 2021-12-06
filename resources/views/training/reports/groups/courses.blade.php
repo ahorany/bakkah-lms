@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
     <table class="table table-hover table-condensed text-center">
       <thead>
         <tr>
+
             <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.test')}}</th>
             <th class="">{{__('admin.completed')}}</th>
