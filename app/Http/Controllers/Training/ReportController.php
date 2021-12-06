@@ -108,8 +108,21 @@ class ReportController extends Controller
         $count =1;
         $assigned_users     = DB::table('user_groups')->where('group_id',$group_id)->count(DB::raw('DISTINCT user_id'));
         $assigned_courses   = DB::table('course_groups')->where('group_id',$group_id)->count(DB::raw('DISTINCT course_id'));
+        $completed_courses  = DB::table('user_groups')
+        ->join('course_groups', function ($join) use($group_id) {
+            $join->on('course_groups.group_id', '=', 'user_groups.group_id')
+                 ->where('user_groups.role_id',3)
+                 ->where('user_groups.group_id',$group_id)
+                 ->where('course_groups.group_id',$group_id);
+        })
+        ->join('courses_registration as cr1', function ($join) {
+            $join->on('cr1.course_id', '=', 'course_groups.course_id')
+                 ->where('cr1.progress',100);
+        })
+        ->join('courses_registration as cr2','cr2.user_id','user_groups.user_id')
+        ->count(DB::raw('DISTINCT cr1.id'));
         $overview = 1;
-        return view('training.reports.groups.group_report',compact('group_id','overview','assigned_users','count','assigned_courses'));
+        return view('training.reports.groups.group_report',compact('group_id','overview','assigned_users','count','assigned_courses','completed_courses'));
 
     }
 
