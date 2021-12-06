@@ -4,14 +4,20 @@
         <div class="card h-100 justify-content-center p-30">
 
             <div class="d-flex flex-column flex-sm-row flex-wrap">
-
-<<<<<<< HEAD
-                @if(isset($completed_learners))
-=======
-
-
                 @if(isset($count))
->>>>>>> ac5558e7ce74f369129a3267b121174a8c53d6fc
+                <div class="course-cards card-report bg-four justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="71.3" viewBox="0 0 71.3 71.3">
+                        <path id="Path_164" data-name="Path 164" d="M254.387,629.475h-8.913v8.912a8.91,8.91,0,0,1-8.912,8.913h-35.65A8.91,8.91,0,0,1,192,638.387v-35.65a8.91,8.91,0,0,1,8.913-8.912h8.913v-8.913A8.91,8.91,0,0,1,218.737,576h35.65a8.91,8.91,0,0,1,8.912,8.912v35.65a8.91,8.91,0,0,1-8.912,8.913Zm-53.475,8.912h35.65v-35.65h-35.65v35.65Zm53.475-53.475h-35.65v8.913h17.825a8.91,8.91,0,0,1,8.912,8.912v17.825h8.913v-35.65Z" transform="translate(-192 -576)" fill="#fff" fill-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span>{{__('admin.courses')}}</span>
+                        <b>{{$count}}</b>
+                    </div>
+
+                </div>
+            @endif
+
+            @if(isset($count))
                 <div class="course-cards card-report bg-third justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report" id="bg-two" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                         <g>
@@ -26,22 +32,10 @@
 
                     </div>
                 </div>
-                @endif
+            @endif
 
-                @if(isset($count))
+            @if(isset($assigned_learners))
                 <div class="course-cards card-report bg-five justify-content-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="71.3" viewBox="0 0 71.3 71.3">
-                        <path id="Path_164" data-name="Path 164" d="M254.387,629.475h-8.913v8.912a8.91,8.91,0,0,1-8.912,8.913h-35.65A8.91,8.91,0,0,1,192,638.387v-35.65a8.91,8.91,0,0,1,8.913-8.912h8.913v-8.913A8.91,8.91,0,0,1,218.737,576h35.65a8.91,8.91,0,0,1,8.912,8.912v35.65a8.91,8.91,0,0,1-8.912,8.913Zm-53.475,8.912h35.65v-35.65h-35.65v35.65Zm53.475-53.475h-35.65v8.913h17.825a8.91,8.91,0,0,1,8.912,8.912v17.825h8.913v-35.65Z" transform="translate(-192 -576)" fill="#fff" fill-rule="evenodd"></path>
-                    </svg>
-                    <div>
-                        <span>{{__('admin.courses')}}</span>
-                        <b>{{$count}}</b>
-                    </div>
-
-                </div>
-                @endif
-                @if(isset($assigned_learners))
-                <div class="course-cards card-report bg-four justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049">
                         <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
                           <g id="Group_319" data-name="Group 319" transform="translate(448.818 -55.416)">
@@ -59,12 +53,10 @@
                         <b>{{$assigned_learners}}</b>
                     </div>
                 </div>
-                @endif
+            @endif
 
-
-
-                @if(isset($assigned_instructors))
-                <div class="course-cards card-report bg-four justify-content-center">
+            @if(isset($assigned_instructors))
+                <div class="course-cards card-report bg-five justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049">
                         <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
                           <g id="Group_319" data-name="Group 319" transform="translate(448.818 -55.416)">
@@ -82,13 +74,9 @@
                        <b>{{$assigned_instructors}}</b>
                    </div>
                </div>
-               @endif
-
+            @endif
 
             </div>
-
         </div>
-
     </div>
-
 </div>
