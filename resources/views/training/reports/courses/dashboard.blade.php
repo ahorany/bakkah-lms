@@ -13,10 +13,6 @@
                         <span>{{__('admin.courses')}}</span>
                         <b>{{$count}}</b>
                     </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> ac70a010f85fa17483f521695a21e76379b7afa4
                 </div>
 
                 <div class="course-cards card-report bg-third justify-content-center">
