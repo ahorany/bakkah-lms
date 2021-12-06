@@ -88,9 +88,9 @@
                             src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
                             <?php
-                            $user_id = sprintf("%'.09d", auth()->user()->id);
-                            $content_id = sprintf("%'.09d", $content->id);
-                            $SCOInstanceID = '1'.$user_id.'2'.$content_id;
+                            $user_id = sprintf("%'.06d", auth()->user()->id);
+                            $content_id = sprintf("%'.05d", $content->id);
+                            $SCOInstanceID = (1).$user_id.(2).$content_id;
                             ?>
                             <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}" name="API" style="display: none;"></iframe>
                             <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
