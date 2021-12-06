@@ -192,13 +192,18 @@
                 <div class="col-lg-4 course_info">
                     <div class="card p-30 activity">
                         <h2>Activity</h2>
-                        {{--<ul>
-                            <li>Lean Six Sigma Yellow belt training provides insight to the methodology for process
-                                improvement, tools and techniques of Six Sigma.</li>
-                        </ul>--}}
+                        <ul>
+                            <?php $lang = app()->getLocale(); ?>
+                            @foreach($activities as $activity)
+                               <li><a href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                                  <div>Start Date: {{$activity->start_date}}</div>
+                                  <div>End Date: {{$activity->end_date}}</div>
+                               </li>
+                            @endforeach
+                        </ul>
                     </div>
 
-                    {{--<div class="d-flex justify-content-between mt-5 course-group">
+                    <div class="d-flex justify-content-between mt-5 course-group">
                         <div class="persons card p-20">
                             <h3 class="mt-0">Course Group</h3>
                             <!-- <small>Lean Six Sigma Yellow belt training provides insight to the </small> -->
@@ -216,7 +221,7 @@
                             <span>New Student</span>
                             <b>12</b>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         @endif

@@ -350,7 +350,24 @@ class UserProfileController extends Controller
         $total_rate = DB::select(DB::raw('SELECT AVG(rate) as total_rate FROM `courses_registration` WHERE course_id =' .$course->id));
         $total_rate = $total_rate[0]->total_rate??0;
 
-        return view('pages.course_details',compact('course','total_rate'));
+        $date_now = Carbon::now();
+        $user_id = \auth()->id();
+
+        $activities = DB::select(DB::raw("SELECT contents.id as content_id,contents.post_type as type,
+                                                exams.start_date as start_date,exams.end_date as end_date,
+                                                courses.title as course_title,contents.title as content_title FROM contents
+                                    INNER JOIN exams ON exams.content_id = contents.id
+                                    INNER JOIN courses ON contents.course_id = courses.id
+                                    INNER JOIN courses_registration ON courses_registration.course_id = courses.id
+                                    WHERE
+                                    contents.post_type=\"exam\"
+                                    AND
+                                    contents.deleted_at IS NULL
+                                    AND
+                                     courses_registration.user_id = $user_id
+                                    AND (exams.end_date > '$date_now' OR exams.end_date IS NULL)
+                          "));
+        return view('pages.course_details',compact('course','total_rate','activities'));
     }
 
     public function course_preview($content_id){
@@ -394,7 +411,6 @@ class UserProfileController extends Controller
 
         $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
                                                             FROM contents
-
                                                             WHERE   course_id =". $content->course_id ." AND parent_id IS NOT NULL AND  deleted_at IS NULL"));
         $contents_count = $contents_count[0]->contents_count??0;
 
@@ -510,10 +526,25 @@ class UserProfileController extends Controller
                                                         ORDER By status
 "));
 
+        $date_now = Carbon::now();
+        $user_id = \auth()->id();
 
+        $activities = DB::select(DB::raw("SELECT contents.id as content_id,contents.post_type as type,
+                                                exams.start_date as start_date,exams.end_date as end_date,
+                                                courses.title as course_title,contents.title as content_title FROM contents
+                                    INNER JOIN exams ON exams.content_id = contents.id
+                                    INNER JOIN courses ON contents.course_id = courses.id
+                                    INNER JOIN courses_registration ON courses_registration.course_id = courses.id
+                                    WHERE
+                                    contents.post_type=\"exam\"
+                                    AND
+                                    contents.deleted_at IS NULL
+                                    AND
+                                     courses_registration.user_id = $user_id
+                                    AND (exams.end_date > '$date_now' OR exams.end_date IS NULL)
+                          "));
 
-
-        return view('home',compact('complete_courses','courses','last_video','next_videos'));
+        return view('home',compact('complete_courses','courses','last_video','next_videos','activities'));
 
     }
 
