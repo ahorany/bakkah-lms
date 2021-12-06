@@ -1,8 +1,18 @@
+h1 , h2 , h3 , h4 , h5 ,h6,
+a, span , p , label, div{
+    text-transform: capitalize !important;
+}
 .bg-one {
     background: #6a6a6a;
 }
 .bg-two {
     background: #fc991e;
+}
+.bg-four {
+    background: #65aa74;
+}
+.bg-five {
+    background: #6597aa;
 }
 .card {
     box-shadow: 0 0 20px rgb(127 170 203 / 5%);
@@ -186,6 +196,7 @@ ol.answers li{
 }
 
 @media (max-width: 768px) {
+
     .dash-header h1 {
         font-size: 25px;
     }
@@ -193,7 +204,7 @@ ol.answers li{
         padding: 15px 25px !important;
     }
     .card.p-5.user-info {
-        padding: 0px 15px !important;
+        padding: 15px !important;
     }
     .signin .logo {
         right: 15% !important;
@@ -237,6 +248,23 @@ ol.answers li{
     }
     .lms-header a.navbar-brand {
         padding: 12px 10px !important;
+    }
+    /***********************/
+    /* main#main-vue-element {
+        padding: 15px 0 !important;
+    } */
+    .home-section {
+        margin-bottom: 15px !important;
+    }
+    .home-section .col-lg-6.mb-5.mb-lg-0{
+        margin-bottom: 0px !important;
+    }
+    .home-section .text-center.course-image.p-30 {
+        margin: 0 !important;
+        width: 100%;
+    }
+    .back_button{
+        width: 30% !important;
     }
 }
 
@@ -425,4 +453,20 @@ ol.answers li{
 .lms-header ul.navbar-nav li.user a svg
 {
     margin: 0;
+}
+svg#back{
+    fill: #fb4400;
+}
+a:hover svg#back{
+    fill: #fff;
+    background: #fb4400;
+}
+.icon-report{
+    fill: #fff !important;
+}
+.icon-report image{
+    filter: invert(1);
+}
+.home-section .course-cards{
+    width: 23%;
 }

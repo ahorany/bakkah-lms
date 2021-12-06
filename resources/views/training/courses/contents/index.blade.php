@@ -57,11 +57,11 @@
                             </div>
                             <div class="mt-3 col-md-12 col-lg-12">
                                 <div>
-                                    <button type="button" @click="OpenModal('video',content.id)" class="badge cyan" id="video" ><i class="fa fa-video-camera" aria-hidden="true"></i> {{__('admin.video')}}</button>
-                                    <button type="button" @click="OpenModal('audio',content.id)" class="badge cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                                    <button type="button" @click="OpenModal('presentation',content.id)" class="badge cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
-                                    <button type="button" @click="OpenModal('scorm',content.id)" class="badge cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
-                                    <button  type="button" @click="OpenModal('exam',content.id)" class="badge cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
+                                    <button style="font-size: 90%;" type="button" @click="OpenModal('video',content.id)" class="cyan" id="video" ><i class="fa fa-video-camera" aria-hidden="true"></i> {{__('admin.video')}}</button>
+                                    <button style="font-size: 90%;" type="button" @click="OpenModal('audio',content.id)" class="cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+                                    <button style="font-size: 90%;" type="button" @click="OpenModal('presentation',content.id)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
+                                    <button style="font-size: 90%;" type="button" @click="OpenModal('scorm',content.id)" class="cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
+                                    <button style="font-size: 90%;" type="button" @click="OpenModal('exam',content.id)" class="cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -88,14 +88,14 @@
                                     <span v-if="entry.post_type == 'audio'" class="badge badge-warning">@{{entry.post_type}}</span>
                                     <span v-if="entry.post_type == 'presentation'" class="badge badge-success">@{{entry.post_type}}</span>
                                     <span v-if="entry.post_type == 'exam'" class="badge badge-info">@{{entry.post_type}}</span>
+                                    <span v-if="entry.post_type == 'exam'" class="badge badge-secondary">Questions Count : ( @{{entry.questions_count}} )</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">
+                                        <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
                                         <a v-if="entry.post_type == 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + entry.id" :target="entry.id">
                                             <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                                         </a>
-                                        <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
-
                                         <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
                                             <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                                         </a>

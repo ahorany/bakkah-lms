@@ -16,7 +16,7 @@ class Group extends Model
     protected $guarded = [];
 
     public function users(){
-        return $this->belongsToMany(User::class,'user_groups','group_id')->withPivot('user_id' ,'group_id');
+        return $this->belongsToMany(User::class,'user_groups','group_id')->withPivot('user_id' ,'group_id','role_id');
     }
 
     public function courses(){

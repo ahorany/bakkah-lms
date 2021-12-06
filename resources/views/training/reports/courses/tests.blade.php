@@ -2,6 +2,11 @@
 use App\Models\Training\CourseRegistration;
 use Illuminate\Support\Facades\DB;
 ?>
+
+@section('useHead')
+    <title>{{__('education.Course Tests')}} | {{ __('home.DC_title') }}</title>
+@endsection
+
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center">
       <thead>

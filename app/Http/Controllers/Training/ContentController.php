@@ -23,10 +23,9 @@ class ContentController extends Controller
         $contents = Content::where('course_id',$course_id)
             ->whereNull('parent_id')
             ->with(['contents' => function($q){
-                $q->with(['upload','details','exam'])->orderBy('id');
+                $q->with(['upload','details','exam'])->withCount('questions')->orderBy('id');
             },'details','exams'])
             ->orderBy('id')
-//            ->latest()
             ->get();
 //        return $contents;
         return view('training.courses.contents.index', compact('course', 'contents'));
