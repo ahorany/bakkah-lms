@@ -93,7 +93,7 @@
             </div>
 
             <li class="has-dropdown user course-details" style="list-style: none;">
-                <a onclick="this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link main-button btn btn-primary" href="#">
+                <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link main-button btn btn-primary" href="#">
                     {{__('education.Add a Review')}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
                         <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"
