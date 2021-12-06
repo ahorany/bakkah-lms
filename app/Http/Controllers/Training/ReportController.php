@@ -101,6 +101,48 @@ class ReportController extends Controller
 
     }
 
+    public function groupReportOverview()
+    {
+
+        $group_id = request()->id;
+        $count =1;
+        $assigned_users     = DB::table('user_groups')->where('group_id',$group_id)->count(DB::raw('DISTINCT user_id'));
+        $assigned_courses   = DB::table('course_groups')->where('group_id',$group_id)->count(DB::raw('DISTINCT course_id'));
+        $overview = 1;
+        return view('training.reports.groups.group_report',compact('group_id','overview','assigned_users','count','assigned_courses'));
+
+    }
+
+    public function groupsReportUser()
+    {
+
+        $group_id = request()->id;
+        $users   = DB::table('courses_registration')
+                        ->where('group_id',$group_id)
+                        ->join('users','users.id','courses_registration.user_id')
+                        ->select('users.id','users.name','courses_registration.progress')
+                        ->orderBy('users.id')
+                        ->get();
+        // dd($users);
+        return view('training.reports.groups.group_report',compact('group_id','users'));
+
+    }
+
+    public function groupsReporcourse()
+    {
+
+        $group_id = request()->id;
+        $tests  = DB::table('contents')
+                        ->join('exams','exams.content_id','contents.id')
+                        ->join('courses','courses.id','contents.group_id')
+                        ->where('courses.id',$group_id)
+                        ->select('exams.id','contents.title as content_title')
+                        ->get();
+        return view('training.reports.groups.group_report',compact('group_id','tests'));
+
+    }
+
+
 
 
 

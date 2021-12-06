@@ -31,6 +31,11 @@ class GroupController extends Controller
 
         $assigned_users     = DB::table('user_groups')->count(DB::raw('DISTINCT user_id'));
         $assigned_courses   = DB::table('course_groups')->count(DB::raw('DISTINCT course_id'));
+        $completed_courses  = DB::table('user_groups')
+                                    ->join('course_groups','course_groups.group_id','user_groups.group_id')
+                                    ->join('courses_registration','courses_registration.course_id','course_groups.course_id')
+                                    ->join('courses_registration','courses_registration.course_id','course_groups.course_id')
+                                    ->count(DB::raw('DISTINCT course_id'));
 
         return Active::Index(compact('groups', 'count', 'post_type', 'trash','assigned_users','assigned_courses'));
     }

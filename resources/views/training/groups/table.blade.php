@@ -9,14 +9,12 @@
     <table class="table table-hover table-condensed">
       <thead>
         <tr>
-
             <th class="">{{__('admin.index')}} </th>
             <th class="">{{__('admin.name')}} </th>
             <th class="">{{__('admin.title')}} </th>
             <th class="img-table d-none d-sm-table-cell">{{__('admin.image')}} </th>
             <th class="d-none d-sm-table-cell user-td">{{__('admin.user')}} </th>
             <th class="img-table d-none d-sm-table-cell text-center">{{__('admin.action')}} </th>
-
         </tr>
       </thead>
       <tbody>
@@ -44,7 +42,7 @@
               {!!Builder::BtnGroupRows($group->name, $group->id, [], [
             'post'=>$group->id,
          ])!!}
-
+                <a href="{{route('training.groupReportOverview',['id'=>$group->id])}}" target="blank" class="cyan my-1" ><i class="fa fa-pencil"></i> Report</a>
               <div class="my-2">
                  <a class="green" href="{{route('training.group_users',['group_id' => $group->id])}}">Users</a>
                  <a class="green" href="{{route('training.group_courses',['group_id' => $group->id])}}">Courses</a>
