@@ -39,19 +39,27 @@
             <div class="card h-100 justify-content-center p-30">
 
                 <div class="d-flex flex-column flex-sm-row flex-wrap">
-                    <div class="course-cards bg-third">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report" id="bg-two" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
-                            <g>
-                                <path d="M31.97,55.25c-1.12,0-2.24,0-3.35,0c-0.16-0.03-0.32-0.07-0.48-0.1c-1.02-0.15-2.06-0.22-3.06-0.44   c-5.29-1.14-9.78-3.71-13.43-7.7c-3.29-3.6-5.38-7.8-6.21-12.61c-0.16-0.9-0.26-1.81-0.39-2.71c0-1.12,0-2.23,0-3.35   c0.03-0.14,0.07-0.28,0.09-0.42c0.11-0.86,0.17-1.73,0.34-2.58c1.24-6.24,4.33-11.37,9.37-15.25c5.96-4.6,12.73-6.22,20.12-4.86   c6.2,1.13,11.29,4.26,15.17,9.23c4.68,6,6.33,12.81,4.95,20.28c-1.14,6.18-4.29,11.22-9.21,15.13c-3.3,2.62-7.03,4.3-11.19,5.01   C33.78,55.01,32.87,55.12,31.97,55.25z M51.39,29.99C51.38,18.41,41.86,8.91,30.29,8.91C18.71,8.91,9.2,18.42,9.19,30   c-0.01,11.59,9.55,21.14,21.13,21.11C41.91,51.08,51.41,41.56,51.39,29.99z"/>
-                                <path d="M26.32,35.36c0.13-0.19,0.22-0.37,0.36-0.51c4.77-4.78,9.55-9.55,14.32-14.33c0.55-0.55,1.16-0.9,1.97-0.78   c0.78,0.11,1.33,0.54,1.63,1.26c0.31,0.72,0.2,1.41-0.27,2.04c-0.14,0.18-0.3,0.35-0.46,0.51C38.57,28.84,33.28,34.12,28,39.4   c-1.23,1.23-2.31,1.23-3.53,0.02c-2.64-2.64-5.28-5.27-7.91-7.91c-1.08-1.09-0.93-2.69,0.32-3.39c0.78-0.44,1.54-0.38,2.26,0.14   c0.19,0.13,0.35,0.3,0.51,0.46c2.06,2.05,4.11,4.11,6.17,6.17C25.95,35.01,26.08,35.13,26.32,35.36z"/>
+
+                    <div class="course-cards bg-four">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049">
+                            <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
+                                <g id="Group_319" data-name="Group 319" transform="translate(448.818 -55.416)">
+                                    <g id="Group_176" data-name="Group 176" transform="translate(0 0)">
+                                        <path id="Path_166" data-name="Path 166" d="M512.178,34.445H472.911a2.768,2.768,0,0,1-2.4-1.384L450.88-.946a2.77,2.77,0,0,1,0-2.768L470.514-37.72a2.768,2.768,0,0,1,2.4-1.384h39.267a2.766,2.766,0,0,1,2.4,1.384L534.21-3.714a2.77,2.77,0,0,1,0,2.768L514.576,33.061A2.766,2.766,0,0,1,512.178,34.445ZM474.51,28.909h36.071L528.615-2.33,510.581-33.568H474.51L456.474-2.33Z" transform="translate(-450.509 39.104)" fill="#fff" stroke="#fff" stroke-width="1.5"/>
+                                    </g>
+                                    <g id="Group_177" data-name="Group 177" transform="translate(17.687 12.156)">
+                                        <path id="Path_167" data-name="Path 167" d="M500.974,16.264a2.769,2.769,0,0,1-1.289-.318L487.638,9.61l-12.05,6.335a2.767,2.767,0,0,1-4.016-2.918l2.3-13.418-9.748-9.5a2.766,2.766,0,0,1-.7-2.837,2.77,2.77,0,0,1,2.235-1.884l13.471-1.958,6.025-12.206a2.769,2.769,0,0,1,2.483-1.543h0a2.767,2.767,0,0,1,2.482,1.543l6.025,12.206,13.471,1.958a2.766,2.766,0,0,1,2.235,1.884,2.768,2.768,0,0,1-.7,2.837L501.4-.391l2.235,13.035A2.771,2.771,0,0,1,501,16.264.182.182,0,0,0,500.974,16.264ZM472-9.942l6.774,6.6a2.767,2.767,0,0,1,.8,2.45l-1.6,9.324,8.374-4.4a2.778,2.778,0,0,1,2.576,0l8.374,4.4L495.7-.889a2.766,2.766,0,0,1,.8-2.45l6.774-6.6L493.908-11.3a2.773,2.773,0,0,1-2.084-1.514L487.638-21.3l-4.187,8.483a2.773,2.773,0,0,1-2.084,1.514Z" transform="translate(-463.288 30.321)" fill="#fff" stroke="#fff" stroke-width="0.5"/>
+                                    </g>
+                                </g>
                             </g>
                         </svg>
-                        <div>
 
-                            <span>Course Completed</span>
-                            <b>{{ getReportNumber($complete_courses,1)  }}</b>
+                        <div>
+                            <span>Your Courses</span>
+                            <b>{{count($courses->courses)}}</b>
                         </div>
                     </div>
+
 
                     <div class="course-cards bg-one">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report" id="bg-one" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
@@ -82,36 +90,32 @@
                         </div>
                     </div>
 
-                    <div class="course-cards bg-four">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049">
-                            <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
-                              <g id="Group_319" data-name="Group 319" transform="translate(448.818 -55.416)">
-                                <g id="Group_176" data-name="Group 176" transform="translate(0 0)">
-                                  <path id="Path_166" data-name="Path 166" d="M512.178,34.445H472.911a2.768,2.768,0,0,1-2.4-1.384L450.88-.946a2.77,2.77,0,0,1,0-2.768L470.514-37.72a2.768,2.768,0,0,1,2.4-1.384h39.267a2.766,2.766,0,0,1,2.4,1.384L534.21-3.714a2.77,2.77,0,0,1,0,2.768L514.576,33.061A2.766,2.766,0,0,1,512.178,34.445ZM474.51,28.909h36.071L528.615-2.33,510.581-33.568H474.51L456.474-2.33Z" transform="translate(-450.509 39.104)" fill="#fff" stroke="#fff" stroke-width="1.5"/>
-                                </g>
-                                <g id="Group_177" data-name="Group 177" transform="translate(17.687 12.156)">
-                                  <path id="Path_167" data-name="Path 167" d="M500.974,16.264a2.769,2.769,0,0,1-1.289-.318L487.638,9.61l-12.05,6.335a2.767,2.767,0,0,1-4.016-2.918l2.3-13.418-9.748-9.5a2.766,2.766,0,0,1-.7-2.837,2.77,2.77,0,0,1,2.235-1.884l13.471-1.958,6.025-12.206a2.769,2.769,0,0,1,2.483-1.543h0a2.767,2.767,0,0,1,2.482,1.543l6.025,12.206,13.471,1.958a2.766,2.766,0,0,1,2.235,1.884,2.768,2.768,0,0,1-.7,2.837L501.4-.391l2.235,13.035A2.771,2.771,0,0,1,501,16.264.182.182,0,0,0,500.974,16.264ZM472-9.942l6.774,6.6a2.767,2.767,0,0,1,.8,2.45l-1.6,9.324,8.374-4.4a2.778,2.778,0,0,1,2.576,0l8.374,4.4L495.7-.889a2.766,2.766,0,0,1,.8-2.45l6.774-6.6L493.908-11.3a2.773,2.773,0,0,1-2.084-1.514L487.638-21.3l-4.187,8.483a2.773,2.773,0,0,1-2.084,1.514Z" transform="translate(-463.288 30.321)" fill="#fff" stroke="#fff" stroke-width="0.5"/>
-                                </g>
-                              </g>
-                            </g>
-                          </svg>
 
+                    <div class="course-cards bg-third">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report" id="bg-two" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+                            <g>
+                                <path d="M31.97,55.25c-1.12,0-2.24,0-3.35,0c-0.16-0.03-0.32-0.07-0.48-0.1c-1.02-0.15-2.06-0.22-3.06-0.44   c-5.29-1.14-9.78-3.71-13.43-7.7c-3.29-3.6-5.38-7.8-6.21-12.61c-0.16-0.9-0.26-1.81-0.39-2.71c0-1.12,0-2.23,0-3.35   c0.03-0.14,0.07-0.28,0.09-0.42c0.11-0.86,0.17-1.73,0.34-2.58c1.24-6.24,4.33-11.37,9.37-15.25c5.96-4.6,12.73-6.22,20.12-4.86   c6.2,1.13,11.29,4.26,15.17,9.23c4.68,6,6.33,12.81,4.95,20.28c-1.14,6.18-4.29,11.22-9.21,15.13c-3.3,2.62-7.03,4.3-11.19,5.01   C33.78,55.01,32.87,55.12,31.97,55.25z M51.39,29.99C51.38,18.41,41.86,8.91,30.29,8.91C18.71,8.91,9.2,18.42,9.19,30   c-0.01,11.59,9.55,21.14,21.13,21.11C41.91,51.08,51.41,41.56,51.39,29.99z"/>
+                                <path d="M26.32,35.36c0.13-0.19,0.22-0.37,0.36-0.51c4.77-4.78,9.55-9.55,14.32-14.33c0.55-0.55,1.16-0.9,1.97-0.78   c0.78,0.11,1.33,0.54,1.63,1.26c0.31,0.72,0.2,1.41-0.27,2.04c-0.14,0.18-0.3,0.35-0.46,0.51C38.57,28.84,33.28,34.12,28,39.4   c-1.23,1.23-2.31,1.23-3.53,0.02c-2.64-2.64-5.28-5.27-7.91-7.91c-1.08-1.09-0.93-2.69,0.32-3.39c0.78-0.44,1.54-0.38,2.26,0.14   c0.19,0.13,0.35,0.3,0.51,0.46c2.06,2.05,4.11,4.11,6.17,6.17C25.95,35.01,26.08,35.13,26.32,35.36z"/>
+                            </g>
+                        </svg>
                         <div>
-                            <span>Your Courses</span>
-                            <b>{{count($courses->courses)}}</b>
+
+                            <span>Course Completed</span>
+                            <b>{{ getReportNumber($complete_courses,1)  }}</b>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
-        {{-- <div class="col-lg-6 mb-5 mb-xl-0">
-            <div class="card p-30">
-                <div class="line-chart">
-                    <h3>Learning Time Overview</h3>
-                    <canvas class="w-100" id="myChart" height="250"></canvas>
-                </div>
-            </div>
-        </div> --}}
+{{--         <div class="col-lg-6 mb-5 mb-xl-0">--}}
+{{--            <div class="card p-30">--}}
+{{--                <div class="line-chart">--}}
+{{--                    <h3>Learning Time Overview</h3>--}}
+{{--                    <canvas class="w-100" id="myChart" height="250"></canvas>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
 
     @if (count($courses->courses) > 0)
@@ -157,42 +161,7 @@
         </div>
     @endif
 
-    @if($last_video)
-        <div class="row mb-5 home-section">
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <div class="card h-100 p-30">
-                    <h3>{{ __('education.Last Video View') }}</h3>
-                    <video controls controlsList="nodownload">
-                        <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
-                    </video>
-                </div>
-            </div>
-
-            @if(count($next_videos) >0 )
-                <div class="col-lg-6">
-                    <div class="card p-30">
-                        <h3>{{ __('education.Next Video') }}</h3>
-                        <ul class="video-list">
-                            @foreach($next_videos as $next_video)
-                            <li>
-                                <div class="play">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="17.325" height="19.732" viewBox="0 0 17.325 19.732">
-                                        <path id="Path_92" data-name="Path 92" d="M1586.871,1153.329V1133.6l17.325,9.8Z" transform="translate(-1586.871 -1133.597)" fill="#fff"/>
-                                    </svg>
-                                </div>
-                                <div class="text">
-                                    <h5><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </h5>
-                                </div>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            @endif
-        </div>
-    @endif
-
-{{--    <div class="row mb-5">--}}
+    <div class="row mb-5">
 {{--        <div class="col-xl-6 d-flex flex-column justify-content-between mb-4 mb-xl-0">--}}
 {{--            <div class="card p-30 mb-4">--}}
 {{--                <h3>Badges</h3>--}}
@@ -313,286 +282,366 @@
 {{--                </div>--}}
 {{--            </div>--}}
 {{--        </div>--}}
-{{--        <div class="col-xl-6">--}}
-{{--            <div class="card h-100 calendar">--}}
-{{--                <div class="sideb">--}}
-{{--                    <div class="header">--}}
-{{--                        <i class="fa fa-angle-left" aria-hidden="true">--}}
-{{--                            <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">--}}
-{{--                                <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#333"/>--}}
-{{--                              </svg>--}}
 
-{{--                        </i>--}}
-{{--                        <h3>--}}
-{{--                            <span class="month"></span>--}}
-{{--                            <span class="year"></span>--}}
-{{--                        </h3>--}}
-{{--                        <i class="fa fa-angle-right" aria-hidden="true"><svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">--}}
-{{--                            <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#333"/>--}}
-{{--                          </svg>--}}
-{{--                          </i>--}}
-{{--                    </div>--}}
-{{--                    <div class="calender">--}}
-{{--                        <table>--}}
-{{--                            <thead>--}}
-{{--                                <tr class="weedays">--}}
-{{--                                    <th data-weekday="sun" data-column="0">Sun</th>--}}
-{{--                                    <th data-weekday="mon" data-column="1">Mon</th>--}}
-{{--                                    <th data-weekday="tue" data-column="2">Tue</th>--}}
-{{--                                    <th data-weekday="wed" data-column="3">Wed</th>--}}
-{{--                                    <th data-weekday="thu" data-column="4">Thu</th>--}}
-{{--                                    <th data-weekday="fri" data-column="5">Fri</th>--}}
-{{--                                    <th data-weekday="sat" data-column="6">Sat</th>--}}
-{{--                                </tr>--}}
-{{--                            </thead>--}}
-{{--                            <tbody>--}}
-{{--                                <tr class="days" data-row="0">--}}
-{{--                                    <td data-column="0"></td>--}}
-{{--                                    <td data-column="1"></td>--}}
-{{--                                    <td data-column="2"></td>--}}
-{{--                                    <td data-column="3"></td>--}}
-{{--                                    <td data-column="4"></td>--}}
-{{--                                    <td data-column="5"></td>--}}
-{{--                                    <td data-column="6"></td>--}}
-{{--                                </tr>--}}
-{{--                                <tr class="days" data-row="1">--}}
-{{--                                    <td data-column="0"></td>--}}
-{{--                                    <td data-column="1"></td>--}}
-{{--                                    <td data-column="2"></td>--}}
-{{--                                    <td data-column="3"></td>--}}
-{{--                                    <td data-column="4"></td>--}}
-{{--                                    <td data-column="5"></td>--}}
-{{--                                    <td data-column="6"></td>--}}
-{{--                                </tr>--}}
-{{--                                <tr class="days" data-row="2">--}}
-{{--                                    <td data-column="0"></td>--}}
-{{--                                    <td data-column="1"></td>--}}
-{{--                                    <td data-column="2"></td>--}}
-{{--                                    <td data-column="3"></td>--}}
-{{--                                    <td data-column="4"></td>--}}
-{{--                                    <td data-column="5"></td>--}}
-{{--                                    <td data-column="6"></td>--}}
-{{--                                </tr>--}}
-{{--                                <tr class="days" data-row="3">--}}
-{{--                                    <td data-column="0"></td>--}}
-{{--                                    <td data-column="1"></td>--}}
-{{--                                    <td data-column="2"></td>--}}
-{{--                                    <td data-column="3"></td>--}}
-{{--                                    <td data-column="4"></td>--}}
-{{--                                    <td data-column="5"></td>--}}
-{{--                                    <td data-column="6"></td>--}}
-{{--                                </tr>--}}
-{{--                                <tr class="days" data-row="4">--}}
-{{--                                    <td data-column="0"></td>--}}
-{{--                                    <td data-column="1"></td>--}}
-{{--                                    <td data-column="2"></td>--}}
-{{--                                    <td data-column="3"></td>--}}
-{{--                                    <td data-column="4"></td>--}}
-{{--                                    <td data-column="5"></td>--}}
-{{--                                    <td data-column="6"></td>--}}
-{{--                                </tr>--}}
-{{--                                <tr class="days" data-row="5">--}}
-{{--                                    <td data-column="0"></td>--}}
-{{--                                    <td data-column="1"></td>--}}
-{{--                                    <td data-column="2"></td>--}}
-{{--                                    <td data-column="3"></td>--}}
-{{--                                    <td data-column="4"></td>--}}
-{{--                                    <td data-column="5"></td>--}}
-{{--                                    <td data-column="6"></td>--}}
-{{--                                </tr>--}}
-{{--                            </tbody>--}}
-{{--                        </table>--}}
-{{--                    </div>--}}
+        <div class="col-lg-6 mb-5 mb-xl-0">
+            <div class="card p-30">
+{{--                <div class="line-chart">--}}
+                    <h3>Courses Progress Overview</h3>
+{{--                    <canvas id="oilChart" width="600" height="400"></canvas>--}}
+                    <canvas class="w-100" id="oilChart" height="400"></canvas>
 {{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+            </div>
+        </div>
 
+        <div class="col-xl-6">
+            <div class="card h-100 calendar">
+                <div class="sideb">
+                    <div class="header">
+                        <i class="fa fa-angle-left" aria-hidden="true">
+                            <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                                <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#333"/>
+                              </svg>
+
+                        </i>
+                        <h3>
+                            <span class="month"></span>
+                            <span class="year"></span>
+                        </h3>
+                        <i class="fa fa-angle-right" aria-hidden="true"><svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                            <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#333"/>
+                          </svg>
+                          </i>
+                    </div>
+                    <div class="calender">
+                        <table>
+                            <thead>
+                                <tr class="weedays">
+                                    <th data-weekday="sun" data-column="0">Sun</th>
+                                    <th data-weekday="mon" data-column="1">Mon</th>
+                                    <th data-weekday="tue" data-column="2">Tue</th>
+                                    <th data-weekday="wed" data-column="3">Wed</th>
+                                    <th data-weekday="thu" data-column="4">Thu</th>
+                                    <th data-weekday="fri" data-column="5">Fri</th>
+                                    <th data-weekday="sat" data-column="6">Sat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="days" data-row="0">
+                                    <td data-column="0"></td>
+                                    <td data-column="1"></td>
+                                    <td data-column="2"></td>
+                                    <td data-column="3"></td>
+                                    <td data-column="4"></td>
+                                    <td data-column="5"></td>
+                                    <td data-column="6"></td>
+                                </tr>
+                                <tr class="days" data-row="1">
+                                    <td data-column="0"></td>
+                                    <td data-column="1"></td>
+                                    <td data-column="2"></td>
+                                    <td data-column="3"></td>
+                                    <td data-column="4"></td>
+                                    <td data-column="5"></td>
+                                    <td data-column="6"></td>
+                                </tr>
+                                <tr class="days" data-row="2">
+                                    <td data-column="0"></td>
+                                    <td data-column="1"></td>
+                                    <td data-column="2"></td>
+                                    <td data-column="3"></td>
+                                    <td data-column="4"></td>
+                                    <td data-column="5"></td>
+                                    <td data-column="6"></td>
+                                </tr>
+                                <tr class="days" data-row="3">
+                                    <td data-column="0"></td>
+                                    <td data-column="1"></td>
+                                    <td data-column="2"></td>
+                                    <td data-column="3"></td>
+                                    <td data-column="4"></td>
+                                    <td data-column="5"></td>
+                                    <td data-column="6"></td>
+                                </tr>
+                                <tr class="days" data-row="4">
+                                    <td data-column="0"></td>
+                                    <td data-column="1"></td>
+                                    <td data-column="2"></td>
+                                    <td data-column="3"></td>
+                                    <td data-column="4"></td>
+                                    <td data-column="5"></td>
+                                    <td data-column="6"></td>
+                                </tr>
+                                <tr class="days" data-row="5">
+                                    <td data-column="0"></td>
+                                    <td data-column="1"></td>
+                                    <td data-column="2"></td>
+                                    <td data-column="3"></td>
+                                    <td data-column="4"></td>
+                                    <td data-column="5"></td>
+                                    <td data-column="6"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if($last_video)
+        <div class="row mb-5 home-section">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="card h-100 p-30">
+                    <h3>{{ __('education.Last Video View') }}</h3>
+                    <video controls controlsList="nodownload">
+                        <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
+                    </video>
+                </div>
+            </div>
+
+            @if(count($next_videos) >0 )
+                <div class="col-lg-6">
+                    <div class="card p-30">
+                        <h3>{{ __('education.Next Video') }}</h3>
+                        <ul class="video-list">
+                            @foreach($next_videos as $next_video)
+                                <li>
+                                    <div class="play">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="17.325" height="19.732" viewBox="0 0 17.325 19.732">
+                                            <path id="Path_92" data-name="Path 92" d="M1586.871,1153.329V1133.6l17.325,9.8Z" transform="translate(-1586.871 -1133.597)" fill="#fff"/>
+                                        </svg>
+                                    </div>
+                                    <div class="text">
+                                        <h5><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </h5>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
+        </div>
+    @endif
 
 
 @endsection
 
 
 @section('script')
-{{--    <script>--}}
-{{--        var month = [--}}
-{{--            "January",--}}
-{{--            "February",--}}
-{{--            "March",--}}
-{{--            "April",--}}
-{{--            "May",--}}
-{{--            "June",--}}
-{{--            "July",--}}
-{{--            "August",--}}
-{{--            "September",--}}
-{{--            "October",--}}
-{{--            "November",--}}
-{{--            "December"--}}
-{{--        ];--}}
-{{--        var weekday = [--}}
-{{--            "Sunday",--}}
-{{--            "Monday",--}}
-{{--            "Tuesday",--}}
-{{--            "Wednesday",--}}
-{{--            "Thursday",--}}
-{{--            "Friday",--}}
-{{--            "Saturday"--}}
-{{--        ];--}}
-{{--        var weekdayShort = [--}}
-{{--            "sun",--}}
-{{--            "mon",--}}
-{{--            "tue",--}}
-{{--            "wed",--}}
-{{--            "thu",--}}
-{{--            "fri",--}}
-{{--            "sat"--}}
-{{--        ];--}}
-{{--        var monthDirection = 0;--}}
+    <script>
+        var month = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+        var weekday = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+        var weekdayShort = [
+            "sun",
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat"
+        ];
+        var monthDirection = 0;
 
-{{--        function getNextMonth() {--}}
-{{--            monthDirection++;--}}
-{{--            var current;--}}
-{{--            var now = new Date();--}}
-{{--            if (now.getMonth() == 11) {--}}
-{{--                current = new Date(now.getFullYear() + monthDirection, 0, 1);--}}
-{{--            } else {--}}
-{{--                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);--}}
-{{--            }--}}
-{{--            initCalender(getMonth(current));--}}
-{{--        }--}}
+        function getNextMonth() {
+            monthDirection++;
+            var current;
+            var now = new Date();
+            if (now.getMonth() == 11) {
+                current = new Date(now.getFullYear() + monthDirection, 0, 1);
+            } else {
+                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
+            }
+            initCalender(getMonth(current));
+        }
 
-{{--        function getPrevMonth() {--}}
-{{--            monthDirection--;--}}
-{{--            var current;--}}
-{{--            var now = new Date();--}}
-{{--            if (now.getMonth() == 11) {--}}
-{{--                current = new Date(now.getFullYear() + monthDirection, 0, 1);--}}
-{{--            } else {--}}
-{{--                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);--}}
-{{--            }--}}
-{{--            initCalender(getMonth(current));--}}
-{{--        }--}}
-{{--        Date.prototype.isSameDateAs = function (pDate) {--}}
-{{--            return (--}}
-{{--                this.getFullYear() === pDate.getFullYear() &&--}}
-{{--                this.getMonth() === pDate.getMonth() &&--}}
-{{--                this.getDate() === pDate.getDate()--}}
-{{--            );--}}
-{{--        };--}}
+        function getPrevMonth() {
+            monthDirection--;
+            var current;
+            var now = new Date();
+            if (now.getMonth() == 11) {
+                current = new Date(now.getFullYear() + monthDirection, 0, 1);
+            } else {
+                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
+            }
+            initCalender(getMonth(current));
+        }
+        Date.prototype.isSameDateAs = function (pDate) {
+            return (
+                this.getFullYear() === pDate.getFullYear() &&
+                this.getMonth() === pDate.getMonth() &&
+                this.getDate() === pDate.getDate()
+            );
+        };
 
-{{--        function getMonth(currentDay) {--}}
-{{--            var now = new Date();--}}
-{{--            var currentMonth = month[currentDay.getMonth()];--}}
-{{--            var monthArr = [];--}}
-{{--            for (i = 1 - currentDay.getDate(); i < 31; i++) {--}}
-{{--                var tomorrow = new Date(currentDay);--}}
-{{--                tomorrow.setDate(currentDay.getDate() + i);--}}
-{{--                if (currentMonth !== month[tomorrow.getMonth()]) {--}}
-{{--                    break;--}}
-{{--                } else {--}}
-{{--                    monthArr.push({--}}
-{{--                        date: {--}}
-{{--                            weekday: weekday[tomorrow.getDay()],--}}
-{{--                            weekday_short: weekdayShort[tomorrow.getDay()],--}}
-{{--                            day: tomorrow.getDate(),--}}
-{{--                            month: month[tomorrow.getMonth()],--}}
-{{--                            year: tomorrow.getFullYear(),--}}
-{{--                            current_day: now.isSameDateAs(tomorrow) ? true : false,--}}
-{{--                            date_info: tomorrow--}}
-{{--                        }--}}
-{{--                    });--}}
-{{--                }--}}
-{{--            }--}}
-{{--            return monthArr;--}}
-{{--        }--}}
+        function getMonth(currentDay) {
+            var now = new Date();
+            var currentMonth = month[currentDay.getMonth()];
+            var monthArr = [];
+            for (i = 1 - currentDay.getDate(); i < 31; i++) {
+                var tomorrow = new Date(currentDay);
+                tomorrow.setDate(currentDay.getDate() + i);
+                if (currentMonth !== month[tomorrow.getMonth()]) {
+                    break;
+                } else {
+                    monthArr.push({
+                        date: {
+                            weekday: weekday[tomorrow.getDay()],
+                            weekday_short: weekdayShort[tomorrow.getDay()],
+                            day: tomorrow.getDate(),
+                            month: month[tomorrow.getMonth()],
+                            year: tomorrow.getFullYear(),
+                            current_day: now.isSameDateAs(tomorrow) ? true : false,
+                            date_info: tomorrow
+                        }
+                    });
+                }
+            }
+            return monthArr;
+        }
 
-{{--        function clearCalender() {--}}
+        function clearCalender() {
 
-{{--            var tr = document.querySelectorAll('table tbody tr');--}}
+            var tr = document.querySelectorAll('table tbody tr');
 
-{{--            tr.forEach(element => {--}}
-{{--                element.querySelectorAll('td').forEach(function(td) {--}}
-{{--                    td.classList.remove('active', 'selectable', 'currentDay', 'between', 'hover');--}}
-{{--                    td.innerHTML = '';--}}
-{{--                })--}}
-{{--            })--}}
+            tr.forEach(element => {
+                element.querySelectorAll('td').forEach(function(td) {
+                    td.classList.remove('active', 'selectable', 'currentDay', 'between', 'hover');
+                    td.innerHTML = '';
+                })
+            })
 
-{{--            document.querySelectorAll("td").forEach(function (td) {--}}
-{{--                td.removeEventListener('mouseenter', null);--}}
-{{--                td.removeEventListener('mouseleave', null);--}}
-{{--                td.removeEventListener('click', null);--}}
-{{--                // $(this).unbind('mouseenter').unbind('mouseleave');--}}
-{{--            });--}}
+            document.querySelectorAll("td").forEach(function (td) {
+                td.removeEventListener('mouseenter', null);
+                td.removeEventListener('mouseleave', null);
+                td.removeEventListener('click', null);
+                // $(this).unbind('mouseenter').unbind('mouseleave');
+            });
 
-{{--            clickCounter = 0;--}}
-{{--        }--}}
+            clickCounter = 0;
+        }
 
-{{--        function initCalender(monthData) {--}}
-{{--            var row = 0;--}}
-{{--            var classToAdd = "";--}}
-{{--            var currentDay = "";--}}
-{{--            var today = new Date();--}}
+        function initCalender(monthData) {
+            var row = 0;
+            var classToAdd = "";
+            var currentDay = "";
+            var today = new Date();
 
-{{--            clearCalender();--}}
-{{--            // var i = 0;--}}
-{{--            monthData.forEach(function (value) {--}}
-{{--                var weekday = value.date.weekday_short;--}}
-{{--                var day = value.date.day;--}}
-{{--                var column = 0;--}}
+            clearCalender();
+            // var i = 0;
+            monthData.forEach(function (value) {
+                var weekday = value.date.weekday_short;
+                var day = value.date.day;
+                var column = 0;
 
-{{--                document.querySelector(".sideb .header .month").innerHTML = value.date.month;--}}
-{{--                document.querySelector(".sideb .header .year").innerHTML = value.date.year;--}}
+                document.querySelector(".sideb .header .month").innerHTML = value.date.month;
+                document.querySelector(".sideb .header .year").innerHTML = value.date.year;
 
 
-{{--                if (value.date.current_day) {--}}
-{{--                    currentDay = "currentDay";--}}
-{{--                    classToAdd = "selectable";--}}
-{{--                }--}}
-{{--                if (today.getTime() < value.date.date_info.getTime()) {--}}
-{{--                    classToAdd = "selectable";--}}
+                if (value.date.current_day) {
+                    currentDay = "currentDay";
+                    classToAdd = "selectable";
+                }
+                if (today.getTime() < value.date.date_info.getTime()) {
+                    classToAdd = "selectable";
 
-{{--                }--}}
-{{--                document.querySelectorAll("tr.weedays th").forEach(function (th) {--}}
-{{--                    if (th.dataset.weekday === weekday) {--}}
-{{--                        column = th.dataset.column;--}}
-{{--                        return;--}}
-{{--                    }--}}
-{{--                });--}}
+                }
+                document.querySelectorAll("tr.weedays th").forEach(function (th) {
+                    if (th.dataset.weekday === weekday) {
+                        column = th.dataset.column;
+                        return;
+                    }
+                });
 
-{{--                if(classToAdd.length) {--}}
-{{--                    document.querySelectorAll("tr.days")[row].querySelectorAll('td')[column].classList.add(classToAdd);--}}
-{{--                }--}}
+                if(classToAdd.length) {
+                    document.querySelectorAll("tr.days")[row].querySelectorAll('td')[column].classList.add(classToAdd);
+                }
 
-{{--                if(currentDay.length) {--}}
-{{--                    document.querySelectorAll("tr.days")[row].querySelectorAll('td')[column].classList.add(currentDay);--}}
-{{--                }--}}
+                if(currentDay.length) {
+                    document.querySelectorAll("tr.days")[row].querySelectorAll('td')[column].classList.add(currentDay);
+                }
 
-{{--                document.querySelectorAll("tr.days")[row].querySelectorAll('td')[column].innerHTML = day;--}}
+                document.querySelectorAll("tr.days")[row].querySelectorAll('td')[column].innerHTML = day;
 
-{{--                currentDay = "";--}}
-{{--                if (column == 6) {--}}
-{{--                    row++;--}}
-{{--                }--}}
-{{--            });--}}
+                currentDay = "";
+                if (column == 6) {
+                    row++;
+                }
+            });
 
-{{--            document.querySelectorAll("td.selectable")--}}
-{{--                .forEach(td => {--}}
-{{--                    td.addEventListener('click', () => {--}}
-{{--                        document.querySelectorAll('td.selectable').forEach(function(td) {--}}
-{{--                            td.classList.remove('active', 'between', 'hover');--}}
-{{--                            // td.classList.remove('active', 'between', 'hover', 'currentDay');--}}
-{{--                        })--}}
-{{--                        td.classList.toggle('active');--}}
-{{--                    })--}}
-{{--                })--}}
-{{--        }--}}
-{{--        initCalender(getMonth(new Date()));--}}
+            document.querySelectorAll("td.selectable")
+                .forEach(td => {
+                    td.addEventListener('click', () => {
+                        document.querySelectorAll('td.selectable').forEach(function(td) {
+                            td.classList.remove('active', 'between', 'hover');
+                            // td.classList.remove('active', 'between', 'hover', 'currentDay');
+                        })
+                        td.classList.toggle('active');
+                    })
+                })
+        }
+        initCalender(getMonth(new Date()));
 
-{{--        document.querySelector(".fa-angle-left").onclick = () => getPrevMonth();--}}
-{{--        document.querySelector(".fa-angle-right").onclick = () => getNextMonth();--}}
+        document.querySelector(".fa-angle-left").onclick = () => getPrevMonth();
+        document.querySelector(".fa-angle-right").onclick = () => getNextMonth();
 
-{{--    </script>--}}
-{{--    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>--}}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script>
+        var courses_count = @json(count($courses->courses));
+        var progress = @json(getReportNumber($complete_courses,0));
+        var not_complete = @json(getReportNumber($complete_courses,2));
+        var complete = @json(getReportNumber($complete_courses,1));
+
+        var oilCanvas = document.getElementById("oilChart");
+
+        Chart.defaults.global.defaultFontFamily = "Lato";
+        Chart.defaults.global.defaultFontSize = 18;
+
+        var oilData = {
+            labels: [
+                "Your Courses",
+                "In Progress",
+                "Not Complete",
+                "Completed",
+            ],
+            datasets: [
+                {
+                    data: [courses_count, progress, not_complete, complete],
+                    backgroundColor: [
+                        "#65aa74",
+                        "#6a6a6a",
+                        "#fb4400",
+                        "#00bcb3",
+                    ]
+                }]
+        };
+
+        var pieChart = new Chart(oilCanvas, {
+            type: 'pie',
+            data: oilData
+        });
+    </script>
 {{--    <script>--}}
 {{--        var ctx = document.getElementById('myChart')--}}
 {{--        // eslint-disable-next-line no-unused-vars--}}
