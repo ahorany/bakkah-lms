@@ -38,33 +38,41 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="m-0" style="text-transform:capitalize;">{{ $content->title }}</h3>
                 <div class="d-flex align-items-center">
+
+{{--                    <div class="title" style="margin-right: 15px;">--}}
+{{--                        <span class="previous-title">--}}
+{{--                            <a id="title-prev" style="display: none; color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a>--}}
+{{--                        </span>--}}
+{{--                        <span class="next-title">--}}
+{{--                            <a id="title-next" style="display: none; color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a>--}}
+{{--                        </span>--}}
+{{--                    </div>--}}
+
                     @if($previous)
-                    <span class="previous-title"></span>
-                        <button class="next_prev" onclick="location.href =  '{{$previous_url}}'">
-                            {{-- <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                    {{-- <span class="previous-title"><a style="color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a></span> --}}
+                        <button title="{{$previous->title}}" class="next_prev" onmouseleave="hide_prev()" onmouseenter="show_prev()" onclick="location.href =  '{{$previous_url}}'">
+                            <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
                                 <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
-                            </svg> --}}
+                            </svg>
                             <span>{{__('education.Previous')}}</span>
                         </button>
-                    @endif
-                    {{-- <span class="mx-1 mx-sm-3" style="text-transform:capitalize;">{{ $content->title }}</span> --}}
 
-                        @if($next)
-                        <button class="next_prev" onclick="location.href = '{{$next_url}}'">
+                    @endif
+
+
+                    @if($next)
+
+                        <button title="{{$next->title}}" onmouseleave="hide_next()" onmouseenter="show_next()" class="next next_prev" onclick="location.href = '{{$next_url}}'">
                             <span>{{__('education.Next')}}</span>
-                            {{-- <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                                <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
-                            </svg> --}}
+                            <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                               <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
+                           </svg>
                         </button>
-                        <span class="next-title"></span>
+                            {{-- <span class="next-title"><a style="color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a></span> --}}
                     @endif
                 </div>
             </div>
             <div class="card-body p-30">
-{{--                            <iframe height="700" width="100%" src="https://bakkah.com/public/upload/pdf/2021-09-28-03-49-18-en_pdf-مجلة بكه للتعليم العدد 7.pdf" frameborder="0"></iframe>--}}
-                <!-- <iframe style="height:400px"  frameborder='0' src='https://view.officeapps.live.com/op/embed.aspx?src=https://bakkah.com/public/upload/pdf/2021-09-28-03-49-18-en_pdf-مجلة بكه للتعليم العدد 7.pdf' > -->
-
-
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
                         <video controls class="w-100">
@@ -75,7 +83,9 @@
                             <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
                         </audio>
                     @elseif($content->post_type == 'presentation' )
-                        @if($content->upload->extension == 'pdf' )
+                        @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
+                           <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
+                        @elseif($content->upload->extension == 'pdf' )
                             <iframe width="100%" height="500px"
                                     src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @else
@@ -88,9 +98,9 @@
                             src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
                             <?php
-                            $user_id = sprintf("%'.09d", auth()->user()->id);
-                            $content_id = sprintf("%'.09d", $content->id);
-                            $SCOInstanceID = '1'.$user_id.'2'.$content_id;
+                            $user_id = sprintf("%'.06d", auth()->user()->id);
+                            $content_id = sprintf("%'.05d", $content->id);
+                            $SCOInstanceID = (1).$user_id.(2).$content_id;
                             ?>
                             <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}" name="API" style="display: none;"></iframe>
                             <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
@@ -112,8 +122,26 @@
                     }
                     ?>
                     <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
+
                 @endif
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        function show_prev() {
+            var x = document.getElementById("title-prev").style.display = "inline-block";
+        }
+        function show_next() {
+            var x = document.getElementById("title-next").style.display = "inline-block";
+        }
+        function hide_prev() {
+            var x = document.getElementById("title-prev").style.display = "none";
+        }
+        function hide_next() {
+            var x = document.getElementById("title-next").style.display = "none";
+        }
+    </script>
 @endsection

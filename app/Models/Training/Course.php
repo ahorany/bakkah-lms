@@ -44,38 +44,6 @@ class Course extends Model
         ];
     }
 
-    /**
-     * Get the index name for the model.
-     *
-     * @return string
-     */
-//    public function searchableAs()
-//    {
-//        return 'products_index';
-//    }
-//
-//    const SEARCHABLE_FIELDS = ['id', 'en_title', 'ar_title', 'en_short_excerpt', 'ar_short_excerpt', 'en_path', 'ar_path'
-//    , 'model_name', 'order', 'algolia_order', 'price'];
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array
-     */
-//    public function toSearchableArray()
-//    {
-//        return $this->only(self::SEARCHABLE_FIELDS);
-//        // $array = $this->toArray();
-//        // $courses = self::all();
-//        // $array = $courses->map(function($data){
-//        //     return [
-//        //         'en_title'=>$data['en_title'],
-//        //         'ar_title'=>$data['ar_title'],
-//        //     ];
-//        // })->toArray();
-//
-//        // return $array;
-//    }
-
     public function getEnPathAttribute(){
         return 'sessions/'.$this->slug;
         // return env('APP_URL').'sessions/'.$this->slug;
@@ -229,6 +197,10 @@ class Course extends Model
 
     public function partner(){
         return $this->belongsTo(Partner::class, 'partner_id', 'id');
+    }
+
+    public function deliveryMethod(){
+        return $this->belongsTo(Constant::class, 'training_option_id', 'id');
     }
 
     // public function agreement(){

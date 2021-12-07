@@ -282,7 +282,7 @@ body {
 }
 
 .lead {
-  font-size: 1.25rem;
+  /*font-size: 1rem;*/
   font-weight: 300;
 }
 
@@ -741,8 +741,8 @@ ol.breadcrumb li a {
 }
 
 .card-header button svg {
-  height: 15px;
-  filter: invert(1);
+    height: 10px;
+    filter: brightness(0.5);
 }
 
 p.time-remaining {

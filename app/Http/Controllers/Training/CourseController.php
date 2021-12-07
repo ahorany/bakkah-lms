@@ -38,7 +38,7 @@ class CourseController extends Controller
                 return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',2);
             });
         }else{
-            $courses = Course::with(['upload', 'user']);
+            $courses = Course::with(['upload', 'user','deliveryMethod']);
         }
 
         if (!is_null(request()->course_search)) {

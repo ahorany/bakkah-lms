@@ -19,10 +19,10 @@ use App\Models\Training\CourseRegistration;
         <tr>
             <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
+            <th class="">{{__('admin.course_code')}}</th>
+            <th class="">{{__('admin.delivery_methods')}}</th>
             <th class="">{{__('admin.assigned_learners')}}</th>
             <th class="">{{__('admin.completed_learners')}}</th>
-
-            <th class="">{{__('admin.pdu')}}</th>
             <th class="">{{__('admin.image')}}</th>
             {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
             <th class="text-right">{{__('admin.action')}}</th>
@@ -35,9 +35,14 @@ use App\Models\Training\CourseRegistration;
           <span class="td-title">{{$loop->iteration}}</span>
         </td>
         <td>
-            <span style="display: block;" class="title">{{$post->trans_title}}  &nbsp;&nbsp;&nbsp;&nbsp; {{$post->code}}</span>
+            <span style="display: block;" class="title">{{$post->trans_title ?? null}}</span>
         </td>
-
+        <td>
+            <span class="td-title">{{$post->code ?? null}}</span>
+        </td>
+        <td>
+            <span class="td-title">{{$post->deliveryMethod->trans_name}}</span>
+        </td>
         <td>
             <?php
                 $trainee_count =   DB::table('courses_registration')
@@ -61,10 +66,6 @@ use App\Models\Training\CourseRegistration;
 
              <span class="td-title">{{$completed_learners}}</span>
         </td>
-        <td>
-            <span class="td-title">{{$post->PDUs}}</span>
-        </td>
-
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
         {{-- <td class="d-sm-table-cell" style="font-size: 13px;">
             <span class="author">

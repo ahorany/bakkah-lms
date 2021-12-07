@@ -129,8 +129,8 @@ class ContentController extends Controller
             switch ($type){
                 case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:100000' ; break;
                 case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
-                case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,docx'; break;
-                case 'scorm': $mimes = '|mimes:pdf,docx,zip'; break;
+                case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,doc,docx,xls,jpeg,png'; break;
+                case 'scorm': $mimes = '|mimes:zip'; break;
                 default : $mimes = '';;
             }
 
@@ -247,8 +247,8 @@ class ContentController extends Controller
         switch ($type){
             case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:100000' ; break;
             case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
-            case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,docx'; break;
-            case 'scorm': $mimes = '|mimes:pdf,docx,zip'; break;
+            case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,doc,docx,xls,jpeg,png'; break;
+            case 'scorm': $mimes = '|mimes:zip'; break;
             default : $mimes = '';
         }
 

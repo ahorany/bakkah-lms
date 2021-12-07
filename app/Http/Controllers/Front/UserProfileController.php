@@ -350,7 +350,24 @@ class UserProfileController extends Controller
         $total_rate = DB::select(DB::raw('SELECT AVG(rate) as total_rate FROM `courses_registration` WHERE course_id =' .$course->id));
         $total_rate = $total_rate[0]->total_rate??0;
 
-        return view('pages.course_details',compact('course','total_rate'));
+        $date_now = Carbon::now();
+        $user_id = \auth()->id();
+
+        $activities = DB::select(DB::raw("SELECT contents.id as content_id,contents.post_type as type,
+                                                exams.start_date as start_date,exams.end_date as end_date,
+                                                courses.title as course_title,contents.title as content_title FROM contents
+                                    INNER JOIN exams ON exams.content_id = contents.id
+                                    INNER JOIN courses ON contents.course_id = courses.id
+                                    INNER JOIN courses_registration ON courses_registration.course_id = courses.id
+                                    WHERE
+                                    contents.post_type=\"exam\"
+                                    AND
+                                    contents.deleted_at IS NULL
+                                    AND
+                                     courses_registration.user_id = $user_id
+                                    AND (exams.end_date > '$date_now' OR exams.end_date IS NULL)
+                          "));
+        return view('pages.course_details',compact('course','total_rate','activities'));
     }
 
     public function course_preview($content_id){
@@ -394,7 +411,6 @@ class UserProfileController extends Controller
 
         $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
                                                             FROM contents
-
                                                             WHERE   course_id =". $content->course_id ." AND parent_id IS NOT NULL AND  deleted_at IS NULL"));
         $contents_count = $contents_count[0]->contents_count??0;
 
@@ -478,16 +494,17 @@ class UserProfileController extends Controller
             }]);
         }])->first();
 
-        $video = DB::select(DB::raw("SELECT user_contents.id , contents.id as content_id, uploads.file FROM user_contents
+        $video = DB::select(DB::raw("SELECT user_contents.id ,contents.url as url, contents.id as content_id, uploads.file FROM user_contents
             INNER JOIN contents ON  contents.id = user_contents.content_id
-            INNER JOIN uploads  ON  contents.id = uploads.uploadable_id
+            LEFT JOIN uploads  ON  contents.id = uploads.uploadable_id
         WHERE user_contents.user_id = ".\auth()->id()."
-        AND uploads.uploadable_type = 'App\\\\Models\\\\Training\\\\Content'
+        AND (uploads.uploadable_type = 'App\\\\Models\\\\Training\\\\Content' OR contents.url IS NOT NULL)
         AND contents.post_type = 'video'
         AND contents.deleted_at IS NULL
         ORDER BY user_contents.id DESC LIMIT 1"));
 
         $last_video = $video[0]??null;
+//        dd($last_video);
         $next_videos = [];
         if($last_video){
             $next_videos = DB::select(DB::raw("SELECT contents.id ,contents.title  FROM contents
@@ -510,10 +527,25 @@ class UserProfileController extends Controller
                                                         ORDER By status
 "));
 
+        $date_now = Carbon::now();
+        $user_id = \auth()->id();
 
+        $activities = DB::select(DB::raw("SELECT contents.id as content_id,contents.post_type as type,
+                                                exams.start_date as start_date,exams.end_date as end_date,
+                                                courses.title as course_title,contents.title as content_title FROM contents
+                                    INNER JOIN exams ON exams.content_id = contents.id
+                                    INNER JOIN courses ON contents.course_id = courses.id
+                                    INNER JOIN courses_registration ON courses_registration.course_id = courses.id
+                                    WHERE
+                                    contents.post_type=\"exam\"
+                                    AND
+                                    contents.deleted_at IS NULL
+                                    AND
+                                     courses_registration.user_id = $user_id
+                                    AND (exams.end_date > '$date_now' OR exams.end_date IS NULL)
+                          "));
 
-
-        return view('home',compact('complete_courses','courses','last_video','next_videos'));
+        return view('home',compact('complete_courses','courses','last_video','next_videos','activities'));
 
     }
 

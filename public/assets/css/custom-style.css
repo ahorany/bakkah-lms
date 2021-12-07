@@ -354,7 +354,17 @@ ol.answers li{
 /* End Buttons Style */
 
 /**************************************************************************************************************/
-
+.course-image .progress{
+    width: 100%;
+    height: 10px;
+    /* border-radius: 8px; */
+    border: 2px solid #e0e0e0;
+    margin-top: 8px;
+    overflow: hidden;
+}
+.course-image .progress .bar {
+    height: 8px;
+}
 .progress-bar
 {
     background: #fb4400;
@@ -381,15 +391,21 @@ a:hover svg#back{
     justify-content: center;
 }
 button.next_prev {
-    padding: 5px 10px;
-    width: 75px;
+    width: 85px;
+    padding: 5px;
     margin: 0 5px;
-    border: 1px solid;
+    border: 1px solid #7c9290;
+    color: #7c9290;
     text-align: center;
+    border-radius: 30px;
 }
 button.next_prev:hover {
-    background-color: #000;
+    background-color: #7c9290;
     color: #fff;
+    border: transparent;
+}
+button.next_prev:hover svg{
+    filter: none;
 }
 
 /******************************************************************************************************************/
@@ -430,12 +446,6 @@ button.next_prev:hover {
     .change-password input.form-control {
         font-size: 12px;
     }
-    /* .course-cards.card-report.justify-content-center {
-        display: inline-block;
-        width: 100%;
-        text-align: center;
-        margin: 0 0 10px;
-    } */
     .navbar .navbar-toggler {
         top: 20%;
         left: 80px;
@@ -482,9 +492,6 @@ button.next_prev:hover {
     .course_info {
         padding: 1% 5% !important;
     }
-    /* .col-12.course_info {
-        padding: 0 35px !important;
-    } */
     .course_info.mb-3.card.p-3 {
         border: none;
         margin-top: 10px;

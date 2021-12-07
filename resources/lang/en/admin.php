@@ -145,6 +145,6 @@ return [
     'groups'=>'Groups',
     'assigned_users'=>'Assigned Users',
     'completed_learners' => 'Completed Learners',
-
-
+    'course_code' => 'Course Code',
+    'delivery_methods' => 'Delivery Methods',
 ];

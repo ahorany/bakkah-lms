@@ -35,6 +35,7 @@
 
                         <div style="margin-left:0px;margin-top: 5px;"> {{-- class="col-md-6"  --}}
                             {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
+                            <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
                             {{-- {!! Builder::Submit('clear', 'clear', 'btn-default', 'eraser') !!} --}}
                         </div>
                     </div>
