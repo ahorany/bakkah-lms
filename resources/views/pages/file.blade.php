@@ -39,14 +39,14 @@
                 <h3 class="m-0" style="text-transform:capitalize;">{{ $content->title }}</h3>
                 <div class="d-flex align-items-center">
 
-                    <div class="title" style="margin-right: 15px;">
-                        <span class="previous-title">
-                            <a id="title-prev" style="display: none; color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a>
-                        </span>
-                        <span class="next-title">
-                            <a id="title-next" style="display: none; color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a>
-                        </span>
-                    </div>
+{{--                    <div class="title" style="margin-right: 15px;">--}}
+{{--                        <span class="previous-title">--}}
+{{--                            <a id="title-prev" style="display: none; color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a>--}}
+{{--                        </span>--}}
+{{--                        <span class="next-title">--}}
+{{--                            <a id="title-next" style="display: none; color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a>--}}
+{{--                        </span>--}}
+{{--                    </div>--}}
 
                     @if($previous)
                     {{-- <span class="previous-title"><a style="color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a></span> --}}
@@ -64,9 +64,9 @@
 
                         <button title="{{$next->title}}" onmouseleave="hide_next()" onmouseenter="show_next()" class="next next_prev" onclick="location.href = '{{$next_url}}'">
                             <span>{{__('education.Next')}}</span>
-                            {{-- <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                                <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
-                            </svg> --}}
+{{--                             <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">--}}
+{{--                                <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>--}}
+{{--                            </svg>--}}
                         </button>
                             {{-- <span class="next-title"><a style="color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a></span> --}}
                     @endif
@@ -83,7 +83,9 @@
                             <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
                         </audio>
                     @elseif($content->post_type == 'presentation' )
-                        @if($content->upload->extension == 'pdf' )
+                        @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
+                           <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
+                        @elseif($content->upload->extension == 'pdf' )
                             <iframe width="100%" height="500px"
                                     src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @else
@@ -99,7 +101,6 @@
                             $user_id = sprintf("%'.06d", auth()->user()->id);
                             $content_id = sprintf("%'.05d", $content->id);
                             $SCOInstanceID = (1).$user_id.(2).$content_id;
-                            dd($SCOInstanceID);
                             ?>
                             <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}" name="API" style="display: none;"></iframe>
                             <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
