@@ -391,8 +391,8 @@ a:hover svg#back{
     justify-content: center;
 }
 button.next_prev {
-    padding: 5px 10px;
-    width: 75px;
+    width: 85px;
+    padding: 5px;
     margin: 0 5px;
     border: 1px solid #7c9290;
     color: #7c9290;
@@ -403,6 +403,9 @@ button.next_prev:hover {
     background-color: #7c9290;
     color: #fff;
     border: transparent;
+}
+button.next_prev:hover svg{
+    filter: none;
 }
 
 /******************************************************************************************************************/
