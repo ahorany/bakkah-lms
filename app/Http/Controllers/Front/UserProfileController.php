@@ -372,7 +372,7 @@ class UserProfileController extends Controller
 
     public function course_preview($content_id){
         $content = Content::whereId($content_id)
-            ->with(['upload','course' ])->first();
+            ->with(['upload','course' ,'section'])->first();
 
         if (!$content){
             abort(404);
@@ -388,9 +388,6 @@ class UserProfileController extends Controller
             abort(404);
         }
 
-
-
-
         UserContent::firstOrCreate([
             'user_id' => \auth()->id(),
             'content_id' => $content_id,
@@ -398,7 +395,6 @@ class UserProfileController extends Controller
             'user_id'  => \auth()->id(),
             'content_id' => $content_id,
         ]);
-
 
         $user_contents_count = DB::select(DB::raw("SELECT COUNT(user_contents.id) as user_contents_count FROM user_contents
                                    INNER JOIN contents on user_contents.content_id = contents.id
@@ -480,7 +476,7 @@ class UserProfileController extends Controller
         $next = ($next[0]??null);
         $previous = ($previous[0]??null);
 
-
+        // dd('aa');
         return view('pages.file',compact('content','previous','next'));
     }
 
