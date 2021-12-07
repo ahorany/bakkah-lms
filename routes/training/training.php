@@ -101,6 +101,9 @@ Route::group([
         Route::resource('groups', 'GroupController');
         Route::patch('/groups/{group}/restore', 'GroupController@restore')->name('groups.restore');
 
+        Route::resource('branches', 'BrancheController');
+        Route::patch('/branches/{branche}/restore', 'BrancheController@restore')->name('branches.restore');
+
 
 
 
