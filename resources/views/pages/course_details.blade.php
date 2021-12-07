@@ -68,6 +68,28 @@
                         </template>
 
 
+<<<<<<< HEAD
+            <li class="has-dropdown user course-details" style="list-style: none;">
+                <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link main-button btn btn-primary" href="#">
+                    {{__('education.Add a Review')}}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
+                        <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"
+                                transform="translate(10.125) rotate(90)" fill="#fff" />
+                    </svg>
+                </a>
+
+                <div class="dropdown d-none" style="left: 0; width: max-content !important;">
+                    <div class="p-2">
+                        <template v-for="item in 5">
+                            <span @click="review(item)" v-if="item <= rate">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
+                                        viewBox="0 0 17.43 16.6">
+                                    <path id="Path_39" data-name="Path 39"
+                                            d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
+                                            transform="translate(-74.153 -183.355)" fill="#fb4400" />
+                                </svg>
+                            </template>
+=======
                         <template v-if="item > stars && (item == half_star)">
                             <svg xmlns="http://www.w3.org/2000/svg" id="Group_32" data-name="Group 32"  width="17.43"
                                  height="16.6" viewBox="0 0 17.43 16.6">
@@ -79,6 +101,7 @@
                                       transform="translate(-146.334 -183.298)" fill="#fb4400" />
                             </svg>
                         </template>
+>>>>>>> dac6416ee6921240c64756e1abe871a358a8251b
 
 
                         <template v-if="item > stars && (item != (half_star))">

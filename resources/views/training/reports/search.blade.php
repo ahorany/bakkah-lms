@@ -39,6 +39,7 @@
                                 <div style="margin-top: 5px;"> {{-- class="col-md-6"  --}}
                                     {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
 
+
                                 </div>
                             </div>
                         </div>
