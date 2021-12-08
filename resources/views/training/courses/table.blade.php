@@ -79,21 +79,13 @@ use App\Models\Training\CourseRegistration;
                     'post'=>$post->id,
                 ])!!}
               @endif
-              <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="cyan my-1" ><i class="fa fa-pencil"></i> Report</a>
+              <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="cyan mt-1" ><i class="fa fa-pencil"></i> Report</a>
               @if(!request()->has('trash') && request()->trash != "trash")
                 <div class="my-1">
                     <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="green">Contents</a>
                     <a href="{{route('training.units',['course_id'=>$post->id])}}" class="green">Units</a>
                     <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class="green">Users</a>
-<<<<<<< HEAD
                     <a href="{{route('training.role_path',['course_id'=>$post->id])}}" class="green">to Role and Path</a>
-=======
-<<<<<<< HEAD
-{{--                    <a href="{{route('training.clone.course',['course_id'=>$post->id])}}" class="green">Clone</a>--}}
-=======
-                    <a href="{{route('training.role_path',['course_id'=>$post->id])}}" class="green">Role and Path</a>
->>>>>>> cb1b943005041057d7da61c867d8911bf76ec134
->>>>>>> 0952546d4f5974a6f1a6929060568f410a3cec75
                 </div>
               @endif
           </td>
