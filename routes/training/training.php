@@ -60,6 +60,7 @@ Route::group([
         Route::post('courses/importUsersGroups', 'ImportController@importUsersGroups')->name('importUsersGroups');
 
         Route::post('courses/importQuestions', 'ImportController@importQuestions')->name('importQuestions');
+        Route::post('courses/importQuestionsMoodle', 'ImportController@importQuestionsMoodle')->name('importQuestionsMoodle');
         Route::post('courses/importResults', 'ImportController@importResults')->name('importResults');
 
 
