@@ -62,6 +62,24 @@
                     </div>
             </form>
             <hr>
+            <form action="{{ route('training.importQuestionsMoodle') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+                @csrf
+                    <div class="col-md-6 px-0">
+                        <div class="add-question-file">
+                            {!!Builder::File('file', 'file', null, [])!!}
+                        </div>
+                    </div>
+                    <div class="col-md-6 px-0">
+                        <div class="import-question-file">
+                            {!!Builder::Submit('importQuestionsMoodle', 'import_questions_moodle', 'green', null, [
+                                'icon'=>'far fa-file-excel',
+                            ])!!}
+                            <a href="{{CustomAsset('samples/moodel_questions.xlsx')}}" download class="cyan" role="button"> Sample </a>
+                            <input type="hidden" name="content_id" value="{{$content->id}}">
+                        </div>
+                    </div>
+            </form>
+            <br>
             <form action="{{ route('training.importResults') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
                 @csrf
                     <div class="col-md-6 px-0">
