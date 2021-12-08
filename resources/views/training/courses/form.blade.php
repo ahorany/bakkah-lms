@@ -86,6 +86,7 @@
                 {!!Builder::Input('en_short_title', 'en_short_title', null)!!}
                 {!!Builder::Input('ar_short_title', 'ar_short_title', null)!!}
                 {!!Builder::Input('order', 'order', null)!!}
+                {!!Builder::Input('PDUs', 'PDUs', null)!!}
 
                 {{-- {!!Builder::Select('partner_id', 'partners', $partners, null, ['col'=>'col-md-12']) !!} --}}
 
