@@ -183,14 +183,25 @@ function setInLMS($varname,$varvalue) {
 
 function getFromLMS($varname) {
 
+    global $mysqli;
+
+    $sql = "select name->>'$.en' as name from users where id='".$_REQUEST['user_id']."'";
+	$result = $mysqli -> query($sql);
+    $name = '';
+    while($row = $result->fetch_row()){
+        $name = $row[0];
+    }
+
 	switch ($varname) {
 
 		case 'cmi.core.student_name':
-			$varvalue = "Addison, Steve";
+			// $varvalue = "Addison, Steve";
+			$varvalue = $name;
 			break;
 
 		case 'cmi.core.student_id':
-			$varvalue = "007";
+			// $varvalue = "007";
+			$varvalue = $_REQUEST['user_id'];
 			break;
 
 		case 'adlcp:masteryscore':
