@@ -34,7 +34,7 @@
         <form action="{{route('training.send_role_path',['course_id'=>$course->id])}}" method="GET">
             <div class="card p-4 mb-2">
                 <input type="hidden" name="course_id" value="{{$course_id}}">
-                <input type="submit" class="main-color" value="Update">
+                <button type="submit" class="main-color" style="width: max-content;"><i class="fa fa-save"></i> Update</button>
             </div>
             <div class="card p-4">
                 <ul list-style="none">
