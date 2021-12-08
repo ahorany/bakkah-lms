@@ -122,7 +122,7 @@ class ContentController extends Controller
                 'attempt_count'=>'nullable|numeric|gt:-1',
                 'start_date'  => $start_date,
                 'end_date'     => $end_date,
-                'pass_mark' => "required"
+                'pass_mark' => "required|gt:-1|lt:101"
             ];
         }else{
             $mimes ='';
@@ -286,7 +286,7 @@ class ContentController extends Controller
                 'attempt_count'=>'nullable|numeric|gt:-1',
                 'start_date'  => $start_date,
                 'end_date'     => $end_date,
-                'pass_mark'     => 'required',
+                'pass_mark' => "required|gt:-1|lt:101"
 
             ];
         }
