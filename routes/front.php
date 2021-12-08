@@ -23,7 +23,6 @@ Route::group([
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {//'prefix'=>'user',
 
         Route::get('/dashboard', [UserProfileController::class, 'dashboard'])->name('dashboard');
-        Route::get('/messages', [UserProfileController::class, 'getMessage'])->name('messages');
         Route::get('/home', [UserProfileController::class, 'home'])->name('home');
         Route::get('/info', [UserProfileController::class, 'info'])->name('info');
         Route::post('/info/{id}/upadte', [UserProfileController::class, 'update'])->name('update');
@@ -74,6 +73,14 @@ Route::group([
         Route::get('/request_tickets/{type?}', [UserProfileController::class, 'myComplaints'])->name('my_complaints');
         Route::get('/request_tickets/add/{type?}', [UserProfileController::class, 'complaintView'])->name('complaint');
         Route::post('/request_tickets/send_complaint', [UserProfileController::class, 'complaintStore'])->name('send_complaint');
+
+
+
+        Route::get('/messages', [UserProfileController::class, 'getMessages'])->name('messages');
+        Route::get('/add_message', [UserProfileController::class, 'addMessage'])->name('add_message');
+        Route::get('/send_message', [UserProfileController::class, 'sendMessage'])->name('send_message');
+        Route::get('/replay_message/{id}', [UserProfileController::class, 'replayMessage'])->name('replay_message');
+        Route::get('/add_replay', [UserProfileController::class, 'addReplay'])->name('add_replay');
 
     });
 });

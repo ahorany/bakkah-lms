@@ -13,19 +13,17 @@ use App\Models\Training\UserExam;
 use App\Models\Training\UserQuestion;
 use App\User;
 use App\Constant;
+use App\Models\Admin\Role;
 use App\Models\Admin\Upload;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Training\Course;
+use App\Models\Training\Message;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Validation\ValidationException;
-use Laravel\Socialite\Facades\Socialite;
 
 class UserProfileController extends Controller
 {
@@ -645,9 +643,63 @@ class UserProfileController extends Controller
         return redirect()->back();
     }
 
-    public function getMessage()
-    {
-        return view('training.messages.index');
+    public function getMessages(){
+        $messages = Message::where('user_id',auth()->user()->id)->with(['courses.course','user'])->get();
+        return view('training.messages.index',compact('messages'));
+    }
+
+    public function addMessage(){
+        $courses = CourseRegistration::where('user_id',auth()->user()->id)->with(['course.users'])->get();
+        $roles = Role::where('id','!=',3)->get();
+        return view('training.messages.form',compact('courses','roles'));
+    }
+
+    public function sendMessage(){
+        $rules = [
+            "course_id"   => "required|numeric",
+            "recipient_id"   => "required|numeric",
+            "subject"   => "required|max:100",
+            "description"   => "required",
+        ];
+
+        $validator = Validator::make(\request()->all(), $rules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        Message::create([
+            'user_id' => auth()->user()->id,
+            'course_id' => request()->course_id,
+            'role_id' => request()->recipient_id,
+            'title' => request()->subject,
+            'description' => request()->description,
+            'created_at' => Carbon::now(),
+        ]);
+        return redirect()->route('user.messages');
+    }
+
+    public function replayMessage($id){
+        $message = Message::where('id',$id)->with(['courses.course','user'])->first();
+        $user = User::where('id',$message->user_id)->with(['upload'])->first();
+        return view('training.messages.replay',compact('message','user'));
+    }
+    public function addReplay(){
+        $rules = [
+            "replay"   => "required",
+        ];
+
+        $validator = Validator::make(\request()->all(), $rules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $message = Message::where('id',request()->message_id)->first();
+        $message->update([
+            'replay' => request()->replay,
+        ]);
+        return redirect()->route('user.messages');
     }
 
 }
