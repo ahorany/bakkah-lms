@@ -105,7 +105,8 @@ Route::group([
         Route::resource('branches', 'BrancheController');
         Route::patch('/branches/{branche}/restore', 'BrancheController@restore')->name('branches.restore');
 
-
+        Route::get('/role_path', 'RolePathController@rolePath')->name('role_path');
+        Route::get('/send_role_path', 'RolePathController@sendRolePath')->name('send_role_path');
 
 
     });

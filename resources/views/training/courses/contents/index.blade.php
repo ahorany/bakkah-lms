@@ -28,6 +28,7 @@
             </button>
                 <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Units</a>
                 <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Users</a>
+                <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Role and Path</a>
         </div>
           @if(!checkUserIsTrainee())
              <div class="col-md-3 col-3 text-right">

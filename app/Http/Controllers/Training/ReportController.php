@@ -25,12 +25,15 @@ class ReportController extends Controller
     public function usersReportOverview()
     {
         $user_id = request()->id;
-        $learners_no         = DB::table('role_user')->where('role_id',3)->where('user_id',$user_id)->count();
+        $user = User::find($user_id);
+
+        $learners_no = DB::table('role_user')->where('role_id',3)->where('user_id',$user_id)->count();
         $complete_courses_no = DB::table('courses_registration')->where('user_id',$user_id)->where('progress',100)->count();
         $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('user_id',$user_id)->count();
         $courses_not_started = DB::table('courses_registration')->where('progress',0)->where('user_id',$user_id)->count();
         $overview = 1;
-        return view('training.reports.users.user_report',compact('user_id','learners_no','complete_courses_no','courses_in_progress','courses_not_started','overview'));
+        return view('training.reports.users.user_report',compact('user_id','learners_no','complete_courses_no',
+        'courses_in_progress','courses_not_started','overview', 'user'));
 
     }
 
@@ -38,66 +41,74 @@ class ReportController extends Controller
     public function usersReportCourse()
     {
         $user_id = request()->id;
+        $user = User::find($user_id);
+
         $courses  = DB::table('courses')
-                        ->join('courses_registration','courses.id','courses_registration.course_id')
-                        ->where('user_id',$user_id)->get();
+        ->join('courses_registration','courses.id','courses_registration.course_id')
+        ->where('user_id',$user_id)->get();
         // dd($courses);
-        return view('training.reports.users.user_report',compact('user_id','courses'));
+        return view('training.reports.users.user_report',compact('user_id', 'courses', 'user'));
 
     }
 
     public function usersReportTest()
     {
         $user_id = request()->id;
-        $tests  = DB::table('contents')
-                        ->join('exams','exams.content_id','contents.id')
-                        ->join('user_exams','user_exams.exam_id','exams.id')
-                        ->join('courses','courses.id','contents.course_id')
-                        ->where('user_exams.user_id',$user_id)
-                        ->select('user_exams.id','contents.title as content_title','courses.title as course_title','user_exams.time','exams.exam_mark','exams.pass_mark','user_exams.mark')
-                        ->orderBy('user_exams.time')
-                        ->get();
-        //dd($tests);
+        $user = User::find($user_id);
 
-        return view('training.reports.users.user_report',compact('user_id','tests'));
+        $tests  = DB::table('contents')
+        ->join('exams','exams.content_id','contents.id')
+        ->join('user_exams','user_exams.exam_id','exams.id')
+        ->join('courses','courses.id','contents.course_id')
+        ->where('user_exams.user_id',$user_id)
+        ->select('user_exams.id','contents.title as content_title','courses.title as course_title','user_exams.time','exams.exam_mark','exams.pass_mark','user_exams.mark')
+        ->orderBy('user_exams.time')
+        ->get();
+        //dd($tests);
+        return view('training.reports.users.user_report',compact('user_id', 'tests', 'user'));
     }
 
 
     public function coursesReportOverview()
     {
         $course_id = request()->id;
+        $course = Course::find($course_id);
         $assigned_learners = DB::table('courses_registration')->where('course_id',$course_id)->where('role_id',3)->count();
         $assigned_instructors = DB::table('courses_registration')->where('course_id',$course_id)->where('role_id',2)->count();
         $completed_learners = DB::table('courses_registration')->where('role_id',3)->where('progress',100)->count();
         $count = 1;
         $overview = 1;
-        return view('training.reports.courses.course_report',compact('completed_learners','course_id','overview','assigned_learners','count','assigned_instructors'));
-
+        return view('training.reports.courses.course_report',compact('completed_learners', 'course_id', 'overview'
+        , 'assigned_learners', 'count', 'assigned_instructors', 'course'));
     }
 
     public function coursesReportUser()
     {
         $course_id = request()->id;
+        $course = Course::find($course_id);
+
         $users   = DB::table('courses_registration')
-                        ->where('course_id',$course_id)
-                        ->join('users','users.id','courses_registration.user_id')
-                        ->select('users.id','users.name','courses_registration.progress')
-                        ->orderBy('users.id')
-                        ->get();
+        ->where('course_id',$course_id)
+        ->join('users','users.id','courses_registration.user_id')
+        ->select('users.id','users.name','courses_registration.progress')
+        ->orderBy('users.id')
+        ->get();
         // dd($users);
-        return view('training.reports.courses.course_report',compact('course_id','users'));
+        return view('training.reports.courses.course_report',compact('course_id', 'users', 'course'));
 
     }
     public function coursesReportTest()
     {
         $course_id = request()->id;
+        $course = Course::find($course_id);
+
         $tests  = DB::table('contents')
-                        ->join('exams','exams.content_id','contents.id')
-                        ->join('courses','courses.id','contents.course_id')
-                        ->where('courses.id',$course_id)
-                        ->select('exams.id','contents.title as content_title')
-                        ->get();
-        return view('training.reports.courses.course_report',compact('course_id','tests'));
+        ->join('exams','exams.content_id','contents.id')
+        ->join('courses','courses.id','contents.course_id')
+        ->where('courses.id',$course_id)
+        ->select('exams.id','contents.title as content_title')
+        ->get();
+        return view('training.reports.courses.course_report',compact('course_id', 'tests', 'course'));
 
     }
 

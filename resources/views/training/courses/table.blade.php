@@ -85,7 +85,11 @@ use App\Models\Training\CourseRegistration;
                     <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="green">Contents</a>
                     <a href="{{route('training.units',['course_id'=>$post->id])}}" class="green">Units</a>
                     <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class="green">Users</a>
+<<<<<<< HEAD
 {{--                    <a href="{{route('training.clone.course',['course_id'=>$post->id])}}" class="green">Clone</a>--}}
+=======
+                    <a href="{{route('training.role_path',['course_id'=>$post->id])}}" class="green">Role and Path</a>
+>>>>>>> cb1b943005041057d7da61c867d8911bf76ec134
                 </div>
               @endif
           </td>

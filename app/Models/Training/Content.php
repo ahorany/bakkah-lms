@@ -18,6 +18,10 @@ class Content extends Model
         return $this->hasMany('App\Models\Training\Content','parent_id');
     }
 
+    public function section(){
+        return $this->belongsTo('App\Models\Training\Content','parent_id');
+    }
+
     public function exams(){
         return $this->hasMany(Exam::class,'content_id');
     }

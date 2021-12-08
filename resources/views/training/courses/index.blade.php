@@ -17,11 +17,3 @@
 	@include('training.'.$folder.'.table')
 
 @endsection
-
-{{-- @section('script')
-    <script>
-        function clear() {
-            var x = document.getElementById("title-prev").style.display = "inline-block";
-        }
-    </script>
-@endsection --}}
