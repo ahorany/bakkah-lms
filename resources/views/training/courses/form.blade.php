@@ -68,7 +68,7 @@
                     <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="green mb-1">Contents</a>
                     <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="green mb-1">Units</a>
                     <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="green mb-1">Users</a>
-                    <a href="{{route('training.role_path',['course_id'=>$eloquent->id])}}" class="green mb-1">Role and Path</a>
+                    <a href="{{route('training.role_path',['course_id'=>$eloquent->id])}}" class="green mb-1">to Role and Path</a>
                 </div>
             </div>
         @endif
