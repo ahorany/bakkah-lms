@@ -23,6 +23,7 @@ Route::group([
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {//'prefix'=>'user',
 
         Route::get('/dashboard', [UserProfileController::class, 'dashboard'])->name('dashboard');
+        Route::get('/messages', [UserProfileController::class, 'getMessage'])->name('messages');
         Route::get('/home', [UserProfileController::class, 'home'])->name('home');
         Route::get('/info', [UserProfileController::class, 'info'])->name('info');
         Route::post('/info/{id}/upadte', [UserProfileController::class, 'update'])->name('update');

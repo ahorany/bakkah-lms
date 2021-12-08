@@ -88,7 +88,6 @@ class UserProfileController extends Controller
 
     // exam page
     public function exam($exam_id){
-
         $exam = Content::whereId($exam_id)
             ->with(['course','exam' => function($q){
                 return $q->with(['users_exams' => function($q){
@@ -121,7 +120,7 @@ class UserProfileController extends Controller
 
     public function add_answers(){
         $user_exam =  UserExam::whereId(\request()->user_exam_id)
-            ->where('user_id',\auth()->id())->where('status',0)->first();
+            ->where('user_id',\auth()->id())->where('status',0)->with(['exam.content'])->first();
         if (!$user_exam) abort(404);
 
         if(\request()->has('answer') && \request()->status != 'save'){
@@ -194,22 +193,49 @@ class UserProfileController extends Controller
 
         // save answers
         if (\request()->status == 'save'){
-            $this->saveAndCalcMark($user_exam);
+            $this->saveAndCalcMark($user_exam->exam,$user_exam);
             return response(['status' => 'success' , 'redirect_route' => route('user.exam',$user_exam->exam->content_id)]);
         }
     }
-    private function saveAndCalcMark($user_exam){
+
+    private function saveAndCalcMark($exam,$user_exam){
         $user_exam_id = \request()->user_exam_id;
 
         $grade =  DB::select( DB::raw("SELECT SUM(mark) as grade
                                 FROM `user_questions`
                                 WHERE user_exam_id = ". $user_exam_id ."
                                 "));
+        $grade = $grade[0]->grade??0;
         $user_exam->update([
             'status' => 1,
             'end_attempt' => Carbon::now(),
-            'mark' => $grade[0]->grade??0
+            'mark' => $grade
         ]);
+        $content = $exam->content;
+        // update progress
+        if($content->role_and_path == 1 && ( ( ($exam->exam_mark * $exam->pass_mark) / 100 ) <= $grade) ){
+
+            $user_contents_count = DB::select(DB::raw("SELECT COUNT(user_contents.id) as user_contents_count FROM user_contents
+                                   INNER JOIN contents on user_contents.content_id = contents.id
+                                   WHERE user_contents.user_id =".\auth()->id()."
+                                   AND  contents.deleted_at IS NULL
+                                   AND contents.course_id = ". $content->course_id ."
+
+                             "));
+            $user_contents_count = $user_contents_count[0]->user_contents_count??0;
+
+            $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
+                                                            FROM contents
+                                                            WHERE   course_id =". $content->course_id ." AND parent_id IS NOT NULL AND  deleted_at IS NULL"));
+            $contents_count = $contents_count[0]->contents_count??0;
+
+            CourseRegistration::where('course_id',$content->course_id)
+                ->where('user_id',\auth()->id())->update(['progress'=> round(($user_contents_count / $contents_count) * 100 ,  1)  ]);
+
+        }
+//        else if($content->role_and_path == 1 && ( ( ($exam->exam_mark * $exam->pass_mark) / 100 ) > $grade)){
+//
+//        }
     }
 
     // start exam attempt
@@ -381,9 +407,8 @@ class UserProfileController extends Controller
         $user_course_register = CourseRegistration::where('course_id',$content->course->id)->where('user_id',\auth()->id())->first();
 
         $role_auth_is_admin = \auth()->user()->roles()->first();
-//        if($role_auth_is_admin && $role_auth_is_admin->id == 1){
-//
-//        }
+
+
         if(!$user_course_register && ($role_auth_is_admin && $role_auth_is_admin->id != 1)){
             abort(404);
         }
@@ -396,6 +421,7 @@ class UserProfileController extends Controller
             'content_id' => $content_id,
         ]);
 
+    if($content->role_and_path == 1){
         $user_contents_count = DB::select(DB::raw("SELECT COUNT(user_contents.id) as user_contents_count FROM user_contents
                                    INNER JOIN contents on user_contents.content_id = contents.id
                                    WHERE user_contents.user_id =".\auth()->id()."
@@ -413,8 +439,7 @@ class UserProfileController extends Controller
         CourseRegistration::where('course_id',$content->course_id)
             ->where('user_id',\auth()->id())->update(['progress'=> round(($user_contents_count / $contents_count) * 100 ,  1)  ]);
 
-
-
+ }
 
 //        return $user_contents_count;
 
@@ -550,50 +575,11 @@ class UserProfileController extends Controller
         return redirect(route('login'));
     }
 
-//   public function register()
-//   {
-//       if(Auth::check()){
-//           return redirect(route('user.home'));
-//       }
-//       return view('auth.register');
-//   }
-//
-//   public function registerSubmit(Request $request)
-//   {
-//       $request->validate([
-//           'en_name' => 'required',
-//           'email' => 'required|email|unique:users,email',
-//           'mobile' => 'required',
-//           'password' => 'required|confirmed'
-//       ]);
-//
-//       $user = User::where('email', $request->email)->first();
-//
-//       if($user) {
-//           if(is_null($user->password)) {
-//               $user->update(['password' => Hash::make($request->password)]);
-//           }
-//       }else {
-//
-//           $user = User::create([
-//               'name' => $request->en_name,
-//               'email' => $request->email,
-//               'mobile' => $request->mobile,
-//               'password' => Hash::make($request->password),
-//               'user_type' => 41
-//           ]);
-//       }
-//
-//
-//       Auth::login($user);
-//
-//       return redirect()->route('user.home');
-//   }
-//
 
     public function change_password() {
         return view('pages.change_password');
     }
+
 
     public function save_password() {
 
@@ -657,6 +643,11 @@ class UserProfileController extends Controller
         User::UploadFile($user, ['method'=>'update']);
 
         return redirect()->back();
+    }
+
+    public function getMessage()
+    {
+        return view('training.messages.index');
     }
 
 }

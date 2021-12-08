@@ -29,6 +29,7 @@ Route::group([
             Route::get('/coursesReportOverview', 'ReportController@coursesReportOverview')->name('coursesReportOverview');
             Route::get('/coursesReportUser', 'ReportController@coursesReportUser')->name('coursesReportUser');
             Route::get('/coursesReportTest', 'ReportController@coursesReportTest')->name('coursesReportTest');
+            Route::get('/course/clone/{course_id}', 'CourseController@cloneCourse')->name('clone.course');
 
             Route::get('/groupReportOverview', 'ReportController@groupReportOverview')->name('groupReportOverview');
             Route::get('/groupsReportUser', 'ReportController@groupsReportUser')->name('groupsReportUser');

@@ -9,9 +9,7 @@ class RolePathController extends Controller
 {
     public function rolePath(){
         $course_id = request()->course_id;
-        $course = Course::where('id',$course_id)->with(['contents' => function($q) use ($course_id){
-            return $q->where('course_id',$course_id)->with('contents');
-         }])->first();
+        $course = $this->courseContent($course_id);
         return view('training.courses.contents.role_path', compact('course' , 'course_id'));
     }
 
@@ -19,19 +17,19 @@ class RolePathController extends Controller
         $contents = request()->contents;
         $course_id = request()->course_id;
         $course = $this->courseContent($course_id);
-
         foreach($course->contents as $content){
             $content_course = Content::where('id',$content->id)->first();
             $content_course->update([
                 'role_and_path' => 0,
             ]);
         }
-
-        foreach($contents as $content){
-            $content_course = Content::where('id',$content)->first();
-            $content_course->update([
-                'role_and_path' => 1,
-            ]);
+        if($contents != null){
+            foreach($contents as $content){
+                $content_course = Content::where('id',$content)->first();
+                $content_course->update([
+                    'role_and_path' => 1,
+                ]);
+            }
         }
 
         $course = $this->courseContent($course_id);

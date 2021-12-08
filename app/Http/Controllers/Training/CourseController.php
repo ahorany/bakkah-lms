@@ -9,6 +9,8 @@ use App\Models\Admin\Partner;
 use App\Models\Training\Course;
 use App\Constant;
 use App\Models\Training\Group;
+use App\Models\Training\Unit;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use DB;
 
@@ -319,6 +321,92 @@ class CourseController extends Controller
         }
     }
 
+
+    public function cloneCourse($course_id){
+        $course =  Course::with(['units.subunits','contents' => function($q){
+            $q->with(['details','upload','exams','questions.answers']);
+        }])->first();
+        $this->cloneUnits($course->units,'');
+//         dd($course->units);
+dd('');
+        // store course
+      $course_clone =  Course::create([
+              "title" => $course->title,
+              "excerpt" => $course->excerpt,
+              "training_option_id" => $course->training_option_id,
+              "accredited_notes" => $course->accredited_notes,
+              "disclaimer" => $course->disclaimer,
+              "PDUs" => $course->PDUs,
+              "post_type" => $course->post_type,
+              "price" => $course->price,
+              "exam_price" => $course->exam_price,
+              "take2_price" => $course->take2_price,
+              "take2_price_usd" => $course->take2_price_usd,
+              "rating" => $course->rating,
+              "reviews" => $course->reviews,
+              "created_by" => auth()->id(),
+              "updated_by" => auth()->id(),
+              "trashed_status" => $course->trashed_status,
+              "slug" => $course->slug,
+              "order" => $course->order,
+              "algolia_order" => $course->algolia_order,
+              "xero_code" => $course->xero_code,
+              "xero_exam_code" => $course->xero_exam_code,
+              "material_cost" => $course->material_cost,
+              "created_at" => Carbon::now(),
+              "updated_at" => Carbon::now(),
+              "short_title" => $course->short_title,
+              "deleted_at" => $course->deleted_at,
+              "exam_is_included" => $course->exam_is_included,
+              "partner_id" => $course->partner_id,
+              "certificate_type_id" => $course->certificate_type_id,
+              "type_id" => $course->type_id,
+              "show_in_website" => $course->show_in_website,
+              "active" => $course->active,
+              "wp_id" => $course->wp_id,
+              "wp_city" => $course->wp_city,
+              "wp_migrate" => $course->wp_migrate,
+              "post_year" => $course->post_year,
+              "reference_course_id" => $course->reference_course_id,
+              "code" => $course->code,
+        ]);
+
+
+        return $course;
+    }
+
+    private function cloneUnits($course_units,$clone_course_id){
+        $course_units = $this->buildTree($course_units);
+        dd($course_units);
+         foreach ($course_units as $unit){
+             Unit::create([
+                ""
+             ]);
+         }
+    }
+
+    private function cloneContent($course_contents,$clone_course_id){
+
+    }
+
+    private function buildTree($elements, $parentId = 0) {
+        $branch = array();
+
+        foreach ($elements as $element) {
+//            dump($element->parent_id);
+//            dump($parentId);
+//            dump($element->parent_id == $parentId);
+
+            if ($element->parent_id == $parentId) {
+                $children = $this->buildTree($elements, $element->id);
+                if ($children) {
+                    $element->s = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+        return $branch;
+    }
 
 
 

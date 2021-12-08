@@ -28,7 +28,7 @@
             </button>
                 <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Units</a>
                 <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Users</a>
-                <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Role and Path</a>
+                <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">to Role and Path</a>
         </div>
           @if(!checkUserIsTrainee())
              <div class="col-md-3 col-3 text-right">
@@ -195,8 +195,8 @@
 
                                 <div class="col-md-6 col-12">
                                     <div class="modal-diff-content form-group">
-                                        <label class="m-0">Pass Mark</label>
-                                        <input type="number" v-model="pass_mark" name="pass_mark" class="form-control" placeholder="pass mark">
+                                        <label class="m-0">Pass Mark (%)</label>
+                                        <input min="0" max="100" type="number" v-model="pass_mark" name="pass_mark" class="form-control" placeholder="pass mark">
                                         <div v-show="'pass_mark' in errors">
                                             <span style="color: red;font-size: 13px">@{{ errors.pass_mark }}</span>
                                         </div>
@@ -774,11 +774,6 @@
 			},
 
             validateContent : function () {
-                // if (self.title == ''  || self.title == null) {
-                //     self.errors = {'title': 'The title field is required.'};
-                //     return;
-                // }
-
                 switch (this.model_type) {
                     case 'video': return this.validateVideo(['mp4','mov','ogg','qt']); break;
                     case 'audio': return this.validateContentWithFile(['application/octet-stream','audio/mpeg','mpga','mp3','wav']); break;

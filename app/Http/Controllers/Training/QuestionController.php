@@ -35,15 +35,11 @@ class QuestionController extends Controller
 
     public function add_questions($exam_id){
         $content = Content::where('id',$exam_id)->with(['questions.answers','questions.units'])->latest()->first();
-        /////
-//        return $content;
         $course_id = $content->course_id;
         $units = Unit::where('course_id',$course_id)->with(['subunits'])->get();
-
-
         $units = $this->buildTree($units);
 
-        return view('training.courses.contents.exam', compact('content','units'));
+        return view('training.courses.contents.exam', compact('content','units','course_id'));
     }
 
     public function add_question(){
