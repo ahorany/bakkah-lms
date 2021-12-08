@@ -22,10 +22,12 @@
         }
     }
     ?>
+    {{-- @dd($content) --}}
     <div class="dash-header course_info">
         @include('pages.templates.breadcrumb', [
             'course_id'=>$content->course->id,
             'course_title'=>$content->course->trans_title,
+            'section_title' => $content->section->title,
             'content_title'=>$content->title,
         ])
         <br>
@@ -50,7 +52,7 @@
 
                     @if($previous)
                     {{-- <span class="previous-title"><a style="color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a></span> --}}
-                        <button title="{{$previous->title}}" class="next_prev" onmouseleave="hide_prev()" onmouseenter="show_prev()" onclick="location.href =  '{{$previous_url}}'">
+                        <button title="{{$previous->title}}" class="next_prev" onclick="location.href =  '{{$previous_url}}'">
                             <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
                                 <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
                             </svg>
@@ -98,11 +100,11 @@
                             src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
                             <?php
-                            $user_id = sprintf("%'.06d", auth()->user()->id);
+                            $user_id = sprintf("%'.05d", auth()->user()->id);
                             $content_id = sprintf("%'.05d", $content->id);
                             $SCOInstanceID = (1).$user_id.(2).$content_id;
                             ?>
-                            <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}" name="API" style="display: none;"></iframe>
+                            <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
                             <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
                             {{-- <iframe src="{{CustomAsset('scorm/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe> --}}
                             {{-- @include('scorm') --}}
@@ -128,7 +130,7 @@
         </div>
     </div>
 @endsection
-
+{{--
 @section('script')
     <script>
         function show_prev() {
@@ -144,4 +146,4 @@
             var x = document.getElementById("title-next").style.display = "none";
         }
     </script>
-@endsection
+@endsection --}}

@@ -121,6 +121,7 @@
                         {{__('admin.contents')}}
                     </a>
                     <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Users</a>
+                    <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">to Role and Path</a>
                 </div>
 
                 <div class="col-md-3 col-3 text-right">
@@ -143,37 +144,7 @@
             </div>
         </div>
 
-
-
     </div>
-
-
-{{--    <ul class="tree">--}}
-{{--        <li>Animals--}}
-{{--            <ul>--}}
-{{--                <li>Birds</li>--}}
-{{--                <li>Mammals--}}
-{{--                    <ul>--}}
-{{--                        <li>Elephant</li>--}}
-{{--                        <li class="last">Mouse</li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
-{{--                <li class="last">Reptiles</li>--}}
-{{--            </ul>--}}
-{{--        </li>--}}
-{{--        <li class="last">Plants--}}
-{{--            <ul>--}}
-{{--                <li>Flowers--}}
-{{--                    <ul>--}}
-{{--                        <li>Rose</li>--}}
-{{--                        <li class="last">Tulip</li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
-{{--                <li class="last">Trees</li>--}}
-{{--            </ul>--}}
-{{--        </li>--}}
-{{--    </ul>--}}
-
 @endsection
 
 @section('script')

@@ -14,34 +14,30 @@
 
 
     <div class="toLoad" id="questions">
+        <div  class="course_info mb-3 card p-3">
+            <div class="row">
+                <div class="col-md-9 col-9">
+                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$content->course->trans_title}}</span>
+                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Exam Title : {{$content->title}}</span>
 
-    {{-- <div class="course_info card p-3 mb-3">
-        <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons" style="width: max-content;">
-            <i class="fa fa-plus"></i> {{__('admin.add_question')}}
-        </button>
-    </div> --}}
-
-    <div  class="course_info mb-3 card p-3">
-        <div class="row">
-            <div class="col-md-9 col-9">
-                <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$content->course->trans_title}}</span>
-                <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Exam Title : {{$content->title}}</span>
-
-                <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
-                    <i class="fa fa-plus"></i> {{__('admin.add_question')}}
-                </button>
-
-                <a  class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + {{$content->id}}" :target="{{$content->id}}">
-                    <i class="fa fa-folder-open-o" aria-hidden="true"></i> Preview Exam
-                </a>
-            </div>
-            <div class="col-md-3 col-3 text-right">
-                <div class="back">
-                    <a href="{{route('training.contents',['course_id'=>$content->course_id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
+                        <i class="fa fa-plus"></i> {{__('admin.add_question')}}
+                    </button>
+                    <a href="{{route('training.contents',['course_id'=>$course_id])}}"  class="group_buttons mb-1 btn-sm mr-1">{{__('admin.contents')}}</a>
+                    <a href="{{route('training.units',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">Units</a>
+                    <a href="{{route('training.course_users',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">Users</a>
+                    <a href="{{route('training.role_path',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">to Role and Path</a>
+                    <a  class="group_buttons mb-1 btn-sm" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + {{$content->id}}" :target="{{$content->id}}">
+                        <i class="fa fa-folder-open-o" aria-hidden="true"></i> Preview Exam
+                    </a>
+                </div>
+                <div class="col-md-3 col-3 text-right">
+                    <div class="back">
+                        <a href="{{route('training.contents',['course_id'=>$content->course_id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
         <div class="card p-3 mb-3">
             <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="row mx-0">

@@ -29,6 +29,7 @@ Route::group([
             Route::get('/coursesReportOverview', 'ReportController@coursesReportOverview')->name('coursesReportOverview');
             Route::get('/coursesReportUser', 'ReportController@coursesReportUser')->name('coursesReportUser');
             Route::get('/coursesReportTest', 'ReportController@coursesReportTest')->name('coursesReportTest');
+            Route::get('/course/clone/{course_id}', 'CourseController@cloneCourse')->name('clone.course');
 
             Route::get('/groupReportOverview', 'ReportController@groupReportOverview')->name('groupReportOverview');
             Route::get('/groupsReportUser', 'ReportController@groupsReportUser')->name('groupsReportUser');
@@ -105,7 +106,8 @@ Route::group([
         Route::resource('branches', 'BrancheController');
         Route::patch('/branches/{branche}/restore', 'BrancheController@restore')->name('branches.restore');
 
-
+        Route::get('/role_path', 'RolePathController@rolePath')->name('role_path');
+        Route::get('/send_role_path', 'RolePathController@sendRolePath')->name('send_role_path');
 
 
     });

@@ -65,9 +65,10 @@
             <div class="card card-default contents">
                 <div class="card-header">{{__('admin.contents')}}</div>
                 <div class="card-body">
-                    <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="green">Contents</a>
-                    <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="green">Units</a>
-                    <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="green">Users</a>
+                    <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="green mb-1">Contents</a>
+                    <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="green mb-1">Units</a>
+                    <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="green mb-1">Users</a>
+                    <a href="{{route('training.role_path',['course_id'=>$eloquent->id])}}" class="green mb-1">to Role and Path</a>
                 </div>
             </div>
         @endif
@@ -85,6 +86,7 @@
                 {!!Builder::Input('en_short_title', 'en_short_title', null)!!}
                 {!!Builder::Input('ar_short_title', 'ar_short_title', null)!!}
                 {!!Builder::Input('order', 'order', null)!!}
+                {!!Builder::Input('PDUs', 'PDUs', null)!!}
 
                 {{-- {!!Builder::Select('partner_id', 'partners', $partners, null, ['col'=>'col-md-12']) !!} --}}
 

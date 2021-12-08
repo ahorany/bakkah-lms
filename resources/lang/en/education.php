@@ -87,4 +87,6 @@ return [
     "Change Password" => 'Change Password',
     "Next" => 'Next',
     "Previous" => 'Previous',
+    "Messages" => 'Messages',
+    "to Rule & Path" => 'to Rule & Path',
 ];

@@ -28,6 +28,7 @@
             </button>
                 <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Units</a>
                 <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Users</a>
+                <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">to Role and Path</a>
         </div>
           @if(!checkUserIsTrainee())
              <div class="col-md-3 col-3 text-right">
@@ -194,8 +195,8 @@
 
                                 <div class="col-md-6 col-12">
                                     <div class="modal-diff-content form-group">
-                                        <label class="m-0">Pass Mark</label>
-                                        <input type="number" v-model="pass_mark" name="pass_mark" class="form-control" placeholder="pass mark">
+                                        <label class="m-0">Pass Mark (%)</label>
+                                        <input min="0" max="100" type="number" v-model="pass_mark" name="pass_mark" class="form-control" placeholder="pass mark">
                                         <div v-show="'pass_mark' in errors">
                                             <span style="color: red;font-size: 13px">@{{ errors.pass_mark }}</span>
                                         </div>
@@ -512,6 +513,10 @@
 
             saveSection : function(){
                 let self = this;
+                if (self.title == ''  || self.title == null) {
+                    self.errors = {'title': 'The title field is required.'};
+                    return;
+                }
                 if(this.save_type  == 'add'){
                     axios.post("{{route('training.add_section')}}",
                         {
@@ -522,7 +527,8 @@
                             status : self.status,
                         })
                         .then(response => {
-                            console.log(response)
+                            console.log(response['data']['errors'])
+
                             if(response['data']['errors']) {
                                 self.errors =  response['data']['errors']
                                 for (let property in self.errors) {
@@ -562,7 +568,7 @@
                             status : self.status,
                         })
                         .then(response => {
-                            console.log(response)
+                            console.log(response['data']['errors'])
                             if(response['data']['errors']) {
                                 self.errors =  response['data']['errors']
                                 for (let property in self.errors) {
@@ -760,9 +766,90 @@
 				if(self.model_type == 'section'){
                     this.saveSection();
                 }else{
+				    if(this.validateContent()) {
+                        return;
+                    }
                     this.saveContent();
                 }
 			},
+
+            validateContent : function () {
+                switch (this.model_type) {
+                    case 'video': return this.validateVideo(['mp4','mov','ogg','qt']); break;
+                    case 'audio': return this.validateContentWithFile(['application/octet-stream','audio/mpeg','mpga','mp3','wav']); break;
+                    case 'presentation': return this.validateContentWithFile(['ppt','pptx','pdf','doc','docx','xls','jpeg','png']); break;
+                    case 'scorm': return this.validateContentWithFile(['zip']); break;
+                }
+            },
+
+            validateContentWithFile : function (extensions_array) {
+                var lock = true;
+                if(this.file){
+                    let file_extension = this.file.name.split(".")[1];
+                    for(var i = 0; i < extensions_array.length ; i++){
+                        if(extensions_array[i] == file_extension){
+                            lock = false;
+                        }
+                    }
+
+                    if(lock){
+                        this.errors = {'file': 'The file type must be' + extensions_array.join(',')};
+                        if(this.title == '' || this.title == null){
+                            this.errors =  {'title': 'The title is required','file': 'The file type must be ' + extensions_array.join(',')};
+                        }
+                        return true;
+                    }else{
+                        if(this.title == '' || this.title == null){
+                            this.errors =  {'title': 'The title is required'};
+                            return true;
+                        }
+                    }
+                    return false;
+
+
+                }else{
+                    if(this.save_type == 'add'){
+                        this.errors = {'file': 'The file is required '};
+                        if(this.title == '' || this.title == null){
+                            this.errors =  {'title': 'The title is required','file': 'The file is required '};
+                        }
+                        return true;
+                    }else{
+                        if(this.title == '' || this.title == null){
+                            this.errors =  {'title': 'The title is required'};
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            },
+
+            validateVideo : function (extensions_array) {
+                if(this.url && this.file){
+                    if(this.title == null || this.title == ''){
+                        this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
+                    }else{
+                        this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
+                    }
+                    return true;
+                }else if( (this.url == null || this.url == '') && (this.file == null || this.file == '')){
+                    if(this.title == null || this.title == ''){
+                        this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
+                    }else{
+                        this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
+                    }
+                    return true;
+                }else if(this.url){
+                    if(this.title == null || this.title == ''){
+                        this.errors =  {'title': 'The title is required'};
+                        return true;
+                    }
+                }else if(this.file){
+                    return this.validateContentWithFile(extensions_array);
+                }
+                return false;
+            },
+
 		},
 	});
 </script>
