@@ -27,43 +27,46 @@
             </div>
         </div>
     </div>
-
-<div class="row">
-    <div class="col-md-9"></div>
-    <div class="col-md-3">
+    <div>
         <form action="{{route('training.send_role_path',['course_id'=>$course->id])}}" method="GET">
-            <div class="card p-4 mb-2">
-                <input type="hidden" name="course_id" value="{{$course_id}}">
-                <button type="submit" class="main-color" style="width: max-content;"><i class="fa fa-save"></i> Update</button>
-            </div>
-            <div class="card p-4">
-                <ul list-style="none">
-                    @foreach ($course->contents as $content)
-                        @if ($content->parent_id == null)
-                            <li>
-                                <div class="form-group">
-                                    <input type="checkbox" @if ($content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$content->id}}" id="content_{{$content->id}}">
-                                    <label for="content_{{$content->id}}">{{$content->title}}</label>
-                                </div>
-                                @if (count($content->contents) > 0)
-                                    <ul list-style="none" class="pl-4">
-                                        @foreach ($content->contents as $sub_content)
-                                            <li>
-                                                <div class="form-group">
-                                                    <input type="checkbox" @if ($sub_content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$sub_content->id}}" id="content_{{$sub_content->id}}">
-                                                    <label for="content_{{$sub_content->id}}">{{$sub_content->title}}</label>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endif
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="card p-5">
+                        <ul list-style="none">
+                            @foreach ($course->contents as $content)
+                                @if ($content->parent_id == null)
+                                    <li>
+                                        <div class="form-group">
+                                            <input type="checkbox" @if ($content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$content->id}}" id="content_{{$content->id}}">
+                                            <label for="content_{{$content->id}}">{{$content->title}}</label>
+                                        </div>
+                                        @if (count($content->contents) > 0)
+                                            <ul list-style="none" class="pl-4">
+                                                @foreach ($content->contents as $sub_content)
+                                                    <li>
+                                                        <div class="form-group">
+                                                            <input type="checkbox" @if ($sub_content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$sub_content->id}}" id="content_{{$sub_content->id}}">
+                                                            <label for="content_{{$sub_content->id}}">{{$sub_content->title}}</label>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
 
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card p-4 mb-2">
+                        <input type="hidden" name="course_id" value="{{$course_id}}">
+                        <button type="submit" class="main-color" style="width: max-content;"><i class="fa fa-save"></i> Update</button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
-</div>
 @endsection
