@@ -1,7 +1,7 @@
 @extends('layouts.crm.index')
 
 @section('useHead')
-    <title>{{__('education.Course Units')}} | {{ __('home.DC_title') }}</title>
+    <title>{{__('education.to Rule & Path')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
 @section('table')
@@ -37,7 +37,7 @@
                                 @if ($content->parent_id == null)
                                     <li>
                                         <div class="form-group">
-                                            <input type="checkbox" @if ($content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$content->id}}" id="content_{{$content->id}}">
+                                            {{-- <input type="checkbox" @if ($content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$content->id}}" id="content_{{$content->id}}"> --}}
                                             <label for="content_{{$content->id}}">{{$content->title}}</label>
                                         </div>
                                         @if (count($content->contents) > 0)

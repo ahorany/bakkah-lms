@@ -659,4 +659,9 @@ class UserProfileController extends Controller
         return redirect()->back();
     }
 
+    public function getMessage()
+    {
+        return view('training.messages.index');
+    }
+
 }
