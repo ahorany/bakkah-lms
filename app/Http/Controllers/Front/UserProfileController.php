@@ -421,11 +421,7 @@ class UserProfileController extends Controller
             'content_id' => $content_id,
         ]);
 
-<<<<<<< HEAD
     if($content->role_and_path == 1){
-
-=======
->>>>>>> cb1b943005041057d7da61c867d8911bf76ec134
         $user_contents_count = DB::select(DB::raw("SELECT COUNT(user_contents.id) as user_contents_count FROM user_contents
                                    INNER JOIN contents on user_contents.content_id = contents.id
                                    WHERE user_contents.user_id =".\auth()->id()."
