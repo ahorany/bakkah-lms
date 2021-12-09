@@ -100,15 +100,15 @@
 
                                         @if (($user->roles[0]->pivot->role_id == 1) || ($user->roles[0]->pivot->role_id == 2))
                                             @if ($message->replay == null)
-                                                <a href="{{route('user.replay_message',$message->id)}}" class="main-color">Replay</a>
+                                                <a href="{{route('user.replay_message',$message->id)}}" class="green">Replay</a>
                                             @else
-                                                <a href="{{route('user.replay_message',$message->id)}}" class="main-color">Show Replay</a>
+                                                <a href="{{route('user.replay_message',$message->id)}}" class="green">Show Replay</a>
                                             @endif
                                         @else
                                             @if ($message->replay == null)
                                                 <span>No replay</span>
                                             @else
-                                                <a href="{{route('user.replay_message',$message->id)}}" class="main-color">Show Replay</a>
+                                                <a href="{{route('user.replay_message',$message->id)}}" class="green">Show Replay</a>
                                             @endif
                                         @endif
 
