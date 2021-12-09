@@ -22,7 +22,6 @@
 
     <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}">
-
     @yield('style')
 <style>
     /*h1, h2, h3, h4, h5, h6 {*/
@@ -35,6 +34,8 @@
         margin-bottom: 5px !important;
     }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -54,9 +55,8 @@
 
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> --}}
+{{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="{{CustomAsset('assets/js/main.js')}}"></script>
