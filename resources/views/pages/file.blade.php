@@ -90,6 +90,8 @@
                         @elseif($content->upload->extension == 'pdf' )
                             <iframe width="100%" height="500px"
                                     src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                        @elseif($content->upload->extension == 'xls' )
+                            <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
                         @else
                             <iframe style="" width="100%" height="500px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @endif
