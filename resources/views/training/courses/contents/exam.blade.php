@@ -26,7 +26,7 @@
                     <a href="{{route('training.contents',['course_id'=>$course_id])}}"  class="group_buttons mb-1 btn-sm mr-1">{{__('admin.contents')}}</a>
                     <a href="{{route('training.units',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">Units</a>
                     <a href="{{route('training.course_users',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">Users</a>
-                    <a href="{{route('training.role_path',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">to Role and Path</a>
+                    <a href="{{route('training.role_path',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">Rule and Path</a>
                     <a  class="group_buttons mb-1 btn-sm" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + {{$content->id}}" :target="{{$content->id}}">
                         <i class="fa fa-folder-open-o" aria-hidden="true"></i> Preview Exam
                     </a>

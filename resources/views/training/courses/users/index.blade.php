@@ -58,7 +58,7 @@
                         {{__('admin.contents')}}
                     </a>
                     <a href="{{route('training.units',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Units</a>
-                    <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">to Role and Path</a>
+                    <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Rule and Path</a>
                 </div>
 
                 @if(!checkUserIsTrainee())

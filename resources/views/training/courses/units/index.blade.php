@@ -121,7 +121,7 @@
                         {{__('admin.contents')}}
                     </a>
                     <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Users</a>
-                    <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">to Role and Path</a>
+                    <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Rule and Path</a>
                 </div>
 
                 <div class="col-md-3 col-3 text-right">

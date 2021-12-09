@@ -88,5 +88,5 @@ return [
     "Next" => 'Next',
     "Previous" => 'Previous',
     "Messages" => 'Messages',
-    "to Rule & Path" => 'to Rule & Path',
+    "Rule & Path" => 'Rule & Path',
 ];

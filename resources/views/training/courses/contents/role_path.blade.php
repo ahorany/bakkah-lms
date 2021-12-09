@@ -1,7 +1,7 @@
 @extends('layouts.crm.index')
 
 @section('useHead')
-    <title>{{__('education.to Rule & Path')}} | {{ __('home.DC_title') }}</title>
+    <title>{{__('education.Rule & Path')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
 @section('table')
