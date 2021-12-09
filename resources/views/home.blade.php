@@ -79,7 +79,7 @@
                             </g>
                         </svg>
                         <div>
-                            <span>Course in Progress</span>
+                            <span>Course in Progess</span>
                             <b>{{ getReportNumber($complete_courses,0)  }}</b>
                         </div>
                     </div>
@@ -640,7 +640,7 @@
         var oilData = {
             labels: [
                 "Your Courses",
-                "In Progress",
+                "In Progess",
                 "Not Complete",
                 "Completed",
             ],
