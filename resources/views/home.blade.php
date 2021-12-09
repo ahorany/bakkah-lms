@@ -433,9 +433,9 @@
                 <ul>
                     <?php $lang = app()->getLocale(); ?>
                     @foreach($activities as $activity)
-                        <li><a href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-                            <div>Start Date: {{$activity->start_date}}</div>
-                            <div>End Date: {{$activity->end_date}}</div>
+                        <li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+{{--                            <div>Start Date: {{$activity->start_date}}</div>--}}
+{{--                            <div>End Date: {{$activity->end_date}}</div>--}}
                         </li>
                     @endforeach
                 </ul>
