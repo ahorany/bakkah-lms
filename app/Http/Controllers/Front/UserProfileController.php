@@ -13,19 +13,17 @@ use App\Models\Training\UserExam;
 use App\Models\Training\UserQuestion;
 use App\User;
 use App\Constant;
+use App\Models\Admin\Role;
 use App\Models\Admin\Upload;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Training\Course;
+use App\Models\Training\Message;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Validation\ValidationException;
-use Laravel\Socialite\Facades\Socialite;
 
 class UserProfileController extends Controller
 {
@@ -219,6 +217,7 @@ class UserProfileController extends Controller
                                    INNER JOIN contents on user_contents.content_id = contents.id
                                    WHERE user_contents.user_id =".\auth()->id()."
                                    AND  contents.deleted_at IS NULL
+                                   AND  contents.role_and_path = 1
                                    AND contents.course_id = ". $content->course_id ."
 
                              "));
@@ -226,16 +225,17 @@ class UserProfileController extends Controller
 
             $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
                                                             FROM contents
-                                                            WHERE   course_id =". $content->course_id ." AND parent_id IS NOT NULL AND  deleted_at IS NULL"));
+                                                            WHERE   course_id =". $content->course_id ."
+                                                            AND parent_id IS NOT NULL
+                                                            AND  deleted_at IS NULL
+                                                            AND  role_and_path = 1
+                                                            "));
             $contents_count = $contents_count[0]->contents_count??0;
 
             CourseRegistration::where('course_id',$content->course_id)
                 ->where('user_id',\auth()->id())->update(['progress'=> round(($user_contents_count / $contents_count) * 100 ,  1)  ]);
 
         }
-//        else if($content->role_and_path == 1 && ( ( ($exam->exam_mark * $exam->pass_mark) / 100 ) > $grade)){
-//
-//        }
     }
 
     // start exam attempt
@@ -426,6 +426,7 @@ class UserProfileController extends Controller
                                    INNER JOIN contents on user_contents.content_id = contents.id
                                    WHERE user_contents.user_id =".\auth()->id()."
                                    AND  contents.deleted_at IS NULL
+                                   AND  contents.role_and_path = 1
                                    AND contents.course_id = ". $content->course_id ."
 
                              "));
@@ -433,32 +434,17 @@ class UserProfileController extends Controller
 
         $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
                                                             FROM contents
-                                                            WHERE   course_id =". $content->course_id ." AND parent_id IS NOT NULL AND  deleted_at IS NULL"));
+                                                            WHERE   course_id =". $content->course_id ."
+                                                            AND parent_id IS NOT NULL
+                                                            AND  deleted_at IS NULL
+                                                            AND  role_and_path = 1
+                                                            "));
         $contents_count = $contents_count[0]->contents_count??0;
 
         CourseRegistration::where('course_id',$content->course_id)
             ->where('user_id',\auth()->id())->update(['progress'=> round(($user_contents_count / $contents_count) * 100 ,  1)  ]);
 
  }
-
-//        return $user_contents_count;
-
-
-        /*
-           SELECT * FROM `contents`
-               INNER JOIN contents AS sections ON contents.parent_id = sections.id
-                WHERE contents.course_id = 1
-               ORDER BY contents.parent_id
-        *******************
-
-        SELECT * FROM `contents`
-           INNER JOIN contents AS sections ON contents.parent_id = sections.id
-        WHERE contents.course_id = 1
-              AND (contents.parent_id >= 203 AND contents.id != 210)
-        ORDER BY contents.parent_id
-        LIMIT 1
-
-         */
 
 
         $next =  DB::select(DB::raw("
@@ -501,7 +487,6 @@ class UserProfileController extends Controller
         $next = ($next[0]??null);
         $previous = ($previous[0]??null);
 
-        // dd('aa');
         return view('pages.file',compact('content','previous','next'));
     }
 
@@ -645,9 +630,69 @@ class UserProfileController extends Controller
         return redirect()->back();
     }
 
-    public function getMessage()
-    {
-        return view('training.messages.index');
+    public function getMessages(){
+        $user = User::where('id',auth()->user()->id)->with(['uploads','roles'])->first();
+        if(($user->roles[0]->pivot->role_id == 1) || ($user->roles[0]->pivot->role_id == 2)){
+            $messages = Message::where('role_id','!=',3)->with(['courses.course','user'])->get();
+        }else{
+            $messages = Message::where('user_id',auth()->user()->id)->with(['courses.course','user'])->get();
+        }
+        // return $user;
+        return view('training.messages.index',compact('messages','user'));
+    }
+
+    public function addMessage(){
+        $courses = CourseRegistration::where('user_id',auth()->user()->id)->with(['course.users'])->get();
+        $roles = Role::where('id','!=',3)->get();
+        return view('training.messages.form',compact('courses','roles'));
+    }
+
+    public function sendMessage(){
+        $rules = [
+            "course_id"   => "required|numeric",
+            "recipient_id"   => "required|numeric",
+            "subject"   => "required|max:100",
+            "description"   => "required",
+        ];
+
+        $validator = Validator::make(\request()->all(), $rules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        Message::create([
+            'user_id' => auth()->user()->id,
+            'course_id' => request()->course_id,
+            'role_id' => request()->recipient_id,
+            'title' => request()->subject,
+            'description' => request()->description,
+            'created_at' => Carbon::now(),
+        ]);
+        return redirect()->route('user.messages');
+    }
+
+    public function replayMessage($id){
+        $message = Message::where('id',$id)->with(['courses.course','user'])->first();
+        $user = User::where('id',$message->user_id)->with(['upload'])->first();
+        return view('training.messages.replay',compact('message','user'));
+    }
+    public function addReplay(){
+        $rules = [
+            "replay"   => "required",
+        ];
+
+        $validator = Validator::make(\request()->all(), $rules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $message = Message::where('id',request()->message_id)->first();
+        $message->update([
+            'replay' => request()->replay,
+        ]);
+        return redirect()->route('user.messages');
     }
 
 }

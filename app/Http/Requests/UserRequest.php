@@ -29,8 +29,9 @@ class UserRequest extends FormRequest
         }
 
         $args = [
-            'en_name'=>'min:3|max:191',//|regex:/^[A-Za-z]*$/
-            'ar_name'=>'min:2|max:191',
+            'en_name'=>'min:2|max:191',//|regex:/^[A-Za-z]*$/
+            // 'ar_name'=>'min:2|max:191',
+            'ar_name'=>'nullable|max:191',
             'image'=>'image|mimes:jpeg,png,jpg,gif,svg,pdf|max:20480',
             'created_by'=>'',
             'updated_by'=>'',

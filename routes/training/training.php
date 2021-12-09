@@ -113,6 +113,11 @@ Route::group([
         Route::get('/send_role_path', 'RolePathController@sendRolePath')->name('send_role_path');
 
 
+        Route::get('/settings', 'SettingController@index')->name('settings.index');
+        Route::post('/update/settings', 'SettingController@update')->name('settings.update');
+
+        Route::post('/save/content/order', 'ContentController@save_content_order')->name('contents.save_order');
+
     });
 });
 

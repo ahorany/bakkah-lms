@@ -46,29 +46,29 @@ class BrancheController extends Controller
         return Active::Inserted($branche->name);
     }
 
-    public function edit(Branche $branche){
-        return Active::Edit(['eloquent'=>$branche]);
+    public function edit(Branche $branch){
+        return Active::Edit(['eloquent'=>$branch]);
     }
 
-    public function update(BrancheRequest $request,Branche $branche){
+    public function update(BrancheRequest $request,Branche $branch){
         $validated = $request->validated();
         $validated['updated_by'] = auth()->user()->id;
         $validated['active'] = request()->has('active')?1:0;
-        Branche::find($branche->id)->update($validated);
-        Branche::UploadFile($branche, ['method'=>'update']);
-        \App\Models\SEO\Seo::seo($branche);
-        return Active::Updated($branche->name);
+        Branche::find($branch->id)->update($validated);
+        Branche::UploadFile($branch, ['method'=>'update']);
+        \App\Models\SEO\Seo::seo($branch);
+        return Active::Updated($branch->name);
     }
 
-    public function destroy(Branche $branche){
-        Branche::where('id', $branche->id)->SoftTrash();
-        return Active::Deleted($branche->name);
+    public function destroy(Branche $branch){
+        Branche::where('id', $branch->id)->SoftTrash();
+        return Active::Deleted($branch->name);
     }
 
-    public function restore($branche){
-        Branche::where('id', $branche)->RestoreFromTrash();
-        $branche = Branche::where('id', $branche)->first();
-        return Active::Restored($branche->name);
+    public function restore($branch){
+        Branche::where('id', $branch)->RestoreFromTrash();
+        $branch = Branche::where('id', $branch)->first();
+        return Active::Restored($branch->name);
     }
 
 }

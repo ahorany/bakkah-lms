@@ -59,7 +59,7 @@
         </div>
         <div class="col-xl-3 col-lg-4">
             <div class="card h-100 p-30">
-                <h4>QUIZ Navigation</h4>
+                <h4>Quiz Navigation</h4>
                 <ol class="answers">
                     @foreach($exam->exam->content->questions as $question)
                         <li>

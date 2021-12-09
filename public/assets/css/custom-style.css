@@ -1,6 +1,9 @@
 h1 , h2 , h3 , h4 , h5 ,h6,
-a, span , p , label, div{
+a, span , p , label, div, small{
     text-transform: capitalize !important;
+}
+.quill-editor-container .ql-editor>p{
+    text-transform: none !important;
 }
 .bg-one {
     background: #6a6a6a;
@@ -185,7 +188,7 @@ ol.answers li{
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 2%) !important;
 }
 .lms-header ul.navbar-nav > li {
-    margin: 0 30px;
+    margin: 0 30px 0 0;
 }
 /*************************************************************************************************************/
 
@@ -315,7 +318,7 @@ ol.answers li{
     text-decoration: none;
     background: #f6feff;
 }
-.group_buttons:active {
+.group_buttons.active {
     background: #62a0a7;
     color: #fff;
 }

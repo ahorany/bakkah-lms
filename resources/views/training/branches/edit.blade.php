@@ -7,6 +7,6 @@
 @section('edit')
 	{{Builder::SetEloquent($eloquent)}}
     {{Builder::SetNameSpace('training.')}}
-	{{Builder::SetObject('branche')}}
+	{{Builder::SetObject('branch')}}
 	@include('training.'.$folder.'.form')
 @endsection

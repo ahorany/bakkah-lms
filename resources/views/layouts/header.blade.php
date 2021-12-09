@@ -10,7 +10,7 @@
 <header class="navbar navbar-dark sticky-top bg-white flex-md-nowrap p-0 shadow lms-header">
     <a class="navbar-brand col-md-3 col-lg-3 col-xl-2 me-0 px-3" href="{{CustomRoute('user.home')}}">
         <img src="{{CustomAsset('assets/images/logo.png')}}" alt="{{__('education.header_title')}}">
-        <span class="d-none d-sm-block">BAKKAH<b>LMS</b></span>
+        <span class="d-none d-sm-block">BAKKAH <b>LMS</b></span>
     </a>
     <button class="navbar-toggler position-absolute d-md-none collapsed  me-auto ms-3" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
@@ -30,6 +30,48 @@
         <small>{{\auth()->user()->roles()->first()->trans_name}}</small>
     </span> --}}
     <ul class="navbar-nav mx-0">
+        <li  class="has-dropdown notification">
+            <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;"  href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                    <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                    </style>
+                    <g>
+                        <path d="M96.47,46.82c0,2.17,0,4.35,0,6.52c-0.2,1.49-0.36,2.98-0.62,4.46c-1.36,7.91-4.49,15.04-9.55,21.28   c-7.27,8.96-16.59,14.55-27.96,16.66c-1.65,0.31-3.33,0.49-4.99,0.73c-2.17,0-4.35,0-6.52,0c-0.26-0.06-0.52-0.13-0.79-0.17   c-2.32-0.37-4.67-0.59-6.94-1.14C15.97,89.57,0.75,67.14,4.11,43.64c1.19-8.32,4.27-15.89,9.64-22.38   C25.24,7.39,40.03,1.77,57.81,4.33c8,1.15,15.15,4.51,21.42,9.64c8.9,7.29,14.46,16.6,16.52,27.95   C96.04,43.54,96.23,45.18,96.47,46.82z M10.22,50.03c-0.02,22.01,17.83,39.9,39.82,39.93c22,0.03,39.9-17.83,39.92-39.83   c0.02-22.01-17.82-39.9-39.82-39.93C28.13,10.18,10.24,28.03,10.22,50.03z"/>
+                        <path class="st0" d="M96.47,46.82c-0.24-1.63-0.42-3.27-0.72-4.9c-2.06-11.35-7.62-20.66-16.52-27.95   c-6.26-5.13-13.42-8.49-21.42-9.64C40.03,1.77,25.24,7.39,13.75,21.26C8.38,27.75,5.3,35.32,4.11,43.64   C0.75,67.14,15.97,89.57,39.1,95.16c2.27,0.55,4.63,0.76,6.94,1.14c0.26,0.04,0.52,0.12,0.79,0.17c-14.43,0-28.86,0-43.29,0   c0-30.97,0-61.94,0-92.94c30.97,0,61.96,0,92.94,0C96.47,17.95,96.47,32.39,96.47,46.82z"/>
+                        <path class="st0" d="M53.35,96.47c1.67-0.24,3.34-0.43,4.99-0.73c11.37-2.1,20.69-7.69,27.96-16.66   c5.06-6.24,8.19-13.37,9.55-21.28c0.25-1.48,0.41-2.97,0.62-4.46c0,14.38,0,28.75,0,43.13C82.09,96.47,67.72,96.47,53.35,96.47z"/>
+                        <path d="M45.38,56.78c0-3.59,0-7.19,0-10.78c0-1.98,0.63-2.83,2.55-3.37c1.77-0.5,3.52-0.42,5.21,0.35   c1.14,0.52,1.74,1.37,1.74,2.7c-0.03,7.46-0.02,14.92,0,22.38c0,1.04-0.39,1.82-1.25,2.35c-2.21,1.37-4.49,1.43-6.78,0.2   c-0.99-0.54-1.5-1.37-1.49-2.58C45.41,64.27,45.38,60.53,45.38,56.78z"/>
+                        <path d="M55.19,32.38c-0.23,2.52-2.7,4.57-5.35,4.38c-1.58-0.11-2.91-0.71-3.91-1.97c-1.12-1.42-1.17-3.21-0.14-4.69   c1.98-2.85,6.74-2.8,8.58,0.14C54.78,30.87,54.93,31.66,55.19,32.38z"/>
+                    </g>
+                </svg>
+            </a>
+
+            <div class="dropdown d-none">
+                <ul class="postition-relative">
+                    <li>
+                        <a href="#">
+                            <span class="mx-1">
+                                {{__('education.asfasdf')}}
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="mx-1">
+                                {{__('education.asfasdf')}}
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="mx-1">
+                                {{__('education.asfasdf')}}
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
         <li  class="has-dropdown user">
             <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link" href="#">
                 <?php

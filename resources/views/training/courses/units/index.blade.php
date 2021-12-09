@@ -111,23 +111,15 @@
 
         <div  class="course_info mb-3 card p-3">
             <div class="row">
-                <div class="col-md-9 col-9">
+
+                @include('training.courses.contents.header',['course_id' => $course->id, 'back_id' =>$course->id , 'units' =>true])
+
+                <div class="col-md-12 col-12">
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
 
                     <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
                         <i class="fa fa-plus"></i> {{__('admin.add_unit')}}
                     </button>
-                    <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="group_buttons mb-1 btn-sm mr-1">
-                        {{__('admin.contents')}}
-                    </a>
-                    <a href="{{route('training.course_users',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">Users</a>
-                    <a href="{{route('training.role_path',['course_id'=>$course->id])}}" class="group_buttons mb-1 btn-sm">to Role and Path</a>
-                </div>
-
-                <div class="col-md-3 col-3 text-right">
-                    <div class="back">
-                        <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                    </div>
                 </div>
             </div>
         </div>

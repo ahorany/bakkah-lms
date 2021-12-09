@@ -99,7 +99,7 @@
                                 <small class="text-danger" style="color: red;">{{$message}}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="display: none;">
                                 <label for="headline">{{__('education.Headline')}}</label>
                                 <input name="headline" value="{{auth()->user()->headline}}" type="text" id="headline" class="form-control">
                             </div>

@@ -13,9 +13,11 @@ use App\Models\Admin\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
+use App\Mail\UserMail;
 use App\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Stmt\GroupUse;
 
 class UserController extends Controller
@@ -197,6 +199,10 @@ class UserController extends Controller
         $user->roles()->attach([request()->role]);
 
         $post_type = request()->post_type;
+
+        if(is_null(request()->ar_name)){
+            request()->ar_name = request()->en_name;
+        }
         //User::SetMorph($user->id);
         //        User::UploadFile($user);
 
@@ -229,6 +235,10 @@ class UserController extends Controller
         $this->uploadsPDF($profile, 'cv', null);
         $this->uploadsPDF($profile, 'certificates', null);
         $this->uploadsPDF($profile, 'financial_info', null);
+        // dd($user);
+        // dd($request);
+        $password = $request->password;
+        Mail::to($user->email)->send(new UserMail($user->id , $password));
 
         Active::$namespace = 'training';
         return Active::Inserted($user->trans_name,[
@@ -360,6 +370,8 @@ class UserController extends Controller
         $this->uploadsPDF($user->profile, 'certificates', null);
         $this->uploadsPDF($user->profile, 'financial_info', null);
 
+        $password = $request->password;
+        Mail::to($user->email)->send(new UserMail($user->id , $password));
 
         return Active::Updated($user->trans_name, [
             'post_type' => $post_type,
