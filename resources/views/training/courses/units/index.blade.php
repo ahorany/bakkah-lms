@@ -156,7 +156,7 @@
               }
             },
             template: `
-                         <li @click.stop="open = (!open)">@{{item.title }} <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                         <li @click.stop="open = (!open)">@{{item.title }} <i v-if="item.s && item.s.length > 0" class="fa fa-chevron-down" aria-hidden="true"></i>
 
                                   <button @click.stop="$root.deleteUnit(course.units,item.id)" class="btn text-danger btn-sm" >
                                            <i class="fa fa-trash"></i></button>

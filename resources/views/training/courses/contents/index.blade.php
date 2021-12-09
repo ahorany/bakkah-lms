@@ -41,7 +41,7 @@
 
             <template v-if="contents">
                 <div class="sortable">
-                    <div class="card mb-2" v-for="(content,index) in contents" :id="content.id">
+                    <div class="card mb-2" v-for="(content,index) in contents" :key="content.id" :id="content.id">
                         <div class="card-body" >
                             <div class="clearfix">
                                 <div class="row my-3">
@@ -83,7 +83,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="sortable" >
-                                <tr v-if="content.contents" v-for="(entry, index) in content.contents" :id="entry.id" class="text-capitalize">
+                                <tr v-if="content.contents" v-for="(entry, index) in content.contents" :key="entry.id" :id="entry.id" class="text-capitalize">
                                     <td>
                                         <span>@{{entry.title}}</span>
                                     </td>
@@ -207,6 +207,16 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-6 col-12">
+                                            <div class="modal-diff-content form-group">
+                                                <label class="m-0">Shuffle Answers</label>
+                                                <input  type="checkbox" v-model="shuffle_answers" name="shuffle_answers">
+                                                <div v-show="'shuffle_answers' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.shuffle_answers }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </template>
                                 <div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content my-2">
@@ -295,6 +305,8 @@
 <script>
 $(function() {
     $('.sortable').sortable({
+        tolerance:'pointer',
+        cursor:'move',
         axis: 'y',
         update: function (event, ui) {
             var data = $(this).sortable();
@@ -369,6 +381,7 @@ $(function() {
             file_title : '',
             file_url : '',
             status : false,
+            shuffle_answers : false,
             start_date : '',
             end_date : '',
             duration : 0,
@@ -407,6 +420,7 @@ $(function() {
                 this.file_url = '';
                 this.file_title = '';
                 this.status = false;
+                this.shuffle_answers = false;
                 this.url = '';
                 this.start_date = '';
                 this.end_date 	= '';
@@ -484,6 +498,7 @@ $(function() {
                                      content.exam ? self.pagination = content.exam.pagination : 1;
                                      content.exam ? self.attempt_count = content.exam.attempt_count :1;
                                      content.exam ? self.pass_mark = content.exam.pass_mark : 0;
+                                     content.exam ? self.shuffle_answers = (content.exam.shuffle_answers == 1 ? true : false ) : false;
                                      self.model_type = content.post_type;
                                      self.url = content.url;
 
@@ -680,6 +695,7 @@ $(function() {
                 formData.append('pagination', self.pagination);
                 formData.append('attempt_count', self.attempt_count);
                 formData.append('pass_mark', self.pass_mark);
+                formData.append('shuffle_answers', self.shuffle_answers);
 
                 if(self.save_type == 'add'){
 
@@ -740,6 +756,7 @@ $(function() {
                                        content.exam.pagination =self.pagination;
                                        content.exam.attempt_count =self.attempt_count;
                                        content.exam.pass_mark =self.pass_mark;
+                                       content.exam.shuffle_answers = self.shuffle_answers;
 
 
                                     }

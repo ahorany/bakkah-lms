@@ -248,7 +248,9 @@ class UserProfileController extends Controller
                 }])->where('start_date','<=',Carbon::now())->where(function ($q){
                       $q->where('end_date','>',Carbon::now())->orWhere('end_date',null);
                 });
-            },'questions.answers:id,title,question_id','questions' => function($q){
+            },'questions.answers' => function($q){
+                return $q->select('id','title','question_id')->inRandomOrder();
+            },'questions' => function($q){
                 $q->select('id','title','mark','exam_id','unit_id')->withCount(['answers' => function ($query){
                     $query->where('check_correct' ,1);
                 }]);
