@@ -223,7 +223,7 @@ public function save_content_order()
                 'pagination' => request()->pagination??1,
                 'attempt_count' => request()->attempt_count??0,
                 'pass_mark' =>  request()->pass_mark,
-
+                'shuffle_answers' => request()->shuffle_answers == 'true' ? 1 : 0,
             ]);
 
         }else{
@@ -346,6 +346,7 @@ public function save_content_order()
                 'attempt_count' => request()->attempt_count??0,
                 'updated_by' => auth()->id(),
                 'pass_mark' =>  request()->pass_mark,
+                'shuffle_answers' => request()->shuffle_answers == 'true' ? 1 : 0,
             ]);
 
         } else {
