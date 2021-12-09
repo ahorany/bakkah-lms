@@ -71,6 +71,15 @@
                 </div>
 
                 <div v-if="content.details" class="my-2" v-html="content.details.excerpt">}</div>
+
+                <button class="clickaaaa">Test</button>
+                <ul class="sortable">
+                    <li v-if="content.contents" v-for="(entry, index) in content.contents" :id="entry.id" class="ui-state-default text-capitalize">
+                        @{{entry.id}}:
+                        @{{entry.title}}
+                    </li>
+                </ul>
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -80,7 +89,7 @@
                             {{-- <th>import</th> --}}
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         <tr v-if="content.contents" v-for="(entry, index) in content.contents" class="text-capitalize">
                             <td>
                                 <span>@{{entry.title}}</span>
@@ -290,19 +299,28 @@
 @section('script')
 
 <script>
-    $(function() {
-        // alert('test');
-        $( "#sortable" ).sortable();
-        // $( "#sortable" ).sortable({
-        // revert: true
-        // });
-        // $( "#draggable" ).draggable({
-        // connectToSortable: "#sortable",
-        // helper: "clone",
-        // revert: "invalid"
-        // });
-        // $( "ul, li" ).disableSelection();
-    });
+$(function() {
+
+    $(".sortable").sortable();
+
+   $('.clickaaaa').click(function(){
+
+        // var idsInOrder = $(".sortable").sortable('toArray');
+        var idsInOrder = $(".sortable").sortable();
+        console.log(idsInOrder);
+        return false;
+   });
+    // $( ".sortable" ).sortable();
+    // $( ".sortable" ).sortable({
+    //     revert: true
+    // });
+    // $( "#draggable" ).draggable({
+    // connectToSortable: "#sortable",
+    // helper: "clone",
+    // revert: "invalid"
+    // });
+    // $( "ul, li" ).disableSelection();
+});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
 
