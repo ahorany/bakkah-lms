@@ -9,6 +9,6 @@ return [
     'Updated Successfully' => 'Updated Successfully',
     'promo code in pre found' => 'promo code in pre found',
     'empty' => '',
-    'imported' => 'Successfully Imported Zoom  ',
+    'imported' => 'Successfully ',
     'not_imported' => 'please choose file to complete importing',
 ];
