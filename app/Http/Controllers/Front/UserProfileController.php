@@ -219,6 +219,7 @@ class UserProfileController extends Controller
                                    INNER JOIN contents on user_contents.content_id = contents.id
                                    WHERE user_contents.user_id =".\auth()->id()."
                                    AND  contents.deleted_at IS NULL
+                                   AND  contents.role_and_path = 1
                                    AND contents.course_id = ". $content->course_id ."
 
                              "));
@@ -226,16 +227,17 @@ class UserProfileController extends Controller
 
             $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
                                                             FROM contents
-                                                            WHERE   course_id =". $content->course_id ." AND parent_id IS NOT NULL AND  deleted_at IS NULL"));
+                                                            WHERE   course_id =". $content->course_id ."
+                                                            AND parent_id IS NOT NULL
+                                                            AND  deleted_at IS NULL
+                                                            AND  role_and_path = 1
+                                                            "));
             $contents_count = $contents_count[0]->contents_count??0;
 
             CourseRegistration::where('course_id',$content->course_id)
                 ->where('user_id',\auth()->id())->update(['progress'=> round(($user_contents_count / $contents_count) * 100 ,  1)  ]);
 
         }
-//        else if($content->role_and_path == 1 && ( ( ($exam->exam_mark * $exam->pass_mark) / 100 ) > $grade)){
-//
-//        }
     }
 
     // start exam attempt
@@ -426,6 +428,7 @@ class UserProfileController extends Controller
                                    INNER JOIN contents on user_contents.content_id = contents.id
                                    WHERE user_contents.user_id =".\auth()->id()."
                                    AND  contents.deleted_at IS NULL
+                                   AND  contents.role_and_path = 1
                                    AND contents.course_id = ". $content->course_id ."
 
                              "));
@@ -433,32 +436,17 @@ class UserProfileController extends Controller
 
         $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
                                                             FROM contents
-                                                            WHERE   course_id =". $content->course_id ." AND parent_id IS NOT NULL AND  deleted_at IS NULL"));
+                                                            WHERE   course_id =". $content->course_id ."
+                                                            AND parent_id IS NOT NULL
+                                                            AND  deleted_at IS NULL
+                                                            AND  role_and_path = 1
+                                                            "));
         $contents_count = $contents_count[0]->contents_count??0;
 
         CourseRegistration::where('course_id',$content->course_id)
             ->where('user_id',\auth()->id())->update(['progress'=> round(($user_contents_count / $contents_count) * 100 ,  1)  ]);
 
  }
-
-//        return $user_contents_count;
-
-
-        /*
-           SELECT * FROM `contents`
-               INNER JOIN contents AS sections ON contents.parent_id = sections.id
-                WHERE contents.course_id = 1
-               ORDER BY contents.parent_id
-        *******************
-
-        SELECT * FROM `contents`
-           INNER JOIN contents AS sections ON contents.parent_id = sections.id
-        WHERE contents.course_id = 1
-              AND (contents.parent_id >= 203 AND contents.id != 210)
-        ORDER BY contents.parent_id
-        LIMIT 1
-
-         */
 
 
         $next =  DB::select(DB::raw("
@@ -501,7 +489,6 @@ class UserProfileController extends Controller
         $next = ($next[0]??null);
         $previous = ($previous[0]??null);
 
-        // dd('aa');
         return view('pages.file',compact('content','previous','next'));
     }
 

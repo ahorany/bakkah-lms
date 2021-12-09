@@ -109,6 +109,9 @@ Route::group([
         Route::get('/send_role_path', 'RolePathController@sendRolePath')->name('send_role_path');
 
 
+        Route::get('/settings', 'SettingController@index')->name('settings.index');
+        Route::post('/update/settings', 'SettingController@update')->name('settings.update');
+
     });
 });
 

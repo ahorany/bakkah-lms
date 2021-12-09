@@ -15,6 +15,11 @@ class Branche extends Model
     use TrashTrait,ImgTrait , SeoTrait;
     protected $guarded = [];
 
+    public function criteria(){
+        return $this->belongsToMany(Criteria::class,'branches_points_criteria','branche_id','points_criteria_id')->withPivot('points_criteria_id' ,'branche_id','points');
+    }
+
+
 //    public function users(){
 //        return $this->belongsToMany(User::class,'user_groups','group_id')->withPivot('user_id' ,'group_id','role_id');
 //    }

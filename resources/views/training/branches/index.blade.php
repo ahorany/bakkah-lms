@@ -12,7 +12,7 @@
 	{{Builder::SetFolder($folder)}}
 	{{Builder::SetPrefix('training.')}}
     {{Builder::SetNameSpace('training.')}}
-	{{Builder::SetObject('branche')}}
+	{{Builder::SetObject('branch')}}
 
 	@include('training.'.$folder.'.table')
 
