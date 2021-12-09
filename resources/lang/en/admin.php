@@ -147,4 +147,5 @@ return [
     'completed_learners' => 'Completed Learners',
     'course_code' => 'Course Code',
     'delivery_methods' => 'Delivery Methods',
+    'importQuestionsCourse'=>'Import Questions Course',
 ];
