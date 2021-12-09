@@ -34,33 +34,22 @@
 
             <template v-if="contents">
                 <div class="sortable">
-                    <div style="cursor: move;" class="card mb-2" v-for="(content,index) in contents" :id="content.id">
+                    <div class="card mb-2" v-for="(content,index) in contents" :id="content.id">
                         <div class="card-body" >
                             <div class="clearfix">
                                 <div class="row my-3">
-                                    {{-- <div class="col-md-12 col-12">
-                                        <div class="icon-bottom text-right mb-3">
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                        </div>
-                                    </div> --}}
                                     <div class="col-md-8 col-lg-8">
-                                        <h3 class="BtnGroupRows text-capitalize" style="font-size: 22px;">@{{content.title}}</h3>
+                                        <span class="icon-bottom mr-1" style="cursor: pointer">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </span>
+                                        <h3 class="BtnGroupRows text-capitalize d-inline-block" style="font-size: 22px;">@{{content.title}}</h3>
                                     </div>
                                     <div class="col-md-4 col-lg-4 text-right">
                                         <div class="BtnGroupRows" data-id="150">
                                             <button @click="OpenSectionEditModal(content.id)" class="yellow"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
 
                                             <button @click="deleteSection(content.id)"  class="red" ><i class="fa fa-trash"></i> Delete</button>
-
-                                            <span class="icon-bottom ml-2">
-                                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                                {{-- <i class="fa fa-arrows-v" aria-hidden="true"></i> --}}
-                                            </span>
                                         </div>
-
-                                        {{-- <div class="icon-bottom text-right mb-3">
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                        </div> --}}
                                     </div>
                                     <div class="mt-3 col-md-12 col-lg-12">
                                         <div>
@@ -86,7 +75,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="sortable" >
-                                <tr style="cursor: move;" v-if="content.contents" v-for="(entry, index) in content.contents" :id="entry.id" class="text-capitalize">
+                                <tr v-if="content.contents" v-for="(entry, index) in content.contents" :id="entry.id" class="text-capitalize">
                                     <td>
                                         <span>@{{entry.title}}</span>
                                     </td>
