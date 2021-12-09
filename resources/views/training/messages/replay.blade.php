@@ -4,7 +4,7 @@
     <title>{{__('education.Messages')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-{{-- @section('style')
+@section('style')
     <style>
         .replay{
             background: #f7f7f7;
@@ -12,7 +12,7 @@
             border-radius: 5px;
         }
     </style>
-@endsection --}}
+@endsection
 
 @section('content')
     <div class="container">
@@ -22,14 +22,14 @@
         <div class="card p-5">
             <form action="{{route('user.add_replay')}}" method="GET">
                 <div class="row">
-                    <div class="col-md-2">
-                        <p>{{$user->trans_name}}</p>
+                    <div class="col-md-3">
+                        <h2>{{$user->trans_name}}</h2>
                     </div>
-                    <div class="col-md-10">
-                        <div class="row">
+                    <div class="col-md-9">
+                        <div class="row mx-0">
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
-                                    <p>{{$message->title??null}}</p>
+                                    <h3>{{$message->title??null}}</h3>
                                     <p>{{$message->description??null}}</p>
                                 </div>
                             </div>

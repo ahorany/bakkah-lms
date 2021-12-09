@@ -315,7 +315,7 @@ ol.answers li{
     text-decoration: none;
     background: #f6feff;
 }
-.group_buttons:active {
+.group_buttons.active {
     background: #62a0a7;
     color: #fff;
 }

@@ -97,11 +97,21 @@
                                     <td>{{$message->title??null}}</td>
                                     <td>{{$message->created_at??null}}</td>
                                     <td>
-                                        @if ($message->replay == null)
-                                            <a href="{{route('user.replay_message',$message->id)}}" class="main-color">Replay</a>
+
+                                        @if (($user->roles[0]->pivot->role_id == 1) || ($user->roles[0]->pivot->role_id == 2))
+                                            @if ($message->replay == null)
+                                                <a href="{{route('user.replay_message',$message->id)}}" class="main-color">Replay</a>
+                                            @else
+                                                <a href="{{route('user.replay_message',$message->id)}}" class="main-color">Show Replay</a>
+                                            @endif
                                         @else
-                                        <a href="{{route('user.replay_message',$message->id)}}" class="main-color">Show Replay</a>
+                                            @if ($message->replay == null)
+                                                <span>No replay</span>
+                                            @else
+                                                <a href="{{route('user.replay_message',$message->id)}}" class="main-color">Show Replay</a>
+                                            @endif
                                         @endif
+
                                     </td>
                                 </tr>
                             @endforeach
