@@ -46,8 +46,9 @@
                             <div class="clearfix">
                                 <div class="row my-3">
                                     <div class="col-md-8 col-lg-8">
-                                        <span class="icon-bottom mr-1" style="cursor: pointer">
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        <span class="icon-bottom mr-1" style="cursor: pointer; vertical-align: text-bottom;">
+                                            <i class="fa fa-chevron-down d-none" aria-hidden="true"></i>
+                                            <i class="fa fa-chevron-up " aria-hidden="true"></i>
                                         </span>
                                         <h3 class="BtnGroupRows text-capitalize d-inline-block" style="font-size: 22px;">@{{content.title}}</h3>
                                     </div>
@@ -917,8 +918,10 @@ $(function() {
 
 <script>
     $(document).ready(function(){
-        $('.icon-bottom i').click(function() {
+        $('.icon-bottom').click(function() {
             $(this).parents('.card-body').children('#content-items').toggle("fast");
+            $('i.fa.fa-chevron-up').toggle();
+            $('i.fa.fa-chevron-down').toggleClass('d-none');
         });
     })
 </script>
