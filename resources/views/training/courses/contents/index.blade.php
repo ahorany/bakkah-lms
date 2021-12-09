@@ -19,7 +19,6 @@
          <div class="toLoad" id="contents">
 {{--    {!!Builder::Tinymce('details', 'details')!!}--}}
 
-<<<<<<< HEAD
     <div class="course_info mb-3 card p-3">
         <div class="row">
         <div class="col-md-9 col-9">
@@ -41,33 +40,6 @@
           @endif
         </div>
     </div>
-=======
-        <div class="course_info mb-3 card p-3">
-            <div class="row">
-
-                @include('training.courses.contents.header',['course_id' => $course->id, 'back_id' =>$course->id , 'contents' =>true])
-
-                <div class="col-md-12 col-12">
-                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
-                    <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
-                    </button>
-                </div>
-
-            </div>
-        </div>
-         <template v-if="contents">
-            <div  class="card mb-2" v-for="(content,index) in contents">
-                <div class="card-body" >
-                    <div class="clearfix">
-                        <div class="row my-3">
-                            <div class="col-md-8 col-lg-8">
-                                <h3 class="BtnGroupRows text-capitalize" style="font-size: 22px;">@{{content.title}}</h3>
-                            </div>
-                            <div class="col-md-4 col-lg-4 text-right">
-                                <div class="BtnGroupRows" data-id="150">
-                                    <button @click="OpenSectionEditModal(content.id)" class="yellow">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
->>>>>>> 08691156b53d874d618d97fe33c7f38e5c494e08
 
     <template v-if="contents">
         <div  class="card mb-2" v-for="(content,index) in contents">
