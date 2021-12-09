@@ -17,272 +17,278 @@
     <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
          <div class="toLoad" id="contents">
-{{--    {!!Builder::Tinymce('details', 'details')!!}--}}
+            <div class="course_info mb-3 card p-3">
+                <div class="row">
+                    @include('training.courses.contents.header',['course_id' => $course->id, 'back_id' =>$course->id , 'contents' =>true])
 
-    <div class="course_info mb-3 card p-3">
-        <div class="row">
-            @include('training.courses.contents.header',['course_id' => $course->id, 'back_id' =>$course->id , 'contents' =>true])
+                    @if(!checkUserIsTrainee())
+                        <div class="col-md-12 col-12">
+                            <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
 
-            @if(!checkUserIsTrainee())
-                <div class="col-md-12 col-12">
-                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
-
-                    <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
-                    </button>
+                            <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
+                            </button>
+                        </div>
+                    @endif
                 </div>
-            @endif
-        </div>
-    </div>
+            </div>
 
+            <template v-if="contents">
+                <div class="sortable">
+                    <div style="cursor: move;" class="card mb-2" v-for="(content,index) in contents" :id="content.id">
+                        <div class="card-body" >
+                            <div class="clearfix">
+                                <div class="row my-3">
+                                    {{-- <div class="col-md-12 col-12">
+                                        <div class="icon-bottom text-right mb-3">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-md-8 col-lg-8">
+                                        <h3 class="BtnGroupRows text-capitalize" style="font-size: 22px;">@{{content.title}}</h3>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 text-right">
+                                        <div class="BtnGroupRows" data-id="150">
+                                            <button @click="OpenSectionEditModal(content.id)" class="yellow"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
 
-                 <template v-if="contents">
-                     <div class="sortable">
-                       <div  class="card mb-2" v-for="(content,index) in contents" :id="content.id">
-                         <div class="card-body" >
-                             <div class="clearfix">
-                                 <div class="row my-3">
-                                     <div class="col-md-8 col-lg-8">
-                                         <h3 class="BtnGroupRows text-capitalize" style="font-size: 22px;">@{{content.title}}</h3>
-                                     </div>
-                                     <div class="col-md-4 col-lg-4 text-right">
-                                         <div class="BtnGroupRows" data-id="150">
-                                             <button @click="OpenSectionEditModal(content.id)" class="yellow">
-                                                 <i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+                                            <button @click="deleteSection(content.id)"  class="red" ><i class="fa fa-trash"></i> Delete</button>
 
-                                             <button @click="deleteSection(content.id)"  class="red" >
-                                                 <i class="fa fa-trash"></i> Delete</button>
-                                         </div>
-                                     </div>
-                                     <div class="mt-3 col-md-12 col-lg-12">
-                                         <div>
-                                             <button style="font-size: 90%;" type="button" @click="OpenModal('video',content.id)" class="cyan" id="video" ><i class="fa fa-video-camera" aria-hidden="true"></i> {{__('admin.video')}}</button>
-                                             <button style="font-size: 90%;" type="button" @click="OpenModal('audio',content.id)" class="cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                                             <button style="font-size: 90%;" type="button" @click="OpenModal('presentation',content.id)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
-                                             <button style="font-size: 90%;" type="button" @click="OpenModal('scorm',content.id)" class="cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
-                                             <button style="font-size: 90%;" type="button" @click="OpenModal('exam',content.id)" class="cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
+                                            <span class="icon-bottom ml-2">
+                                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                {{-- <i class="fa fa-arrows-v" aria-hidden="true"></i> --}}
+                                            </span>
+                                        </div>
 
-                             <div v-if="content.details" class="my-2" v-html="content.details.excerpt">}</div>
+                                        {{-- <div class="icon-bottom text-right mb-3">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </div> --}}
+                                    </div>
+                                    <div class="mt-3 col-md-12 col-lg-12">
+                                        <div>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('video',content.id)" class="cyan" id="video" ><i class="fa fa-video-camera" aria-hidden="true"></i> {{__('admin.video')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('audio',content.id)" class="cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('presentation',content.id)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('scorm',content.id)" class="cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('exam',content.id)" class="cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div v-if="content.details" class="my-2" v-html="content.details.excerpt">}</div>
 
-                             <table class="table">
-                                 <thead>
-                                 <tr>
-                                     <th scope="col">Title</th>
-                                     <th scope="col">Type</th>
-                                     <th scope="col" class="text-right">Action</th>
-                                     {{-- <th>import</th> --}}
-                                 </tr>
-                                 </thead>
-                                 <tbody class="sortable" >
-                                 <tr v-if="content.contents" v-for="(entry, index) in content.contents" :id="entry.id" class="text-capitalize">
-                                     <td>
-                                         <span>@{{entry.title}}</span>
-                                     </td>
-                                     <td>
-                                         <span v-if="entry.post_type == 'scorm'" class="badge badge-secondary">@{{entry.post_type}}</span>
-                                         <span v-if="entry.post_type == 'video'" class="badge badge-primary">@{{entry.post_type}}</span>
-                                         <span v-if="entry.post_type == 'audio'" class="badge badge-warning">@{{entry.post_type}}</span>
-                                         <span v-if="entry.post_type == 'presentation'" class="badge badge-success">@{{entry.post_type}}</span>
-                                         <span v-if="entry.post_type == 'exam'" class="badge badge-info">@{{entry.post_type}}</span>
-                                         <span v-if="entry.post_type == 'exam'" class="badge badge-secondary">Questions Count : ( @{{entry.questions_count}} )</span>
-                                     </td>
-                                     <td class="text-right">
-                                         <div class="BtnGroupRows buttons" data-id="150">
-                                             <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
-                                             <a v-if="entry.post_type == 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + entry.id" :target="entry.id">
-                                                 <i class="fa fa-folder-open-o" aria-hidden="true"></i>
-                                             </a>
-                                             <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
-                                                 <i class="fa fa-folder-open-o" aria-hidden="true"></i>
-                                             </a>
+                            <table class="table" id="content-items">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col" class="text-right">Action</th>
+                                    {{-- <th>import</th> --}}
+                                </tr>
+                                </thead>
+                                <tbody class="sortable" >
+                                <tr style="cursor: move;" v-if="content.contents" v-for="(entry, index) in content.contents" :id="entry.id" class="text-capitalize">
+                                    <td>
+                                        <span>@{{entry.title}}</span>
+                                    </td>
+                                    <td>
+                                        <span v-if="entry.post_type == 'scorm'" class="badge badge-secondary">@{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'video'" class="badge badge-primary">@{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'audio'" class="badge badge-warning">@{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'presentation'" class="badge badge-success">@{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'exam'" class="badge badge-info">@{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'exam'" class="badge badge-secondary">Questions Count : ( @{{entry.questions_count}} )</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="BtnGroupRows buttons" data-id="150">
+                                            <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
+                                            <a v-if="entry.post_type == 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + entry.id" :target="entry.id">
+                                                <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                                            </a>
+                                            <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
+                                                <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                                            </a>
 
-                                             <button title="Edit" v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id, entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> </button>
-                                             <button title="Edit" v-else @click="OpenEditModal(content.id, entry.id)"  class="yellow" >
-                                                 <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+                                            <button title="Edit" v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id, entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+                                            <button title="Edit" v-else @click="OpenEditModal(content.id, entry.id)"  class="yellow" >
+                                                <i class="fa fa-pencil" aria-hidden="true"></i> </button>
 
-                                             <button title="Delete" @click="deleteContent(content.id,entry.id)"  class="red"><i class="fa fa-trash" aria-hidden="true"></i> </button>
-                                         </div>
-                                     </td>
-                                 </tr>
-                                 </tbody>
-                             </table>
-                             <br>
-                         </div>
-                     </div>
+                                            <button title="Delete" @click="deleteContent(content.id,entry.id)"  class="red"><i class="fa fa-trash" aria-hidden="true"></i> </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                        </div>
                     </div>
+                </div>
 
-                     <div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
-                         <div class="modal-dialog modal-lg" role="document">
-                             <div class="modal-content">
-                                 <div class="modal-header">
-                                     <h5 class="modal-title text-capitalize" id="exampleModalLabel">@{{ model_type }}</h5>
-                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                         <span aria-hidden="true">&times;</span>
-                                     </button>
-                                 </div>
+                <div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-capitalize" id="exampleModalLabel">@{{ model_type }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
 
-                                 <div class="modal-body">
-                                     <div v-if="model_type != 'exam'" class="col-md-12 p-0">
-                                         <div class="form-group">
-                                             <label>Title </label>
-                                             <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
-                                             <div v-show="'title' in errors">
-                                                 <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <template v-if="model_type == 'exam'">
-                                         <div class="row">
-                                             <div class="col-md-6 col-6">
-                                                 <div class="form-group">
-                                                     <label class="m-0">Title </label>
-                                                     <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
-                                                     <div v-show="'title' in errors">
-                                                         <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-md-6 col-12">
-                                                 <div class="modal-diff-content form-group">
-                                                     <label class="m-0">Duration (minutes)</label>
-                                                     <input type="number" v-model="duration" name="duration" class="form-control" placeholder="duration">
-                                                     <div v-show="'duration' in errors">
-                                                         <span style="color: red;font-size: 13px">@{{ errors.duration }}</span>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-md-6 col-12">
-                                                 <div class="modal-diff-content form-group">
-                                                     <label class="m-0">Attempt Count</label>
-                                                     <input type="number" v-model="attempt_count" name="attempt_count" class="form-control" placeholder="attempt_count">
-                                                     <div v-show="'attempt_count' in errors">
-                                                         <span style="color: red;font-size: 13px">@{{ errors.attempt_count }}</span>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-md-6 col-12">
-                                                 <div class="modal-diff-content form-group">
-                                                     <label class="m-0">Pagination Number</label>
-                                                     <input type="number" v-model="pagination" name="pagination" class="form-control" placeholder="pagination">
-                                                     <div v-show="'pagination' in errors">
-                                                         <span style="color: red;font-size: 13px">@{{ errors.pagination }}</span>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-md-6 col-12">
-                                                 <div class="modal-diff-content form-group">
-                                                     <label class="m-0">Start Date </label>
-                                                     <input type="datetime-local" v-model="start_date" name="start_date" class="form-control" placeholder="start date">
-                                                     <div v-show="'start_date' in errors">
-                                                         <span style="color: red;font-size: 13px">@{{ errors.start_date }}</span>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-md-6 col-12">
-                                                 <div  class="modal-diff-content form-group">
-                                                     <label class="m-0">End Date </label>
-                                                     <input  type="datetime-local" v-model="end_date" name="end_date" class="form-control" placeholder="end date">
-                                                     <div v-show="'end_date' in errors">
-                                                         <span style="color: red;font-size: 13px">@{{ errors.end_date }}</span>
-                                                     </div>
-                                                 </div>
-                                             </div>
+                            <div class="modal-body">
+                                <div v-if="model_type != 'exam'" class="col-md-12 p-0">
+                                    <div class="form-group">
+                                        <label>Title </label>
+                                        <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
+                                        <div v-show="'title' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template v-if="model_type == 'exam'">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="form-group">
+                                                <label class="m-0">Title </label>
+                                                <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
+                                                <div v-show="'title' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="modal-diff-content form-group">
+                                                <label class="m-0">Duration (minutes)</label>
+                                                <input type="number" v-model="duration" name="duration" class="form-control" placeholder="duration">
+                                                <div v-show="'duration' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.duration }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="modal-diff-content form-group">
+                                                <label class="m-0">Attempt Count</label>
+                                                <input type="number" v-model="attempt_count" name="attempt_count" class="form-control" placeholder="attempt_count">
+                                                <div v-show="'attempt_count' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.attempt_count }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="modal-diff-content form-group">
+                                                <label class="m-0">Pagination Number</label>
+                                                <input type="number" v-model="pagination" name="pagination" class="form-control" placeholder="pagination">
+                                                <div v-show="'pagination' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.pagination }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="modal-diff-content form-group">
+                                                <label class="m-0">Start Date </label>
+                                                <input type="datetime-local" v-model="start_date" name="start_date" class="form-control" placeholder="start date">
+                                                <div v-show="'start_date' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.start_date }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div  class="modal-diff-content form-group">
+                                                <label class="m-0">End Date </label>
+                                                <input  type="datetime-local" v-model="end_date" name="end_date" class="form-control" placeholder="end date">
+                                                <div v-show="'end_date' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.end_date }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                             <div class="col-md-6 col-12">
-                                                 <div class="modal-diff-content form-group">
-                                                     <label class="m-0">Pass Mark (%)</label>
-                                                     <input min="0" max="100" type="number" v-model="pass_mark" name="pass_mark" class="form-control" placeholder="pass mark">
-                                                     <div v-show="'pass_mark' in errors">
-                                                         <span style="color: red;font-size: 13px">@{{ errors.pass_mark }}</span>
-                                                     </div>
-                                                 </div>
-                                             </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="modal-diff-content form-group">
+                                                <label class="m-0">Pass Mark (%)</label>
+                                                <input min="0" max="100" type="number" v-model="pass_mark" name="pass_mark" class="form-control" placeholder="pass mark">
+                                                <div v-show="'pass_mark' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.pass_mark }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                         </div>
-                                     </template>
-                                     <div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content my-2">
-                                         <editor v-model="excerpt" theme="snow" :options="options" :placeholder="'Details'"></editor>
-                                         <div v-show="'excerpt' in errors">
-                                             <span style="color: red;font-size: 13px">@{{ errors.excerpt }}</span>
-                                         </div>
-                                     </div>
+                                    </div>
+                                </template>
+                                <div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content my-2">
+                                    <editor v-model="excerpt" theme="snow" :options="options" :placeholder="'Details'"></editor>
+                                    <div v-show="'excerpt' in errors">
+                                        <span style="color: red;font-size: 13px">@{{ errors.excerpt }}</span>
+                                    </div>
+                                </div>
 
-                                     <div v-else-if="model_type != 'video'" class="modal-diff-content">
-                                         <div class="text-danger">Note: (Max Upload File Size: 100MB)</div>
+                                <div v-else-if="model_type != 'video'" class="modal-diff-content">
+                                    <div class="text-danger">Note: (Max Upload File Size: 100MB)</div>
 
-                                         <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
-                                         <div v-show="'file' in errors">
-                                             <span style="color: red;font-size: 13px">@{{ errors.file }}</span>
-                                         </div>
-                                         <div class="progress">
-                                             <div class="progress-bar" role="progressbar" :style="{'width' : progress}"  aria-valuemin="0" aria-valuemax="100">@{{ progress }}</div>
-                                         </div>
-                                     </div>
+                                    <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
+                                    <div v-show="'file' in errors">
+                                        <span style="color: red;font-size: 13px">@{{ errors.file }}</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" :style="{'width' : progress}"  aria-valuemin="0" aria-valuemax="100">@{{ progress }}</div>
+                                    </div>
+                                </div>
 
-                                     <div v-else class="modal-diff-content">
-                                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                             <li class="nav-item">
-                                                 <a class="nav-link active cyan" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
-                                             </li>
-                                             <li class="nav-item">
-                                                 <a class="nav-link cyan" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">Url</a>
-                                             </li>
+                                <div v-else class="modal-diff-content">
+                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active cyan" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link cyan" id="pills-url-tab" data-toggle="pill" href="#pills-url" role="tab" aria-controls="pills-url" aria-selected="false">Url</a>
+                                        </li>
 
-                                         </ul>
-                                         <div class="tab-content" id="pills-tabContent">
-                                             <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-file-tab">
-                                                 <div class="form-group">
-                                                     <label class="label">
-                                                         <i class="far fa-file-code"></i>
-                                                         <span class="title">Add File</span>
-                                                         <div class="text-danger">Note: (Max Upload File Size: 100MB)</div>
-                                                         <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
-                                                     </label>
-                                                 </div>
-                                                 <div v-show="'file' in errors">
-                                                     <span style="color: red;font-size: 13px">@{{ errors.file }}</span>
-                                                 </div>
-                                                 <div class="progress">
-                                                     <div class="progress-bar" role="progressbar" :style="{'width' : progress}"  aria-valuemin="0" aria-valuemax="100">@{{ progress }}</div>
-                                                 </div>
-                                             </div>
-                                             <div class="tab-pane fade" id="pills-url" role="tabpanel" aria-labelledby="pills-url-tab">
-                                                 <input type="url" v-model="url" class="form-control" placeholder="Enter url">
-                                                 <div v-show="'url' in errors">
-                                                     <span style="color: red;font-size: 13px">@{{ errors.url }}</span>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
+                                    </ul>
+                                    <div class="tab-content" id="pills-tabContent">
+                                        <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-file-tab">
+                                            <div class="form-group">
+                                                <label class="label">
+                                                    <i class="far fa-file-code"></i>
+                                                    <span class="title">Add File</span>
+                                                    <div class="text-danger">Note: (Max Upload File Size: 100MB)</div>
+                                                    <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
+                                                </label>
+                                            </div>
+                                            <div v-show="'file' in errors">
+                                                <span style="color: red;font-size: 13px">@{{ errors.file }}</span>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" :style="{'width' : progress}"  aria-valuemin="0" aria-valuemax="100">@{{ progress }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-url" role="tabpanel" aria-labelledby="pills-url-tab">
+                                            <input type="url" v-model="url" class="form-control" placeholder="Enter url">
+                                            <div v-show="'url' in errors">
+                                                <span style="color: red;font-size: 13px">@{{ errors.url }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                     <div v-if="model_type != 'section'" class="form-group form-check child">
+                                <div v-if="model_type != 'section'" class="form-group form-check child">
 
-                                         <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status">
-                                         <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label>
+                                    <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status">
+                                    <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label>
 
-                                         <div v-if="file_url">
-                                             <p>Files : </p>
-                                             <div><i class="fa fa-file"></i> <a :href="file_url" v-text="file_title"></a></div>
-                                         </div>
-                                     </div>
+                                    <div v-if="file_url">
+                                        <p>Files : </p>
+                                        <div><i class="fa fa-file"></i> <a :href="file_url" v-text="file_title"></a></div>
+                                    </div>
+                                </div>
 
-                                 </div>
+                            </div>
 
-                                 <div class="modal-footer">
-                                     <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
-                                     <button type="reset" class="cyan" @click="clear()">{{__('admin.clear')}}</button>
-                                     <button type="button"  @click="save()" class="green">{{__('admin.save')}}</button>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </template>
-
-
+                            <div class="modal-footer">
+                                <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
+                                <button type="reset" class="cyan" @click="clear()">{{__('admin.clear')}}</button>
+                                <button type="button"  @click="save()" class="green">{{__('admin.save')}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
 
         </div>
 @endsection
@@ -911,5 +917,13 @@ $(function() {
 
 		},
 	});
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('.icon-bottom i').click(function() {
+            $(this).parents('.card-body').children('#content-items').toggle("fast");
+        });
+    })
 </script>
 @endsection
