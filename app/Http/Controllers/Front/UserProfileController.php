@@ -644,8 +644,14 @@ class UserProfileController extends Controller
     }
 
     public function getMessages(){
-        $messages = Message::where('user_id',auth()->user()->id)->with(['courses.course','user'])->get();
-        return view('training.messages.index',compact('messages'));
+        $user = User::where('id',auth()->user()->id)->with(['uploads','roles'])->first();
+        if(($user->roles[0]->pivot->role_id == 1) || ($user->roles[0]->pivot->role_id == 2)){
+            $messages = Message::where('role_id','!=',3)->with(['courses.course','user'])->get();
+        }else{
+            $messages = Message::where('role_id',3)->with(['courses.course','user'])->get();
+        }
+        // return $user;
+        return view('training.messages.index',compact('messages','user'));
     }
 
     public function addMessage(){
