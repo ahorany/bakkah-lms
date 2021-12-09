@@ -270,5 +270,8 @@ class Course extends Model
         return $this->belongsTo(Constant::class,'training_option_id');
     }
 
+    // public function role(){
+    //     return $this->belongsTo(Constant::class,'training_option_id');
+    // }
 
 }

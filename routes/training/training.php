@@ -60,6 +60,7 @@ Route::group([
         Route::post('courses/importUsersGroups', 'ImportController@importUsersGroups')->name('importUsersGroups');
 
         Route::post('courses/importQuestions', 'ImportController@importQuestions')->name('importQuestions');
+        Route::post('courses/importQuestionsMoodle', 'ImportController@importQuestionsMoodle')->name('importQuestionsMoodle');
         Route::post('courses/importResults', 'ImportController@importResults')->name('importResults');
 
 
@@ -111,6 +112,8 @@ Route::group([
 
         Route::get('/settings', 'SettingController@index')->name('settings.index');
         Route::post('/update/settings', 'SettingController@update')->name('settings.update');
+
+        Route::post('/save/content/order', 'ContentController@save_content_order')->name('contents.save_order');
 
     });
 });

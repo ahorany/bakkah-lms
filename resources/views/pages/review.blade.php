@@ -55,7 +55,7 @@
                  @endif
 
                   <div>
-                     <h4 class="mb-0">Answers correct : </h4>
+                     <h4 class="mb-0">Correct Answer: </h4>
                      @foreach($question->answers as $answer)
                          @if($answer->check_correct == 1)
                              <div style="color: #2a9055" >

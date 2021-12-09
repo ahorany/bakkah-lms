@@ -11,6 +11,8 @@ use App\Constant;
 use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
 use App\Imports\QuestionsImport;
+use App\Imports\QuestionsMoodleImport;
+
 use App\Imports\ResultsImport;
 use App\Imports\CoursesImport;
 use App\Imports\UsersImport;
@@ -21,6 +23,8 @@ use App\Imports\UsersGroupsImport;
 
 
 use Maatwebsite\Excel\Facades\Excel;
+use ReflectionFunctionAbstract;
+
 // use Illuminate\Support\Str;
 
 class ImportController extends Controller
@@ -61,7 +65,10 @@ class ImportController extends Controller
         // dd(request()->all());
         return $this->import(new QuestionsImport);
     }
-
+    public function importQuestionsMoodle()
+    {
+        return $this->import(new QuestionsMoodleImport);
+    }
     public function importResults()
     {
         // dd(request()->all());

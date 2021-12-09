@@ -3,9 +3,11 @@
 {{--{!! Builder::SetPostType(null) !!}--}}
 {{--{{ Builder::SetFolder($folder) }}--}}
 {{--{{ Builder::SetPublishName('save') }}--}}
-
-
-
+<style>
+.upload_title, .upload_excerpt, .upload_caption, [for="exclude_img"]{
+    display: none;
+}
+</style>
 {!!Builder::SetPostType($post_type)!!}
 {{Builder::SetFolder($folder)}}
 
@@ -30,21 +32,15 @@
 {{--           'multiple'=> 'multiple'--}}
 {{--        ]) !!}--}}
 
-
-
-
-
     @if ($post_type == 'users')
         {!! Builder::Password('password', 'password', null, ['type' => 'password', 'col' => 'col-md-6']) !!}
         {!! Builder::Password('password_confirmation', 'password_confirmation', null, ['type' => 'password', 'col' => 'col-md-6']) !!}
     @endif
 
-
-
     {!! Builder::Select('role', 'role', $roles, $role_id??null, [
-   'col' => 'col-md-6',
-   'model_title' => 'trans_name',
-]) !!}
+    'col' => 'col-md-6',
+    'model_title' => 'trans_name',
+    ]) !!}
 
     {{--    <div class="col-md-12">--}}
 {{--        <div class="form-group">--}}
@@ -62,37 +58,35 @@
 
     @if ($post_type != 'users')
         {!! Builder::Select('country_id', 'country_id', $countries, null, [
-    'col' => 'col-md-6',
-    'model_title' => 'trans_name',
-]) !!}
+            'col' => 'col-md-6',
+            'model_title' => 'trans_name',
+        ]) !!}
         {!! Builder::Input('iqama_number', 'iqama_number', $eloquent->profile ? $eloquent->profile->iqama_number : null, ['col' => 'col-md-6']) !!}
         {!! Builder::Input('passport_id', 'passport_id', $eloquent->profile ? $eloquent->profile->passport_id : null, ['col' => 'col-md-6']) !!}
         {!! Builder::Date('passport_expiry_date', 'passport_expiry_date', $eloquent->profile ? $eloquent->profile->passport_expiry_date : null, ['col' => 'col-md-6']) !!}
         {!! Builder::Number('experience', 'experience', $eloquent->profile ? $eloquent->profile->experience : null, ['col' => 'col-md-6']) !!}
 
         {!! Builder::Select('training_field_id', 'training_field_id', $training_field, $eloquent->profile ? $eloquent->profile->training_field_id : null, [
-    'col' => 'col-md-6',
-    'model_title' => 'trans_name',
-]) !!}
+            'col' => 'col-md-6',
+            'model_title' => 'trans_name',
+        ]) !!}
         {!! Builder::Select('activity_level_id', 'activity_level_id', $activity_level, $eloquent->profile ? $eloquent->profile->activity_level_id : null, [
-    'col' => 'col-md-6',
-    'model_title' => 'trans_name',
-]) !!}
+            'col' => 'col-md-6',
+            'model_title' => 'trans_name',
+        ]) !!}
         {!! Builder::Input('certifications', 'certifications', $eloquent->profile ? $eloquent->profile->certifications : null, ['col' => 'col-md-6']) !!}
         {!! Builder::Select('level_education_id', 'level_education_id', $level_of_education, $eloquent->profile ? $eloquent->profile->level_education_id : null, [
-    'col' => 'col-md-6',
-    'model_title' => 'trans_name',
-]) !!}
-
+            'col' => 'col-md-6',
+            'model_title' => 'trans_name',
+        ]) !!}
 
         {!! Builder::Date('joining_bakkah', 'joining_bakkah', $eloquent->profile ? $eloquent->profile->joining_bakkah : null, ['col' => 'col-md-6']) !!}
 
-
         @if ($post_type == 'on-demand-team')
             {!! Builder::Select('session_handle_id', 'session_handle_id', $session_can_handle, $eloquent->profile ? $eloquent->profile->session_handle_id : null, [
-    'col' => 'col-md-6',
-    'model_title' => 'trans_name',
-]) !!}
+                'col' => 'col-md-6',
+                'model_title' => 'trans_name',
+            ]) !!}
         @endif
 
         @if ($post_type == 'trainers')
@@ -185,7 +179,9 @@
     </div>
     @endif
 
-    <div class="card card-default">
+    {!! Builder::Hidden('user_type', $user_type ?? null) !!}
+
+    {{-- <div class="card card-default">
         <div class="card-header">{{ __('admin.attachments') }}</div>
         <div class="card-body">
             <style>
@@ -194,10 +190,7 @@
                 .certificates .form-group {
                     margin-bottom: 0;
                 }
-
             </style>
-
-            {!! Builder::Hidden('user_type', $user_type ?? null) !!}
 
             {!! Builder::File('financial_info', 'financial_info', null, ['col' => 'col-md-12']) !!}
             {!! Builder::ProfileFile('financial_info') !!}
@@ -209,11 +202,13 @@
             {!! Builder::ProfileFile('certificates') !!}
 
         </div>
-    </div>
+    </div> --}}
     {{-- @include(ADMIN.'.Html.checkbox_const', ['const_type'=>'employee']) --}}
 @endsection
 
 @section('image')
     <?php $image_title = __('admin.image'); ?>
-    @include('Html.image')
+    <div class="image">
+        @include('Html.image')
+    </div>
 @endsection

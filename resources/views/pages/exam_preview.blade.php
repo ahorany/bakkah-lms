@@ -99,7 +99,7 @@
                                       </label>
 
                                       <div v-if="(answers.length == 0 || (answers[question.id] == undefined)) || answers[question.id].check_correct == 0">
-                                          <span>Answers correct : </span>
+                                          <span>Correct Answer: </span>
                                           <div class="text-success" v-for="answer in correct_answers(question)">
                                               @{{  answer.title }}
                                           </div>
@@ -119,7 +119,7 @@
                                       </label>
 
                                       <div v-if="(answers.length == 0) || checkIfQuestionHasInCorrectAnswers(question.id)">
-                                          <span>Answers correct : </span>
+                                          <span>Correct Answer: </span>
                                           <div class="text-success" v-for="answer in correct_answers(question)">
                                               @{{  answer.title }}
                                           </div>

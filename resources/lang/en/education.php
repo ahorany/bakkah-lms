@@ -46,7 +46,7 @@ return [
     'Gender' => 'Gender',
     'Save Changes' => 'Save Changes',
     'My Courses' => 'My Courses',
-    'Add a Review' => 'Add a Review',
+    'Add a Review' => 'Add Rating',
     'choose' => 'Choose',
     'Name' => 'Name',
     'Login' => 'Login',
@@ -88,5 +88,5 @@ return [
     "Next" => 'Next',
     "Previous" => 'Previous',
     "Messages" => 'Messages',
-    "to Rule & Path" => 'to Rule & Path',
+    "Rule & Path" => 'Rule & Path',
 ];
