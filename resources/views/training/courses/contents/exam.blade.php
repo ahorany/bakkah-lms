@@ -16,7 +16,7 @@
     <div class="toLoad" id="questions">
         <div  class="course_info mb-3 card p-3">
             <div class="row">
-                <div class="col-md-9 col-9">
+                <div class="col-md-10 col-10">
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$content->course->trans_title}}</span>
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Exam Title : {{$content->title}}</span>
 
@@ -31,7 +31,7 @@
                         <i class="fa fa-folder-open-o" aria-hidden="true"></i> Preview Exam
                     </a>
                 </div>
-                <div class="col-md-3 col-3 text-right">
+                <div class="col-md-2 col-2 text-right">
                     <div class="back">
                         <a href="{{route('training.contents',['course_id'=>$content->course_id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                     </div>
