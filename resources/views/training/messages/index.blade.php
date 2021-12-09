@@ -69,13 +69,30 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div class="card px-5 py-3 mb-2" style="direction: rtl;">
-                    <a href="{{route('user.add_message')}}" class="main-color" style="width: max-content;">Add Message</a>
+            <div class="col-md-12 col-md-12 mb-2">
+                <div class="card px-5 py-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="{{route('user.messages')}}" method="GET">
+                                <div class="form-group">
+                                    <label for="search">Search:</label>
+                                    <input type="text" name="search" placeholder="Search Subject" id="search" class="form-control mb-2">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" name="submit" value="Search" class="form-control main-color" style="width: max-content;">
+                                    <input type="reset" name="reset" value="Clear" class="form-control cyan" style="width: max-content;">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="col-md-12">
                 <div class="card p-5">
+                    <div class="add_message mb-2">
+                        <a href="{{route('user.add_message')}}" class="main-color" style="width: max-content;">Add Message</a>
+                    </div>
                     <table>
                         <thead>
                             <tr>
@@ -111,7 +128,6 @@
                                                 <a href="{{route('user.replay_message',$message->id)}}" class="green">Show Replay</a>
                                             @endif
                                         @endif
-
                                     </td>
                                 </tr>
                             @endforeach

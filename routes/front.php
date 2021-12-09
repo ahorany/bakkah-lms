@@ -81,6 +81,7 @@ Route::group([
         Route::get('/send_message', [UserProfileController::class, 'sendMessage'])->name('send_message');
         Route::get('/replay_message/{id}', [UserProfileController::class, 'replayMessage'])->name('replay_message');
         Route::get('/add_replay', [UserProfileController::class, 'addReplay'])->name('add_replay');
+        Route::get('/search_subject', [UserProfileController::class, 'searchSubject'])->name('search_subject');
 
     });
 });

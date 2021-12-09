@@ -933,13 +933,13 @@ $(function() {
 	});
 </script>
 
-<script>
-    $(document).ready(function(){
-        $('.icon-bottom').click(function() {
-            $(this).parents('.card-body').children('#content-items').toggle("fast");
-            $('i.fa.fa-chevron-up').toggle();
-            $('i.fa.fa-chevron-down').toggleClass('d-none');
-        });
-    })
-</script>
+    <script>
+        $(document).ready(function(){
+            $('.icon-bottom').click(function() {
+                $(this).parents('.card-body').children('#content-items').toggle("fast");
+                $('i.fa.fa-chevron-up').toggle();
+                $('i.fa.fa-chevron-down').toggleClass('d-none');
+            });
+        })
+    </script>
 @endsection
