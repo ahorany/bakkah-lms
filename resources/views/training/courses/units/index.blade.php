@@ -111,8 +111,14 @@
 
         <div  class="course_info mb-3 card p-3">
             <div class="row">
-
-                @include('training.courses.contents.header',['course_id' => $course->id, 'back_id' =>$course->id , 'units' =>true])
+                <div class="col-md-10 col-10">
+                    @include('training.courses.contents.header',['course_id' => $course->id, 'units' =>true])
+                </div>
+                <div class="col-md-2 col-2 text-right">
+                    <div class="back">
+                        <a href="{{route('training.contents',['course_id'=>$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    </div>
+                </div>
 
                 <div class="col-md-12 col-12">
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>

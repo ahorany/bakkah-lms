@@ -16,8 +16,14 @@
     <div class="toLoad" id="questions">
         <div  class="course_info mb-3 card p-3">
             <div class="row">
-
-                @include('training.courses.contents.header',['course_id' => $course_id, 'back_id' =>$content->course_id , 'contents' =>true , 'units' => false])
+                <div class="col-md-10 col-10">
+                    @include('training.courses.contents.header',['course_id' => $course_id, 'contents' =>true , 'units' => false])
+                </div>
+                <div class="col-md-2 col-2 text-right">
+                    <div class="back">
+                        <a href="{{route('training.contents',['course_id'=>$content->course_id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    </div>
+                </div>
 
                 <div class="col-md-12 col-12">
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$content->course->trans_title}}</span>
@@ -162,12 +168,13 @@
                            <button @click.prevent="addAnswerBox()" class="main-color mb-3"><i class="fa fa-plus"></i> Add Answers</button>
 
                            <div v-for="(answer,index) in answers" class="form-group">
+
                             <label class="container-check" style="display: inline-block;">
                                 <input class="mx-3" type="checkbox" v-model="answer.check_correct"  :checked="answer.check_correct" style="display: inline-block" >
                                 <span class="checkmark"></span>
-                              </label>
+                            </label>
 
-                                   <input class="w-75 form-control" type="text" v-model="answer.title" name="title"  placeholder="title" style="display: inline-block;">
+                                <input class="w-75 form-control" type="text" v-model="answer.title" name="title"  placeholder="title" style="display: inline-block;">
                                <button  @click="deleteAnswer(question_id,answer.id,index)" class="red my-1" style="vertical-align: bottom;"><i class="fa fa-trash" aria-hidden="true"></i>
                                  Delete<!-- Delete --> </button>
                                  </div>

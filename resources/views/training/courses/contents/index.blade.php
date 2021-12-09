@@ -19,7 +19,14 @@
          <div class="toLoad" id="contents">
             <div class="course_info mb-3 card p-3">
                 <div class="row">
-                    @include('training.courses.contents.header',['course_id' => $course->id, 'back_id' =>$course->id , 'contents' =>true])
+                    <div class="col-md-10 col-10">
+                        @include('training.courses.contents.header',['course_id' => $course->id, 'contents' =>true])
+                    </div>
+                    <div class="col-md-2 col-2 text-right">
+                        <div class="back">
+                            <a href="{{route('training.contents',['course_id'=>$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                        </div>
+                    </div>
 
                     @if(!checkUserIsTrainee())
                         <div class="col-md-12 col-12">
