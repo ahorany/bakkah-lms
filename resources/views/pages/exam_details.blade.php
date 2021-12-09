@@ -33,6 +33,17 @@
         text-transform: uppercase;
     }
 
+    .progress {
+        background: gainsboro;
+        border-radius: 5px;
+        overflow: hidden;
+        color: #fff;
+    }
+    .progress-bar{
+        width: 50%;
+        margin: 0 !important;
+    }
+
     @media screen and (max-width: 767px) {
         table {
             border: 0;
