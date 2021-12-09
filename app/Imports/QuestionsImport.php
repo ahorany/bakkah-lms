@@ -65,7 +65,7 @@ class QuestionsImport implements ToCollection, WithHeadingRow
                         $check_correct = 1;
                     if($row['fraction_3'] == '100' && $i == 3)
                         $check_correct = 1;
-                    elseif($row['fraction_4'] == '100' && $i == 3)
+                    elseif($row['fraction_4'] == '100' && $i == 4)
                         $check_correct = 1;
 
                     Answer::create([

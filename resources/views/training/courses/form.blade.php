@@ -66,10 +66,11 @@
                 <div class="card-header">{{__('admin.contents')}}</div>
                 <div class="card-body">
                     {{-- @include('training.courses.contents.header',['course_id' => $course->id, 'back_id' =>$course->id , 'users' =>true]) --}}
-                    <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="green mb-1">Contents</a>
+                    {{-- <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="green mb-1">Contents</a>
                     <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="green mb-1">Units</a>
                     <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="green mb-1">Users</a>
-                    <a href="{{route('training.role_path',['course_id'=>$eloquent->id])}}" class="green mb-1">Rule and Path</a>
+                    <a href="{{route('training.role_path',['course_id'=>$eloquent->id])}}" class="green mb-1">Rule and Path</a> --}}
+                    @include('training.courses.contents.header',['course_id' => $eloquent])
                 </div>
             </div>
         @endif

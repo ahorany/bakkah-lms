@@ -9,6 +9,6 @@ return [
     'Updated Successfully' => 'تمت عملية التعديل بنجاح',
     'promo code in pre found' => 'promo code in pre found',
     'empty' => '',
-    'imported' => 'تم استيراد بيانات الزووم بنجاح',
+    'imported' => 'تم استيراد الملف بنجاح',
     'not_imported' => ' من فضلك قم باختيار ملف أولا ...',
 ];
