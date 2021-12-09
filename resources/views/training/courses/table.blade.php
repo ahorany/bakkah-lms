@@ -2,6 +2,7 @@
 use App\Models\Training\CourseRegistration;
 ?>
 @include('training.reports.courses.dashboard')
+
 <div class="card courses">
   <div class="card-header">
       {{-- {!!Builder::SetBtnParam([

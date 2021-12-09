@@ -12,6 +12,8 @@ use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
 use App\Imports\QuestionsImport;
 use App\Imports\QuestionsMoodleImport;
+use App\Imports\QuestionsCourseImport;
+
 
 use App\Imports\ResultsImport;
 use App\Imports\CoursesImport;
@@ -68,6 +70,11 @@ class ImportController extends Controller
     public function importQuestionsMoodle()
     {
         return $this->import(new QuestionsMoodleImport);
+    }
+
+    public function importQuestionsCourse()
+    {
+        return $this->import(new QuestionsCourseImport);
     }
     public function importResults()
     {

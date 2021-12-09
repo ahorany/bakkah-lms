@@ -18,6 +18,23 @@
 
          <div class="toLoad" id="contents">
 {{--    {!!Builder::Tinymce('details', 'details')!!}--}}
+<form action="{{ route('training.importQuestionsCourse') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+    @csrf
+        <div class="col-md-6 px-0">
+            <div class="add-question-file">
+                {!!Builder::File('file', 'file', null, [])!!}
+            </div>
+        </div>
+        <div class="col-md-6 px-0">
+            <div class="import-question-file">
+                {!!Builder::Submit('importQuestionsCourse', 'importQuestionsCourse', 'green', null, [
+                    'icon'=>'far fa-file-excel',
+                ])!!}
+                <a href="{{CustomAsset('samples/P3O_Practice Test_Foundation.xlsx')}}" download class="cyan" role="button"> Sample </a>
+                <input type="hidden" name="course_id" value="{{$course->id}}">
+            </div>
+        </div>
+</form>
 
     <div  class="course_info mb-3 card p-3">
         <div class="row">
