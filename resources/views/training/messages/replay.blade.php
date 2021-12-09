@@ -4,6 +4,16 @@
     <title>{{__('education.Messages')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
+{{-- @section('style')
+    <style>
+        .replay{
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+@endsection --}}
+
 @section('content')
     <div class="container">
         <div class="card px-5 py-3 mb-2" style="direction: rtl;">
@@ -34,7 +44,7 @@
                                         @enderror
                                     </div>
                                 @else
-                                    <p>{{$message->replay}}</p>
+                                    <p class="replay">{{$message->replay}}</p>
                                 @endif
 
                             </div>
