@@ -16,6 +16,24 @@ use Illuminate\Support\Facades\Validator;
 class ContentController extends Controller
 {
 
+
+public function save_content_order()
+{
+    $list_of_ids = request()->data;
+    $data = Content::select('id','order')->whereIn('id',$list_of_ids )->get();
+
+    foreach ($data as $d){
+        foreach ($list_of_ids as $index => $id){
+               if($id == $d->id){
+                   Content::where('id',$id )->update([
+                       'order' => $index +1
+                   ]);
+               }
+        }
+    }
+    return response()->json(['status' => true]);
+}
+
     public function contents()
     {
         $course_id = request()->course_id;
@@ -23,9 +41,10 @@ class ContentController extends Controller
         $contents = Content::where('course_id',$course_id)
             ->whereNull('parent_id')
             ->with(['contents' => function($q){
-                $q->with(['upload','details','exam'])->withCount('questions')->orderBy('id');
+                $q->with(['upload','details','exam'])->withCount('questions')->orderBy('order');
             },'details','exams'])
-            ->orderBy('id')
+            ->orderBy('order')
+//            ->orderBy('id')
             ->get();
 //        return $contents;
         return view('training.courses.contents.index', compact('course', 'contents'));
