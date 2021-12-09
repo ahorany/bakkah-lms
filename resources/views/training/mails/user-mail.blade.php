@@ -14,10 +14,7 @@
                 <br>
                 <div>Dear <b>{{$user->en_name}},</b></div>
 
-                <br>
                 <p>Your password is: {{$password}}</p>
-
-                <br>
 
                 <div>Best Regards,</div>
                 <div>{{__('education.app_title')}}</div>
