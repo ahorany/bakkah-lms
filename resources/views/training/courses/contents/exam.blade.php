@@ -16,26 +16,21 @@
     <div class="toLoad" id="questions">
         <div  class="course_info mb-3 card p-3">
             <div class="row">
-                <div class="col-md-10 col-10">
+
+                @include('training.courses.contents.header',['course_id' => $course_id, 'back_id' =>$content->course_id , 'contents' =>true , 'units' => false])
+
+                <div class="col-md-12 col-12">
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$content->course->trans_title}}</span>
                     <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Exam Title : {{$content->title}}</span>
 
                     <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
                         <i class="fa fa-plus"></i> {{__('admin.add_question')}}
                     </button>
-                    <a href="{{route('training.contents',['course_id'=>$course_id])}}"  class="group_buttons mb-1 btn-sm mr-1">{{__('admin.contents')}}</a>
-                    <a href="{{route('training.units',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">Units</a>
-                    <a href="{{route('training.course_users',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">Users</a>
-                    <a href="{{route('training.role_path',['course_id'=>$course_id])}}" class="group_buttons mb-1 btn-sm">Rule and Path</a>
                     <a  class="group_buttons mb-1 btn-sm" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + {{$content->id}}" :target="{{$content->id}}">
                         <i class="fa fa-folder-open-o" aria-hidden="true"></i> Preview Exam
                     </a>
                 </div>
-                <div class="col-md-2 col-2 text-right">
-                    <div class="back">
-                        <a href="{{route('training.contents',['course_id'=>$content->course_id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                    </div>
-                </div>
+
             </div>
         </div>
 
