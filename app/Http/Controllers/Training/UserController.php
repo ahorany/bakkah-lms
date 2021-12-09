@@ -197,6 +197,10 @@ class UserController extends Controller
         $user->roles()->attach([request()->role]);
 
         $post_type = request()->post_type;
+
+        if(is_null(request()->ar_name)){
+            request()->ar_name = request()->en_name;
+        }
         //User::SetMorph($user->id);
         //        User::UploadFile($user);
 

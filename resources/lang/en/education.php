@@ -46,7 +46,7 @@ return [
     'Gender' => 'Gender',
     'Save Changes' => 'Save Changes',
     'My Courses' => 'My Courses',
-    'Add a Review' => 'Add a Review',
+    'Add a Review' => 'Add Rating',
     'choose' => 'Choose',
     'Name' => 'Name',
     'Login' => 'Login',
