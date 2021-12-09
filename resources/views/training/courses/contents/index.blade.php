@@ -17,7 +17,6 @@
     <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
          <div class="toLoad" id="contents">
-<<<<<<< HEAD
             <div class="course_info mb-3 card p-3">
                 <div class="row">
                     @include('training.courses.contents.header',['course_id' => $course->id, 'back_id' =>$course->id , 'contents' =>true])
@@ -30,37 +29,6 @@
                             </button>
                         </div>
                     @endif
-=======
-{{--    {!!Builder::Tinymce('details', 'details')!!}--}}
-<form action="{{ route('training.importQuestionsCourse') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
-    @csrf
-        <div class="col-md-6 px-0">
-            <div class="add-question-file">
-                {!!Builder::File('file', 'file', null, [])!!}
-            </div>
-        </div>
-        <div class="col-md-6 px-0">
-            <div class="import-question-file">
-                {!!Builder::Submit('importQuestionsCourse', 'importQuestionsCourse', 'green', null, [
-                    'icon'=>'far fa-file-excel',
-                ])!!}
-                <a href="{{CustomAsset('samples/P3O_Practice Test_Foundation.xlsx')}}" download class="cyan" role="button"> Sample </a>
-                <input type="hidden" name="course_id" value="{{$course->id}}">
-            </div>
-        </div>
-</form>
-
-    <div class="course_info mb-3 card p-3">
-        <div class="row">
-            @include('training.courses.contents.header',['course_id' => $course->id, 'back_id' =>$course->id , 'contents' =>true])
-
-            @if(!checkUserIsTrainee())
-                <div class="col-md-12 col-12">
-                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
-
-                    <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
-                    </button>
->>>>>>> b819e43a7b55aa3a4221224a4b421fea9a777797
                 </div>
             </div>
 
