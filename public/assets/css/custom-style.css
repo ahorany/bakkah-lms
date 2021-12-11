@@ -405,7 +405,7 @@ button.next_prev {
 button.next_prev:hover {
     background-color: #7c9290;
     color: #fff;
-    border: transparent;
+    border: 1px solid transparent;
 }
 button.next_prev:hover svg{
     filter: none;
@@ -499,6 +499,10 @@ button.next_prev:hover svg{
         border: none;
         margin-top: 10px;
     }
+    .q-card h3 {
+        font-size: 17px;
+        font-weight: 700;
+    }
 }
 
 @media (max-width: 768px) and (min-width: 576px){
@@ -522,8 +526,21 @@ button.next_prev:hover svg{
     .course-cards {
         width: 100% !important;
     }
-    /* .back_button {
-        width: 20% !important;
+    .lead{
+        display: none;
+    }
+    .card iframe {
+        height: 200px;
+    }
+    ol.breadcrumb{
+        display: inline-block !important;
+    }
+    /* ol.breadcrumb li {
+        font-size: 12px;
+        margin: 0 !important;
+    } */
+    /* ol.breadcrumb li:not(:last-child):after {
+        margin: 0 !important;
     } */
 }
 
