@@ -241,6 +241,7 @@ class UserProfileController extends Controller
 
     // start exam attempt
     public function preview_exam($exam_id){
+
         $page_type = 'exam';
         $exam = Content::whereId($exam_id)
             ->with(['course','exam' => function($q){
@@ -257,13 +258,12 @@ class UserProfileController extends Controller
                 }]);
             }])->first();
 
-      $user_course_register = CourseRegistration::where('course_id',$exam->course->id)->where('user_id',\auth()->id())->first();
+        $user_course_register = CourseRegistration::where('course_id',$exam->course->id)->where('user_id',\auth()->id())->first();
         if(!$user_course_register){
             abort(404);
         }
 
         if (!$exam->exam || (count($exam->questions) == 0) ) abort(404);
-
 
         $without_timer = false;
         if($exam->exam->duration == 0){
