@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Training\Course;
 use App\Models\Training\Message;
+use App\Models\Training\Reply;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -634,19 +635,15 @@ class UserProfileController extends Controller
 
     public function getMessages(){
         $user = User::where('id',auth()->user()->id)->with(['uploads','roles'])->first();
+        $messages = Message::where('user_id',auth()->user()->id)->with(['courses.course','user','replies']);
 
-        if(($user->roles[0]->pivot->role_id == 1) || ($user->roles[0]->pivot->role_id == 2)){
-            $messages = Message::where('role_id','!=',3)->with(['courses.course','user'])->get();
-        }else{
-            $messages = Message::where('user_id',auth()->user()->id)->with(['courses.course','user'])->get();
+        // dd(request()->search);
+        if(!is_null(request()->search)) {
+            $messages = $messages->where(function($query){
+                $query->where('title', 'like', '%'.request()->search.'%');
+            });
         }
-
-        // if(!is_null(request()->search)) {
-        //     $messages = $messages->where(function($query){
-        //         $query->where('title', 'like', '%'.request()->search.'%');
-        //     })->get();
-        // }
-
+        $messages = $messages->get();
         return view('training.messages.index',compact('messages','user'));
     }
 
@@ -681,14 +678,13 @@ class UserProfileController extends Controller
         return redirect()->route('user.messages');
     }
 
-    public function replayMessage($id){
-        $message = Message::where('id',$id)->with(['courses.course','user'])->first();
-        $user = User::where('id',$message->user_id)->with(['upload'])->first();
-        return view('training.messages.replay',compact('message','user'));
+    public function replyMessage($id){
+        $message = Message::where('id',$id)->with(['courses.course','user','replies.user'])->first();
+        return view('training.messages.reply',compact('message'));
     }
-    public function addReplay(){
+    public function addreply(){
         $rules = [
-            "replay"   => "required",
+            "reply"   => "required",
         ];
 
         $validator = Validator::make(\request()->all(), $rules);
@@ -696,10 +692,10 @@ class UserProfileController extends Controller
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
-
-        $message = Message::where('id',request()->message_id)->first();
-        $message->update([
-            'replay' => request()->replay,
+        Reply::whereNotNull('id')->create([
+            'title' => request()->reply,
+            'message_id' => request()->message_id,
+            'user_id' => auth()->user()->id,
         ]);
         return redirect()->route('user.messages');
     }

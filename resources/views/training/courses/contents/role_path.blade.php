@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-2 col-2 text-right">
                 <div class="back">
-                    <a href="{{route('training.contents',['course_id'=>$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                 </div>
             </div>
         </div>

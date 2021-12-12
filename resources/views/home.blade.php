@@ -6,7 +6,7 @@
 
 @section('content')
     {{-- @dd(auth()->user()->bio) --}}
-    <div class="card p-30 mb-5 home-section">
+    <div class="card p-30 home-section">
         <div class="row align-items-center">
             <div class="col-lg-8">
                 <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
@@ -37,7 +37,7 @@
             return 0;
         }
     ?>
-    <div class="row mb-5 home-section">
+    <div class="row home-section">
 
         <div class="col-lg-12">
             <div class="card h-100 justify-content-center p-30">
@@ -112,11 +112,11 @@
     </div>
 
     @if (count($courses->courses) > 0)
-        <div class="card p-30 mb-5 home-section">
+        <div class="card p-30 home-section">
             <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
             <div class="row">
                 @forelse($courses->courses as $course)
-                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
+                <div class="col-sm-6 col-md-12 col-lg-4 col-xl-3 mb-4">
                     <a href="{{CustomRoute('user.course_details',$course->id)}}">
                     <div class="text-center course-image p-30">
                         <?php
@@ -154,7 +154,7 @@
         </div>
     @endif
 
-    <div class="row mb-5">
+    <div class="row home-section">
 {{--        <div class="col-xl-6 d-flex flex-column justify-content-between mb-4 mb-xl-0">--}}
 {{--            <div class="card p-30 mb-4">--}}
 {{--                <h3>Badges</h3>--}}
@@ -276,17 +276,14 @@
 {{--            </div>--}}
 {{--        </div>--}}
 
-        <div class="col-lg-6 mb-5 mb-xl-0">
-            <div class="card p-30">
-{{--                <div class="line-chart">--}}
-                    <h3>Courses Progress Overview</h3>
-{{--                    <canvas id="oilChart" width="600" height="400"></canvas>--}}
-                    <canvas class="w-100" id="oilChart" height="400"></canvas>
-{{--                </div>--}}
+        <div class="col-lg-6 col-md-12 col-sm-12 col-12 m-bottom">
+            <div class="card h-100 p-30">
+                <h3>Courses Progress Overview</h3>
+                <canvas class="w-100" id="oilChart" height="400"></canvas>
             </div>
         </div>
 
-        <div class="col-xl-6">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-12">
             <div class="card h-100 calendar">
                 <div class="sideb">
                     <div class="header">
@@ -381,8 +378,8 @@
     </div>
 
     @if($last_video)
-        <div class="row mb-5 home-section">
-            <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="row home-section">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
                 <div class="card h-100 p-30">
                     <h3>{{ __('education.Last Video View') }}</h3>
                     @if($last_video->url == null)
@@ -395,15 +392,15 @@
                             $video_id = $match[1]??null;
                         }
                         ?>
-                        <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
+                        <iframe style="" width="100%" height="323px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
 
                     @endif
                 </div>
             </div>
 
             @if(count($next_videos) >0 )
-                <div class="col-lg-6">
-                    <div class="card p-30">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
+                    <div class="card h-100 p-30">
                         <h3>{{ __('education.Next Video') }}</h3>
                         <ul class="video-list">
                             @foreach($next_videos as $next_video)
@@ -422,25 +419,21 @@
                     </div>
                 </div>
             @endif
-        </div>
-    @endif
-
-    <div class="row">
-        <div class="col-lg-6 course_info">
-            <div class="card p-30 activity">
-                <h2>Activity</h2>
-                <ul>
-                    <?php $lang = app()->getLocale(); ?>
-                    @foreach($activities as $activity)
-                        <li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-{{--                            <div>Start Date: {{$activity->start_date}}</div>--}}
-{{--                            <div>End Date: {{$activity->end_date}}</div>--}}
-                        </li>
-                    @endforeach
-                </ul>
+            <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
+                <div class="card h-100 p-30 activity">
+                    <h2>Activity</h2>
+                    <ul>
+                        <?php $lang = app()->getLocale(); ?>
+                        @foreach($activities as $activity)
+                            <li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+
+    @endif
 
 @endsection
 
@@ -486,7 +479,8 @@
             var current;
             var now = new Date();
             if (now.getMonth() == 11) {
-                current = new Date(now.getFullYear() + monthDirection, 0, 1);
+                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
+                // current = new Date(now.getFullYear() + monthDirection, 0, 1);
             } else {
                 current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
             }
@@ -498,7 +492,8 @@
             var current;
             var now = new Date();
             if (now.getMonth() == 11) {
-                current = new Date(now.getFullYear() + monthDirection, 0, 1);
+                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
+                // current = new Date(now.getFullYear() + monthDirection, 0, 1);
             } else {
                 current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
             }

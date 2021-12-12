@@ -411,6 +411,15 @@ button.next_prev:hover svg{
     filter: none;
 }
 
+ul.video-list li .play{
+    cursor: unset;
+}
+/* .vertical-row{
+    margin-bottom: 20px;
+} */
+.home-section {
+    margin-bottom: 25px;
+}
 /******************************************************************************************************************/
 
 /* Media Query */
@@ -422,8 +431,13 @@ button.next_prev:hover svg{
     }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 991px) and (max-width: 1156px) {
+    .calendar .sideb table th{
+        font-size: 12px;
+    }
+}
 
+@media (max-width: 768px) {
     .dash-header h1 {
         font-size: 25px;
     }
@@ -470,9 +484,6 @@ button.next_prev:hover svg{
     .lms-header a.navbar-brand {
         padding: 12px 10px !important;
     }
-    .home-section {
-        margin-bottom: 15px !important;
-    }
     .home-section .col-lg-6.mb-5.mb-lg-0{
         margin-bottom: 0px !important;
     }
@@ -480,9 +491,6 @@ button.next_prev:hover svg{
         margin: 0 !important;
         width: 100%;
     }
-    /* .back_button {
-        width: 15% !important;
-    } */
     .course-cards {
         width: 48% !important;
     }
@@ -492,20 +500,17 @@ button.next_prev:hover svg{
     .course_details .course-image{
         box-shadow: none !important;
     }
-    .course_info {
-        padding: 1% 5% !important;
-    }
-    .course_info.mb-3.card.p-3 {
-        border: none;
-        margin-top: 10px;
-    }
     .q-card h3 {
         font-size: 17px;
         font-weight: 700;
     }
+    .m-bottom{
+        margin-bottom: 25px;;
+    }
 }
 
 @media (max-width: 768px) and (min-width: 576px){
+
     .navbar .navbar-toggler {
         top: 20%;
         left: 200px;
@@ -523,6 +528,9 @@ button.next_prev:hover svg{
 }
 
 @media (max-width: 576px){
+    .calendar .sideb table th{
+        font-size: 12px;
+    }
     .course-cards {
         width: 100% !important;
     }
