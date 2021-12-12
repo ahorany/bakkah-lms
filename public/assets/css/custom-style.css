@@ -438,6 +438,9 @@ ul.video-list li .play{
 }
 
 @media (max-width: 768px) {
+    .mx-md-4.course_info {
+        padding: 0 10px;
+    }
     .dash-header h1 {
         font-size: 25px;
     }
@@ -541,15 +544,8 @@ ul.video-list li .play{
         height: 200px;
     }
     ol.breadcrumb{
-        display: inline-block !important;
+        display: none !important;
     }
-    /* ol.breadcrumb li {
-        font-size: 12px;
-        margin: 0 !important;
-    } */
-    /* ol.breadcrumb li:not(:last-child):after {
-        margin: 0 !important;
-    } */
 }
 
 /* End Media Query */

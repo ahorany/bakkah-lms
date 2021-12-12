@@ -203,7 +203,7 @@
                         </ul>
                     </div>
 
-                    <div class="d-flex justify-content-between mt-5 course-group">
+                    {{-- <div class="d-flex justify-content-between mt-5 course-group">
                         <div class="persons card p-20">
                             <h3 class="mt-0">Course Group</h3>
                             <!-- <small>Lean Six Sigma Yellow belt training provides insight to the </small> -->
@@ -221,7 +221,7 @@
                             <span>New Student</span>
                             <b>12</b>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         @endif
