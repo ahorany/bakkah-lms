@@ -24,18 +24,17 @@
             </div>
         </div>
     </div>
-
     <?php
-        function getReportNumber($complete_courses,$status){
-            if($complete_courses){
-                foreach ($complete_courses as $complete_course){
-                    if($complete_course->status == $status){
-                        return  str_pad($complete_course->courses_count, 2, '0', STR_PAD_LEFT);
-                    }
+    function getReportNumber($complete_courses,$status){
+        if($complete_courses){
+            foreach ($complete_courses as $complete_course){
+                if($complete_course->status == $status){
+                    return  str_pad($complete_course->courses_count, 2, '0', STR_PAD_LEFT);
                 }
             }
-            return 0;
         }
+        return 0;
+    }
     ?>
     <div class="row home-section">
 
@@ -654,6 +653,7 @@
             type: 'pie',
             data: oilData
         });
+
     </script>
 {{--    <script>--}}
 {{--        var ctx = document.getElementById('myChart')--}}

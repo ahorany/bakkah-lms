@@ -8,6 +8,10 @@ Route::group([
 ], function(){
 
     // Route::get('/', 'Front\HomeController@index')->name('web.home');
+    Route::get('/zoom', function(){
+        return view('zoom');
+    })->name('web.zoom');
+
     Route::get('/vsscorm1', function(){
 
         return view('scorm');
