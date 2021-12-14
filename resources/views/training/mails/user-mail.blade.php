@@ -14,6 +14,9 @@
                 <br>
                 <div>Dear <b>{{$user->en_name}},</b></div>
 
+                <a href="{{env('APP_URL')}}">{{env('APP_URL')}}</a>
+
+                <p>Your Username is: {{$user->email}}</p>
                 <p>Your password is: {{$password}}</p>
 
                 <div>Best Regards,</div>
