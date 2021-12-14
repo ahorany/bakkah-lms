@@ -80,6 +80,7 @@ use App\Models\Training\CourseRegistration;
                     'post'=>$post->id,
                 ])!!}
               @endif
+              <a class="cyan" href="{{CustomRoute('user.course_details',$post->id) }}">Preview</a>
               <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="cyan mt-1" ><i class="fa fa-pencil"></i> Report</a>
               @if(!request()->has('trash') && request()->trash != "trash")
                 <div class="my-1">

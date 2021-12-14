@@ -43,9 +43,9 @@
         .form-group{
             margin-bottom: 20px;
         }
-        .form-control#bio{
+        /* .form-control#bio{
             height: 83%;
-        }
+        } */
     </style>
 
 @endsection
@@ -92,6 +92,8 @@
                                 <small class="text-danger" style="color: red;">{{$message}}</small>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="ar_name">{{__('education.arabic_name')}}</label>
                                 <input name="ar_name" value="{{json_decode(auth()->user()->name)->ar}}" type="text" id="ar_name" class="form-control">
@@ -99,17 +101,19 @@
                                 <small class="text-danger" style="color: red;">{{$message}}</small>
                                 @enderror
                             </div>
-                            <div class="form-group" style="display: none;">
+                        </div>
+                        <div class="col-lg-6" style="display: none;">
+                            <div class="form-group">
                                 <label for="headline">{{__('education.Headline')}}</label>
                                 <input name="headline" value="{{auth()->user()->headline}}" type="text" id="headline" class="form-control">
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="form-group h-100">
                                 <label for="bio">{{__('education.Bio')}}</label>
                                 <textarea rows="4"  name="bio"  id="bio" class="form-control">{{auth()->user()->bio}}</textarea>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="language">{{__('education.Language')}}</label>
