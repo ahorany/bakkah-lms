@@ -6,15 +6,13 @@
         <td style="direction: ltr; background: #fff; font-weight:300; font-size: 12px; color: #707070; font-family:sans-serif; padding: 0px 35px; line-height: 25px;border: 2px solid #d6d6d6;">
             <div>
                 <br>
-                <div>Dear <b>{{$user->en_name}},</b></div>
+                <div>Dear <b>{{$recieve->trans_name}},</b></div>
 
-                <p>Email is: {{$user->email}}</p>
-                <p>Password is: {{$password}}</p>
+                <p>From: {{$message->user->email}}</p>
+                <p>The Message is: {{$message->title}}</p>
 
                 <div>Best Regards,</div>
                 <div>{{__('education.app_title')}}</div>
-                {{-- <div>Phone: 920003928</div>
-                <div>Mobile: <span dir="ltr">+966 55 676 5156</span></div> --}}
                 <br>
             </div>
         </td>

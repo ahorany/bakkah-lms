@@ -1,4 +1,4 @@
-@extends('emails.courses.master')
+@extends('training.mails.master')
 
 @section('content')
     <table align="center" style="width: 600px; padding: 5px 0;padding-bottom:0;" cellspacing="0" cellpadding="0">

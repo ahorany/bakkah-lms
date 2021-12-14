@@ -18,7 +18,7 @@
         <tbody>
         <tr>
             <td style="font-size: 12px; vertical-align: middle; font-family:Tahoma,sans-serif">
-                <img src="{{CustomAsset('images/mail/logo-bakkah.png')}}" width="90" border="0" alt="{{__('education.DC_title')}}">
+                <img src="{{CustomAsset('images/mail/logo-bakkah.png')}}" width="25%" border="0" alt="{{__('education.DC_title')}}">
             </td>
         </tr>
         </tbody>
@@ -56,11 +56,6 @@
                 </table>
             </td>
         </tr>
-        {{-- <tr>
-            <td class="mcnImageContent" valign="middle" style="text-align:center;">
-                <p style="font-family:Helvetica;font-size:14px;font-weight:normal;text-align:center;margin: 3px !important;color:#999999;"><a href="{{route('education.static.static-page', ["post_type"=>"privacy-policy"])}}" style="color:#999999;text-decoration:none">Privacy Policy</a> | <a href="{{route('education.static.contactusIndex')}}" style="color:#999999;text-decoration:none">Contact Support</a></p>
-            </td>
-        </tr> --}}
         <tr>
             <td class="mcnImageContent" valign="middle" style="text-align:center;background-color: #F6F6F6;">
                 <p style="font-family:Helvetica;font-size:14px;font-weight:normal;text-align:center;margin: 3px !important;color:#999999;">© {{YEAR}} <a href="{{CustomRoute('education.login')}}" target="_blank" style="color:#fb4400;text-decoration:none;">{{__('education.app_title')}}</a></p>
