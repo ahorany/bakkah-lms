@@ -136,7 +136,8 @@ class MessageController extends Controller
             'description' => request()->description,
         ]);
 
-       $recipients = CourseRegistration::where('course_id', request()->course_id)->where('role_id',2);
+       $recipients = CourseRegistration::where('course_id', request()->course_id)->where('role_id',2)->get();
+
         foreach ($recipients as $recipient){
             RecipientMessage::create([
                'user_id' => $recipient->user_id,
