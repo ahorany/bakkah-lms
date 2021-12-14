@@ -79,7 +79,7 @@
                 <div class="card px-5 py-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <form action="{{route('user.messages')}}" method="GET">
+                            <form action="{{route('user.messages.inbox')}}" method="GET">
                                 <div class="form-group">
                                     <label for="search">Search:</label>
                                     <input type="text" name="search" placeholder="Search Subject" id="search" class="form-control mb-2">
@@ -132,42 +132,71 @@
 
                     <table>
                         <thead>
-                            <tr>
-                                <th>#</td>
-                                <th>Course</td>
-                                <th>Recipients</td>
-                                <th>Subject</td>
-                                <th>Date</td>
-                                <th>Count of Replies</td>
-                                <th>Reply</td>
-                            </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Course</th>
+                            @if($is_inbox)
+                            <th>Sender</th>
+                            @else
+                            <th>Recipients</th>
+                            @endif
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th>Reply count</th>
+                            <th>Reply</th>
+                        </tr>
+{{--                            <tr>--}}
+{{--                                <td>#</td>--}}
+{{--                                <td>Course</td>--}}
+{{--                                <td>Recipients</td>--}}
+{{--                                <td>Subject</td>--}}
+{{--                                <td>Date</td>--}}
+{{--                                <td>Count of Replies</td>--}}
+{{--                                <td>Reply</td>--}}
+{{--                            </tr>--}}
                         </thead>
                         <tbody>
-                            @foreach ($messages as $message)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{$message->courses->course->trans_title??null}}</td>
-                                    <td>{{(($message->role_id == 1) ? 'Admin' : (($message->role_id == 2) ? 'Instructor' : null))}}</td>
-                                    <td>{{$message->title??null}}</td>
-                                    <td>{{$message->created_at??null}}</td>
-                                    <td>{{count($message->replies)??null}}</td>
-                                    <td>
-                                        <a href="{{route('user.reply_message',$message->id)}}" class="green">Reply</a>
-                                        {{-- @if (($user->roles[0]->pivot->role_id == 1) || ($user->roles[0]->pivot->role_id == 2))
-                                            @if ($message->reply == null)
-                                                <a href="{{route('user.reply_message',$message->id)}}" class="green">Reply</a>
-                                            @else
-                                                <a href="{{route('user.reply_message',$message->id)}}" class="green">Show Reply</a>
-                                            @endif
-                                        @else
-                                            @if ($message->reply == null)
-                                                <span>No reply</span>
-                                            @else
-                                                <a href="{{route('user.reply_message',$message->id)}}" class="green">Show Reply</a>
-                                            @endif
-                                        @endif --}}
-                                    </td>
-                                </tr>
+                        <?php  $lang = app()->getLocale(); ?>
+                        @foreach ($messages as $message)
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{json_decode($message->course_title)->$lang}}</td>
+                                @if($is_inbox)
+                                <td>{{json_decode($message->username_send_msg)->$lang}}</td>
+                                @else
+                                <td>{{$message->recipient == 2 ? "Instructor" : "Admin" }}</td>
+                                @endif
+                                <td>{{$message->msg_title}}</td>
+                                <td>{{$message->msg_date}}</td>
+                                <td>{{$message->replies_count}}</td>
+                                <td>
+                                      <a href="{{route('user.reply_message',$message->msg_id)}}" class="green">Reply</a>
+                                </td>
+                            </tr>
+{{--                                <tr>--}}
+{{--                                    <td>{{$loop->iteration}}</td>--}}
+{{--                                    <td>{{json_decode($message->course_title)->$lang}}</td>--}}
+{{--                                    <td>{{(($message->role_id == 1) ? 'Admin' : (($message->role_id == 2) ? 'Instructor' : null))}}</td>--}}
+{{--                                    <td>{{$message->title??null}}</td>--}}
+{{--                                    <td>{{$message->created_at??null}}</td>--}}
+{{--                                    <td>{{count($message->replies)??null}}</td>--}}
+{{--                                    <td>--}}
+{{--                                        <a href="{{route('user.reply_message',$message->id)}}" class="green">Reply</a>--}}
+{{--                                        --}}{{-- @if (($user->roles[0]->pivot->role_id == 1) || ($user->roles[0]->pivot->role_id == 2))--}}
+{{--                                            @if ($message->reply == null)--}}
+{{--                                                <a href="{{route('user.reply_message',$message->id)}}" class="green">Reply</a>--}}
+{{--                                            @else--}}
+{{--                                                <a href="{{route('user.reply_message',$message->id)}}" class="green">Show Reply</a>--}}
+{{--                                            @endif--}}
+{{--                                        @else--}}
+{{--                                            @if ($message->reply == null)--}}
+{{--                                                <span>No reply</span>--}}
+{{--                                            @else--}}
+{{--                                                <a href="{{route('user.reply_message',$message->id)}}" class="green">Show Reply</a>--}}
+{{--                                            @endif--}}
+{{--                                        @endif --}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
                             @endforeach
                         </tbody>
                     </table>

@@ -11,8 +11,8 @@ class Message extends Model
     use TrashTrait;
     protected $guarded = [];
 
-    public function courses(){
-        return $this->belongsTo('App\Models\Training\CourseRegistration','course_id');
+    public function course(){
+        return $this->belongsTo('App\Models\Training\CourseRegistration','course_id','course_id');
     }
 
     public function user(){

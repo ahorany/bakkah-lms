@@ -74,14 +74,19 @@ Route::group([
         Route::get('/request_tickets/add/{type?}', [UserProfileController::class, 'complaintView'])->name('complaint');
         Route::post('/request_tickets/send_complaint', [UserProfileController::class, 'complaintStore'])->name('send_complaint');
 
+        Route::get('/messages/inbox', [\App\Http\Controllers\Training\MessageController::class,'inbox'])->name('messages.inbox');
+        Route::get('/add_message', [\App\Http\Controllers\Training\MessageController::class,'addMessage'])->name('add_message');
+        Route::get('/send_message', [\App\Http\Controllers\Training\MessageController::class,'sendMessage'])->name('send_message');
+        Route::get('/reply_message/{id}', [\App\Http\Controllers\Training\MessageController::class,'replyMessage'])->name('reply_message');
+        Route::get('/add_reply', [\App\Http\Controllers\Training\MessageController::class,'addReply'])->name('add_reply');
+        Route::get('/search_subject', [\App\Http\Controllers\Training\MessageController::class,'searchSubject'])->name('search_subject');
 
-
-        Route::get('/messages', [UserProfileController::class, 'getMessages'])->name('messages');
-        Route::get('/add_message', [UserProfileController::class, 'addMessage'])->name('add_message');
-        Route::get('/send_message', [UserProfileController::class, 'sendMessage'])->name('send_message');
-        Route::get('/reply_message/{id}', [UserProfileController::class, 'replyMessage'])->name('reply_message');
-        Route::get('/add_reply', [UserProfileController::class, 'addReply'])->name('add_reply');
-        Route::get('/search_subject', [UserProfileController::class, 'searchSubject'])->name('search_subject');
+//        Route::get('/messages', [UserProfileController::class, 'getMessages'])->name('messages');
+//        Route::get('/add_message', [UserProfileController::class, 'addMessage'])->name('add_message');
+//        Route::get('/send_message', [UserProfileController::class, 'sendMessage'])->name('send_message');
+//        Route::get('/reply_message/{id}', [UserProfileController::class, 'replyMessage'])->name('reply_message');
+//        Route::get('/add_reply', [UserProfileController::class, 'addReply'])->name('add_reply');
+//        Route::get('/search_subject', [UserProfileController::class, 'searchSubject'])->name('search_subject');
 
     });
 });
