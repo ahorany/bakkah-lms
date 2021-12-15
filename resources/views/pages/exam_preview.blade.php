@@ -85,7 +85,7 @@
 
                                <label  v-if="question.answers_count > 1" v-for="answer in question.answers" class="custom-radio" :for="answer.title + '_' + answer.id + '_' + answer.question_id"  > @{{ answer.title }} dddd
                                    <input type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="searchMultiAnswers(answer.question_id,answer.id) ? true:false " @change="addMultiAnswers(answer.question_id,answer.id)"  :id="answer.title + '_' + answer.id + '_' + answer.question_id">
-                                   <span class="radio-mark"></span>
+                                   <span class="radio-mark check-mark"></span>
                                </label>
 
                            </template>
@@ -115,7 +115,7 @@
                                   <template v-if="countCorrectAnswers(question) > 1">
                                       <label  v-for="answer in question.answers"  class="custom-radio" :class="{'text-success' : answer.check_correct == 1 , 'text-danger' : (answer.check_correct == 0 && (answers.length > 0) && (searchReviewMultiAnswers(answer.question_id,answer.id) ) ) }"> @{{ answer.title }}
                                           <input type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="(answers.length > 0) ? (searchReviewMultiAnswers(answer.question_id,answer.id) ) : false" :name="answer.question_id">
-                                          <span class="radio-mark"></span>
+                                          <span class="radio-mark check-mark"></span>
                                       </label>
 
                                       <div v-if="(answers.length == 0) || checkIfQuestionHasInCorrectAnswers(question.id)">
@@ -183,15 +183,9 @@
                         </template>
                     </div>
 
-
                     <div class="col-xl-3 col-lg-4">
-<<<<<<< HEAD
                         <div class="card h-100 p-30">
                             <h4>Quiz</h4>
-=======
-                        <div class="card p-30"><!-- h-100 -->
-                            <h4>QUIZ Navigation</h4>
->>>>>>> f634250bcb5a3c882775027a8039a230979742d9
                             <ol class="answers">
                                 <template v-if="page_type == 'exam' "  v-for="(question, index) in exam.questions">
                                     <li @click="searchAndOpenQuestion(question.id)" :key="question.id" >

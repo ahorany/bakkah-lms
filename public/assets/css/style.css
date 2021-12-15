@@ -199,6 +199,9 @@ body {
   background-color: #eee;
   border-radius: 50%;
 }
+.check-mark {
+    border-radius: 0% !important;
+  }
 
 /* On mouse-over, add a grey background color */
 .custom-radio:hover input ~ .radio-mark {
@@ -740,7 +743,7 @@ ol.breadcrumb li a {
   cursor: pointer;
 }
 
-.card-header button svg {
+button svg {
     height: 10px;
     filter: brightness(0.5);
 }
@@ -1013,12 +1016,16 @@ ol.answers li .icon.empty {
 }
 
 .learning-file ul li a svg {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 }
 
 .learning-file ul li a span {
   margin: 0 10px;
+}
+
+.learning-file ul li a span.svg {
+    margin-left: auto;
 }
 
 .learning-file ul li a:hover {
