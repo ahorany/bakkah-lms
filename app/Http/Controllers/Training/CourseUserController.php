@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Training;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TraineeMail;
 use App\Models\Admin\Role;
 use App\Models\Training\Answer;
 use App\Models\Training\Content;
@@ -14,6 +15,7 @@ use App\Models\Training\Question;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -101,14 +103,12 @@ class CourseUserController extends Controller
         if(checkUserIsTrainee()){
             abort(404);
         }
-//        return \request();
-        $course = Course::find(\request()->course_id);
 
+        $course = Course::find(\request()->course_id);
         if(!$course){
             return response()->json([ 'status' => 'fail']);
         }
 
-//       $type_id =  (Role::where("name", 'like', '%'.request()->type.'%')->first())->id;
         if(request()->type == 'instructor'){
             $type_id = 2;
         }else{
@@ -117,24 +117,31 @@ class CourseUserController extends Controller
 
         foreach (\request()->users as $key =>  $value){
             if ($value == true){
-                CourseRegistration::updateOrcreate([
-                    'user_id' => $key,
-                    'course_id' => $course->id
-                ],
-                [
-                    'user_id' => $key,
-                    'course_id' => $course->id,
-                    'expire_date' => request()->expire_date,
-                    'role_id' => $type_id,
-                ]);
+                CourseRegistration::updateOrcreate(
+                    [
+                        'user_id' => $key,
+                        'course_id' => $course->id
+                    ],
+                    [
+                        'user_id' => $key,
+                        'course_id' => $course->id,
+                        'expire_date' => request()->expire_date,
+                        'role_id' => $type_id,
+                    ]
+                );
+
+                if($type_id == 3){
+                    $user = User::where('id',$key)->first();
+                    Mail::to($user->email)->send(new TraineeMail($key , $course->id));
+                }
+
             }else if ($value == false){
                 CourseRegistration::where('user_id',$key)->where('course_id',$course->id)->delete();
             }
+
         }
         $course = Course::with(['users.roles'])->where('id',$course->id)->first();
 
         return response()->json([ 'status' => 'success' ,'course' => $course]);
-
-
     }
 }

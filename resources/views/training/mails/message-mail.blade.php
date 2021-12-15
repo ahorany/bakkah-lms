@@ -6,22 +6,13 @@
         <td style="direction: ltr; background: #fff; font-weight:300; font-size: 12px; color: #707070; font-family:sans-serif; padding: 0px 35px; line-height: 25px;border: 2px solid #d6d6d6;">
             <div>
                 <br>
-                <div>Dear <b>{{$user->en_name}},</b></div>
+                <div>Dear <b>{{$recieve->trans_name}},</b></div>
 
-<<<<<<< HEAD
-                <a href="{{env('APP_URL')}}">{{env('APP_URL')}}</a>
-
-                <p>Your Username is: {{$user->email}}</p>
-                <p>Your password is: {{$password}}</p>
-=======
-                <p>Email is: {{$user->email}}</p>
-                <p>Password is: {{$password}}</p>
->>>>>>> e83383318ad161fa3abc67860d1cf1672de217f7
+                <p>From: {{$message->user->email}}</p>
+                <p>The Message is: {{$message->title}}</p>
 
                 <div>Best Regards,</div>
                 <div>{{__('education.app_title')}}</div>
-                {{-- <div>Phone: 920003928</div>
-                <div>Mobile: <span dir="ltr">+966 55 676 5156</span></div> --}}
                 <br>
             </div>
         </td>

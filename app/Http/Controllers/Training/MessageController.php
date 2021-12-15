@@ -9,6 +9,7 @@ use App\Models\Admin\Partner;
 use App\Models\Admin\Role;
 use App\Models\Training\Course;
 use App\Constant;
+use App\Mail\MessageMail;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\Group;
 use App\Models\Training\Message;
@@ -19,6 +20,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 // use Illuminate\Support\Str;
@@ -85,7 +87,13 @@ class MessageController extends Controller
             }
         }
 
+<<<<<<< HEAD
         $sql .= " GROUP BY messages.id";
+=======
+        $sql .= " GROUP BY replies.message_id";
+        dd($sql);
+//        dd($sql);
+>>>>>>> 66b4dcb691b1bf5dcb068d975ef24b9382655261
 
         $messages = DB::select(DB::raw($sql));
         return view('training.messages.index',compact('messages','is_inbox'));
@@ -134,6 +142,7 @@ class MessageController extends Controller
             'title' => request()->subject,
             'description' => request()->description,
         ]);
+        // dd($msg);
 
        $recipients = CourseRegistration::where('course_id', request()->course_id)->where('role_id',2)->get();
 
@@ -143,6 +152,9 @@ class MessageController extends Controller
                'role_id' => $recipient->role_id,
                'message_id' => $msg->id,
             ]);
+
+            // $user = User::where('id',$recipient->user_id)->first();
+            // Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
         }
 
         $admins = User::whereHas('roles',function ($q){
