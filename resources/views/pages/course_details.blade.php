@@ -118,7 +118,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
                                      viewBox="0 0 17.43 16.6">
                                         <path id="Path_42" data-name="Path 42"
-                                              d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
+                                              MessageController            d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
                                               transform="translate(-128.289 -183.355)" fill="#c6c6c6" />
                                 </svg>
                             </span>
@@ -182,164 +182,172 @@
                                                 <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
                                                     <img width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
                                                     <span> {{$content->title}}</span>
-                                                </a>
+                                                    @if(isset($content->user_contents[0]))
+                                                        <span><svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="62.387" viewBox="0 0 71.3 62.387">
+                                                            <path id="Icon_open-task" data-name="Icon open-task" d="M0,0V62.387H62.387v-32L53.475,39.3V53.475H8.912V8.912h32L49.821,0ZM62.387,0,35.65,26.737l-8.912-8.912-8.912,8.912L35.65,44.562,71.3,8.912Z" fill="#fb4400"></path>
+                                                          </svg>
+                                                        </span>
+                                                    @endif
+                                                 </a>
+
+
 {{--                                                <a @if( ( isset($section->contents[($k-1)]->user_contents[0]) || ( isset($course->contents[($key-1)])  && isset($course->contents[($key-1)]->contents[ (count($course->contents[($key-1)]->contents) - 1)]->user_contents[0]) && $k == 0  ) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >--}}
 {{--                                                    <img width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">--}}
 {{--                                                    <span> {{$content->title}}</span>--}}
 {{--                                                </a>--}}
-                                            </li>
-                                        @endforeach
+                                    </li>
+                                    @endforeach
                                     </ul>
-                                @endisset
-                            </div> <!-- /.learning-file -->
-                    @endforeach
-                </div>
+                                    @endisset
+                                    </div> <!-- /.learning-file -->
+                                    @endforeach
+</div>
 
-                <div class="col-lg-4 course_info">
-                    <div class="card p-30 activity">
-                        <h2>Activity</h2>
-                        <ul>
-                            <?php $lang = app()->getLocale(); ?>
-                            @foreach($activities as $activity)
-                               <li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+<div class="col-lg-4 course_info">
+<div class="card p-30 activity">
+<h2>Activity</h2>
+<ul>
+<?php $lang = app()->getLocale(); ?>
+@foreach($activities as $activity)
+<li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
 {{--                                  <div>Start Date: {{$activity->start_date}}</div>--}}
 {{--                                  <div>End Date: {{$activity->end_date}}</div>--}}
-                               </li>
-                            @endforeach
-                        </ul>
-                    </div>
+</li>
+@endforeach
+</ul>
+</div>
 
-                    {{-- <div class="d-flex justify-content-between mt-5 course-group">
-                        <div class="persons card p-20">
-                            <h3 class="mt-0">Course Group</h3>
-                            <!-- <small>Lean Six Sigma Yellow belt training provides insight to the </small> -->
-                            <ul>
-                                <li><img src="http://placehold.it/50x50" alt=""></li>
-                                <li><img src="http://placehold.it/50x50" alt=""></li>
-                                <li><img src="http://placehold.it/50x50" alt=""></li>
-                                <li><img src="http://placehold.it/50x50" alt=""></li>
-                                <li><img src="http://placehold.it/50x50" alt=""></li>
-                                <li><img src="http://placehold.it/50x50" alt=""></li>
-                                <li>+15</li>
-                            </ul>
-                        </div>
-                        <div class="new-students">
-                            <span>New Student</span>
-                            <b>12</b>
-                        </div>
-                    </div> --}}
-                </div>
-            </div>
-        @endif
-    </div>
+{{-- <div class="d-flex justify-content-between mt-5 course-group">
+<div class="persons card p-20">
+<h3 class="mt-0">Course Group</h3>
+<!-- <small>Lean Six Sigma Yellow belt training provides insight to the </small> -->
+<ul>
+<li><img src="http://placehold.it/50x50" alt=""></li>
+<li><img src="http://placehold.it/50x50" alt=""></li>
+<li><img src="http://placehold.it/50x50" alt=""></li>
+<li><img src="http://placehold.it/50x50" alt=""></li>
+<li><img src="http://placehold.it/50x50" alt=""></li>
+<li><img src="http://placehold.it/50x50" alt=""></li>
+<li>+15</li>
+</ul>
+</div>
+<div class="new-students">
+<span>New Student</span>
+<b>12</b>
+</div>
+</div> --}}
+</div>
+</div>
+@endif
+</div>
 
 
 @endsection
 
 @section('script')
-    <script>
-        window.total_rate = {!! json_encode($total_rate) !!}
-        window.rate =  @json($course->course_rate->rate)
+<script>
+window.total_rate = {!! json_encode($total_rate) !!}
+window.rate =  @json($course->course_rate->rate)
 
 
-        new Vue({
-            'el' : '#main-vue-element',
-            'data' : {
-                total_rate: window.total_rate,
-                stars : 0,
-                half_star  : 0,
-                rate  : window.rate,
-            },
-            created(){
-                this.getTotalRate()
-                this.setTotalRateStars()
-            },
-            methods : {
-                getTotalRate : function(){
-                     this.total_rate = parseFloat(this.total_rate).toFixed(2);
-                     return this.total_rate;
-                },
-                setTotalRateStars : function(){
-                    this.half_star = 0;
-                    let total_as_int = parseInt(this.total_rate)
-                    this.stars = total_as_int
-                    if(total_as_int < this.total_rate){
-                        this.half_star = this.stars + 1
-                    }
-                },
-                review : function (item) {
-                   // alert(item)
-                    let self = this;
-                    var data = {
-                        'course_id' : {{$course->id}},
-                        'rate' : item
-                    }
+new Vue({
+'el' : '#main-vue-element',
+'data' : {
+total_rate: window.total_rate,
+stars : 0,
+half_star  : 0,
+rate  : window.rate,
+},
+created(){
+this.getTotalRate()
+this.setTotalRateStars()
+},
+methods : {
+getTotalRate : function(){
+this.total_rate = parseFloat(this.total_rate).toFixed(2);
+return this.total_rate;
+},
+setTotalRateStars : function(){
+this.half_star = 0;
+let total_as_int = parseInt(this.total_rate)
+this.stars = total_as_int
+if(total_as_int < this.total_rate){
+this.half_star = this.stars + 1
+}
+},
+review : function (item) {
+// alert(item)
+let self = this;
+var data = {
+'course_id' : {{$course->id}},
+'rate' : item
+}
 
-                    this.rate = item
-                    axios.post("{{route('user.rate')}}",
-                        data
-                    )
-                        .then(response => {
-                             self.total_rate =  response.data.data;
-                             self.getTotalRate();
-                             self.setTotalRateStars();
-                            console.log(response.data)
-                        })
-                        .catch(e => {
-                            console.log(e)
-                        });
-
-
-
-                    {{--$.ajax({--}}
-                    {{--    type: "POST",--}}
-                    {{--    url: @json(CustomRoute('user.rate')),--}}
-                    {{--    data: {--}}
-                    {{--        'course_id' : {{$course->id}},--}}
-                    {{--        '_token' : @json(csrf_token()),--}}
-                    {{--        'rate' : rate--}}
-                    {{--    },--}}
-                    {{--    success: function(response){--}}
-                    {{--        console.log(response)--}}
-                    {{--        $('.total_rate').text(parseFloat(response.data).toFixed(1))--}}
-                    {{--        total_review()--}}
-                    {{--    },--}}
-                    {{--});--}}
+this.rate = item
+axios.post("{{route('user.rate')}}",
+data
+)
+.then(response => {
+self.total_rate =  response.data.data;
+self.getTotalRate();
+self.setTotalRateStars();
+console.log(response.data)
+})
+.catch(e => {
+console.log(e)
+});
 
 
 
-                }
-            }
-        });
-    </script>
+{{--$.ajax({--}}
+{{--    type: "POST",--}}
+{{--    url: @json(CustomRoute('user.rate')),--}}
+{{--    data: {--}}
+{{--        'course_id' : {{$course->id}},--}}
+{{--        '_token' : @json(csrf_token()),--}}
+{{--        'rate' : rate--}}
+{{--    },--}}
+{{--    success: function(response){--}}
+{{--        console.log(response)--}}
+{{--        $('.total_rate').text(parseFloat(response.data).toFixed(1))--}}
+{{--        total_review()--}}
+{{--    },--}}
+{{--});--}}
 
 
 
+}
+}
+});
+</script>
 
 
 
 
-        <script>
-        var btn = document.querySelector('.video-btn');
-        var modal = document.querySelector('.modal');
-        var content = document.querySelector('.modal-content');
-        var close = document.querySelector('.modal-close');
 
-        btn.onclick = e => {
-            modal.querySelector('video').play();
-            modal.classList.add("show");
-        };
 
-        close.onclick = e => {
-            modal.querySelector('video').pause();
-            modal.classList.remove("show");
-        };
 
-        modal.onclick = e => {
-            modal.querySelector('video').pause();
-            modal.classList.remove("show");
-        };
+<script>
+var btn = document.querySelector('.video-btn');
+var modal = document.querySelector('.modal');
+var content = document.querySelector('.modal-content');
+var close = document.querySelector('.modal-close');
 
-        content.onclick = e => e.stopPropagation()
-    </script>
+btn.onclick = e => {
+modal.querySelector('video').play();
+modal.classList.add("show");
+};
+
+close.onclick = e => {
+modal.querySelector('video').pause();
+modal.classList.remove("show");
+};
+
+modal.onclick = e => {
+modal.querySelector('video').pause();
+modal.classList.remove("show");
+};
+
+content.onclick = e => e.stopPropagation()
+</script>
 @endsection

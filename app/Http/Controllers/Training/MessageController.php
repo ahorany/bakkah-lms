@@ -87,13 +87,7 @@ class MessageController extends Controller
             }
         }
 
-<<<<<<< HEAD
         $sql .= " GROUP BY messages.id";
-=======
-        $sql .= " GROUP BY replies.message_id";
-        dd($sql);
-//        dd($sql);
->>>>>>> 66b4dcb691b1bf5dcb068d975ef24b9382655261
 
         $messages = DB::select(DB::raw($sql));
         return view('training.messages.index',compact('messages','is_inbox'));
