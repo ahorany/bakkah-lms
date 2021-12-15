@@ -86,6 +86,23 @@
 @endsection
 
 @section('content')
+    <?php
+    if( !is_null($next)){
+        if( $next->post_type != 'exam' ) {
+            $next_url = CustomRoute('user.course_preview',$next->id);
+        }else{
+            $next_url =  CustomRoute('user.exam',$next->id);
+        }
+    }
+
+    if(!is_null($previous)){
+        if($previous->post_type != 'exam'){
+            $previous_url = CustomRoute('user.course_preview',$previous->id);
+        }else{
+            $previous_url =  CustomRoute('user.exam',$previous->id);
+        }
+    }
+    ?>
 <div class="card p-5 user-info">
 
         <div class="dash-header">
@@ -141,6 +158,28 @@
                     <h4 class="card-title">Exam Description</h4>
                     <div class="card-body">
                         <p class="card-text">{!!  $exam->details->excerpt == 'null' ? 'There is no description for this exam.' : $exam->details->excerpt  !!}</p>
+                        @if($previous)
+                            {{-- <span class="previous-title"><a style="color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a></span> --}}
+                            <button title="{{$previous->title}}" class="next_prev" onclick="location.href =  '{{$previous_url}}'">
+                                <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                                    <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
+                                </svg>
+                                <span>{{__('education.Previous')}}</span>
+                            </button>
+
+                        @endif
+
+
+                        @if($next)
+
+                            <button title="{{$next->title}}" onmouseleave="hide_next()" onmouseenter="show_next()" class="next next_prev" onclick="location.href = '{{$next_url}}'">
+                                <span>{{__('education.Next')}}</span>
+                                <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                                    <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
+                                </svg>
+                            </button>
+                            {{-- <span class="next-title"><a style="color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a></span> --}}
+                        @endif
                     </div>
                 </div>
 
@@ -188,16 +227,9 @@
 
                         <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                         <td>
-                            @if($exam->exam->exam_mark && $exam->exam->exam_mark == 0)
+                        @if($exam->exam->exam_mark && $exam->exam->exam_mark != 0)
                             <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
-                            {{-- <div class="progress">
-                                <div class=" progress-bar @if($progress < 50) bg-danger @endif"   role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div> --}}
-
-{{--                                                <div class="progress">--}}
-{{--                                                    <div style=" width: {{$progress}}%;" class="mx-auto bar @if($progress < 50) bg-danger @endif" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>--}}
-{{--                                                </div>--}}
-                            <small>{{$progress}}% Complete</small>
+                                <small>{{$progress}}%</small>
                             @endif
                         </td>
                     </tr>
