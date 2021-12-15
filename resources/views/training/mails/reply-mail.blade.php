@@ -8,8 +8,7 @@
                 <br>
                 <div>Dear <b>{{$recieve->trans_name??null}},</b></div>
                 <p>From: {{$message_content->user->email}}</p>
-                <p>Subject: {{$message_content->title}}</p>
-                <p>Body: {{$message_content->description}}</p>
+                <p>Reply: {{$message_content->title}}</p>
 
                 <div>Best Regards,</div>
                 <div>{{__('education.app_title')}}</div>

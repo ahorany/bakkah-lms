@@ -10,6 +10,7 @@ use App\Models\Admin\Role;
 use App\Models\Training\Course;
 use App\Constant;
 use App\Mail\MessageMail;
+use App\Mail\ReplyMail;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\Group;
 use App\Models\Training\Message;
@@ -87,15 +88,11 @@ class MessageController extends Controller
             }
         }
 
-        $sql .= " GROUP BY replies.message_id";
-        dd($sql);
-//        dd($sql);
+        $sql .= " GROUP BY messages.id";
 
         $messages = DB::select(DB::raw($sql));
         return view('training.messages.index',compact('messages','is_inbox'));
     }
-
-
 
 
     public function addMessage(){
@@ -138,7 +135,6 @@ class MessageController extends Controller
             'title' => request()->subject,
             'description' => request()->description,
         ]);
-        // dd($msg);
 
        $recipients = CourseRegistration::where('course_id', request()->course_id)->where('role_id',2)->get();
 
@@ -149,8 +145,8 @@ class MessageController extends Controller
                'message_id' => $msg->id,
             ]);
 
-            // $user = User::where('id',$recipient->user_id)->first();
-            // Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
+            $user = User::where('id',$recipient->user_id)->first();
+            Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
         }
 
         $admins = User::whereHas('roles',function ($q){
@@ -163,6 +159,9 @@ class MessageController extends Controller
                 'role_id' => 1,
                 'message_id' => $msg->id,
             ]);
+
+            $user = User::where('id',$admin->id)->first();
+            Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
         }
 
         return redirect()->route('user.messages.inbox',['type' => 'sent']);
@@ -195,11 +194,32 @@ class MessageController extends Controller
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
-        Reply::whereNotNull('id')->create([
+        $reply = Reply::whereNotNull('id')->create([
             'title' => request()->reply,
             'message_id' => request()->message_id,
             'user_id' => auth()->user()->id,
         ]);
+
+        $recipeient_replies = RecipientMessage::where('message_id',$reply->message_id)->get();
+        $person_reply = RecipientMessage::where('user_id',$reply->user_id)->first();
+        // dd($reply);
+        // dd($person_reply);
+
+            if($person_reply == null){
+                foreach($recipeient_replies as $recipeient_reply){
+                    $user = User::where('id',$recipeient_reply->user_id)->first();
+                    Mail::to($user->email)->send(new ReplyMail($reply->id , $user->id));
+                }
+            }elseif($person_reply->role_id == 2){
+                $message = Message::where('id',$reply->message_id)->with('user')->first();
+                Mail::to($message->user->email)->send(new ReplyMail($reply->id , $message->user->id));
+            }elseif($person_reply->role_id == 1){
+                $message = Message::where('id',$reply->message_id)->with('user')->first();
+                Mail::to($message->user->email)->send(new ReplyMail($reply->id , $message->user->id));
+            }
+
+
+
         return redirect()->route('user.messages.inbox');
     }
 
