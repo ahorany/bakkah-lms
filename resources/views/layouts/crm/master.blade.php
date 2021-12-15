@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html @if(!env('APP_DEBUG'))  oncontextmenu="return false;"@endif lang="en">
 
 <head>
     <meta charset="utf-8">

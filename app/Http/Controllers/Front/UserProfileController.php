@@ -88,7 +88,7 @@ class UserProfileController extends Controller
     // exam page
     public function exam($exam_id){
         $exam = Content::whereId($exam_id)
-            ->with(['course','exam' => function($q){
+            ->with(['section','course','exam' => function($q){
                 return $q->with(['users_exams' => function($q){
                     return $q->where('user_id',auth()->id());
                 }]);
@@ -110,7 +110,17 @@ class UserProfileController extends Controller
             'content_id' => $exam_id,
         ]);
 
-        return view('pages.exam',compact('exam'));
+
+        $arr =  $this->nextAndPreviouseQuery($exam->course_id,$exam->id,$exam->order,$exam->parent_id,$exam->section->order);
+
+        $previous = $arr[0];
+        $next = $arr[1];
+
+
+        $next = ($next[0]??null);
+        $previous = ($previous[0]??null);
+
+        return view('pages.exam',compact('exam','next','previous'));
     }
 
 
@@ -365,15 +375,17 @@ class UserProfileController extends Controller
         },'contents' => function($query){
             $query->where('post_type','section')->with(['details',
             'contents' => function($q){
-                return $q->orderBy('id');
+                return $q->orderBy('order');
             },
             'contents.details','contents.user_contents' => function($q){
                 return $q->where('user_id',\auth()->id());
-            }])->orderBy('id');
+            }])->orderBy('order');
         }])->first();
         if (!$course){
             abort(404);
         }
+//        return $course->contents[0]->contents[0]->user_contents ;
+
 
 
         $total_rate = DB::select(DB::raw('SELECT AVG(rate) as total_rate FROM `courses_registration` WHERE course_id =' .$course->id));
@@ -402,7 +414,6 @@ class UserProfileController extends Controller
     public function course_preview($content_id){
         $content = Content::whereId($content_id)
             ->with(['upload','course' ,'section'])->first();
-
         if (!$content){
             abort(404);
         }
@@ -449,22 +460,34 @@ class UserProfileController extends Controller
 
  }
 
+      $arr =  $this->nextAndPreviouseQuery($content->course_id,$content->id,$content->order,$content->parent_id,$content->section->order);
 
+        $previous = $arr[0];
+        $next = $arr[1];
+
+
+        $next = ($next[0]??null);
+        $previous = ($previous[0]??null);
+
+        return view('pages.file',compact('content','previous','next'));
+    }
+
+
+
+    private function nextAndPreviouseQuery($course_id,$content_id,$content_order,$content_parent_id,$section_order){
         $next =  DB::select(DB::raw("
-                        SELECT contents.id , contents.title,contents.post_type FROM `contents`
+                        SELECT contents.id , sections.id as section_id , contents.order,sections.order as section_order , contents.title,contents.post_type FROM `contents`
                           INNER JOIN contents AS sections ON contents.parent_id = sections.id
-                            WHERE contents.course_id = $content->course_id
-                              AND contents.id !=  $content->id
-                              AND contents.deleted_at IS NULL
-                              AND  (
-                                  (contents.order > $content->order AND contents.parent_id = $content->parent_id)
+                         WHERE contents.course_id =  $course_id
+                          AND contents.id !=  $content_id
+                         AND contents.deleted_at IS NULL
+                           AND  (
+                                  (contents.order > $content_order  AND contents.parent_id = $content_parent_id)
                                     OR
-                                  (contents.parent_id > $content->parent_id)
-                              )
-                        ORDER BY contents.parent_id
-                        ,contents.order
-                        LIMIT 1
-                        "
+                                  ( sections.order > ".$section_order.")
+                                )
+                         order BY sections.order , contents.order
+                         LIMIT 1"
         ));
 
 
@@ -472,25 +495,21 @@ class UserProfileController extends Controller
             "
                         SELECT contents.id , contents.title,contents.post_type FROM `contents`
                           INNER JOIN contents AS sections ON contents.parent_id = sections.id
-                            WHERE contents.course_id = $content->course_id
-                             AND contents.id !=  $content->id
+                            WHERE contents.course_id = $course_id
+                             AND contents.id !=  $content_id
                               AND contents.deleted_at IS NULL
                               AND  (
-                                  (contents.order < $content->order AND contents.parent_id = $content->parent_id)
+                                  (contents.order < $content_order AND contents.parent_id = $content_parent_id)
                                     OR
-                                  ( contents.parent_id < $content->parent_id)
+                                  ( sections.order < ".$section_order.")
                               )
-                        ORDER BY contents.parent_id DESC
+                        ORDER BY sections.order DESC
                         ,contents.order DESC
                         LIMIT 1
                          "
         ));
 
-
-        $next = ($next[0]??null);
-        $previous = ($previous[0]??null);
-
-        return view('pages.file',compact('content','previous','next'));
+        return [$previous,$next];
     }
 
 
