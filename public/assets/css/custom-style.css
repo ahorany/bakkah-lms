@@ -376,6 +376,13 @@ ol.answers li{
 {
     margin: 0;
 }
+.lms-header ul.navbar-nav li.user a svg#Layer_2
+.lms-header ul.navbar-nav li.user a svg#Layer_3{
+    width: 18px;
+    vertical-align: text-bottom !important;
+    fill: #6a6a6a;
+}
+
 svg#back{
     fill: #fb4400;
 }

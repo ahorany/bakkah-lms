@@ -106,14 +106,56 @@
                 </svg> back</a>
         </div>
 
+
         <div class="row">
             <div class="col-12 mt-5">
                 <table class="table">
                     <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">title</th>
+                            <th scope="col">count</th>
+                            <th scope="col">result</th>
+                            <th scope="col">total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $count_questions = 0;
+                        @endphp
+                        @foreach($units_rprt as $data)
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$data->title}}</td>
+                                <td>{{$data->count}}</td>
+                                @php
+                                    $count_questions += $data->count;
+                                @endphp
+                                <td>
+                                    {{$data->result??0}}
+                                    <div class="progress">
+                                        <div class="mx-auto progress-bar " role="progressbar" style="width: {{($data->result != null) || ($data->total != null) ? number_format((($data->result / $data->total) * 100), 2, '.', ',') . '%' : 0}};" aria-valuenow="{{$data->result}}" aria-valuemin="0" aria-valuemax="100">
+                                            {{($data->result != null) || ($data->total != null) ? number_format((($data->result / $data->total) * 100), 2, '.', ','). '%' : 0}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{$data->total??0}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Unit</th>
-                        <th scope="col">Mark</th>
+                        <th scope="col">Total Title</th>
+                        <th scope="col">TotalCount</th>
+                        <th scope="col">Total Result</th>
+                        <th scope="col">Total</th>
                     </tr>
                     </thead>
 
@@ -121,13 +163,17 @@
                     @foreach($unit_marks as $data)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$data->unit_title?? 'Other'}}</td>
+                            <td>Total Units</td>
+                            <td>{{$count_questions}}</td>
                             <td>
-                                {{ ($data->unit_marks??0) .' / ' . $data->total_marks}}
+                                {{$data->unit_marks??0}}
                                 <?php  $progress = ($data->unit_marks / $data->total_marks) * 100; $progress = round($progress,2)  ?>
                                 <div class="progress">
-                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? $progress . '%' : '0' }}</div>
+                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? number_format($progress, 2, '.', ',') . '%' : '0' }}</div>
                                 </div>
+                            </td>
+                            <td>
+                                {{$data->total_marks}}
                             </td>
                         </tr>
                     @endforeach
@@ -138,45 +184,6 @@
             </div>
         </div>
 
-
-        <div class="row">
-            <div class="col-12 mt-5">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">title</th>
-                        <th scope="col">count</th>
-                        <th scope="col">result</th>
-                        <th scope="col">total</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-                    @foreach($units_rprt as $data)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$data->title}}</td>
-<<<<<<< HEAD
-=======
-                        <td>
-                            {{$data->result}}
-                            {{-- <div class="progress">
-                                <div class="mx-auto progress-bar @if($data->result < 50) bg-danger @endif"  role="progressbar" style="width: {{$data->result}}%;" aria-valuenow="{{$data->result}}" aria-valuemin="0" aria-valuemax="100">{{($data->result > 0) ? $data->result . '%' : '0' }}</div>
-                            </div> --}}
-                        </td>
->>>>>>> 5e6346dff9976c255d49e78278de1870530208b1
-                        <td>{{$data->count}}</td>
-                        <td>{{$data->result}}</td>
-                        <td>{{$data->total}}</td>
-
-                    </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 @endsection
 
