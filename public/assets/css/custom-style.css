@@ -416,12 +416,12 @@ ul.video-list li .play{
 }
 
 .req svg{
-    width: 10px !important;
-    height: 10px !important;
+    width: 7px !important;
+    height: 15px !important;
 }
 
 .req svg path{
-    fill: red !important;
+    fill: #dc3545 !important;
 }
 .home-section {
     margin-bottom: 25px;

@@ -7,16 +7,9 @@
             <div>
                 <br>
                 <div>Dear <b>{{$user->en_name}},</b></div>
-
-<<<<<<< HEAD
                 <a href="{{env('APP_URL')}}">{{env('APP_URL')}}</a>
-
-                <p>Your Username is: {{$user->email}}</p>
-                <p>Your password is: {{$password}}</p>
-=======
                 <p>Email is: {{$user->email}}</p>
                 <p>Password is: {{$password}}</p>
->>>>>>> e83383318ad161fa3abc67860d1cf1672de217f7
 
                 <div>Best Regards,</div>
                 <div>{{__('education.app_title')}}</div>
