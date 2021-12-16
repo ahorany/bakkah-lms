@@ -146,8 +146,9 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">title</th>
-                        <th scope="col">result</th>
                         <th scope="col">count</th>
+                        <th scope="col">result</th>
+                        <th scope="col">total</th>
                     </tr>
                     </thead>
 
@@ -157,8 +158,10 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$data->title}}</td>
-                        <td>{{$data->result}}</td>
                         <td>{{$data->count}}</td>
+                        <td>{{$data->result}}</td>
+                        <td>{{$data->total}}</td>
+
                     </tr>
                     @endforeach
                     </tbody>
