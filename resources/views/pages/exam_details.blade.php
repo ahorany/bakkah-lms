@@ -131,6 +131,36 @@
                             </td>
                         </tr>
                     @endforeach
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12 mt-5">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">title</th>
+                        <th scope="col">result</th>
+                        <th scope="col">count</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    @foreach($units_rprt as $data)
+                    <tr>
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$data->title}}</td>
+                        <td>{{$data->result}}</td>
+                        <td>{{$data->count}}</td>
+                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

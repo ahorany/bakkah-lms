@@ -64,7 +64,21 @@ class UserProfileController extends Controller
             GROUP BY questions.unit_id
        "));
 
-        return view('pages.exam_details',compact('unit_marks','exam_title','exam_id'));
+       $units_rprt = DB::select("select m.id, m.title, sum(m.moh) as result ,count(m.question_id) as count
+       from (
+           SELECT u.id, u.title, qu.question_id
+           , (select uq.mark/count(id) from question_units where question_id = qu.question_id) as moh
+           , uq.mark
+           from units u
+           join question_units qu on u.id=qu.unit_id
+           join user_questions uq on uq.question_id = qu.question_id
+           join user_exams ue on ue.id = uq.user_exam_id
+           where  ue.id = $user_exams_id
+           order by u.id asc
+       ) as m
+       group by m.id") ;
+    // dd($units_rprt);
+        return view('pages.exam_details',compact('unit_marks','exam_title','exam_id','units_rprt'));
 
     }
 
