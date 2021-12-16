@@ -126,7 +126,7 @@
                                 {{ ($data->unit_marks??0) .' / ' . $data->total_marks}}
                                 <?php  $progress = ($data->unit_marks / $data->total_marks) * 100; $progress = round($progress,2)  ?>
                                 <div class="progress">
-                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{$progress}}%</div>
+                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? $progress . '%' : '0' }}</div>
                                 </div>
                             </td>
                         </tr>
@@ -157,7 +157,12 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$data->title}}</td>
-                        <td>{{$data->result}}</td>
+                        <td>
+                            {{$data->result}}
+                            {{-- <div class="progress">
+                                <div class="mx-auto progress-bar @if($data->result < 50) bg-danger @endif"  role="progressbar" style="width: {{$data->result}}%;" aria-valuenow="{{$data->result}}" aria-valuemin="0" aria-valuemax="100">{{($data->result > 0) ? $data->result . '%' : '0' }}</div>
+                            </div> --}}
+                        </td>
                         <td>{{$data->count}}</td>
                     </tr>
                     @endforeach
