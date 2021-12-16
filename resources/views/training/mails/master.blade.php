@@ -40,7 +40,7 @@
                         <td width="240"></td>
                         <td width="30" class="mcnImageContent" valign="middle" style="text-align:center;padding-top:9px;padding-right:4px;">
                             <a href="{{FACEBOOK}}" target="_blank"><img width="22" style="padding: 4px;" src="{{CustomAsset('images/mail/facebook.png')}}" class="CToWUd" alt="facebook"></a>
-                        </td>$user
+                        </td>
                         <td width="30" class="mcnImageContent" valign="middle" style="text-align:center;padding-top:9px;padding-right:4px;">
                             <a href="{{TWITTER}}" target="_blank"><img width="22" style="padding: 4px;" src="{{CustomAsset('images/mail/twitter.png')}}" class="CToWUd" alt="twitter"></a>
                         </td>

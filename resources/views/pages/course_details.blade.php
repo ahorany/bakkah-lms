@@ -177,15 +177,23 @@
                                     <ul>
                                         @foreach($section->contents as $k => $content)
 {{--                                            @dump($content->user_contents[0])--}}
-
                                             <li>
                                                 <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
                                                     <img width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
                                                     <span> {{$content->title}}</span>
+
+                                                    @if ($content->role_and_path == 1)
+                                                        <div class="req">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                                                <path class="st0" d="M3.05,37.53c0.07-0.06,0.17-0.1,0.19-0.17c0.84-2.4,2.63-3.44,5.08-3.65c6.42-0.54,12.83-1.13,19.25-1.7  c2.1-0.19,4.19-0.4,6.29-0.56c0.63-0.05,0.94-0.33,1.18-0.9c3.42-8.06,6.86-16.11,10.32-24.15c1.42-3.29,5.37-4.2,7.97-1.87  c0.68,0.61,1.09,1.38,1.45,2.2c3.36,7.88,6.74,15.76,10.08,23.65c0.33,0.77,0.76,1.02,1.54,1.09c6.66,0.58,13.32,1.19,19.97,1.8  c2.01,0.18,4.01,0.36,6.02,0.56c2.17,0.22,3.64,1.41,4.29,3.45c0.66,2.06,0.09,3.88-1.52,5.3c-4.97,4.39-9.96,8.75-14.94,13.12  c-1.58,1.39-3.15,2.8-4.77,4.15c-0.53,0.45-0.68,0.85-0.52,1.55c1.95,8.44,3.85,16.89,5.78,25.33c0.75,3.3-1.07,6.03-4.35,6.43  c-1.24,0.15-2.33-0.27-3.38-0.9c-7.3-4.38-14.62-8.73-21.91-13.14c-0.78-0.47-1.32-0.49-2.11-0.01c-7.31,4.42-14.66,8.79-22,13.17  c-2.68,1.6-5.61,0.98-7.13-1.46c-0.76-1.23-0.91-2.57-0.59-3.97c1.91-8.39,3.8-16.77,5.74-25.15c0.21-0.92,0.04-1.45-0.68-2.08  c-6.32-5.49-12.59-11.03-18.91-16.52c-1.09-0.95-1.9-2.03-2.34-3.39C3.05,38.99,3.05,38.26,3.05,37.53z"/>
+                                                                </svg>
+                                                        </div>
+                                                    @endif
+
                                                     @if(isset($content->user_contents[0]))
                                                         <span class="svg">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="62.387" viewBox="0 0 71.3 62.387">
-                                                            <path id="Icon_open-task" data-name="Icon open-task" d="M0,0V62.387H62.387v-32L53.475,39.3V53.475H8.912V8.912h32L49.821,0ZM62.387,0,35.65,26.737l-8.912-8.912-8.912,8.912L35.65,44.562,71.3,8.912Z" fill="#fb4400"></path>
+                                                            <path id="Icon_open-task" data-name="Icon open-task" d="M0,0V62.387H62.387v-32L53.475,39.3V53.475H8.912V8.912h32L49.821,0ZM62.387,0,35.65,26.737l-8.912-8.912-8.912,8.912L35.65,44.562,71.3,8.912Z" fill="#00000066"></path>
                                                           </svg>
                                                         </span>
                                                     @endif

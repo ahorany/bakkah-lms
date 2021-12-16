@@ -89,4 +89,6 @@ return [
     "Previous" => 'Previous',
     "Messages" => 'Messages',
     "Rule & Path" => 'Rule & Path',
+    "Sent Items" => 'Sent Items',
+    "Inbox" => 'Inbox',
 ];
