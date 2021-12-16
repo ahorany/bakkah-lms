@@ -414,9 +414,15 @@ button.next_prev:hover svg{
 ul.video-list li .play{
     cursor: unset;
 }
-/* .vertical-row{
-    margin-bottom: 20px;
-} */
+
+.req svg{
+    width: 10px !important;
+    height: 10px !important;
+}
+
+.req svg path{
+    fill: red !important;
+}
 .home-section {
     margin-bottom: 25px;
 }
