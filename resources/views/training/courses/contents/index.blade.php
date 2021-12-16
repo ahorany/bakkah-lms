@@ -208,15 +208,34 @@
                                             </div>
                                         </div>
 
+
+
+
+
+
+
+
                                         <div class="col-md-6 col-12">
                                             <div class="modal-diff-content form-group">
-                                                <label class="m-0">Shuffle Answers</label>
-                                                <input  type="checkbox" v-model="shuffle_answers" name="shuffle_answers">
+                                                <label class="container-check" style="padding: 25px 30px 0; font-size: 15px;">
+                                                    Shuffle Answers
+                                                    <input class="mx-3" style="display: inline-block;" id="shuffle" type="checkbox" v-model="shuffle_answers" name="shuffle_answers">
+                                                    <span class="checkmark" style="top: 26px;"></span>
+                                                    <div v-show="'shuffle_answers' in errors">
+                                                        <span style="color: red;font-size: 13px">@{{ errors.shuffle_answers }}</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-6 col-12">
+                                            <div class="modal-diff-content form-group">
+                                                <label for="shuffle" class="m-0">Shuffle Answers</label>
+                                                <input id="shuffle" type="checkbox" v-model="shuffle_answers" name="shuffle_answers">
                                                 <div v-show="'shuffle_answers' in errors">
                                                     <span style="color: red;font-size: 13px">@{{ errors.shuffle_answers }}</span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                 </template>
@@ -276,9 +295,14 @@
                                 </div>
 
                                 <div v-if="model_type != 'section'" class="form-group form-check child">
+                                    <label class="container-check form-check-label" for="1" style="padding: 25px 30px 0; font-size: 15px;">
+                                        {{__('admin.Enabeld Status')}}
+                                        <input class="form-check-input child" style="display: inline-block;" v-model="status" id="1" type="checkbox" name="status">
+                                        <span class="checkmark" style="top: 26px;"></span>
+                                    </label>
 
-                                    <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status">
-                                    <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label>
+                                    {{-- <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status"> --}}
+                                    {{-- <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label> --}}
 
                                     <div v-if="file_url">
                                         <p>Files : </p>

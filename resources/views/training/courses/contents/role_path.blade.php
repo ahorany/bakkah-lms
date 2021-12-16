@@ -26,8 +26,8 @@
                         <ul list-style="none">
                             @foreach ($course->contents as $content)
                                 @if ($content->parent_id == null)
-                                    <li>
-                                        <div class="form-group">
+                                    <li class=" mb-4">
+                                        <div class="form-group m-0">
                                             {{-- <input type="checkbox" @if ($content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$content->id}}" id="content_{{$content->id}}"> --}}
                                             <label for="content_{{$content->id}}">{{$content->title}}</label>
                                         </div>
@@ -35,9 +35,14 @@
                                             <ul list-style="none" class="pl-4">
                                                 @foreach ($content->contents as $sub_content)
                                                     <li>
-                                                        <div class="form-group">
-                                                            <input type="checkbox" @if ($sub_content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$sub_content->id}}" id="content_{{$sub_content->id}}">
-                                                            <label for="content_{{$sub_content->id}}">{{$sub_content->title}}</label>
+                                                        <div class="form-group m-0">
+                                                            <label class="container-check form-check-label" for="content_{{$sub_content->id}}" style="padding: 10px 30px 0; font-size: 15px;">
+                                                                {{$sub_content->title}}
+                                                                <input class="form-check-input child" style="display: inline-block;" type="checkbox" @if ($sub_content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$sub_content->id}}" id="content_{{$sub_content->id}}">
+                                                                <span class="checkmark" style="top: 12px;"></span>
+                                                            </label>
+                                                            {{-- <input type="checkbox" @if ($sub_content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$sub_content->id}}" id="content_{{$sub_content->id}}">
+                                                            <label for="content_{{$sub_content->id}}">{{$sub_content->title}}</label> --}}
                                                         </div>
                                                     </li>
                                                 @endforeach
