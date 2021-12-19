@@ -126,5 +126,5 @@ return [
     'assigned_instructors'=>'Assigned Instructors',
     'completed_learners' => 'Completed Learners',
     'importQuestionsCourse'=>'Import Questions Course',
-
+    'import_questions_moodle'=>'Import Questions Moodle',
 ];

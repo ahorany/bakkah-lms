@@ -46,8 +46,7 @@
                             <li>
                                 <a href="{{route('user.messages.inbox',['type'=>'sent'])}}" class="d-flex">
                                     <span class="mx-1">
-                                        <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve" width="18px" style="vertical-align: text-bottom !important; fill: #6a6a6a;">
-
+                                        <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
                                             <path d="M4.4,46.85c0.51-1.03,1.39-1.53,2.43-1.93C33.1,34.91,59.35,24.89,85.6,14.86c1.09-0.42,2.1-0.46,3,0.39
                                                 c0.9,0.85,0.91,1.87,0.57,2.98C82.5,40.08,75.83,61.94,69.15,83.8c-0.68,2.24-2.46,2.82-4.35,1.42c-7.15-5.3-14.3-10.61-21.44-15.92
                                                 c-0.26-0.2-0.53-0.38-0.86-0.61c-0.26,0.51-0.51,0.96-0.74,1.42c-2.8,5.55-5.59,11.09-8.38,16.64c-0.67,1.33-1.66,1.9-2.83,1.66
@@ -67,7 +66,7 @@
                             <li>
                                 <a href="{{route('user.messages.inbox',['type'=>'inbox'])}}" class="d-flex">
                                     <span class="mx-1">
-                                        <svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve" width="18px" style="vertical-align: text-bottom !important; fill: #6a6a6a;">
+                                        <svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
                                             <g>
                                                 <path d="M93.14,87.2c-28.75,0-57.39,0-86.13,0c0-0.39,0-0.74,0-1.09c0-9-0.05-18.01,0.04-27.01c0.02-2.34,0.47-4.69,0.77-7.02
                                                     c0.55-4.26,1.14-8.52,1.71-12.78c0.64-4.76,1.28-9.53,1.91-14.29c0.5-3.79,1-7.58,1.5-11.36c0.04-0.32,0.1-0.65,0.16-1.02
