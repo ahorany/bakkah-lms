@@ -10,6 +10,8 @@
 import ZoomFrame from "./ZoomFrame.vue";
 
 export default {
+  watch: {
+  },
   name: "app",
   components: {
     ZoomFrame,
