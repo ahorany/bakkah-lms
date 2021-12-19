@@ -139,9 +139,12 @@
                                 @endphp
                                 <td>
                                     {{$data->result??0}}
+                                    @php
+                                        $width = number_format((($data->result / $data->total) * 100), 0, '.', ',');
+                                    @endphp
                                     <div class="progress">
-                                        <div class="mx-auto progress-bar " role="progressbar" style="width: {{($data->result != null) || ($data->total != null) ? number_format((($data->result / $data->total) * 100), 2, '.', ',') . '%' : 0}};" aria-valuenow="{{$data->result}}" aria-valuemin="0" aria-valuemax="100">
-                                            {{($data->result != null) || ($data->total != null) ? number_format((($data->result / $data->total) * 100), 0, '.', ','). '%' : 0}}
+                                        <div class="mx-auto progress-bar " role="progressbar" style="width: {{($data->result != null) || ($data->total != null) ? ($width > 0 ? ($width . '%') : 0)  : 0}};" aria-valuenow="{{$data->result}}" aria-valuemin="0" aria-valuemax="100">
+                                            {{($data->result != null) || ($data->total != null) ? ($width > 0 ? ($width . '%') : 0)  : 0}}
                                         </div>
                                     </div>
                                 </td>
@@ -175,7 +178,7 @@
                                 {{$data->unit_marks??0}}
                                 <?php  $progress = ($data->unit_marks / $data->total_marks) * 100; $progress = round($progress,2)  ?>
                                 <div class="progress">
-                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{$progress}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? number_format($progress, 0, '.', ',') . '%' : '0' }}</div>
+                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{($progress > 0) ? number_format($progress, 0, '.', ',') . '%' : '0'}}%;" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? number_format($progress, 0, '.', ',') . '%' : '0' }}</div>
                                 </div>
                             </td>
                             <td>
