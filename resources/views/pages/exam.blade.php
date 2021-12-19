@@ -15,8 +15,14 @@
         table-layout: fixed;
     }
 
-        table tr {
+    table tbody tr {
         background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        padding: .35em;
+    }
+
+    table thead tr{
+        background-color: #f0f0f0;
         border: 1px solid #ddd;
         padding: .35em;
     }
