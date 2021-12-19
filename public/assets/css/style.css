@@ -809,18 +809,18 @@ p.time-remaining svg {
   display: block;
 }
 
-.q-card .btn {
+.buttons .btn {
   border: 1px solid var(--mainColor);
   padding: 5px 20px;
   transition: all 0.15s ease-in-out;
 }
 
-.q-card .btn:hover {
+.buttons .btn:hover {
   background: var(--mainColor);
   color: #fff;
 }
 
-.q-card .navigation button {
+.buttons .navigation button {
   width: 35px;
   height: 35px;
   background: transparent;
@@ -835,11 +835,11 @@ p.time-remaining svg {
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 }
-.q-card .navigation button:hover {
+.buttons .navigation button:hover {
   background: #eee;
 }
 
-.q-card .navigation button svg {
+.buttons .navigation button svg {
   height: 15px;
 }
 ol.answers {

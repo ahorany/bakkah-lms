@@ -247,7 +247,7 @@
                                 </div>
 
                                 <div v-else-if="model_type != 'video'" class="modal-diff-content">
-                                    <div class="text-danger">Note: (Max Upload File Size: 100MB)</div>
+                                    <div class="text-danger">Note: (Max Upload File Size: 200MB)</div>
 
                                     <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
                                     <div v-show="'file' in errors">
@@ -274,7 +274,7 @@
                                                 <label class="label">
                                                     <i class="far fa-file-code"></i>
                                                     <span class="title">Add File</span>
-                                                    <div class="text-danger">Note: (Max Upload File Size: 100MB)</div>
+                                                    <div class="text-danger">Note: (Max Upload File Size: 200MB)</div>
                                                     <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
                                                 </label>
                                             </div>

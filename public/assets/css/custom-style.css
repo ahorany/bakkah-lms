@@ -159,6 +159,10 @@ em u {
 
 /* End Checkbox */
 
+
+.q-card {
+    margin-bottom: 10px;
+}
 .q-card h3 {
     font-size: 20px;
 }

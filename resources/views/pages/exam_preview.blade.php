@@ -133,54 +133,54 @@
 
                           </template>
 
-{{--                            <label class="custom-radio"> Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement.--}}
-{{--                                <input type="radio" name="radio">--}}
-{{--                                <span class="radio-mark"></span>--}}
-{{--                            </label>--}}
+                                    {{--                            <label class="custom-radio"> Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement.--}}
+                                    {{--                                <input type="radio" name="radio">--}}
+                                    {{--                                <span class="radio-mark"></span>--}}
+                                    {{--                            </label>--}}
 
-{{--                            <label class="custom-radio"> Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement.--}}
-{{--                                <input type="radio" name="radio">--}}
-{{--                                <span class="radio-mark"></span>--}}
-{{--                            </label>--}}
+                                    {{--                            <label class="custom-radio"> Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement.--}}
+                                    {{--                                <input type="radio" name="radio">--}}
+                                    {{--                                <span class="radio-mark"></span>--}}
+                                    {{--                            </label>--}}
 
-{{--                            <label class="custom-radio"> Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement.--}}
-{{--                                <input type="radio" name="radio">--}}
-{{--                                <span class="radio-mark"></span>--}}
-{{--                            </label>--}}
-
-                            <div class="d-flex algin-items-center justify-content-between mt-4">
-                                <template v-if="save_status && page_type == 'exam' ">
-                                   <button class="btn" @click.prevent="save()">Submit</button>
-                                </template>
-
-                                <div class="navigation">
-                                    <template v-if="prev_status">
-                                        <button  @click.prevent="prev()" class="prev">
-                                            <svg id="Group_92" data-name="Group 92" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                                            <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#8a8a8a"/>
-                                          </svg>
-                                        </button>
-                                    </template>
-
-                                    <template v-if="!save_status" >
-                                      <button @click.prevent="next()" class="next">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                                            <defs>
-                                              <linearGradient id="linear-gradient" x1="-1623.535" y1="17.172" x2="-1624.535" y2="17.172" gradientUnits="objectBoundingBox">
-                                                <stop offset="0" stop-color="#8a8a8a"/>
-                                                <stop offset="0.564" stop-color="#f7ba50"/>
-                                                <stop offset="1" stop-color="#f7b243"/>
-                                              </linearGradient>
-                                            </defs>
-                                            <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="url(#linear-gradient)"/>
-                                          </svg>
-                                    </button>
-                                    </template>
-                                </div>
-                            </div>
+                                    {{--                            <label class="custom-radio"> Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement.--}}
+                                    {{--                                <input type="radio" name="radio">--}}
+                                    {{--                                <span class="radio-mark"></span>--}}
+                                    {{--                            </label>--}}
 
                         </div>
                         </template>
+
+                        <div class="d-flex algin-items-center justify-content-between mt-4 buttons">
+                            <template v-if="save_status && page_type == 'exam' ">
+                               <button class="btn" @click.prevent="save()">Submit</button>
+                            </template>
+
+                            <div class="navigation">
+                                <template v-if="prev_status">
+                                    <button  @click.prevent="prev()" class="prev">
+                                        <svg id="Group_92" data-name="Group 92" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                                        <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#8a8a8a"/>
+                                      </svg>
+                                    </button>
+                                </template>
+
+                                <template v-if="!save_status" >
+                                  <button @click.prevent="next()" class="next">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                                        <defs>
+                                          <linearGradient id="linear-gradient" x1="-1623.535" y1="17.172" x2="-1624.535" y2="17.172" gradientUnits="objectBoundingBox">
+                                            <stop offset="0" stop-color="#8a8a8a"/>
+                                            <stop offset="0.564" stop-color="#f7ba50"/>
+                                            <stop offset="1" stop-color="#f7b243"/>
+                                          </linearGradient>
+                                        </defs>
+                                        <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="url(#linear-gradient)"/>
+                                      </svg>
+                                </button>
+                                </template>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-xl-3 col-lg-4">
