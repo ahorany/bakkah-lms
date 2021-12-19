@@ -10,6 +10,8 @@
 import ZoomFrame from "./ZoomFrame.vue";
 
 export default {
+  watch: {
+  },
   name: "app",
   data: function () {
       return {
@@ -22,7 +24,7 @@ export default {
   },
   created : function (){
       this.nickname = "khaled";
-      this.meetingId = "77015577000";
+      this.meetingId = "78589450816";
   }
 };
 </script>
