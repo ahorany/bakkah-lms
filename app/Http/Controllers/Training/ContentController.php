@@ -30,22 +30,23 @@ class ContentController extends Controller
         }
         return $contents;
     }
-public function save_content_order()
-{
-    $list_of_ids = request()->data;
-    $data = Content::select('id','order')->whereIn('id',$list_of_ids )->get();
 
-    foreach ($data as $d){
-        foreach ($list_of_ids as $index => $id){
-               if($id == $d->id){
-                   Content::where('id',$id )->update([
-                       'order' => $index +1
-                   ]);
-               }
+    public function save_content_order()
+    {
+        $list_of_ids = request()->data;
+        $data = Content::select('id','order')->whereIn('id',$list_of_ids )->get();
+
+        foreach ($data as $d){
+            foreach ($list_of_ids as $index => $id){
+                if($id == $d->id){
+                    Content::where('id',$id )->update([
+                        'order' => $index +1
+                    ]);
+                }
+            }
         }
+        return response()->json(['status' => true]);
     }
-    return response()->json(['status' => true]);
-}
 
     public function contents()
     {

@@ -20,13 +20,8 @@ export default {
    props: ['nickname','meetingId'],
 
   created : function (){
-<<<<<<< HEAD
-      this.nickname = "khaled";
-      this.meetingId = "78589450816";
-=======
       // this.nickname = "khaled";
       // this.meetingId = "74816836253";
->>>>>>> a1c612ffca17cbce6b3efded6c9261dd7a56636f
   }
 };
 </script>
