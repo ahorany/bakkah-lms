@@ -7,6 +7,7 @@ Route::group([
 ], function(){
 
 	Route::group(['prefix'=>'training', 'as'=>'training.'], function(){
+        Route::get('test/zoom','\App\Http\Controllers\Api\ZoomApiController@index')->name('zoom.index');
 
         Route::group([
             'middleware' => ['CheckInstructorType'],

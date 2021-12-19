@@ -22,6 +22,9 @@ Route::group([
 ], function() {
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {//'prefix'=>'user',
 
+        Route::get('zoom/join', [UserProfileController::class, 'join_zoom'])->name('join_zoom');
+        Route::get('zoom/meeting', [UserProfileController::class, 'meeting'])->name('meeting');
+
         Route::get('/dashboard', [UserProfileController::class, 'dashboard'])->name('dashboard');
         Route::get('/home', [UserProfileController::class, 'home'])->name('home');
         Route::get('/info', [UserProfileController::class, 'info'])->name('info');

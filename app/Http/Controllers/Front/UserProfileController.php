@@ -38,6 +38,14 @@ class UserProfileController extends Controller
         ]]);
     }
 
+    public function join_zoom(){
+        return view('pages.zoom.join');
+    }
+
+    public function meeting(){
+        return view('pages.zoom.meeting');
+    }
+
     public function attempt_details ($user_exams_id){
         $exam = UserExam::whereId($user_exams_id)
             ->where('user_id',\auth()->id())
