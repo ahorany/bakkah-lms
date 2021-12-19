@@ -146,7 +146,7 @@ public function save_content_order()
         }else{
             $mimes ='';
             switch ($type){
-                case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:100000' ; break;
+                case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:200000' ; break;
                 case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
                 case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,doc,docx,xls,jpeg,png'; break;
                 case 'scorm': $mimes = '|mimes:zip'; break;
@@ -264,7 +264,7 @@ public function save_content_order()
 
         $mimes ='';
         switch ($type){
-            case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:100000' ; break;
+            case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:200000' ; break;
             case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
             case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,doc,docx,xls,jpeg,png'; break;
             case 'scorm': $mimes = '|mimes:zip'; break;
