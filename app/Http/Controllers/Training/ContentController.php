@@ -16,7 +16,20 @@ use Illuminate\Support\Facades\Validator;
 class ContentController extends Controller
 {
 
-
+    public function reset_order_contents($course_id){
+        $i = 0;
+        $contents = Content::where('course_id',$course_id)
+            ->whereNull('parent_id')
+            ->orderBy('order')
+            ->get();
+        foreach ($contents as $content){
+            Content::where('course_id',$course_id)->where('id',$content->id)->update([
+                "order" => $i
+            ]);
+            $i++;
+        }
+        return $contents;
+    }
 public function save_content_order()
 {
     $list_of_ids = request()->data;
@@ -71,10 +84,14 @@ public function save_content_order()
             return response()->json(['errors' => $validator->errors()]);
         }
 
+        $course_id = request()->course_id;
+        $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE course_id = $course_id  AND parent_id IS NULL"));
+
         $content = Content::create([
             'title'      => request()->title,
             'course_id'  =>request()->course_id,
             'post_type'  => 'section',
+            'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
         ]);
 
         $content->details()->create([

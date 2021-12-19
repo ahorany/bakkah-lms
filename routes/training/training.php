@@ -98,6 +98,7 @@ Route::group([
         Route::post('/add_content', 'ContentController@add_content')->name('add_content');
         Route::post('/update_content', 'ContentController@update_content')->name('update_content');
         Route::get('/delete_content', 'ContentController@delete_content')->name('delete_content');
+        Route::get('/reset_order_contents/{course_id}', 'ContentController@reset_order_contents')->name('reset_order_contents');
 
 
         Route::get('/add_questions/{exam_id}', 'QuestionController@add_questions')->name('add_questions');

@@ -38,12 +38,22 @@ class UserProfileController extends Controller
         ]]);
     }
 
+
+
     public function join_zoom(){
         return view('pages.zoom.join');
     }
 
     public function meeting(){
-        return view('pages.zoom.meeting');
+       $nickname = session()->get('nickname');
+       $meetingId = session()->get('meetingId');
+        return view('pages.zoom.meeting',compact('nickname','meetingId'));
+    }
+
+    public function add_join_zoom(Request $request){
+        $nickname = $request->nickname;
+        $meetingId = $request->meetingId;
+        return redirect(route("user.meeting"))->with(['nickname' => $nickname , 'meetingId' => $meetingId]);
     }
 
     public function attempt_details ($user_exams_id){
@@ -144,7 +154,6 @@ class UserProfileController extends Controller
 
 
         $arr =  $this->nextAndPreviouseQuery($exam->course_id,$exam->id,$exam->order,$exam->parent_id,$exam->section->order);
-
         $previous = $arr[0];
         $next = $arr[1];
 

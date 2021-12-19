@@ -23,6 +23,7 @@ Route::group([
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {//'prefix'=>'user',
 
         Route::get('zoom/join', [UserProfileController::class, 'join_zoom'])->name('join_zoom');
+        Route::post('zoom/add/join', [UserProfileController::class, 'add_join_zoom'])->name('add.join_zoom');
         Route::get('zoom/meeting', [UserProfileController::class, 'meeting'])->name('meeting');
 
         Route::get('/dashboard', [UserProfileController::class, 'dashboard'])->name('dashboard');

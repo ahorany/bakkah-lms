@@ -14,7 +14,7 @@
 <body>
 <div id="app">
     {{--           <example-component></example-component>--}}
-    <meeting></meeting>
+    <meeting nickname="jjjj" meetingId="73859643403"></meeting>
 </div>
 
 <script src="{{CustomAsset('js/app.js')}}"></script>
