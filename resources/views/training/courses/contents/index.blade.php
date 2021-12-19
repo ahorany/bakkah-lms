@@ -295,9 +295,9 @@
                                 </div>
 
                                 <div v-if="model_type != 'section'" class="form-group form-check child">
-                                    <label class="container-check form-check-label" for="1" style="padding: 25px 30px 0; font-size: 15px;">
+                                    <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
                                         {{__('admin.Enabeld Status')}}
-                                        <input class="form-check-input child" style="display: inline-block;" v-model="status" id="1" type="checkbox" name="status">
+                                        <input class="form-check-input child" style="display: inline-block;" v-model="status" id="enabled" type="checkbox" name="status">
                                         <span class="checkmark" style="top: 26px;"></span>
                                     </label>
 

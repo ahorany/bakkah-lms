@@ -190,39 +190,6 @@
             </div>
         </div>
 
-<<<<<<< HEAD
-
-        <div class="row">
-            <div class="col-12 mt-5">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">title</th>
-                        <th scope="col">count</th>
-                        <th scope="col">result</th>
-                        <th scope="col">total</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-                    @foreach($units_rprt as $data)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$data->title}}</td>
-                        <td>{{$data->count}}</td>
-                        <td>{{$data->result}}</td>
-                        <td>{{$data->total}}</td>
-
-                    </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-=======
->>>>>>> 3fc1aa3af8ac1c75f7edaa280897e7064b196636
     </div>
 @endsection
 
