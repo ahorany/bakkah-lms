@@ -80,13 +80,13 @@ class UserProfileController extends Controller
                 ) as m
                 group by m.id
                 union
-            SELECT  ' ' as id, 'other' as title,sum(uq.mark) as result,count(uq.question_id) as count,sum(q.mark)  as total
+            SELECT  ' ' as id, 'other' as title,sum(uq.mark) as result,count(uq.question_id) as count,sum(q.mark)
             from user_questions uq  join user_exams ue on ue.id = uq.user_exam_id
             join questions q on q.id = uq.question_id
             where  ue.id = $user_exams_id and uq.question_id not in (select question_id from question_units)
             ") ;
 
-
+        // dd( $units_rprt);
     // dd($units_rprt);
         return view('pages.exam_details',compact('unit_marks','exam_title','exam_id','units_rprt'));
 
