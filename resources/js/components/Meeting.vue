@@ -11,18 +11,15 @@ import ZoomFrame from "./ZoomFrame.vue";
 
 export default {
   name: "app",
-  data: function () {
-      return {
-          nickname: '',
-          meetingId: '',
-      }
-  },
   components: {
     ZoomFrame,
   },
+
+   props: ['nickname','meetingId'],
+
   created : function (){
-      this.nickname = "khaled";
-      this.meetingId = "77015577000";
+      // this.nickname = "khaled";
+      // this.meetingId = "74816836253";
   }
 };
 </script>
