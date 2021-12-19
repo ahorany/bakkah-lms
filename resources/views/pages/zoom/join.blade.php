@@ -31,7 +31,8 @@
         <div class="join-header">
             <h2>Join Meeting</h2>
         </div>
-        <form action="">
+        <form method="post" action="{{route("user.add.join_zoom")}}">
+            @csrf
             <div>
                 <div class="form-item">
                     <label for="alias">Alias: </label>

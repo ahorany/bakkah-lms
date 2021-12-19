@@ -4,21 +4,24 @@
       <div class="join-header">
         <h2>Join Meeting</h2>
       </div>
-      <div>
-        <div class="form-item">
-          <label for="alias">Alias: </label>
-          <input  type="text" name="nickname">
-        </div>
+        <form action="{{}}">
+            <div>
+                <div class="form-item">
+                    <label for="alias">Alias: </label>
+                    <input  type="text" name="nickname">
+                </div>
 
-        <div class="form-item">
-          <label for="meetingId">Meeting ID: </label>
-          <input  type="text" name="meetingId">
-        </div>
+                <div class="form-item">
+                    <label for="meetingId">Meeting ID: </label>
+                    <input  type="text" name="meetingId">
+                </div>
 
-        <div class="form-item">
-          <button>Join Meeting</button>
-        </div>
-      </div>
+                <div class="form-item">
+                    <button>Join Meeting</button>
+                </div>
+            </div>
+        </form>
+
     </div>
   </div>
 </template>
