@@ -119,15 +119,15 @@
 
                 @endisset
 
-                @if($content->post_type == 'video' && $content->url)
-                    <?php
-                    if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
-                        $video_id = $match[1]??null;
-                    }
-                    ?>
-                    <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
+{{--                @if($content->post_type == 'video' && $content->url)--}}
+{{--                    <?php--}}
+{{--                    if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {--}}
+{{--                        $video_id = $match[1]??null;--}}
+{{--                    }--}}
+{{--                    ?>--}}
+{{--                    <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>--}}
 
-                @endif
+{{--                @endif--}}
             </div>
         </div>
     </div>
