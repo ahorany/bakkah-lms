@@ -148,4 +148,5 @@ return [
     'course_code' => 'Course Code',
     'delivery_methods' => 'Delivery Methods',
     'importQuestionsCourse'=>'Import Questions Course',
+    'import_questions_moodle'=>'Import Questions Moodle',
 ];
