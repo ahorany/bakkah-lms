@@ -15,6 +15,8 @@
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Front\UserProfileController;
+Route::get('/video/{secret}', 'VideoController@find')->name("get_file");
+Route::get('/video/secret/{secret}', 'VideoController@playVideoWithSecret')->name('video_secret')->middleware('signed');
 
 Route::group([
     'middleware' => 'web',

@@ -5,6 +5,19 @@
 @endsection
 
 @section('content')
+    <style>
+        video::-internal-media-controls-download-button {
+            display:none;
+        }
+
+        video::-webkit-media-controls-enclosure {
+            overflow:hidden;
+        }
+
+        video::-webkit-media-controls-panel {
+            width: calc(100% + 30px); /* Adjust as needed */
+        }
+    </style>
     <?php
     if( !is_null($next)){
         if( $next->post_type != 'exam' ) {
@@ -77,9 +90,10 @@
             <div class="card-body p-30">
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
-                        <video controls class="w-100">
-                            <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">
-                        </video>
+{{--                        <video controls class="w-100" controlsList="nodownload">--}}
+{{--                            <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">--}}
+{{--                            <source src="{{route("get_file",["v" => $random_key])}}">--}}
+{{--                        </video>--}}
                     @elseif($content->post_type == 'audio' )
                         <audio controls>
                             <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
@@ -119,6 +133,11 @@
 
                 @endisset
 
+                    <video class="video" controls controlsList="nodownload" id="video_player">
+                        <source id="update_video_source" src="" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+
 {{--                @if($content->post_type == 'video' && $content->url)--}}
 {{--                    <?php--}}
 {{--                    if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {--}}
@@ -132,20 +151,68 @@
         </div>
     </div>
 @endsection
-{{--
-@section('script')
+
+@section("script")
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
-        function show_prev() {
-            var x = document.getElementById("title-prev").style.display = "inline-block";
-        }
-        function show_next() {
-            var x = document.getElementById("title-next").style.display = "inline-block";
-        }
-        function hide_prev() {
-            var x = document.getElementById("title-prev").style.display = "none";
-        }
-        function hide_next() {
-            var x = document.getElementById("title-next").style.display = "none";
-        }
+        // Select the source and video tags
+        const player = document.querySelector("#update_video_source");
+        const vid = player.parentElement;
+
+        let video_id = 222;  // Getting the selected video id, it depends on your code
+        let user_id = 13023; // It depends on your code too
+
+        fetch('{{url("video")}}/' +
+            video_id +
+            "&&" +
+            user_id,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        ) .then((x) => x.json())
+            .then( (x) => {
+                player.setAttribute("src", x.url);
+                vid.load();
+            })
+
+
+        //////////////
+
+        vid.addEventListener("error", ()=>{
+            fetch(
+                "/video" +
+                '{{url("video")}}/' +
+                "&&" +
+                user_id,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+                .then((x) => x.json())
+                .then((x) => {
+                    let ct = vid.currentTime;
+                    player.setAttribute("src", x.url);
+                    vid.load();
+                    vid.addEventListener(
+                        "loadedmetadata",
+                        function() {
+                            this.currentTime = ct;
+                        },
+                        false
+                    );
+                    vid.play();
+                });
+        });
     </script>
-@endsection --}}
+
+@endsection
+
+

@@ -510,7 +510,34 @@ class UserProfileController extends Controller
         $next = ($next[0]??null);
         $previous = ($previous[0]??null);
 
-        return view('pages.file',compact('content','previous','next'));
+        $random_key = "";
+        if( $content->post_type == 'video' ){
+            $random_key = uniqid();
+            session()->put("$random_key",CustomAsset('upload/files/videos/'.$content->upload->file));
+        }
+
+        return view('pages.file',compact('content','previous','next','random_key'));
+    }
+
+    public function get_file(){
+
+//        if (\request()->has("v") &&  session()->has("v")){
+//        $pieces = explode("/", session(\request()->v));
+//
+//        return session(\request()->v);
+            $file = session(\request()->v);
+            session()->forget("v");
+
+//            dd(!file_exists($file));
+            if( $file===''){
+                dd("dddddd");
+                abort(404);
+            }
+            return  readfile($file);
+//        }
+//
+//        abort(404);
+
     }
 
 
