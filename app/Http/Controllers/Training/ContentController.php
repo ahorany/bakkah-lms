@@ -290,16 +290,58 @@ class ContentController extends Controller
         }
 
         if ($mimes != ''){
-            $file =  'required_without:url';
-            if(\request()->hasFile('file')){
-                $file = 'required_without:url|file'.$mimes;
+            if($type == "video"){
+                $file = "";
+                $content_id = request()->content_id;
+                $sql = "SELECT *  FROM `uploads` WHERE `uploadable_id` = $content_id AND `uploadable_type` LIKE '%Content%'";
+                $content_file_from_upload =  DB::select(DB::raw($sql));
+
+                if(\request()->has("url") && \request()->url != "" && \request()->url != null){
+                   if(count($content_file_from_upload) > 0){
+                       $file = "";
+                   }
+
+                    $rules = [
+                        'title'      => "required|string",
+                        'url'        =>   "required_without:file",
+                        'file'       =>   $file,
+                    ];
+                }else{
+                    if(count($content_file_from_upload) == 0){
+                        $file =  'required_without:url';
+                        if(\request()->hasFile('file')){
+                           $file = 'required_without:url|file'.$mimes;
+                        }
+
+                        $rules = [
+                            'title'      => "required|string",
+                            'url'        =>   "required_without:file",
+                            'file'       =>   $file,
+                        ];
+                    }else{
+                        $rules = [
+                            'title'      => "required|string",
+                            'url'        =>   "",
+                            'file'       =>   $file,
+                        ];
+                    }
+                }
+
+
+
+            }else{
+                $file =  'required_without:url';
+                if(\request()->hasFile('file')){
+                    $file = 'required_without:url|file'.$mimes;
+                }
+
+                $rules = [
+                    'title'      => "required|string",
+                    'url'        =>   "required_without:file",
+                    'file'      => $file,
+                ];
             }
 
-            $rules = [
-                'title'      => "required|string",
-                'url'        =>   "required_without:file",
-                'file'      => $file,
-            ];
         }else{
 
             $start_date = '';

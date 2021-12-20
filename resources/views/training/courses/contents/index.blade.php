@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-md-2 col-2 text-right">
                         <div class="back">
-                            <a href="{{route('training.reset_order_contents',[$course->id])}}" class="cyan mb-1">reset order contents</a>
+{{--                            <a href="{{route('training.reset_order_contents',[$course->id])}}" class="cyan mb-1">reset order contents</a>--}}
                             <a href="{{route('training.courses.index')}}" class="cyan mb-1">Course List</a>
                             <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                         </div>
@@ -930,7 +930,21 @@ $(function() {
             },
 
             validateVideo : function (extensions_array) {
-                if(this.url && this.file){
+		        if(!this.file_url && (this.url == null || this.url == '') &&  (this.file == null || this.file == '')){
+                        if(this.title == null || this.title == ''){
+                            this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
+                        }else{
+                            this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
+                        }
+                        return true;
+                }else if(this.file_url && ((this.url == null || this.url == '') || (this.file == null || this.file == ''))){
+                        if(this.title == null || this.title == ''){
+                            this.errors =  {'title': 'The title is required'};
+                            return true
+                        }else{
+                            return false
+                        }
+                }else if(this.url && this.file){
                     if(this.title == null || this.title == ''){
                         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
                     }else{
@@ -944,14 +958,40 @@ $(function() {
                         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
                     }
                     return true;
-                }else if(this.url){
-                    if(this.title == null || this.title == ''){
-                        this.errors =  {'title': 'The title is required'};
-                        return true;
-                    }
                 }else if(this.file){
                     return this.validateContentWithFile(extensions_array);
                 }
+
+
+		        // if(this.file_url && ((this.url == null || this.url == '') || (this.file == null || this.file == ''))){
+                //     if(this.title == null || this.title == ''){
+                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
+                //     }else{
+                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
+                //     }
+                //     return true;
+                // }else if(this.url && this.file){
+                //     if(this.title == null || this.title == ''){
+                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
+                //     }else{
+                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
+                //     }
+                //     return true;
+                // }else if( (this.url == null || this.url == '') && (this.file == null || this.file == '')){
+                //     if(this.title == null || this.title == ''){
+                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
+                //     }else{
+                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
+                //     }
+                //     return true;
+                // }else if(this.url){
+                //     if(this.title == null || this.title == ''){
+                //         this.errors =  {'title': 'The title is required'};
+                //         return true;
+                //     }
+                // }else if(this.file){
+                //     return this.validateContentWithFile(extensions_array);
+                // }
                 return false;
             },
 
