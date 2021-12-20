@@ -38,7 +38,9 @@ class RolePathController extends Controller
 
     private function courseContent($course_id){
         $course = Course::where('id',$course_id)->with(['contents' => function($q) use ($course_id){
-            return $q->where('course_id',$course_id)->with('contents');
+            return $q->where('course_id',$course_id)->with(['contents' => function($q){
+                $q->orderBy("order");
+            }])->orderBy("order");
         }])->first();
 
         return $course;
