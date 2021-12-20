@@ -161,7 +161,7 @@
         const player = document.querySelector("#update_video_source");
         const vid = player.parentElement;
 
-        let video_id = 222;  // Getting the selected video id, it depends on your code
+        let video_id = 17;  // Getting the selected video id, it depends on your code
         let user_id = 13023; // It depends on your code too
 
         fetch('{{url("video")}}/' +
