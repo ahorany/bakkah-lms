@@ -90,10 +90,10 @@
             <div class="card-body p-30">
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
-{{--                        <video controls class="w-100" controlsList="nodownload">--}}
-{{--                            <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}">--}}
-{{--                            <source src="{{route("get_file",["v" => $random_key])}}">--}}
-{{--                        </video>--}}
+                        <video class="video" controls controlsList="nodownload" id="video_player">
+                            <source id="update_video_source" src="" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
                     @elseif($content->post_type == 'audio' )
                         <audio controls>
                             <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
@@ -133,10 +133,7 @@
 
                 @endisset
 
-                    <video class="video" controls controlsList="nodownload" id="video_player">
-                        <source id="update_video_source" src="" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
+
 
 {{--                @if($content->post_type == 'video' && $content->url)--}}
 {{--                    <?php--}}
@@ -161,8 +158,8 @@
         const player = document.querySelector("#update_video_source");
         const vid = player.parentElement;
 
-        let video_id = 222;  // Getting the selected video id, it depends on your code
-        let user_id = 13023; // It depends on your code too
+        let video_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code
+        let user_id = {{ auth()->id() }} // It depends on your code too
 
         fetch('{{url("video")}}/' +
             video_id +
@@ -187,6 +184,7 @@
             fetch(
                 "/video" +
                 '{{url("video")}}/' +
+                video_id +
                 "&&" +
                 user_id,
                 {
