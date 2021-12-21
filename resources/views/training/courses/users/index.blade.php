@@ -43,6 +43,18 @@
         <div class="card p-3 mb-3">
             <div class="row">
 
+                <template>
+                    <div style="direction: ltr;" class="alert alert-success alert-dismissible" :class="{'d-none': !alert}" role="alert"><!-- fade show-->
+                        <div>
+                            <strong v-text="msg_alert"></strong> Updated
+                        </div>
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </template>
+
                 <div class="col-md-10 col-10">
                     @include('training.courses.contents.header',['course_id' => $course->id, 'users' =>true])
                 </div>
@@ -178,7 +190,6 @@
         </div>
              @endif
            </template>
-
     </div>
 @endsection
 
@@ -202,6 +213,8 @@
             users_expire_date    : {} ,
             add_users : {},
             type_user : 'trainee',
+            alert:false,
+            msg_alert: ''
         },
         created(){
 		    let self = this
@@ -322,6 +335,19 @@
                             console.log(response)
                             // self.search_users = response.data.users;
                             // $('#ContentModal').modal('hide')
+
+                            let user = self.course.users.filter(function (user,index) {
+                                return user.id == user_id;
+                            })
+
+                            console.log(user);
+                            self.msg_alert = user[0].email
+
+                            self.alert = true;
+                            setTimeout(
+                                function() {
+                                    self.alert = false;
+                                }, 2000);
 
                         })
                         .catch(e => {
