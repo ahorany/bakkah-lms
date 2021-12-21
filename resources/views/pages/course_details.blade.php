@@ -19,6 +19,15 @@
         }
     }
     ?>
+
+    <div class="dash-header course_info">
+        @include('pages.templates.breadcrumb', [
+            'course_id'=>$course->id,
+            'course_title'=>$course->trans_title,
+        ])
+        <br>
+    </div>
+
     <div class="course_details">
         <div class="dash-header course-header d-flex align-items-md-center flex-column flex-md-row">
             <div class="text-center course-image w-30 mb-4 mb-md-0">
@@ -48,10 +57,10 @@
             </div>
             <div class="mx-md-4 course_info">
 
-                @include('pages.templates.breadcrumb', [
+                {{-- @include('pages.templates.breadcrumb', [
                     'course_id'=>$course->id,
                     'course_title'=>$course->trans_title,
-                ])
+                ]) --}}
 
                 <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
 
@@ -149,7 +158,7 @@
                 <div class="col-lg-4 col-xl-3">
                     <div class="card h-100 justify-content-center align-items-center p-3 video-btn">
                         <video width="100%" oncontextmenu="return false;" controls="controls" controlslist="nodownload" preload="metadata" class="embed-responsive-item">
-                            <source src="{{CustomAsset('upload/video/'.$video->file)}}#t=0.5" type="video/mp4">
+                            <source src="{{CustomAsset('upload/video/'.$video->file)}}#t=0.2" type="video/mp4">
                         </video>
                         {{-- <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"
                                 viewBox="0 0 26.818 30.542">
@@ -339,33 +348,29 @@ console.log(e)
 });
 </script>
 
+@if($video)
+    <script>
+    var btn = document.querySelector('.video-btn');
+    var modal = document.querySelector('.modal');
+    var content = document.querySelector('.modal-content');
+    var close = document.querySelector('.modal-close');
 
+    btn.onclick = e => {
+    modal.querySelector('video').play();
+    modal.classList.add("show");
+    };
 
+    close.onclick = e => {
+    modal.querySelector('video').pause();
+    modal.classList.remove("show");
+    };
 
+    modal.onclick = e => {
+    modal.querySelector('video').pause();
+    modal.classList.remove("show");
+    };
 
-
-
-<script>
-var btn = document.querySelector('.video-btn');
-var modal = document.querySelector('.modal');
-var content = document.querySelector('.modal-content');
-var close = document.querySelector('.modal-close');
-
-btn.onclick = e => {
-modal.querySelector('video').play();
-modal.classList.add("show");
-};
-
-close.onclick = e => {
-modal.querySelector('video').pause();
-modal.classList.remove("show");
-};
-
-modal.onclick = e => {
-modal.querySelector('video').pause();
-modal.classList.remove("show");
-};
-
-content.onclick = e => e.stopPropagation()
-</script>
+    content.onclick = e => e.stopPropagation()
+    </script>
+@endif
 @endsection
