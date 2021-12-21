@@ -1,0 +1,200 @@
+@font-face {
+    font-family: 'Lato-Regular';
+    src: url(../../Lato/Lato-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Lato-Bold';
+    src: url(../../Lato/Lato-Bold.ttf);
+}
+
+body {
+    font-family: 'Lato-Regular';
+}
+nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
+    height: 78px !important;
+    border: none !important;
+}
+.nav-sidebar>.nav-item>.nav-link:focus,
+.nav-sidebar>.nav-item.menu-open>.nav-link:focus{
+    color: #c2c7d0 !important;
+}
+
+[class*=sidebar-dark-] .nav-sidebar>.nav-item>.nav-link:focus{
+    color: #26c6da !important;
+}
+[class*=sidebar-dark-] .nav-sidebar>.nav-item.menu-open>.nav-link{
+    color: #26c6da !important;
+}
+[class*=sidebar-dark-] .nav-sidebar>.nav-item.menu-open>.nav-link.active{
+    color: #fff !important;
+}
+
+/* [class*=sidebar-dark-] .nav-sidebar>.nav-item:hover>.nav-link{
+    
+} */
+.content-wrapper {
+    background: #eef5f9 !important;
+}
+aside.main-sidebar.sidebar-dark-primary.elevation-4 {
+    background: #fff;
+    box-shadow: none !important;
+}
+.nav-sidebar>.nav-item.has-treeview>.nav-link:hover{
+    color:#26c6da;
+}
+.nav-sidebar>.nav-item.has-treeview>.nav-link.active{
+    background: #26c6da;
+}
+.nav-sidebar>.nav-item.has-treeview>.nav-link.active:hover{
+    color: #fff;
+}
+.nav-sidebar>.nav-item.has-treeview>.nav-treeview>li a:hover{
+    color: #26c6da;
+}
+/* .nav-sidebar li.menu-open>a.nav-link.active {
+    background: #26c6da !important;
+    font-weight: bold;
+}
+.nav-sidebar li.menu-open>ul li a.active {
+    font-weight: bold;
+}
+.nav-sidebar li.nav-item.has-treeview>a.active {
+    background: #26c6da !important;
+}
+.nav-sidebar li.nav-item.has-treeview>a:hover{
+    color: #26c6da !important;
+}
+.nav-sidebar li.menu-open>ul li a.active:hover {
+    color: #000 !important;
+} */
+
+
+.course_info {
+    display: flex;
+    justify-content: space-between;
+    background: #7896b4;
+    padding: 10px 20px;
+    color: #fff;
+    margin-bottom: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.course_info button {
+    color: #fff;
+    padding: 0 10px;
+    border: 1px solid #fff;
+}
+.course_info button:hover{
+    background: #fff;
+    color:#000;
+}
+.course_info label {
+    text-transform: capitalize;
+    font-size: 20px;
+    font-weight: 500 !important;
+    letter-spacing: -1px;
+    word-spacing: 3px;
+}
+.card {
+    margin-bottom: 10px;
+    border-radius: 0 !important;
+    /* border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important; */
+}
+table tbody tr .buttons button,
+table tbody tr .buttons a {
+    border-radius: 50%;
+    margin: 0 5px;
+}
+table tbody tr:hover {
+    background: #f4f4f4;
+}
+table th {
+    background: ghostwhite;
+    border-top: none !important;
+}
+table tr {
+    height: 60px !important;
+}
+table {
+    margin: 0px !important;
+}
+/*****************custom checkbox*******************/
+  input[type="checkbox"] { display: none; }
+
+  input[type="checkbox"] + label {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 20px;
+    font: 14px/20px 'Open Sans', Arial, sans-serif;
+    color: #000;
+    cursor: pointer;
+  }
+
+  input[type="checkbox"] + label:last-child { margin-bottom: 0; }
+
+  input[type="checkbox"] + label:before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: .6;
+    -webkit-transition: all .12s, border-color .08s;
+    transition: all .12s, border-color .08s;
+  }
+
+  input[type="checkbox"]:checked + label:before {
+    width: 10px;
+    top: -5px;
+    left: 5px;
+    border-radius: 0;
+    opacity: 1;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  /***************modal*****************/
+.modal-header {
+    background: #7896b4;
+    color: #fff;
+}
+button.close span {
+    color: #fff;
+}
+#pills-tab li.nav-item {
+    margin-right: 10px !important;
+}
+#pills-tab li.nav-item a:hover {
+    color: #fff;
+}
+.modal-diff-content {
+    margin: 10px 0;
+}
+/*.progress{*/
+/*    display: none;*/
+/*}*/
+/*********************custom file************************/
+#pills-tabContent input[type=file] {
+    outline: 0;
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+    display: none;
+  }
+ #pills-tabContent .label {
+    width: 100%;
+    border: 2px dashed gray;
+    border-radius: 5px;
+    display: block;
+    padding: 2px;
+    transition: border 300ms ease;
+    cursor: pointer;
+    text-align: center;
+  }
