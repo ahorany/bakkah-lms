@@ -65,7 +65,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
 <script>
-<<<<<<< HEAD
     document.querySelector('html,body').onclick = function () {
         document.querySelectorAll('.has-dropdown .dropdown').forEach((el) => {
             if(!el.classList.contains('d-none')){
@@ -73,7 +72,6 @@
             }
         })
     }
-=======
 
     $(document).ready(function(){
         $('[type=reset]').click(function(){
@@ -81,7 +79,6 @@
         });
     });
 
->>>>>>> 8638e0b42cc0adc1a236d0ac8fe05f8c121229c7
 </script>
 @yield('script')
 
