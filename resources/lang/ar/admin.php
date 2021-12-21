@@ -116,7 +116,7 @@ return [
     'test'=>'Test',
     'date'=>'Date',
     'exam_mark'=>'Exam Mark',
-    'exam_pass'=>'Exam Pass Mark',
+    'exam_pass'=>'Exam Pass Score',
     'attempt_mark'=>'Attempt Mark',
     'result'=>'Result',
     'assigned_learners'=>'Assigned Learners',

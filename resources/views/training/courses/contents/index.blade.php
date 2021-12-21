@@ -164,7 +164,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="modal-diff-content form-group">
-                                                <label class="m-0">Attempt Count</label>
+                                                <label class="m-0">Allow Repetitions</label>
                                                 <input type="number" v-model="attempt_count" name="attempt_count" class="form-control" placeholder="attempt_count">
                                                 <div v-show="'attempt_count' in errors">
                                                     <span style="color: red;font-size: 13px">@{{ errors.attempt_count }}</span>
@@ -201,7 +201,7 @@
 
                                         <div class="col-md-6 col-12">
                                             <div class="modal-diff-content form-group">
-                                                <label class="m-0">Pass Mark (%)</label>
+                                                <label class="m-0">Pass Score (%)</label>
                                                 <input min="0" max="100" type="number" v-model="pass_mark" name="pass_mark" class="form-control" placeholder="pass mark">
                                                 <div v-show="'pass_mark' in errors">
                                                     <span style="color: red;font-size: 13px">@{{ errors.pass_mark }}</span>
