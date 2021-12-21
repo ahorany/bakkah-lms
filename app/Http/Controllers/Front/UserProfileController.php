@@ -38,12 +38,22 @@ class UserProfileController extends Controller
         ]]);
     }
 
+
+
     public function join_zoom(){
         return view('pages.zoom.join');
     }
 
     public function meeting(){
-        return view('pages.zoom.meeting');
+       $nickname = session()->get('nickname');
+       $meetingId = session()->get('meetingId');
+        return view('pages.zoom.meeting',compact('nickname','meetingId'));
+    }
+
+    public function add_join_zoom(Request $request){
+        $nickname = $request->nickname;
+        $meetingId = $request->meetingId;
+        return redirect(route("user.meeting"))->with(['nickname' => $nickname , 'meetingId' => $meetingId]);
     }
 
     public function attempt_details ($user_exams_id){
@@ -144,7 +154,6 @@ class UserProfileController extends Controller
 
 
         $arr =  $this->nextAndPreviouseQuery($exam->course_id,$exam->id,$exam->order,$exam->parent_id,$exam->section->order);
-
         $previous = $arr[0];
         $next = $arr[1];
 
@@ -501,7 +510,34 @@ class UserProfileController extends Controller
         $next = ($next[0]??null);
         $previous = ($previous[0]??null);
 
-        return view('pages.file',compact('content','previous','next'));
+        $random_key = "";
+        if( $content->post_type == 'video' ){
+            $random_key = uniqid();
+            session()->put("$random_key",CustomAsset('upload/files/videos/'.$content->upload->file));
+        }
+
+        return view('pages.file',compact('content','previous','next','random_key'));
+    }
+
+    public function get_file(){
+
+//        if (\request()->has("v") &&  session()->has("v")){
+//        $pieces = explode("/", session(\request()->v));
+//
+//        return session(\request()->v);
+            $file = session(\request()->v);
+            session()->forget("v");
+
+//            dd(!file_exists($file));
+            if( $file===''){
+                dd("dddddd");
+                abort(404);
+            }
+            return  readfile($file);
+//        }
+//
+//        abort(404);
+
     }
 
 

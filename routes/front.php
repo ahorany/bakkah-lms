@@ -15,6 +15,8 @@
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Front\UserProfileController;
+Route::get('/video/{secret}', 'VideoController@find')->name("get_file");
+Route::get('/video/secret/{secret}', 'VideoController@playVideoWithSecret')->name('video_secret')->middleware('signed');
 
 Route::group([
     'middleware' => 'web',
@@ -23,6 +25,7 @@ Route::group([
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {//'prefix'=>'user',
 
         Route::get('zoom/join', [UserProfileController::class, 'join_zoom'])->name('join_zoom');
+        Route::post('zoom/add/join', [UserProfileController::class, 'add_join_zoom'])->name('add.join_zoom');
         Route::get('zoom/meeting', [UserProfileController::class, 'meeting'])->name('meeting');
 
         Route::get('/dashboard', [UserProfileController::class, 'dashboard'])->name('dashboard');

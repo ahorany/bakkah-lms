@@ -16,23 +16,37 @@ use Illuminate\Support\Facades\Validator;
 class ContentController extends Controller
 {
 
-
-public function save_content_order()
-{
-    $list_of_ids = request()->data;
-    $data = Content::select('id','order')->whereIn('id',$list_of_ids )->get();
-
-    foreach ($data as $d){
-        foreach ($list_of_ids as $index => $id){
-               if($id == $d->id){
-                   Content::where('id',$id )->update([
-                       'order' => $index +1
-                   ]);
-               }
+    public function reset_order_contents($course_id){
+        $i = 0;
+        $contents = Content::where('course_id',$course_id)
+            ->whereNull('parent_id')
+            ->orderBy('order')
+            ->get();
+        foreach ($contents as $content){
+            Content::where('course_id',$course_id)->where('id',$content->id)->update([
+                "order" => $i
+            ]);
+            $i++;
         }
+        return $contents;
     }
-    return response()->json(['status' => true]);
-}
+
+    public function save_content_order()
+    {
+        $list_of_ids = request()->data;
+        $data = Content::select('id','order')->whereIn('id',$list_of_ids )->get();
+
+        foreach ($data as $d){
+            foreach ($list_of_ids as $index => $id){
+                if($id == $d->id){
+                    Content::where('id',$id )->update([
+                        'order' => $index +1
+                    ]);
+                }
+            }
+        }
+        return response()->json(['status' => true]);
+    }
 
     public function contents()
     {
@@ -71,10 +85,14 @@ public function save_content_order()
             return response()->json(['errors' => $validator->errors()]);
         }
 
+        $course_id = request()->course_id;
+        $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE course_id = $course_id  AND parent_id IS NULL"));
+
         $content = Content::create([
             'title'      => request()->title,
             'course_id'  =>request()->course_id,
             'post_type'  => 'section',
+            'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
         ]);
 
         $content->details()->create([
@@ -272,16 +290,58 @@ public function save_content_order()
         }
 
         if ($mimes != ''){
-            $file =  'required_without:url';
-            if(\request()->hasFile('file')){
-                $file = 'required_without:url|file'.$mimes;
+            if($type == "video"){
+                $file = "";
+                $content_id = request()->content_id;
+                $sql = "SELECT *  FROM `uploads` WHERE `uploadable_id` = $content_id AND `uploadable_type` LIKE '%Content%'";
+                $content_file_from_upload =  DB::select(DB::raw($sql));
+
+                if(\request()->has("url") && \request()->url != "" && \request()->url != null){
+                   if(count($content_file_from_upload) > 0){
+                       $file = "";
+                   }
+
+                    $rules = [
+                        'title'      => "required|string",
+                        'url'        =>   "required_without:file",
+                        'file'       =>   $file,
+                    ];
+                }else{
+                    if(count($content_file_from_upload) == 0){
+                        $file =  'required_without:url';
+                        if(\request()->hasFile('file')){
+                           $file = 'required_without:url|file'.$mimes;
+                        }
+
+                        $rules = [
+                            'title'      => "required|string",
+                            'url'        =>   "required_without:file",
+                            'file'       =>   $file,
+                        ];
+                    }else{
+                        $rules = [
+                            'title'      => "required|string",
+                            'url'        =>   "",
+                            'file'       =>   $file,
+                        ];
+                    }
+                }
+
+
+
+            }else{
+                $file =  'required_without:url';
+                if(\request()->hasFile('file')){
+                    $file = 'required_without:url|file'.$mimes;
+                }
+
+                $rules = [
+                    'title'      => "required|string",
+                    'url'        =>   "required_without:file",
+                    'file'      => $file,
+                ];
             }
 
-            $rules = [
-                'title'      => "required|string",
-                'url'        =>   "required_without:file",
-                'file'      => $file,
-            ];
         }else{
 
             $start_date = '';

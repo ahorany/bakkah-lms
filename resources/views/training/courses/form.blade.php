@@ -25,6 +25,15 @@
 
 {{--            {!!Builder::Select('group_id', 'group', $groups, null, ['col'=>'col-md-12','model_title' => 'name']) !!}--}}
 
+<<<<<<< HEAD
+@section('col3_block')
+    @if(isset($eloquent->id))
+    <div class="card card-default">
+        <div class="card-header">{{__('admin.contents')}}</div>
+        <div class="card-body">
+        <a href="{{route('training.contents',['course_id'=>$eloquent->id])}}" class="btn btn-outline-success add_contents">Add to contents</a>
+        <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="btn btn-outline-success add_contents">Add to Units</a>
+=======
             {{Builder::SetPrefix('training.')}}
             {!!Builder::Textarea('en_accredited_notes', 'en_accredited_notes', null, [
                 'row'=>8,
@@ -52,6 +61,7 @@
 
             {{Builder::SetPrefix('admin.')}}
             {!!Builder::Input('slug', 'slug', null)!!}
+>>>>>>> efa16fd94aede59611c2c5bbfcea0b45f7451c4f
 
         </div>
     </div>
