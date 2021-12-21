@@ -23,7 +23,8 @@ class RoleController extends Controller
     	$post_type = GetPostType('roles');
     	$trash = GetTrash();
 
-        $roles = Role::with('infrastructures');
+        // ======= Not Trainees ========
+        $roles = Role::where('id', '<>', 3)->with('infrastructures');
 
         if(!is_null(request()->user_search)) {
             $roles = $roles->where(function($query){
