@@ -212,19 +212,19 @@
                                     @endforeach
 </div>
 
+{{--
 <div class="col-lg-4 course_info">
 <div class="card p-30 activity">
 <h2>Activity</h2>
 <ul>
-<?php $lang = app()->getLocale(); ?>
+< $lang = app()->getLocale();
 @foreach($activities as $activity)
-<li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-{{--                                  <div>Start Date: {{$activity->start_date}}</div>--}}
-{{--                                  <div>End Date: {{$activity->end_date}}</div>--}}
+    <li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
 </li>
 @endforeach
 </ul>
 </div>
+--}}
 
 {{-- <div class="d-flex justify-content-between mt-5 course-group">
 <div class="persons card p-20">

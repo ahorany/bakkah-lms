@@ -13,7 +13,7 @@
                 <p class="lead">
                     Welcome to Bakkah Learning Management System!
                     <br>
-                    We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for students of all backgrounds and abilities.
+                    We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for learners of all backgrounds and abilities.
 
                     A lot of Knowledge & fun are waiting for you, so let's get started.
                 </p>

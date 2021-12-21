@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Front\Education\EducationController;
+use Modules\UserProfile\Http\Controllers\UserProfileController;
 
 Route::group([
     'prefix'=>LaravelLocalization::setLocale(),
