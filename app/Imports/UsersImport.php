@@ -22,46 +22,46 @@ class UsersImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row)
         {
             $data = json_encode([
-                'en'=>$row['firstname'].' '.$row['lastname'],
-                'ar'=>$row['firstname'].' '.$row['lastname'],
+                'en'=>$row['english_name'],//.' '.$row['lastname'],
+                'ar'=>$row['arabic_name'],//.' '.$row['lastname'],
             ], JSON_UNESCAPED_UNICODE);
 
             $gender = 43;
             if($row['gender'] == 'female')
                 $gender = 44;
 
-            $expire_date = null;
-            if($row['deactivation_date'] != '')
-            {
-                $row['deactivation_date'] = str_replace('/','-',$row['deactivation_date']);
-                $expire_date = date('Y-m-d H:i:s', strtotime($row['deactivation_date']));
-            }
+            // $expire_date = null;
+            // if($row['deactivation_date'] != '')
+            // {
+            //     $row['deactivation_date'] = str_replace('/','-',$row['deactivation_date']);
+            //     $expire_date = date('Y-m-d H:i:s', strtotime($row['deactivation_date']));
+            // }
 
             DB::table('users')->insert([
                 [
 
                  'name' => $data,
-                 'username_lms'=>$row['login'],
+                //  'username_lms'=>$row['login'],
                  'email'=>$row['email'],
                 //  'user_type'=>$user_type,
-                 'reference_user_id' =>$row['user_id'],
-                 'bio'=>$row['bio'],
-                 'locale'=>$row['language'],
+                //  'reference_user_id' =>$row['user_id'],
+                //  'bio'=>$row['bio'],
+                //  'locale'=>$row['language'],
                  'gender_id'=>$gender,
-                 'expire_date'=> $expire_date,
-
+                //  'expire_date'=> $expire_date,
+                    'mobile'=>$row['mobile'],
                 ],
             ]);
 
             $user_id = DB::getPdo()->lastInsertId();
             $role_id = 0;
-            if($row['user_type'] == 'SuperAdmin' || $row['user_type']  == 'Admin-Type')
+            if($row['role'] == 'SuperAdmin' || $row['role']  == 'Admin-Type')
                 $role_id = 1;
-            elseif($row['user_type'] == 'Manager')
+            elseif($row['role'] == 'Manager')
                 $role_id = 4;
-            elseif($row['user_type'] == 'Trainer-Type')
+            elseif($row['role'] == 'Trainer-Type')
                 $role_id = 2;
-            elseif($row['user_type'] == 'Trainee-Type')
+            elseif($row['role'] == 'Trainee-Type')
                 $role_id = 3;
 
             DB::table('role_user')->insert([

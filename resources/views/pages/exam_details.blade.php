@@ -140,11 +140,16 @@
                                 <td>
                                     {{$data->result??0}}
                                     @php
+<<<<<<< HEAD
+
+                                        $width = number_format((($data->result / $data->total) * 100), 0, '.', ',');
+=======
                                         if($data->result == 0 || $data->total == 0){
                                             $width = 0;
                                         }else{
                                             $width = number_format((($data->result / $data->total) * 100), 0, '.', ',');
                                         }
+>>>>>>> 53edfbdb3ffadebc1ec002039de0744581d3add7
                                     @endphp
                                     <div class="progress">
                                         <div class="mx-auto progress-bar " role="progressbar" style="width: {{($data->result != null) || ($data->total != null) ? ($width > 0 ? ($width . '%') : 0)  : 0}};" aria-valuenow="{{$data->result}}" aria-valuemin="0" aria-valuemax="100">
