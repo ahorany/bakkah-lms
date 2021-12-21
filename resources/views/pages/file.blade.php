@@ -120,14 +120,10 @@
 
                 @endisset
 
-<<<<<<< HEAD
-
-=======
                     <video class="video w-100" controls controlsList="nodownload" id="video_player">
                         <source id="update_video_source" src="" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
->>>>>>> de062304a562c27fcc151db20ab6e74a64053a5b
 
                {{-- @if($content->post_type == 'video' && $content->url) --}}
                    <?php
@@ -151,13 +147,8 @@
         const player = document.querySelector("#update_video_source");
         const vid = player.parentElement;
 
-<<<<<<< HEAD
         let video_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code
         let user_id = {{ auth()->id() }} // It depends on your code too
-=======
-        let video_id = 17;  // Getting the selected video id, it depends on your code
-        let user_id = 13023; // It depends on your code too
->>>>>>> de062304a562c27fcc151db20ab6e74a64053a5b
 
         fetch('{{url("video")}}/' +
             video_id +

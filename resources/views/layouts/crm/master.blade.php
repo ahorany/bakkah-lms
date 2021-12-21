@@ -64,6 +64,22 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+<script>
+    document.querySelector('html,body').onclick = function () {
+        document.querySelectorAll('.has-dropdown .dropdown').forEach((el) => {
+            if(!el.classList.contains('d-none')){
+                el.classList.add('d-none')
+            }
+        })
+    }
+
+    $(document).ready(function(){
+        $('[type=reset]').click(function(){
+             $('.input_search').attr('value','');
+        });
+    });
+
+</script>
 @yield('script')
 
 </body>

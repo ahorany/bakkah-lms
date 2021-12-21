@@ -29,7 +29,7 @@
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="text" name="user_search"  class="form-control" placeholder="Name, Email, Mobile, Job Title, Comapny" value="{{request()->user_search??null}}" class="form-control">
+                                <input type="text" name="user_search"  class="form-control input_search" placeholder="Name, Email, Mobile, Job Title, Comapny" value="{{request()->user_search??null}}">
                             </div>
                         </div>
 

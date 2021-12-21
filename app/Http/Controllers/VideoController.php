@@ -17,13 +17,8 @@ class VideoController extends Controller
             // We specify which route should this method send the secure URL to
             'url' => URL::temporarySignedRoute('video_secret',
                 // I have chosen that the link should expire in 5 seconds
-<<<<<<< HEAD
 //                now()->addSeconds(5), ['secret' => $secret]
                 now()->addSeconds(1), ['secret' => $secret]
-=======
-                now(), ['secret' => $secret]
-                // now()->addSeconds(1), ['secret' => $secret]
->>>>>>> de062304a562c27fcc151db20ab6e74a64053a5b
             )
         ],201);
     }
