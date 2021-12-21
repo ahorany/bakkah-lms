@@ -444,6 +444,20 @@ span.pdu {
     font-weight: 600;
     font-size: 12px;
 }
+.activity li:before{
+    content: "\f192";
+    font-family: "Font Awesome 5 Free";
+    display: inline-block;
+    font-size: 12px;
+    padding: 0 5px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 5px;
+    border: 1px solid gainsboro;
+}
+.activity li{
+    margin-bottom: 15px;
+}
 /******************************************************************************************************************/
 
 /* Media Query */
