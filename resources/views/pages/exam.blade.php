@@ -115,7 +115,8 @@
             @include('pages.templates.breadcrumb', [
                 'course_id'=>$exam->course->id,
                 'course_title'=>$exam->course->trans_title,
-                'content_title'=>__('education.Exam'),
+                'content_title'=>$exam->title,
+                // 'content_title'=>__('education.Exam'),
             ])
             <div>
                 @if($previous)
