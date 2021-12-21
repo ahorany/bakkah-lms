@@ -119,6 +119,10 @@
 
 
                 @endisset
+<<<<<<< HEAD
+=======
+
+>>>>>>> e41496640cfd47c7ba33759556060df48c20c339
                {{-- @if($content->post_type == 'video' && $content->url) --}}
                    <?php
                         // if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
@@ -156,7 +160,7 @@
             }
         ) .then((x) => x.json())
             .then( (x) => {
-                player.setAttribute("src", x.url);
+                player.setAttribute("src", x.url+"#t=0.2");
                 vid.load();
             })
 
@@ -180,7 +184,7 @@
                 .then((x) => x.json())
                 .then((x) => {
                     let ct = vid.currentTime;
-                    player.setAttribute("src", x.url);
+                    player.setAttribute("src", x.url+"#t=0.2");
                     vid.load();
                     vid.addEventListener(
                         "loadedmetadata",

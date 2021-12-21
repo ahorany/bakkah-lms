@@ -382,8 +382,8 @@
                 <div class="card h-100 p-30">
                     <h3>{{ __('education.Last Video View') }}</h3>
                     @if($last_video->url == null)
-                        <video controls controlsList="nodownload">
-                            <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}">
+                        <video preload="metadata" controls controlsList="nodownload">
+                            <source  src="{{CustomAsset('upload/files/videos/'.$last_video->file)}}#t=0.2">
                         </video>
                     @else
                         <?php
