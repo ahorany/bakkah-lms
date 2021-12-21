@@ -158,7 +158,7 @@
                 <div class="col-lg-4 col-xl-3">
                     <div class="card h-100 justify-content-center align-items-center p-5 video-btn">
                         <video width="100%" oncontextmenu="return false;" controls="controls" controlslist="nodownload" preload="metadata" class="embed-responsive-item">
-                            <source src="{{CustomAsset('upload/video/'.$video->file)}}#t=0.5" type="video/mp4">
+                            <source src="{{CustomAsset('upload/video/'.$video->file)}}#t=0.2" type="video/mp4">
                         </video>
                         {{-- <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"
                                 viewBox="0 0 26.818 30.542">
