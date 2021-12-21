@@ -15,23 +15,23 @@
         </thead>
         <tbody>
         @foreach($roles as $role)
-        <tr data-id="{{$role->id}}">
-          <td>
-            <span class="td-title">{{$loop->iteration}}</span>
-          </td>
-          <td>
-              <span style="display: block;">{{$role->trans_name}}</span>
+            <tr data-id="{{$role->id}}">
+            <td>
+                <span class="td-title">{{$loop->iteration}}</span>
+            </td>
+            <td>
+                <span style="display: block;">{{$role->trans_name}}</span>
 
-          </td>
-          <td>
-              @foreach ($role->infrastructures as $page)
-                <span style="font-size: 70%; padding: 3px 6px;" class="badge badge-success mb-1">{{ $page->trans_title }}</span>
-              @endforeach
-          </td>
-          <td class="d-none d-sm-table-cell text-right">{!!Builder::BtnGroupRows($role->trans_name, $role->id, [], [
-            'post'=>$role->id,
-         ])!!}</td>
-        </tr>
+            </td>
+            <td>
+                @foreach ($role->infrastructures as $page)
+                    <span style="font-size: 70%; padding: 3px 6px;" class="badge badge-success mb-1">{{ $page->trans_title }}</span>
+                @endforeach
+            </td>
+            <td class="d-none d-sm-table-cell text-right">{!!Builder::BtnGroupRows($role->trans_name, $role->id, [], [
+                'post'=>$role->id,
+            ])!!}</td>
+            </tr>
         @endforeach
         </tbody>
       </table>

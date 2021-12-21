@@ -77,7 +77,7 @@
             <div class="card-body p-30">
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
-                        <video class="video" controls controlsList="nodownload" id="video_player">
+                        <video class="video w-100" controls controlsList="nodownload" id="video_player">
                             <source id="update_video_source" src="" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
@@ -89,17 +89,17 @@
                         @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="500px"
+                            <iframe width="100%" height="800px"
                                     src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
                         @else
-                            <iframe style="" width="100%" height="500px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                            <iframe style="" width="100%" height="800px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @endif
 
                     @elseif($content->post_type == 'scorm' )
                         @if($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="500px"
+                            <iframe width="100%" height="800px"
                             src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
                             <?php
@@ -114,20 +114,12 @@
                             {{-- <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe> --}}
                         @endif
                     @else
-                        <iframe style="" width="100%" height="500px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
+                        <iframe style="" width="100%" height="800px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
                     @endif
 
 
                 @endisset
 
-<<<<<<< HEAD
-
-=======
-                    <video class="video w-100" controls controlsList="nodownload" id="video_player">
-                        <source id="update_video_source" src="" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
->>>>>>> de062304a562c27fcc151db20ab6e74a64053a5b
 
                {{-- @if($content->post_type == 'video' && $content->url) --}}
                    <?php
@@ -151,13 +143,8 @@
         const player = document.querySelector("#update_video_source");
         const vid = player.parentElement;
 
-<<<<<<< HEAD
         let video_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code
         let user_id = {{ auth()->id() }} // It depends on your code too
-=======
-        let video_id = 17;  // Getting the selected video id, it depends on your code
-        let user_id = 13023; // It depends on your code too
->>>>>>> de062304a562c27fcc151db20ab6e74a64053a5b
 
         fetch('{{url("video")}}/' +
             video_id +

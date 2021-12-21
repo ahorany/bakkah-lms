@@ -418,18 +418,18 @@
                     </div>
                 </div>
             @endif
-            {{-- <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
                 <div class="card h-100 p-30 activity">
                     <h2>Activity</h2>
                     <ul>
-                        < $lang = app()->getLocale(); ?>
+                        <?php $lang = app()->getLocale(); ?>
                         @foreach($activities as $activity)
                             <li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
                             </li>
                         @endforeach
                     </ul>
                 </div>
-            </div> --}}
+            </div>
         </div>
 
     @endif
