@@ -22,7 +22,7 @@ export default {
   },
   created : function (){
       this.nickname = "khaled";
-      this.meetingId = "77015577000";
+      this.meetingId = "76113869594";
   }
 };
 </script>

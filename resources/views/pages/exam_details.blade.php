@@ -140,6 +140,7 @@
                                 <td>
                                     {{$data->result??0}}
                                     @php
+
                                         $width = number_format((($data->result / $data->total) * 100), 0, '.', ',');
                                     @endphp
                                     <div class="progress">
