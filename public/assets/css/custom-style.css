@@ -444,19 +444,29 @@ span.pdu {
     font-weight: 600;
     font-size: 12px;
 }
-.activity li:before{
-    content: "\f192";
-    font-family: "Font Awesome 5 Free";
-    display: inline-block;
-    font-size: 12px;
-    padding: 0 5px;
-    border-radius: 50%;
-    vertical-align: middle;
-    margin-right: 5px;
-    border: 1px solid gainsboro;
-}
 .activity li{
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+}
+.activity li:hover {
+    font-weight: 700;
+}
+
+tr.text-capitalize.ui-sortable-handle:hover {
+    box-shadow: 0 0 10px 0 #e0e0e0;
+    cursor: grab;
+}
+
+.drag_icon {
+    left: -20px;
+    top: 15px;
+}
+.drag_icon svg {
+    width: 20px;
+    fill: gainsboro;
+    display: none;
+}
+tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
+    display: inline-block;
 }
 /******************************************************************************************************************/
 
