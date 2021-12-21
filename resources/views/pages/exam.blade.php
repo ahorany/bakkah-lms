@@ -39,6 +39,17 @@
         text-transform: uppercase;
     }
 
+    .progress {
+        background: gainsboro;
+        border-radius: 5px;
+        overflow: hidden;
+        color: #fff;
+    }
+    .progress-bar{
+        width: 50%;
+        margin: 0 !important;
+    }
+
     @media screen and (max-width: 1150px) {
         table {
             border: 0;
@@ -111,7 +122,7 @@
     ?>
 <div class="card p-5 user-info">
 
-        <div class="dash-header d-flex justify-content-between">
+        <div class="dash-header d-flex justify-content-between ">
             @include('pages.templates.breadcrumb', [
                 'course_id'=>$exam->course->id,
                 'course_title'=>$exam->course->trans_title,
@@ -231,9 +242,13 @@
 
                         <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                         <td>
-                        @if($exam->exam->exam_mark && $exam->exam->exam_mark != 0)
-                            <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
-                                <small>{{$progress}}%</small>
+                            @if($exam->exam->exam_mark && $exam->exam->exam_mark != 0)
+                                <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
+
+                                <small>{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '0%' }}</small>
+                                <div class="progress">
+                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{($progress > 0) ? number_format($progress, 0, '.', ',') . '%' : '0'}};" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? number_format($progress, 0, '.', ',')  : '0' }}</div>
+                                </div>
                             @endif
                         </td>
                     </tr>

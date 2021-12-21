@@ -148,12 +148,15 @@
                 @if($video)
                 <div class="col-lg-4 col-xl-3">
                     <div class="card h-100 justify-content-center align-items-center p-5 video-btn">
-                        <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"
+                        <video width="100%" oncontextmenu="return false;" controls="controls" controlslist="nodownload" preload="metadata" class="embed-responsive-item">
+                            <source src="{{CustomAsset('upload/video/'.$video->file)}}#t=0.5" type="video/mp4">
+                        </video>
+                        {{-- <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"
                                 viewBox="0 0 26.818 30.542">
                                 <path id="Path_92" data-name="Path 92" d="M1586.871,1164.139V1133.6l26.818,15.165Z"
                                     transform="translate(-1586.871 -1133.597)" fill="#fff" />
                             </svg>
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
                 @endif

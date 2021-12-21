@@ -407,7 +407,7 @@ a:hover svg#back{
 button.next_prev {
     width: 85px;
     padding: 5px;
-    margin: 0 5px;
+    margin: 0px 5px 5px 5px;
     border: 1px solid #7c9290;
     color: #7c9290;
     text-align: center;
