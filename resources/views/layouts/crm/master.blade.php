@@ -64,6 +64,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+<script>
+
+    $(document).ready(function(){
+        $('[type=reset]').click(function(){
+             $('.input_search').attr('value','');
+        });
+    });
+
+</script>
 @yield('script')
 
 </body>
