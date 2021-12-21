@@ -211,8 +211,8 @@
                                 </div>
                                 @if($video)
                                     <div class="col-12 col-md-12 col-lg-4 mb-3 py-3 px-0">
-                                        <video style="border: 1px solid gainsboro; border-radius: 15px;" width="100%" height="200px" controls>
-                                            <source src="{{CustomAsset('upload/video/'.$video->file)}}">
+                                        <video style="border: 1px solid gainsboro; border-radius: 15px;" width="100%" height="200px" controls preload="metadata">
+                                            <source src="{{CustomAsset('upload/video/'.$video->file)}}#t=0.2">
                                         </video>
                                     </div>
                                 @endif

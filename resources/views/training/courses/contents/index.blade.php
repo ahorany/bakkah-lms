@@ -86,7 +86,19 @@
                                 </thead>
                                 <tbody class="sortable" >
                                 <tr v-if="content.contents" v-for="(entry, index) in content.contents" :key="entry.id" :id="entry.id" class="text-capitalize">
-                                    <td>
+                                    <td class="position-relative">
+                                        <span class="drag_icon position-absolute">
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                                <circle cx="61.48" cy="15.83" r="9.18"/>
+                                                <circle cx="61.48" cy="38.79" r="9.18"/>
+                                                <circle cx="61.48" cy="61.74" r="9.18"/>
+                                                <circle cx="38.52" cy="15.83" r="9.18"/>
+                                                <circle cx="38.52" cy="38.79" r="9.18"/>
+                                                <circle cx="38.52" cy="61.74" r="9.18"/>
+                                                <circle cx="61.48" cy="84.7" r="9.18"/>
+                                                <circle cx="38.52" cy="84.7" r="9.18"/>
+                                            </svg>
+                                        </span>
                                         <span>@{{entry.title}}</span>
                                     </td>
                                     <td>

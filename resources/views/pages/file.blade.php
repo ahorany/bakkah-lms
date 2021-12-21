@@ -77,7 +77,7 @@
             <div class="card-body p-30">
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
-                        <video class="video w-100" controls controlsList="nodownload" id="video_player">
+                        <video class="video w-100" preload="metadata" controls controlsList="nodownload" id="video_player">
                             <source id="update_video_source" src="" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
@@ -89,17 +89,17 @@
                         @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="800px"
+                            <iframe width="100%" height="600px"
                                     src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
                         @else
-                            <iframe style="" width="100%" height="800px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                            <iframe style="" width="100%" height="600px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @endif
 
                     @elseif($content->post_type == 'scorm' )
                         @if($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="800px"
+                            <iframe width="100%" height="600px"
                             src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
                             <?php
@@ -114,19 +114,17 @@
                             {{-- <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe> --}}
                         @endif
                     @else
-                        <iframe style="" width="100%" height="800px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
+                        <iframe style="" width="100%" height="600px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
                     @endif
 
 
                 @endisset
-
-
                {{-- @if($content->post_type == 'video' && $content->url) --}}
-                   <?php
+                   {{-- <php
                         // if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
                         //     $video_id = $match[1]??null;
                         // }
-                    ?>
+                    ?> --}}
                    {{-- <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
                @endif --}}
             </div>
@@ -158,7 +156,7 @@
             }
         ) .then((x) => x.json())
             .then( (x) => {
-                player.setAttribute("src", x.url);
+                player.setAttribute("src", x.url+"#t=0.2");
                 vid.load();
             })
 
@@ -182,7 +180,7 @@
                 .then((x) => x.json())
                 .then((x) => {
                     let ct = vid.currentTime;
-                    player.setAttribute("src", x.url);
+                    player.setAttribute("src", x.url+"#t=0.2");
                     vid.load();
                     vid.addEventListener(
                         "loadedmetadata",
