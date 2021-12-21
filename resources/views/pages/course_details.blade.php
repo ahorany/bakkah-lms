@@ -163,14 +163,14 @@
             </div>
         @endif
 
-        @if($video)
+        {{-- @if($video)
             <div class="modal">
                 <div class="modal-content">
                     <div class="modal-close">x</div>
                     <video width="100%" oncontextmenu="return false;" controls="controls" controlslist="nodownload" src="{{CustomAsset('upload/video/'.$video->file)}}" class="embed-responsive-item"></video>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         @if (count($course->contents) > 0)
             <div class="row mx-0 mt-3 course-content">
