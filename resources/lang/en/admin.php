@@ -146,6 +146,7 @@ return [
     'assigned_users'=>'Assigned Users',
     'completed_learners' => 'Completed Learners',
     'course_code' => 'Course Code',
+    'course_pdus' => 'PDUs',
     'delivery_methods' => 'Delivery Methods',
     'importQuestionsCourse'=>'Import Questions Course',
     'import_questions_moodle'=>'Import Questions Moodle',

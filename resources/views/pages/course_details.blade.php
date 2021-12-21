@@ -55,6 +55,12 @@
 
                 <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
 
+                @if($course->PDUs > 0)
+                    <span class="">
+                        {{$course->PDUs}} PDUs
+                    </span>
+                @endif
+
                 <div class="rating">
                     <span class="total_rate" v-text="total_rate"></span>
                     <template v-for="item in 5">

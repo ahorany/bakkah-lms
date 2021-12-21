@@ -632,9 +632,9 @@
 
         var oilData = {
             labels: [
-                "Your Courses",
+                "My Courses",
                 "In Progess",
-                "Not Complete",
+                "Not Started",
                 "Completed",
             ],
             datasets: [
