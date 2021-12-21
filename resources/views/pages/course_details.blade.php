@@ -147,7 +147,7 @@
 
                 @if($video)
                 <div class="col-lg-4 col-xl-3">
-                    <div class="card h-100 justify-content-center align-items-center p-5 video-btn">
+                    <div class="card h-100 justify-content-center align-items-center p-3 video-btn">
                         <video width="100%" oncontextmenu="return false;" controls="controls" controlslist="nodownload" preload="metadata" class="embed-responsive-item">
                             <source src="{{CustomAsset('upload/video/'.$video->file)}}#t=0.5" type="video/mp4">
                         </video>

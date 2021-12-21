@@ -89,17 +89,17 @@
                         @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="800px"
+                            <iframe width="100%" height="600px"
                                     src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
                         @else
-                            <iframe style="" width="100%" height="800px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                            <iframe style="" width="100%" height="600px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @endif
 
                     @elseif($content->post_type == 'scorm' )
                         @if($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="800px"
+                            <iframe width="100%" height="600px"
                             src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
                             <?php
@@ -114,7 +114,7 @@
                             {{-- <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe> --}}
                         @endif
                     @else
-                        <iframe style="" width="100%" height="800px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
+                        <iframe style="" width="100%" height="600px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
                     @endif
 
 
@@ -122,11 +122,11 @@
 
 
                {{-- @if($content->post_type == 'video' && $content->url) --}}
-                   <?php
+                   {{-- <?php
                         // if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
                         //     $video_id = $match[1]??null;
                         // }
-                    ?>
+                    ?> --}}
                    {{-- <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
                @endif --}}
             </div>
