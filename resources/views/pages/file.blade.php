@@ -133,7 +133,7 @@
 
                 @endisset
 
-                    <video class="video" controls controlsList="nodownload" id="video_player">
+                    <video class="video w-100" controls controlsList="nodownload" id="video_player">
                         <source id="update_video_source" src="" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
