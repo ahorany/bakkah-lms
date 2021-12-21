@@ -10,11 +10,11 @@
         <div class="row align-items-center">
             <div class="col-lg-8">
                 <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
-                <p class="lead">
+                <p class="lead" style="text-transform: none !important;">
                     Welcome to Bakkah Learning Management System!
                     <br>
-                    We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for learners of all backgrounds and abilities.
-
+                    We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for students of all backgrounds and abilities.
+                    <br>
                     A lot of Knowledge & fun are waiting for you, so let's get started.
                 </p>
             </div>
@@ -49,7 +49,7 @@
                         </svg>
 
                         <div>
-                            <span>Your Courses</span>
+                            <span>My Courses</span>
                             <b>{{count($courses->courses)}}</b>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             <path d="M31.74,55.25c-1.12,0-2.24,0-3.35,0c-0.16-0.03-0.32-0.07-0.48-0.1c-1.02-0.15-2.06-0.22-3.06-0.44  c-5.29-1.14-9.78-3.71-13.43-7.7c-3.29-3.6-5.38-7.8-6.21-12.61c-0.16-0.9-0.26-1.81-0.39-2.71c0-1.12,0-2.23,0-3.35  c0.03-0.14,0.07-0.28,0.09-0.42c0.11-0.86,0.17-1.73,0.34-2.58c1.24-6.24,4.33-11.37,9.37-15.25c5.96-4.6,12.73-6.22,20.12-4.86  c6.2,1.13,11.29,4.26,15.17,9.23c4.68,6,6.33,12.81,4.95,20.28c-1.14,6.18-4.29,11.22-9.21,15.13c-3.3,2.62-7.03,4.3-11.19,5.01  C33.55,55.01,32.64,55.12,31.74,55.25z M51.16,29.99C51.15,18.41,41.63,8.91,30.06,8.91C18.48,8.91,8.97,18.42,8.96,30  C8.95,41.59,18.5,51.14,30.09,51.11C41.68,51.08,51.18,41.56,51.16,29.99z"></path>
                         </svg>
                         <div>
-                            <span>Course Not Complete</span>
+                            <span>Courses Not Started</span>
                             <b>{{ getReportNumber($complete_courses,2)  }}</b>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                             </g>
                         </svg>
                         <div>
-                            <span>Course in Progess</span>
+                            <span>Courses In Progess</span>
                             <b>{{ getReportNumber($complete_courses,0)  }}</b>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                         </svg>
                         <div>
 
-                            <span>Course Completed</span>
+                            <span>Courses Completed</span>
                             <b>{{ getReportNumber($complete_courses,1)  }}</b>
                         </div>
                     </div>
