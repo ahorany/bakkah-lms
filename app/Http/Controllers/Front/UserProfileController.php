@@ -505,6 +505,23 @@ class UserProfileController extends Controller
 
  }
 
+
+    // if downloadable status == true (Download file)
+        if($content->downloadable == 1){
+            $file = "";
+            switch ($content->post_type){
+                case 'video': $file = public_path('upload/files/videos/'.$content->upload->file);  break;
+                case 'audio': $file = public_path('upload/files/audios/'.$content->upload->file);  break;
+                case 'presentation': $file = public_path('upload/files/presentations/'.$content->upload->file);  break;
+                case 'scorm': $file = public_path('upload/files/scorms/'.$content->upload->file);  break;
+            }
+            if ($file){
+                return response()->download($file);
+            }
+
+
+        }
+
       $arr =  $this->nextAndPreviouseQuery($content->course_id,$content->id,$content->order,$content->parent_id,$content->section->order);
 
         $previous = $arr[0];

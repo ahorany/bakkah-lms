@@ -119,12 +119,8 @@
 
 
                 @endisset
-<<<<<<< HEAD
-=======
-
->>>>>>> e41496640cfd47c7ba33759556060df48c20c339
                {{-- @if($content->post_type == 'video' && $content->url) --}}
-                   {{-- <?php
+                   {{-- <php
                         // if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
                         //     $video_id = $match[1]??null;
                         // }

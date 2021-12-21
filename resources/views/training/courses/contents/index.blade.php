@@ -307,6 +307,15 @@
                                     </div>
                                 </div>
 
+                                <div v-if="model_type != 'section' && model_type != 'exam'" class="form-group form-check child">
+                                    <label class="container-check form-check-label" for="downloadable" style="padding: 25px 30px 0; font-size: 15px;">
+                                        {{__('admin.downloadable')}}
+                                        <input class="form-check-input child" style="display: inline-block;" v-model="downloadable" id="downloadable" type="checkbox" name="downloadable">
+                                        <span class="checkmark" style="top: 26px;"></span>
+                                    </label>
+                                </div>
+
+
                                 <div v-if="model_type != 'section'" class="form-group form-check child">
                                     <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
                                         {{__('admin.Enabeld Status')}}
@@ -323,7 +332,11 @@
                                     </div>
                                 </div>
 
+
+
                             </div>
+
+
 
                             <div class="modal-footer">
                                 <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
@@ -372,32 +385,6 @@ $(function() {
             });
         }
     });
-
-
-
-   //  $(".sortable").sortable();
-   //
-   // $('.clickaaaa').click(function(){
-   //
-   //      // var idsInOrder = $(".sortable").sortable('toArray');
-   //      var idsInOrder = $(".sortable").sortable();
-   //      console.log(idsInOrder);
-   //      return false;
-   // });
-
-
-
-
-    // $( ".sortable" ).sortable();
-    // $( ".sortable" ).sortable({
-    //     revert: true
-    // });
-    // $( "#draggable" ).draggable({
-    // connectToSortable: "#sortable",
-    // helper: "clone",
-    // revert: "invalid"
-    // });
-    // $( "ul, li" ).disableSelection();
 });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
@@ -419,6 +406,7 @@ $(function() {
             file_title : '',
             file_url : '',
             status : false,
+            downloadable : false,
             shuffle_answers : false,
             start_date : '',
             end_date : '',
@@ -458,6 +446,7 @@ $(function() {
                 this.file_url = '';
                 this.file_title = '';
                 this.status = false;
+                this.downloadable = false;
                 this.shuffle_answers = false;
                 this.url = '';
                 this.start_date = '';
@@ -527,7 +516,8 @@ $(function() {
                          section.contents.forEach(function (content) {
                             if(content.id == content_id) {
                                     self.title = content.title;
-                                    self.status = content.status;
+                                    self.status = content.status == 1 ? true : false;
+                                    self.downloadable = content.downloadable == 1 ? true : false;
                                     self.excerpt =  content.details ?  content.details.excerpt : '';
                                     // self.duration =  content.duration ?  content.details.duration : '';
                                      content.exam ? self.start_date = moment(content.exam.start_date).format('YYYY-MM-DDTHH:mm')  : '';
@@ -640,6 +630,7 @@ $(function() {
                             type : self.model_type,
                             course_id : self.course_id,
                             status : self.status,
+                            downloadable : self.downloadable,
                         })
                         .then(response => {
                             console.log(response['data']['errors'])
@@ -681,6 +672,7 @@ $(function() {
                             course_id : self.course_id,
                             content_id : self.content_id,
                             status : self.status,
+                            downloadable : self.downloadable,
                         })
                         .then(response => {
                             console.log(response['data']['errors'])
@@ -725,6 +717,7 @@ $(function() {
                 formData.append('excerpt', self.excerpt);
                 formData.append('url', self.url);
                 formData.append('status', self.status);
+                formData.append('downloadable', self.downloadable);
                 formData.append('type', self.model_type);
                 formData.append('file', self.file);
                 formData.append('start_date', self.start_date);
@@ -782,6 +775,7 @@ $(function() {
                                 if(content.id == self.content_id) {
                                     content.title = self.title;
                                     content.status = self.status;
+                                    content.downloadable = self.downloadable;
                                     if(content.details ){
                                         content.details.excerpt = self.excerpt
                                     }
@@ -824,6 +818,7 @@ $(function() {
                                             if(content.id == response.data.data.id) {
                                                  content.title =  response.data.data.title;
                                                  content.status =  response.data.data.status;
+                                                 content.downloadable =  response.data.data.downloadable;
 
                                                  content.url = response.data.data.url;
 
@@ -973,37 +968,6 @@ $(function() {
                 }else if(this.file){
                     return this.validateContentWithFile(extensions_array);
                 }
-
-
-		        // if(this.file_url && ((this.url == null || this.url == '') || (this.file == null || this.file == ''))){
-                //     if(this.title == null || this.title == ''){
-                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
-                //     }else{
-                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
-                //     }
-                //     return true;
-                // }else if(this.url && this.file){
-                //     if(this.title == null || this.title == ''){
-                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
-                //     }else{
-                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
-                //     }
-                //     return true;
-                // }else if( (this.url == null || this.url == '') && (this.file == null || this.file == '')){
-                //     if(this.title == null || this.title == ''){
-                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required','title': 'The title is required'};
-                //     }else{
-                //         this.errors =  {'file': 'The file or url is required','url': 'The file or url is required'};
-                //     }
-                //     return true;
-                // }else if(this.url){
-                //     if(this.title == null || this.title == ''){
-                //         this.errors =  {'title': 'The title is required'};
-                //         return true;
-                //     }
-                // }else if(this.file){
-                //     return this.validateContentWithFile(extensions_array);
-                // }
                 return false;
             },
 

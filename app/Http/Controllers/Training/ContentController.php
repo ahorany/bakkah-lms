@@ -224,6 +224,7 @@ class ContentController extends Controller
                 'post_type'  => request()->type,
                 'parent_id'  => request()->content_id,
                 'status' => request()->status == 'true' ? 1 : 0,
+                'downloadable' => request()->downloadable == 'true' ? 1 : 0,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
             $content->details()->create([
@@ -251,6 +252,7 @@ class ContentController extends Controller
                 'post_type'  => request()->type,
                 'url'        => request()->url,
                 'status' => request()->status == 'true' ? 1 : 0,
+                'downloadable' => request()->downloadable == 'true' ? 1 : 0,
                 'parent_id'  => request()->content_id,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
@@ -393,6 +395,7 @@ class ContentController extends Controller
             $content = Content::whereId(request()->content_id)->update([
                 'title' => request()->title,
                 'status' => request()->status == 'true' ? 1 : 0,
+                'downloadable' => request()->downloadable == 'true' ? 1 : 0,
             ]);
             ContentDetails::where('content_id', request()->content_id)->update([
                 'excerpt' => request()->excerpt,
@@ -415,6 +418,7 @@ class ContentController extends Controller
                     'title' => request()->title,
                     'url' => request()->url,
                     'status' => request()->status == 'true' ? 1 : 0,
+                    'downloadable' => request()->downloadable == 'true' ? 1 : 0,
                 ]);
 
 
