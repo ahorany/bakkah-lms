@@ -5,19 +5,6 @@
 @endsection
 
 @section('content')
-    <style>
-        video::-internal-media-controls-download-button {
-            display:none;
-        }
-
-        video::-webkit-media-controls-enclosure {
-            overflow:hidden;
-        }
-
-        video::-webkit-media-controls-panel {
-            width: calc(100% + 30px); /* Adjust as needed */
-        }
-    </style>
     <?php
     if( !is_null($next)){
         if( $next->post_type != 'exam' ) {
