@@ -56,7 +56,7 @@
                 <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
 
                 @if($course->PDUs > 0)
-                    <span class="">
+                    <span class="pdu">
                         {{$course->PDUs}} PDUs
                     </span>
                 @endif

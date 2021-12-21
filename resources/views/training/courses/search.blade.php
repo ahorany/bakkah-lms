@@ -33,7 +33,7 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" name="course_search"  class="form-control" placeholder="Course Title" value="{{request()->course_search??null}}" class="form-control">
+                                    <input type="text"  name="course_search"  class="form-control input_search" placeholder="Course Title" value="{{request()->course_search??null}}" >
                                 </div>
                             </div>
 
@@ -51,3 +51,4 @@
             <!-- /.card -->
         </div>
 </form>
+
