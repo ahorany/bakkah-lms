@@ -77,7 +77,7 @@
             <div class="card-body p-30">
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
-                        <video class="video" preload="metadata" controls controlsList="nodownload" id="video_player">
+                        <video class="video w-100" controls controlsList="nodownload" id="video_player">
                             <source id="update_video_source" src="" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
@@ -89,17 +89,17 @@
                         @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="500px"
+                            <iframe width="100%" height="800px"
                                     src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
                         @else
-                            <iframe style="" width="100%" height="500px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                            <iframe style="" width="100%" height="800px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                         @endif
 
                     @elseif($content->post_type == 'scorm' )
                         @if($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="500px"
+                            <iframe width="100%" height="800px"
                             src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
                         @else
                             <?php
@@ -114,11 +114,16 @@
                             {{-- <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe> --}}
                         @endif
                     @else
-                        <iframe style="" width="100%" height="500px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
+                        <iframe style="" width="100%" height="800px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
                     @endif
 
 
                 @endisset
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> d44a28796249895e84dc7a778e65e15bcbf767ee
                {{-- @if($content->post_type == 'video' && $content->url) --}}
                    <?php
                         // if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {

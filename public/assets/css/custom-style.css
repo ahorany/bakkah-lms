@@ -1,7 +1,7 @@
-h1 , h2 , h3 , h4 , h5 ,h6,
+/* h1 , h2 , h3 , h4 , h5 ,h6,
 a, span , p , label, div, small{
     text-transform: capitalize !important;
-}
+} */
 .quill-editor-container .ql-editor>p{
     text-transform: none !important;
 }
@@ -443,6 +443,30 @@ span.pdu {
     border-radius: 5px;
     font-weight: 600;
     font-size: 12px;
+}
+.activity li{
+    margin-bottom: 20px;
+}
+.activity li:hover {
+    font-weight: 700;
+}
+
+tr.text-capitalize.ui-sortable-handle:hover {
+    box-shadow: 0 0 10px 0 #e0e0e0;
+    cursor: grab;
+}
+
+.drag_icon {
+    left: -20px;
+    top: 15px;
+}
+.drag_icon svg {
+    width: 20px;
+    fill: gainsboro;
+    display: none;
+}
+tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
+    display: inline-block;
 }
 /******************************************************************************************************************/
 
