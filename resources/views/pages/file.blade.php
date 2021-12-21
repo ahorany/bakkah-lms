@@ -77,7 +77,7 @@
             <div class="card-body p-30">
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
-                        <video class="video w-100" controls controlsList="nodownload" id="video_player">
+                        <video class="video w-100" preload="metadata" controls controlsList="nodownload" id="video_player">
                             <source id="update_video_source" src="" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
@@ -119,11 +119,6 @@
 
 
                 @endisset
-<<<<<<< HEAD
-=======
-
-
->>>>>>> d44a28796249895e84dc7a778e65e15bcbf767ee
                {{-- @if($content->post_type == 'video' && $content->url) --}}
                    <?php
                         // if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
