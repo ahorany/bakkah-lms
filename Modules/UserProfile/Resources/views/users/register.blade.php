@@ -35,7 +35,7 @@ input.form-control::placeholder {
                 @csrf
                 <div class="my-4">
                     <h2>{{__('education.Sign Up')}}</h2>
-                   <p>{{ __('education.do you have an account?') }} <a href="{{CustomRoute('user.login')}}">Create an account</a> </p>
+                   <p>{{ __('education.do you have an account?') }} <a href="{{CustomRoute('user.login')}}">Login</a> </p>
                     {{-- <p>{{__('education.Welcome! Please, fill email and password to sign in into your account.')}}</p> --}}
                 </div>
 

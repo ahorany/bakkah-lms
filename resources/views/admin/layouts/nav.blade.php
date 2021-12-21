@@ -24,10 +24,10 @@
         <li class="nav-item">
             <?= GetSiteLang(); ?>
         </li>
-        <li class="nav-item navbar-hidden">
+        {{-- <li class="nav-item navbar-hidden">
             <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
                     class="fas fa-th-large"></i></a>
-        </li>
+        </li> --}}
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

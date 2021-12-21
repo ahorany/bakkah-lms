@@ -574,6 +574,7 @@
     }
 }
 @media (min-width: 290px) and (max-width: 360px){
+    
     .exam .col-12.mt-5 {
         overflow-x: auto;
     }

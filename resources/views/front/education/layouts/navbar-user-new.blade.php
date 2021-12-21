@@ -9,11 +9,14 @@ button.navbar-toggler {
 /*    overflow: hidden;*/
 /*}*/
 .userarea-wrapper aside li a.active {
-    background: #707070;
-    border-color: #707070;
+    background: #1ebfb8;
+    border-color: #fff;
     color: #fff;
 }
 .user-float{
+    display: none !important;
+}
+li.nav-item.navbar-hidden {
     display: none !important;
 }
 </style>
