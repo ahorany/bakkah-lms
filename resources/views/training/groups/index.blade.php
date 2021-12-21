@@ -1,4 +1,8 @@
-@extends(ADMIN.'.general.index')
+@extends('layouts.crm.index')
+
+@section('useHead')
+    <title>{{ __('education.Groups') }} | {{ __('home.DC_title') }}</title>
+@endsection
 
 @section('table')
 
@@ -11,5 +15,7 @@
 	{{Builder::SetObject('group')}}
 
 	@include('training.'.$folder.'.table')
+
+	{{-- @include('crm.'.$folder.'.search') --}}
 
 @endsection

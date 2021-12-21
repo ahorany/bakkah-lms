@@ -1,10 +1,7 @@
-{{-- @extends('layouts.app') --}}
-@extends(FRONT.'.education.layouts.master')
-@section('d_title')
-    <title>{{ __('education.Verify Your Email Address') }}</title>
-@endsection
+@extends('layouts.auth')
+
 @section('content')
-<div class="container py-5">
+  <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -19,7 +16,7 @@
 
                     {{ __('education.Before proceeding, please check your email for a verification link.') }}
                     {{ __('education.If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                    <form style="display: inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
                         <button type="submit" class="btn btn-secondary mt-3 align-baseline">{{ __('education.Click here to request another') }}</button>.
                     </form>

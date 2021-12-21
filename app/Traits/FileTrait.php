@@ -38,6 +38,7 @@ Trait FileTrait
 
 		if(request()->$name){
             $fileName = $this->NameManipulation($fileName, $name);
+            $extension = request()->$name->getClientOriginalExtension();
             request()->file->move($folder_path, $fileName);
         }
 
@@ -56,6 +57,7 @@ Trait FileTrait
 		    'excerpt'=>$excerpt,
 		    'caption'=>$caption,
 		    'exclude_img'=>$exclude_img,
+		    'extension'=>$extension,
 		];
 
 		if(!is_null($fileName) || $method == 'update'){

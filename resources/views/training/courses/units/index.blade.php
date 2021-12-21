@@ -1,4 +1,8 @@
-@extends(ADMIN.'.general.index')
+@extends('layouts.crm.index')
+
+@section('useHead')
+    <title>{{__('education.Course Units')}} | {{ __('home.DC_title') }}</title>
+@endsection
 
 @section('table')
     <style>
@@ -11,7 +15,7 @@
             margin-left: 10px;
         }
         ul.tree li {
-            margin: 0 30px;
+            margin: 0 0px;
             padding: 0 10px;
             line-height: 20px;
             color: #369;
@@ -75,17 +79,15 @@
                                 </div>
 
 
+                                <div class="mt-1">
 
-
-                                <div v-if="counter <= 2" class="mt-5">
-
-                                    <button @click.prevent="addSubUnitBox()" class="btn btn-primary mb-3">Add Subunit +</button>
+                                    <button @click.prevent="addSubUnitBox()" class="main-color mb-3"><i class="fa fa-plus" aria-hidden="true"></i> Add Sub Unit</button>
                                     <div class="mb-2" v-show="'subunits' in errors">
                                         <span style="color: red;font-size: 13px">@{{ errors.subunits }}</span>
                                     </div>
                                     <div v-for="(subunit,index) in subunits" class="form-group">
-                                        <input class="w-75" type="text" v-model="subunit.title" name="title"  placeholder="title">
-                                        <button @click.stop="deleteUnit(course.units,subunit.id,index)"  class="btn btn-sm btn-outline-danger mx-3" >
+                                        <input class="w-75 form-control" style="display: inline-block;" type="text" v-model="subunit.title" name="title" placeholder="title">
+                                        <button @click.stop="deleteUnit(course.units,subunit.id,index)" class="red">
                                             <i class="fa fa-trash"></i><!-- Delete --> </button>
                                     </div>
                                 </div>
@@ -95,12 +97,9 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
-                                <i class="fas fa-times"></i> {{__('admin.close')}}</button>
-                            <button @click="clear()" type="reset" class="btn btn-outline-info" @click="Clear()">
-                                <i  class="fas fa-eraser"></i> {{__('admin.clear')}}</button>
-                            <button type="button"  @click="save()" class="btn btn-outline-success">
-                                <i class="fa fa-save"></i> {{__('admin.save')}}</button>
+                            <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
+                            <button @click="clear()" type="reset" class="cyan" @click="Clear()">{{__('admin.clear')}}</button>
+                            <button type="button"  @click="save()" class="green">{{__('admin.save')}}</button>
 
                         </div>
                     </div>
@@ -110,21 +109,30 @@
 
         </div>
 
-        <div  class="course_info">
-            <label class="m-0">{{$course->trans_title}}</label>
-            <div>
-                <button type="button" @click="OpenModal()" class="btn btn-outline-dark mx-3">
-                    <i class="fa fa-plus"></i>  {{__('admin.add_unit')}}
-                </button>
-                <a href="{{route('training.contents',['course_id'=>$course->id])}}"  class="btn btn-outline-light">
-                    {{__('admin.contents')}}
-                </a>
-            </div>
+        <div  class="course_info mb-3 card p-3">
+            <div class="row">
+                <div class="col-md-10 col-10">
+                    @include('training.courses.contents.header',['course_id' => $course->id, 'units' =>true])
+                </div>
+                <div class="col-md-2 col-2 text-right">
+                    <div class="back">
+                        <a href="{{route('training.courses.index')}}" class="cyan mb-1">Course List</a>
+                        <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    </div>
+                </div>
 
+                <div class="col-md-12 col-12">
+                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
+
+                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
+                        <i class="fa fa-plus"></i> {{__('admin.add_unit')}}
+                    </button>
+                </div>
+            </div>
         </div>
 
         <div  class="card">
-            <div class="card-header p-0" >
+            <div class="card-body p-0" >
                 <div class="clearfix mb-1 p-3 m-0">
                     <ul class='tree'>
                         <li @click.stop="open = (!open)" >{{$course->trans_title}} Units
@@ -135,40 +143,10 @@
             </div>
         </div>
 
-
-
     </div>
-
-
-{{--    <ul class="tree">--}}
-{{--        <li>Animals--}}
-{{--            <ul>--}}
-{{--                <li>Birds</li>--}}
-{{--                <li>Mammals--}}
-{{--                    <ul>--}}
-{{--                        <li>Elephant</li>--}}
-{{--                        <li class="last">Mouse</li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
-{{--                <li class="last">Reptiles</li>--}}
-{{--            </ul>--}}
-{{--        </li>--}}
-{{--        <li class="last">Plants--}}
-{{--            <ul>--}}
-{{--                <li>Flowers--}}
-{{--                    <ul>--}}
-{{--                        <li>Rose</li>--}}
-{{--                        <li class="last">Tulip</li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
-{{--                <li class="last">Trees</li>--}}
-{{--            </ul>--}}
-{{--        </li>--}}
-{{--    </ul>--}}
-
 @endsection
 
-@push('vue')
+@section('script')
     <script>
 
         Vue.component('tree', {
@@ -179,11 +157,11 @@
               }
             },
             template: `
-                         <li @click.stop="open = (!open)">@{{item.title }} <i class="fas fa-sort-down"></i>
+                         <li @click.stop="open = (!open)">@{{item.title }} <i v-if="item.s && item.s.length > 0" class="fa fa-chevron-down" aria-hidden="true"></i>
 
-                                  <button @click.stop="$root.deleteUnit(course.units,item.id)"  class="btn text-danger btn-sm" >
+                                  <button @click.stop="$root.deleteUnit(course.units,item.id)" class="btn text-danger btn-sm" >
                                            <i class="fa fa-trash"></i></button>
-                                  <button @click.stop="$root.edit(item,item.id)" type="button" class="btn text-info  btn-sm" id="answer" ><i class="fa fa-pencil-alt"></i></button>
+                                  <button @click.stop="$root.edit(item,item.id)" type="button" class="btn text-info btn-sm" id="answer" ><i class="fa fa-pencil" style="color:#000;" aria-hidden="true"></i></button>
 
                              <tree-item-contents v-show="open" v-if="item.s" :items="item.s"/>
                            </li>`
@@ -202,7 +180,7 @@
                          <li @click.stop="open = (!open)" class="last" v-else>@{{child.title }}
                               <button @click.stop="$root.deleteUnit(course.units,child.id)"  class="btn btn-sm text-danger" >
                                        <i class="fa fa-trash"></i></button>
-                              <button @click.stop="$root.edit(child,child.id)" type="button" class="btn text-info btn-sm px-3" id="answer" ><i class="fa fa-pencil-alt"></i></button>
+                              <button @click.stop="$root.edit(child,child.id)" type="button" class="btn text-info btn-sm px-3" id="answer" ><i style="color:#000;" class="fa fa-pencil"></i></button>
                            </li></template></ul>`
          })
 
@@ -411,4 +389,4 @@
 
             });
     </script>
-@endpush
+@endsection

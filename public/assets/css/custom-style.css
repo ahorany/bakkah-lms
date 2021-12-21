@@ -1,0 +1,568 @@
+h1 , h2 , h3 , h4 , h5 ,h6,
+a, span , p , label, div, small{
+    text-transform: capitalize !important;
+}
+.quill-editor-container .ql-editor>p{
+    text-transform: none !important;
+}
+.bg-one {
+    background: #6a6a6a;
+}
+.bg-two {
+    background: #fc991e;
+}
+.bg-four {
+    background: #65aa74;
+}
+.bg-five {
+    background: #6597aa;
+}
+.card {
+    box-shadow: 0 0 20px rgb(127 170 203 / 5%);
+}
+.navbar-nav{
+    flex-direction: row;
+}
+.courses .card-header {
+    background: #f3f3f3;
+}
+.card-header {
+    background: #f3f3f3;
+    color: #000 !important;
+}
+.courses.form-inline .form-group .form-control{
+    width: 100% !important;
+}
+.courses .card-header span{
+    color: #000 !important;
+}
+.courses .BtnGroupRows a  {
+    background: #ffc107;
+    color: #000;
+    border: 1px solid #ffc107;
+}
+.btn-outline-primary:not(:disabled):not(.disabled):active{
+    background: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgb(255 193 7 / 50%);
+    color: #000;
+}
+.btn-outline-primary.focus, .btn-outline-primary:focus,
+.btn-outline-primary:not(:disabled):not(.disabled):active:focus{
+    box-shadow: 0 0 0 0.2rem rgb(255 193 7 / 50%);
+}
+.courses .BtnGroupRows form button{
+    background: #dc3545;
+    color: #fff;
+    border: 1px solid #dc3545;
+}
+.main-button{
+    background: #fb4400;
+    color: #fff;
+    text-decoration: none;
+}
+.inputs .form-group {
+    margin: 0 0 15px !important;
+}
+.card-default{
+    margin-bottom: 10px;
+}
+em u {
+    font-style: normal;
+    text-shadow: 0px 0px #fb4400;
+    color: #000;
+    text-decoration: none;
+}
+#ContentModal .modal-content{
+    width: 75% !important;
+}
+/*#ContentModal .modal-content .progress{*/
+/*    display: none;*/
+/*}*/
+.import-question-file {
+    padding: 29px 0 0;
+    text-align: right;
+}
+.col-md-12.file {
+    padding: 0;
+}
+.text-success {
+    color: #009eb8 !important;
+    font-size: small;
+}
+.modal-dialog.modal-lg {
+    max-width: 100% !important;
+}
+.text-center.course-image {
+    min-height: 197.35px !important;
+}
+
+/* checkbox */
+
+.container-check {
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .container-check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .container-check .checkmark {
+    position: absolute;
+    top: -7px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+  }
+
+  .container-check:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  .container-check input:checked ~ .checkmark {
+    background-color: #fb4400;
+  }
+
+  .container-check .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  .container-check input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  .container-check .checkmark:after {
+    left: 8px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+/* End Checkbox */
+
+
+.q-card {
+    margin-bottom: 10px;
+}
+.q-card h3 {
+    font-size: 20px;
+}
+.q-card label{
+    box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
+}
+ol.answers li .icon.empty {
+    background: #82bafe;
+}
+ol.answers li{
+    cursor: pointer;
+}
+.ql-container.ql-snow{
+    height: 150px;
+}
+.table td, .table th{
+    vertical-align: middle !important;
+}
+.navbar-brand{
+    box-shadow: none;
+}
+.card-report {
+    width: 24%;
+    margin: 5px auto;
+}
+.shadow{
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 2%) !important;
+}
+.lms-header ul.navbar-nav > li {
+    margin: 0 30px 0 0;
+}
+/*************************************************************************************************************/
+
+/* Buttons Style */
+.badge-blue{
+    background: #8dabf7;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.badge-pink{
+    background: #b18db5;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.badge-green{
+    background: #b0ac27;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.main-color {
+    background: transparent;
+    color: #fb4400;
+    border: 1px solid #fb4400;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+}
+.main-color:hover {
+    background: #fb4400;
+    text-decoration: none;
+    color: #fff;
+}
+
+.yellow {
+    background: transparent;
+    color: #000;
+    border: 1px solid #ffc107;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+}
+.yellow:hover {
+    background: #ffc107;
+    text-decoration: none;
+}
+
+.red{
+    background: transparent;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+}
+.red:hover {
+    background: #dc3545;
+    color: #fff;
+    text-decoration: none;
+}
+
+.green{
+    background: transparent;
+    color: green;
+    border: 1px solid green;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+}
+.green:hover {
+    background: green;
+    color: #fff;
+    text-decoration: none;
+}
+
+.cyan{
+    background: transparent;
+    color: #0dcaf0;
+    border: 1px solid #0dcaf0;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+}
+.cyan:hover {
+    background: #0dcaf0;
+    color: #fff;
+    text-decoration: none;
+}
+
+.primary{
+    background: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+}
+.primary:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.group_buttons {
+    background: transparent;
+    color: #009eb8;
+    border: 1px solid #ebd7ff;
+    font-weight: 500;
+}
+.group_buttons:hover{
+    text-decoration: none;
+    background: #f6feff;
+}
+.group_buttons.active {
+    background: #62a0a7;
+    color: #fff;
+}
+.white {
+    background: transparent;
+    color: #000 !important;
+    border: 1px solid #000;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+}
+.white:hover {
+    background: #000;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.primary-outline{
+    background: #fff;
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+}
+.primary-outline:hover {
+    text-decoration: none;
+    color: #fff;
+    background: #007bff;
+}
+
+/* End Buttons Style */
+
+/**************************************************************************************************************/
+.course-image .progress{
+    width: 100%;
+    height: 10px;
+    /* border-radius: 8px; */
+    border: 2px solid #e0e0e0;
+    margin-top: 8px;
+    overflow: hidden;
+}
+.course-image .progress .bar {
+    height: 8px;
+}
+.progress-bar
+{
+    background: #fb4400;
+}
+.lms-header ul.navbar-nav li.user a svg
+{
+    margin: 0;
+}
+.lms-header ul.navbar-nav li.user a svg#Layer_2
+.lms-header ul.navbar-nav li.user a svg#Layer_3{
+    width: 18px;
+    vertical-align: text-bottom !important;
+    fill: #6a6a6a;
+}
+
+svg#back{
+    fill: #fb4400;
+}
+a:hover svg#back{
+    fill: #fff;
+    background: #fb4400;
+}
+.icon-report{
+    fill: #fff !important;
+}
+.icon-report image{
+    filter: invert(1);
+}
+.course-cards{
+    width: 23%;
+    justify-content: center;
+}
+button.next_prev {
+    width: 85px;
+    padding: 5px;
+    margin: 0 5px;
+    border: 1px solid #7c9290;
+    color: #7c9290;
+    text-align: center;
+    border-radius: 30px;
+}
+button.next_prev:hover {
+    background-color: #7c9290;
+    color: #fff;
+    border: 1px solid transparent;
+}
+button.next_prev:hover svg{
+    filter: none;
+}
+
+ul.video-list li .play{
+    cursor: unset;
+}
+
+.req svg{
+    width: 7px !important;
+    height: 15px !important;
+}
+
+.req svg path{
+    fill: #dc3545 !important;
+}
+.home-section {
+    margin-bottom: 25px;
+}
+/******************************************************************************************************************/
+
+/* Media Query */
+
+@media (max-width: 1025px) {
+    .change-password .card .card-body{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+@media (min-width: 991px) and (max-width: 1156px) {
+    .calendar .sideb table th{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mx-md-4.course_info {
+        padding: 0 10px;
+    }
+    .dash-header h1 {
+        font-size: 25px;
+    }
+    main#main-vue-element {
+        padding: 15px 25px !important;
+    }
+    .card.p-5.user-info {
+        padding: 20px !important;
+    }
+    .signin .logo {
+        right: 15% !important;
+        left: unset !important;
+        top: 10% !important;
+    }
+    .signin .signin-form {
+        width: 85% !important;
+        padding: 50px 25px !important;
+    }
+    .change-password .card {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .change-password input.form-control {
+        font-size: 12px;
+    }
+    .navbar .navbar-toggler {
+        top: 20%;
+        left: 80px;
+        width: 30px;
+        height: 25px;
+        padding: 1px 6px;
+    }
+    .navbar-dark .navbar-brand {
+        color: #fff;
+        width: max-content;
+    }
+    .lms-header ul.navbar-nav li a.nav-link {
+        width: 40px;
+        height: 40px;
+    }
+    .course-cards > div {
+        display: inline-block;
+    }
+    .lms-header a.navbar-brand {
+        padding: 12px 10px !important;
+    }
+    .home-section .col-lg-6.mb-5.mb-lg-0{
+        margin-bottom: 0px !important;
+    }
+    .home-section .text-center.course-image.p-30 {
+        margin: 0 !important;
+        width: 100%;
+    }
+    .course-cards {
+        width: 48% !important;
+    }
+    main#main-vue-element{
+        padding: 0 !important;
+    }
+    .course_details .course-image{
+        box-shadow: none !important;
+    }
+    .q-card h3 {
+        font-size: 17px;
+        font-weight: 700;
+    }
+    .m-bottom{
+        margin-bottom: 25px;;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 576px){
+
+    .navbar .navbar-toggler {
+        top: 20%;
+        left: 200px;
+        width: 30px;
+        height: 25px;
+        padding: 1px 6px;
+    }
+    .lms-header a.navbar-brand {
+        padding: 12px 17.4px !important;
+    }
+    .text-center.course-image.w-30.mb-4.mb-md-0 {
+        width: 100%;
+        border-radius: 0 !important;
+    }
+}
+
+@media (max-width: 576px){
+    .calendar .sideb table th{
+        font-size: 12px;
+    }
+    .course-cards {
+        width: 100% !important;
+    }
+    .lead{
+        display: none;
+    }
+    .card iframe {
+        height: 200px;
+    }
+    ol.breadcrumb{
+        display: none !important;
+    }
+}
+
+/* End Media Query */

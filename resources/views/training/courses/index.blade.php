@@ -1,4 +1,8 @@
-@extends(ADMIN.'.general.index')
+@extends('layouts.crm.index')
+
+@section('useHead')
+    <title>{{__('education.Courses')}} | {{ __('home.DC_title') }}</title>
+@endsection
 
 @section('table')
 

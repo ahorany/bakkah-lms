@@ -8,9 +8,18 @@ Route::group([
 ], function(){
 
     // Route::get('/', 'Front\HomeController@index')->name('web.home');
+    Route::get('/zoom', function(){
+        return view('zoom');
+    })->name('web.zoom');
+
+    Route::get('/vsscorm1', function(){
+
+        return view('scorm');
+        dd('test');
+    });
     Route::get('/sitemap/sitemap', 'Front\HomeController@sitemap')->name('web.sitemap');
 
-    Auth::routes(['verify' => true]);
+    Auth::routes(['register' => false]);
 });
 
 Route::get('/clear-cache', function(){

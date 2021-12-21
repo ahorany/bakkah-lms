@@ -13,9 +13,40 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
-
 class ContentController extends Controller
 {
+
+    public function reset_order_contents($course_id){
+        $i = 0;
+        $contents = Content::where('course_id',$course_id)
+            ->whereNull('parent_id')
+            ->orderBy('order')
+            ->get();
+        foreach ($contents as $content){
+            Content::where('course_id',$course_id)->where('id',$content->id)->update([
+                "order" => $i
+            ]);
+            $i++;
+        }
+        return $contents;
+    }
+
+    public function save_content_order()
+    {
+        $list_of_ids = request()->data;
+        $data = Content::select('id','order')->whereIn('id',$list_of_ids )->get();
+
+        foreach ($data as $d){
+            foreach ($list_of_ids as $index => $id){
+                if($id == $d->id){
+                    Content::where('id',$id )->update([
+                        'order' => $index +1
+                    ]);
+                }
+            }
+        }
+        return response()->json(['status' => true]);
+    }
 
     public function contents()
     {
@@ -24,17 +55,19 @@ class ContentController extends Controller
         $contents = Content::where('course_id',$course_id)
             ->whereNull('parent_id')
             ->with(['contents' => function($q){
-                $q->with(['details','exam']);
+                $q->with(['upload','details','exam'])->withCount('questions')->orderBy('order');
             },'details','exams'])
-//            ->latest()
+            ->orderBy('order')
+//            ->orderBy('id')
             ->get();
+//        return $contents;
         return view('training.courses.contents.index', compact('course', 'contents'));
     }
 
     public function delete_content()
     {
         $content_id = request()->content_id;
-         Content::where('id',$content_id)->delete();
+        Content::where('id',$content_id)->delete();
         return response()->json([ 'status' => 'success']);
     }
 
@@ -52,14 +85,18 @@ class ContentController extends Controller
             return response()->json(['errors' => $validator->errors()]);
         }
 
+        $course_id = request()->course_id;
+        $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE course_id = $course_id  AND parent_id IS NULL"));
+
         $content = Content::create([
-                'title'      => request()->title,
-                'course_id'  =>request()->course_id,
-                'post_type'  => 'section',
+            'title'      => request()->title,
+            'course_id'  =>request()->course_id,
+            'post_type'  => 'section',
+            'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
         ]);
 
         $content->details()->create([
-                'excerpt'    =>  request()->excerpt,
+            'excerpt'    =>  request()->excerpt,
         ]);
 
         $content = Content::whereId($content->id)->with(['details','contents'])->first();
@@ -118,18 +155,19 @@ class ContentController extends Controller
 //                'excerpt'    =>  "required|string",
                 'content_id' => 'required|exists:contents,id',
                 'duration'=>'nullable|numeric|gt:-1',
-                'pagination'=>'nullable|numeric|gt:-1',
+                'pagination'=>'nullable|numeric|gt:0',
                 'attempt_count'=>'nullable|numeric|gt:-1',
                 'start_date'  => $start_date,
                 'end_date'     => $end_date,
+                'pass_mark' => "required|gt:-1|lt:101"
             ];
         }else{
             $mimes ='';
             switch ($type){
-                case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:20000' ; break;
+                case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:200000' ; break;
                 case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
-                case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,docx'; break;
-                case 'scorm': $mimes = '|mimes:pdf,doxc'; break;
+                case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,doc,docx,xls,jpeg,png'; break;
+                case 'scorm': $mimes = '|mimes:zip'; break;
                 default : $mimes = '';;
             }
 
@@ -168,7 +206,9 @@ class ContentController extends Controller
     }
 
     public function add_content(){
+
         $validate = $this->contentValidation(request()->type);
+//        return \request();
 
         if($validate){
             return response()->json(['errors' => $validate]);
@@ -178,13 +218,12 @@ class ContentController extends Controller
         $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE parent_id= $parent_id  "));
 
         if(\request()->type == 'exam'){
-
-
             $content = Content::create([
                 'title'      => request()->title,
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
                 'parent_id'  => request()->content_id,
+                'status' => request()->status == 'true' ? 1 : 0,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
             $content->details()->create([
@@ -201,6 +240,8 @@ class ContentController extends Controller
                 'duration' => request()->duration??0,
                 'pagination' => request()->pagination??1,
                 'attempt_count' => request()->attempt_count??0,
+                'pass_mark' =>  request()->pass_mark,
+                'shuffle_answers' => request()->shuffle_answers == 'true' ? 1 : 0,
             ]);
 
         }else{
@@ -209,23 +250,31 @@ class ContentController extends Controller
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
                 'url'        => request()->url,
+                'status' => request()->status == 'true' ? 1 : 0,
                 'parent_id'  => request()->content_id,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
 
-            $path = '';
-            switch (request()->type){
-                case 'video': $path = public_path('upload/files/videos'); break;
-                case 'audio': $path = public_path('upload/files/audios'); break;
-                case 'presentation': $path = public_path('upload/files/presentations'); break;
-                case 'scorm': $path = public_path('upload/files/scorms'); break;
-                default : $path = public_path('upload/files/files');
+            if(!request()->url){
+                  $path = '';
+                        switch (request()->type){
+                            case 'video': $path = public_path('upload/files/videos'); break;
+                            case 'audio': $path = public_path('upload/files/audios'); break;
+                            case 'presentation': $path = public_path('upload/files/presentations'); break;
+                            case 'scorm': $path = public_path('upload/files/scorms'); break;
+                            default : $path = public_path('upload/files/files');
+                        }
+
+                        Content::UploadFile($content,['folder_path' => $path]);
+
+                        if(request()->type == "scorm"){
+                           $this->unzipScormFile();
+                        }
             }
 
-            Content::UploadFile($content,['folder_path' => $path]);
         }
 
-        $content = Content::whereId($content->id)->with(['details','exam'])->first();
+        $content = Content::whereId($content->id)->with(['upload','details','exam'])->first();
         return response()->json([ 'status' => 'success','data' => $content]);
     }
 
@@ -233,24 +282,66 @@ class ContentController extends Controller
 
         $mimes ='';
         switch ($type){
-            case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:20000' ; break;
+            case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:200000' ; break;
             case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
-            case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,docx'; break;
-            case 'scorm': $mimes = '|mimes:pdf,doxc'; break;
-            default : $mimes = '';;
+            case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,doc,docx,xls,jpeg,png'; break;
+            case 'scorm': $mimes = '|mimes:zip'; break;
+            default : $mimes = '';
         }
 
         if ($mimes != ''){
-            $file =  'required_without:url';
-            if(\request()->hasFile('file')){
-                $file = 'required_without:url|file'.$mimes;
+            if($type == "video"){
+                $file = "";
+                $content_id = request()->content_id;
+                $sql = "SELECT *  FROM `uploads` WHERE `uploadable_id` = $content_id AND `uploadable_type` LIKE '%Content%'";
+                $content_file_from_upload =  DB::select(DB::raw($sql));
+
+                if(\request()->has("url") && \request()->url != "" && \request()->url != null){
+                   if(count($content_file_from_upload) > 0){
+                       $file = "";
+                   }
+
+                    $rules = [
+                        'title'      => "required|string",
+                        'url'        =>   "required_without:file",
+                        'file'       =>   $file,
+                    ];
+                }else{
+                    if(count($content_file_from_upload) == 0){
+                        $file =  'required_without:url';
+                        if(\request()->hasFile('file')){
+                           $file = 'required_without:url|file'.$mimes;
+                        }
+
+                        $rules = [
+                            'title'      => "required|string",
+                            'url'        =>   "required_without:file",
+                            'file'       =>   $file,
+                        ];
+                    }else{
+                        $rules = [
+                            'title'      => "required|string",
+                            'url'        =>   "",
+                            'file'       =>   $file,
+                        ];
+                    }
+                }
+
+
+
+            }else{
+                $file =  'required_without:url';
+                if(\request()->hasFile('file')){
+                    $file = 'required_without:url|file'.$mimes;
+                }
+
+                $rules = [
+                    'title'      => "required|string",
+                    'url'        =>   "required_without:file",
+                    'file'      => $file,
+                ];
             }
 
-            $rules = [
-                'title'      => "required|string",
-                'url'        =>   "required_without:file",
-                'file'      => $file,
-            ];
         }else{
 
             $start_date = '';
@@ -270,10 +361,12 @@ class ContentController extends Controller
                 'title'      => "required|string",
 //                'excerpt'    =>  "required|string",
                 'duration'=>'nullable|numeric|gt:-1',
-                'pagination'=>'nullable|numeric|gt:-1',
+                'pagination'=>'nullable|numeric|gt:0',
                 'attempt_count'=>'nullable|numeric|gt:-1',
                 'start_date'  => $start_date,
                 'end_date'     => $end_date,
+                'pass_mark' => "required|gt:-1|lt:101"
+
             ];
         }
 
@@ -299,6 +392,7 @@ class ContentController extends Controller
         if (\request()->type == 'exam') {
             $content = Content::whereId(request()->content_id)->update([
                 'title' => request()->title,
+                'status' => request()->status == 'true' ? 1 : 0,
             ]);
             ContentDetails::where('content_id', request()->content_id)->update([
                 'excerpt' => request()->excerpt,
@@ -311,6 +405,8 @@ class ContentController extends Controller
                 'pagination' => request()->pagination??1,
                 'attempt_count' => request()->attempt_count??0,
                 'updated_by' => auth()->id(),
+                'pass_mark' =>  request()->pass_mark,
+                'shuffle_answers' => request()->shuffle_answers == 'true' ? 1 : 0,
             ]);
 
         } else {
@@ -318,6 +414,7 @@ class ContentController extends Controller
                 ->update([
                     'title' => request()->title,
                     'url' => request()->url,
+                    'status' => request()->status == 'true' ? 1 : 0,
                 ]);
 
 
@@ -340,15 +437,39 @@ class ContentController extends Controller
             }
             if (request()->file('file') != null) {
                 Content::UploadFile(Content::where('id', request()->content_id)->first(), ['method' => 'update', 'folder_path' => $path]);
+                if(request()->type == "scorm"){
+                    $this->unzipScormFile();
+                }
             }
         }
-        return response()->json([ 'status' => 'success']);
+
+        $content = Content::whereId(request()->content_id)->with(['upload','details','exam'])->first();
+        return response()->json([ 'status' => 'success','data' => $content]);
+
+//        return response()->json([ 'status' => 'success']);
     }
 
 
+    private function unzipScormFile(){
+        $fileName = date('Y-m-d-H-i-s') . '_' . trim(request()->file->getClientOriginalName());
+        $fileName = str_replace(' ','_',$fileName);
+        $fileName = str_replace(['(',')'],'_',$fileName);
+        $fileName = trim(strtolower($fileName));
+        $name=explode('.',$fileName)[0];
 
+        $zip = new \ZipArchive();
+        $x = $zip->open(public_path("upload/files/scorms/$fileName"));
+        if ($x === true) {
+            $zip->extractTo(public_path("upload/files/scorms/").$name);
+            $zip->close();
+       }
+//        unlink(public_path("upload/files/scorms/$fileName"));
+    }
 
-
+    public function exam_preview_content($exam_id){
+        $exam =  Content::where('id',$exam_id)->with(['exam','questions.answers'])->first();
+        return view('training.courses.contents.preview.exam', compact('exam'));
+    }
 
 
 

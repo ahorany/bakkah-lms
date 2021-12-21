@@ -66,22 +66,31 @@ class Builder {
           $args = array_merge($args, json_decode($sidebar->route_param, true));
         }
 
-		$href = !is_null($sidebar->route_name)?route($sidebar->route_name, $args):'#';
-		$psth_to__check = str_replace(Request::root().'/',"", $href);
+        if(Route::has($sidebar->route_name)){
 
-		$active = ($sidebar->id==session('infastructure_id')) ? 'active' : $active;
-		$div .= '<a href="'.$href.'" class="nav-link '.$active.'">';
+            $href = !is_null($sidebar->route_name)?route($sidebar->route_name, $args):'#';
+            $psth_to__check = str_replace(Request::root().'/',"", $href);
 
-			$div .= '<i class="nav-icon '.($sidebar->icon??'fas fa-chart-pie').'"></i>';
-			// $div .= '<i class="nav-icon fas fa-th"></i>';
-	        $div .= '<p>';
-	       	$div .= $sidebar->trans_title;
+            $active = ($sidebar->id == session('infastructure_id')) ? 'active' : $active;
+//            $active = ($sidebar->id== (url()->full() == route($sidebar->route_name, $args)) ) && (url()->full() != CustomRoute('user.home'))  ? 'active' : $active;
+    //        $active = (session('infastructure_id') != 'user') ? 'active' : '';
+    //        dump(session('infastructure_id'));
 
-	       	if(is_null($sidebar->route_name))
-	       	  $div .= '<i class="right fas fa-angle-left"></i>';
+            $div .= '<a href="'.$href.'" class="nav-link '.$active.'">';
 
-	        $div .= '</p>';
-        $div .= '</a>';
+                // $div .= '<i class="nav-icon '.($sidebar->icon??'fas fa-chart-pie').'"></i>';
+                $div .= '<svg xmlns="http://www.w3.org/2000/svg" width="40.86" height="39.254" viewBox="0 0 40.86 39.254">
+                <path id="Path_131" data-name="Path 131" d="M40.428,11.8,20.848,22.039a.851.851,0,0,1-.787,0L.484,11.8A.854.854,0,0,1,.53,10.263L20.064.045a.855.855,0,0,1,.787,0l19.577,10.24a.855.855,0,0,1,0,1.513ZM20.457,1.764,2.719,11.043,20.454,20.32l17.739-9.278ZM.491,18.423,3.044,17.11a.853.853,0,0,1,.777,1.518L2.705,19.2l17.752,9.643L38.21,19.2l-1.117-.575a.853.853,0,0,1,.778-1.518l2.531,1.3a.854.854,0,0,1,.038,1.518L20.863,30.566a.848.848,0,0,1-.811,0L.473,19.932a.854.854,0,0,1,.017-1.509Zm0,8.533,2.553-1.313a.853.853,0,0,1,.777,1.518l-1.116.575,17.752,9.643L38.21,27.737l-1.117-.576a.853.853,0,0,1,.778-1.518l2.531,1.3a.853.853,0,0,1,.038,1.518L20.863,39.1a.848.848,0,0,1-.811,0L.473,28.466a.854.854,0,0,1,.017-1.509Z" transform="translate(-0.026 0.051)"></path>
+            </svg>';
+                $div .= '<p class="m-0">';
+                $div .= $sidebar->trans_title;
+
+                if(is_null($sidebar->route_name))
+                $div .= '<i class="right fas fa-angle-left"></i>';
+
+                $div .= '</p>';
+            $div .= '</a>';
+        }
         return $div;
 	}
 
@@ -418,7 +427,7 @@ class Builder {
 	static function Submit($name, $title, $class='btn-primary', $icon=null, $array=[]){
 		$type = $array['type']??'submit';
         $icon_fa=$array['icon']??'fa fa-'.$icon;
-		return '<button type="'.$type.'" name="'.$name.'" class="btn btn-sm '.$class.'"><i class="'.$icon_fa.'"></i> '.self::title($title, false, 'admin.').'</button>';
+		return '<button type="'.$type.'" name="'.$name.'" class=" '.$class.'"><i class="'.$icon_fa.'"></i> '.self::title($title, false, 'admin.').'</button>';
 	}
 
 	/*
@@ -438,19 +447,19 @@ class Builder {
 
 	static function Href($name, $post_type, $class, $icon, $route=null){
 		$name1 = !is_null($name)?__('admin.'.$name):null;
-		return '<a name="'.$name.'" href="'.$route.'" class="btn btn-sm '.$class.'" title="'.$name1.' '.__('admin.'.$post_type).'"><i class="fa fa-'.$icon.'"></i> '.$name1.'</a>';
+		return '<a name="'.$name.'" href="'.$route.'" class="mr-1 '.$class.'" title="'.$name1.' '.__('admin.'.$post_type).'"><i class="fa fa-'.$icon.'"></i> '.$name1.'</a>';
 	}
 
 	static function Create($post_type){
 		// $args = self::SetPage($args);
 		$route = self::Route(self::$folder.'.create', $post_type);//.self::getPage();
-		return self::Href('create', $post_type, 'btn-sm btn-primary', 'plus', $route);
+		return self::Href('create', $post_type, 'primary', 'plus', $route);
 	}
 
 	// To define buttons
 	static function TrashOrArchiveOrSchedule($post_type, $type='trash', $icon='trash'){
 		$route = self::Route(self::$folder.'.'.self::$getIndex, $post_type, ['trash'=>$type]);
-		$class = self::$trash==$type?'btn-sm btn-table':'btn-sm btn-default';
+		$class = self::$trash==$type?'btn-sm btn-table':'white';
 		return self::Href($type, $post_type, $class, $icon, $route);
 	}
 
@@ -547,15 +556,15 @@ class Builder {
 	}
 
 	static function Edit($title, $id){
-		return self::GridHref('edit', $title, $id, 'btn-sm btn-outline-primary', 'pencil-alt', 'edit');
+		return self::GridHref('edit', $title, $id, 'btn-sm btn-outline-primary', 'pencil', 'edit');
 	}
 
     static function Dublicate($title, $id){
-		return self::GridHref('duplicate', $title, $id, 'btn-sm btn-outline-primary duplicate', 'pencil-alt', 'duplicate','#duplicateRow');
+		return self::GridHref('duplicate', $title, $id, 'btn-sm btn-outline-primary duplicate', 'pencil', 'duplicate','#duplicateRow');
 	}
 
     static function Replicate($title, $id){
-		return self::GridHref('replicate', $title, $id, 'btn-sm btn-outline-primary replicate', 'pencil-alt', 'replicate','#replicateRow');
+		return self::GridHref('replicate', $title, $id, 'btn-sm btn-outline-primary replicate', 'pencil', 'replicate','#replicateRow');
 	}
 
     static function Attendance($title, $id){
@@ -591,7 +600,7 @@ class Builder {
 					$btn .= self::Create(self::$post_type);
 			}
 			else
-				$btn .= self::List(self::$post_type, 'list', 'btn-sm btn-success', 'list');
+				$btn .= self::List(self::$post_type, 'list', 'primary', 'list');
 			// ////////////////////////////////////
 			if(is_null(self::$trash) && count($array)==0)
 				$array = ['Trash'];
@@ -608,12 +617,12 @@ class Builder {
 		  <div class="card-body">';
 		$btn .= '<div class="BtnGroupForm">';
 			if($hasBack)// used in users.form_old.blade.php
-				$btn .= self::List(self::$post_type, 'back', 'btn-default', 'arrow-left');
+				$btn .= self::List(self::$post_type, 'back', 'cyan mr-1', 'arrow-left');
 
 			if(is_null(self::$eloquent))
-				$btn .= self::Submit('submit', self::$getPublishName, 'btn-primary', 'save');
+				$btn .= self::Submit('submit', self::$getPublishName, 'main-color', 'save');
 			else{
-				$btn .= self::Submit('submit', 'update', 'btn-primary', 'save');
+				$btn .= self::Submit('submit', 'update', 'main-color', 'save');
 			}
 
 		$btn .= '</div>';

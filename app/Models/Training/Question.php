@@ -18,4 +18,8 @@ class Question extends Model
         return $this->belongsTo('App\Models\Training\Content','exam_id');
     }
 
+    public function units(){
+        return $this->belongsToMany(Unit::class,'question_units','question_id','unit_id');
+    }
+
 }

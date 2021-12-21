@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Api\CheckApiKey;
 use App\Http\Middleware\CheckAdminUsers;
 use App\Http\Middleware\CheckPageMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -76,7 +77,10 @@ class Kernel extends HttpKernel
         'checkUser' => CheckAdminUsers::class,
 
         'checkRedirectPage'     => \App\Http\Middleware\checkRedirectPage::class,
-        'check_page' => CheckPageMiddleware::class
+        'check_page' => CheckPageMiddleware::class,
+        'apiToken' => CheckApiKey::class,
+        'checkUserType' => \App\Http\Middleware\CheckUserType::class,
+        'CheckInstructorType' => \App\Http\Middleware\CheckInstructorType::class,
 
     ];
 

@@ -20,7 +20,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable, TrashTrait, ImgTrait, JsonTrait;
     use PostMorphTrait;
@@ -35,7 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         , 'date_time', 'mobile', 'country', 'city','mail_subscribe', 'ref_id'
         , 'password_lms', 'username_lms', 'country_id'
         , 'trainer_courses_for_certifications', 'locale'
-        , 'two_factor_code', 'two_factor_expires_at','headline','lang','bio'
+        , 'two_factor_code', 'two_factor_expires_at','headline','lang','bio','last_login'
     ];
 
     /**
@@ -120,12 +120,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Constant::class, 'gender_id', 'id');
     }
 
-    // public function role(){
-    //     return $this->belongsTo(Role::class, 'role_id', 'id');
-    // }
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class,'role_user','user_id','role_id');
     }
 
     public function carts(){

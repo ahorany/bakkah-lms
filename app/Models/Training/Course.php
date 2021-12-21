@@ -44,38 +44,6 @@ class Course extends Model
         ];
     }
 
-    /**
-     * Get the index name for the model.
-     *
-     * @return string
-     */
-//    public function searchableAs()
-//    {
-//        return 'products_index';
-//    }
-//
-//    const SEARCHABLE_FIELDS = ['id', 'en_title', 'ar_title', 'en_short_excerpt', 'ar_short_excerpt', 'en_path', 'ar_path'
-//    , 'model_name', 'order', 'algolia_order', 'price'];
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array
-     */
-//    public function toSearchableArray()
-//    {
-//        return $this->only(self::SEARCHABLE_FIELDS);
-//        // $array = $this->toArray();
-//        // $courses = self::all();
-//        // $array = $courses->map(function($data){
-//        //     return [
-//        //         'en_title'=>$data['en_title'],
-//        //         'ar_title'=>$data['ar_title'],
-//        //     ];
-//        // })->toArray();
-//
-//        // return $array;
-//    }
-
     public function getEnPathAttribute(){
         return 'sessions/'.$this->slug;
         // return env('APP_URL').'sessions/'.$this->slug;
@@ -164,13 +132,13 @@ class Course extends Model
 		$this->attributes['disclaimer'] = $data;
     }
 
-    public function trainingOption(){
-        return $this->hasOne(TrainingOption::class, 'course_id');//->latest()
-    }
-
-    public function trainingOptions(){
-        return $this->hasMany(TrainingOption::class, 'course_id');
-    }
+//    public function trainingOption(){
+//        return $this->hasOne(TrainingOption::class, 'course_id');//->latest()
+//    }
+//
+//    public function trainingOptions(){
+//        return $this->hasMany(TrainingOption::class, 'course_id');
+//    }
 
     public function carts(){
         return $this->hasMany(Cart::class);
@@ -231,6 +199,10 @@ class Course extends Model
         return $this->belongsTo(Partner::class, 'partner_id', 'id');
     }
 
+    public function deliveryMethod(){
+        return $this->belongsTo(Constant::class, 'training_option_id', 'id');
+    }
+
     // public function agreement(){
     //     return $this->belongsTo(Course::class, 'partner_id', 'partner_id');
     // }
@@ -278,8 +250,9 @@ class Course extends Model
     ///////////// lms //////////////
 
     public function users(){
-        return $this->belongsToMany(User::class,'courses_registration','course_id')->withPivot('user_id' ,'course_id','rate', 'progress');
+        return $this->belongsToMany(User::class,'courses_registration','course_id')->withPivot('user_id' ,'course_id','role_id','rate', 'progress','expire_date');
     }
+
 
     public function contents(){
         return $this->hasMany(Content::class,'course_id');
@@ -293,5 +266,12 @@ class Course extends Model
         return $this->hasOne(CourseRegistration::class,'course_id');
     }
 
+    public function training_option(){
+        return $this->belongsTo(Constant::class,'training_option_id');
+    }
+
+    // public function role(){
+    //     return $this->belongsTo(Constant::class,'training_option_id');
+    // }
 
 }

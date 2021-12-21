@@ -9,12 +9,7 @@ Route::group([
 
     Route::group(['as' => 'education.'], function () {
 
-        Route::get('/', [UserProfileController::class, 'login'])->name('login');
+        Route::get('/', [\App\Http\Controllers\Front\UserProfileController::class, 'home'])->name('login');
 
-        Route::group(['prefix' => 'sessions'], function () {
-
-            Route::get('/{category?}', [EducationController::class, 'sessions'])->name('courses');
-
-        });
     });
 });

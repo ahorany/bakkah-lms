@@ -22,6 +22,15 @@ use App\Models\Training\CartMaster;
 use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
+function checkUserIsTrainee(){
+    if(isset(\auth()->user()->roles()->first()->id) && \auth()->user()->roles()->first()->id == 2 ){
+        return true;
+    }
+    return false;
+}
+
+
+
 function CustomAsset($url){
     return asset(env('LIVE_ASSET').$url);
 }

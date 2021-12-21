@@ -16,12 +16,11 @@ class Authenticate extends Middleware
     {
 
 
-
         if (! $request->expectsJson()) {
-            if ($request->is('user/*'))
-            {
-                return route('user.login');
-            }
+//            if ($request->is('user/*'))
+//            {
+//                return route('user.login');
+//            }
             return route('login');
         }
     }

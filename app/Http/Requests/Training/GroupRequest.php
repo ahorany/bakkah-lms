@@ -27,6 +27,7 @@ class GroupRequest extends FormRequest
             'name'=>'required|min:2|max:200',
             'title'=>'required|min:2|max:200',
             'description'=>'',
+            'expire_date'=>'',
             'image'=>'image|mimes:jpeg,png,jpg,gif,svg|max:20480',
             'active'=>'',
             'updated_by'=>'',
