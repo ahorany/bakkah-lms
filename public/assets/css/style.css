@@ -622,8 +622,8 @@ nav#sidebarMenu ul li a svg path {
 .lms-header ul.navbar-nav li a.nav-link {
   display: flex;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   background: #eee;
   justify-content: center;
   border-radius: 50%;
@@ -710,7 +710,7 @@ ol.breadcrumb li a {
 }
 
 .dash-header h1 {
-  font-size: 40px;
+  font-size: 25px;
   margin: 0;
   margin-top: 15px;
   font-family: "Lato Black";

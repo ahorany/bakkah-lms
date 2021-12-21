@@ -55,6 +55,12 @@
 
                 <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
 
+                @if($course->PDUs > 0)
+                    <span class="">
+                        {{$course->PDUs}} PDUs
+                    </span>
+                @endif
+
                 <div class="rating">
                     <span class="total_rate" v-text="total_rate"></span>
                     <template v-for="item in 5">
@@ -142,26 +148,29 @@
                 @if($video)
                 <div class="col-lg-4 col-xl-3">
                     <div class="card h-100 justify-content-center align-items-center p-5 video-btn">
-                        <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"
+                        <video width="100%" oncontextmenu="return false;" controls="controls" controlslist="nodownload" preload="metadata" class="embed-responsive-item">
+                            <source src="{{CustomAsset('upload/video/'.$video->file)}}#t=0.5" type="video/mp4">
+                        </video>
+                        {{-- <button><svg xmlns="http://www.w3.org/2000/svg" width="26.818" height="30.542"
                                 viewBox="0 0 26.818 30.542">
                                 <path id="Path_92" data-name="Path 92" d="M1586.871,1164.139V1133.6l26.818,15.165Z"
                                     transform="translate(-1586.871 -1133.597)" fill="#fff" />
                             </svg>
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
                 @endif
             </div>
         @endif
 
-        @if($video)
+        {{-- @if($video)
             <div class="modal">
                 <div class="modal-content">
                     <div class="modal-close">x</div>
                     <video width="100%" oncontextmenu="return false;" controls="controls" controlslist="nodownload" src="{{CustomAsset('upload/video/'.$video->file)}}" class="embed-responsive-item"></video>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         @if (count($course->contents) > 0)
             <div class="row mx-0 mt-3 course-content">
@@ -212,19 +221,19 @@
                                     @endforeach
 </div>
 
+{{--
 <div class="col-lg-4 course_info">
 <div class="card p-30 activity">
 <h2>Activity</h2>
 <ul>
-<?php $lang = app()->getLocale(); ?>
+< $lang = app()->getLocale();
 @foreach($activities as $activity)
-<li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-{{--                                  <div>Start Date: {{$activity->start_date}}</div>--}}
-{{--                                  <div>End Date: {{$activity->end_date}}</div>--}}
+    <li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
 </li>
 @endforeach
 </ul>
 </div>
+--}}
 
 {{-- <div class="d-flex justify-content-between mt-5 course-group">
 <div class="persons card p-20">

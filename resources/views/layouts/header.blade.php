@@ -1,3 +1,15 @@
+<style>
+    a.messages {
+        background: #6a6a6a;
+        display: inline-block;
+        color: #fff;
+        width: 35px;
+        text-align: center;
+        height: 35px;
+        line-height: 2.2;
+        border-radius: 50%;
+    }
+</style>
 <header class="navbar navbar-dark sticky-top bg-white flex-md-nowrap p-0 shadow lms-header">
     <a class="navbar-brand col-md-3 col-lg-3 col-xl-2 me-0 px-3" href="{{CustomRoute('user.home')}}">
         <img src="{{CustomAsset('assets/images/logo.png')}}" alt="{{__('education.header_title')}}">
@@ -24,8 +36,8 @@
         <li class="has-dropdown user">
             <ul class="navbar-nav mx-0">
                 <li class="has-dropdown user m-0">
-                    <a style="color: #6a6a6a;" onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" href="#">
-                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" viewBox="0 0 100 100" style="vertical-align: middle; fill: #6a6a6a;" xml:space="preserve">
+                    <a style="color: #6a6a6a;" class="messages" onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" href="#">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" viewBox="0 0 100 100" style="vertical-align: middle; fill: #fff;" xml:space="preserve">
                             <g>
                                 <path d="M45.91,12.57c0-1.23-0.03-2.59,0.01-3.95c0.05-2.18,1.22-3.64,3.22-4.1c2.12-0.48,4.39,1.03,4.68,3.18
                                     c0.12,0.92,0.08,1.86,0.1,2.79c0.01,0.71,0,1.42,0,2.06c1.9,0.53,3.77,0.88,5.5,1.57c10.3,4.07,16.38,11.58,18.09,22.55
@@ -44,9 +56,9 @@
                     <div class="dropdown d-none">
                         <ul class="postition-relative">
                             <li>
-                                <a href="{{route('user.messages.inbox',['type'=>'sent'])}}" class="d-flex">
-                                    <span class="mx-1">
-                                        <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                <a href="{{route('user.messages.inbox',['type'=>'sent'])}}">
+                                    <span class="mx-2 d-flex">
+                                        <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 10px;" xml:space="preserve">
                                             <path d="M4.4,46.85c0.51-1.03,1.39-1.53,2.43-1.93C33.1,34.91,59.35,24.89,85.6,14.86c1.09-0.42,2.1-0.46,3,0.39
                                                 c0.9,0.85,0.91,1.87,0.57,2.98C82.5,40.08,75.83,61.94,69.15,83.8c-0.68,2.24-2.46,2.82-4.35,1.42c-7.15-5.3-14.3-10.61-21.44-15.92
                                                 c-0.26-0.2-0.53-0.38-0.86-0.61c-0.26,0.51-0.51,0.96-0.74,1.42c-2.8,5.55-5.59,11.09-8.38,16.64c-0.67,1.33-1.66,1.9-2.83,1.66
@@ -64,9 +76,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('user.messages.inbox',['type'=>'inbox'])}}" class="d-flex">
-                                    <span class="mx-1">
-                                        <svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                <a href="{{route('user.messages.inbox',['type'=>'inbox'])}}">
+                                    <span class="mx-2 d-flex">
+                                        <svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 10px;"xml:space="preserve">
                                             <g>
                                                 <path d="M93.14,87.2c-28.75,0-57.39,0-86.13,0c0-0.39,0-0.74,0-1.09c0-9-0.05-18.01,0.04-27.01c0.02-2.34,0.47-4.69,0.77-7.02
                                                     c0.55-4.26,1.14-8.52,1.71-12.78c0.64-4.76,1.28-9.53,1.91-14.29c0.5-3.79,1-7.58,1.5-11.36c0.04-0.32,0.1-0.65,0.16-1.02
@@ -103,7 +115,7 @@
                         $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
                     }
                 ?>
-                <img style="width:40px;height:40px;object-fit:cover;border-radius: 50%;" src="{{$url}}" alt=" " />
+                <img style="width:35px;height:35px;object-fit:cover;border-radius: 50%;" src="{{$url}}" alt=" " />
 
                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: -15px;" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
                     <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"

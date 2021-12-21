@@ -164,7 +164,7 @@ em u {
     margin-bottom: 10px;
 }
 .q-card h3 {
-    font-size: 20px;
+    font-size: 16px;
 }
 .q-card label{
     box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
@@ -407,7 +407,7 @@ a:hover svg#back{
 button.next_prev {
     width: 85px;
     padding: 5px;
-    margin: 0 5px;
+    margin: 0px 5px 5px 5px;
     border: 1px solid #7c9290;
     color: #7c9290;
     text-align: center;

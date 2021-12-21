@@ -120,17 +120,23 @@
 
                 @endisset
 
+<<<<<<< HEAD
 
+=======
+                    <video class="video w-100" controls controlsList="nodownload" id="video_player">
+                        <source id="update_video_source" src="" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+>>>>>>> de062304a562c27fcc151db20ab6e74a64053a5b
 
-{{--                @if($content->post_type == 'video' && $content->url)--}}
-{{--                    <?php--}}
-{{--                    if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {--}}
-{{--                        $video_id = $match[1]??null;--}}
-{{--                    }--}}
-{{--                    ?>--}}
-{{--                    <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>--}}
-
-{{--                @endif--}}
+               {{-- @if($content->post_type == 'video' && $content->url) --}}
+                   <?php
+                        // if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
+                        //     $video_id = $match[1]??null;
+                        // }
+                    ?>
+                   {{-- <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
+               @endif --}}
             </div>
         </div>
     </div>
@@ -145,8 +151,13 @@
         const player = document.querySelector("#update_video_source");
         const vid = player.parentElement;
 
+<<<<<<< HEAD
         let video_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code
         let user_id = {{ auth()->id() }} // It depends on your code too
+=======
+        let video_id = 17;  // Getting the selected video id, it depends on your code
+        let user_id = 13023; // It depends on your code too
+>>>>>>> de062304a562c27fcc151db20ab6e74a64053a5b
 
         fetch('{{url("video")}}/' +
             video_id +

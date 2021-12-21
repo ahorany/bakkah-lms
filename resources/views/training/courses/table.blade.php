@@ -21,6 +21,7 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
             <th class="">{{__('admin.course_code')}}</th>
+            <th class="">{{__('admin.course_pdus')}}</th>
             <th class="">{{__('admin.delivery_methods')}}</th>
             <th class="">{{__('admin.assigned_learners')}}</th>
             <th class="">{{__('admin.completed_learners')}}</th>
@@ -40,6 +41,9 @@ use App\Models\Training\CourseRegistration;
         </td>
         <td>
             <span class="td-title">{{$post->code ?? null}}</span>
+        </td>
+        <td>
+            <span class="td-title">{{$post->PDUs ?? null}}</span>
         </td>
         <td>
             <span class="td-title">{{$post->deliveryMethod->trans_name}}</span>

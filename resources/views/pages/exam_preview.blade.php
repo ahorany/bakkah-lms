@@ -75,7 +75,7 @@
                                 <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
                                 <small v-text=" '(' + (question.mark) + ' Marks)'"></small>
                             </div>
-                            <h2 v-html="question.title" style="padding-right: 7%;"></h2>
+                            <h3 v-html="question.title" style="padding-right: 7%;"></h3>
 
                            <template v-if="page_type == 'exam'">
                                 <label :for="answer.title + '_' + answer.id + '_' + answer.question_id"  v-if="question.answers_count == 1" v-for="answer in question.answers" class="custom-radio" > @{{ answer.title }}
