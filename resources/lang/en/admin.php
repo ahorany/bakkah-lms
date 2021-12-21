@@ -83,7 +83,7 @@ return [
     'course_id'=>'Course',
     'training_option_id'=>'Delivery Method',
     'action'=>'Action',
-    'Enabeld Status' => 'Enabeld Status',
+    'Enabeld Status' => 'Enable Status',
     'job_title' => 'Job Title',
     'gender_id' => 'Gender',
     'company' => 'Company',

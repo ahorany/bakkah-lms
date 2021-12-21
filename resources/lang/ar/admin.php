@@ -79,7 +79,7 @@ return [
     'search form'=>'Search Form',
     'course_id'=>'Course',
     'training_option_id'=>'Delivery Method',
-    'Enabeld Status' => 'Enabeld Status',
+    'Enabeld Status' => 'Enable Status',
     'en_pdf' => 'en pdf',
     'ar_pdf' => 'ar pdf',
     'brochure' => 'Brochure',
