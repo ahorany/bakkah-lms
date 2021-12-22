@@ -89,65 +89,6 @@
                                </label>
 
                            </template>
-
-
-                          <template v-if="page_type != 'exam'">
-                                  <template v-if="countCorrectAnswers(question) == 1" >
-                                      <label v-for="answer in question.answers" class="custom-radio" :class="{'text-success' : answer.check_correct == 1 , 'text-danger' : (answer.check_correct == 0 && (answers.length > 0) && (answers[answer.question_id] != undefined) && (answers[answer.question_id].id == answer.id)) }"> @{{ answer.title }}
-                                        <input type="radio" name="radio" :checked=" (answers.length > 0) && (answers[answer.question_id] != undefined) ? answers[answer.question_id].id == answer.id ? true:false : false " :name="answer.question_id">
-                                        <span class="radio-mark"></span>
-                                      </label>
-
-                                      <div v-if="(answers.length == 0 || (answers[question.id] == undefined)) || answers[question.id].check_correct == 0">
-                                          <span>Correct Answer: </span>
-                                          <div class="text-success" v-for="answer in correct_answers(question)">
-                                              @{{  answer.title }}
-                                          </div>
-                                      </div>
-
-                                      <div v-if="question.feedback" class="mt-3">
-                                          <h3>Feedback : </h3>
-                                          <p class="p-2">@{{  question.feedback }}</p>
-                                      </div>
-                                  </template>
-
-
-                                  <template v-if="countCorrectAnswers(question) > 1">
-                                      <label  v-for="answer in question.answers"  class="custom-radio" :class="{'text-success' : answer.check_correct == 1 , 'text-danger' : (answer.check_correct == 0 && (answers.length > 0) && (searchReviewMultiAnswers(answer.question_id,answer.id) ) ) }"> @{{ answer.title }}
-                                          <input type="checkbox" :key="answer.title + '_' + answer.id + '_' + answer.question_id" :checked="(answers.length > 0) ? (searchReviewMultiAnswers(answer.question_id,answer.id) ) : false" :name="answer.question_id">
-                                          <span class="radio-mark check-mark"></span>
-                                      </label>
-
-                                      <div v-if="(answers.length == 0) || checkIfQuestionHasInCorrectAnswers(question.id)">
-                                          <span>Correct Answer: </span>
-                                          <div class="text-success" v-for="answer in correct_answers(question)">
-                                              @{{  answer.title }}
-                                          </div>
-                                      </div>
-
-                                      <div v-if="question.feedback" class="mt-3">
-                                          <h3>Feedback : </h3>
-                                          <p class="p-2">@{{  question.feedback }}</p>
-                                      </div>
-                                  </template>
-
-                          </template>
-
-                                    {{--                            <label class="custom-radio"> Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement.--}}
-                                    {{--                                <input type="radio" name="radio">--}}
-                                    {{--                                <span class="radio-mark"></span>--}}
-                                    {{--                            </label>--}}
-
-                                    {{--                            <label class="custom-radio"> Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement.--}}
-                                    {{--                                <input type="radio" name="radio">--}}
-                                    {{--                                <span class="radio-mark"></span>--}}
-                                    {{--                            </label>--}}
-
-                                    {{--                            <label class="custom-radio"> Lean Six Sigma Yellow belt training provides insight to the methodology for process improvement.--}}
-                                    {{--                                <input type="radio" name="radio">--}}
-                                    {{--                                <span class="radio-mark"></span>--}}
-                                    {{--                            </label>--}}
-
                         </div>
                         </template>
 
