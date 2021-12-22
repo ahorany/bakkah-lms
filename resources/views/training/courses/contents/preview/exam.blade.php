@@ -22,6 +22,10 @@
             <li>{{$exam->title}}</li>
         </ol>
         <h1>{{$exam->title}}</h1>
+
+        <a class="group_buttons mb-1 btn-sm" title="Preview" href="{{route('training.add_questions',$exam->exam->content->id)}}" target="{{$exam->content_id}}">
+            <i aria-hidden="true" class="fa fa-pencil"></i> Edit
+        </a>
     </div>
 
 

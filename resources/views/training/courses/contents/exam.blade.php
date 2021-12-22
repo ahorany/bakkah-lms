@@ -33,7 +33,7 @@
                     <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
                         <i class="fa fa-plus"></i> {{__('admin.add_question')}}
                     </button>
-                    <a  class="group_buttons mb-1 btn-sm" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + {{$content->id}}" :target="{{$content->id}}">
+                    <a class="group_buttons mb-1 btn-sm" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + {{$content->id}}" :target="{{$content->id}}">
                         <i class="fa fa-folder-open-o" aria-hidden="true"></i> Preview Exam
                     </a>
                 </div>
