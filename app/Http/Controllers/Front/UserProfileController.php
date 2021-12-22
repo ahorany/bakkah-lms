@@ -38,6 +38,34 @@ class UserProfileController extends Controller
         ]]);
     }
 
+    public function resume($course_id){
+        $user_id = \auth()->id();
+       $content =  DB::select(DB::raw("SELECT user_contents.content_id as content_id , contents.post_type as type  FROM courses
+                                    INNER JOIN contents ON courses.id = contents.course_id
+                                    INNER JOIN user_contents ON contents.id = user_contents.content_id
+                                    WHERE courses.id = $course_id
+                                    AND
+                                    user_contents.user_id = $user_id
+                                    AND
+                                    courses.deleted_at IS NULL
+                                    AND
+                                    contents.deleted_at IS NULL
+                                    AND
+                                    contents.downloadable = 0
+                                    ORDER BY user_contents.id DESC
+                                    LIMIT 1"));
+
+       if(count($content) > 0){
+           $content_id = $content[0]->content_id;
+           if($content[0]->type == "exam"){
+               return redirect()->route('user.exam',$content_id);
+           }else{
+               return redirect()->route('user.course_preview',$content_id);
+           }
+       }else{
+           abort(404);
+       }
+    }
 
 
     public function join_zoom(){
@@ -453,6 +481,7 @@ class UserProfileController extends Controller
                                      ORDER BY contents.order DESC
                                      LIMIT 5
                           "));
+
         return view('pages.course_details',compact('course','total_rate','activities'));
     }
 
