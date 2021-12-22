@@ -248,7 +248,7 @@
 
                                 {{-- <small>{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '0%' }}</small> --}}
                                 <div class="progress">
-                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{($progress > 0) ? number_format($progress, 0, '.', ',') . '%' : '0'}};" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? number_format($progress, 0, '.', ',')  : '0' }}%</div>
+                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{($progress > 0) ? number_format($progress, 0, '.', ',') . '%' : '0'}};" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '' }}</div>
                                 </div>
                             @endif
                         </td>
