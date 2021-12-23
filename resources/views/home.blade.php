@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    <div class="course-cards bg-two">
+                    <div class="course-cards bg-main">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report" id="bg-main" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                             <path d="M32.47,29.61c0.84,0.83,1.65,1.64,2.46,2.46c1.86,1.86,3.73,3.72,5.58,5.59c0.93,0.95,0.74,2.31-0.37,2.83  c-0.7,0.33-1.38,0.17-2.06-0.5c-2.48-2.48-4.96-4.95-7.43-7.43c-0.17-0.17-0.32-0.35-0.53-0.59c-0.21,0.2-0.38,0.35-0.54,0.51  c-2.53,2.52-5.05,5.05-7.57,7.57c-0.52,0.52-1.11,0.75-1.83,0.5c-0.66-0.23-1.03-0.71-1.13-1.39c-0.1-0.67,0.24-1.16,0.69-1.61  c2.47-2.46,4.93-4.92,7.39-7.38c0.17-0.17,0.38-0.3,0.62-0.49c-0.24-0.26-0.4-0.43-0.56-0.59c-2.29-2.29-4.59-4.58-6.88-6.88  c-1-1.01-0.72-2.45,0.54-2.9c0.75-0.27,1.35,0.02,1.88,0.56c2.26,2.26,4.53,4.52,6.79,6.79c0.17,0.17,0.29,0.38,0.46,0.61  c0.27-0.25,0.45-0.41,0.61-0.57c2.26-2.26,4.53-4.52,6.79-6.79c0.51-0.51,1.08-0.83,1.81-0.64c1.2,0.31,1.65,1.75,0.86,2.71  c-0.15,0.18-0.33,0.35-0.5,0.52c-2.22,2.22-4.43,4.43-6.65,6.65C32.77,29.28,32.64,29.43,32.47,29.61z"></path>
                             <path d="M31.74,55.25c-1.12,0-2.24,0-3.35,0c-0.16-0.03-0.32-0.07-0.48-0.1c-1.02-0.15-2.06-0.22-3.06-0.44  c-5.29-1.14-9.78-3.71-13.43-7.7c-3.29-3.6-5.38-7.8-6.21-12.61c-0.16-0.9-0.26-1.81-0.39-2.71c0-1.12,0-2.23,0-3.35  c0.03-0.14,0.07-0.28,0.09-0.42c0.11-0.86,0.17-1.73,0.34-2.58c1.24-6.24,4.33-11.37,9.37-15.25c5.96-4.6,12.73-6.22,20.12-4.86  c6.2,1.13,11.29,4.26,15.17,9.23c4.68,6,6.33,12.81,4.95,20.28c-1.14,6.18-4.29,11.22-9.21,15.13c-3.3,2.62-7.03,4.3-11.19,5.01  C33.55,55.01,32.64,55.12,31.74,55.25z M51.16,29.99C51.15,18.41,41.63,8.91,30.06,8.91C18.48,8.91,8.97,18.42,8.96,30  C8.95,41.59,18.5,51.14,30.09,51.11C41.68,51.08,51.18,41.56,51.16,29.99z"></path>
@@ -137,7 +137,7 @@
                         @else
                             <img src="{{$url}}" height="100px" >
                         @endisset
-                        <h3 style="color: #000; min-height: 50px;">{{$course->trans_title}}</h3>
+                        <h3 style="color: #000;">{{$course->trans_title}}</h3>
 
                         <div class="progress">
                             <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
@@ -420,7 +420,7 @@
             @endif
             <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
                 <div class="card h-100 p-30 activity">
-                    <h3>Activity</h3>
+                    <h2>Activity</h2>
                     <ul>
                         <?php $lang = app()->getLocale(); ?>
                         @foreach($activities as $activity)
@@ -455,7 +455,11 @@
                                             C48.19,61.53,44.77,61.52,41.34,61.52z"/>
                                     </g>
                                 </svg>
-                                <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                                @if($activity->type == 'exam')
+                                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                                @else
+                                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                                @endif
                             </li>
                         @endforeach
                     </ul>
@@ -669,10 +673,10 @@
                 {
                     data: [courses_count, progress, not_complete, complete],
                     backgroundColor: [
-                        "#303d47",
-                        "#6d6e70",
-                        "#fd9a18",
-                        "#1ca09a",
+                        "#65aa74",
+                        "#6a6a6a",
+                        "#fb4400",
+                        "#00bcb3",
                     ]
                 }]
         };
