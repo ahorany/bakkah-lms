@@ -223,6 +223,7 @@ ol.answers li{
     color: #fb4400;
     border: 1px solid #fb4400;
     padding: 4px 10px;
+    width: max-content;
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
@@ -232,6 +233,11 @@ ol.answers li{
     background: #fb4400;
     text-decoration: none;
     color: #fff;
+}
+.dflex{
+display: flex;
+align-items: center;
+justify-content: center;
 }
 
 .yellow {
@@ -486,6 +492,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 }
 
 @media (max-width: 768px) {
+    .dash-header.course_info {
+        padding: 25px 20px 0;
+    }
     .mx-md-4.course_info {
         padding: 0 10px;
     }
@@ -526,8 +535,8 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         width: max-content;
     }
     .lms-header ul.navbar-nav li a.nav-link {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
     }
     .course-cards > div {
         display: inline-block;
@@ -591,9 +600,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .card iframe {
         height: 200px;
     }
-    ol.breadcrumb{
+    /* ol.breadcrumb{
         display: none !important;
-    }
+    } */
 }
 
 /* End Media Query */

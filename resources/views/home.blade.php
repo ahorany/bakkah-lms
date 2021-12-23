@@ -137,7 +137,7 @@
                         @else
                             <img src="{{$url}}" height="130px" >
                         @endisset
-                        <h3 style="color: #000;">{{$course->trans_title}}</h3>
+                        <h3 style="color: #000; min-height: 50px;">{{$course->trans_title}}</h3>
 
                         <div class="progress">
                             <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
