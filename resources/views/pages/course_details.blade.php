@@ -235,40 +235,6 @@
 
 
 <div class="col-lg-4 course_info">
-<<<<<<< HEAD
-<div class="card p-30 activity">
-<h2>Activity</h2>
-<ul>
-<?php $lang = app()->getLocale();?>
-@foreach($activities as $activity)
-    <li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-</li>
-@endforeach
-</ul>
-</div>
-
-
-{{-- <div class="d-flex justify-content-between mt-5 course-group">--}}
-{{--<div class="persons card p-20">--}}
-{{--<h3 class="mt-0">Course Group</h3>--}}
-{{--<!-- <small>Lean Six Sigma Yellow belt training provides insight to the </small> -->--}}
-{{--<ul>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li>+15</li>--}}
-{{--</ul>--}}
-{{--</div>--}}
-{{--<div class="new-students">--}}
-{{--<span>New Student</span>--}}
-{{--<b>12</b>--}}
-{{--</div>--}}
-{{--</div>--}}
-</div>
-=======
     <div class="card p-30 activity">
     <h2>Activity</h2>
     <ul style="list-style: none;">
@@ -310,7 +276,6 @@
         @endforeach
     </ul>
     </div>
->>>>>>> 1b47b079a432520a00eba35ea7a65092618bd77e
 </div>
 @endif
 </div>
