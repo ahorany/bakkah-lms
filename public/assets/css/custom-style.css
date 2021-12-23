@@ -6,13 +6,13 @@ a, span , p , label, div, small{
     text-transform: none !important;
 }
 .bg-one {
-    background: #6a6a6a;
+    background: #6d6e70;
 }
 .bg-two {
-    background: #fc991e;
+    background: #fd9a18;
 }
 .bg-four {
-    background: #65aa74;
+    background: #303d47;
 }
 .bg-five {
     background: #6597aa;
@@ -371,12 +371,12 @@ justify-content: center;
     width: 100%;
     height: 10px;
     /* border-radius: 8px; */
-    border: 2px solid #e0e0e0;
+    border: 1px solid #f2f2f2;
     margin-top: 8px;
     overflow: hidden;
 }
 .course-image .progress .bar {
-    height: 8px;
+    height: 7.5px;
 }
 .progress-bar
 {
@@ -473,6 +473,11 @@ tr.text-capitalize.ui-sortable-handle:hover {
 }
 tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     display: inline-block;
+}
+
+.course-cards span {
+    font-family: 'Lato Black';
+    font-size: 13px;
 }
 /******************************************************************************************************************/
 

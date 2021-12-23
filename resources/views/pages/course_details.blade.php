@@ -235,14 +235,16 @@
 
 
 <div class="col-lg-4 course_info">
-    <div class="card p-30 activity">
+    <div class="card learning-file activity">
     <h2>Activity</h2>
-    <ul style="list-style: none;">
+    <ul style="list-style: none; padding: 0;">
     <?php $lang = app()->getLocale(); ?>
         @foreach($activities as $activity)
             <li>
-                <svg style="width: 20px; vertical-align: bottom;" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                    viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+
+                <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">
+                    <svg style="vertical-align: bottom;" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 100 100" height="28.126" width="28.126" xml:space="preserve">
                     <g>
                         <path d="M70.1,8.49C70.73,8.65,71.37,8.8,72,8.96c5.34,1.4,9.44,6.21,9.68,11.69c0.19,4.33,0.11,8.67,0.13,13
                             c0.01,2.71,0.02,5.41,0,8.12c-0.02,2.1-1.33,3.6-3.16,3.66c-2.06,0.08-3.52-1.38-3.55-3.6c-0.03-2.37-0.01-4.75-0.01-7.13
@@ -271,7 +273,8 @@
                             C48.19,61.53,44.77,61.52,41.34,61.52z"/>
                     </g>
                 </svg>
-                <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                    <span>{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</span>
+                </a>
             </li>
         @endforeach
     </ul>
