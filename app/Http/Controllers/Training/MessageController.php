@@ -96,6 +96,7 @@ class MessageController extends Controller
 
 
     public function addMessage(){
+
         $user_auth_role = \auth()->user()->roles()->first()->id ;
         if($user_auth_role == 1){
             $courses =  Course::with(['users'])->get();
@@ -139,6 +140,7 @@ class MessageController extends Controller
        $recipients = CourseRegistration::where('course_id', request()->course_id)->where('role_id',2)->get();
 
         foreach ($recipients as $recipient){
+
             RecipientMessage::create([
                'user_id' => $recipient->user_id,
                'role_id' => $recipient->role_id,
@@ -146,7 +148,10 @@ class MessageController extends Controller
             ]);
 
             $user = User::where('id',$recipient->user_id)->first();
-            Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
+
+            if(env('SEND_MAIL')==true){
+                Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
+            }
         }
 
         $admins = User::whereHas('roles',function ($q){
@@ -154,14 +159,17 @@ class MessageController extends Controller
         })->get();
 
         foreach ($admins as $admin){
+
             RecipientMessage::create([
                 'user_id' => $admin->id,
                 'role_id' => 1,
                 'message_id' => $msg->id,
             ]);
 
-            $user = User::where('id',$admin->id)->first();
-            Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
+            if(env('SEND_MAIL')==true){
+                $user = User::where('id',$admin->id)->first();
+                Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
+            }
         }
 
         return redirect()->route('user.messages.inbox',['type' => 'sent']);
@@ -204,6 +212,7 @@ class MessageController extends Controller
         $person_reply = RecipientMessage::where('user_id',$reply->user_id)->first();
         // dd($reply);
         // dd($person_reply);
+        if(env('SEND_MAIL')==true){
 
             if($person_reply == null){
                 foreach($recipeient_replies as $recipeient_reply){
@@ -217,9 +226,7 @@ class MessageController extends Controller
                 $message = Message::where('id',$reply->message_id)->with('user')->first();
                 Mail::to($message->user->email)->send(new ReplyMail($reply->id , $message->user->id));
             }
-
-
-
+        }
         return redirect()->route('user.messages.inbox');
     }
 

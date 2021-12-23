@@ -157,8 +157,9 @@ class UserProfileController extends Controller
 
     // exam page
     public function exam($exam_id){
+
         $exam = Content::whereId($exam_id)
-            ->with(['section','course','exam' => function($q){
+            ->with(['section','course', 'exam' => function($q){
                 return $q->with(['users_exams' => function($q){
                     return $q->where('user_id',auth()->id());
                 }]);
@@ -170,7 +171,6 @@ class UserProfileController extends Controller
         }
 
         if (!$exam->exam) abort(404);
-
 
         UserContent::firstOrCreate([
             'user_id' => \auth()->id(),
