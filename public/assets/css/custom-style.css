@@ -15,7 +15,10 @@ a, span , p , label, div, small{
     background: #303d47;
 }
 .bg-five {
-    background: #6597aa;
+    background: #00bcb3;
+}
+a.review:hover svg path{
+    fill: #fff;;
 }
 .card {
     box-shadow: 0 0 20px rgb(127 170 203 / 5%);
@@ -371,12 +374,12 @@ justify-content: center;
     width: 100%;
     height: 10px;
     /* border-radius: 8px; */
-    border: 1px solid #f2f2f2;
+    border: 2px solid #f2f2f2;
     margin-top: 8px;
     overflow: hidden;
 }
 .course-image .progress .bar {
-    height: 7.5px;
+    height: 8px;
 }
 .progress-bar
 {
