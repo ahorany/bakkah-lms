@@ -6,11 +6,11 @@
 
 @section('content')
                 <div class="dash-header course_info">
-                    <ol class="breadcrumb">
+                    {{-- <ol class="breadcrumb">
                         <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
                         <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
                         <li>{{$exam->title}}</li>
-                    </ol>
+                    </ol> --}}
                     <h2>{{$exam->title}}</h2>
                 </div>
 
@@ -94,7 +94,7 @@
 
                         <div class="d-flex algin-items-center justify-content-between mt-4 buttons">
                             <template v-if="save_status && page_type == 'exam' ">
-                               <button class="btn" @click.prevent="save()">Submit</button>
+                               <button class="form-control main-color" @click.prevent="save()">Submit</button>
                             </template>
 
                             <div class="navigation">

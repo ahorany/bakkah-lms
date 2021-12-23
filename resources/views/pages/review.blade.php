@@ -15,12 +15,12 @@
 
 @section('content')
     <div class="dash-header course_info">
-        <ol class="breadcrumb">
+        {{-- <ol class="breadcrumb">
             <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
             <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
             <li>{{$exam->exam->content->title}}</li>
-        </ol>
-        <h1>{{$exam->title}}</h1>
+        </ol> --}}
+        <h2>{{$exam->exam->content->title}}</h2>
     </div>
 
 

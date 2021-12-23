@@ -748,9 +748,9 @@ ol.breadcrumb li a {
   cursor: pointer;
 }
 
-button svg {
+button.next_prev svg {
     height: 10px;
-    /* filter: brightness(0.5); */
+    filter: brightness(0.5);
 }
 
 p.time-remaining {

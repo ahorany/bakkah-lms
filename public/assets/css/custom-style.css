@@ -499,6 +499,17 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         font-size: 12px;
     }
 }
+@media (min-width: 768px) and (max-width: 991px) {
+    .dash-header.d-flex.justify-content-between {
+        display: block !important;
+    }
+    .dash-header.d-flex.justify-content-between ol.breadcrumb{
+        margin-bottom: 10px;
+    }
+    .card.p-5.user-info {
+        padding: 25px !important;
+    }
+}
 
 @media (max-width: 768px) {
     .dash-header.course_info {
@@ -617,6 +628,12 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     }
     .card.px-5.py-3.mb-2 {
         margin-top: 10px;
+    }
+    .dash-header.d-flex.justify-content-between {
+        display: block !important;
+    }
+    .dash-header.d-flex.justify-content-between ol.breadcrumb{
+        margin-bottom: 10px;
     }
 }
 
