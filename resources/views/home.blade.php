@@ -133,9 +133,9 @@
                         }
                     ?>
                         @isset($course->upload->file)
-                            <img src="{{$url}}" height="130px" >
+                            <img src="{{$url}}" height="100px" >
                         @else
-                            <img src="{{$url}}" height="130px" >
+                            <img src="{{$url}}" height="100px" >
                         @endisset
                         <h3 style="color: #000; min-height: 50px;">{{$course->trans_title}}</h3>
 
