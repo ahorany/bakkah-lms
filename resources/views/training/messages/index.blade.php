@@ -88,9 +88,6 @@
                                     <button type="submit" name="submit" value="Search" class="form-control main-color back_button" style="width: max-content;">
                                         <svg width="15px" version="1.1" id="svg_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                         viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
-                                        <style type="text/css">
-                                            .st0{fill:#FFFFFF;}
-                                        </style>
                                         <path d="M3.35,23.71c0.14-0.88,0.24-1.77,0.42-2.65c0.91-4.51,3.08-8.33,6.43-11.48c2.93-2.74,6.37-4.55,10.31-5.35
                                             c4.59-0.93,9.05-0.45,13.31,1.53c4.28,1.98,7.57,5.05,9.86,9.17c1.49,2.67,2.35,5.55,2.59,8.61c0.36,4.57-0.64,8.82-2.97,12.76
                                             c-0.21,0.36-0.11,0.53,0.14,0.78c3.87,3.86,7.74,7.74,11.61,11.6c0.99,0.99,1.6,2.14,1.49,3.56c-0.13,1.74-1.02,3.01-2.61,3.69
@@ -112,7 +109,7 @@
             <div class="col-md-12 mb-2">
                 <div class="card p-5">
                     <div class="add_message mb-2">
-                        <a href="{{route('user.add_message')}}" class="main-color back_button" style="width: max-content;">
+                        <a href="{{route('user.add_message')}}" class="main-color form-control" style="width: max-content;">
                             <svg width="12px" version="1.1" id="svg_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                             <style type="text/css">
@@ -170,7 +167,7 @@
                                 <td>{{$message->msg_date}}</td>
                                 <td>{{$message->replies_count}}</td>
                                 <td>
-                                      <a href="{{route('user.reply_message',$message->msg_id)}}" class="green">Reply</a>
+                                      <a href="{{route('user.reply_message',$message->msg_id)}}" class="green form-control">Reply</a>
                                 </td>
                             </tr>
 {{--                                <tr>--}}

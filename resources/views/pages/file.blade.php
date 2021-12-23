@@ -74,7 +74,7 @@
                     @endif
                 </div>
             </div>
-            <div class="card-body p-30">
+            <div class="card-body">
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
                         <video class="video w-100" preload="metadata" controls controlsList="nodownload" id="video_player">

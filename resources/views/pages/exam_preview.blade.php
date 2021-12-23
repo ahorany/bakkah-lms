@@ -11,7 +11,7 @@
                         <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
                         <li>{{$exam->title}}</li>
                     </ol>
-                    <h1>{{$exam->title}}</h1>
+                    <h2>{{$exam->title}}</h2>
                 </div>
 
                   <div class="row justify-content-end">

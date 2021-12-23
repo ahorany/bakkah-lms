@@ -717,7 +717,7 @@ ol.breadcrumb li a {
 .dash-header h1 {
   font-size: 25px;
   margin: 0;
-  /* margin-top: 15px; */
+  margin-bottom: 10px;
   font-family: "Lato Black";
 }
 
@@ -750,7 +750,7 @@ ol.breadcrumb li a {
 
 button svg {
     height: 10px;
-    filter: brightness(0.5);
+    /* filter: brightness(0.5); */
 }
 
 p.time-remaining {

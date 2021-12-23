@@ -52,7 +52,7 @@
                                     <path d="M41.97,84.09c5.35,0,10.62,0,15.88,0c0.19,4.16-3.55,7.91-7.88,7.94C45.63,92.07,41.9,88.4,41.97,84.09z" />
                                 </g>
                             </svg>
-                            {{__('education.Messages')}}
+                           <span> {{__('education.Messages')}}</span>
                         </span>
                     </a>
 
@@ -61,7 +61,7 @@
                             <li>
                                 <a href="{{route('user.add_message')}}">
                                     <span class="mx-2 d-flex">
-                                        <svg  version="1.1" id="svg_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  viewBox="0 0 60 60"  xml:space="preserve" style="margin-right: 10px;" >
+                                        <svg  version="1.1" id="svg_icon1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  viewBox="0 0 60 60"  xml:space="preserve" style="margin-right: 10px;" >
                                         <path d="M57.28,30.77c-0.25,0.89-0.57,1.75-1.22,2.44c-0.94,1-2.09,1.53-3.47,1.53c-5.55,0-11.1,0-16.65,0c-0.21,0-0.41,0-0.69,0
                                         c0,0.23,0,0.43,0,0.64c0,5.57,0,11.13,0,16.7c0,2.37-1.73,4.34-4.08,4.67c-2.26,0.32-4.47-1.12-5.12-3.36
                                         c-0.13-0.46-0.18-0.96-0.19-1.44c-0.01-5.53-0.01-11.06-0.01-16.6c0-0.19,0-0.37,0-0.61c-0.25,0-0.46,0-0.66,0

@@ -238,7 +238,7 @@ ol.answers li{
     color: #fff;
 }
 .dflex{
-display: flex;
+display: flex !important;
 align-items: center;
 justify-content: center;
 }
@@ -299,6 +299,7 @@ justify-content: center;
     cursor: pointer;
     display: inline-block;
     font-weight: 500;
+    width: max-content;
 }
 .cyan:hover {
     background: #0dcaf0;
@@ -397,11 +398,11 @@ justify-content: center;
 }
 
 svg#back{
-    fill: #fb4400;
+    fill: #0dcaf0;
 }
 a:hover svg#back{
     fill: #fff;
-    background: #fb4400;
+    background: #0dcaf0;
 }
 .icon-report{
     fill: #fff !important;
@@ -608,9 +609,32 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .card iframe {
         height: 200px;
     }
-    /* ol.breadcrumb{
-        display: none !important;
-    } */
+    .lms-header a.navbar-brand img{
+        width: 35px;
+    }
+    span.d-none.d-sm-block{
+        display: inline-block;
+    }
+    .card.px-5.py-3.mb-2 {
+        margin-top: 10px;
+    }
 }
 
+@media(max-width : 431px){
+    span.d-none.d-sm-block{
+        display: none;
+    }
+}
+
+@media(max-width : 330px){
+    span.mx-2.d-flex span {
+        display: none;
+    }
+    span.mx-2.d-flex svg#Layer_1 {
+        width: 25px;
+    }
+    .lms-header ul.navbar-nav li.user a{
+        padding: 5px 0;
+    }
+}
 /* End Media Query */
