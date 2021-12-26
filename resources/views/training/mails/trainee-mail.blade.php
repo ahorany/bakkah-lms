@@ -47,12 +47,6 @@
                     <img src="{{CustomAsset('images/email/user_icon.png')}}" width="auto" height="20px" alt="" style="margin: 0 10px;">
                     <span style="font-size: 15px;">{{$user->email}}</span>
                 </div>
-                @if (!is_Null($password))
-                    <div style="display: flex; justify-content: center; align-items: center; padding: 0 15px; align-items: center;">
-                        <img src="{{CustomAsset('images/email/email_icon.png')}}" width="auto" height="20px" alt="" style="margin: 0 10px;">
-                        <span style="font-size: 15px;">{{$password}}</span>
-                    </div>
-                @endif
             </div>
         </div>
         <hr style="margin: 0 auto;">
