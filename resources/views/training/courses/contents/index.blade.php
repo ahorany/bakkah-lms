@@ -102,11 +102,11 @@
                                         <span>@{{entry.title}}</span>
                                     </td>
                                     <td>
-                                        <span v-if="entry.post_type == 'scorm'" class="badge badge-secondary">@{{entry.post_type}}</span>
-                                        <span v-if="entry.post_type == 'video'" class="badge badge-primary">@{{entry.post_type}}</span>
-                                        <span v-if="entry.post_type == 'audio'" class="badge badge-warning">@{{entry.post_type}}</span>
-                                        <span v-if="entry.post_type == 'presentation'" class="badge badge-success">@{{entry.post_type}}</span>
-                                        <span v-if="entry.post_type == 'exam'" class="badge badge-info">@{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'scorm'" class="badge badge-secondary"><i class="fa fa-file-archive-o" aria-hidden="true"></i> @{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'video'" class="badge badge-primary"><i class="fa fa-video-camera" aria-hidden="true"></i> @{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'audio'" class="badge badge-warning"><i class="fa fa-headphones"></i> @{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'presentation'" class="badge badge-success"><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> @{{entry.post_type}}</span>
+                                        <span v-if="entry.post_type == 'exam'" class="badge badge-info"><i class="fa fa-file" aria-hidden="true"></i> @{{entry.post_type}}</span>
                                         <span v-if="entry.post_type == 'exam'" class="badge badge-secondary">Questions Count : ( @{{entry.questions_count}} )</span>
                                     </td>
                                     <td class="text-right">
@@ -220,13 +220,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
-
-
-
 
                                         <div class="col-md-6 col-12">
                                             <div class="modal-diff-content form-group">

@@ -15,7 +15,7 @@ a, span , p , label, div, small{
     background: #303d47;
 }
 .bg-five {
-    background: #00bcb3;
+    background: #d1d2d4;;
 }
 a.review:hover svg path{
     fill: #fff;;
@@ -78,9 +78,12 @@ em u {
 #ContentModal .modal-content{
     width: 75% !important;
 }
-/*#ContentModal .modal-content .progress{*/
-/*    display: none;*/
-/*}*/
+li.has-dropdown .dropdown{
+    width: 200px;
+}
+li.has-dropdown .dropdown span{
+    font-size: 14px;
+}
 .import-question-file {
     padding: 29px 0 0;
     text-align: right;
@@ -382,13 +385,12 @@ justify-content: center;
 .course-image .progress .bar {
     height: 8px;
 }
-.progress-bar
-{
+.progress-bar{
     background: #fb4400;
 }
-.lms-header ul.navbar-nav li.user a svg
-{
+.lms-header ul.navbar-nav li.user a svg{
     margin: 0;
+    width: 17px;
 }
 .lms-header ul.navbar-nav li.user a svg#Layer_2
 .lms-header ul.navbar-nav li.user a svg#Layer_3{
@@ -442,7 +444,7 @@ ul.video-list li .play{
 }
 
 .req svg path{
-    fill: #dc3545 !important;
+    fill: #fb4400 !important;
 }
 .home-section {
     margin-bottom: 25px;
@@ -493,13 +495,24 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         margin: 0 !important;
     }
 }
+@media (max-width: 1199px) and (min-width: 991px) {
+    .course-cards{
+        width: 40%;
+    }
+}
 
 @media (min-width: 991px) and (max-width: 1156px) {
     .calendar .sideb table th{
         font-size: 12px;
     }
+    .course-cards{
+        width: 40%;
+    }
 }
 @media (min-width: 768px) and (max-width: 991px) {
+    .course-cards{
+        width: 40%;
+    }
     .dash-header.d-flex.justify-content-between {
         display: block !important;
     }
@@ -640,6 +653,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 @media(max-width : 431px){
     span.d-none.d-sm-block{
         display: none;
+    }
+    .messages li.has-dropdown .dropdown{
+        right: -80px;
     }
 }
 
