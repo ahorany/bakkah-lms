@@ -493,13 +493,24 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         margin: 0 !important;
     }
 }
+@media (max-width: 1199px) and (min-width: 991px) {
+    .course-cards{
+        width: 40%;
+    }
+}
 
 @media (min-width: 991px) and (max-width: 1156px) {
     .calendar .sideb table th{
         font-size: 12px;
     }
+    .course-cards{
+        width: 40%;
+    }
 }
 @media (min-width: 768px) and (max-width: 991px) {
+    .course-cards{
+        width: 40%;
+    }
     .dash-header.d-flex.justify-content-between {
         display: block !important;
     }
@@ -640,6 +651,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 @media(max-width : 431px){
     span.d-none.d-sm-block{
         display: none;
+    }
+    .messages li.has-dropdown .dropdown{
+        right: -80px;
     }
 }
 

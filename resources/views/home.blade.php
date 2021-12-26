@@ -25,23 +25,23 @@
         </div>
     </div>
     <?php
-    function getReportNumber($complete_courses,$status){
-        if($complete_courses){
-            foreach ($complete_courses as $complete_course){
-                if($complete_course->status == $status){
-                    return  str_pad($complete_course->courses_count, 2, '0', STR_PAD_LEFT);
+        function getReportNumber($complete_courses,$status){
+            if($complete_courses){
+                foreach ($complete_courses as $complete_course){
+                    if($complete_course->status == $status){
+                        return  str_pad($complete_course->courses_count, 2, '0', STR_PAD_LEFT);
+                    }
                 }
             }
+            return 0;
         }
-        return 0;
-    }
     ?>
     <div class="row home-section">
 
         <div class="col-lg-12">
             <div class="card h-100 justify-content-center p-30">
 
-                <div class="d-flex flex-column flex-sm-row flex-wrap">
+                <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-center">
 
                     <div class="course-cards bg-four">
                         <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="71.3" viewBox="0 0 71.3 71.3">
@@ -100,14 +100,6 @@
                 </div>
             </div>
         </div>
-{{--         <div class="col-lg-6 mb-5 mb-xl-0">--}}
-{{--            <div class="card p-30">--}}
-{{--                <div class="line-chart">--}}
-{{--                    <h3>Learning Time Overview</h3>--}}
-{{--                    <canvas class="w-100" id="myChart" height="250"></canvas>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
 
     @if (count($courses->courses) > 0)
@@ -115,7 +107,7 @@
             <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
             <div class="row">
                 @forelse($courses->courses as $course)
-                <div class="col-sm-6 col-md-12 col-lg-4 col-xl-3 mb-4">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
                     <a href="{{CustomRoute('user.course_details',$course->id)}}">
                     <div class="text-center course-image p-30">
                         <?php

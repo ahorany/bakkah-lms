@@ -33,7 +33,7 @@
         <small>{{\auth()->user()->roles()->first()->trans_name}}</small>
     </span> --}}
     <ul class="navbar-nav mx-0">
-        <li class="has-dropdown user">
+        <li class="has-dropdown user messages">
             <ul class="navbar-nav mx-0">
                 <li class="has-dropdown user m-0">
                     <a style="color: #6a6a6a;" class="messages" onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" href="#">
