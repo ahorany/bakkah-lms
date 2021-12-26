@@ -12,13 +12,13 @@
     </header>
     <main style="text-align: center; width: 80%; margin: 80px auto 0;">
         <div style="margin-bottom: 50px;">
-            <h5 style="font-size: 14px; margin: 15px 0;">Dear {{$user->en_name}}</h5>
+            <h5 style="font-size: 14px; margin: 15px 0;">Dear Jihad Hamdan,</h5>
             <p style="font-size: 30px; font-weight: bold; margin: 15px 0; text-transform: uppercase; color: #fb4400;">Welcome onboard!</p>
-            <p style="font-size: 15px; margin: 15px 0;">You have registered to {{$course->trans_title}}. We would like to welcome you and wish you a great learning experience!</p>
+            <p style="font-size: 15px; margin: 15px 0;">You have registered to attend Self-Study Lean Six Sigma – Yellow Belt Course. We would like to welcome you and wish you a great learning experience!</p>
             <hr style="width: 40%; margin: 30px auto;">
             <p style="font-size: 17px;">This email is intended to provide you with the needed information before the beginning of the course to help you log in our LMS system and deal with the course properly.</p>
         </div>
-        {{-- <div style="background: #f9f9f9; padding: 15px 0;">
+        <div style="background: #f9f9f9; padding: 15px 0;">
             <h3 style="font-size: 20px;">Details you need to note</h3>
             <div style="display: flex; justify-content: center; align-items: center;">
                 <div style="display: flex; margin: 0 10px; align-items: center;">
@@ -30,7 +30,7 @@
                     <p style="font-size: 20px;">English</p>
                 </div>
             </div>
-        </div> --}}
+        </div>
         <div style="margin: 40px 0;">
             <h3 style="font-size: 20px;">The Learning Management System (LMS)</h3>
             <p style="font-size: 17px;">The access below is for our LMS system where you’ll find the course and all supporting materials!</p>
@@ -41,18 +41,16 @@
             <div style="display: flex; justify-content: center; align-items: center;">
                 <div style="display: flex; justify-content: center; align-items: center; padding: 0 15px; align-items: center;">
                     <img src="{{CustomAsset('images/email/link_icon.png')}}" width="auto" height="20px" alt="" style="margin: 0 10px;">
-                    <span style="font-size: 15px;"><a href="{{env('APP_URL')}}" style="text-decoration: none;">{{env('APP_URL')}}</a></span>
+                    <span style="font-size: 15px;"><a href="{{env('APP_URL')}}">{{env('APP_URL')}}</a></span>
                 </div>
                 <div style="display: flex; justify-content: center; align-items: center; padding: 0 15px; align-items: center;">
                     <img src="{{CustomAsset('images/email/user_icon.png')}}" width="auto" height="20px" alt="" style="margin: 0 10px;">
-                    <span style="font-size: 15px;">{{$user->email}}</span>
+                    <span style="font-size: 15px;">jhamdan</span>
                 </div>
-                @if (!is_Null($password))
-                    <div style="display: flex; justify-content: center; align-items: center; padding: 0 15px; align-items: center;">
-                        <img src="{{CustomAsset('images/email/email_icon.png')}}" width="auto" height="20px" alt="" style="margin: 0 10px;">
-                        <span style="font-size: 15px;">{{$password}}</span>
-                    </div>
-                @endif
+                <div style="display: flex; justify-content: center; align-items: center; padding: 0 15px; align-items: center;">
+                    <img src="{{CustomAsset('images/email/email_icon.png')}}" width="auto" height="20px" alt="" style="margin: 0 10px;">
+                    <span style="font-size: 15px;">jhamdan@Fp_</span>
+                </div>
             </div>
         </div>
         <hr style="margin: 0 auto;">
