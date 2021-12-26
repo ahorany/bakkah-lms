@@ -145,9 +145,9 @@
 
             <div class="dropdown d-none">
                 <ul class="postition-relative">
-                    <li class="p-3 dropdown-item borderBottom" style="background: #f4f4f4; border-bottom: 1px solid gainsboro;">
+                    <li class="m-3 mb-0 pb-3 dropdown-item borderBottom" style="border-bottom: 1px solid gainsboro;">
                         <div>
-                            <h2 style="font-size: 1.2rem; margin-bottom: 0;">{{auth()->user()->trans_name}}</h2>
+                            <h2 style="font-size: 1.1rem; margin-bottom: 0;">{{auth()->user()->trans_name}}</h2>
                             <small style="color: #73726c; font-weight:700;">{{$user_role_name}}</small>
                         </div>
                     </li>
