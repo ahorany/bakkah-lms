@@ -23,8 +23,6 @@ Route::group([
             Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
 
 
-
-
             Route::get('/usersReportOverview', 'ReportController@usersReportOverview')->name('usersReportOverview');
             Route::get('/usersReportCourse', 'ReportController@usersReportCourse')->name('usersReportCourse');
             Route::get('/usersReportTest', 'ReportController@usersReportTest')->name('usersReportTest');
@@ -53,6 +51,16 @@ Route::group([
 
             Route::get('/exam/preview-content/{content_id}', 'ContentController@exam_preview_content')->name('exam.preview.content');
 
+            Route::get('certificates/preview', 'CertificateControllerH@preview')->name('certificates.preview');
+            Route::get('certificates/add_new', 'CertificateControllerH@add_new')->name('certificates.add_new');
+            Route::get('certificates/save_position', 'CertificateControllerH@save_position')->name('certificates.save_position');
+            Route::get('certificates/preview_pdf','CertificateControllerH@preview_pdf')->name('certificates.preview_pdf');
+            Route::get('certificates/delete_rich','CertificateControllerH@delete_rich')->name('certificates.delete_rich');
+            Route::get('certificates/replicate','CertificateControllerH@replicate')->name('certificates.duplicate');
+
+            Route::get('certificates/certificate','CertificateControllerH@certificate')->name('.certificates.certificate_dynamic');
+
+            Route::resource('certificates', 'CertificateControllerH');
 
         });
 
@@ -71,6 +79,8 @@ Route::group([
 
 
         Route::post('courses/importResults', 'ImportController@importResults')->name('importResults');
+
+
 
 
 

@@ -38,7 +38,18 @@
             <div class="card card-default col-md-12">
                 <div class="card-header"><b>{{__('admin.cerificate')}}</b></div>
                 <div class="card-body">
-                    {!!Builder::Select('certificate_type_id', 'certificate_type_id', $certificate_types, null, ['col'=>'col-md-6'])!!}
+                    <?php
+                    if(is_dynamic_certificate() == 1)
+                    {
+                    ?>
+                        {!!Builder::Select('certificate_id', 'certificate_id', $certificate_ids, null, ['col'=>'col-md-6', 'model_title'=>'trans_title',])!!}           <?php
+                    }
+                    else {
+                        ?>
+                        {!!Builder::Select('certificate_type_id', 'certificate_type_id', $certificate_types, null, ['col'=>'col-md-6', 'model_title'=>'trans_name',])!!}
+                        <?php
+                    }
+                   ?>
                     {!!Builder::Textarea('ar_disclaimer', 'ar_disclaimer', null, [
                         'row'=>1,
                         'attr'=>'maxlength="1000"',

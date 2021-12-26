@@ -22,6 +22,12 @@ use App\Models\Training\CartMaster;
 use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
+
+function is_dynamic_certificate()
+{
+    return 1;//1 OR 0
+}
+
 function checkUserIsTrainee(){
     if(isset(\auth()->user()->roles()->first()->id) && \auth()->user()->roles()->first()->id == 2 ){
         return true;
@@ -205,4 +211,19 @@ function GetCartTotalPriceAfterVat($cart_master_id) {
 }
 function array_without_empty($var){
     return ($var !== NULL && $var !== FALSE && $var !== "");
+}
+
+
+
+function deviation_improve_y($y_value)
+{
+    return $y_value+($y_value*0.65);
+}
+
+function deviation_improve_x($x_value)
+{
+    if($x_value <= 160)
+        return 0;
+    else
+        return ($x_value-160)*1.6;
 }
