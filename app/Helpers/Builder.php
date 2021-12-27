@@ -311,7 +311,7 @@ class Builder {
 
 	static function Tinymce($name, $title, $value=null, $array=array()){
 		$array = array_merge($array, array('tinymce'=>'tinymce'));
-//		$array = array_merge($array, array('tinymce'=>'ckeditor'));
+		//$array = array_merge($array, array('tinymce'=>'ckeditor'));
 		return self::Textarea($name, $title, $value, $array);
     }
 
@@ -852,5 +852,12 @@ class Builder {
 			}
 		}
 		return $array;
+	}
+
+    static function getCertificate($upload=null){
+		if(!is_null($upload)){
+			$href = CustomAsset('certificates/img/'.$upload->file);
+			return '<a href="'.$href.'" target="'.$upload->file.'"> <i class="far fa-file-pdf"></i> '.$upload->title.'</a>';
+		}
 	}
 }

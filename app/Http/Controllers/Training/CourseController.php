@@ -8,6 +8,7 @@ use App\Http\Requests\Training\CourseRequest;
 use App\Models\Admin\Partner;
 use App\Models\Training\Course;
 use App\Constant;
+use App\Models\Training\Certificate;
 use App\Models\Training\Group;
 use App\Models\Training\Unit;
 use Carbon\Carbon;
@@ -106,11 +107,13 @@ class CourseController extends Controller
 //        $groups = Group::all();
         $partners = Partner::GetPartners('partners', -1, false, 1, 0);
         $certificate_types = Constant::where('parent_id', 323)->get();
+        $certificate_ids = Certificate::whereNull('parent_id')->get();
+
         $delivery_methods = Constant::where('parent_id', 10)->get();
 
         // $params = $this->_create_edit_params();
         // , ['certificate_types'=>$params['certificate_types']]
-        return Active::Create(compact('partners', 'certificate_types','delivery_methods'));
+        return Active::Create(compact('partners', 'certificate_types','delivery_methods','certificate_ids'));
     }
 
     public function store(CourseRequest $request){
@@ -142,10 +145,11 @@ class CourseController extends Controller
         }
         $partners = Partner::GetPartners('partners', -1, false, 1, 0);
         $certificate_types = Constant::where('parent_id', 323)->get();
+        $certificate_ids = Certificate::whereNull('parent_id')->get();
 //        $groups = Group::all();
         $delivery_methods = Constant::where('parent_id', 10)->get();
 
-        return Active::Edit(['eloquent'=>$course, 'delivery_methods' => $delivery_methods, 'partners'=>$partners, 'certificate_types'=>$certificate_types]);
+        return Active::Edit(['eloquent'=>$course, 'delivery_methods' => $delivery_methods, 'partners'=>$partners, 'certificate_types'=>$certificate_types,'certificate_ids'=>$certificate_ids]);
     }
 
     public function update(CourseRequest $request, Course $course){

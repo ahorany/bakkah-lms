@@ -111,7 +111,11 @@
                     </template>
 
                 </div>
-
+                @if($course->users[0]->pivot->progress == 100)
+                {{-- <a href="{{route('training.certificates.certificate_dynamic', ['id'=> cart.id ] )}}" class="btn btn-success btn-xs mb-1" target="_blank">
+                    Certificate
+                </a> --}}
+                @endif
                 <div class="d-flex">
 
                     <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px;">
