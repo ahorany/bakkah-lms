@@ -86,7 +86,6 @@
                             </svg>
                         </template>
 
-
                         <template v-if="item > stars && (item == half_star)">
                             <svg xmlns="http://www.w3.org/2000/svg" id="Group_32" data-name="Group 32"  width="17.43"
                                  height="16.6" viewBox="0 0 17.43 16.6">
@@ -99,7 +98,6 @@
                             </svg>
                         </template>
 
-
                         <template v-if="item > stars && (item != (half_star))">
                             <svg xmlns="http://www.w3.org/2000/svg" width="17.43" height="16.6"
                                  viewBox="0 0 17.43 16.6">
@@ -108,13 +106,15 @@
                                       transform="translate(-128.289 -183.355)" fill="#c6c6c6" />
                             </svg>
                         </template>
+
                     </template>
 
                 </div>
+                sssssssssssssssssssssssssssssssssssssssssss-----
                 @if($course->users[0]->pivot->progress == 100)
-                {{-- <a href="{{route('training.certificates.certificate_dynamic', ['id'=> cart.id ] )}}" class="btn btn-success btn-xs mb-1" target="_blank">
-                    Certificate
-                </a> --}}
+                    <a href="{{route('training.certificates.certificate_dynamic', ['id'=> $course->id ] )}}" class="btn btn-success btn-xs mb-1" target="_blank">
+                        Certificate
+                    </a>
                 @endif
                 <div class="d-flex">
 

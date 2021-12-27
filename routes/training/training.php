@@ -58,7 +58,7 @@ Route::group([
             Route::get('certificates/delete_rich','CertificateControllerH@delete_rich')->name('certificates.delete_rich');
             Route::get('certificates/replicate','CertificateControllerH@replicate')->name('certificates.duplicate');
 
-            Route::get('certificates/certificate','CertificateControllerH@certificate')->name('.certificates.certificate_dynamic');
+            Route::get('certificates/certificate','CertificateControllerH@certificate_dynamic')->name('certificates.certificate_dynamic');
 
             Route::resource('certificates', 'CertificateControllerH');
 

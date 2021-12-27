@@ -22,3 +22,5 @@ class Certificate extends Model
 
     protected $guarded = ['en_title', 'ar_title'];
 }
+
+

@@ -44,7 +44,8 @@
                     ?>
                         {!!Builder::Select('certificate_id', 'certificate_id', $certificate_ids, null, ['col'=>'col-md-6', 'model_title'=>'trans_title',])!!}           <?php
                     }
-                    else {
+                    else
+                    {
                         ?>
                         {!!Builder::Select('certificate_type_id', 'certificate_type_id', $certificate_types, null, ['col'=>'col-md-6', 'model_title'=>'trans_name',])!!}
                         <?php
