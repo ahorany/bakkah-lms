@@ -4,6 +4,10 @@
     <title>{{$content->course->trans_title}} {{__('education.Files')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
+@endsection
+
 @section('content')
     <?php
     if( !is_null($next)){
@@ -80,7 +84,7 @@
             <div class="card-body">
                 @isset($content->upload->file)
                     @if($content->post_type == 'video' )
-                        <video class="video w-100" preload="metadata" controls controlsList="nodownload" id="video_player">
+                        <video  playsinline controls class="video w-100" preload="metadata"  controlsList="nodownload" id="player">
                             <source id="update_video_source" src="" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
@@ -92,8 +96,7 @@
                         @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="600px"
-                                    src='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                            <iframe width="100%" height="600px" id="update_file_source" src='' ></iframe>
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
                         @else
@@ -102,8 +105,7 @@
 
                     @elseif($content->post_type == 'scorm' )
                         @if($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="600px"
-                            src='{{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe>
+                            <iframe width="100%" height="600px" id="update_file_source" src='' ></iframe>
                         @else
                             <?php
                             $user_id = sprintf("%'.05d", auth()->user()->id);
@@ -125,6 +127,8 @@
                     @endif
 
                 @endisset
+{{--                    <iframe id="update_file_source" style="" width="100%" height="600px"  src='' ></iframe>--}}
+
 
             </div>
         </div>
@@ -135,7 +139,15 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script>
+@isset($content->upload->file)
+    @if($content->post_type == 'video' )
+        <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
+        <script>
+
+        // video player
+        new Plyr('#player');
+
+
         // Select the source and video tags
         const player = document.querySelector("#update_video_source");
         const vid = player.parentElement;
@@ -192,9 +204,69 @@
                 });
         });
     </script>
+    @endif
+
+    @if( ($content->post_type == 'presentation' || $content->post_type == 'scorm') && $content->upload->extension == 'pdf')
+      <script>
+
+        // Select the source and video tags
+        const iframe_el = document.querySelector("#update_file_source");
+        const file = iframe_el.parentElement;
+
+        let file_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code
+        let user_id = {{ auth()->id() }} // It depends on your code too
+        var post_type = "{{$content->post_type}}";
+        fetch('{{url("file")}}/' +
+                file_id +
+                "&&" +
+                user_id +
+                "&&" +
+               post_type
+            ,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            ) .then((x) => x.json())
+                .then( (x) => {
+                    iframe_el.setAttribute("src", x.url+"#toolbar=0");
+                })
 
 
+        //////////////
 
+        file.addEventListener("error", ()=>{
+            fetch(
+                "/file" +
+                '{{url("file")}}/' +
+                file_id +
+                "&&" +
+                user_id,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+                .then((x) => x.json())
+                .then((x) => {
+                    let ct = file.currentTime;
+                    iframe_el.setAttribute("src", x.url+"#toolbar=0");
+                    file.addEventListener(
+                        "loadedmetadata",
+                        function() {
+                            this.currentTime = ct;
+                        },
+                        false
+                    );
+                });
+        });
+    </script>
+    @endif
+@endisset
     <script>
         var enabled = "{{$enabled}}";
 
@@ -250,6 +322,7 @@
             });
         }
     </script>
+
 
 @endsection
 

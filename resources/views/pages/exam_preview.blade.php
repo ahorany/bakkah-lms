@@ -75,7 +75,7 @@
                                 <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
                                 <small v-text=" '(' + (question.mark) + ' Marks)'"></small>
                             </div>
-                            <h3 v-html="question.title" style="padding-right: 13%;"></h3>
+                            <h3 v-html="question.title" style="padding-right: 14%;"></h3>
 
                            <template v-if="page_type == 'exam'">
                                 <label :for="answer.title + '_' + answer.id + '_' + answer.question_id"  v-if="question.answers_count == 1" v-for="answer in question.answers" class="custom-radio" > @{{ answer.title }}
@@ -179,7 +179,6 @@
             },
 
             created(){
-                console.log(this.exam)
                 this.pageSize = this.exam.exam.pagination
                 if(this.page_type == 'exam'){
                     this.user_exam_id = this.exam.exam.users_exams[this.exam.exam.users_exams.length-1].id
@@ -231,15 +230,13 @@
 
                     }
                     this.exam = this.exam.exam.content;
-// console.log(this.exam)
                 }
 
 
             },
 
             methods : {
-
-                // shared methods bettwen exam and review
+                // exam methods
                 searchAndOpenQuestion : function(question_id){
                     // index question
                     let current_page = this.current
@@ -280,18 +277,6 @@
                     this.current = page;
                     this.indexStart= start_index
                     this.question_id = question_id
-                    // const  [element] = this.$refs["question"+question_id];
-                    // element.scrollIntoView({ behavior: "smooth", block: "end" });
-
-                    // var top = element.offsetTop;
-                    // alert(top)
-                    // window.scrollTo(0, top);
-
-                    // console.log($('.questions').find($("#question"+question_id)).offset().top)
-
-                    // $('html, body').animate({
-                    //     scrollTop: $("#question"+question_id).offset().top - 100
-                    // }, 500);
                 },
                 prev() {
                     this.save_status = false;
@@ -315,68 +300,6 @@
 
                     // this.nextSaveAnswers();
                 },
-
-
-
-                // review methods
-                countCorrectAnswers : function(question){
-                    return this.correct_answers(question).length
-                },
-                search_correct_answer: function(question,answer){
-                    let answers = this.correct_answers(question)
-                    answer = answers.filter(function (value) {
-                        return  value.id == answer.id;
-                    })
-                    if(answer)
-                        return true;
-
-                    return false;
-                },
-                correct_answers: function(question){
-                    return question.answers.filter(function (value) {
-                        return  value.check_correct == 1;
-                    })
-                },
-                searchReviewMultiAnswers : function(question_id,answer_id){
-                    if(this.answers[question_id] == undefined)
-                        return false;
-
-                    let answer = null;
-                    if(Array.isArray(this.answers[question_id])) {
-                        answer = this.answers[question_id].filter(function (answer,index) {
-                            return( answer.id == answer_id )
-                        })
-                    }else{
-                        answer = [this.answers[question_id]]
-                    }
-
-                    if(answer.length > 0)
-                        return true;
-
-                    return false;
-                },
-                checkIfQuestionHasInCorrectAnswers : function(question_id){
-                    // if(this.answers[question_id] == undefined)
-                    //     return false;
-
-                    let answer = null;
-                    if(Array.isArray(this.answers[question_id])){
-                        answer = this.answers[question_id].filter(function (answer,index) {
-                            return( answer.check_correct == 0 )
-                        })
-                    }else{
-                        answer = [this.answers[question_id]]
-                    }
-
-                    if(answer.length > 0)
-                        return true;
-
-                    return false;
-                },
-
-
-
-                // exam methods
                 countdownTimeStart : function(){
                     var self = this;
                     let t = this.start_user_attepmt
@@ -473,7 +396,6 @@
 
                        if(this.answers[question_id] && !Array.isArray(this.answers[question_id])){
                            this.answers[question_id] = [];
-                           console.log(this.answers)
                         }else{
                            this.answers[question_id].forEach(function (answer,index) {
                                if( answer == answer_id ){
