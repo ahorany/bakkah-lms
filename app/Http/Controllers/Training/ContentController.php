@@ -183,6 +183,7 @@ class ContentController extends Controller
                     'course_id'  =>'required|exists:courses,id',
                     'content_id' => 'required|exists:contents,id',
                     'file'      => $file,
+                    'time_limit'=>'nullable|numeric|gt:-1',
                 ];
             }else{
                 $rules = [
@@ -190,6 +191,7 @@ class ContentController extends Controller
                     'course_id'  =>'required|exists:courses,id',
                     'content_id' => 'required|exists:contents,id',
                     'file'      => 'required|file'.$mimes,
+                    'time_limit'=>'nullable|numeric|gt:-1',
                 ];
             }
 
@@ -250,11 +252,13 @@ class ContentController extends Controller
                 'title'      => request()->title,
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
-                'url'        => request()->url,
+                'url' => request()->url == 'null' ? null : request()->url,
                 'status' => request()->status == 'true' ? 1 : 0,
                 'downloadable' => request()->downloadable == 'true' ? 1 : 0,
                 'parent_id'  => request()->content_id,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
+                'time_limit'=> request()->time_limit,
+
             ]);
 
             if(!request()->url){
@@ -307,6 +311,7 @@ class ContentController extends Controller
                         'title'      => "required|string",
                         'url'        =>   "required_without:file",
                         'file'       =>   $file,
+                        'time_limit' =>'nullable|numeric|gt:-1',
                     ];
                 }else{
                     if(count($content_file_from_upload) == 0){
@@ -319,12 +324,14 @@ class ContentController extends Controller
                             'title'      => "required|string",
                             'url'        =>   "required_without:file",
                             'file'       =>   $file,
+                            'time_limit'=>'nullable|numeric|gt:-1',
                         ];
                     }else{
                         $rules = [
                             'title'      => "required|string",
                             'url'        =>   "",
                             'file'       =>   $file,
+                            'time_limit'=>'nullable|numeric|gt:-1',
                         ];
                     }
                 }
@@ -340,7 +347,8 @@ class ContentController extends Controller
                 $rules = [
                     'title'      => "required|string",
                     'url'        =>   "required_without:file",
-                    'file'      => $file,
+                    'file'       => $file,
+                    'time_limit' =>'nullable|numeric|gt:-1',
                 ];
             }
 
@@ -416,9 +424,10 @@ class ContentController extends Controller
             $content = Content::whereId(request()->content_id)
                 ->update([
                     'title' => request()->title,
-                    'url' => request()->url,
+                    'url' => request()->url == 'null' ? null : request()->url,
                     'status' => request()->status == 'true' ? 1 : 0,
                     'downloadable' => request()->downloadable == 'true' ? 1 : 0,
+                    'time_limit' => request()->time_limit,
                 ]);
 
 

@@ -46,16 +46,10 @@ class Course extends Model
 
     public function getEnPathAttribute(){
         return 'sessions/'.$this->slug;
-        // return env('APP_URL').'sessions/'.$this->slug;
-        // return route('education.courses.single', ['slug'=>$this->slug]);
     }
 
     public function getArPathAttribute(){
         return 'ar/sessions/'.$this->slug;
-        // return env('APP_URL').'ar/sessions/'.$this->slug;
-
-        // $route = route('education.courses.single', ['slug'=>$this->slug]);
-        // return LaravelLocalization::getLocalizedURL('ar', $route, [], false);
     }
 
     public function getModelNameAttribute(){
@@ -132,119 +126,14 @@ class Course extends Model
 		$this->attributes['disclaimer'] = $data;
     }
 
-//    public function trainingOption(){
-//        return $this->hasOne(TrainingOption::class, 'course_id');//->latest()
-//    }
-//
-//    public function trainingOptions(){
-//        return $this->hasMany(TrainingOption::class, 'course_id');
-//    }
 
-    public function carts(){
-        return $this->hasMany(Cart::class);
-    }
 
-    public function discountDetails(){
-        return $this->hasMany(DiscountDetail::class, 'course_id', 'id');
-    }
-
-    public function discountDetail(){
-        return $this->hasOne(DiscountDetail::class, 'course_id', 'id');
-    }
-
-    public function getTake2PriceByCurrencyAttribute(){
-        // $price = $this->take2_price;
-        // if(Cache::has('coinID_'.request()->ip())){
-        //     if(Cache::get('coinID_'.request()->ip())==335){
-        //         $price = $this->take2_price_usd;
-        //     }
-        // }
-        $price = $this->take2_price;
-        if(GetCoinId()==335){
-            $price = $this->take2_price_usd;
-        }
-        return !is_null($price)?$price:0;
-    }
-
-//    public function CourseList($query){
-//        return $query->postMorph()->whereBetween('constant_id', [22,29])->get();
-//    }
-
-    //Moved to PostMorphTrait
-    // public static function AddMorph($id, $parent_id=25)
-    // {
-    //     $course = self::find($id);
-    //     $constants = Constant::where('parent_id', $parent_id)->get();
-    //     foreach($constants as $constant){
-    //         $course->postMorphs()->create([
-    //             'created_by'=>auth()->user()->id,
-    //             'updated_by'=>auth()->user()->id,
-    //             'constant_id'=>$constant->id,
-    //             'table_id'=>$parent_id,
-    //         ]);
-    //     }
-    // }
-
-    //remove it
-    // public static function Bage($course){
-    //     if($course->created_at->addDays(30) >= Carbon::now()){
-    //         return '<div class="badge bg-info text-white">'.__("education.New").'</div>';
-    //     }
-    //     /*return '<div class="badge bg-success text-white">'.__('education.Best Seller').'</div>
-    //                                     <div class="badge bg-danger text-white">'.__('education.Hot & New').'</div>';*/
-    //     return '';
-    // }
-
-    public function partner(){
-        return $this->belongsTo(Partner::class, 'partner_id', 'id');
-    }
 
     public function deliveryMethod(){
         return $this->belongsTo(Constant::class, 'training_option_id', 'id');
     }
 
-    // public function agreement(){
-    //     return $this->belongsTo(Course::class, 'partner_id', 'partner_id');
-    // }
 
-    public function scopeGetAll($query){
-        $all_courses = $query->has('trainingOptions.sessions')
-            ->where('active',1)
-            // ->whereNull('wp_migrate')
-            ->with('trainingOptions.sessions')
-            ->orderBy('order')
-            ->get();
-        return $all_courses;
-    }
-
-    // public function setSlugAttribute(){
-
-    //     if(request()->has('slug')){
-    //         $slug = request()->slug;
-    //         if ((static::whereSlug($slug)->exists()) || is_null($slug) ) {
-    //             if (static::whereSlug($slug = Str::slug(json_decode($this->title)->en??substr(md5(time()),0,10), '-'))->exists()) {
-    //                 $slug = "{$slug}-{$this->id}";
-    //             }
-    //         }
-    //         $this->attributes['slug'] = $slug;
-    //     }
-    // }
-
-    public function getSales($courseId){
-        if($courseId){
-            $course_sales = Cart::where('course_id', $courseId)
-                ->whereNull('trashed_status')
-                ->whereIn('payment_status', [68, 376, 317]) //paid 317
-                // ->where('coin_id', 335)
-                ->select(DB::raw('(sum(total_after_vat)-sum(refund_value_after_vat)) as total_after_vat, coin_id, count(id) as trainees_no'))
-                ->groupBy('course_id', 'coin_id')
-                ->get()
-                ->toArray();
-            return $course_sales;
-        }else{
-            return null;
-        }
-    }
 
 
     ///////////// lms //////////////
@@ -269,9 +158,5 @@ class Course extends Model
     public function training_option(){
         return $this->belongsTo(Constant::class,'training_option_id');
     }
-
-    // public function role(){
-    //     return $this->belongsTo(Constant::class,'training_option_id');
-    // }
 
 }

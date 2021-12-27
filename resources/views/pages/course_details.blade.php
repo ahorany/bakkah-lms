@@ -211,7 +211,7 @@
                                                         </div>
                                                     @endif
 
-                                                    @if(isset($content->user_contents[0]))
+                                                    @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                         <span class="svg">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="62.387" viewBox="0 0 71.3 62.387">
                                                             <path id="Icon_open-task" data-name="Icon open-task" d="M0,0V62.387H62.387v-32L53.475,39.3V53.475H8.912V8.912h32L49.821,0ZM62.387,0,35.65,26.737l-8.912-8.912-8.912,8.912L35.65,44.562,71.3,8.912Z" fill="#00000066"></path>
@@ -235,40 +235,6 @@
 
 
 <div class="col-lg-4 course_info">
-<<<<<<< HEAD
-<div class="card p-30 activity">
-<h2>Activity</h2>
-<ul>
-<?php $lang = app()->getLocale();?>
-@foreach($activities as $activity)
-    <li><a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-</li>
-@endforeach
-</ul>
-</div>
-
-
-{{-- <div class="d-flex justify-content-between mt-5 course-group">--}}
-{{--<div class="persons card p-20">--}}
-{{--<h3 class="mt-0">Course Group</h3>--}}
-{{--<!-- <small>Lean Six Sigma Yellow belt training provides insight to the </small> -->--}}
-{{--<ul>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li><img src="http://placehold.it/50x50" alt=""></li>--}}
-{{--<li>+15</li>--}}
-{{--</ul>--}}
-{{--</div>--}}
-{{--<div class="new-students">--}}
-{{--<span>New Student</span>--}}
-{{--<b>12</b>--}}
-{{--</div>--}}
-{{--</div>--}}
-</div>
-=======
     <div class="card p-30 activity">
     <h2>Activity</h2>
     <ul style="list-style: none;">
@@ -305,12 +271,15 @@
                             C48.19,61.53,44.77,61.52,41.34,61.52z"/>
                     </g>
                 </svg>
-                <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                @if($activity->type == 'exam')
+                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                @else
+                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                @endif
             </li>
         @endforeach
     </ul>
     </div>
->>>>>>> 1b47b079a432520a00eba35ea7a65092618bd77e
 </div>
 @endif
 </div>

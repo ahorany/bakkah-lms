@@ -405,7 +405,7 @@ a:hover svg#back{
     justify-content: center;
 }
 button.next_prev {
-    width: 85px;
+    width: max-content;
     padding: 5px;
     margin: 0px 5px 5px 5px;
     border: 1px solid #7c9290;

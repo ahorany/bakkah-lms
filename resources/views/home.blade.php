@@ -455,7 +455,11 @@
                                             C48.19,61.53,44.77,61.52,41.34,61.52z"/>
                                     </g>
                                 </svg>
+                                @if($activity->type == 'exam')
                                 <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                                @else
+                                 <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                                @endif
                             </li>
                         @endforeach
                     </ul>

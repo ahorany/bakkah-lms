@@ -22,7 +22,7 @@
         }
     }
     ?>
-    {{-- @dd($content) --}}
+
     <div class="dash-header course_info">
         @include('pages.templates.breadcrumb', [
             'course_id'=>$content->course->id,
@@ -35,7 +35,9 @@
     </div>
 
     <div class="row mt-3">
-
+        @if(session()->has('status'))
+            <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div>
+        @endif
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="m-0" style="text-transform:capitalize;">{{ $content->title }}</h3>
@@ -63,9 +65,8 @@
 
 
                     @if($next)
-
-                        <button title="{{$next->title}}" onmouseleave="hide_next()" onmouseenter="show_next()" class="next next_prev" onclick="location.href = '{{$next_url}}'">
-                            <span>{{__('education.Next')}}</span>
+                        <button title="{{$next->title}}"  class="next next_prev">
+                            <span id="demo">{{__('education.Next')}}</span>
                             <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
                                <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
                            </svg>
@@ -73,6 +74,8 @@
                             {{-- <span class="next-title"><a style="color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a></span> --}}
                     @endif
                 </div>
+
+
             </div>
             <div class="card-body p-30">
                 @isset($content->upload->file)
@@ -107,25 +110,22 @@
                             $content_id = sprintf("%'.05d", $content->id);
                             $SCOInstanceID = (1).$user_id.(2).$content_id;
                             ?>
+
                             <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
-                            <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
-                            {{-- <iframe src="{{CustomAsset('scorm/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe> --}}
-                            {{-- @include('scorm') --}}
-                            {{-- <iframe style="" width="100%" height="500px" src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/scorms/'.$content->upload->file)}}' ></iframe> --}}
+
+                            @if(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI') ))
+                                 <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                            @else
+                                 <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                           @endif
+
                         @endif
                     @else
                         <iframe style="" width="100%" height="600px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
                     @endif
 
                 @endisset
-               {{-- @if($content->post_type == 'video' && $content->url) --}}
-                   {{-- <php
-                        // if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
-                        //     $video_id = $match[1]??null;
-                        // }
-                    ?> --}}
-                   {{-- <iframe style="" width="100%" height="500px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
-               @endif --}}
+
             </div>
         </div>
     </div>
@@ -191,6 +191,64 @@
                     vid.play();
                 });
         });
+    </script>
+
+
+
+    <script>
+        var enabled = "{{$enabled}}";
+
+        if(!enabled){
+            document.getElementById("demo").addEventListener("click", function(event){
+                event.preventDefault()
+            });
+            window.onload = function(){
+            var start_time = "{{$content->time_limit}}";
+            let t = new Date();
+            t = new Date(t.getTime() + (start_time * 1000));
+            var countDownDate = t.getTime();
+
+            var x = setInterval(function() {
+                var now = new Date().getTime();
+                var distance = countDownDate - now;
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("demo").innerHTML = hours + "h "
+                    + minutes + "m " + seconds + "s ";
+
+                if (distance < 0) {
+                    clearInterval(x);
+
+                    $.post("{{route("user.update_completed_status")}}",
+                        {
+                            content_id: {{$content->id}},
+                            _token: "{{csrf_token()}}"
+
+                        },
+                        function(data, status){
+                             console.log(data)
+                        });
+
+
+                    document.getElementById("demo").innerHTML = "Next";
+                    document.querySelector(".next").addEventListener("click", function(event){
+                        window.location.href = '{{$next_url}}'
+                    });
+                }
+
+            }, 1000);
+        }
+
+
+
+        }else{
+          document.getElementById("demo").innerHTML = "Next";
+            document.querySelector(".next").addEventListener("click", function(event){
+                window.location.href = '{{$next_url}}'
+            });
+        }
     </script>
 
 @endsection

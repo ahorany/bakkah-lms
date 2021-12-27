@@ -154,6 +154,17 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div v-if="model_type != 'exam'" class="col-md-12 p-0">
+                                    <div class="form-group">
+                                        <label>Time Limit (seconds) </label>
+                                        <input min="0" type="number" v-model="time_limit" name="time_limit" class="form-control" placeholder="time_limit">
+                                        <div v-show="'time_limit' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.time_limit }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <template v-if="model_type == 'exam'">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -220,11 +231,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
-
 
 
 
@@ -402,6 +408,7 @@ $(function() {
             section_id : '',
             content_id : '',
             title: '',
+            time_limit: 0,
 			excerpt : '',
             file_title : '',
             file_url : '',
@@ -423,7 +430,6 @@ $(function() {
             errors : {},
             options: {
                 modules: {
-
                     'toolbar': [
                         [{ 'size': [] }],
                         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -443,6 +449,7 @@ $(function() {
 		    clear : function(){
                 this.title = '';
                 this.excerpt = '';
+                this.time_limit = 0;
                 this.file_url = '';
                 this.file_title = '';
                 this.status = false;
@@ -477,7 +484,6 @@ $(function() {
                this.clear(); // clear data
                this.save_type  = 'add';
                this.model_type = type;
-               console.log(type)
                this.content_id = content_id;
                this.errors = {};
                $('#ContentModal').modal('show')
@@ -516,6 +522,7 @@ $(function() {
                          section.contents.forEach(function (content) {
                             if(content.id == content_id) {
                                     self.title = content.title;
+                                    self.time_limit = content.time_limit;
                                     self.status = content.status == 1 ? true : false;
                                     self.downloadable = content.downloadable == 1 ? true : false;
                                     self.excerpt =  content.details ?  content.details.excerpt : '';
@@ -694,7 +701,6 @@ $(function() {
             },
 
             saveContent: function(){
-
                 let self = this;
                 let formData = new FormData();
                 let config = {
@@ -712,6 +718,7 @@ $(function() {
                 };
 
                 formData.append('course_id', self.course_id);
+                formData.append('time_limit', self.time_limit);
                 formData.append('content_id', self.content_id);
                 formData.append('title', self.title);
                 formData.append('excerpt', self.excerpt);
@@ -741,9 +748,6 @@ $(function() {
                                     self.errors[property] = self.errors[property][0];
                                 }
                             }else{
-                                console.log(response)
-                                // this.contents.push(response.data.data);
-
                                 self.contents.forEach(function (section) {
                                     if(section.id == self.content_id){
                                         section.contents.push(response.data.data);
@@ -775,6 +779,7 @@ $(function() {
                                 if(content.id == self.content_id) {
                                     content.title = self.title;
                                     content.status = self.status;
+                                    content.time_limit = self.time_limit;
                                     content.downloadable = self.downloadable;
                                     if(content.details ){
                                         content.details.excerpt = self.excerpt
@@ -817,6 +822,7 @@ $(function() {
                                         section.contents.forEach(function (content) {
                                             if(content.id == response.data.data.id) {
                                                  content.title =  response.data.data.title;
+                                                 content.time_limit =  response.data.data.time_limit;
                                                  content.status =  response.data.data.status;
                                                  content.downloadable =  response.data.data.downloadable;
 
@@ -841,19 +847,13 @@ $(function() {
                                                             path = self.public_path + '/files/files';
                                                     }
 
-                                                    console.log(content.upload == null)
                                                     content.upload  = content.upload == null  ? {} : content.upload;
-                                                    console.log(content)
                                                     content.upload.file =  path + '/' + response.data.data.upload.file;
                                                     content.upload.name =  response.data.data.upload.name;
                                                 }else if(response.data.data.url){
                                                       content.url = response.data.data.url;
                                                       content.url = response.data.data.url;
                                                 }
-
-
-
-                                                console.log(content)
 
                                             }
                                         })
