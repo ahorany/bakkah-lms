@@ -6,16 +6,19 @@ a, span , p , label, div, small{
     text-transform: none !important;
 }
 .bg-one {
-    background: #6a6a6a;
+    background: #6d6e70;
 }
 .bg-two {
-    background: #fc991e;
+    background: #fd9a18;
 }
 .bg-four {
-    background: #65aa74;
+    background: #303d47;
 }
 .bg-five {
-    background: #6597aa;
+    background: #d1d2d4;;
+}
+a.review:hover svg path{
+    fill: #fff;;
 }
 .card {
     box-shadow: 0 0 20px rgb(127 170 203 / 5%);
@@ -75,9 +78,12 @@ em u {
 #ContentModal .modal-content{
     width: 75% !important;
 }
-/*#ContentModal .modal-content .progress{*/
-/*    display: none;*/
-/*}*/
+li.has-dropdown .dropdown{
+    width: 200px;
+}
+li.has-dropdown .dropdown span{
+    font-size: 14px;
+}
 .import-question-file {
     padding: 29px 0 0;
     text-align: right;
@@ -165,6 +171,7 @@ em u {
 }
 .q-card h3 {
     font-size: 16px;
+    
 }
 .q-card label{
     box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
@@ -223,6 +230,7 @@ ol.answers li{
     color: #fb4400;
     border: 1px solid #fb4400;
     padding: 4px 10px;
+    width: max-content;
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
@@ -232,6 +240,11 @@ ol.answers li{
     background: #fb4400;
     text-decoration: none;
     color: #fff;
+}
+.dflex{
+display: flex !important;
+align-items: center;
+justify-content: center;
 }
 
 .yellow {
@@ -290,6 +303,7 @@ ol.answers li{
     cursor: pointer;
     display: inline-block;
     font-weight: 500;
+    width: max-content;
 }
 .cyan:hover {
     background: #0dcaf0;
@@ -365,20 +379,19 @@ ol.answers li{
     width: 100%;
     height: 10px;
     /* border-radius: 8px; */
-    border: 2px solid #e0e0e0;
+    border: 2px solid #f2f2f2;
     margin-top: 8px;
     overflow: hidden;
 }
 .course-image .progress .bar {
     height: 8px;
 }
-.progress-bar
-{
+.progress-bar{
     background: #fb4400;
 }
-.lms-header ul.navbar-nav li.user a svg
-{
+.lms-header ul.navbar-nav li.user a svg{
     margin: 0;
+    width: 17px;
 }
 .lms-header ul.navbar-nav li.user a svg#Layer_2
 .lms-header ul.navbar-nav li.user a svg#Layer_3{
@@ -388,11 +401,11 @@ ol.answers li{
 }
 
 svg#back{
-    fill: #fb4400;
+    fill: #0dcaf0;
 }
 a:hover svg#back{
     fill: #fff;
-    background: #fb4400;
+    background: #0dcaf0;
 }
 .icon-report{
     fill: #fff !important;
@@ -432,7 +445,7 @@ ul.video-list li .play{
 }
 
 .req svg path{
-    fill: #dc3545 !important;
+    fill: #fb4400 !important;
 }
 .home-section {
     margin-bottom: 25px;
@@ -468,6 +481,11 @@ tr.text-capitalize.ui-sortable-handle:hover {
 tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     display: inline-block;
 }
+
+.course-cards span {
+    font-family: 'Lato Black';
+    font-size: 13px;
+}
 /******************************************************************************************************************/
 
 /* Media Query */
@@ -478,14 +496,39 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         margin: 0 !important;
     }
 }
+@media (max-width: 1199px) and (min-width: 991px) {
+    .course-cards{
+        width: 40%;
+    }
+}
 
 @media (min-width: 991px) and (max-width: 1156px) {
     .calendar .sideb table th{
         font-size: 12px;
     }
+    .course-cards{
+        width: 40%;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .course-cards{
+        width: 40%;
+    }
+    .dash-header.d-flex.justify-content-between {
+        display: block !important;
+    }
+    .dash-header.d-flex.justify-content-between ol.breadcrumb{
+        margin-bottom: 10px;
+    }
+    .card.p-5.user-info {
+        padding: 25px !important;
+    }
 }
 
 @media (max-width: 768px) {
+    .dash-header.course_info {
+        padding: 25px 20px 0;
+    }
     .mx-md-4.course_info {
         padding: 0 10px;
     }
@@ -526,8 +569,8 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         width: max-content;
     }
     .lms-header ul.navbar-nav li a.nav-link {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
     }
     .course-cards > div {
         display: inline-block;
@@ -591,9 +634,41 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .card iframe {
         height: 200px;
     }
-    ol.breadcrumb{
-        display: none !important;
+    .lms-header a.navbar-brand img{
+        width: 35px;
+    }
+    span.d-none.d-sm-block{
+        display: inline-block;
+    }
+    .card.px-5.py-3.mb-2 {
+        margin-top: 10px;
+    }
+    .dash-header.d-flex.justify-content-between {
+        display: block !important;
+    }
+    .dash-header.d-flex.justify-content-between ol.breadcrumb{
+        margin-bottom: 10px;
     }
 }
 
+@media(max-width : 431px){
+    span.d-none.d-sm-block{
+        display: none;
+    }
+    .messages li.has-dropdown .dropdown{
+        right: -80px;
+    }
+}
+
+@media(max-width : 330px){
+    span.mx-2.d-flex span {
+        display: none;
+    }
+    span.mx-2.d-flex svg#Layer_1 {
+        width: 25px;
+    }
+    .lms-header ul.navbar-nav li.user a{
+        padding: 5px 0;
+    }
+}
 /* End Media Query */

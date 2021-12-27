@@ -91,4 +91,6 @@ return [
     "Rule & Path" => 'Rule & Path',
     "Sent Items" => 'Sent Items',
     "Inbox" => 'Inbox',
+    "Send Message" => 'Send Message',
+    "Messages" => 'Messages',
 ];

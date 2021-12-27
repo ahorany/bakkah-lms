@@ -21,9 +21,12 @@
             <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
             <li>{{$exam->title}}</li>
         </ol>
-        <h1>{{$exam->title}}</h1>
-    </div>
+        <div class="d-flex justify-content-between">
+            <h1>{{$exam->title}}</h1>
 
+            <a class="yellow group_buttons mb-1 btn-sm pull-right" title="Preview" href="{{route('training.add_questions',$exam->exam->content->id)}}" target="{{$exam->content_id}}" style="border: 1px solid #ffc107;"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-xl-9 col-lg-8 mb-4 mb-lg-0">

@@ -151,4 +151,9 @@ return [
     'importQuestionsCourse'=>'Import Questions Course',
     'import_questions_moodle'=>'Import Questions Moodle',
     'downloadable'=>'downloadable',
+    'duplicate'=>'Duplicate',
+    'certificate_name'=>'Certificate Name',
+    'preview'=>'Preview',
+    'add_new'=>'Add New',
+    'users_manual'=>'Users Manual',
 ];

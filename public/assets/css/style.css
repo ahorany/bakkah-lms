@@ -42,6 +42,11 @@
   font-display: swap;
 }
 
+hr {
+    border: none;
+    border-bottom: 1px solid gainsboro;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -285,7 +290,7 @@ body {
 }
 
 .lead {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 300;
 }
 
@@ -353,7 +358,7 @@ ol {
 }
 
 .bg-third {
-  background: var(--thirdColor);
+  background: #1ca09a;
 }
 
 .bg-fourth {
@@ -553,7 +558,7 @@ nav#sidebarMenu ul {
 }
 
 nav#sidebarMenu ul li a {
-  padding: 15px 40px;
+  padding: 15px;
   display: flex;
   align-items: center;
   color: #000;
@@ -587,12 +592,12 @@ nav#sidebarMenu ul li a svg path {
   color: #fff;
   display: flex;
   align-items: center;
-  padding: 18px 0;
+  padding: 10px 0;
 }
 
 .lms-header a.navbar-brand img {
   filter: brightness(0) invert(1);
-  width: 30px;
+  width: 50px;
   margin: 0 15px;
 }
 
@@ -712,7 +717,7 @@ ol.breadcrumb li a {
 .dash-header h1 {
   font-size: 25px;
   margin: 0;
-  /* margin-top: 15px; */
+  margin-bottom: 10px;
   font-family: "Lato Black";
 }
 
@@ -743,7 +748,7 @@ ol.breadcrumb li a {
   cursor: pointer;
 }
 
-button svg {
+button.next_prev svg {
     height: 10px;
     filter: brightness(0.5);
 }
@@ -1004,7 +1009,8 @@ ol.answers li .icon.empty {
 .learning-file h2 {
   margin: 20px 30px;
   font-family: "Lato Black";
-  font-size: 18px;
+  text-transform: uppercase;
+  font-size: 17px;
 }
 
 .learning-file ul li a {
@@ -1106,7 +1112,7 @@ ul.video-list li .text p {
 .course-cards > div b {
   display: block;
   font-size: 35px;
-  font-family: "Lato Black";
+  font-family: "Lato Regular";
 }
 
 .course-cards > div {
@@ -1205,6 +1211,7 @@ ul.badges li svg {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-top: 16px;
 }
 
 .calendar .header i {
@@ -1285,8 +1292,8 @@ ul.badges li svg {
 }
 
 .calendar .sideb table th {
-  color: var(--mainColor);
-  font-size: 16px;
+  color: 000;
+  font-size: 15px;
   text-transform: uppercase;
   margin-bottom: 10px;
 }
@@ -1325,6 +1332,7 @@ ul.badges li svg {
 .calendar .sideb table td.currentDay {
   background: var(--mainColor);
   color: white;
+  border-radius: 5px;
 }
 
 .calendar .sideb table td.between {
@@ -1406,7 +1414,7 @@ ul.badges li svg {
   }
 
   .course-image {
-    width: 50%;
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -1419,6 +1427,16 @@ ul.badges li svg {
 }
 
 @media (max-width: 576.98px) {
+   .image{
+        height: auto;
+    }
+   .image img{
+        width: 50%;
+    }
+
+    .home-section .no-img img {
+        width: 100px !important;
+    }
   .lms-header ul.navbar-nav {
     /* width: 100%;
     padding: 10px 0;

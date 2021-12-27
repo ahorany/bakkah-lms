@@ -11,7 +11,12 @@ Route::group([
         return view('zoom');
     })->name('web.zoom');
 
+<<<<<<< HEAD
     Route::get('/vsscorm1', function(){
+=======
+    Route::get('/vsscorm12', function(){
+
+>>>>>>> 2ee991f8503e33a8e5dc0c50e2c6dcd66d1b914a
         return view('scorm');
     });
 

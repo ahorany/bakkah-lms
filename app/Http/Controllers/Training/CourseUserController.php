@@ -115,7 +115,7 @@ class CourseUserController extends Controller
             $type_id = 3;
         }
 
-        foreach (\request()->users as $key =>  $value){
+        foreach (request()->users as $key =>  $value){
             if ($value == true){
                 CourseRegistration::updateOrcreate(
                     [

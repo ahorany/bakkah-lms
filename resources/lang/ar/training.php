@@ -48,4 +48,17 @@ return [
     'po'=>'الدفع لاحقا',
     'free_seat'=>'مقعد مجاني',
     'date'=>'التاريخ',
+    'background'=>'Background Image',
+    'preview' => 'Preview',
+    'print' => 'Print',
+    'certificate_name'=>'Certificate Name In English',
+    'certificate_name_ar'=>'Certificate Name In Arabic',
+    'direction'=>'Direction',
+    'font_type'=>'Font Type',
+    'variable_name'=>'Variable',
+    'description'=>'Description',
+    'align'=>'Align',
+    'choose_value'=>'Choose Value',
+    'certificate_id'=>'Certificate',
+
 ];

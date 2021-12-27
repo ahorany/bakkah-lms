@@ -20,16 +20,16 @@
     }
     ?>
 
-    <div class="dash-header course_info">
+    {{-- <div class="dash-header course_info">
         @include('pages.templates.breadcrumb', [
             'course_id'=>$course->id,
             'course_title'=>$course->trans_title,
         ])
         <br>
-    </div>
+    </div> --}}
 
     <div class="course_details">
-        <div class="dash-header course-header d-flex align-items-md-center flex-column flex-md-row">
+        <div class="dash-header course-header d-flex align-items-md-end flex-column flex-md-row">
             <div class="text-center course-image w-30 mb-4 mb-md-0">
                 <?php
                     $url = '';
@@ -45,9 +45,13 @@
                     }
                 ?>
                 @if($image != null)
-                    <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" height="135px">
+                    <div class="image">
+                        <img src="{{CustomAsset('upload/thumb200/'.$course->upload->file)}}" height="auto" width="auto">
+                    </div>
                 @else
-                    <img src="{{CustomAsset($url)}}" height="135px">
+                    <div class="image no-img">
+                        <img src="{{CustomAsset($url)}}" height="auto" width="100px">
+                    </div>
                 @endif
 
                 <div class="progress">
@@ -107,47 +111,54 @@
                     </template>
 
                 </div>
-
-                <li class="has-dropdown user course-details" style="list-style: none;">
-                    <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link main-button btn btn-primary" href="#">
-                        {{__('education.Add a Review')}}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
-                            <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"
-                                  transform="translate(10.125) rotate(90)" fill="#fff" />
-                        </svg>
-                    </a>
-
-                    <div class="dropdown d-none" style="left: 0; width: max-content !important;">
-                        <div class="p-2">
-                            <template v-for="item in 5">
-                            <span @click="review(item)" v-if="item <= rate">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
-                                     viewBox="0 0 17.43 16.6">
-                                    <path id="Path_39" data-name="Path 39"
-                                          d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
-                                          transform="translate(-74.153 -183.355)" fill="#fb4400" />
-                                </svg>
-                            </span>
-
-                                <span @click="review(item)" v-if="item > rate">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
-                                     viewBox="0 0 17.43 16.6">
-                                        <path id="Path_42" data-name="Path 42"
-                                              MessageController            d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
-                                              transform="translate(-128.289 -183.355)" fill="#c6c6c6" />
-                                </svg>
-                            </span>
-
-                            </template>
-                        </div>
-                    </div>
-                </li>
-
-
-
-                @if(!is_null($course->users[0]->pivot->progress))
-                   <a href="{{route("user.resume",$course->id)}}" class="btn btn-primary mt-5 px-4">Resume Course</a>
+                @if($course->users[0]->pivot->progress == 100)
+                {{-- <a href="{{route('training.certificates.certificate_dynamic', ['id'=> cart.id ] )}}" class="btn btn-success btn-xs mb-1" target="_blank">
+                    Certificate
+                </a> --}}
                 @endif
+                <div class="d-flex">
+
+                    <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px;">
+                        <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="main-button main-color review" href="#">
+                            {{__('education.Add a Review')}}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
+                                <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"
+                                      transform="translate(10.125) rotate(90)" fill="#fb4400" />
+                            </svg>
+                        </a>
+
+                        <div class="dropdown d-none" style="left: 0; width: max-content !important;">
+                            <div class="p-2">
+                                <template v-for="item in 5">
+                                <span @click="review(item)" v-if="item <= rate">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
+                                         viewBox="0 0 17.43 16.6">
+                                        <path id="Path_39" data-name="Path 39"
+                                              d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
+                                              transform="translate(-74.153 -183.355)" fill="#fb4400" />
+                                    </svg>
+                                </span>
+
+                                    <span @click="review(item)" v-if="item > rate">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
+                                         viewBox="0 0 17.43 16.6">
+                                            <path id="Path_42" data-name="Path 42"
+                                                  MessageController            d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
+                                                  transform="translate(-128.289 -183.355)" fill="#c6c6c6" />
+                                    </svg>
+                                </span>
+
+                                </template>
+                            </div>
+                        </div>
+                    </li>
+
+
+
+                    @if(!is_null($course->users[0]->pivot->progress))
+                       <a href="{{route("user.resume",$course->id)}}" class="main-button main-color">Resume Course</a>
+                    @endif
+                </div>
             </div>
         </div>
 
@@ -200,7 +211,7 @@
 {{--                                            @dump($content->user_contents[0])--}}
                                             <li>
                                                 <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
-                                                    <img width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
+                                                    <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
                                                     <span> {{$content->title}}</span>
 
                                                     @if ($content->role_and_path == 1)
@@ -214,7 +225,7 @@
                                                     @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                         <span class="svg">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="62.387" viewBox="0 0 71.3 62.387">
-                                                            <path id="Icon_open-task" data-name="Icon open-task" d="M0,0V62.387H62.387v-32L53.475,39.3V53.475H8.912V8.912h32L49.821,0ZM62.387,0,35.65,26.737l-8.912-8.912-8.912,8.912L35.65,44.562,71.3,8.912Z" fill="#00000066"></path>
+                                                            <path id="Icon_open-task" data-name="Icon open-task" d="M0,0V62.387H62.387v-32L53.475,39.3V53.475H8.912V8.912h32L49.821,0ZM62.387,0,35.65,26.737l-8.912-8.912-8.912,8.912L35.65,44.562,71.3,8.912Z" fill="#dcdcdcb3"></path>
                                                           </svg>
                                                         </span>
                                                     @endif
@@ -235,12 +246,17 @@
 
 
 <div class="col-lg-4 course_info">
+<<<<<<< HEAD
     <div class="card p-30 activity">
+=======
+    <div class="card p-30 learning-file activity" style="padding: 0 !important;">
+>>>>>>> 2ee991f8503e33a8e5dc0c50e2c6dcd66d1b914a
     <h2>Activity</h2>
-    <ul style="list-style: none;">
+    <ul style="list-style: none; padding: 0;">
     <?php $lang = app()->getLocale(); ?>
         @foreach($activities as $activity)
             <li>
+<<<<<<< HEAD
                 <svg style="width: 20px; vertical-align: bottom;" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                     viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
                     <g>
@@ -275,6 +291,18 @@
                     <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
                 @else
                     <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+=======
+                @if($activity->type == 'exam')
+                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">
+                        <img  style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
+                        <span>{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</span>
+                    </a>
+                @else
+                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">
+                        <img  style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
+                        <span>{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</span>
+                    </a>
+>>>>>>> 2ee991f8503e33a8e5dc0c50e2c6dcd66d1b914a
                 @endif
             </li>
         @endforeach
