@@ -67,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mx-0">
                     <div class="col-xl-9 col-lg-8 mb-4 mb-lg-0">
                         <template v-for="(question, index) in paginated" >
                            <div :ref="'question'+question.id" :id="'question'+question.id" :key="index" class="card p-30 q-card"><!-- h-100 -->
@@ -75,7 +75,7 @@
                                 <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
                                 <small v-text=" '(' + (question.mark) + ' Marks)'"></small>
                             </div>
-                            <h3 v-html="question.title" style="padding-right: 7%;"></h3>
+                            <h3 v-html="question.title" style="padding-right: 13%;"></h3>
 
                            <template v-if="page_type == 'exam'">
                                 <label :for="answer.title + '_' + answer.id + '_' + answer.question_id"  v-if="question.answers_count == 1" v-for="answer in question.answers" class="custom-radio" > @{{ answer.title }}
