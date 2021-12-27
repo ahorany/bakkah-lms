@@ -336,20 +336,13 @@
                                             c0.32-0.08,0.66-0.08,0.98-0.08c6.77,0,13.53-0.01,20.3,0c2.05,0,3.58,1.45,3.56,3.34c-0.02,1.88-1.52,3.28-3.52,3.29
                                             C48.19,61.53,44.77,61.52,41.34,61.52z"/>
                                     </g>
-<<<<<<< HEAD
-                                </svg>
-                                @if($activity->type == 'exam')
-                                <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-                                @else
-                                 <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-=======
+
                                 </svg> --}}
                                 <img width="28.126" height="28.127" style="vertical-align: middle;" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
                                 @if($activity->type == 'exam')
                                     <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
                                 @else
                                     <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
->>>>>>> 2ee991f8503e33a8e5dc0c50e2c6dcd66d1b914a
                                 @endif
                             </li>
                         @endforeach
