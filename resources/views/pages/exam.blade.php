@@ -153,6 +153,10 @@
         <br>
 
         <div class="row">
+            @if(session()->has('status'))
+                <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div>
+            @endif
+
             <?php $users_exams_count = count($exam->exam->users_exams) ?>
 
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3">

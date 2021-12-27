@@ -6,21 +6,25 @@
 
 @section('content')
     {{-- @dd(auth()->user()->bio) --}}
-    <div class="card p-30 home-section">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
-                <p class="lead" style="text-transform: none !important;">
-                    Welcome to Bakkah Learning Management System!
-                    <br>
-                    We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for students of all backgrounds and abilities.
-                    <br>
-                    A lot of Knowledge & fun are waiting for you, so let's get started.
-                </p>
-            </div>
+    <div class="row m-0 home-section">
+        <div class="col-md-12 col-xl-12">
+            <div class="card p-30 home-section">
+                <div class="row mx-0 align-items-center">
+                    <div class="col-lg-8">
+                        <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
+                        <p class="lead" style="text-transform: none !important;">
+                            Welcome to Bakkah Learning Management System!
+                            <br>
+                            We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for students of all backgrounds and abilities.
+                            <br>
+                            A lot of Knowledge & fun are waiting for you, so let's get started.
+                        </p>
+                    </div>
 
-            <div class="col-lg-4 mt-4 mt-lg-0 text-center">
-                <img src="{{CustomAsset('assets/images/dash.png')}}" {{(auth()->user()->bio == null) ? 'style='.' width:'.'60%;' : '' }} alt="">
+                    <div class="col-lg-4 mt-4 mt-lg-0 text-center">
+                        <img src="{{CustomAsset('assets/images/dash.png')}}" {{(auth()->user()->bio == null) ? 'style='.' width:'.'60%;' : '' }} alt="">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -103,53 +107,57 @@
     </div>
 
     @if (count($courses->courses) > 0)
-        <div class="card p-30 home-section">
-            <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
-            <div class="row">
-                @forelse($courses->courses as $course)
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
-                    <a href="{{CustomRoute('user.course_details',$course->id)}}">
-                    <div class="text-center course-image p-3">
-                        <?php
-                        $url = '';
-                        // dd($course);
-                        if($course->upload != null) {
-                            // if (file_exists($course->upload->file) == false){
-                            //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . $course->trans_title;
-                            // }else{
-                                $url = $course->upload->file;
-                                $url = CustomAsset('upload/thumb200/'. $url);
-                            // }
-                        }else {
-                            $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . $course->trans_title;
-                        }
-                    ?>
-                        @isset($course->upload->file)
-                            <div class="image" style="height: 150px; display:flex; align-items: center; justify-content: center;">
-                                <img src="{{$url}}" height="auto" width="100%">
-                            </div>
-                        @else
-                            <div class="image no-img" style="height: 150px; display:flex; align-items: center; justify-content: center;">
-                                <img src="{{$url}}" height="auto" width="100px">
-                            </div>
-                        @endisset
-                        <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 48px;">{{$course->trans_title}}</h3>
+    <div class="row mx-0 home-section">
+        <div class="col-xl-12 col-md-12">
+            <div class="card p-30 ">
+                <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
+                <div class="row">
+                    @forelse($courses->courses as $course)
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                        <a href="{{CustomRoute('user.course_details',$course->id)}}">
+                        <div class="text-center course-image p-3">
+                            <?php
+                            $url = '';
+                            // dd($course);
+                            if($course->upload != null) {
+                                // if (file_exists($course->upload->file) == false){
+                                //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . $course->trans_title;
+                                // }else{
+                                    $url = $course->upload->file;
+                                    $url = CustomAsset('upload/thumb200/'. $url);
+                                // }
+                            }else {
+                                $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . $course->trans_title;
+                            }
+                        ?>
+                            @isset($course->upload->file)
+                                <div class="image" style="height: 150px; display:flex; align-items: center; justify-content: center;">
+                                    <img src="{{$url}}" height="auto" width="100%">
+                                </div>
+                            @else
+                                <div class="image no-img" style="height: 150px; display:flex; align-items: center; justify-content: center;">
+                                    <img src="{{$url}}" height="auto" width="100px">
+                                </div>
+                            @endisset
+                            <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 48px;">{{$course->trans_title}}</h3>
 
-                        <div class="progress">
-                            <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
+                            <div class="progress">
+                                <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
+                            </div>
+                            <small>{{$course->pivot->progress??0}}% Complete</small>
                         </div>
-                        <small>{{$course->pivot->progress??0}}% Complete</small>
+                        </a>
                     </div>
-                    </a>
+                    @empty
+                    <p>Not found any course!!</p>
+                    @endforelse
                 </div>
-                @empty
-                <p>Not found any course!!</p>
-                @endforelse
             </div>
         </div>
+    </div>
     @endif
 
-    <div class="row home-section">
+    <div class="row mx-0 home-section">
         <div class="col-lg-6 col-md-12 col-sm-12 col-12 m-bottom">
             <div class="card h-100 p-30">
                 <h3>Courses Progress Overview</h3>
@@ -252,7 +260,7 @@
     </div>
 
     @if($last_video)
-        <div class="row home-section">
+        <div class="row mx-0 home-section">
             <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
                 <div class="card h-100 p-30">
                     <h3>{{ __('education.Last Video View') }}</h3>
@@ -328,6 +336,7 @@
                                             c0.32-0.08,0.66-0.08,0.98-0.08c6.77,0,13.53-0.01,20.3,0c2.05,0,3.58,1.45,3.56,3.34c-0.02,1.88-1.52,3.28-3.52,3.29
                                             C48.19,61.53,44.77,61.52,41.34,61.52z"/>
                                     </g>
+
                                 </svg> --}}
                                 <img width="28.126" height="28.127" style="vertical-align: middle;" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
                                 @if($activity->type == 'exam')

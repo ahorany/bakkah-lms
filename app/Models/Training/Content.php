@@ -44,6 +44,6 @@ class Content extends Model
     }
 
     public function user_contents(){
-        return $this->belongsToMany(User::class,'user_contents','content_id','user_id');
+        return $this->belongsToMany(User::class,'user_contents','content_id','user_id')->withPivot('user_id' ,'content_id','is_completed');;
     }
 }

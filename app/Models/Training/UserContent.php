@@ -12,6 +12,9 @@ class UserContent extends Model
     protected $guarded = [];
 
 
+    public function content(){
+        return $this->belongsTo(Content::class,'content_id');
+    }
 
 
 
