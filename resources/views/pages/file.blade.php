@@ -309,7 +309,7 @@
 
                     document.getElementById("demo").innerHTML = "Next";
                     document.querySelector(".next").addEventListener("click", function(event){
-                        window.location.href = '{{$next_url}}'
+                        window.location.href = '{{$next_url??null}}'
                     });
                 }
 
@@ -321,7 +321,7 @@
         }else{
           document.getElementById("demo").innerHTML = "Next";
             document.querySelector(".next").addEventListener("click", function(event){
-                window.location.href = '{{$next_url}}'
+                window.location.href = '{{$next_url??null}}'
             });
         }
     </script>
