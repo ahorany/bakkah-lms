@@ -506,6 +506,9 @@ class CertificateControllerH extends Controller
                 }
 
                 $data_for_qr .= "\n"."stage.bakkah.com/";
+                // $s = strtotime($course_registration->expire_date);
+                // dump($s->format('d F,Y'));
+                // dd($user->created_at->format('d F,Y'));
             }
 
             // dd( $data_for_qr);
@@ -645,7 +648,7 @@ class CertificateControllerH extends Controller
     //     // ============ End of generate certification pdf function ==================
     //     return compact('cart', 'data_for_qr', 'file_name_pdf');
     // }
-    public function certificate_url($id) {dd(60);
+    public function certificate_url($id) {
 
         $cart = Cart::findOrFail($id);
         $qr_image = $this->DrawBarcode($cart);

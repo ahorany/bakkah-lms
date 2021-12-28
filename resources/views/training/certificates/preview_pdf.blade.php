@@ -32,23 +32,27 @@
                     {
                         $child->content=  str_replace('${literal_date}','<h6 style="background-color: #fb4400;color: #fff;margin: 0;margin-top: 20px;padding: 5px 10px;width: 150px;text-align: center;">'.date_format(now(), 'l, F d, Y').'</h6>',$child->content);
                     }
-                    if (strpos($child->content,  '${from_date_ar}') !== false)
-                    {
-                        $date = Date::replace_month_ar($course_registration->created_at??null);
-                        $child->content=  str_replace('${from_date_ar}',$date,$child->content);
-                    }
+                    // if (strpos($child->content,  '${from_date_ar}') !== false)
+                    // {
+                    //     $date = Date::replace_month_ar($course_registration->created_at??null);
+                    //     $child->content=  str_replace('${from_date_ar}',$date,$child->content);
+                    // }
                     if (strpos($child->content,  '${from_date_en}') !== false)
                     {
-                        $child->content=  str_replace('${from_date_en}',($course_registration->expire_date??null),$child->content);
+                        $child->content=  str_replace('${from_date_en}',($course_registration->created_at->format('d F,Y')??null),$child->content);
                     }
-                    if (strpos($child->content,  '${to_date_ar}') !== false)
-                    {
-                        $date = Date::replace_month_ar($course_registration->expire_date??null);
-                        $child->content=  str_replace('${to_date_ar}',$date,$child->content);
-                    }
+                    // if (strpos($child->content,  '${to_date_ar}') !== false)
+                    // {
+                    //     $date = Date::replace_month_ar($course_registration->expire_date??null);
+                    //     $child->content=  str_replace('${to_date_ar}',$date,$child->content);
+                    // }
                     if (strpos($child->content,  '${to_date_en}') !== false)
                     {
-                        $child->content=  str_replace('${to_date_en}',$course_registration->expire_date??null,$child->content);
+                        $s = $course_registration->expire_date;
+                        $date = strtotime($s);
+                        $expire_date = date('d F,Y', $date);
+
+                        $child->content=  str_replace('${to_date_en}',$expire_date??null,$child->content);
                     }
 
                     if (strpos($child->content,  '${gender}') !== false)
