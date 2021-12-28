@@ -9,7 +9,7 @@ class RouteServiceProvider extends ServiceProvider
 {
     protected $namespace = 'App\Http\Controllers';
 
-    public const HOME = '/user/home';
+     const HOME = '/user/home';
 
     public function boot()
     {
