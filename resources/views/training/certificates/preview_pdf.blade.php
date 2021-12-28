@@ -1,7 +1,16 @@
-
     <?php
+// dd(80);
     use App\Helpers\Date;
     use App\Models\Training\Webinar;
+    use App\Models\Training\CourseRegistration;
+    use App\User;
+
+    $user = User::find(auth()->user()->id);
+    $course_registration = CourseRegistration::where('course_id',$course->id)
+                                            ->where('user_id',auth()->user()->id)->get();
+
+    // dd($course_registration);
+
     if(isset($certificate->upload->file))
     {
         $src = $certificate->upload->file;
@@ -10,11 +19,14 @@
     {{-- <img src="https://bakkah.com/public/certificates/img/{{$src}}" style="width:{{$width}};height: {{$height}}"> --}}
         @foreach($childs as $child)
             <?php
-                if(isset($cart) && $cart != '')
+                if(isset($course) && $course != '')
                 {
-                    $training_option = $cart->trainingOption->constant->id??353;
+
+                    // $training_option = $course->trainingOption->constant->id??353;
+                    $training_option = $course->training_option_id??353;
                     $gender = 'he';
-                    if($cart->userId->gender_id != 43)
+
+                    if($user->gender_id != 43)
                         $gender = 'she';
 
                     if (strpos($child->content,  '${finished}') !== false)
@@ -30,21 +42,21 @@
                     }
                     if (strpos($child->content,  '${from_date_ar}') !== false)
                     {
-                        $date = Date::replace_month_ar($cart->session->certificate_from??null);
+                        $date = Date::replace_month_ar($course_registration->created_at??null);
                         $child->content=  str_replace('${from_date_ar}',$date,$child->content);
                     }
                     if (strpos($child->content,  '${from_date_en}') !== false)
                     {
-                        $child->content=  str_replace('${from_date_en}',$cart->session->certificate_from??null,$child->content);
+                        $child->content=  str_replace('${from_date_en}',($course_registration->expire_date??null),$child->content);
                     }
                     if (strpos($child->content,  '${to_date_ar}') !== false)
                     {
-                        $date = Date::replace_month_ar($cart->session->certificate_from??null);
+                        $date = Date::replace_month_ar($course_registration->expire_date??null);
                         $child->content=  str_replace('${to_date_ar}',$date,$child->content);
                     }
                     if (strpos($child->content,  '${to_date_en}') !== false)
                     {
-                        $child->content=  str_replace('${to_date_en}',$cart->session->certificate_from??null,$child->content);
+                        $child->content=  str_replace('${to_date_en}',$course_registration->expire_date??null,$child->content);
                     }
 
                     if (strpos($child->content,  '${gender}') !== false)
@@ -53,66 +65,67 @@
                     }
                     if (strpos($child->content,  '${name_en}') !== false)
                     {
-                        $child->content=  str_replace('${name_en}',$cart->userId->en_name,$child->content);
+                        $child->content=  str_replace('${name_en}',$user->en_name,$child->content);
                     }
                     if (strpos($child->content,  '${name_ar}') !== false)
                     {
-                        $child->content=  str_replace('${name_ar}',$cart->userId->ar_name,$child->content);
+                        $child->content=  str_replace('${name_ar}',$user->ar_name,$child->content);
                     }
                     if (strpos($child->content,  '${certificate}') !== false)
                     {
-                        if(isset($is_webinar ))
-                            $child->content=  str_replace('${certificate}',$cart->webinar->en_title??null,$child->content);
-                         else
-                         {
-                            if($cart->trainingOption->type_id==370)
-                                $child->content=  str_replace('${certificate}',$cart->course->ar_disclaimer??$cart->course->en_title.' Live Online Training ',$child->content);
-                            else
-                                $child->content=  str_replace('${certificate}',($cart->course->ar_disclaimer??$cart->course->en_title).' '.(($training_option !=353 && $training_option !=383)?$cart->trainingOption->constant->trans_name : null),$child->content);
-                         }
+                        // if(isset($is_webinar ))
+                        //     $child->content=  str_replace('${certificate}',$cart->webinar->en_title??null,$child->content);
+                        //  else
+                        //  {
+                            // if($cart->trainingOption->type_id==370)
+                            //     $child->content=  str_replace('${certificate}',$cart->course->ar_disclaimer??$cart->course->en_title.' Live Online Training ',$child->content);
+                            // else
+                                $child->content=  str_replace('${certificate}',$course->en_title??null,$child->content);
+                        //  }
 
                     }
                     if (strpos($child->content,  '${certificate_en}') !== false)
                     {
-                        $child->content=  str_replace('${certificate_en}',$cart->course->en_title,$child->content);
+                        $child->content=  str_replace('${certificate_en}',$course->en_title,$child->content);
                     }
                     if (strpos($child->content,  '${certificate_ar}') !== false)
                     {
-                        $child->content=  str_replace('${certificate_ar}',$cart->course->ar_title,$child->content);
+                        $child->content=  str_replace('${certificate_ar}',$course->ar_title,$child->content);
                     }
 
 
                     if (strpos($child->content,  '${certificate_no}') !== false) {
-                        $child->content=  str_replace('${certificate_no}',$cart->cert_no,$child->content);
+                        $child->content=  str_replace('${certificate_no}',$course->certificate_no,$child->content);
                     }
-                    if (strpos($child->content,  '${course_days_no}') !== false) {
-                        $child->content=  str_replace('${course_days_no}',$cart->duration,$child->content);
-                    }
+                    // if (strpos($child->content,  '${course_days_no}') !== false) {
+                    //     $child->content=  str_replace('${course_days_no}',$cart->duration,$child->content);
+                    // }
 
-                    if (strpos($child->content,  '${hours_no}') !== false)
-                    {
-                        if(isset($is_webinar ))
-                            $child->content =  str_replace('${hours_no}',$cart->webinar->duration,$child->content);
-                        else
-                            $child->content =  str_replace('${hours_no}',$cart->trainingOption->PDUs,$child->content);
-                    }
+                    // if (strpos($child->content,  '${hours_no}') !== false)
+                    // {
+                    //     if(isset($is_webinar ))
+                    //         $child->content =  str_replace('${hours_no}',$cart->webinar->duration,$child->content);
+                    //     else
+                    //         $child->content =  str_replace('${hours_no}',$cart->trainingOption->PDUs,$child->content);
+                    // }
                     if (strpos($child->content,  '${date_from}') !== false)
                     {
-                        if(isset($is_webinar ))
-                            $child->content=  str_replace('${date_from}',$cart->webinar->certificate_from??null,$child->content);
-                        else
-                            $child->content=  str_replace('${date_from}',$cart->session->certificate_from??null,$child->content);
+                        // if(isset($is_webinar ))
+                        //     $child->content=  str_replace('${date_from}',$cart->webinar->certificate_from??null,$child->content);
+                        // else
+                            $child->content=  str_replace('${date_from}',($course_registration->created_at??null),$child->content);
                     }
                     if (strpos($child->content,  '${date_to}') !== false)
                     {
-                        $child->content=  str_replace('${date_to}',$cart->session->certificate_to??null,$child->content);
+                        $child->content=  str_replace('${date_to}',$course_registration->expire_date??null,$child->content);
                     }
                     if (strpos($child->content,  '${city}') !== false)
                     {
-                        $city_id = $cart->b2b->city_id??'Riyadh';
-                        if($cart->trainingOption->type_id==370)
-                            $child->content=  str_replace('${city}',$city_id.'-'.'Saudi Arabia'??null,$child->content);
-                        else
+                        // $city_id = $cart->b2b->city_id??'Riyadh';
+                        $city_id = 'Riyadh';
+                        // if($cart->trainingOption->type_id==370)
+                        //     $child->content=  str_replace('${city}',$city_id.'-'.'Saudi Arabia'??null,$child->content);
+                        // else
                             $child->content=  str_replace('${city}',' Riyadh - Saudi Arabia'??null,$child->content);
                     }
                     if (strpos($child->content,  '${barcode}') !== false)
@@ -121,11 +134,17 @@
                     }
                     if (strpos($child->content,  '${cource_img}') !== false)
                     {
-                        if($cart->course->type_id != 370)
-                        {
-                            if(isset($cart->course->upload->file))
-                                $child->content=  str_replace('${cource_img}','<img src="https://bakkah.com/public/upload/thumb300/'.$cart->course->upload->file.'" style="width: 200px;display: block;margin: 0 auto;margin-top: 5px;">',$child->content);
-                        }
+                        // if($cart->course->type_id != 370)
+                        // {
+                        //      if(env('NODE_ENV')=='production')
+                        //         $path = env('APP_URL');
+                        //     else
+                        //         $path = "https://bakkah.com/";
+                            // dd($course->upload->file);
+                            if(isset($course->upload->file))
+                                $child->content=  str_replace('${cource_img}','<img src="https://bakkah.com/public/upload/thumb300/'.$course->upload->file.'" style="width: 200px;display: block;margin: 0 auto;margin-top: 5px;">',$child->content);
+
+                        // }
                     }
                     if (strpos($child->content,  '${signature}') !== false)
                     {
@@ -134,15 +153,15 @@
                         <h4 style="color: #808080;">Education Services Director</h4>
                         <img src="https://bakkah.com/public/certificates/img/Nawar-Signature.png" style="width: 200px;display: block;margin: 0 auto;margin-top: 5px;"></div></div>',$child->content);
                     }
-                    if (strpos($child->content,  '${trainer_name}') !== false)
-                    {
-                        $dd = $cart->session;
-                        $child->content=  str_replace('${trainer_name}',$cart->session->usersSessions()->where('post_type','trainer')->first()->user->trans_name??null,$child->content);
-                    }
+                    // if (strpos($child->content,  '${trainer_name}') !== false)
+                    // {
+                    //     $dd = $cart->session;
+                    //     $child->content=  str_replace('${trainer_name}',$cart->session->usersSessions()->where('post_type','trainer')->first()->user->trans_name??null,$child->content);
+                    // }
                     if (strpos($child->content,  '${hourOrhours}') !== false)
                     {
                         // dd(500);
-                        $hours = $cart->trainingOption->PDUs??null;
+                        $hours = $course->PDUs??null;
 
                         $word_hour = 'ساعة';
                         if($hours>2 && $hours <11)

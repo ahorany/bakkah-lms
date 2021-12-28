@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Training;
 use App\Constant;
 use App\Http\Controllers\Controller;
 use App\Models\Training\Cart;
+use App\Models\Training\Course;
+use App\Models\Training\CourseRegistration;
+use App\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CertificateEmail;
 // use PDF;
@@ -373,7 +376,7 @@ class CertificateControllerH extends Controller
     }
 
     public function certificate($id) {
-        dd($id);
+        // dd($id);
         $body = $this->certificate_body(['cart_id'=>$id]);
         return view('training.certificates.certificate.index', [
             'cart'=>$body['cart'],
@@ -382,6 +385,22 @@ class CertificateControllerH extends Controller
         ]);
 
     }
+
+    public function certificate_dynamic() {
+        // dd(request()->id);
+        $course = Course::find(request()->id);
+        // dd($certificate->id);
+        $body = $this->certificate_body(['certificate_id'=>$course->certificate_id,
+                                        'course_id'=>$course->id]);
+        return view('training.certificates.certificate.index', [
+            'cart'=>$body['cart'],
+            'data_for_qr'=>$body['data_for_qr'],
+            'file_name_pdf'=>$body['file_name_pdf'],
+        ]);
+
+    }
+
+
 
     public function certificate_body($array=null) {
         // dd($array);
@@ -415,8 +434,9 @@ class CertificateControllerH extends Controller
         // ============ End of Data will be in certificate ==================
         if( $certificate_id != '')
         {
+
             $certificate = Certificate::find($certificate_id);
-            // dd($certificate_id);
+
             $orientation = 'L';
             if($certificate->direction == 490)
                 $orientation = 'P';
@@ -457,14 +477,34 @@ class CertificateControllerH extends Controller
             // ============ Start of generate the certificate and save it as a file ==================
             ob_start();
 
+
+
             // $body = view('training.certificates.certificate.content', compact('cart', 'data_for_qr'))->render();
             // $body = view('training.certificates.attendance.content', compact('cart'))->render();
 
 
             $childs   = Certificate::where('parent_id',$certificate_id)->where('content','!=',null)->get();
+
             $parent_id = $certificate_id;
-            // dd($cart);
-            $body = view('training.certificates.preview_pdf', compact('certificate','childs','parent_id','cart','data_for_qr'))->render();
+            $course = Course::find($array['course_id']);
+            $user = User::find(auth()->user()->id);
+            $course_registration = CourseRegistration::where('course_id',$course->id)
+                                                    ->where('user_id',auth()->user()->id)->get();
+            $data_for_qr = $course->en_title;
+
+            if($course->PDUs!=0)
+            {
+                $data_for_qr .= "\n"."With ".$course->PDUs." PDUs";
+            }
+
+            if(!is_null($user->trans_name))
+            {
+                $data_for_qr .= " for"."\n".$user->trans_name;
+            }
+
+            $data_for_qr .= "\n"."stage.bakkah.com/";
+            // dd( $data_for_qr);
+            $body = view('training.certificates.preview_pdf', compact('user','course_registration','certificate','childs','parent_id','cart','data_for_qr','course'))->render();
             try{
                 $mpdf->WriteHTML($body);
             }catch(\Mpdf\MpdfException $e){
