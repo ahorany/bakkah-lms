@@ -389,7 +389,7 @@ class CertificateControllerH extends Controller
     public function certificate_dynamic() {
         // dd(request()->id);
         $course = Course::find(request()->id);
-        // dd($certificate->id);
+        // dd($course->id);
         $body = $this->certificate_body(['certificate_id'=>$course->certificate_id,
                                         'course_id'=>$course->id]);
         return view('training.certificates.certificate.index', [
@@ -486,24 +486,30 @@ class CertificateControllerH extends Controller
             $childs   = Certificate::where('parent_id',$certificate_id)->where('content','!=',null)->get();
 
             $parent_id = $certificate_id;
-            $course = Course::find($array['course_id']);
-            $user = User::find(auth()->user()->id);
-            $course_registration = CourseRegistration::where('course_id',$course->id)
-                                                    ->where('user_id',auth()->user()->id)->get();
-            $data_for_qr = $course->en_title;
-
-            if($course->PDUs!=0)
+            $user = '' ;$course_registration='';$course='';
+            if(isset($array['course_id']))
             {
-                $data_for_qr .= "\n"."With ".$course->PDUs." PDUs";
+                $course = Course::find($array['course_id']);
+                $user = User::find(auth()->user()->id);
+                $course_registration = CourseRegistration::where('course_id',$course->id)
+                                                        ->where('user_id',auth()->user()->id)->first();
+                $data_for_qr = $course->en_title;
+
+                if($course->PDUs!=0)
+                {
+                    $data_for_qr .= "\n"."With ".$course->PDUs." PDUs";
+                }
+
+                if(!is_null($user->trans_name))
+                {
+                    $data_for_qr .= " for"."\n".$user->trans_name;
+                }
+
+                $data_for_qr .= "\n"."stage.bakkah.com/";
             }
 
-            if(!is_null($user->trans_name))
-            {
-                $data_for_qr .= " for"."\n".$user->trans_name;
-            }
-
-            $data_for_qr .= "\n"."stage.bakkah.com/";
             // dd( $data_for_qr);
+
             $body = view('training.certificates.preview_pdf', compact('user','course_registration','certificate','childs','parent_id','cart','data_for_qr','course'))->render();
             try{
                 $mpdf->WriteHTML($body);

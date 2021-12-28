@@ -1,15 +1,7 @@
     <?php
-// dd(80);
+// dd($course_registration->created_a);
     use App\Helpers\Date;
     use App\Models\Training\Webinar;
-    use App\Models\Training\CourseRegistration;
-    use App\User;
-
-    $user = User::find(auth()->user()->id);
-    $course_registration = CourseRegistration::where('course_id',$course->id)
-                                            ->where('user_id',auth()->user()->id)->get();
-
-    // dd($course_registration);
 
     if(isset($certificate->upload->file))
     {
