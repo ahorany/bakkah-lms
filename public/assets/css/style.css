@@ -1105,8 +1105,10 @@ ul.video-list li .text p {
 }
 
 .course-cards svg {
-  width: 40px;
-  height: 40px;
+width: 55px;
+    height: 55px;
+    padding: 10px;
+    border-radius: 0 0 15px 0;
 }
 
 .course-cards > div b {

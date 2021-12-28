@@ -110,9 +110,8 @@
                     </template>
 
                 </div>
-                sssssssssssssssssssssssssssssssssssssssssss-----
                 @if($course->users[0]->pivot->progress == 100)
-                    <a href="{{route('training.certificates.certificate_dynamic', ['id'=> $course->id ] )}}" class="btn btn-success btn-xs mb-1" target="_blank">
+                    <a href="{{route('training.certificates.certificate_dynamic', ['id'=> $course->id ] )}}" class="green mb-1" target="_blank">
                         Certificate
                     </a>
                 @endif
