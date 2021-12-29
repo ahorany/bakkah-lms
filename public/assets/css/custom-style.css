@@ -503,17 +503,19 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 }
 
 .certificate{
-    box-shadow: none;
+    /* box-shadow: none; */
     border-radius: 15px;
     padding: 60px 40px 30px;
     position: relative;
     margin-bottom: 20px;
-}
-
-.certificate:hover {
     box-shadow: 1px 1px 10px 1px #f0f0f0;
     border: none;
 }
+
+/* .certificate:hover {
+    box-shadow: 1px 1px 10px 1px #f0f0f0;
+    border: none;
+} */
 
 .certificate h2{
     color: #000;

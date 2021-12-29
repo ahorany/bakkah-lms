@@ -20,7 +20,7 @@
                             //         $url = $course->upload->file;
                                     $url = CustomAsset('icons/capm.png');
                             // }else {
-                                $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . 'test';
+                                // $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . 'test';
                             // }
                         @endphp
                         @isset($course->upload->file)
@@ -29,7 +29,7 @@
                             </div>
                         @else
                             <div class="no-img" style="height: 120px; display:flex; align-items: center; justify-content: center;">
-                                <img src="{{$url}}" height="auto" width="100px">
+                                <img src="{{$url}}" height="auto" width="100%">
                             </div>
                         @endisset
                         <h2>CAMP Course</h2>
