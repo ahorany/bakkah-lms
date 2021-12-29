@@ -11,17 +11,12 @@ Route::group([
         return view('zoom');
     })->name('web.zoom');
 
-
     Route::get('/vsscorm12', function(){
-
         return view('scorm');
     });
 
     Auth::routes(['register' => false]);
 });
-
-
-
 
 Route::get('/clear-cache', function(){
     if(auth()->user()->id==1 || auth()->user()->id==2 || auth()->user()->id==3){
