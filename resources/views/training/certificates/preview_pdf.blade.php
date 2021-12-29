@@ -138,7 +138,7 @@
                         //         $path = "https://bakkah.com/";
                             // dd($course->upload->file);
                             if(isset($course->upload->file))
-                                $child->content=  str_replace('${cource_img}','<img src="https://bakkah.com/public/upload/thumb300/'.$course->upload->file.'" style="width: 200px;display: block;margin: 0 auto;margin-top: 5px;">',$child->content);
+                                $child->content=  str_replace('${cource_img}','<img src="https://stage.bakkah.com/public/upload/thumb300/'.$course->upload->file.'" style="width: 200px;display: block;margin: 0 auto;margin-top: 5px;">',$child->content);
 
                         // }
                     }
