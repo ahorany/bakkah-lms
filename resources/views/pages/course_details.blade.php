@@ -111,7 +111,8 @@
 
                 </div>
                 @if($course->users[0]->pivot->progress == 100)
-                    <a href="{{route('training.certificates.certificate_dynamic', ['id'=> $course->id ] )}}" class="green mb-1" target="_blank">
+
+                    <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}" class="green mb-1" target="_blank">
                         Certificate
                     </a>
                 @endif
