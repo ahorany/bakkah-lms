@@ -20,6 +20,9 @@ Route::group([
     Auth::routes(['register' => false]);
 });
 
+Route::get('/', function(){
+    return redirect()->route('user.home');
+});
 
 
 
