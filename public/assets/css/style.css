@@ -568,7 +568,7 @@ nav#sidebarMenu ul li a {
 
 nav#sidebarMenu ul li a:hover,
 nav#sidebarMenu ul li a.active {
-  background: #fb4400;
+  background: #5D5B5A;
   border-color: #fff;
   color: #fff;
 }
