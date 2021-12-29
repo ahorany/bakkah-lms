@@ -18,15 +18,12 @@ Route::group([
     Auth::routes(['register' => false]);
 });
 
-<<<<<<< HEAD
-=======
 Route::get('/', function(){
     return redirect()->route('user.home');
 });
 
 
 
->>>>>>> aaf57faaf4a62bff55d9afe53cf19d343fe54ad6
 Route::get('/clear-cache', function(){
     if(auth()->user()->id==1 || auth()->user()->id==2 || auth()->user()->id==3){
         \Artisan::call('cache:clear');
