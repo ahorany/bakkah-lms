@@ -439,6 +439,7 @@ button.next_prev {
     align-items: center;
     box-shadow: 1px 1px 7px 1px gainsboro;
     border: none;
+    cursor: pointer;
 }
 /* button.next_prev:hover {
     background-color: #7c9290;
@@ -732,9 +733,6 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .messages li.has-dropdown .dropdown{
         right: -80px;
     }
-}
-
-@media(max-width : 330px){
     span.mx-2.d-flex span {
         display: none;
     }
@@ -745,4 +743,5 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         padding: 5px 0;
     }
 }
+
 /* End Media Query */
