@@ -202,7 +202,7 @@
                 <div class="col-lg-8 mb-5 mb-lg-0 course_info">
                     @foreach($course->contents as $key => $section)
                             <div class="card learning-file mb-3">
-                                <h2>{{$section->title}}</h2>
+                                <h3>{{$section->title}}</h3>
                                 <div style="margin: 0px 40px;">{!!  $section->details->excerpt??null !!}</div>
                                 @isset($section->contents)
                                     <ul>
@@ -247,7 +247,7 @@
 <div class="col-lg-4 course_info">
 
     <div class="card p-30 learning-file activity" style="padding: 0 !important;">
-    <h2>Activity</h2>
+    <h3>Activity</h3>
     <ul style="list-style: none; padding: 0;">
     <?php $lang = app()->getLocale(); ?>
         @foreach($activities as $activity)

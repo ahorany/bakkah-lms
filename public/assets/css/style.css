@@ -1006,9 +1006,9 @@ ol.answers li .icon.empty {
   padding-bottom: 20px;
 }
 
-.learning-file h2 {
+.learning-file h3 {
   margin: 20px 30px;
-  font-family: "Lato Black";
+  /* font-family: "Lato Black"; */
   text-transform: uppercase;
   font-size: 17px;
 }
