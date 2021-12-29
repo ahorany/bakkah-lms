@@ -724,15 +724,7 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .dash-header.d-flex.justify-content-between ol.breadcrumb{
         margin-bottom: 10px;
     }
-}
 
-@media(max-width : 431px){
-    span.d-none.d-sm-block{
-        display: none;
-    }
-    .messages li.has-dropdown .dropdown{
-        right: -80px;
-    }
     span.mx-2.d-flex span {
         display: none;
     }
@@ -741,6 +733,15 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     }
     .lms-header ul.navbar-nav li.user a{
         padding: 5px 0;
+    }
+}
+
+@media(max-width : 431px){
+    span.d-none.d-sm-block{
+        display: none;
+    }
+    .messages li.has-dropdown .dropdown{
+        right: -80px;
     }
 }
 
