@@ -232,11 +232,6 @@
                                             </div>
                                         </div>
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 2ee991f8503e33a8e5dc0c50e2c6dcd66d1b914a
                                         <div class="col-md-6 col-12">
                                             <div class="modal-diff-content form-group">
                                                 <label class="container-check" style="padding: 25px 30px 0; font-size: 15px;">
