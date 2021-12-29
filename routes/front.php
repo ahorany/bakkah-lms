@@ -28,6 +28,7 @@ Route::group([
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
         Route::get('/home', [\App\Http\Controllers\Front\HomeController::class, 'home'])->name('home');
+        Route::get('/certificate', [\App\Http\Controllers\Front\HomeController::class, 'certificate'])->name('certificate');
 
         Route::get('/logout',  [UserProfileController::class, 'logout'])->name('logout');
         Route::get('/info', [UserProfileController::class, 'info'])->name('info');
