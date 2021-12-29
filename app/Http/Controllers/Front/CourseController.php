@@ -54,8 +54,9 @@ class CourseController extends Controller
 
         // Get User Course Activities
         $activities = $this->getUserCourseActivities($course->id,\auth()->id());
+        $course_registration_id = CourseRegistration::where('course_id',$course->id)->where('user_id',\auth()->id())->pluck('id')->first();
 
-        return view('pages.course_details',compact('course','total_rate','activities'));
+        return view('pages.course_details',compact('course','total_rate','activities','course_registration_id'));
     } // end function
 
 

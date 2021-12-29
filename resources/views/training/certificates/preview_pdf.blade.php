@@ -1,5 +1,5 @@
     <?php
-// dd($course_registration->created_a);
+
     use App\Helpers\Date;
     use App\Models\Training\Webinar;
 
