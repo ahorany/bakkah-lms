@@ -11,15 +11,16 @@ Route::group([
         return view('zoom');
     })->name('web.zoom');
 
-
     Route::get('/vsscorm12', function(){
-
         return view('scorm');
     });
 
     Auth::routes(['register' => false]);
 });
 
+Route::get('/', function(){
+    return redirect()->route('user.home');
+});
 
 
 

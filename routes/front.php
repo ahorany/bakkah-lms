@@ -11,8 +11,6 @@
 |
 */
 
-
-
 use App\Http\Controllers\Front\UserProfileController;
 
 Route::get('/video/{secret}', 'VideoController@find')->name("get_file");
@@ -30,7 +28,6 @@ Route::group([
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
         Route::get('/home', [\App\Http\Controllers\Front\HomeController::class, 'home'])->name('home');
-
 
         Route::get('/logout',  [UserProfileController::class, 'logout'])->name('logout');
         Route::get('/info', [UserProfileController::class, 'info'])->name('info');
