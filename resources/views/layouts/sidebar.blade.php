@@ -34,7 +34,6 @@
                 </a>
             </li>
 
-
             @foreach($user_pages as $aside)
                 <?php
                 $has_treeview = is_null($aside->route_name) ? 'has-treeview' : '';

@@ -93,9 +93,6 @@
                         </template>
 
                         <div class="d-flex algin-items-center justify-content-between mt-4 buttons">
-                            <template v-if="save_status && page_type == 'exam' ">
-                               <button class="form-control main-color" @click.prevent="save()">Submit</button>
-                            </template>
 
                             <div class="navigation">
                                 <template v-if="prev_status">
@@ -121,6 +118,11 @@
                                 </button>
                                 </template>
                             </div>
+
+                            <template v-if="save_status && page_type == 'exam' ">
+                               <button class="form-control main-color" @click.prevent="save()">Submit</button>
+                            </template>
+
                         </div>
                     </div>
 

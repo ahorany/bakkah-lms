@@ -64,7 +64,6 @@
                             </svg>
                             <span>{{__('education.Previous')}}</span>
                         </button>
-
                     @endif
 
 

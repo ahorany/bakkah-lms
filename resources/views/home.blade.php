@@ -131,11 +131,11 @@
                             }
                         ?>
                             @isset($course->upload->file)
-                                <div class="image" style="height: 150px; display:flex; align-items: center; justify-content: center;">
-                                    <img src="{{$url}}" height="auto" width="100%">
+                                <div class="image" style="height: 120px; display:flex; align-items: center; justify-content: center;">
+                                    <img src="{{$url}}" height="auto" width="80%">
                                 </div>
                             @else
-                                <div class="image no-img" style="height: 150px; display:flex; align-items: center; justify-content: center;">
+                                <div class="image no-img" style="height: 120px; display:flex; align-items: center; justify-content: center;">
                                     <img src="{{$url}}" height="auto" width="100px">
                                 </div>
                             @endisset
@@ -302,7 +302,7 @@
             @endif
             <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
                 <div class="card h-100 p-30 activity">
-                    <h2>Activity</h2>
+                    <h3>Activity</h3>
                     <ul>
                         <?php $lang = app()->getLocale(); ?>
                         @foreach($activities as $activity)

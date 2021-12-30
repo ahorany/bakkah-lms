@@ -130,7 +130,7 @@
                 'content_title'=>$exam->title,
                 // 'content_title'=>__('education.Exam'),
             ])
-            <div>
+            <div class="parent_next_prev">
                 @if($previous)
                     <button title="{{$previous->title}}" class="next_prev" onclick="location.href =  '{{$previous_url}}'">
                         <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">

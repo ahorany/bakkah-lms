@@ -418,6 +418,7 @@ a:hover svg#back{
 }
 .course-cards{
     width: 23%;
+    margin-bottom: 10px;
     justify-content: center;
     background: #FFF;
     color: #000;
@@ -427,21 +428,27 @@ a:hover svg#back{
 
 button.next_prev {
     width: max-content;
-    padding: 5px;
+    padding: 8px;
+    color: #646464;
+    background: #fff;
     margin: 0px 5px 5px 5px;
-    border: 1px solid #7c9290;
-    color: #7c9290;
     text-align: center;
-    border-radius: 30px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 7px 1px gainsboro;
+    border: none;
+    cursor: pointer;
 }
-button.next_prev:hover {
+/* button.next_prev:hover {
     background-color: #7c9290;
     color: #fff;
     border: 1px solid transparent;
-}
-button.next_prev:hover svg{
+} */
+/* button.next_prev:hover svg{
     filter: none;
-}
+} */
 
 ul.video-list li .play{
     cursor: unset;
@@ -494,6 +501,66 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     font-family: 'Lato Regular';
     font-size: 14px;
 }
+
+.certificate{
+    /* box-shadow: none; */
+    border-radius: 15px;
+    padding: 60px 40px 30px;
+    position: relative;
+    margin-bottom: 20px;
+    box-shadow: 1px 1px 10px 1px #f0f0f0;
+    border: none;
+}
+
+/* .certificate:hover {
+    box-shadow: 1px 1px 10px 1px #f0f0f0;
+    border: none;
+} */
+
+.certificate h2{
+    color: #000;
+    margin: 0;
+    margin-top: 5px;
+    min-height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.certificate .completed {
+    margin-top: 15px;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.certificate .completed *{
+    margin: 0 5px;
+}
+
+.certificate a.download {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.parent_next_prev{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.padding-none{
+    padding: 0 !important;
+}
+
+.p-20{
+    padding: 20px;
+}
+
 /******************************************************************************************************************/
 
 /* Media Query */
@@ -504,6 +571,7 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         margin: 0 !important;
     }
 }
+
 @media (max-width: 1199px) and (min-width: 991px) {
     .course-cards{
         width: 40%;
@@ -518,7 +586,12 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         width: 40%;
     }
 }
+
 @media (min-width: 768px) and (max-width: 991px) {
+    .course-cards span {
+        display: block;
+        margin-top: 25px;
+    }
     .course-cards{
         width: 40%;
     }
@@ -534,6 +607,10 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 }
 
 @media (max-width: 768px) {
+    .course-cards span {
+        display: block;
+        margin-top: 25px;
+    }
     .dash-header.course_info {
         padding: 25px 20px 0;
     }
@@ -657,6 +734,16 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .dash-header.d-flex.justify-content-between ol.breadcrumb{
         margin-bottom: 10px;
     }
+
+    span.mx-2.d-flex span {
+        display: none;
+    }
+    span.mx-2.d-flex svg#Layer_1 {
+        width: 25px;
+    }
+    .lms-header ul.navbar-nav li.user a{
+        padding: 5px 0;
+    }
 }
 
 @media(max-width : 431px){
@@ -668,15 +755,4 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     }
 }
 
-@media(max-width : 330px){
-    span.mx-2.d-flex span {
-        display: none;
-    }
-    span.mx-2.d-flex svg#Layer_1 {
-        width: 25px;
-    }
-    .lms-header ul.navbar-nav li.user a{
-        padding: 5px 0;
-    }
-}
 /* End Media Query */

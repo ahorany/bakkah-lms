@@ -568,7 +568,7 @@ nav#sidebarMenu ul li a {
 
 nav#sidebarMenu ul li a:hover,
 nav#sidebarMenu ul li a.active {
-  background: #fb4400;
+  background: #5D5B5A;
   border-color: #fff;
   color: #fff;
 }
@@ -597,7 +597,7 @@ nav#sidebarMenu ul li a svg path {
 
 .lms-header a.navbar-brand img {
   filter: brightness(0) invert(1);
-  width: 50px;
+  width: 35px;
   margin: 0 15px;
 }
 
@@ -1006,9 +1006,9 @@ ol.answers li .icon.empty {
   padding-bottom: 20px;
 }
 
-.learning-file h2 {
+.learning-file h3 {
   margin: 20px 30px;
-  font-family: "Lato Black";
+  /* font-family: "Lato Black"; */
   text-transform: uppercase;
   font-size: 17px;
 }

@@ -111,7 +111,8 @@
 
                 </div>
                 @if($course->users[0]->pivot->progress == 100)
-                    <a href="{{route('training.certificates.certificate_dynamic', ['id'=> $course->id ] )}}" class="green mb-1" target="_blank">
+
+                    <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}" class="green mb-1" target="_blank">
                         Certificate
                     </a>
                 @endif
@@ -202,7 +203,7 @@
                 <div class="col-lg-8 mb-5 mb-lg-0 course_info">
                     @foreach($course->contents as $key => $section)
                             <div class="card learning-file mb-3">
-                                <h2>{{$section->title}}</h2>
+                                <h3>{{$section->title}}</h3>
                                 <div style="margin: 0px 40px;">{!!  $section->details->excerpt??null !!}</div>
                                 @isset($section->contents)
                                     <ul>
@@ -247,7 +248,7 @@
 <div class="col-lg-4 course_info">
 
     <div class="card p-30 learning-file activity" style="padding: 0 !important;">
-    <h2>Activity</h2>
+    <h3>Activity</h3>
     <ul style="list-style: none; padding: 0;">
     <?php $lang = app()->getLocale(); ?>
         @foreach($activities as $activity)

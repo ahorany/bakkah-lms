@@ -387,11 +387,16 @@ class CertificateControllerH extends Controller
     }
 
     public function certificate_dynamic() {
-        // dd(request()->id);
-        $course = Course::find(request()->id);
+
+        // $course = Course::find(request()->course_registration_id);
+        $course_registration  = CourseRegistration::find(request()->course_registration_id) ;
+        // dd($course_registration);
+
+        // dd($course);
         // dd($course->id);
+        $course = Course::find($course_registration->course_id);
         $body = $this->certificate_body(['certificate_id'=>$course->certificate_id,
-                                        'course_id'=>$course->id]);
+                                        'course_registration'=>$course_registration]);
         return view('training.certificates.certificate.index', [
             'cart'=>$body['cart'],
             'data_for_qr'=>$body['data_for_qr'],
@@ -406,28 +411,29 @@ class CertificateControllerH extends Controller
         // dd($array);
         // ============ Start of Data will be in certificate ==================
         $cart = '';$data_for_qr='';
-        if(isset($array['cart_id']) && $array['cart_id'] != '')
-        {
-            $id = $array['cart_id'];
-            $cart = Cart::findOrFail($id);
-            // dd($cart);
-            // $cert_no = !is_null($cart->cert_no)?$cart->cert_no:$cart->id;
-            $course_title = $cart->course->ar_disclaimer??$cart->course->en_title;
-            $data_for_qr = $course_title;
+        // if(isset($array['cart_id']) && $array['cart_id'] != '')
+        // {
+        //     $id = $array['cart_id'];
+        //     $cart = Cart::findOrFail($id);
+        //     // dd($cart);
+        //     // $cert_no = !is_null($cart->cert_no)?$cart->cert_no:$cart->id;
+        //     $course_title = $cart->course->ar_disclaimer??$cart->course->en_title;
+        //     $data_for_qr = $course_title;
 
-            if($cart->course->PDUs!=0)
-            {
-                $data_for_qr .= "\n"."With ".$cart->course->PDUs." PDUs";
-            }
-            if(!is_null($cart->userId->trans_name))
-            {
-                $data_for_qr .= " for"."\n".$cart->userId->trans_name;
-            }
-            $data_for_qr .= "\n"."www.bakkah.com";
-            $certificate_id  = $cart->course->certificate_id;
-            // dd($certificate_id);
-        }
-        elseif(isset($array['certificate_id']) && $array['certificate_id'] != '')
+        //     if($cart->course->PDUs!=0)
+        //     {
+        //         $data_for_qr .= "\n"."With ".$cart->course->PDUs." PDUs";
+        //     }
+        //     if(!is_null($cart->userId->trans_name))
+        //     {
+        //         $data_for_qr .= " for"."\n".$cart->userId->trans_name;
+        //     }
+        //     $data_for_qr .= "\n"."www.bakkah.com";
+        //     $certificate_id  = $cart->course->certificate_id;
+        //     // dd($certificate_id);
+        // }
+        // else
+        if(isset($array['certificate_id']) && $array['certificate_id'] != '')
         {
             $certificate_id = $array['certificate_id'];
         }
@@ -487,12 +493,13 @@ class CertificateControllerH extends Controller
 
             $parent_id = $certificate_id;
             $user = '' ;$course_registration='';$course='';
-            if(isset($array['course_id']))
+            if(isset($array['course_registration']))
             {
-                $course = Course::find($array['course_id']);
-                $user = User::find(auth()->user()->id);
-                $course_registration = CourseRegistration::where('course_id',$course->id)
-                                                        ->where('user_id',auth()->user()->id)->first();
+                $course_registration = $array['course_registration'];
+                $course = Course::find($course_registration->course_id);
+                // $course = Course::find($array['course_id']);
+                $user = User::find($course_registration->user_id);
+
                 $data_for_qr = $course->en_title;
 
                 if($course->PDUs!=0)
