@@ -36,7 +36,7 @@ class CourseRequest extends FormRequest
             'created_by'=>'',
             'updated_by'=>'',
             'slug'=>'',
-            // 'slug'=>'required|min:2|max:500',
+            'complete_progress'=>'required',
             'order'=>'nullable|numeric|max:1500',
 //            'algolia_order'=>'nullable|numeric|max:1500',
             'en_short_title'=>'max:100',
