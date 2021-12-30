@@ -95,7 +95,8 @@
                         @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="600px" id="update_file_source" src='' ></iframe>
+                            {{-- <embed width="100%" height="600px" id="update_file_source" src='' > --}}
+                            <iframe width="100%" height="600px" id="update_file_source" src='' style="border: 1px solid #eaeaea;" ></iframe>
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
                         @else
@@ -111,7 +112,6 @@
                             $content_id = sprintf("%'.05d", $content->id);
                             $SCOInstanceID = (1).$user_id.(2).$content_id;
                             ?>
-
                             <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
 
                             @if(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html') ))
@@ -320,8 +320,26 @@
                 window.location.href = '{{$next_url??null}}'
             });
         }
-    </script>
 
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     // const btn = document.querySelector("Layer_1");
+        //     // const btn = document.getElementById("download");
+        //     // btn.addEventListener("click", function () {
+        //     //     // name.style.color = "blue";
+        //     //     alert();
+        //     // });
+
+        //     setTimeout(function(){
+        //         alert();
+        //         document.getElementById("toolbarViewerRight").remove();
+        //     }.bind(this), 3000)
+        // }, false);
+
+        // setTimeout(function(){
+        //     alert();
+        //     document.getElementById("toolbarContainer").style.visibility = "hidden";
+        // }.bind(this), 3000)
+    </script>
 
 @endsection
 
