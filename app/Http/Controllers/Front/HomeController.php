@@ -70,9 +70,13 @@ class HomeController extends Controller
         return view('home', compact('complete_courses','courses','last_video','next_videos','activities'));
     } // end function
 
-    
+
     public function certificate(){
         return view('certificate');
+    }
+
+    public function congrats(){
+        return view('congrats');
     }
 
     /*
