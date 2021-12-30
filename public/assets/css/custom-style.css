@@ -21,7 +21,7 @@ a.review:hover svg path{
     fill: #fff;;
 }
 .card {
-    box-shadow: 0 0 20px rgb(127 170 203 / 5%);
+    box-shadow: 0 0 10px 1px #f4f4f4;
 }
 .navbar-nav{
     flex-direction: row;
@@ -559,6 +559,16 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 
 .p-20{
     padding: 20px;
+}
+
+.certification-card{
+    padding: 60px 40px;
+}
+
+.certification-card h2 {
+    font-family: 'Lato Light';
+    font-size: 25px;
+    margin: 0;
 }
 
 /******************************************************************************************************************/
