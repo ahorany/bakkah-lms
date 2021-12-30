@@ -15,6 +15,9 @@ define('USD_PRICE', 3.75);
 define('ZOOM_COST', 86);
 
 
+define('COMPLETED_PROGRESS', 100);
+
+
 use App\User;
 use Carbon\Carbon;
 use App\Models\Training\Cart;

@@ -26,14 +26,28 @@
 @include("layouts.header")
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row align-items-center justify-content-center">
 
-        @if(Route::current()->getName() != 'user.congrats')
-            @include("layouts.sidebar")
-        @endif
+        <main class="col-md-10 col-lg-8 col-xl-6 px-4 py-5">
 
-        <main class="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-5" id="main-vue-element">
-            @yield('content')
+            <div class="container congrats">
+                <div class="text-center course-image certificate certification-card">
+                    <a href="#" class="download">
+                        <img src="{{CustomAsset('icons/download.svg')}}" width="50px" alt="">
+                    </a>
+                    <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
+                        <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
+                    </div>
+                    <div>
+                        <h1>Congratulations!</h1>
+                        <p>
+                            You have successfully completed the course. Can’t wait for to hear the good news about you getting certified! <br><br>
+                            Good Luck in your exam
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 </div>
@@ -57,3 +71,4 @@
 </body>
 
 </html>
+

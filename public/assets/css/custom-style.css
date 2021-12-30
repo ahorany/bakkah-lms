@@ -21,7 +21,7 @@ a.review:hover svg path{
     fill: #fff;;
 }
 .card {
-    box-shadow: 0 0 10px 1px #f4f4f4;
+    box-shadow: 0 0 10px 1px #00000003;
 }
 .navbar-nav{
     flex-direction: row;
@@ -571,29 +571,53 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     margin: 0;
 }
 
+.congrats h1{
+    font-family: 'Lato Bold';
+    font-size: 35px;
+    color: #000;
+}
+
+.congrats p{
+    font-size: 15px;
+    color: #000;
+}
+
 /******************************************************************************************************************/
 
 /* Media Query */
+
+@media (max-width: 1300px) and (min-width: 1200px) {
+    .certificate{
+        padding: 60px 15px 30px;
+    }
+
+    .certificate .download img{
+        width: 35px !important;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 991px) {
+    .calendar .sideb table th{
+        font-size: 12px;
+    }
+    .course-cards{
+        width: 40%;
+    }
+    .certificate{
+        padding: 60px 15px 30px;
+    }
+    .certificate .download img{
+        width: 35px !important;
+    }
+}
 
 @media (max-width: 1025px) {
     .change-password .card .card-body{
         padding: 0 !important;
         margin: 0 !important;
     }
-}
-
-@media (max-width: 1199px) and (min-width: 991px) {
-    .course-cards{
-        width: 40%;
-    }
-}
-
-@media (min-width: 991px) and (max-width: 1156px) {
-    .calendar .sideb table th{
-        font-size: 12px;
-    }
-    .course-cards{
-        width: 40%;
+    .certificate{
+        padding: 60px 15px 30px;
     }
 }
 
@@ -617,6 +641,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 }
 
 @media (max-width: 768px) {
+    .certificate-page {
+        padding: 50px;
+    }
     .course-cards span {
         display: block;
         margin-top: 25px;
@@ -754,6 +781,18 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .lms-header ul.navbar-nav li.user a{
         padding: 5px 0;
     }
+    .congrats h1{
+        font-size: 25px;
+    }
+    .certification-card {
+        padding: 60px 20px;
+    }
+    .certificate-img img {
+        width: 40%;
+    }
+    .text-center.course-image .download img{
+        width: 60%;
+    }
 }
 
 @media(max-width : 431px){
@@ -762,6 +801,13 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     }
     .messages li.has-dropdown .dropdown{
         right: -80px;
+    }
+    .congrats h1 {
+        font-size: 18px;
+    }
+    .congrats p {
+        color: #000;
+        font-size: 13px;
     }
 }
 
