@@ -115,9 +115,9 @@
                                             <a v-if="entry.post_type == 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + entry.id" :target="entry.id">
                                                 <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                                             </a>
-                                            <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">
-                                                <i class="fa fa-folder-open-o" aria-hidden="true"></i>
-                                            </a>
+{{--                                            <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id" :target="entry.id">--}}
+{{--                                                <i class="fa fa-folder-open-o" aria-hidden="true"></i>--}}
+{{--                                            </a>--}}
 
                                             <button title="Edit" v-if="entry.post_type == 'exam'" @click="OpenEditModal(content.id, entry.id)"  class="yellow" > <i class="fa fa-pencil" aria-hidden="true"></i> </button>
                                             <button title="Edit" v-else @click="OpenEditModal(content.id, entry.id)"  class="yellow" >
