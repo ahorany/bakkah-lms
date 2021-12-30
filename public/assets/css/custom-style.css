@@ -553,6 +553,14 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     align-items: center;
 }
 
+.padding-none{
+    padding: 0 !important;
+}
+
+.p-20{
+    padding: 20px;
+}
+
 /******************************************************************************************************************/
 
 /* Media Query */

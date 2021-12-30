@@ -93,4 +93,5 @@ return [
     "Inbox" => 'Inbox',
     "Send Message" => 'Send Message',
     "Messages" => 'Messages',
+    "Certificates" => 'Certificates',
 ];

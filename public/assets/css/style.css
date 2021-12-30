@@ -597,7 +597,7 @@ nav#sidebarMenu ul li a svg path {
 
 .lms-header a.navbar-brand img {
   filter: brightness(0) invert(1);
-  width: 50px;
+  width: 35px;
   margin: 0 15px;
 }
 

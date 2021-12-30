@@ -37,7 +37,7 @@
             <ul class="navbar-nav mx-0">
                 <li class="has-dropdown user m-0">
                     <a style="color: #6a6a6a;" class="messages" onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" href="#">
-                        <span class="mx-2 d-flex">
+                        <span class="d-flex">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" viewBox="0 0 100 100" style="vertical-align: middle; fill: #6a6a6a;" xml:space="preserve">
                                 <g>
                                     <path d="M45.91,12.57c0-1.23-0.03-2.59,0.01-3.95c0.05-2.18,1.22-3.64,3.22-4.1c2.12-0.48,4.39,1.03,4.68,3.18
@@ -60,8 +60,8 @@
                         <ul class="postition-relative">
                             <li>
                                 <a href="{{route('user.add_message')}}">
-                                    <span class="mx-2 d-flex">
-                                        <svg  version="1.1" id="svg_icon1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  viewBox="0 0 60 60"  xml:space="preserve" style="margin-right: 10px;" >
+                                    <span class="d-flex">
+                                        <svg  version="1.1" id="svg_icon1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  viewBox="0 0 60 60"  xml:space="preserve" style="margin-right: 4px;" >
                                         <path d="M57.28,30.77c-0.25,0.89-0.57,1.75-1.22,2.44c-0.94,1-2.09,1.53-3.47,1.53c-5.55,0-11.1,0-16.65,0c-0.21,0-0.41,0-0.69,0
                                         c0,0.23,0,0.43,0,0.64c0,5.57,0,11.13,0,16.7c0,2.37-1.73,4.34-4.08,4.67c-2.26,0.32-4.47-1.12-5.12-3.36
                                         c-0.13-0.46-0.18-0.96-0.19-1.44c-0.01-5.53-0.01-11.06-0.01-16.6c0-0.19,0-0.37,0-0.61c-0.25,0-0.46,0-0.66,0
@@ -77,8 +77,8 @@
                             </li>
                             <li>
                                 <a href="{{route('user.messages.inbox',['type'=>'sent'])}}">
-                                    <span class="mx-2 d-flex">
-                                        <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 10px;" xml:space="preserve">
+                                    <span class="d-flex">
+                                        <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 4px;" xml:space="preserve">
                                             <path d="M4.4,46.85c0.51-1.03,1.39-1.53,2.43-1.93C33.1,34.91,59.35,24.89,85.6,14.86c1.09-0.42,2.1-0.46,3,0.39
                                                 c0.9,0.85,0.91,1.87,0.57,2.98C82.5,40.08,75.83,61.94,69.15,83.8c-0.68,2.24-2.46,2.82-4.35,1.42c-7.15-5.3-14.3-10.61-21.44-15.92
                                                 c-0.26-0.2-0.53-0.38-0.86-0.61c-0.26,0.51-0.51,0.96-0.74,1.42c-2.8,5.55-5.59,11.09-8.38,16.64c-0.67,1.33-1.66,1.9-2.83,1.66
@@ -97,8 +97,8 @@
                             </li>
                             <li>
                                 <a href="{{route('user.messages.inbox',['type'=>'inbox'])}}">
-                                    <span class="mx-2 d-flex">
-                                        <svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 10px;"xml:space="preserve">
+                                    <span class="d-flex">
+                                        <svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 4px;"xml:space="preserve">
                                             <g>
                                                 <path d="M93.14,87.2c-28.75,0-57.39,0-86.13,0c0-0.39,0-0.74,0-1.09c0-9-0.05-18.01,0.04-27.01c0.02-2.34,0.47-4.69,0.77-7.02
                                                     c0.55-4.26,1.14-8.52,1.71-12.78c0.64-4.76,1.28-9.53,1.91-14.29c0.5-3.79,1-7.58,1.5-11.36c0.04-0.32,0.1-0.65,0.16-1.02
@@ -145,9 +145,9 @@
 
             <div class="dropdown d-none">
                 <ul class="postition-relative">
-                    <li class="m-3 mb-0 pb-3 dropdown-item borderBottom" style="border-bottom: 1px solid gainsboro;">
+                    <li class="dropdown-item borderBottom p-20" style="border-bottom: 1px solid gainsboro;">
                         <div>
-                            <h2 style="font-size: 1.1rem; margin-bottom: 0;">{{auth()->user()->trans_name}}</h2>
+                            <h2 style="font-size: 1.1rem; margin: 0; ">{{auth()->user()->trans_name}}</h2>
                             <small style="color: #73726c; font-weight:700;">{{$user_role_name}}</small>
                         </div>
                     </li>
@@ -171,11 +171,19 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{route('user.certificate')}}" class="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+                                <path id="Path_132" data-name="Path 132"
+                                      d="M34.5,36h-12A1.5,1.5,0,0,1,21,34.5v-12A1.5,1.5,0,0,1,22.5,21h12A1.5,1.5,0,0,1,36,22.5v12A1.5,1.5,0,0,1,34.5,36Zm-12-13.5v12h12l0-12Zm12-7.5h-12A1.5,1.5,0,0,1,21,13.5V1.5A1.5,1.5,0,0,1,22.5,0h12A1.5,1.5,0,0,1,36,1.5v12A1.5,1.5,0,0,1,34.5,15ZM22.5,1.5v12h12l0-12ZM13.5,36H1.5A1.5,1.5,0,0,1,0,34.5v-12A1.5,1.5,0,0,1,1.5,21h12A1.5,1.5,0,0,1,15,22.5v12A1.5,1.5,0,0,1,13.5,36ZM1.5,22.5v12h12l0-12Zm12-7.5H1.5A1.5,1.5,0,0,1,0,13.5V1.5A1.5,1.5,0,0,1,1.5,0h12A1.5,1.5,0,0,1,15,1.5v12A1.5,1.5,0,0,1,13.5,15ZM1.5,1.5v12h12l0-12Z" />
+                            </svg>
+                            <span class="mx-1">
+                                {{__('education.Certificates')}}
+                            </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{route('user.change_password')}}" class="d-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-                                <style type="text/css">
-                                    .st0{fill:#FFFFFF;}
-                                </style>
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve">
                                 <g>
                                     <path d="M51.34,6.77c1.51,0.22,3.02,0.41,4.52,0.66c6.68,1.13,12.72,3.76,18.18,7.75c0.16,0.11,0.32,0.22,0.65,0.45   c0-1.17-0.02-2.19,0.01-3.22c0.01-0.51,0.03-1.03,0.16-1.51c0.32-1.14,1.38-1.84,2.59-1.77c1.14,0.06,2.09,0.86,2.33,2.01   c0.07,0.36,0.1,0.73,0.1,1.1c0.01,2.81,0.01,5.62,0,8.42c0,2.16-0.69,2.95-2.8,3.32c-2.98,0.52-5.96,1.06-8.94,1.59   c-1.41,0.25-2.73-0.6-3.02-1.96c-0.3-1.39,0.49-2.73,1.9-3.04c1.24-0.28,2.5-0.46,3.75-0.69c0.19-0.03,0.37-0.1,0.84-0.24   c-1.82-1.13-3.39-2.23-5.07-3.13c-6.49-3.49-13.43-5.15-20.78-4.47C29.64,13.52,18.5,21.9,12.34,36.81   c-2.12,5.12-2.87,10.54-2.38,16.07c1.27,14.59,8.51,25.25,21.45,31.97c6.05,3.14,12.59,4.27,19.42,3.84   c15.64-0.97,29.36-11.7,34.13-26.82c1.18-3.76,1.72-7.61,1.8-11.54c0.03-1.33,0.95-2.38,2.18-2.53c1.29-0.16,2.44,0.57,2.81,1.82   c0.09,0.29,0.11,0.61,0.1,0.92c-0.07,10.32-3.34,19.52-9.9,27.48c-6.66,8.08-15.14,13.32-25.46,15.12   c-15.65,2.73-29.15-1.67-40.17-13.19c-5.99-6.27-9.56-13.82-11.05-22.35c-0.23-1.33-0.38-2.68-0.57-4.01c0-2.16,0-4.31,0-6.47   c0.19-1.34,0.34-2.68,0.57-4.01c1.51-8.68,5.23-16.27,11.3-22.66c6.85-7.22,15.2-11.65,25.05-13.17c1.14-0.18,2.28-0.33,3.42-0.5   C47.14,6.77,49.24,6.77,51.34,6.77z"/>
                                     <path class="st0" d="M45.04,6.77c-1.14,0.17-2.28,0.32-3.42,0.5c-9.86,1.52-18.2,5.96-25.05,13.17c-6.07,6.39-9.8,13.98-11.3,22.66   c-0.23,1.33-0.38,2.67-0.57,4.01c0-13.43,0-26.87,0-40.34C18.15,6.77,31.6,6.77,45.04,6.77z"/>
