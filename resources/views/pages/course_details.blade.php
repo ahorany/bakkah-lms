@@ -95,7 +95,7 @@
             </template>
          </template>
       </div>
-      @if($course->users[0]->pivot->progress == 100)
+      @if($course->users[0]->pivot->progress == $course->complete_progress)
       <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}" class="green mb-1" target="_blank">
       Certificate
       </a>
@@ -212,7 +212,8 @@
       @endforeach
    </div>
    <div class="col-lg-4 course_info">
-    <div class="text-center course-image certificate certification-card">
+    @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress == $course->complete_progress ) )
+      <div class="text-center course-image certificate certification-card">
         <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
             <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
         </div>
@@ -221,6 +222,7 @@
             <span>You have successfully completed the course. </span>
         </div>
     </div>
+    @endif
       <div class="card p-30 learning-file activity" style="padding: 0 !important;">
          <h3>Activity</h3>
          <ul style="list-style: none; padding: 0;">

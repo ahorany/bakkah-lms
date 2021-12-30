@@ -91,6 +91,8 @@
             <div class="card-header">{{__('admin.options')}}</div>
             <div class="card-body">
 
+                {!!Builder::Input('complete_progress', 'complete progress', isset($eloquent) ? null : COMPLETED_PROGRESS, ['col'=>'col-md-12'])!!}
+
                 {!!Builder::Input('code', 'code', null, ['col'=>'col-md-12'])!!}
 
                 {!! Builder::Select('training_option_id', 'training_option_id', $delivery_methods, null, ['col'=>'col-md-12']) !!}
