@@ -389,11 +389,9 @@ class CertificateControllerH extends Controller
     public function certificate_dynamic() {
 
         // $course = Course::find(request()->course_registration_id);
-        $course_registration  = CourseRegistration::find(request()->course_registration_id) ;
+        $course_registration = CourseRegistration::find(request()->course_registration_id);
         // dd($course_registration);
 
-        // dd($course);
-        // dd($course->id);
         $course = Course::find($course_registration->course_id);
         $body = $this->certificate_body(['certificate_id'=>$course->certificate_id,
                                         'course_registration'=>$course_registration]);
@@ -438,10 +436,12 @@ class CertificateControllerH extends Controller
             $certificate_id = $array['certificate_id'];
         }
         // ============ End of Data will be in certificate ==================
-        if( $certificate_id != '')
+        if($certificate_id != '' && $certificate_id != -1)
         {
-
             $certificate = Certificate::find($certificate_id);
+            if(is_null($certificate)){
+                return 0;
+            }
 
             $orientation = 'L';
             if($certificate->direction == 490)

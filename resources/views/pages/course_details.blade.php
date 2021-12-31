@@ -95,10 +95,10 @@
             </template>
          </template>
       </div>
-      @if($course->users[0]->pivot->progress == $course->complete_progress)
-      <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}" class="green mb-1" target="_blank">
-      Certificate
-      </a>
+      @if($course->users[0]->pivot->progress >= $course->complete_progress)
+        <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}" class="green mb-1" target="_blank">
+        Certificate
+        </a>
       @endif
       <div class="d-flex">
          <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px;">
@@ -212,7 +212,7 @@
       @endforeach
    </div>
    <div class="col-lg-4 course_info">
-    @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress == $course->complete_progress ) )
+    @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress >= $course->complete_progress ) )
       <div class="text-center course-image certificate certification-card">
         <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
             <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
