@@ -129,7 +129,7 @@
                             }else {
                                 $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . $course->trans_title;
                             }
-                        ?>
+                            ?>
                             @isset($course->upload->file)
                                 <div class="image" style="height: 120px; display:flex; align-items: center; justify-content: center;">
                                     <img src="{{$url}}" height="auto" width="80%">
