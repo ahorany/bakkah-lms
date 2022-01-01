@@ -809,6 +809,19 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         color: #000;
         font-size: 13px;
     }
+    .messages .d-flex span {
+        display: none;
+    }
+
+}
+
+@media (min-width: 2000px){
+    .course-image .image img {
+        width: 50% !important;
+    }
+    .course-image .no-img img {
+        width: 100px !important;
+    }
 }
 
 /* End Media Query */
