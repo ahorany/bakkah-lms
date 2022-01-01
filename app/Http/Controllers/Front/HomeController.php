@@ -49,10 +49,8 @@ class HomeController extends Controller
             }]);
         }])->first();
 
-
         // Get last video (user watched)
         $last_video = $this->getLastVideoForUser();
-
 
         // Get next videos
         $next_videos = [];
@@ -63,7 +61,6 @@ class HomeController extends Controller
         // Get Completed Courses
         $complete_courses =  $this->getCompleteCourses();
 
-
         //  Get all activities for user
         $activities = $this->getUserCoursesActivities();
 
@@ -72,7 +69,17 @@ class HomeController extends Controller
 
 
     public function certificate(){
-        return view('certificate');
+
+        $certificates = DB::select("select courses.id, courses.title, uploads.file, cr.id as cr_id
+        from courses
+        inner join courses_registration cr on courses.id = cr.course_id
+        and cr.progress >= courses.complete_progress
+        inner join uploads on courses.id = uploads.uploadable_id
+        and uploads.uploadable_type like '%Course%'
+        where cr.user_id = ".\auth()->id());
+        // dump($certificates);
+
+        return view('certificate', compact('certificates'));
     }
 
     public function congrats(){

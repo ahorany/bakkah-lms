@@ -216,6 +216,7 @@ class CourseController extends Controller
         $content = Content::whereId($content_id)
             ->with(['upload','course' ,'section'])->first();
 
+        // dd($content);
         // Check if content not found => ABORT(404)
         if (!$content){
             abort(404);
@@ -237,12 +238,13 @@ class CourseController extends Controller
         // end next and prev
 
 
-
+        //TODO: Ahoray
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
-        if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
-            return redirect()->back()->with(["status" => 'danger',"msg" => "Can not open  content (Because the content is not completed) !!"]);
-        }// end if
-
+        if(!request()->has('preview')){
+            if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
+                return redirect()->back()->with(["status" => 'danger',"msg" => "Can not open  content (Because the content is not completed) !!"]);
+            }// end if
+        }
 
 
        /*

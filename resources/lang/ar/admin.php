@@ -132,4 +132,6 @@ return [
     'preview'=>'Preview',
     'add_new'=>'Add New',
     'users_manual'=>'Users Manual',
+    'complete progress'=>'Complete Progress',
+    'Pages'=>'Pages',
 ];
