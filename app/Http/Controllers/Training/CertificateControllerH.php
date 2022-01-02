@@ -42,14 +42,11 @@ class CertificateControllerH extends Controller
         $trash = GetTrash();
         $certificates = Certificate::whereNull('parent_id');
 
-        // if(!is_null(request()->webinar_search)) {
-        //     $certificates = $certificates->where(function($query){
-        //         $query->where('title', 'like', '%'.request()->webinar_search.'%')
-        //         ->orWhere('slug', 'like', '%'.request()->webinar_search.'%')
-        //         ->orWhere('zoom_link', 'like', '%'.request()->webinar_search.'%')
-        //         ->orWhere('video_link', 'like', '%'.request()->webinar_search.'%');
-        //     });
-        // }
+        if(!is_null(request()->title)) {
+            $certificates = $certificates->where(function($query){
+                $query->where('title', 'like', '%'.request()->title.'%');
+            });
+        }
 
         // $show_in_website = request()->has('show_in_website')?1:0;
         // $certificates = $certificates->where('show_in_website', $show_in_website);
