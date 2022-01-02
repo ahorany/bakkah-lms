@@ -22,12 +22,14 @@
 
     <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}">
+
+    <link rel="stylesheet" href="{{CustomAsset('css/responsive.css')}}">
+
     @yield('style')
 <style>
     /*h1, h2, h3, h4, h5, h6 {*/
 
     /*}*/
-
     .person-wrapper h2{
         margin-top: 20px !important;
         font-weight: 600 !important;
@@ -41,16 +43,19 @@
 
 <body>
 <?php  $user_role_name = auth()->user()->roles()->select('roles.name')->first()->trans_name??null; ?>
-@include("layouts.header")
 
-<div class="container-fluid">
-    <div class="row">
+<div class="container-max">
+    @include("layouts.header")
 
-        @include("layouts.sidebar")
+    <div class="container-fluid">
+        <div class="row">
 
-        <main class="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-5" id="main-vue-element">
-            @yield('content')
-        </main>
+            @include("layouts.sidebar")
+
+            <main class="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-5" id="main-vue-element">
+                @yield('content')
+            </main>
+        </div>
     </div>
 </div>
 
