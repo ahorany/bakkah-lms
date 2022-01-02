@@ -58,11 +58,11 @@ var container = document.getElementById('the-canvas');
 var pdfDoc = null,
     pageNum = 1,
     pageRendering = false,
-    pageNumPending = null,
+    pageNumPending = null;
     // scale = scale,
-    scale = 1.3,
-    canvas = document.getElementById('the-canvas'),
-    ctx = canvas.getContext('2d');
+    // scale = 1.3,
+    // canvas = document.getElementById('the-canvas'),
+    // ctx = canvas.getContext('2d');
 
 /**
 * Get page info from document, resize canvas accordingly, and render page.
@@ -72,6 +72,9 @@ function renderPage(num) {
     pageRendering = true;
     // Using promise to fetch the page
     pdfDoc.getPage(num).then(function(page) {
+
+        var PRINT_RESOLUTION = 150;
+        var PRINT_UNITS = PRINT_RESOLUTION / 72.0;
 
         var container = document.getElementById('the-container');
         var canvas = document.getElementById('the-canvas');
@@ -87,8 +90,9 @@ function renderPage(num) {
 
         // Render PDF page into canvas context
         var renderContext = {
-        canvasContext: ctx,
-        viewport: viewport
+            canvasContext: context,
+            viewport: viewport,
+            // transform: [PRINT_UNITS, 0, 0, PRINT_UNITS, 0, 0],
         };
         var renderTask = page.render(renderContext);
 
@@ -106,6 +110,36 @@ function renderPage(num) {
     // Update page counters
     document.getElementById('page_num').textContent = num;
 }
+/*
+function renderPage(activeService, pdfDocument, pageNumber, size) {
+  var scratchCanvas = activeService.scratchCanvas;
+  var PRINT_RESOLUTION = 300;
+  var PRINT_UNITS = PRINT_RESOLUTION / 72.0;
+  scratchCanvas.width = Math.floor(size.width * PRINT_UNITS);
+  scratchCanvas.height = Math.floor(size.height * PRINT_UNITS);
+  var width = Math.floor(size.width * _ui_utils.CSS_UNITS) + 'px';
+  var height = Math.floor(size.height * _ui_utils.CSS_UNITS) + 'px';
+  var ctx = scratchCanvas.getContext('2d');
+  ctx.save();
+  ctx.fillStyle = 'rgb(255, 255, 255)';
+  ctx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
+  ctx.restore();
+  return pdfDocument.getPage(pageNumber).then(function (pdfPage) {
+    var renderContext = {
+      canvasContext: ctx,
+      transform: [PRINT_UNITS, 0, 0, PRINT_UNITS, 0, 0],
+      viewport: pdfPage.getViewport(1, size.rotation),
+      intent: 'print'
+    };
+    return pdfPage.render(renderContext).promise;
+  }).then(function () {
+    return {
+      width: width,
+      height: height
+    };
+  });
+}
+*/
 
 /**
 * If another page rendering in progress, waits until the rendering is
