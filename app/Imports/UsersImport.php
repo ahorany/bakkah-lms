@@ -36,42 +36,46 @@ class UsersImport implements ToCollection, WithHeadingRow
             //     $row['deactivation_date'] = str_replace('/','-',$row['deactivation_date']);
             //     $expire_date = date('Y-m-d H:i:s', strtotime($row['deactivation_date']));
             // }
+            $count = User::where('email',$row['email'])->count();
+            if($count == 0)
+            {
+                DB::table('users')->insert([
+                    [
 
-            DB::table('users')->insert([
-                [
+                     'name' => $data,
+                    //  'username_lms'=>$row['login'],
+                     'email'=>$row['email'],
+                    //  'user_type'=>$user_type,
+                    //  'reference_user_id' =>$row['user_id'],
+                    //  'bio'=>$row['bio'],
+                    //  'locale'=>$row['language'],
+                     'gender_id'=>$gender,
+                    //  'expire_date'=> $expire_date,
+                        'mobile'=>$row['mobile'],
+                    ],
+                ]);
 
-                 'name' => $data,
-                //  'username_lms'=>$row['login'],
-                 'email'=>$row['email'],
-                //  'user_type'=>$user_type,
-                //  'reference_user_id' =>$row['user_id'],
-                //  'bio'=>$row['bio'],
-                //  'locale'=>$row['language'],
-                 'gender_id'=>$gender,
-                //  'expire_date'=> $expire_date,
-                    'mobile'=>$row['mobile'],
-                ],
-            ]);
+                $user_id = DB::getPdo()->lastInsertId();
+                $role_id = 0;
+                if($row['role'] == 'SuperAdmin' || $row['role']  == 'Admin-Type')
+                    $role_id = 1;
+                elseif($row['role'] == 'Manager')
+                    $role_id = 4;
+                elseif($row['role'] == 'Trainer-Type')
+                    $role_id = 2;
+                elseif($row['role'] == 'Trainee-Type')
+                    $role_id = 3;
 
-            $user_id = DB::getPdo()->lastInsertId();
-            $role_id = 0;
-            if($row['role'] == 'SuperAdmin' || $row['role']  == 'Admin-Type')
-                $role_id = 1;
-            elseif($row['role'] == 'Manager')
-                $role_id = 4;
-            elseif($row['role'] == 'Trainer-Type')
-                $role_id = 2;
-            elseif($row['role'] == 'Trainee-Type')
-                $role_id = 3;
+                DB::table('role_user')->insert([
+                    [
 
-            DB::table('role_user')->insert([
-                [
+                        'user_id' => $user_id,
+                        'role_id'=>$role_id,
 
-                    'user_id' => $user_id,
-                    'role_id'=>$role_id,
+                    ],
+                ]);
+            }
 
-                ],
-            ]);
         }
 
     }
