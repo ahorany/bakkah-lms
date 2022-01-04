@@ -11,6 +11,24 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.custom-radio .radio-mark::after {
+    left: 2px !important;
+    top: 2px !important;
+    width: 12px !important;
+    height: 12px !important;
+    border: solid #06ae60;
+        border-top-width: medium;
+        border-right-width: medium;
+        border-bottom-width: medium;
+        border-left-width: medium;
+    border-width: 3px !important;
+    background-color: #06ae60;
+    border-radius: 50% !important;
+    -webkit-transform: none !important;
+    -ms-transform: none !important;
+    transform: none !important;
+}
 </style>
 @section('content')
                 <div class="dash-header course_info">
@@ -342,13 +360,26 @@
                     }, 1000);
                 },
                 save : function(){
+
                     if(this.page_type != 'exam') {
                         return ;
                     }
-
-                    if(confirm('Are you sure (save answers) !!!')){
-                        this.nextSaveAnswers('save');
-                    }
+                    // if(confirm('Are you sure (save answers) !!!')){
+                    //     this.nextSaveAnswers('save');
+                    // }
+                    Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Once the answers are submitted, it cannot be undone",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.nextSaveAnswers('save');
+                        }
+                    })
                 },
                 addAnswer : function (question_id,answer_id) {
                     if(this.page_type != 'exam') {

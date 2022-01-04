@@ -148,7 +148,7 @@
                     <li class="dropdown-item borderBottom p-20" style="border-bottom: 1px solid gainsboro;">
                         <div>
                             <h2 style="font-size: 1.1rem; margin: 0; ">{{auth()->user()->trans_name}}</h2>
-                            <small style="color: #73726c; font-weight:700;">{{$user_role_name}}</small>
+                            {{-- <small style="color: #73726c; font-weight:700;">{{$user_role_name}}</small> --}}
                         </div>
                     </li>
                     <li>

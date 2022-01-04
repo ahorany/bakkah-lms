@@ -52,6 +52,7 @@ class ExamController extends Controller
      *  Exam Page Before Attempt => (This Page To Start Attempt)
      */
     public function exam($exam_id){
+
         // Get Exam Content
         $exam = Content::whereId($exam_id)
             ->with(['section','course','exam' => function($q){
@@ -78,8 +79,6 @@ class ExamController extends Controller
             return redirect()->back()->with(["status" => 'danger',"msg" => "Can not open  content (Because the content is not completed) !!"]);
         }// end if
 
-
-
         // Create UserContent When is not exists
         UserContent::firstOrCreate([
             'user_id' => \auth()->id(),
@@ -89,8 +88,6 @@ class ExamController extends Controller
             'content_id' => $exam_id,
             'start_time' => Carbon::now(),
         ]);
-
-
 
         return view('pages.exam',compact('exam','next','previous'));
     } // end function

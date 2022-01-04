@@ -19,8 +19,9 @@
 
     <link rel="stylesheet" href="{{CustomAsset('css/responsive.css')}}">
 
-    @yield('style')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @yield('style')
 </head>
 
 <body>

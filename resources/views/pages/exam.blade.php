@@ -175,7 +175,7 @@
                         <p>Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
                         <p>Exam attempt count : {!! $exam->exam->attempt_count == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->attempt_count!!}</p>
                         <p>Your attempts  : {{$users_exams_count}}</p>
-                        <p>Mark  : {{$exam->exam->exam_mark}} </p>
+                        <p>Marks  : {{$exam->exam->exam_mark}} </p>
 
 
                         @if(count($exam->questions) == 0 || (\Carbon\Carbon::create($exam->exam->start_date)  > \Carbon\Carbon::now() && !is_null($exam->exam->start_date)))
@@ -273,8 +273,23 @@
 @section('script')
 <script>
     function confirmNewAttempt(){
-        if( confirm('Are u sure ?') == false)
-            event.preventDefault()
+        // if( confirm('Are u sure ?') == false)
+        //     event.preventDefault()
+        Swal.fire({
+        title: 'Start the exam',
+        // text: "To start new attempt",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{{CustomRoute('user.preview.exam',$exam->id)}}";
+            }
+            // event.preventDefault()
+        })
+        event.preventDefault()
     }
 </script>
 @endsection
