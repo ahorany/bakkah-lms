@@ -58,10 +58,26 @@ a.review:hover svg path{
     color: #fff;
     border: 1px solid #dc3545;
 }
-.main-button{
-    background: #fb4400;
+.h1-course-title {
+    font-family: "Lato Regular" !important;
+}
+.main-button {
+    /* background: #fb4400;
     color: #fff;
-    text-decoration: none;
+    text-decoration: none; */
+    color: #5D5B5A !important;
+    border: none !important;
+    background: #fff !important;
+    box-shadow: 3px 3px 5px #eaeaea;
+}
+a.main-button svg path {
+    fill:#5D5B5A !important;
+}
+a.main-button:hover svg path {
+    fill: #fb4400 !important
+}
+.main-button:hover {
+    color: #fb4400 !important
 }
 .inputs .form-group {
     margin: 0 0 15px !important;
@@ -466,7 +482,7 @@ ul.video-list li .play{
     margin-bottom: 25px;
 }
 span.pdu {
-    background: #79c1dc;
+    background: #eaeaea;
     padding: 1px 10px;
     border-radius: 5px;
     font-weight: 600;
@@ -581,7 +597,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     font-size: 15px;
     color: #000;
 }
-
+#main-vue-element small {
+    line-height: 2.5rem;
+}
 /******************************************************************************************************************/
 
 /* Media Query */

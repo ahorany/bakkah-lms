@@ -7,21 +7,22 @@
     font-size: 15px !important;
     letter-spacing: .1rem;
 }
-.main-button {
-    color: #5D5B5A !important;
-    border: 1px solid #5D5B5A !important;
+#main-vue-element .course-image {
+    padding-top: 25px;
 }
-.main-button:hover {
-    background-color: #5D5B5A !important;
-    color: #ffffff !important;
+.progress-main {
+    width: 60% !important;
+    margin-top: 15px !important;
 }
 svg {
     fill: #c6c6c6;
     cursor: pointer;
 }
-/* svg:hover {
-  fill: #fb4400;
-} */
+@media (max-width: 576px){
+    .progress-main {
+        width: 100% !important;
+    }
+}
 </style>
 @section('content')
 <?php
@@ -71,13 +72,13 @@ svg {
          <img src="{{CustomAsset($url)}}" height="auto" width="100px">
       </div>
       @endif
-      <div class="progress">
+      <div class="progress progress-main">
          <div style="width: {{$course->users[0]->pivot->progress??0}}% !important;" class="bar"></div>
       </div>
       <small>{{$course->users[0]->pivot->progress??0}}% Complete</small>
    </div>
    <div class="mx-md-4 course_info">
-      <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
+      <h1 class="h1-course-title" style="text-transform: capitalize; font-weight:normal;">{{$course->trans_title}}</h1>
       @if($course->PDUs > 0)
       <span class="pdu">
       {{$course->PDUs}} PDUs
