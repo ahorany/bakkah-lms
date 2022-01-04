@@ -485,7 +485,6 @@ span.pdu {
     background: #eaeaea;
     padding: 1px 10px;
     border-radius: 5px;
-    font-weight: 600;
     font-size: 12px;
 }
 .activity li{
@@ -796,9 +795,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     span.mx-2.d-flex svg#Layer_1 {
         width: 25px;
     }
-    .lms-header ul.navbar-nav li.user a{
+    /* .lms-header ul.navbar-nav li.user a{
         padding: 5px 0;
-    }
+    } */
     .congrats h1{
         font-size: 25px;
     }
