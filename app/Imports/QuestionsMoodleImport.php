@@ -30,6 +30,7 @@ class QuestionsMoodleImport implements ToCollection, WithHeadingRow
         $counter = 0;$q_no = 0;
         foreach ($rows as $row)
         {
+            // dd($row[0]);
             if($counter == 0)
                 $title =  $row['title'];
             if(substr($row['title'],0,7) != 'ANSWER:')
