@@ -154,7 +154,14 @@
 
         <div class="row">
             @if(session()->has('status'))
-                <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div>
+                {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-1 mb-2">
+                    <div class="card h-100">
+                        <div class="card-body" style="padding: 15px 30px; background: #fb4400;color: #fff;">
+                        {{session()->get('msg')}}
+                        </div>
+                    </div>
+                </div>
             @endif
 
             <?php $users_exams_count = count($exam->exam->users_exams) ?>
@@ -242,8 +249,6 @@
                         <td class="text-bold">
                             <span class="{{$attempt->status == 1 ? 'badge badge-success' : 'badge badge-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</span>
                         </td>
-
-
 
                         <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                         <td>

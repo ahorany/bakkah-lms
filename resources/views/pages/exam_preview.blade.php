@@ -3,7 +3,15 @@
 @section('useHead')
     <title>{{$exam->title}} {{ __('education.Exam') }} | {{ __('home.DC_title') }}</title>
 @endsection
-
+<style>
+.prev[disabled="disabled"], .next[disabled="disabled"] {
+    opacity: 0.3;
+}
+.navigation {
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
 @section('content')
                 <div class="dash-header course_info">
                     {{-- <ol class="breadcrumb">
@@ -95,16 +103,18 @@
                         <div class="d-flex algin-items-center justify-content-between mt-4 buttons">
 
                             <div class="navigation">
-                                <template v-if="prev_status">
-                                    <button  @click.prevent="prev()" class="prev">
+                                {{-- <template v-if="prev_status"> --}}
+                                <template>
+                                    <button @click.prevent="prev()" class="prev" :disabled="!prev_status">
                                         <svg id="Group_92" data-name="Group 92" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
                                         <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#8a8a8a"/>
                                       </svg>
                                     </button>
                                 </template>
 
-                                <template v-if="!save_status" >
-                                  <button @click.prevent="next()" class="next">
+                                {{-- <template v-if="!save_status" > --}}
+                                <template>
+                                  <button @click.prevent="next()" class="next" :disabled="save_status">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
                                         <defs>
                                           <linearGradient id="linear-gradient" x1="-1623.535" y1="17.172" x2="-1624.535" y2="17.172" gradientUnits="objectBoundingBox">

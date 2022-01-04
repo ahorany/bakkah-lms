@@ -699,6 +699,7 @@ $(function() {
             },
 
             saveContent: function(){
+
                 let self = this;
                 let formData = new FormData();
                 let config = {
@@ -803,7 +804,7 @@ $(function() {
                         return true ;
                     });
 
-                    axios.post("{{route('training.update_content')}}",
+                axios.post("{{route('training.update_content')}}",
                         formData
                         ,config)
                         .then(response => {
@@ -887,7 +888,7 @@ $(function() {
                 switch (this.model_type) {
                     case 'video': return this.validateVideo(['mp4','mov','ogg','qt']); break;
                     case 'audio': return this.validateContentWithFile(['application/octet-stream','audio/mpeg','mpga','mp3','wav']); break;
-                    case 'presentation': return this.validateContentWithFile(['ppt','pptx','pdf','doc','docx','xls','jpeg','png']); break;
+                    case 'presentation': return this.validateContentWithFile(['ppt','pptx','pdf','doc','docx','xls','xlsx','jpeg','png']); break;
                     case 'scorm': return this.validateContentWithFile(['zip']); break;
                 }
             },
