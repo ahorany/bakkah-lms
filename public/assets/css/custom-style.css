@@ -397,7 +397,7 @@ justify-content: center;
 
 /**************************************************************************************************************/
 .course-image .progress{
-    width: 100%;
+    width: 65%;
     height: 10px;
     /* border-radius: 8px; */
     border: 2px solid #f2f2f2;
@@ -612,6 +612,15 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 #main-vue-element small {
     line-height: 2.5rem;
 }
+.pop-up-content-wrap{
+    margin-top: 20px;
+}
+.close-btn{
+    top: 0 !important;
+    right: 20px !important;
+    color: #000 !important;
+}
+
 /******************************************************************************************************************/
 
 /* Media Query */

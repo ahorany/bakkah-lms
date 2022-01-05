@@ -718,7 +718,7 @@ ol.breadcrumb li a {
   font-size: 25px;
   margin: 0;
   margin-bottom: 10px;
-  font-family: "Lato Black";
+  font-family: "Lato Bold";
 }
 
 .card {
@@ -1008,7 +1008,7 @@ ol.answers li .icon.empty {
 .learning-file h3 {
   margin: 20px 30px;
   /* font-family: "Lato Black"; */
-  text-transform: uppercase;
+  text-transform: capitalize;
   font-size: 17px;
 }
 

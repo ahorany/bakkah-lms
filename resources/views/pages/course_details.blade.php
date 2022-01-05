@@ -49,7 +49,7 @@ svg {
 --}}
 <div class="course_details">
     <div class="dash-header course-header d-flex align-items-md-end flex-column flex-md-row px-3">
-        <div class="text-center course-image w-30 mb-4 mb-md-0">
+        <div class="text-center course-image w-30 mb-4 mt-2 mb-md-0">
             <?php
                 $url = '';
                 if($course->upload != null) {
@@ -200,22 +200,14 @@ svg {
                 <span> {{$content->title}}</span>
                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                     <span class="svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="59" height="59" viewBox="0 0 59 59">
-                            <defs>
-                            <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
-                                <stop offset="0" stop-color="#89d859"/>
-                                <stop offset="1" stop-color="#06c06c"/>
-                            </linearGradient>
-                            </defs>
-                            <g id="Check_2" data-name="Check 2" transform="translate(-0.2 -0.4)">
-                            <rect id="Check_2_Background_" data-name="Check 2 (Background)" width="59" height="59" transform="translate(0.2 0.4)" fill="none"/>
-                            <path id="_22_Check" data-name="22 Check" d="M24.5,49A24.5,24.5,0,1,1,49,24.5,24.528,24.528,0,0,1,24.5,49ZM14.914,21.55a2.028,2.028,0,0,0-1.444.6,2.052,2.052,0,0,0-.108,2.772l7.146,7.146a2.043,2.043,0,0,0,2.88,0L35.638,19.814a2.05,2.05,0,0,0-.106-2.772,2.041,2.041,0,0,0-2.772-.106l-10.811,10.8-5.707-5.7A2.04,2.04,0,0,0,14.914,21.55Z" transform="translate(5.2 5.4)" fill="url(#linear-gradient)"/>
-                            </g>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
+                            <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
+                            <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#4cdd42"/>
                         </svg>
                     </span>
                 @else
                     <span class="svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="59" height="59" viewBox="0 0 59 59">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 59 59">
                             <g id="Check_2" data-name="Check 2" transform="translate(-0.2 0.2)">
                             <rect id="Check_2_Background_" data-name="Check 2 (Background)" width="59" height="59" transform="translate(0.2 -0.2)" fill="none"/>
                             <path id="_22_Check" data-name="22 Check" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(5.2 4.8)" fill="none" stroke="#d7d7d7" stroke-width="2" stroke-dasharray="0 0"/>
