@@ -143,10 +143,26 @@
     @if($popup_compelte_status)
         <div class="custom-model-main model-open">
             <div class="custom-model-inner">
-                <div class="close-btn">×</div>
                 <div class="custom-model-wrap">
+                    <div class="close-btn">×</div>
                     <div class="pop-up-content-wrap">
-                        Content Here
+                        <div class="congrats">
+                            <div class="text-center course-image">
+                                {{-- <a href="#" class="download">
+                                    <img src="{{CustomAsset('icons/download.svg')}}" width="50px" alt="">
+                                </a> --}}
+                                <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
+                                    <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
+                                </div>
+                                <div>
+                                    <h1>Congratulations!</h1>
+                                    <p>
+                                        You have successfully completed the course. Can’t wait for to hear the good news about you getting certified! <br><br>
+                                        Good Luck in your exam
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
