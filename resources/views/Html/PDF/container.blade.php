@@ -46,6 +46,7 @@
 
 // https://mozilla.github.io/pdf.js/examples/index.html#interactive-examples
 var url = "{{CustomAsset('upload/files/presentations/'.$file)}}"
+// console.log(url);
 {{--var url = "{{CustomAsset('upload/files/presentations/2021-12-30-10-19-28_document_1_.pdf')}}"--}}
 
 // Loaded via <script> tag, create shortcut to access PDF.js exports.
@@ -59,10 +60,6 @@ var pdfDoc = null,
     pageNum = 1,
     pageRendering = false,
     pageNumPending = null;
-    // scale = scale,
-    // scale = 1.3,
-    // canvas = document.getElementById('the-canvas'),
-    // ctx = canvas.getContext('2d');
 
 /**
 * Get page info from document, resize canvas accordingly, and render page.
@@ -80,18 +77,32 @@ function renderPage(num) {
         var canvas = document.getElementById('the-canvas');
         var context = canvas.getContext('2d');
 
+        // const scale = 1.5;
         var viewport = page.getViewport({scale: 1});
         var scale = container.clientWidth / viewport.width;
-        viewport = page.getViewport({scale: scale});
+        viewport = page.getViewport({ scale });
+        const outputScale = window.devicePixelRatio || 1;
+        canvas.width = Math.floor(viewport.width * outputScale);
+        canvas.height = Math.floor(viewport.height * outputScale);
+        canvas.style.width = Math.floor(viewport.width) + "px";
+        canvas.style.height = Math.floor(viewport.height) + "px";
+        const transform = outputScale !== 1
+        ? [outputScale, 0, 0, outputScale, 0, 0]
+        : null;
+        console.log(transform);
+        // var viewport = page.getViewport({scale: 1});
+        // var scale = container.clientWidth / viewport.width;
+        // viewport = page.getViewport({scale: scale});
 
         // var viewport = page.getViewport({scale: scale});
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
+        // canvas.height = viewport.height;
+        // canvas.width = viewport.width;
 
         // Render PDF page into canvas context
         var renderContext = {
             canvasContext: context,
             viewport: viewport,
+            transform: transform,
             // transform: [PRINT_UNITS, 0, 0, PRINT_UNITS, 0, 0],
         };
         var renderTask = page.render(renderContext);
