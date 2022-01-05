@@ -181,7 +181,6 @@ document.getElementById('next').addEventListener('click', onNextPage);
 * Asynchronously downloads PDF.
 */
 pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-    alert('dddddddd')
 pdfDoc = pdfDoc_;
 document.getElementById('page_count').textContent = pdfDoc.numPages;
 
