@@ -119,11 +119,7 @@ svg {
                     </template>
                 </template>
             </div>
-            {{--@if($course->users[0]->pivot->progress >= $course->complete_progress)
-                <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}" class="green mb-1" target="_blank">
-                Certificate
-                </a>
-            @endif--}}
+
             <div class="d-flex">
                 <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px;">
                     <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="main-button main-color review" href="#">
