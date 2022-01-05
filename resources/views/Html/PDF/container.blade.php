@@ -9,26 +9,57 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 <style>
+    #the-container{
+        position: relative;
+    }
+    /* canvas{
+        height: 1000px;
+    } */
     #update_file_source {
         background-color: #f4f4f4;
         border-bottom: 2px solid #eaeaea;
         margin-top: 2px;
+        padding: 10px 0;
     }
     #prev, #next {
-        border: 1px solid #eaeaea;
-        background-color: #fafafa;
-        border-radius: 3px;
-        padding: 4px 10px;
-        margin: 5px 1px 5px 1px;
-        display: inline-block;
-        font-weight: 500;
+        /* border-radius: 3px; */
+        /* padding: 4px 10px; */
+        /* margin: 5px 1px 5px 1px; */
+        /* display: inline-block; */
+        /* font-weight: 500; */
+        /* text-align: center; */
+        /* width: 100px; */
+        border: 1px solid #f0f0f0;
+        background-color: transparent;
         cursor: pointer;
-        width: 100px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
+    }
+    button#prev {
+        left: 15px;
+    }
+    button#next {
+        right: 15px;
     }
     #prev:hover, #next:hover {
-        border-color: #999999;
-        background-color: #eaeaea;
+        border-color: transparent;
+        background: #fff;
+        box-shadow: 0 0 10px 1px #f0f0f0;
+
     }
+<<<<<<< HEAD
+    button#prev svg path , button#next svg path {
+        fill: #f0f0f0;
+    }
+    #prev:hover svg path, #next:hover svg path {
+        fill: #000
+    }
+
+=======
 
 
     .anim2 {
@@ -72,14 +103,31 @@
     }
 
     /* by esraa eid 31-12-2021 */
+>>>>>>> a24b362afee3bfcb2f206e9f332215e6115080c6
 </style>
 <div id="the-container">
     <div id="update_file_source" class="text-center">
-        <button id="prev">Previous</button>
+
+        <button id="prev">
+            <svg id="Group_92" data-name="Group 92" xmlns="http://www.w3.org/2000/svg" width="10px" height="auto" viewBox="0 0 14.836 24.835">
+                <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#8a8a8a"/>
+            </svg>
+        </button>
 
         ( <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span> )
 
-        <button id="next">Next</button>
+        <button id="next">
+            <svg id="Group_92" data-name="Group 92" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="auto" viewBox="0 0 14.836 24.835">
+                <defs>
+                <linearGradient id="linear-gradient" x1="-1623.535" y1="17.172" x2="-1624.535" y2="17.172" gradientUnits="objectBoundingBox">
+                    <stop offset="0" stop-color="#8a8a8a"/>
+                    <stop offset="0.564" stop-color="#f7ba50"/>
+                    <stop offset="1" stop-color="#f7b243"/>
+                </linearGradient>
+                </defs>
+                <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="url(#linear-gradient)"/>
+            </svg>
+        </button>
     </div>
     <div class="anim2"></div>
     <canvas id="the-canvas"></canvas>
