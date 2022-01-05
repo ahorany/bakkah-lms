@@ -1038,10 +1038,6 @@ ol.answers li .icon.empty {
   color: var(--mainColor);
 }
 
-.learning-file ul li a:hover svg path {
-  fill: var(--mainColor);
-}
-
 .line-chart {
   position: relative;
 }
@@ -1094,20 +1090,22 @@ ul.video-list li .text p {
 }
 
 .course-cards {
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
   width: 48%;
   margin: 1%;
   color: #fff;
-  padding: 30px;
+  padding: 50px 30px;
   border-radius: 5px;
+  text-align: center;
 }
 
 .course-cards svg {
-width: 55px;
-    height: 55px;
+    width: 80px;
+    height: 80px;
     padding: 10px;
-    border-radius: 0 0 15px 0;
+    border-radius: 50%;
+    outline: 7px solid rgb(168 168 168 / 20%);
 }
 
 .course-cards > div b {
@@ -1118,7 +1116,7 @@ width: 55px;
 
 .course-cards > div {
   text-align: center;
-  margin: 0px 30px;
+  /* margin: 0px 30px; */
 }
 
 ul.badges {
@@ -1469,13 +1467,13 @@ ul.badges li svg {
   .navbar .navbar-toggler svg {
     width: 20px;
   }
-  .course-cards {
+  /* .course-cards {
     width: 100%;
     justify-content: center;
   }
   .course-cards > div {
     width: 120px;
-  }
+  } */
   .calendar .sideb table th {
     font-size: 14px;
   }
