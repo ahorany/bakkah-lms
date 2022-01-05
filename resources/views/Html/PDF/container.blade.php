@@ -33,18 +33,15 @@
 <div id="the-container">
     <div id="update_file_source" class="text-center">
         <button id="prev">Previous</button>
-        &nbsp; &nbsp;
+
         ( <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span> )
-        &nbsp; &nbsp;
+
         <button id="next">Next</button>
     </div>
     <canvas id="the-canvas"></canvas>
 </div>
 <script>
-    // (See also https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/
-// var url = 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/examples/learning/helloworld.pdf';
 
-// https://mozilla.github.io/pdf.js/examples/index.html#interactive-examples
 var url = "{{CustomAsset('upload/files/presentations/'.$file)}}"
 {{--var url = "{{CustomAsset('upload/files/presentations/2021-12-30-10-19-28_document_1_.pdf')}}"--}}
 
