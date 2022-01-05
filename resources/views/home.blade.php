@@ -167,6 +167,7 @@
             </div>
         </div>
 
+<<<<<<< HEAD
         <div class="col-lg-6 col-md-12 col-sm-12 col-12">
             <div class="card h-100 p-30 activity">
                 <h3>Activity</h3>
@@ -185,6 +186,10 @@
                 </ul>
             </div>
             {{-- <div class="card h-100 calendar">
+=======
+        {{--<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="card h-100 calendar">
+>>>>>>> 667ff5eb39a3003b868f7538b70d72da8c11401c
                 <div class="sideb">
                     <div class="header">
                         <i class="fa fa-angle-left" aria-hidden="true">
@@ -273,7 +278,14 @@
                         </table>
                     </div>
                 </div>
+<<<<<<< HEAD
             </div> --}}
+=======
+            </div>
+        </div>--}}
+        <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
+            @include('components.activity')
+>>>>>>> 667ff5eb39a3003b868f7538b70d72da8c11401c
         </div>
     </div>
 

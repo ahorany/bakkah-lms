@@ -20,5 +20,7 @@ return [
     'Logout' => 'خروج',
     'Exam' => 'اختبار',
     'My Courses'  => 'دوراتي',
-    'Add a Review' => "أضف تقييم"
+    'Add a Review' => "أضف تقييم",
+    'Activity Completed'=>'Activity Completed',
+    'Materials'=>'Materials',
 ];
