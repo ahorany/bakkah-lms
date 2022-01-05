@@ -195,7 +195,7 @@ svg {
     @if (count($course->contents) > 0)
     <div class="row mx-0 mt-3 course-content">
     <div class="col-12 course_info">
-        <h3>CONTENT</h3>
+        <h3>{{__('education.Materials')}}</h3>
     </div>
     <div class="col-lg-8 mb-5 mb-lg-0 course_info">
         @foreach($course->contents as $key => $section)
@@ -246,7 +246,7 @@ svg {
         </div>
         @endif
         <div class="card p-30 learning-file activity" style="padding: 0 !important;">
-            <h3>Activity</h3>
+            <h3>{{__('education.Activity Completed')}}</h3>
             <ul style="list-style: none; padding: 0;">
                 <?php $lang = app()->getLocale(); ?>
                 @foreach($activities as $activity)
