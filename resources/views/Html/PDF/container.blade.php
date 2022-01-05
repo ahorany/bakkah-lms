@@ -29,6 +29,49 @@
         border-color: #999999;
         background-color: #eaeaea;
     }
+
+
+    .anim2 {
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        border: 5px solid darkblue;
+        border-left-color: transparent;
+
+        animation-name: spin;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+        }
+    }
+
+    /* by esraa eid 31-12-2021 */
 </style>
 <div id="the-container">
     <div id="update_file_source" class="text-center">
@@ -38,6 +81,7 @@
         &nbsp; &nbsp;
         <button id="next">Next</button>
     </div>
+    <div class="anim2"></div>
     <canvas id="the-canvas"></canvas>
 </div>
 <script>
@@ -181,11 +225,12 @@ document.getElementById('next').addEventListener('click', onNextPage);
 * Asynchronously downloads PDF.
 */
 pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-    alert('dddddddd')
+    // alert('dddddddd')
 pdfDoc = pdfDoc_;
 document.getElementById('page_count').textContent = pdfDoc.numPages;
 
 // Initial/first page rendering
 renderPage(pageNum);
+    document.querySelector('.anim2').remove();
 });
 </script>
