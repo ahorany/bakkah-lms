@@ -51,6 +51,7 @@
         box-shadow: 0 0 10px 1px #f0f0f0;
 
     }
+<<<<<<< HEAD
     button#prev svg path , button#next svg path {
         fill: #f0f0f0;
     }
@@ -58,6 +59,51 @@
         fill: #000
     }
 
+=======
+
+
+    .anim2 {
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        border: 5px solid darkblue;
+        border-left-color: transparent;
+
+        animation-name: spin;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+        }
+    }
+
+    /* by esraa eid 31-12-2021 */
+>>>>>>> a24b362afee3bfcb2f206e9f332215e6115080c6
 </style>
 <div id="the-container">
     <div id="update_file_source" class="text-center">
@@ -83,11 +129,13 @@
             </svg>
         </button>
     </div>
+    <div class="anim2"></div>
     <canvas id="the-canvas"></canvas>
 </div>
 <script>
 
 var url = "{{CustomAsset('upload/files/presentations/'.$file)}}"
+// console.log(url);
 {{--var url = "{{CustomAsset('upload/files/presentations/2021-12-30-10-19-28_document_1_.pdf')}}"--}}
 
 // Loaded via <script> tag, create shortcut to access PDF.js exports.
@@ -101,10 +149,6 @@ var pdfDoc = null,
     pageNum = 1,
     pageRendering = false,
     pageNumPending = null;
-    // scale = scale,
-    // scale = 1.3,
-    // canvas = document.getElementById('the-canvas'),
-    // ctx = canvas.getContext('2d');
 
 /**
 * Get page info from document, resize canvas accordingly, and render page.
@@ -122,18 +166,32 @@ function renderPage(num) {
         var canvas = document.getElementById('the-canvas');
         var context = canvas.getContext('2d');
 
+        // const scale = 1.5;
         var viewport = page.getViewport({scale: 1});
         var scale = container.clientWidth / viewport.width;
-        viewport = page.getViewport({scale: scale});
+        viewport = page.getViewport({ scale });
+        const outputScale = window.devicePixelRatio || 1;
+        canvas.width = Math.floor(viewport.width * outputScale);
+        canvas.height = Math.floor(viewport.height * outputScale);
+        canvas.style.width = Math.floor(viewport.width) + "px";
+        canvas.style.height = Math.floor(viewport.height) + "px";
+        const transform = outputScale !== 1
+        ? [outputScale, 0, 0, outputScale, 0, 0]
+        : null;
+        console.log(transform);
+        // var viewport = page.getViewport({scale: 1});
+        // var scale = container.clientWidth / viewport.width;
+        // viewport = page.getViewport({scale: scale});
 
         // var viewport = page.getViewport({scale: scale});
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
+        // canvas.height = viewport.height;
+        // canvas.width = viewport.width;
 
         // Render PDF page into canvas context
         var renderContext = {
             canvasContext: context,
             viewport: viewport,
+            transform: transform,
             // transform: [PRINT_UNITS, 0, 0, PRINT_UNITS, 0, 0],
         };
         var renderTask = page.render(renderContext);
@@ -223,10 +281,15 @@ document.getElementById('next').addEventListener('click', onNextPage);
 * Asynchronously downloads PDF.
 */
 pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+<<<<<<< HEAD
+    // alert('dddddddd')
+=======
+>>>>>>> 57aeb57534f6f9da6735f1362148cbf4e4af16fc
 pdfDoc = pdfDoc_;
 document.getElementById('page_count').textContent = pdfDoc.numPages;
 
 // Initial/first page rendering
 renderPage(pageNum);
+    document.querySelector('.anim2').remove();
 });
 </script>

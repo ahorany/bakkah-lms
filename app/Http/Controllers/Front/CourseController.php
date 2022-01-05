@@ -220,7 +220,8 @@ class CourseController extends Controller
 
 
         // Check if user is not register in course AND user role not admin => ABORT(404)
-        if(!$this->checkUserCourseRegistrationAndRole($content->course->id)){
+        $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
+        if(!$user_course_register){
             abort(404);
         }// end if
 
@@ -273,7 +274,23 @@ class CourseController extends Controller
         $time_limit = $content->time_limit;
 
 
-        return view('pages.file',compact('content','previous','next','enabled','time_limit'));
+        // Check user progress if grater than or equal complete progress for course
+        // When user course => completed_at is null => update completed at In Course Registration
+        // pop up status => preview else disable
+        $popup_compelte_status = false;
+        if ( ($content->course->complete_progress <= $user_course_register->progress)){
+            // Check if user course => completed_at is null => update completed at In Course Registration
+            if (!$user_course_register->completed_at){
+               CourseRegistration::where('user_id',auth()->id())
+                   ->where('course_id', $content->course->id)->update([
+                       'completed_at' => Carbon::now(),
+                   ]);
+
+                $popup_compelte_status = true;
+            } // end if
+        } // end if
+
+        return view('pages.file',compact('content','previous','next','enabled','time_limit','popup_compelte_status'));
     } // end function
 
     /*
@@ -287,7 +304,7 @@ class CourseController extends Controller
             return false;
         }
 
-        return true;
+        return $user_course_register;
     } // end function
 
 
@@ -444,5 +461,33 @@ class CourseController extends Controller
 
 
     /****************************************************************************/
+
+    /*
+     * Update completed at In Course Registration FROM AJAX
+     * When user click on close button in popup
+     * When user complete progress for course
+     */
+    public function update_completed_at(){
+        // Get auth user register course data from DB
+       $user_course = CourseRegistration::where('user_id',auth()->id())
+           ->where('course_id', request()->course_id)
+           ->with(['course'])->first();
+
+       // check if user register in this course or ABORT(404)
+       if (!$user_course) abort(404);
+
+
+       // Check if user complete progress for course => update completed at In Course Registration
+       if ($user_course->course->complete_progress <= $user_course->progress ){
+           CourseRegistration::where('user_id',auth()->id())
+               ->where('course_id', request()->course_id)->update([
+                      'completed_at' => Carbon::now(),
+               ]);
+       } // end if
+
+
+        // return response to client side
+       return response()->json(['status' => true]);
+    }// end function
 
 } // End Class
