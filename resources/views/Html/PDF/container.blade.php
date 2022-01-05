@@ -51,15 +51,6 @@
         box-shadow: 0 0 10px 1px #f0f0f0;
 
     }
-<<<<<<< HEAD
-    button#prev svg path , button#next svg path {
-        fill: #f0f0f0;
-    }
-    #prev:hover svg path, #next:hover svg path {
-        fill: #000
-    }
-
-=======
 
 
     .anim2 {
@@ -103,7 +94,6 @@
     }
 
     /* by esraa eid 31-12-2021 */
->>>>>>> a24b362afee3bfcb2f206e9f332215e6115080c6
 </style>
 <div id="the-container">
     <div id="update_file_source" class="text-center">
@@ -281,10 +271,6 @@ document.getElementById('next').addEventListener('click', onNextPage);
 * Asynchronously downloads PDF.
 */
 pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-<<<<<<< HEAD
-    // alert('dddddddd')
-=======
->>>>>>> 57aeb57534f6f9da6735f1362148cbf4e4af16fc
 pdfDoc = pdfDoc_;
 document.getElementById('page_count').textContent = pdfDoc.numPages;
 
