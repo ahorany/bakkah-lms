@@ -18,6 +18,9 @@ svg {
     fill: #c6c6c6;
     cursor: pointer;
 }
+.certification-card span {
+    color: rgb(106, 106, 106) !important;
+}
 @media (max-width: 576px){
     .progress-main {
         width: 100% !important;
@@ -116,11 +119,11 @@ svg {
                     </template>
                 </template>
             </div>
-            @if($course->users[0]->pivot->progress >= $course->complete_progress)
+            {{--@if($course->users[0]->pivot->progress >= $course->complete_progress)
                 <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}" class="green mb-1" target="_blank">
                 Certificate
                 </a>
-            @endif
+            @endif--}}
             <div class="d-flex">
                 <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px;">
                     <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="main-button main-color review" href="#">
@@ -235,6 +238,9 @@ svg {
     <div class="col-lg-4 course_info">
         @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress >= $course->complete_progress ) )
 
+        {{-- class="green mb-1"  --}}
+        <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}"
+            target="_blank">
         <div class="text-center course-image certificate certification-card">
             <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
                 <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
@@ -244,6 +250,7 @@ svg {
                 <span>You have successfully completed the course. </span>
             </div>
         </div>
+        </a>
         @endif
         <div class="card p-30 learning-file activity" style="padding: 0 !important;">
             <h3>{{__('education.Activity Completed')}}</h3>
