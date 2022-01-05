@@ -302,7 +302,8 @@ class Builder {
 
 		$div = '<div class="'.$col.'">';
 			$div .= '<div class="form-group">';
-			$div .= '<label>'.self::title($title, $db_trans).' '.$validation.'</label>';
+            if($title != '')
+			    $div .= '<label>'.self::title($title, $db_trans).' '.$validation.'</label>';
 			$div .= '<textarea name="'.$name.'" class="form-control '.$tinymce.'" rows="'.$row.'" placeholder="'.self::title($title, $db_trans).'" '.$attr.' '.$disabled.'>'.$val.'</textarea>';
 			$div .= '</div>';
 		$div .= '</div>';

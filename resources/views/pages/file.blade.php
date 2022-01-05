@@ -95,25 +95,9 @@
                         @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
-
                             {{-- <embed width="100%" height="600px" id="update_file_source" src='' > --}}
-                            <iframe width="100%" height="600px" id="update_file_source" src='' style="border: 1px solid #eaeaea;" ></iframe>
-                            {{--
-                            <style>
-                                #the-canvas {
-                                    /* border: 1px solid #eaeaea; */
-                                    direction: ltr;
-                                }
-                            </style>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                            <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
-                            <div>
-                                <button id="prev">Previous</button>
-                                <button id="next">Next</button>
-                                &nbsp; &nbsp;
-                                <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
-                            </div>
-                            <canvas id="the-canvas"></canvas>--}}
+                            {{-- <iframe width="100%" height="600px" id="update_file_source" src='' style="border: 1px solid #eaeaea;" ></iframe> --}}
+                            @include('Html.PDF.container', ['file'=>$content->upload->file??null])
 
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
@@ -125,17 +109,20 @@
                         @if($content->upload->extension == 'pdf' )
                             <iframe width="100%" height="600px" id="update_file_source" src='' ></iframe>
                         @else
+
                             <?php
                             $user_id = sprintf("%'.05d", auth()->user()->id);
                             $content_id = sprintf("%'.05d", $content->id);
                             $SCOInstanceID = (1).$user_id.(2).$content_id;
                             ?>
                             <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
-
                             @if(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html') ))
-                                 <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
-                            @else
+
+                                <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                            @elseif(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html') ))
                                  <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                            @else
+                                <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/index_lms.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
                            @endif
 
                         @endif
@@ -339,131 +326,7 @@
             });
         }
 
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     // const btn = document.querySelector("Layer_1");
-        //     // const btn = document.getElementById("download");
-        //     // btn.addEventListener("click", function () {
-        //     //     // name.style.color = "blue";
-        //     //     alert();
-        //     // });
 
-        //     setTimeout(function(){
-        //         alert();
-        //         document.getElementById("toolbarViewerRight").remove();
-        //     }.bind(this), 3000)
-        // }, false);
-
-        // setTimeout(function(){
-        //     alert();
-        //     document.getElementById("toolbarContainer").style.visibility = "hidden";
-        // }.bind(this), 3000)
-
-        // atob() is used to convert base64 encoded PDF to binary-like data.
-        // (See also https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/
-        // Base64_encoding_and_decoding.)
-        // If absolute URL from the remote server is provided, configure the CORS
-            // header on that server.
-            // var url = 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/examples/learning/helloworld.pdf';
-
-
-            // https://mozilla.github.io/pdf.js/examples/index.html#interactive-examples
-            // var url = "{{CustomAsset('upload/files/presentations/2021-12-30-10-19-28_document_1_.pdf')}}"
-
-            // // Loaded via <script> tag, create shortcut to access PDF.js exports.
-            // var pdfjsLib = window['pdfjs-dist/build/pdf'];
-
-            // pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
-
-            // var scale = screen.width/900;
-            // var pdfDoc = null,
-            //     pageNum = 1,
-            //     pageRendering = false,
-            //     pageNumPending = null,
-            //     scale = scale,
-            //     // scale = 1.3,
-            //     canvas = document.getElementById('the-canvas'),
-            //     ctx = canvas.getContext('2d');
-
-            // /**
-            // * Get page info from document, resize canvas accordingly, and render page.
-            // * @param num Page number.
-            // */
-            // function renderPage(num) {
-            // pageRendering = true;
-            // // Using promise to fetch the page
-            // pdfDoc.getPage(num).then(function(page) {
-            //     var viewport = page.getViewport({scale: scale});
-            //     canvas.height = viewport.height;
-            //     canvas.width = viewport.width;
-
-            //     // Render PDF page into canvas context
-            //     var renderContext = {
-            //     canvasContext: ctx,
-            //     viewport: viewport
-            //     };
-            //     var renderTask = page.render(renderContext);
-
-            //     // Wait for rendering to finish
-            //     renderTask.promise.then(function() {
-            //     pageRendering = false;
-            //     if (pageNumPending !== null) {
-            //         // New page rendering is pending
-            //         renderPage(pageNumPending);
-            //         pageNumPending = null;
-            //     }
-            //     });
-            // });
-
-            // // Update page counters
-            // document.getElementById('page_num').textContent = num;
-            // }
-
-            // /**
-            // * If another page rendering in progress, waits until the rendering is
-            // * finised. Otherwise, executes rendering immediately.
-            // */
-            // function queueRenderPage(num) {
-            // if (pageRendering) {
-            //     pageNumPending = num;
-            // } else {
-            //     renderPage(num);
-            // }
-            // }
-
-            // /**
-            // * Displays previous page.
-            // */
-            // function onPrevPage() {
-            // if (pageNum <= 1) {
-            //     return;
-            // }
-            // pageNum--;
-            // queueRenderPage(pageNum);
-            // }
-            // document.getElementById('prev').addEventListener('click', onPrevPage);
-
-            // /**
-            // * Displays next page.
-            // */
-            // function onNextPage() {
-            // if (pageNum >= pdfDoc.numPages) {
-            //     return;
-            // }
-            // pageNum++;
-            // queueRenderPage(pageNum);
-            // }
-            // document.getElementById('next').addEventListener('click', onNextPage);
-
-            // /**
-            // * Asynchronously downloads PDF.
-            // */
-            // pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-            // pdfDoc = pdfDoc_;
-            // document.getElementById('page_count').textContent = pdfDoc.numPages;
-
-            // // Initial/first page rendering
-            // renderPage(pageNum);
-            // });
     </script>
 
 @endsection

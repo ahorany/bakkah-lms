@@ -17,24 +17,30 @@
     <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}">
 
+    <link rel="stylesheet" href="{{CustomAsset('css/responsive.css')}}">
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @yield('style')
 </head>
 
 <body>
 <?php  $user_role_name = auth()->user()->roles()->select('roles.name')->first()->trans_name??null; ?>
+<div class="container-max">
 
-@include("layouts.header")
+    @include("layouts.header")
 
-<div class="container-fluid">
-    <div class="row">
+    <div class="container-fluid"><!--fluid-->
+        <div class="row">
 
-        @if(Route::current()->getName() != 'user.congrats')
-            @include("layouts.sidebar")
-        @endif
+            @if(Route::current()->getName() != 'user.congrats')
+                @include("layouts.sidebar")
+            @endif
 
-        <main class="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-5" id="main-vue-element">
-            @yield('content')
-        </main>
+            <main class="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-5" id="main-vue-element">
+                @yield('content')
+            </main>
+        </div>
     </div>
 </div>
 

@@ -918,7 +918,6 @@ ol.answers li .icon.empty {
   text-align: center;
   line-height: 35px;
   border-radius: 50%;
-  font-weight: bold;
   margin-right: 10px;
 }
 
@@ -1119,7 +1118,7 @@ width: 55px;
 
 .course-cards > div {
   text-align: center;
-  margin: 0px 20px;
+  margin: 0px 30px;
 }
 
 ul.badges {

@@ -202,16 +202,12 @@ class CourseController extends Controller
         return response()->json(['status' => 'success','data' => $total_rate ]);
     } // end function
 
-
-
     /****************************************************************************/
-
-
-
     /*
      * Preview Content Course ( Content Page )
      */
     public function preview_content($content_id){
+
         // Get content from DB
         $content = Content::whereId($content_id)
             ->with(['upload','course' ,'section'])->first();
@@ -228,7 +224,6 @@ class CourseController extends Controller
             abort(404);
         }// end if
 
-
         // Get next and prev
         $arr = CourseContentHelper::nextAndPreviouseQuery($content->course_id,$content->id,$content->order,$content->parent_id,$content->section->order);
         $previous = $arr[0];
@@ -237,7 +232,6 @@ class CourseController extends Controller
         $previous = ($previous[0]??null);
         // end next and prev
 
-
         //TODO: Ahoray
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
         if(!request()->has('preview')){
@@ -245,7 +239,6 @@ class CourseController extends Controller
                 return redirect()->back()->with(["status" => 'danger',"msg" => "Can not open  content (Because the content is not completed) !!"]);
             }// end if
         }
-
 
        /*
         *  Create New User Content OR
@@ -335,12 +328,15 @@ class CourseController extends Controller
      * Get Content File Path
      */
     private function getContentFilePath($content_type){
+
         $file = "";
-        switch ($content_type){
-            case 'video': $file = public_path('upload/files/videos/'.$content->upload->file);  break;
-            case 'audio': $file = public_path('upload/files/audios/'.$content->upload->file);  break;
-            case 'presentation': $file = public_path('upload/files/presentations/'.$content->upload->file);  break;
-            case 'scorm': $file = public_path('upload/files/scorms/'.$content->upload->file);  break;
+        if(isset($content)){
+            switch ($content_type){
+                case 'video': $file = public_path('upload/files/videos/'.$content->upload->file);  break;
+                case 'audio': $file = public_path('upload/files/audios/'.$content->upload->file);  break;
+                case 'presentation': $file = public_path('upload/files/presentations/'.$content->upload->file);  break;
+                case 'scorm': $file = public_path('upload/files/scorms/'.$content->upload->file);  break;
+            }
         }
         return $file;
     } // end function

@@ -139,7 +139,9 @@
                                     <img src="{{$url}}" height="auto" width="100px">
                                 </div>
                             @endisset
-                            <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 48px;">{{$course->trans_title}}</h3>
+                            <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 38px; font-weight:normal;">
+                                {{$course->trans_title}}
+                            </h3>
 
                             <div class="progress">
                                 <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>

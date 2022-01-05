@@ -3,7 +3,33 @@
 @section('useHead')
     <title>{{$exam->title}} {{ __('education.Exam') }} | {{ __('home.DC_title') }}</title>
 @endsection
+<style>
+.prev[disabled="disabled"], .next[disabled="disabled"] {
+    opacity: 0.3;
+}
+.navigation {
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.custom-radio .radio-mark::after {
+    left: 2px !important;
+    top: 2px !important;
+    width: 12px !important;
+    height: 12px !important;
+    border: solid #06ae60;
+        border-top-width: medium;
+        border-right-width: medium;
+        border-bottom-width: medium;
+        border-left-width: medium;
+    border-width: 3px !important;
+    background-color: #06ae60;
+    border-radius: 50% !important;
+    -webkit-transform: none !important;
+    -ms-transform: none !important;
+    transform: none !important;
+}
+</style>
 @section('content')
                 <div class="dash-header course_info">
                     {{-- <ol class="breadcrumb">
@@ -95,16 +121,18 @@
                         <div class="d-flex algin-items-center justify-content-between mt-4 buttons">
 
                             <div class="navigation">
-                                <template v-if="prev_status">
-                                    <button  @click.prevent="prev()" class="prev">
+                                {{-- <template v-if="prev_status"> --}}
+                                <template>
+                                    <button @click.prevent="prev()" class="prev" :disabled="!prev_status">
                                         <svg id="Group_92" data-name="Group 92" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
                                         <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#8a8a8a"/>
                                       </svg>
                                     </button>
                                 </template>
 
-                                <template v-if="!save_status" >
-                                  <button @click.prevent="next()" class="next">
+                                {{-- <template v-if="!save_status" > --}}
+                                <template>
+                                  <button @click.prevent="next()" class="next" :disabled="save_status">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
                                         <defs>
                                           <linearGradient id="linear-gradient" x1="-1623.535" y1="17.172" x2="-1624.535" y2="17.172" gradientUnits="objectBoundingBox">
@@ -332,13 +360,26 @@
                     }, 1000);
                 },
                 save : function(){
+
                     if(this.page_type != 'exam') {
                         return ;
                     }
-
-                    if(confirm('Are you sure (save answers) !!!')){
-                        this.nextSaveAnswers('save');
-                    }
+                    // if(confirm('Are you sure (save answers) !!!')){
+                    //     this.nextSaveAnswers('save');
+                    // }
+                    Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Once the answers are submitted, it cannot be undone",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.nextSaveAnswers('save');
+                        }
+                    })
                 },
                 addAnswer : function (question_id,answer_id) {
                     if(this.page_type != 'exam') {

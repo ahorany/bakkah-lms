@@ -154,7 +154,14 @@
 
         <div class="row">
             @if(session()->has('status'))
-                <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div>
+                {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-1 mb-2">
+                    <div class="card h-100">
+                        <div class="card-body" style="padding: 15px 30px; background: #fb4400;color: #fff;">
+                        {{session()->get('msg')}}
+                        </div>
+                    </div>
+                </div>
             @endif
 
             <?php $users_exams_count = count($exam->exam->users_exams) ?>
@@ -168,7 +175,7 @@
                         <p>Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
                         <p>Exam attempt count : {!! $exam->exam->attempt_count == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->attempt_count!!}</p>
                         <p>Your attempts  : {{$users_exams_count}}</p>
-                        <p>Mark  : {{$exam->exam->exam_mark}} </p>
+                        <p>Marks  : {{$exam->exam->exam_mark}} </p>
 
 
                         @if(count($exam->questions) == 0 || (\Carbon\Carbon::create($exam->exam->start_date)  > \Carbon\Carbon::now() && !is_null($exam->exam->start_date)))
@@ -243,8 +250,6 @@
                             <span class="{{$attempt->status == 1 ? 'badge badge-success' : 'badge badge-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</span>
                         </td>
 
-
-
                         <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                         <td>
                             @if($exam->exam->exam_mark && $exam->exam->exam_mark != 0)
@@ -268,8 +273,23 @@
 @section('script')
 <script>
     function confirmNewAttempt(){
-        if( confirm('Are u sure ?') == false)
-            event.preventDefault()
+        // if( confirm('Are u sure ?') == false)
+        //     event.preventDefault()
+        Swal.fire({
+        title: 'Start the exam',
+        // text: "To start new attempt",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{{CustomRoute('user.preview.exam',$exam->id)}}";
+            }
+            // event.preventDefault()
+        })
+        event.preventDefault()
     }
 </script>
 @endsection
