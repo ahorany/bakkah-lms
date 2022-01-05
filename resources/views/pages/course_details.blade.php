@@ -370,7 +370,7 @@
                     content.onclick = e => e.stopPropagation()
                 </script>
             @endif
-        @endsection
+
         <style>
             .svghover {
                 fill: #fb4400;
@@ -388,3 +388,4 @@
                 }
             }
         </script>
+@endsection
