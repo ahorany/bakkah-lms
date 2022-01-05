@@ -42,7 +42,9 @@
                         object-fit: cover;
                         border-radius: 50%;
                         padding: 5px;
-                        box-shadow: 1px 1px 5px #eaeaea;">
+                        background: #F7F7F7;
+                        /* box-shadow: 1px 1px 5px #eaeaea; */
+                        ">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px"
                             viewBox="0 0 100 100" style="vertical-align: middle; fill: #5D5B5A; font-size:18px; width:23px;" xml:space="preserve">

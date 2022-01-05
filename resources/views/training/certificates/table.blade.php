@@ -1,3 +1,8 @@
+<style>
+    .background-img a{
+        color:grey;
+    }
+</style>
 <div class="card">
     <div class="card-header">
         {!!Builder::BtnGroupTable()!!}
@@ -34,14 +39,14 @@
                     </td>
 
                     <td>
-                        <span class="light">
+                        <span class="background-img">
                         {!!Builder::getCertificate($post->upload??null)!!}
                         </span>
                     </td>
 
                     <td>
-                        <span class="light">
-                            <a  class="btn btn-sm btn-primary btn-table btn-preview" style="visibility:visible;"
+                        <span>
+                            <a  class="main-color" style="visibility:visible;"
                                 href="{{route('training.certificates.preview', ['id'=> $post->id ] )}}" target="_blank" >
                             <i class="fa fa-eye"></i> {{__('admin.preview')}}
                             </a>
@@ -49,11 +54,7 @@
                     </td>
 
                     <td>
-                        <a href="{{route('training.certificates.preview_pdf', ['id'=> $post->id ] )}}"
-
-                             target="_blank" class="btn btn-success btn-xs mb-1">
-                                            Certificate
-                        </a>
+                        <a href="{{route('training.certificates.preview_pdf', ['id'=> $post->id ] )}}" target="_blank" class="green mb-1"> Certificate </a>
                     </td>
 
                 </tr>

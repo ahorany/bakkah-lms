@@ -94,4 +94,6 @@ return [
     "Send Message" => 'Send Message',
     "Messages" => 'Messages',
     "Certificates" => 'Certificates',
+    'Activity Completed'=>'Activity Completed',
+    'Materials'=>'Materials',
 ];
