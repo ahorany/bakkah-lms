@@ -278,4 +278,16 @@ document.getElementById('page_count').textContent = pdfDoc.numPages;
 renderPage(pageNum);
     document.querySelector('.anim2').remove();
 });
+
+document.addEventListener('keydown', logKey);
+
+function logKey(e) {
+//   log.textContent += ` ${e.code}`;
+    if(e.code=='ArrowRight'){
+        onNextPage();
+    }
+    else if(e.code=='ArrowLeft'){
+        onPrevPage();
+    }
+}
 </script>

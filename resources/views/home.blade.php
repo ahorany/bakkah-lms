@@ -169,7 +169,7 @@
 
         <div class="col-lg-6 col-md-12 col-sm-12 col-12">
             <div class="card h-100 p-30 activity">
-                <h3>Activity</h3>
+                <h3>{{__('education.Activity Completed')}}</h3>
                 <ul>
                     <?php $lang = app()->getLocale(); ?>
                     @foreach($activities as $activity)
