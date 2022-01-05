@@ -109,17 +109,20 @@
                         @if($content->upload->extension == 'pdf' )
                             <iframe width="100%" height="600px" id="update_file_source" src='' ></iframe>
                         @else
+
                             <?php
                             $user_id = sprintf("%'.05d", auth()->user()->id);
                             $content_id = sprintf("%'.05d", $content->id);
                             $SCOInstanceID = (1).$user_id.(2).$content_id;
                             ?>
                             <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
-
                             @if(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html') ))
-                                 <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
-                            @else
+
+                                <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                            @elseif(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html') ))
                                  <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                            @else
+                                <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/index_lms.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
                            @endif
 
                         @endif

@@ -328,12 +328,15 @@ class CourseController extends Controller
      * Get Content File Path
      */
     private function getContentFilePath($content_type){
+
         $file = "";
-        switch ($content_type){
-            case 'video': $file = public_path('upload/files/videos/'.$content->upload->file);  break;
-            case 'audio': $file = public_path('upload/files/audios/'.$content->upload->file);  break;
-            case 'presentation': $file = public_path('upload/files/presentations/'.$content->upload->file);  break;
-            case 'scorm': $file = public_path('upload/files/scorms/'.$content->upload->file);  break;
+        if(isset($content)){
+            switch ($content_type){
+                case 'video': $file = public_path('upload/files/videos/'.$content->upload->file);  break;
+                case 'audio': $file = public_path('upload/files/audios/'.$content->upload->file);  break;
+                case 'presentation': $file = public_path('upload/files/presentations/'.$content->upload->file);  break;
+                case 'scorm': $file = public_path('upload/files/scorms/'.$content->upload->file);  break;
+            }
         }
         return $file;
     } // end function
