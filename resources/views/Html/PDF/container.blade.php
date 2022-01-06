@@ -171,7 +171,7 @@ function renderPage(num) {
     // Using promise to fetch the page
     pdfDoc.getPage(num).then(function(page) {
 
-        var PRINT_RESOLUTION = 150;
+        var PRINT_RESOLUTION = 300;
         var PRINT_UNITS = PRINT_RESOLUTION / 72.0;
 
         var container = document.getElementById('the-container');
@@ -187,23 +187,11 @@ function renderPage(num) {
         canvas.height = Math.floor(viewport.height * outputScale);
         canvas.style.width = Math.floor(viewport.width) + "px";
         canvas.style.height = Math.floor(viewport.height) + "px";
-        const transform = outputScale !== 1
-        ? [outputScale, 0, 0, outputScale, 0, 0]
-        : null;
-        console.log(transform);
-        // var viewport = page.getViewport({scale: 1});
-        // var scale = container.clientWidth / viewport.width;
-        // viewport = page.getViewport({scale: scale});
-
-        // var viewport = page.getViewport({scale: scale});
-        // canvas.height = viewport.height;
-        // canvas.width = viewport.width;
 
         // Render PDF page into canvas context
         var renderContext = {
             canvasContext: context,
             viewport: viewport,
-            transform: transform,
             // transform: [PRINT_UNITS, 0, 0, PRINT_UNITS, 0, 0],
         };
         var renderTask = page.render(renderContext);
@@ -222,36 +210,6 @@ function renderPage(num) {
     // Update page counters
     document.getElementById('page_num').textContent = num;
 }
-/*
-function renderPage(activeService, pdfDocument, pageNumber, size) {
-  var scratchCanvas = activeService.scratchCanvas;
-  var PRINT_RESOLUTION = 300;
-  var PRINT_UNITS = PRINT_RESOLUTION / 72.0;
-  scratchCanvas.width = Math.floor(size.width * PRINT_UNITS);
-  scratchCanvas.height = Math.floor(size.height * PRINT_UNITS);
-  var width = Math.floor(size.width * _ui_utils.CSS_UNITS) + 'px';
-  var height = Math.floor(size.height * _ui_utils.CSS_UNITS) + 'px';
-  var ctx = scratchCanvas.getContext('2d');
-  ctx.save();
-  ctx.fillStyle = 'rgb(255, 255, 255)';
-  ctx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
-  ctx.restore();
-  return pdfDocument.getPage(pageNumber).then(function (pdfPage) {
-    var renderContext = {
-      canvasContext: ctx,
-      transform: [PRINT_UNITS, 0, 0, PRINT_UNITS, 0, 0],
-      viewport: pdfPage.getViewport(1, size.rotation),
-      intent: 'print'
-    };
-    return pdfPage.render(renderContext).promise;
-  }).then(function () {
-    return {
-      width: width,
-      height: height
-    };
-  });
-}
-*/
 
 /**
 * If another page rendering in progress, waits until the rendering is
