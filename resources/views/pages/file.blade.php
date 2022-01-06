@@ -251,9 +251,9 @@
                     @if($next)
                         <button title="{{$next->title}}"  class="next next_prev">
                             <span id="demo">{{__('education.Next')}}</span>
-                            <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                            {{-- <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
                                <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
-                           </svg>
+                           </svg> --}}
                         </button>
                             {{-- <span class="next-title"><a style="color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a></span> --}}
                     @endif
@@ -468,6 +468,19 @@
      <script>
         var enabled = "{{$enabled}}";
 
+        let svg_time =
+            `
+                <svg xmlns="http://www.w3.org/2000/svg" style="width: auto; height: 16px; margin-left: 5px;" viewBox="0 0 34.151 35.854">
+                    <g id="Group_122" data-name="Group 122" transform="translate(-1085.293 -313.029)"><g id="Group_121" data-name="Group 121" transform="translate(1085.293 313.029)"><g id="Group_108" data-name="Group 108" transform="translate(19.269 20.974)"><path id="Path_117" data-name="Path 117" d="M1110.64,352.445v-1.3a10.538,10.538,0,0,0,10.527-10.526h1.3A11.84,11.84,0,0,1,1110.64,352.445Z" transform="translate(-1110.64 -340.618)" fill="#575756"></path></g> <g id="Group_109" data-name="Group 109" transform="translate(16.13 17.836)"><path id="Path_118" data-name="Path 118" d="M1109.65,342.771a3.14,3.14,0,1,1,3.141-3.14A3.143,3.143,0,0,1,1109.65,342.771Zm0-4.979a1.839,1.839,0,1,0,1.84,1.84A1.842,1.842,0,0,0,1109.65,337.792Z" transform="translate(-1106.51 -336.491)" fill="#575756"></path></g> <g id="Group_110" data-name="Group 110" transform="translate(15.623 22.712)"><rect id="Rectangle_72" data-name="Rectangle 72" width="3.198" height="1.301" transform="matrix(0.548, -0.836, 0.836, 0.548, 0, 2.674)" fill="#575756"></rect></g> <g id="Group_111" data-name="Group 111" transform="translate(20.106 12.488)"><rect id="Rectangle_73" data-name="Rectangle 73" width="7.246" height="1.301" transform="translate(0 6.06) rotate(-56.746)" fill="#575756"></rect></g> <g id="Group_112" data-name="Group 112" transform="translate(4.387 2.785)"><path id="Path_119" data-name="Path 119" d="M1105.946,349.762a14.779,14.779,0,0,1-5.873-1.2l.514-1.2a13.583,13.583,0,1,0,7.132-25.948.651.651,0,0,1-.566-.645v-2.776h-2.413v2.776a.651.651,0,0,1-.566.645,13.606,13.606,0,0,0-11.808,13.465,13.8,13.8,0,0,0,.214,2.416l-1.281.228a15.088,15.088,0,0,1-.234-2.644,14.913,14.913,0,0,1,12.375-14.67v-2.867a.649.649,0,0,1,.65-.65h3.714a.651.651,0,0,1,.651.65v2.867a14.882,14.882,0,0,1-2.508,29.552Z" transform="translate(-1091.064 -316.693)" fill="#575756"></path></g> <g id="Group_113" data-name="Group 113" transform="translate(15.054)"><path id="Path_120" data-name="Path 120" d="M1112.875,317.116h-7.129a.651.651,0,0,1-.651-.651v-2.786a.65.65,0,0,1,.651-.65h7.129a.651.651,0,0,1,.651.65v2.786A.652.652,0,0,1,1112.875,317.116Zm-6.479-1.3h5.829V314.33H1106.4Z" transform="translate(-1105.095 -313.029)" fill="#575756"></path></g> <g id="Group_114" data-name="Group 114" transform="translate(8.281 7.553)"><rect id="Rectangle_74" data-name="Rectangle 74" width="1.301" height="2.435" transform="matrix(0.803, -0.596, 0.596, 0.803, 0, 0.776)" fill="#575756"></rect></g> <g id="Group_115" data-name="Group 115" transform="translate(7.23 6.538)"><rect id="Rectangle_75" data-name="Rectangle 75" width="2.953" height="1.301" transform="matrix(0.803, -0.596, 0.596, 0.803, 0, 1.76)" fill="#575756"></rect></g> <g id="Group_116" data-name="Group 116" transform="translate(27.834 7.553)"><rect id="Rectangle_76" data-name="Rectangle 76" width="2.435" height="1.301" transform="matrix(0.596, -0.803, 0.803, 0.596, 0, 1.955)" fill="#575756"></rect></g> <g id="Group_117" data-name="Group 117" transform="translate(28.235 6.539)"><rect id="Rectangle_77" data-name="Rectangle 77" width="1.301" height="2.953" transform="translate(0 1.044) rotate(-53.414)" fill="#575756"></rect></g> <g id="Group_118" data-name="Group 118" transform="translate(1.922 24.822)"><rect id="Rectangle_78" data-name="Rectangle 78" width="6.776" height="1.301" fill="#575756"></rect></g> <g id="Group_119" data-name="Group 119" transform="translate(7.575 29.158)"><rect id="Rectangle_79" data-name="Rectangle 79" width="4.716" height="1.301" fill="#575756"></rect></g> <g id="Group_120" data-name="Group 120" transform="translate(0 32.522)"><rect id="Rectangle_80" data-name="Rectangle 80" width="8.701" height="1.301" fill="#575756"></rect></g></g></g>
+                </svg>
+            `;
+        let svg_next =
+            `
+                <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                    <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
+                </svg>
+            `;
+
         if(!enabled){
             document.getElementById("demo").addEventListener("click", function(event){
                 event.preventDefault()
@@ -478,6 +491,9 @@
             t = new Date(t.getTime() + (start_time * 1000));
             var countDownDate = t.getTime();
 
+
+            document.querySelector(".next").insertAdjacentHTML('beforeend', svg_time);
+
             var x = setInterval(function() {
                 var now = new Date().getTime();
                 var distance = countDownDate - now;
@@ -487,6 +503,10 @@
 
                 document.getElementById("demo").innerHTML = hours + "h "
                     + minutes + "m " + seconds + "s ";
+
+                    // document.getElementById("demo").nextElementSibling.
+
+
 
                 if (distance < 0) {
                     clearInterval(x);
@@ -503,6 +523,10 @@
 
 
                     document.getElementById("demo").innerHTML = "Next";
+                    let el = document.getElementById('demo').nextElementSibling.remove();
+
+                    document.querySelector(".next").insertAdjacentHTML('beforeend', svg_next);
+
                     document.querySelector(".next").addEventListener("click", function(event){
                         window.location.href = '{{$next_url??null}}'
                     });
@@ -511,10 +535,10 @@
             }, 1000);
         }
 
-
-
         }else{
-          document.getElementById("demo").innerHTML = "Next";
+            document.getElementById("demo").innerHTML = "Next";
+            document.querySelector(".next").insertAdjacentHTML('beforeend', svg_next);
+
             document.querySelector(".next").addEventListener("click", function(event){
                 window.location.href = '{{$next_url??null}}'
             });
