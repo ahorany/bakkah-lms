@@ -122,7 +122,7 @@
     ?>
 <div class="card p-5 user-info">
 
-        <div class="dash-header d-flex justify-content-between ">
+        <div class="dash-header d-flex justify-content-between align-items-center">
             @include('pages.templates.breadcrumb', [
                 'course_id'=>$exam->course->id,
                 'course_title'=>$exam->course->trans_title,
@@ -166,7 +166,7 @@
 
             <?php $users_exams_count = count($exam->exam->users_exams) ?>
 
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-5 mb-3">
                 <div class="card h-100" style="box-shadow: none; border: 1px solid gainsboro;">
                     <div class="card-body" style="padding: 15px 30px;">
                         <h4>Exam title : {{$exam->title}}</h4>
@@ -201,7 +201,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-6 col-lg-8 mb-3">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-7 mb-3">
                 <div class="card pt-3 pl-3 h-100" style="padding: 15px 30px; box-shadow: none; border: 1px solid gainsboro;">
                     <h4 class="card-title">Exam Description</h4>
                     <div class="card-body">
@@ -249,9 +249,9 @@
                         <td class="text-bold">
 {{--                            <span class="{{$attempt->status == 1 ? 'badge badge-success' : 'badge badge-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</span>--}}
                        @if( (($exam->exam->exam_mark * $exam->exam->pass_mark) / 100) <= $attempt->mark)
-                          <span class="">Pass</span>
+                          <span class="badge-green">Pass</span>
                        @else
-                           <span class="">Fail</span>
+                           <span class="badge-red">Fail</span>
                        @endif
                         </td>
 

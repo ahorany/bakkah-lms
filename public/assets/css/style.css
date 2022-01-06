@@ -754,9 +754,12 @@ button.next_prev svg {
 }
 
 p.time-remaining {
-  display: flex;
-  align-items: center;
-  margin-top: 0;
+    display: flex;
+    align-items: center;
+    width: max-content;
+    margin: 0 auto;
+    padding: 5px 15px;
+    border-radius: 5px;
 }
 
 p.time-remaining svg {
