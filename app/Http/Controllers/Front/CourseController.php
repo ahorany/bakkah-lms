@@ -237,7 +237,7 @@ class CourseController extends Controller
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
         if(!request()->has('preview')){
             if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
-                return redirect()->back()->with(["status" => 'danger',"msg" => "Can not open  content (Because the content is not completed) !!"]);
+                return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
             }// end if
         }
 

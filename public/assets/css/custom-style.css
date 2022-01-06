@@ -397,7 +397,7 @@ justify-content: center;
 
 /**************************************************************************************************************/
 .course-image .progress{
-    width: 100%;
+    width: 65%;
     height: 10px;
     /* border-radius: 8px; */
     border: 2px solid #f2f2f2;
@@ -478,8 +478,19 @@ button.next_prev {
 
 ul.video-list li .play{
     cursor: unset;
+    box-shadow: 0 0 5px #33333333;
 }
 
+ul.video-list li .text a {
+    color: #6a6a6a;
+    font-size: 15px;
+    /* font-family: 'Lato Light'; */
+    font-weight: normal;
+    text-transform: capitalize;
+}
+ul.video-list li:hover .text a {
+    font-weight: bold;
+}
 .req svg{
     width: 7px !important;
     height: 15px !important;
@@ -612,6 +623,15 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 #main-vue-element small {
     line-height: 2.5rem;
 }
+.pop-up-content-wrap{
+    margin-top: 20px;
+}
+.close-btn{
+    top: 0 !important;
+    right: 20px !important;
+    color: #000 !important;
+}
+
 /******************************************************************************************************************/
 
 /* Media Query */

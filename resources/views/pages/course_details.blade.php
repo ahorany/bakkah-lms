@@ -18,6 +18,9 @@ svg {
     fill: #c6c6c6;
     cursor: pointer;
 }
+.certification-card span {
+    color: rgb(106, 106, 106) !important;
+}
 @media (max-width: 576px){
     .progress-main {
         width: 100% !important;
@@ -54,7 +57,7 @@ svg {
 --}}
 <div class="course_details">
     <div class="dash-header course-header d-flex align-items-md-end flex-column flex-md-row px-3">
-        <div class="text-center course-image w-30 mb-4 mb-md-0">
+        <div class="text-center course-image w-30 mb-4 mt-2 mb-md-0">
             <?php
                 $url = '';
                 if($course->upload != null) {
@@ -121,11 +124,7 @@ svg {
                     </template>
                 </template>
             </div>
-            @if($course->users[0]->pivot->progress >= $course->complete_progress)
-                <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}" class="green mb-1" target="_blank">
-                Certificate
-                </a>
-            @endif
+
             <div class="d-flex">
                 <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px;">
                     <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="main-button main-color review" href="#">
@@ -136,27 +135,28 @@ svg {
                     </svg>
                     </a>
                     <div class="dropdown d-none" style="left: 0; width: max-content !important;">
-                    <div class="p-2">
-                        <template v-for="item in 5">
-                            <span @click="review(item)" v-if="item <= rate">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
-                                viewBox="0 0 17.43 16.6">
-                                <path id="Path_39" data-name="Path 39"
-                                    d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
-                                    transform="translate(-74.153 -183.355)" fill="#fb4400" />
-                                </svg>
-                            </span>
-                            <span @click="review(item)" v-if="item > rate">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
-                                viewBox="0 0 17.43 16.6">
-                                <path id="Path_42" data-name="Path 42"
-                                    MessageController            d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
-                                    transform="translate(-128.289 -183.355)" fill="#c6c6c6" />
-                                </svg>
-                            </span>
-                        </template>
-                    </div>
-                    </div>
+                        <div class="p-2">
+                           <template v-for="(item, index) in 5">
+                              <span @click="review(item)" v-if="item <= rate">
+                                 <svg :id="index" onmouseleave="mouseleave(this.id)" onmouseover="svghover(this.id)" xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
+                                    viewBox="0 0 17.43 16.6">
+                                    <path id="Path_39" data-name="Path 39"
+                                       d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
+                                       transform="translate(-74.153 -183.355)" fill="#fb4400" />
+                                 </svg>
+                              </span>
+                              <span @click="review(item)" v-if="item > rate">
+                                 <svg :id="index" onmouseleave="mouseleave(this.id)" onmouseover="svghover(this.id)" xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
+                                    viewBox="0 0 17.43 16.6">
+                                    {{-- id="Path_42"  --}}
+                                    <path data-name="Path 42"
+                                       MessageController d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
+                                       transform="translate(-128.289 -183.355)" />
+                                 </svg>
+                              </span>
+                           </template>
+                        </div>
+                     </div>
                 </li>
                 @if(!is_null($course->users[0]->pivot->progress))
                 <a href="{{route("user.resume",$course->id)}}" class="main-button main-color">Resume Course</a>
@@ -205,22 +205,14 @@ svg {
                 <span> {{$content->title}}</span>
                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                     <span class="svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="59" height="59" viewBox="0 0 59 59">
-                            <defs>
-                            <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
-                                <stop offset="0" stop-color="#89d859"/>
-                                <stop offset="1" stop-color="#06c06c"/>
-                            </linearGradient>
-                            </defs>
-                            <g id="Check_2" data-name="Check 2" transform="translate(-0.2 -0.4)">
-                            <rect id="Check_2_Background_" data-name="Check 2 (Background)" width="59" height="59" transform="translate(0.2 0.4)" fill="none"/>
-                            <path id="_22_Check" data-name="22 Check" d="M24.5,49A24.5,24.5,0,1,1,49,24.5,24.528,24.528,0,0,1,24.5,49ZM14.914,21.55a2.028,2.028,0,0,0-1.444.6,2.052,2.052,0,0,0-.108,2.772l7.146,7.146a2.043,2.043,0,0,0,2.88,0L35.638,19.814a2.05,2.05,0,0,0-.106-2.772,2.041,2.041,0,0,0-2.772-.106l-10.811,10.8-5.707-5.7A2.04,2.04,0,0,0,14.914,21.55Z" transform="translate(5.2 5.4)" fill="url(#linear-gradient)"/>
-                            </g>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
+                            <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
+                            <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#4cdd42"/>
                         </svg>
                     </span>
                 @else
                     <span class="svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="59" height="59" viewBox="0 0 59 59">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 59 59">
                             <g id="Check_2" data-name="Check 2" transform="translate(-0.2 0.2)">
                             <rect id="Check_2_Background_" data-name="Check 2 (Background)" width="59" height="59" transform="translate(0.2 -0.2)" fill="none"/>
                             <path id="_22_Check" data-name="22 Check" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(5.2 4.8)" fill="none" stroke="#d7d7d7" stroke-width="2" stroke-dasharray="0 0"/>
@@ -240,6 +232,9 @@ svg {
     <div class="col-lg-4 course_info">
         @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress >= $course->complete_progress ) )
 
+        {{-- class="green mb-1"  --}}
+        <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}"
+            target="_blank">
         <div class="text-center course-image certificate certification-card">
             <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
                 <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
@@ -249,6 +244,7 @@ svg {
                 <span>You have successfully completed the course. </span>
             </div>
         </div>
+        </a>
         @endif
         <div class="card p-30 learning-file activity" style="padding: 0 !important;">
             <h3>{{__('education.Activity Completed')}}</h3>

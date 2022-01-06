@@ -91,7 +91,7 @@ if(!is_null($previous)){
                     @endforeach
                     <small>({{$question->mark}} {{$answers == 1 ? 'Mark' : 'Marks'}} )</small>
                 </div>
-                <h3 style="padding-right: 14%;">{!! $question->title!!}</h3>
+                <h3 style="padding-right: 25%;">{!! $question->title!!}</h3>
                  @foreach($question->answers as $answer)
                      <label class="custom-radio"> {{$answer->title}}
                          <input type="checkbox" disabled="true" @foreach($exam->user_answers as $user_answer) @if($user_answer->id == $answer->id ) @if($answer->check_correct == 0) checked class="incorrect-radio" @else checked @endif   @endif @endforeach>
