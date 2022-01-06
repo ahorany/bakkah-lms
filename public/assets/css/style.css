@@ -698,6 +698,7 @@ li.has-dropdown .dropdown a:hover {
 
 ol.breadcrumb {
   display: flex;
+  align-items: center;
 }
 
 ol.breadcrumb li {

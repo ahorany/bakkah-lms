@@ -41,12 +41,12 @@ if(!is_null($previous)){
 }
 ?>
 
-
-<div class="dash-header d-flex justify-content-between ">
+{{-- @dd($exam) --}}
+<div class="dash-header d-flex justify-content-between review">
     @include('pages.templates.breadcrumb', [
         'course_id'=>$exam->exam->content->course->id,
         'course_title'=>$exam->exam->content->course->trans_title,
-        'content_title'=>$exam->exam->title,
+        'content_title'=>$exam->exam->content->title,
         // 'content_title'=>__('education.Exam'),
     ])
     <div class="parent_next_prev">

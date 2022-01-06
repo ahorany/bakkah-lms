@@ -652,12 +652,27 @@ p.time-remaining:hover span , p.time-remaining:hover {
 p.time-remaining svg path{
     fill: #fb4400;
 }
+.review.dash-header{
+    padding: 20px 0;
+}
 .plyr input {
     color: #fb4400 !important;
     background: #fb4400;
 }
 button.plyr__controls__item.plyr__control:hover , button.plyr__control.plyr__control--overlaid , button.plyr__control.plyr__control--overlaid:hover , button.plyr__control:hover{
     background: #fb4400 !important;
+}
+.modal .form-group.form-check.child{
+    margin: 15px 0 !important;
+    padding: 0 !important;
+}
+label.container-check.form-check-label{
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 30px !important;
+}
+label.container-check.form-check-label span.checkmark{
+    top: 0 !important;
 }
 
 /******************************************************************************************************************/
@@ -907,6 +922,14 @@ button.plyr__controls__item.plyr__control:hover , button.plyr__control.plyr__con
     .course-cards {
         width: 80% !important;
         margin: 5px auto;
+    }
+    .card-header.d-flex.justify-content-between.align-items-center {
+        display: block !important;
+        text-align: center;
+    }
+    .card-header.d-flex.justify-content-between.align-items-center .d-flex.align-items-center {
+        justify-content: center;
+        margin-top: 15px;
     }
 }
 

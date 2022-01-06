@@ -84,7 +84,7 @@
         </div>
           <template v-if="course">
 
-            <table class="table table-striped">
+            <table class="table table-striped" style="width: 97%; margin: 0 auto;">>
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -164,7 +164,7 @@
                         <input   type="datetime-local" v-model="expire_date" name="expire_date" class="w-100 form-control d-inline-block" placeholder="Expire date">
                     </div>
 
-                    <table class="table table-striped mx-3">
+                    <table class="table table-striped" style="width: 97%; margin: 0 auto;">
                         <thead>
                         <tr>
                             <th scope="col">Name</th>

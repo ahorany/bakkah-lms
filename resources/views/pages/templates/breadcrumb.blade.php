@@ -8,9 +8,10 @@
     @if(isset($section_title))
         <li><a href="{{route('user.course_details', ['course_id'=>$course_id])}}">{{$section_title}}</a></li>
     @endif
+    {{-- @dd($content_title) --}}
     {{-- @if(isset($content_title))
-    <li>
-        <strong style="text-transform: capitalize;">{{$content_title}}</strong>
-    </li>
+        <li>
+            <strong style="text-transform: capitalize;">{{$content_title}}</strong>
+        </li>
     @endif --}}
 </ol>
