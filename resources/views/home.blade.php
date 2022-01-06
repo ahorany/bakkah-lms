@@ -139,7 +139,7 @@
                                     <img src="{{$url}}" height="auto" width="100px">
                                 </div>
                             @endisset
-                            <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 38px; font-weight:normal;">
+                            <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 50px; font-weight:normal; display: flex; justify-content: center; align-items: center;">
                                 {{$course->trans_title}}
                             </h3>
 

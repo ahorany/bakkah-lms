@@ -104,6 +104,34 @@
             color: #fff;
         }
 
+        /** alert */
+        .error-notice{
+        margin:5px 0;
+        padding: 0
+        }
+
+        .oaerror{
+        width:100%;
+        background-color: #ffffff;
+        padding:20px;
+        border:1px solid #eee;
+        border-left-width:5px;
+        border-radius: 3px;
+        margin:10px auto;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        }
+
+        .danger{
+        border-left-color: #d9534f;
+        background-color: rgba(217, 83, 79, 0.1);
+        }
+
+        .danger strong{
+        color:#d9534f;
+        }
+        /* end alert */
+
         @media screen and (min-width:800px){
             .custom-model-main:before {
                 content: "";
@@ -182,9 +210,18 @@
         {{-- <h1 style="text-transform:capitalize;">{{ $content->course->trans_title }}</h1> --}}
     </div>
 
-    <div class="row mt-3">
+    <div class="row mx-0 mt-3">
         @if(session()->has('status'))
-            <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div>
+            {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
+            <div class="container">
+                <div class="row">
+                    <div class="error-notice">
+                        <div class="oaerror danger">
+                              <strong>Error</strong>- {{session()->get('msg')}}
+                        </div>
+                    </div>
+                </div>
+             </div>
         @endif
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
