@@ -53,8 +53,15 @@
     }
 
     .anim2{
-        text-align: center;
-        padding: 100px 0;
+        /* position: relative; */
+        min-height: 300px;
+    }
+
+    .anim2 svg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     /* .anim2 {
@@ -124,7 +131,7 @@
         </button>
     </div>
     <div class="anim2">
-        <svg id="Group_95" data-name="Group 95" xmlns="http://www.w3.org/2000/svg" width="100"  viewBox="0 0 245.935 343.644">
+        <svg id="Group_95" data-name="Group 95" xmlns="http://www.w3.org/2000/svg" width="125"  viewBox="0 0 245.935 343.644">
             <path id="Path_100" data-name="Path 100" d="M1904.381,772.014a8.654,8.654,0,0,0,8.654,8.654h228.627a8.654,8.654,0,0,0,8.654-8.654v-213.7H1904.381Z" transform="translate(-1904.381 -437.024)" fill="#f5f5f5"/>
             <path id="Path_101" data-name="Path 101" d="M2095.177,152.9H1913.035a8.654,8.654,0,0,0-8.654,8.654V274.187h245.935V208.036Z" transform="translate(-1904.381 -152.897)" fill="#fb4400"/>
             <path id="Path_102" data-name="Path 102" d="M2542.123,199.382a8.654,8.654,0,0,0,8.654,8.654h46.485L2542.123,152.9Z" transform="translate(-2351.327 -152.897)" fill="#ff6561"/>

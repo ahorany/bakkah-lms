@@ -217,7 +217,8 @@
                 <div class="row">
                     <div class="error-notice">
                         <div class="oaerror danger">
-                              <strong>Error</strong>- {{session()->get('msg')}}
+                              {{-- <strong>Error</strong>- --}}
+                              {{session()->get('msg')}}
                         </div>
                     </div>
                 </div>

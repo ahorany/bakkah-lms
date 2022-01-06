@@ -17,6 +17,7 @@
 svg {
     fill: #c6c6c6;
     cursor: pointer;
+    width: 20px;
 }
 .certification-card span {
     color: rgb(106, 106, 106) !important;

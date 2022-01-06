@@ -461,10 +461,13 @@ a:hover svg#back{
     /* position: relative; */
 }
 
-.course-cards:hover {
+.home-section .course-cards:hover , .home-section .text-center.course-image:hover {
     position: relative;
-    top: -10px;
+    top: -5px;
 }
+/* .text-center.course-image:hover {
+    box-shadow: 0px 0px 5px 0.5px #fb440036;
+} */
 
 button.next_prev {
     width: max-content;
