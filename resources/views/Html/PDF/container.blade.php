@@ -163,7 +163,7 @@ var container = document.getElementById('the-canvas');
 var pdfDoc = null,
     pageNum = 1,
     pageRendering = false,
-    pageNumPending = null;
+    pageNumPending = null
 
 /**
 * Get page info from document, resize canvas accordingly, and render page.
