@@ -40,7 +40,9 @@
 
 
         <div class="course_info">
-        <div class="card p-3 mb-3">
+            @include('training.courses.users.search',['course_id' => $course->id])
+
+            <div class="card p-3 mb-3">
             <div class="row">
 
                 <template>
@@ -89,6 +91,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Type</th>
+                    <th scope="col">Progress</th>
                     @if(!checkUserIsTrainee())
                         <th scope="col">Expire Date</th>
                         <th scope="col">Action</th>
@@ -104,6 +107,7 @@
                             <span v-if="user.pivot != null && user.pivot.role_id == 2" class="badge-pink"> Instructor </span>
                             <span v-if="user.pivot != null && user.pivot.role_id == 3" class="badge-green"> Trainee </span>
                         </td>
+                        <td v-text="(user.pivot.progress??0) + '%'"></td>
 
                     @if(!checkUserIsTrainee())
                             <td>

@@ -26,7 +26,12 @@ svg {
         width: 100% !important;
     }
 }
+
+.svghover {
+    fill: #fb4400;
+}
 </style>
+
 @section('content')
 <?php
    $video = null;
@@ -367,23 +372,22 @@ svg {
 
    content.onclick = e => e.stopPropagation()
 </script>
+
+<script>
+    function svghover(id){
+
+        for(i=0; i<=id; i++){
+            document.getElementById(i).classList.add("svghover");
+        }
+    }
+    function mouseleave(id){
+        for(i=0; i<5; i++){
+            document.getElementById(i).classList.remove("svghover");
+        }
+    }
+</script>
+
 @endif
 @endsection
-<style>
-.svghover {
-    fill: #fb4400;
-}
-</style>
-<script>
-function svghover(id){
 
-    for(i=0; i<=id; i++){
-        document.getElementById(i).classList.add("svghover");
-    }
-}
-function mouseleave(id){
-    for(i=0; i<5; i++){
-        document.getElementById(i).classList.remove("svghover");
-    }
-}
-</script>
+

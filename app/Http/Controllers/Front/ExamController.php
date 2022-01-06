@@ -512,7 +512,15 @@ class ExamController extends Controller
 
         if ( !$exam  ) abort(404);
 
-        return view('pages.review',compact('exam','page_type'));
+        // Get next and prev
+        $arr = CourseContentHelper::nextAndPreviouseQuery($exam->exam->content->course_id,$exam->exam->content->id,$exam->exam->content->order,$exam->exam->content->parent_id,$exam->exam->content->section->order);
+        $previous = $arr[0];
+        $next = $arr[1];
+        $next = ($next[0]??null);
+        $previous = ($previous[0]??null);
+        // end next and prev
+
+        return view('pages.review',compact('exam','page_type','next','previous'));
 
     } // end function
 
