@@ -373,10 +373,10 @@ svg {
 
    content.onclick = e => e.stopPropagation()
 </script>
+@endif
 
 <script>
     function svghover(id){
-
         for(i=0; i<=id; i++){
             document.getElementById(i).classList.add("svghover");
         }
@@ -387,8 +387,4 @@ svg {
         }
     }
 </script>
-
-@endif
 @endsection
-
-

@@ -129,13 +129,31 @@ class CourseContentHelper
 
                 if($pass_mark != 0){
 
-                    $prev_user_content = UserContent::where('user_id',\auth()->id())
-                        ->where('content_id', $previous->id)
-                        ->where('is_completed', 1)
-                        ->first();
+                    if($content->post_type=='scorm'){
+                        $user_id = sprintf("%'.05d", auth()->user()->id);
+                        $content_id = sprintf("%'.05d", $content->id);
+                        $SCOInstanceID = (1).$user_id.(2).$content_id;
 
-                    if (!$prev_user_content){
-                        return false;
+                        $sql = "SELECT * FROM `scormvars`
+                                    WHERE SCOInstanceID = $SCOInstanceID AND
+                                    varName = 'cmi.core.lesson_status'
+                                  ";
+
+                       $scormPrevDataWhenComplete =  DB::select(DB::raw($sql));
+                       $scormPrevDataWhenComplete = ($scormPrevDataWhenComplete[0]??null);
+                       if (!is_null($scormPrevDataWhenComplete) && $scormPrevDataWhenComplete->varValue != "completed"){
+                           return false;
+                       }
+
+                    }else{
+                        $prev_user_content = UserContent::where('user_id',\auth()->id())
+                            ->where('content_id', $previous->id)
+                            ->where('is_completed', 1)
+                            ->first();
+
+                        if (!$prev_user_content){
+                            return false;
+                        }
                     }
                 }
             }

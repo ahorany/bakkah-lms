@@ -225,6 +225,7 @@
                     <th scope="col">Review</th>
                     <th scope="col">Details</th>
                     <th scope="col">Time taken</th>
+                    <th scope="col">Pass Mark (%)</th>
                     <th scope="col">Status</th>
                     <th scope="col">Mark</th>
                     <th scope="col">Progress</th>
@@ -249,6 +250,8 @@
                         <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge badge-info p-2">Review</a>@else ---- @endif</td>
                         <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge badge-info p-2">View Result Details</a>@else ---- @endif</td>
                         <td>{{$diff??'0 seconds'}}</td>
+                        <td class="text-bold">{{($exam->exam->pass_mark??0).'%'}}</td>
+
                         <td class="text-bold">
 {{--                            <span class="{{$attempt->status == 1 ? 'badge badge-success' : 'badge badge-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</span>--}}
                        @if( (($exam->exam->exam_mark * $exam->exam->pass_mark) / 100) <= $attempt->mark)
@@ -257,6 +260,7 @@
                            <span class="badge-red">Fail</span>
                        @endif
                         </td>
+
 
                         <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                         <td>
