@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
+    <meta name="description" content="Bakkah LMS">
+    <meta name="author" content="Bakkah LMS">
+    <meta name="generator" content="Bakkah LMS">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -20,10 +20,10 @@
     <link rel="stylesheet" href="{{CustomAsset('assets/css/bootstrap-grid.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
-    <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}">
-    <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}">
+    <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}?v={{time()}}">
+    <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}?v={{time()}}">
 
-    <link rel="stylesheet" href="{{CustomAsset('css/responsive.css')}}">
+    <link rel="stylesheet" href="{{CustomAsset('css/responsive.css')}}?v={{time()}}">
 
     @yield('style')
 <style>
@@ -65,7 +65,7 @@
 {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="{{CustomAsset('assets/js/main.js')}}"></script>
+<script src="{{CustomAsset('assets/js/main.js')}}?v={{time()}}"></script>
 @include('layouts.crm.dist.js')
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
