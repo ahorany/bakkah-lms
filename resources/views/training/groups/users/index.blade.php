@@ -57,7 +57,7 @@
         </div>
           <template v-if="group">
 
-            <table class="table table-striped">
+            <table class="table table-striped" style="width: 96%; margin: 0 auto;">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -117,7 +117,7 @@
 
 
                 <div class="modal-body" style="overflow: auto;height: 150px;">
-                    <table class="table table-striped">
+                    <table class="table table-striped" style="width: 96%; margin: 0 auto;">
                         <thead>
                         <tr>
                             <th scope="col">Name</th>

@@ -234,8 +234,22 @@ ol.answers li{
     font-size: smaller;
     border-radius: 3px;
 }
-.badge-green{
+.badge-lim{
     background: #b0ac27;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.badge-green{
+    background: green;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.badge-red{
+    background: #dc3545;
     color: #fff;
     padding: 0px 10px;
     font-size: smaller;
@@ -632,6 +646,35 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     color: #000 !important;
 }
 
+p.time-remaining:hover span , p.time-remaining:hover {
+    color: #121212 !important;
+}
+p.time-remaining svg path{
+    fill: #fb4400;
+}
+.review.dash-header{
+    padding: 20px 0;
+}
+.plyr input {
+    color: #fb4400 !important;
+    background: #fb4400;
+}
+button.plyr__controls__item.plyr__control:hover , button.plyr__control.plyr__control--overlaid , button.plyr__control.plyr__control--overlaid:hover , button.plyr__control:hover{
+    background: #fb4400 !important;
+}
+.modal .form-group.form-check.child{
+    margin: 15px 0 !important;
+    padding: 0 !important;
+}
+label.container-check.form-check-label{
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 30px !important;
+}
+label.container-check.form-check-label span.checkmark{
+    top: 0 !important;
+}
+
 /******************************************************************************************************************/
 
 /* Media Query */
@@ -672,6 +715,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+    .text-center.course-image.w-30.mb-4.mt-2.mb-md-0{
+        width: 40%;
+    }
     .course-cards span {
         display: block;
         margin-top: 25px;
@@ -679,18 +725,23 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .course-cards{
         width: 40%;
     }
-    .dash-header.d-flex.justify-content-between {
-        display: block !important;
-    }
     .dash-header.d-flex.justify-content-between ol.breadcrumb{
         margin-bottom: 10px;
     }
     .card.p-5.user-info {
         padding: 25px !important;
     }
+    p.time-remaining{
+        margin: 0;
+        margin-bottom: 15px;
+    }
 }
 
 @media (max-width: 768px) {
+    p.time-remaining{
+        margin: 0;
+        margin-bottom: 15px;
+    }
     .certificate-page {
         padding: 50px;
     }
@@ -700,6 +751,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     }
     .dash-header.course_info {
         padding: 25px 20px 0;
+    }
+    .col-xl-9.col-lg-8.col-md-12 .dash-header.course_info{
+        padding: 0;
     }
     .mx-md-4.course_info {
         padding: 0 10px;
@@ -822,7 +876,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .dash-header.d-flex.justify-content-between ol.breadcrumb{
         margin-bottom: 10px;
     }
-
+    .parent_next_prev {
+        justify-content: start;
+    }
     span.mx-2.d-flex span {
         display: none;
     }
@@ -866,6 +922,14 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .course-cards {
         width: 80% !important;
         margin: 5px auto;
+    }
+    .card-header.d-flex.justify-content-between.align-items-center {
+        display: block !important;
+        text-align: center;
+    }
+    .card-header.d-flex.justify-content-between.align-items-center .d-flex.align-items-center {
+        justify-content: center;
+        margin-top: 15px;
     }
 }
 

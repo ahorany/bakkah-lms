@@ -15,13 +15,13 @@
 .custom-radio .radio-mark::after {
     left: 2px !important;
     top: 2px !important;
-    width: 12px !important;
-    height: 12px !important;
+    width: 11px !important;
+    height: 11px !important;
     border: solid #06ae60;
-        border-top-width: medium;
-        border-right-width: medium;
-        border-bottom-width: medium;
-        border-left-width: medium;
+    border-top-width: medium;
+    border-right-width: medium;
+    border-bottom-width: medium;
+    border-left-width: medium;
     border-width: 3px !important;
     background-color: #06ae60;
     border-radius: 50% !important;
@@ -31,18 +31,16 @@
 }
 </style>
 @section('content')
-                <div class="dash-header course_info">
-                    {{-- <ol class="breadcrumb">
-                        <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
-                        <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-                        <li>{{$exam->title}}</li>
-                    </ol> --}}
-                    <h2>{{$exam->title}}</h2>
-                </div>
 
-                  <div class="row justify-content-end">
-                    <div class="col-xl-3 col-lg-4">
-                        <p v-if="page_type == 'exam' && !without_timer" class="time-remaining">
+
+                  <div class="row MX-0 justify-content-end">
+                    <div class="col-xl-9 col-lg-8 col-md-12">
+                        <div class="dash-header course_info">
+                            <h2>{{$exam->title}}</h2>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-12">
+                        <p v-if="page_type == 'exam' && !without_timer" class="time-remaining main-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="34.151" height="35.854" viewBox="0 0 34.151 35.854">
                                 <g id="Group_122" data-name="Group 122" transform="translate(-1085.293 -313.029)">
                                 <g id="Group_121" data-name="Group 121" transform="translate(1085.293 313.029)">

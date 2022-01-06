@@ -144,8 +144,8 @@
                                 </button>
                             </div>
 
-                            <div class="modal-body">
-                                <div v-if="model_type != 'exam'" class="col-md-12 p-0">
+                            <div class="modal-body row mx-0">
+                                <div v-if="model_type != 'exam'" class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Title </label>
                                         <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
@@ -155,10 +155,10 @@
                                     </div>
                                 </div>
 
-                                <div v-if="model_type != 'exam'" class="col-md-12 p-0">
+                                <div v-if="model_type != 'exam'" class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Time Limit (seconds) </label>
-                                        <input min="0" type="number" v-model="time_limit" name="time_limit" class="form-control" placeholder="time_limit">
+                                        <input min="0" type="number" v-model="time_limit" name="time_limit" class="form-control" placeholder="time limit">
                                         <div v-show="'time_limit' in errors">
                                             <span style="color: red;font-size: 13px">@{{ errors.time_limit }}</span>
                                         </div>
@@ -264,7 +264,7 @@
                                 </div>
 
                                 <div v-else-if="model_type != 'video'" class="modal-diff-content">
-                                    <div class="text-danger">Note: (Max Upload File Size: 200MB)</div>
+                                    <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 200MB)</div>
 
                                     <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
                                     <div v-show="'file' in errors">
@@ -277,7 +277,7 @@
 
                                 <div v-else class="modal-diff-content">
                                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                        <li class="nav-item">
+                                        <li class="nav-item mr-1">
                                             <a class="nav-link active cyan" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
                                         </li>
                                         <li class="nav-item">
@@ -288,10 +288,12 @@
                                     <div class="tab-content" id="pills-tabContent">
                                         <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-file-tab">
                                             <div class="form-group">
-                                                <label class="label">
-                                                    <i class="far fa-file-code"></i>
-                                                    <span class="title">Add File</span>
-                                                    <div class="text-danger">Note: (Max Upload File Size: 200MB)</div>
+                                                <label class="label w-100">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="far fa-file-code"></i>
+                                                        <span class="title mr-1">Add File:</span>
+                                                        <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 200MB)</div>
+                                                    </div>
                                                     <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
                                                 </label>
                                             </div>
@@ -311,36 +313,37 @@
                                     </div>
                                 </div>
 
-                                <div v-if="model_type != 'section' && model_type != 'exam'" class="form-group form-check child">
-                                    <label class="container-check form-check-label" for="downloadable" style="padding: 25px 30px 0; font-size: 15px;">
-                                        {{__('admin.downloadable')}}
-                                        <input class="form-check-input child" style="display: inline-block;" v-model="downloadable" id="downloadable" type="checkbox" name="downloadable">
-                                        <span class="checkmark" style="top: 26px;"></span>
-                                    </label>
+                                <div class="col-md-6 col-12" v-if="model_type != 'section' && model_type != 'exam'">
+                                    <div v-if="model_type != 'section' && model_type != 'exam'" class="form-group form-check child">
+                                        <label class="container-check form-check-label" for="downloadable" style="padding: 25px 30px 0; font-size: 15px;">
+                                            {{__('admin.downloadable')}}
+                                            <input class="form-check-input child" style="display: inline-block;" v-model="downloadable" id="downloadable" type="checkbox" name="downloadable">
+                                            <span class="checkmark" style="top: 26px;"></span>
+                                        </label>
+                                    </div>
                                 </div>
+                                <div class="col-md-6 col-12">
+                                    <div v-if="model_type != 'section'" class="form-group form-check child">
+                                        <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
+                                            {{__('admin.Enabeld Status')}}
+                                            <input class="form-check-input child" style="display: inline-block;" v-model="status" id="enabled" type="checkbox" name="status">
+                                            <span class="checkmark" style="top: 26px;"></span>
+                                        </label>
 
-
-                                <div v-if="model_type != 'section'" class="form-group form-check child">
-                                    <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
-                                        {{__('admin.Enabeld Status')}}
-                                        <input class="form-check-input child" style="display: inline-block;" v-model="status" id="enabled" type="checkbox" name="status">
-                                        <span class="checkmark" style="top: 26px;"></span>
-                                    </label>
-
-                                    {{-- <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status"> --}}
-                                    {{-- <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label> --}}
-
-                                    <div v-if="file_url">
-                                        <p>Files : </p>
-                                        <div><i class="fa fa-file"></i> <a :href="file_url" v-text="file_title"></a></div>
+                                        {{-- <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status"> --}}
+                                        {{-- <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label> --}}
                                     </div>
                                 </div>
 
+                                {{-- <div class="row mx-0">
 
+                                </div> --}}
 
+                                <div v-if="file_url" class="d-flex items-align-center">
+                                    <p class="mr-1">File : </p>
+                                    <div><i class="fa fa-file"></i> <a :href="file_url" v-text="file_title" style="font-family: 'Lato Semibold'; text-decoration: none; font-size: 12px;"></a></div>
+                                </div>
                             </div>
-
-
 
                             <div class="modal-footer">
                                 <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>

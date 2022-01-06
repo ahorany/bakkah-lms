@@ -35,7 +35,7 @@
                                             <ul list-style="none" class="pl-4">
                                                 @foreach ($content->contents as $sub_content)
                                                     <li>
-                                                        <div class="form-group m-0">
+                                                        <div class="form-group m-0 mb-1">
                                                             <label class="container-check form-check-label" for="content_{{$sub_content->id}}" style="padding: 10px 30px 0; font-size: 15px;">
                                                                 {{$sub_content->title}}
                                                                 <input class="form-check-input child" style="display: inline-block;" type="checkbox" @if ($sub_content->role_and_path == 1) checked="checked" @endif name="contents[]" value="{{$sub_content->id}}" id="content_{{$sub_content->id}}">
