@@ -155,13 +155,11 @@
         <div class="row">
             @if(session()->has('status'))
                 {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
-                <div class="container">
-                    <div class="row">
-                        <div class="error-notice">
-                            <div class="oaerror danger">
-                                {{-- <strong>Error</strong>- --}}
-                                {{session()->get('msg')}}
-                            </div>
+                <div class="col-md-12">
+                    <div class="error-notice">
+                        <div class="oaerror danger">
+                            {{-- <strong>Error</strong>- --}}
+                            {{session()->get('msg')}}
                         </div>
                     </div>
                 </div>

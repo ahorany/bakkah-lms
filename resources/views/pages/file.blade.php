@@ -104,34 +104,6 @@
             color: #fff;
         }
 
-        /** alert */
-        .error-notice{
-        margin:5px 0;
-        padding: 0
-        }
-
-        .oaerror{
-        width:100%;
-        background-color: #ffffff;
-        padding:20px;
-        border:1px solid #eee;
-        border-left-width:5px;
-        border-radius: 3px;
-        /* margin:10px auto; */
-        font-family: 'Open Sans', sans-serif;
-        font-size: 16px;
-        }
-
-        .danger{
-        border-left-color: #d9534f;
-        background-color: rgba(217, 83, 79, 0.1);
-        }
-
-        .danger strong{
-        color:#d9534f;
-        }
-        /* end alert */
-
         @media screen and (min-width:800px){
             .custom-model-main:before {
                 content: "";
