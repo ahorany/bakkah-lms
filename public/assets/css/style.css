@@ -797,8 +797,8 @@ p.time-remaining svg {
   border: 1px solid #ccc;
   background: transparent;
   box-sizing: unset;
-  width: 22px;
-  height: 22px;
+  width: 21px;
+  height: 21px;
 }
 
 .q-card label .radio-mark::after {

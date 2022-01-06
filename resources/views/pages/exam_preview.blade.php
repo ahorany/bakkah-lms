@@ -15,13 +15,13 @@
 .custom-radio .radio-mark::after {
     left: 2px !important;
     top: 2px !important;
-    width: 12px !important;
-    height: 12px !important;
+    width: 11px !important;
+    height: 11px !important;
     border: solid #06ae60;
-        border-top-width: medium;
-        border-right-width: medium;
-        border-bottom-width: medium;
-        border-left-width: medium;
+    border-top-width: medium;
+    border-right-width: medium;
+    border-bottom-width: medium;
+    border-left-width: medium;
     border-width: 3px !important;
     background-color: #06ae60;
     border-radius: 50% !important;

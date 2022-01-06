@@ -117,7 +117,7 @@
         border:1px solid #eee;
         border-left-width:5px;
         border-radius: 3px;
-        margin:10px auto;
+        /* margin:10px auto; */
         font-family: 'Open Sans', sans-serif;
         font-size: 16px;
         }
@@ -196,7 +196,7 @@
             </div>
             <div class="bg-overlay"></div>
         </div>
-@endif
+    @endif
 
 
     <div class="dash-header course_info">
@@ -210,7 +210,7 @@
         {{-- <h1 style="text-transform:capitalize;">{{ $content->course->trans_title }}</h1> --}}
     </div>
 
-    <div class="row mx-0 mt-3">
+    <div class="row mx-0">
         @if(session()->has('status'))
             {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
             <div class="container">

@@ -52,6 +52,9 @@
 
     }
 
+    .anim2{
+        text-align: center;
+    }
 
     /* .anim2 {
         width: 50px;
