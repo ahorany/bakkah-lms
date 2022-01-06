@@ -295,9 +295,10 @@
                             <iframe width="100%" height="600px" id="update_file_source" src='' ></iframe>
                         @else
                             <?php
-                            $user_id = sprintf("%'.07d", auth()->user()->id);
-                            $content_id = sprintf("%'.07d", $content->id);
-                            $SCOInstanceID = (1).$user_id.(2).$content_id;
+                            // $user_id = sprintf("%'.07d", auth()->user()->id);
+                            // $content_id = sprintf("%'.07d", $content->id);
+                            // $SCOInstanceID = (1).$user_id.(2).$content_id;
+                            $SCOInstanceID = ScormId($content->id);
                             ?>
                             <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
                             @if(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html') ))
