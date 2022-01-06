@@ -478,8 +478,19 @@ button.next_prev {
 
 ul.video-list li .play{
     cursor: unset;
+    box-shadow: 0 0 5px #33333333;
 }
 
+ul.video-list li .text a {
+    color: #6a6a6a;
+    font-size: 15px;
+    /* font-family: 'Lato Light'; */
+    font-weight: normal;
+    text-transform: capitalize;
+}
+ul.video-list li:hover .text a {
+    font-weight: bold;
+}
 .req svg{
     width: 7px !important;
     height: 15px !important;
