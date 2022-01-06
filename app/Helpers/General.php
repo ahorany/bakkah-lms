@@ -233,8 +233,8 @@ function deviation_improve_x($x_value)
 
 function ScormId($content_id){
 
-    $user_id = sprintf("%'.07d", auth()->user()->id);
-    $content_id1 = sprintf("%'.07d", $content_id);
+    $user_id = sprintf("%'.05d", auth()->user()->id);
+    $content_id1 = sprintf("%'.05d", $content_id);
     $SCOInstanceID = (1).$user_id.(2).$content_id1;
 
     return $SCOInstanceID;
