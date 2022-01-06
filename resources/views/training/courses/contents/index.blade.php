@@ -158,7 +158,7 @@
                                 <div v-if="model_type != 'exam'" class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Time Limit (seconds) </label>
-                                        <input min="0" type="number" v-model="time_limit" name="time_limit" class="form-control" placeholder="time_limit">
+                                        <input min="0" type="number" v-model="time_limit" name="time_limit" class="form-control" placeholder="time limit">
                                         <div v-show="'time_limit' in errors">
                                             <span style="color: red;font-size: 13px">@{{ errors.time_limit }}</span>
                                         </div>
