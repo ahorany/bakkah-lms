@@ -130,9 +130,10 @@ class CourseContentHelper
                 if($pass_mark != 0){
 
                     if($content->post_type=='scorm'){
-                        $user_id = sprintf("%'.05d", auth()->user()->id);
-                        $content_id = sprintf("%'.05d", $content->id);
-                        $SCOInstanceID = (1).$user_id.(2).$content_id;
+                        // $user_id = sprintf("%'.05d", auth()->user()->id);
+                        // $content_id = sprintf("%'.05d", $content->id);
+                        // $SCOInstanceID = (1).$user_id.(2).$content_id;
+                        $SCOInstanceID = ScormId($content->id);
 
                         $sql = "SELECT * FROM `scormvars`
                                     WHERE SCOInstanceID = $SCOInstanceID AND
