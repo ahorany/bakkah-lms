@@ -276,6 +276,10 @@
                         @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
+{{--                            <iframe style="" width="100%" height="600px"   src='https://docs.google.com/viewer?&amp;embedded=true&url={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>--}}
+
+
+
                             {{-- <embed width="100%" height="600px" id="update_file_source" src='' > --}}
                             {{-- <iframe width="100%" height="600px" id="update_file_source" src='' style="border: 1px solid #eaeaea;" ></iframe> --}}
                             @include('Html.PDF.container', ['file'=>$content->upload->file??null])
