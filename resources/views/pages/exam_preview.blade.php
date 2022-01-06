@@ -99,7 +99,9 @@
                            <div :ref="'question'+question.id" :id="'question'+question.id" :key="index" class="card p-30 q-card"><!-- h-100 -->
                             <div class="q-number">
                                 <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
-                                <small v-text=" '(' + (question.mark) + ' Marks)'"></small>
+                                <small v-if="question.answers_count == 1" v-text=" '(' + (question.mark) + ' Mark)'"></small>
+                                <small v-if="question.answers_count > 1" v-text=" '(' + (question.mark) + ' Marks)'"></small>
+
                             </div>
                             <h3 v-html="question.title" style="padding-right: 14%;"></h3>
 

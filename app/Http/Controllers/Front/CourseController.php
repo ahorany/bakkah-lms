@@ -462,32 +462,5 @@ class CourseController extends Controller
 
     /****************************************************************************/
 
-    /*
-     * Update completed at In Course Registration FROM AJAX
-     * When user click on close button in popup
-     * When user complete progress for course
-     */
-    public function update_completed_at(){
-        // Get auth user register course data from DB
-       $user_course = CourseRegistration::where('user_id',auth()->id())
-           ->where('course_id', request()->course_id)
-           ->with(['course'])->first();
-
-       // check if user register in this course or ABORT(404)
-       if (!$user_course) abort(404);
-
-
-       // Check if user complete progress for course => update completed at In Course Registration
-       if ($user_course->course->complete_progress <= $user_course->progress ){
-           CourseRegistration::where('user_id',auth()->id())
-               ->where('course_id', request()->course_id)->update([
-                      'completed_at' => Carbon::now(),
-               ]);
-       } // end if
-
-
-        // return response to client side
-       return response()->json(['status' => true]);
-    }// end function
 
 } // End Class
