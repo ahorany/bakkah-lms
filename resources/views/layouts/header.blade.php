@@ -37,8 +37,17 @@
             <ul class="navbar-nav mx-0">
                 <li class="has-dropdown user m-0">
                     <a style="color: #6a6a6a;" class="messages" onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" href="#">
-                        <span class="d-flex">
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" viewBox="0 0 100 100" style="vertical-align: middle; fill: #6a6a6a;" xml:space="preserve">
+                        <span class="d-flex" style="width: 35px;
+                        height: 35px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                        padding: 5px;
+                        background: #F7F7F7;
+                        /* box-shadow: 1px 1px 5px #eaeaea; */
+                        ">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px"
+                            viewBox="0 0 100 100" style="vertical-align: middle; fill: #5D5B5A; font-size:18px; width:23px;" xml:space="preserve">
                                 <g>
                                     <path d="M45.91,12.57c0-1.23-0.03-2.59,0.01-3.95c0.05-2.18,1.22-3.64,3.22-4.1c2.12-0.48,4.39,1.03,4.68,3.18
                                         c0.12,0.92,0.08,1.86,0.1,2.79c0.01,0.71,0,1.42,0,2.06c1.9,0.53,3.77,0.88,5.5,1.57c10.3,4.07,16.38,11.58,18.09,22.55
@@ -52,14 +61,14 @@
                                     <path d="M41.97,84.09c5.35,0,10.62,0,15.88,0c0.19,4.16-3.55,7.91-7.88,7.94C45.63,92.07,41.9,88.4,41.97,84.09z" />
                                 </g>
                             </svg>
-                           <span> {{__('education.Messages')}}</span>
+                           {{-- <span> {{__('education.Messages')}}</span> --}}
                         </span>
                     </a>
 
                     <div class="dropdown d-none">
                         <ul class="postition-relative">
                             <li>
-                                <a href="{{route('user.add_message')}}">
+                                <a href="{{route('user.add_message')}}" style="border-bottom: 1px solid gainsboro;">
                                     <span class="d-flex">
                                         <svg  version="1.1" id="svg_icon1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  viewBox="0 0 60 60"  xml:space="preserve" style="margin-right: 4px;" >
                                         <path d="M57.28,30.77c-0.25,0.89-0.57,1.75-1.22,2.44c-0.94,1-2.09,1.53-3.47,1.53c-5.55,0-11.1,0-16.65,0c-0.21,0-0.41,0-0.69,0
@@ -76,7 +85,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('user.messages.inbox',['type'=>'sent'])}}">
+                                <a href="{{route('user.messages.inbox',['type'=>'sent'])}}" style="border-bottom: 1px solid gainsboro;">
                                     <span class="d-flex">
                                         <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 4px;" xml:space="preserve">
                                             <path d="M4.4,46.85c0.51-1.03,1.39-1.53,2.43-1.93C33.1,34.91,59.35,24.89,85.6,14.86c1.09-0.42,2.1-0.46,3,0.39
@@ -145,10 +154,10 @@
 
             <div class="dropdown d-none">
                 <ul class="postition-relative">
-                    <li class="dropdown-item borderBottom p-20" style="border-bottom: 1px solid gainsboro;">
+                    <li class="dropdown-item borderBottom" style="border-bottom: 1px solid gainsboro; padding: 15px 0;">
                         <div>
-                            <h2 style="font-size: 1.1rem; margin: 0; ">{{auth()->user()->trans_name}}</h2>
-                            <small style="color: #73726c; font-weight:700;">{{$user_role_name}}</small>
+                            <h2 style="font-size: 1rem; margin: 0; ">{{auth()->user()->trans_name}}</h2>
+                            {{-- <small style="color: #73726c; font-weight:700;">{{$user_role_name}}</small> --}}
                         </div>
                     </li>
                     <li>

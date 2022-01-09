@@ -53,7 +53,7 @@
         </div>
           <template v-if="group">
 
-            <table class="table table-striped">
+            <table class="table table-striped" style="width: 98%; margin: 0 auto;">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -89,17 +89,17 @@
                 <div class="container mt-2">
                     <div class="form-group">
                         <label>Name: </label>
-                        <input name="coursename" placeholder="Name.." class="form-control d-inline-block" v-model="search_coursename"/>
+                        <input name="coursename" placeholder="Name.." class="form-control w-100" v-model="search_coursename"/>
                     </div>
 
-                    <div style="margin-left:40px;margin-top: 5px;">
+                    <div>
                         <button @click.prevent="search()" type="submit" name="search" class="main-color"><i class="fa fa-search"></i> Search</button>
                     </div>
                 </div>
 
 
                 <div class="modal-body" style="overflow: auto;height: 150px;">
-                    <table class="table table-striped">
+                    <table class="table table-striped" style="width: 98%; margin: 0 auto;">
                         <thead>
                         <tr>
                             <th scope="col">Name</th>

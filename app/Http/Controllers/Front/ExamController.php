@@ -52,6 +52,7 @@ class ExamController extends Controller
      *  Exam Page Before Attempt => (This Page To Start Attempt)
      */
     public function exam($exam_id){
+
         // Get Exam Content
         $exam = Content::whereId($exam_id)
             ->with(['section','course','exam' => function($q){
@@ -78,8 +79,6 @@ class ExamController extends Controller
             return redirect()->back()->with(["status" => 'danger',"msg" => "Can not open  content (Because the content is not completed) !!"]);
         }// end if
 
-
-
         // Create UserContent When is not exists
         UserContent::firstOrCreate([
             'user_id' => \auth()->id(),
@@ -89,8 +88,6 @@ class ExamController extends Controller
             'content_id' => $exam_id,
             'start_time' => Carbon::now(),
         ]);
-
-
 
         return view('pages.exam',compact('exam','next','previous'));
     } // end function
@@ -515,7 +512,15 @@ class ExamController extends Controller
 
         if ( !$exam  ) abort(404);
 
-        return view('pages.review',compact('exam','page_type'));
+        // Get next and prev
+        $arr = CourseContentHelper::nextAndPreviouseQuery($exam->exam->content->course_id,$exam->exam->content->id,$exam->exam->content->order,$exam->exam->content->parent_id,$exam->exam->content->section->order);
+        $previous = $arr[0];
+        $next = $arr[1];
+        $next = ($next[0]??null);
+        $previous = ($previous[0]??null);
+        // end next and prev
+
+        return view('pages.review',compact('exam','page_type','next','previous'));
 
     } // end function
 

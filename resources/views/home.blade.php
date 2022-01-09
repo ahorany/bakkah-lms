@@ -43,15 +43,31 @@
     <div class="row mx-0 home-section">
 
         <div class="col-lg-12">
-            <div class="card h-100 justify-content-center p-30">
+            <div class="card h-100 p-30">
 
                 <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-center">
 
                     <div class="course-cards">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="71.3" viewBox="0 0 71.3 71.3" class="icon-report bg-four">
+                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="71.3" viewBox="0 0 71.3 71.3" class="icon-report bg-main">
                             <path id="Path_164" data-name="Path 164" d="M254.387,629.475h-8.913v8.912a8.91,8.91,0,0,1-8.912,8.913h-35.65A8.91,8.91,0,0,1,192,638.387v-35.65a8.91,8.91,0,0,1,8.913-8.912h8.913v-8.913A8.91,8.91,0,0,1,218.737,576h35.65a8.91,8.91,0,0,1,8.912,8.912v35.65a8.91,8.91,0,0,1-8.912,8.913Zm-53.475,8.912h35.65v-35.65h-35.65v35.65Zm53.475-53.475h-35.65v8.913h17.825a8.91,8.91,0,0,1,8.912,8.912v17.825h8.913v-35.65Z" transform="translate(-192 -576)" fill-rule="evenodd"></path>
+                        </svg> --}}
+                        <svg version="1.1" class="icon-report bg-main" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve">
+                            <style type="text/css">
+                                .st0{fill:none;stroke:#fff;stroke-width:3.0215;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
+                                .st1{fill:none;stroke:#fff;stroke-width:3.0221;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
+                            </style>
+                            <g>
+                                <polyline class="st0" points="81.49,25.18 86.65,25.18 86.65,70.19 12.29,70.19 12.29,25.18 17.45,25.18 	"/>
+                                <path class="st1" d="M31.38,83.94h36.19 M43.28,82.59V72.01 M55.66,82.59V72.01 M26.35,24.55c9.22,0,10.82,0,15.53,0 M26.35,32.64
+                                    c9.22,0,10.82,0,15.53,0 M26.35,40.74c9.22,0,10.82,0,15.53,0 M26.35,48.84c9.22,0,10.82,0,15.53,0 M18.96,16.33
+                                    c6.84,0,19.8,0,26.63,0l3.69,4.02c0,13.87,0,27.04,0,40.91l-3.69-4.02c-6.84,0-19.8,0-26.63,0C18.96,43.37,18.96,30.2,18.96,16.33
+                                    L18.96,16.33z M53.35,16.33l-3.69,4.02 M49.66,61.27l3.69-4.02 M53.35,57.25c6.84,0,19.79,0,26.63,0c0-13.87,0-27.04,0-40.91
+                                    c-6.84,0-19.79,0-26.63,0"/>
+                                <polyline class="st0" points="79.99,57.77 79.99,63.65 18.95,63.65 18.95,57.64 	"/>
+                                <path class="st1" d="M57.05,24.55c9.22,0,10.82,0,15.53,0 M57.05,32.64c9.22,0,10.82,0,15.53,0 M57.05,40.74
+                                    c9.22,0,10.82,0,15.53,0"/>
+                            </g>
                         </svg>
-
                         <div>
                             <span>My Courses</span>
                             <b>{{count($courses->courses)}}</b>
@@ -59,7 +75,7 @@
                     </div>
 
                     <div class="course-cards">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report bg-two" id="bg-main" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report bg-third" id="bg-main" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                             <path d="M32.47,29.61c0.84,0.83,1.65,1.64,2.46,2.46c1.86,1.86,3.73,3.72,5.58,5.59c0.93,0.95,0.74,2.31-0.37,2.83  c-0.7,0.33-1.38,0.17-2.06-0.5c-2.48-2.48-4.96-4.95-7.43-7.43c-0.17-0.17-0.32-0.35-0.53-0.59c-0.21,0.2-0.38,0.35-0.54,0.51  c-2.53,2.52-5.05,5.05-7.57,7.57c-0.52,0.52-1.11,0.75-1.83,0.5c-0.66-0.23-1.03-0.71-1.13-1.39c-0.1-0.67,0.24-1.16,0.69-1.61  c2.47-2.46,4.93-4.92,7.39-7.38c0.17-0.17,0.38-0.3,0.62-0.49c-0.24-0.26-0.4-0.43-0.56-0.59c-2.29-2.29-4.59-4.58-6.88-6.88  c-1-1.01-0.72-2.45,0.54-2.9c0.75-0.27,1.35,0.02,1.88,0.56c2.26,2.26,4.53,4.52,6.79,6.79c0.17,0.17,0.29,0.38,0.46,0.61  c0.27-0.25,0.45-0.41,0.61-0.57c2.26-2.26,4.53-4.52,6.79-6.79c0.51-0.51,1.08-0.83,1.81-0.64c1.2,0.31,1.65,1.75,0.86,2.71  c-0.15,0.18-0.33,0.35-0.5,0.52c-2.22,2.22-4.43,4.43-6.65,6.65C32.77,29.28,32.64,29.43,32.47,29.61z"></path>
                             <path d="M31.74,55.25c-1.12,0-2.24,0-3.35,0c-0.16-0.03-0.32-0.07-0.48-0.1c-1.02-0.15-2.06-0.22-3.06-0.44  c-5.29-1.14-9.78-3.71-13.43-7.7c-3.29-3.6-5.38-7.8-6.21-12.61c-0.16-0.9-0.26-1.81-0.39-2.71c0-1.12,0-2.23,0-3.35  c0.03-0.14,0.07-0.28,0.09-0.42c0.11-0.86,0.17-1.73,0.34-2.58c1.24-6.24,4.33-11.37,9.37-15.25c5.96-4.6,12.73-6.22,20.12-4.86  c6.2,1.13,11.29,4.26,15.17,9.23c4.68,6,6.33,12.81,4.95,20.28c-1.14,6.18-4.29,11.22-9.21,15.13c-3.3,2.62-7.03,4.3-11.19,5.01  C33.55,55.01,32.64,55.12,31.74,55.25z M51.16,29.99C51.15,18.41,41.63,8.91,30.06,8.91C18.48,8.91,8.97,18.42,8.96,30  C8.95,41.59,18.5,51.14,30.09,51.11C41.68,51.08,51.18,41.56,51.16,29.99z"></path>
                         </svg>
@@ -70,7 +86,7 @@
                     </div>
 
                     <div class="course-cards">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report bg-one" id="bg-one" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report bg-two" id="bg-one" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                             <g>
                                 <path d="M30.56,8.45c0.71,0.3,1.31,0.72,1.49,1.53c0.03,0.14,0.06,0.28,0.06,0.42c0,2.72,0.01,5.45,0,8.17   c-0.01,1.03-0.77,1.82-1.83,1.96c-0.88,0.12-1.83-0.5-2.09-1.39c-0.08-0.28-0.12-0.6-0.12-0.89c-0.01-2.38,0.03-4.76-0.02-7.14   c-0.03-1.25,0.34-2.19,1.56-2.67C29.92,8.45,30.24,8.45,30.56,8.45z"/>
                                 <path d="M32.11,46.76c0,1.3,0,2.6,0,3.9c0,1.2-0.83,2.1-1.94,2.12c-1.18,0.03-2.1-0.82-2.11-2.04c-0.03-2.67-0.03-5.34,0-8.01   c0.01-1.19,0.97-2.1,2.07-2.05c1.14,0.04,1.97,0.94,1.97,2.15C32.12,44.14,32.11,45.45,32.11,46.76z"/>
@@ -88,7 +104,7 @@
                     </div>
 
                     <div class="course-cards">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report bg-third" id="bg-two" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report bg-five" id="bg-two" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                             <g>
                                 <path d="M31.97,55.25c-1.12,0-2.24,0-3.35,0c-0.16-0.03-0.32-0.07-0.48-0.1c-1.02-0.15-2.06-0.22-3.06-0.44   c-5.29-1.14-9.78-3.71-13.43-7.7c-3.29-3.6-5.38-7.8-6.21-12.61c-0.16-0.9-0.26-1.81-0.39-2.71c0-1.12,0-2.23,0-3.35   c0.03-0.14,0.07-0.28,0.09-0.42c0.11-0.86,0.17-1.73,0.34-2.58c1.24-6.24,4.33-11.37,9.37-15.25c5.96-4.6,12.73-6.22,20.12-4.86   c6.2,1.13,11.29,4.26,15.17,9.23c4.68,6,6.33,12.81,4.95,20.28c-1.14,6.18-4.29,11.22-9.21,15.13c-3.3,2.62-7.03,4.3-11.19,5.01   C33.78,55.01,32.87,55.12,31.97,55.25z M51.39,29.99C51.38,18.41,41.86,8.91,30.29,8.91C18.71,8.91,9.2,18.42,9.19,30   c-0.01,11.59,9.55,21.14,21.13,21.11C41.91,51.08,51.41,41.56,51.39,29.99z"/>
                                 <path d="M26.32,35.36c0.13-0.19,0.22-0.37,0.36-0.51c4.77-4.78,9.55-9.55,14.32-14.33c0.55-0.55,1.16-0.9,1.97-0.78   c0.78,0.11,1.33,0.54,1.63,1.26c0.31,0.72,0.2,1.41-0.27,2.04c-0.14,0.18-0.3,0.35-0.46,0.51C38.57,28.84,33.28,34.12,28,39.4   c-1.23,1.23-2.31,1.23-3.53,0.02c-2.64-2.64-5.28-5.27-7.91-7.91c-1.08-1.09-0.93-2.69,0.32-3.39c0.78-0.44,1.54-0.38,2.26,0.14   c0.19,0.13,0.35,0.3,0.51,0.46c2.06,2.05,4.11,4.11,6.17,6.17C25.95,35.01,26.08,35.13,26.32,35.36z"/>
@@ -139,7 +155,9 @@
                                     <img src="{{$url}}" height="auto" width="100px">
                                 </div>
                             @endisset
-                            <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 48px;">{{$course->trans_title}}</h3>
+                            <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 50px; font-weight:normal; display: flex; justify-content: center; align-items: center;">
+                                {{$course->trans_title}}
+                            </h3>
 
                             <div class="progress">
                                 <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
@@ -166,96 +184,114 @@
         </div>
 
         <div class="col-lg-6 col-md-12 col-sm-12 col-12">
-            <div class="card h-100 calendar">
-                <div class="sideb">
-                    <div class="header">
-                        <i class="fa fa-angle-left" aria-hidden="true">
-                            <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                                <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#333"/>
+            <div class="card h-100 p-30 activity">
+                <h3>{{__('education.Activity Completed')}}</h3>
+                <ul>
+                    <?php $lang = app()->getLocale(); ?>
+                    @foreach($activities as $activity)
+                        <li>
+                            <img width="28.126" height="28.127" style="vertical-align: middle;" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
+                            @if($activity->type == 'exam')
+                                <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                            @else
+                                <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            {{--
+                <div class="card h-100 calendar">
+                    <div class="sideb">
+                        <div class="header">
+                            <i class="fa fa-angle-left" aria-hidden="true">
+                                <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                                    <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#333"/>
+                                </svg>
+                            </i>
+                            <h3>
+                                <span class="month"></span>
+                                <span class="year"></span>
+                            </h3>
+                            <i class="fa fa-angle-right" aria-hidden="true"><svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                                <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#333"/>
                             </svg>
-                        </i>
-                        <h3>
-                            <span class="month"></span>
-                            <span class="year"></span>
-                        </h3>
-                        <i class="fa fa-angle-right" aria-hidden="true"><svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                            <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#333"/>
-                          </svg>
-                          </i>
-                    </div>
-                    <div class="calender">
-                        <table>
-                            <thead>
-                                <tr class="weedays">
-                                    <th data-weekday="sun" data-column="0">Sun</th>
-                                    <th data-weekday="mon" data-column="1">Mon</th>
-                                    <th data-weekday="tue" data-column="2">Tue</th>
-                                    <th data-weekday="wed" data-column="3">Wed</th>
-                                    <th data-weekday="thu" data-column="4">Thu</th>
-                                    <th data-weekday="fri" data-column="5">Fri</th>
-                                    <th data-weekday="sat" data-column="6">Sat</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="days" data-row="0">
-                                    <td data-column="0"></td>
-                                    <td data-column="1"></td>
-                                    <td data-column="2"></td>
-                                    <td data-column="3"></td>
-                                    <td data-column="4"></td>
-                                    <td data-column="5"></td>
-                                    <td data-column="6"></td>
-                                </tr>
-                                <tr class="days" data-row="1">
-                                    <td data-column="0"></td>
-                                    <td data-column="1"></td>
-                                    <td data-column="2"></td>
-                                    <td data-column="3"></td>
-                                    <td data-column="4"></td>
-                                    <td data-column="5"></td>
-                                    <td data-column="6"></td>
-                                </tr>
-                                <tr class="days" data-row="2">
-                                    <td data-column="0"></td>
-                                    <td data-column="1"></td>
-                                    <td data-column="2"></td>
-                                    <td data-column="3"></td>
-                                    <td data-column="4"></td>
-                                    <td data-column="5"></td>
-                                    <td data-column="6"></td>
-                                </tr>
-                                <tr class="days" data-row="3">
-                                    <td data-column="0"></td>
-                                    <td data-column="1"></td>
-                                    <td data-column="2"></td>
-                                    <td data-column="3"></td>
-                                    <td data-column="4"></td>
-                                    <td data-column="5"></td>
-                                    <td data-column="6"></td>
-                                </tr>
-                                <tr class="days" data-row="4">
-                                    <td data-column="0"></td>
-                                    <td data-column="1"></td>
-                                    <td data-column="2"></td>
-                                    <td data-column="3"></td>
-                                    <td data-column="4"></td>
-                                    <td data-column="5"></td>
-                                    <td data-column="6"></td>
-                                </tr>
-                                <tr class="days" data-row="5">
-                                    <td data-column="0"></td>
-                                    <td data-column="1"></td>
-                                    <td data-column="2"></td>
-                                    <td data-column="3"></td>
-                                    <td data-column="4"></td>
-                                    <td data-column="5"></td>
-                                    <td data-column="6"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            </i>
+                        </div>
+                        <div class="calender">
+                            <table>
+                                <thead>
+                                    <tr class="weedays">
+                                        <th data-weekday="sun" data-column="0">Sun</th>
+                                        <th data-weekday="mon" data-column="1">Mon</th>
+                                        <th data-weekday="tue" data-column="2">Tue</th>
+                                        <th data-weekday="wed" data-column="3">Wed</th>
+                                        <th data-weekday="thu" data-column="4">Thu</th>
+                                        <th data-weekday="fri" data-column="5">Fri</th>
+                                        <th data-weekday="sat" data-column="6">Sat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="days" data-row="0">
+                                        <td data-column="0"></td>
+                                        <td data-column="1"></td>
+                                        <td data-column="2"></td>
+                                        <td data-column="3"></td>
+                                        <td data-column="4"></td>
+                                        <td data-column="5"></td>
+                                        <td data-column="6"></td>
+                                    </tr>
+                                    <tr class="days" data-row="1">
+                                        <td data-column="0"></td>
+                                        <td data-column="1"></td>
+                                        <td data-column="2"></td>
+                                        <td data-column="3"></td>
+                                        <td data-column="4"></td>
+                                        <td data-column="5"></td>
+                                        <td data-column="6"></td>
+                                    </tr>
+                                    <tr class="days" data-row="2">
+                                        <td data-column="0"></td>
+                                        <td data-column="1"></td>
+                                        <td data-column="2"></td>
+                                        <td data-column="3"></td>
+                                        <td data-column="4"></td>
+                                        <td data-column="5"></td>
+                                        <td data-column="6"></td>
+                                    </tr>
+                                    <tr class="days" data-row="3">
+                                        <td data-column="0"></td>
+                                        <td data-column="1"></td>
+                                        <td data-column="2"></td>
+                                        <td data-column="3"></td>
+                                        <td data-column="4"></td>
+                                        <td data-column="5"></td>
+                                        <td data-column="6"></td>
+                                    </tr>
+                                    <tr class="days" data-row="4">
+                                        <td data-column="0"></td>
+                                        <td data-column="1"></td>
+                                        <td data-column="2"></td>
+                                        <td data-column="3"></td>
+                                        <td data-column="4"></td>
+                                        <td data-column="5"></td>
+                                        <td data-column="6"></td>
+                                    </tr>
+                                    <tr class="days" data-row="5">
+                                        <td data-column="0"></td>
+                                        <td data-column="1"></td>
+                                        <td data-column="2"></td>
+                                        <td data-column="3"></td>
+                                        <td data-column="4"></td>
+                                        <td data-column="5"></td>
+                                        <td data-column="6"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+             --}}
         </div>
     </div>
 
@@ -300,55 +336,6 @@
                     </div>
                 </div>
             @endif
-            <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
-                <div class="card h-100 p-30 activity">
-                    <h3>Activity</h3>
-                    <ul>
-                        <?php $lang = app()->getLocale(); ?>
-                        @foreach($activities as $activity)
-                            <li>
-                                {{-- <svg style="width: 28px; height:28px; vertical-align: bottom;" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                    viewBox="0 0 100 100" xml:space="preserve">
-                                    <g>
-                                        <path d="M70.1,8.49C70.73,8.65,71.37,8.8,72,8.96c5.34,1.4,9.44,6.21,9.68,11.69c0.19,4.33,0.11,8.67,0.13,13
-                                            c0.01,2.71,0.02,5.41,0,8.12c-0.02,2.1-1.33,3.6-3.16,3.66c-2.06,0.08-3.52-1.38-3.55-3.6c-0.03-2.37-0.01-4.75-0.01-7.13
-                                            c0-4.25,0.02-8.51-0.01-12.76c-0.02-3.28-1.82-5.68-4.9-6.55c-0.71-0.2-1.47-0.28-2.2-0.28c-13.23-0.02-26.46-0.01-39.69-0.01
-                                            c-3.6,0-6.22,1.98-6.98,5.26c-0.1,0.43-0.14,0.87-0.14,1.31c-0.01,19.47-0.02,38.94,0,58.42c0,3.12,1.93,5.53,4.95,6.34
-                                            c0.71,0.19,1.47,0.25,2.21,0.26c3.51,0.03,7.02,0,10.52,0.02c1.77,0.01,3.1,1.27,3.29,3.08c0.16,1.55-0.98,3.11-2.58,3.48
-                                            c-0.29,0.07-0.6,0.07-0.9,0.07c-3.67,0-7.35,0.02-11.02,0c-6.9-0.03-12.64-5.41-13.1-12.29c-0.06-0.85-0.09-1.71-0.09-2.56
-                                            c0-18.7-0.01-37.4,0-56.1c0-5.27,2.11-9.44,6.71-12.1c1.37-0.79,3.02-1.11,4.55-1.64c0.15-0.05,0.3-0.11,0.46-0.16
-                                            C40.82,8.49,55.46,8.49,70.1,8.49z"/>
-                                        <path d="M90.62,64.04c-0.22,2.7-1.35,4.92-3.24,6.81c-5.83,5.8-11.63,11.64-17.49,17.42c-0.62,0.61-1.46,1.13-2.29,1.38
-                                            c-4.14,1.22-8.31,2.34-12.48,3.49c-2.12,0.58-3.9-0.17-4.43-2c-0.21-0.72-0.2-1.6,0.01-2.32c1.19-4.15,2.44-8.28,3.75-12.4
-                                            c0.23-0.73,0.68-1.47,1.22-2.01c5.93-5.98,11.88-11.93,17.87-17.85c2.8-2.77,6.21-3.65,9.97-2.52c3.77,1.14,6.05,3.8,6.88,7.65
-                                            C90.56,62.43,90.55,63.24,90.62,64.04z M72.92,66.58c-0.24,0.23-0.47,0.43-0.68,0.64c-3.01,3-5.94,6.08-9.05,8.97
-                                            c-1.82,1.69-3.12,3.56-3.57,6.02c-0.18,0.95-0.55,1.87-0.86,2.89c0.3-0.04,0.46-0.04,0.61-0.08c1.88-0.52,3.76-1.04,5.63-1.59
-                                            c0.32-0.09,0.63-0.32,0.87-0.56c3.74-3.71,7.47-7.44,11.19-11.17c0.17-0.17,0.32-0.35,0.45-0.49
-                                            C75.98,69.66,74.48,68.16,72.92,66.58z M82.38,66.36c1.17-0.91,1.76-2.1,1.42-3.59c-0.31-1.34-1.2-2.2-2.58-2.47
-                                            c-1.5-0.3-2.58,0.39-3.47,1.45C79.3,63.29,80.82,64.8,82.38,66.36z"/>
-                                        <path d="M48.09,35.01c-5.66,0-11.32,0.01-16.98,0c-1.81,0-3.12-1.18-3.36-3c-0.21-1.55,0.88-3.11,2.49-3.53
-                                            c0.31-0.08,0.65-0.1,0.98-0.1c11.26,0,22.53-0.01,33.79,0c2,0,3.49,1.41,3.52,3.29c0.02,1.89-1.51,3.34-3.55,3.34
-                                            C59.36,35.01,53.73,35.01,48.09,35.01z"/>
-                                        <path d="M48.09,48.26c-5.66,0-11.32,0.01-16.98,0c-1.81,0-3.11-1.19-3.36-3c-0.21-1.55,0.89-3.1,2.5-3.52
-                                            c0.31-0.08,0.65-0.09,0.98-0.09c11.26,0,22.53-0.01,33.79,0c2,0,3.49,1.42,3.51,3.29c0.02,1.89-1.51,3.33-3.56,3.33
-                                            C59.35,48.27,53.72,48.26,48.09,48.26z"/>
-                                        <path d="M41.34,61.52c-3.42,0-6.85,0.01-10.27,0c-1.79-0.01-3.1-1.23-3.32-3.05c-0.19-1.55,0.94-3.1,2.55-3.5
-                                            c0.32-0.08,0.66-0.08,0.98-0.08c6.77,0,13.53-0.01,20.3,0c2.05,0,3.58,1.45,3.56,3.34c-0.02,1.88-1.52,3.28-3.52,3.29
-                                            C48.19,61.53,44.77,61.52,41.34,61.52z"/>
-                                    </g>
-
-                                </svg> --}}
-                                <img width="28.126" height="28.127" style="vertical-align: middle;" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
-                                @if($activity->type == 'exam')
-                                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-                                @else
-                                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</a>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
         </div>
     @endif
 @endsection

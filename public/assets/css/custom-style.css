@@ -15,7 +15,7 @@ a, span , p , label, div, small{
     background: #303d47;
 }
 .bg-five {
-    background: #d1d2d4;;
+    background: #ADADAD;;
 }
 a.review:hover svg path{
     fill: #fff;;
@@ -58,10 +58,26 @@ a.review:hover svg path{
     color: #fff;
     border: 1px solid #dc3545;
 }
-.main-button{
-    background: #fb4400;
+.h1-course-title {
+    font-family: "Lato Regular" !important;
+}
+.main-button {
+    /* background: #fb4400;
     color: #fff;
-    text-decoration: none;
+    text-decoration: none; */
+    color: #5D5B5A !important;
+    border: none !important;
+    background: #fff !important;
+    box-shadow: 3px 3px 5px #eaeaea;
+}
+a.main-button svg path {
+    fill:#5D5B5A !important;
+}
+a.main-button:hover svg path {
+    fill: #fb4400 !important
+}
+.main-button:hover {
+    color: #fb4400 !important
 }
 .inputs .form-group {
     margin: 0 0 15px !important;
@@ -218,8 +234,22 @@ ol.answers li{
     font-size: smaller;
     border-radius: 3px;
 }
-.badge-green{
+.badge-lim{
     background: #b0ac27;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.badge-green{
+    background: green;
+    color: #fff;
+    padding: 0px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.badge-red{
+    background: #dc3545;
     color: #fff;
     padding: 0px 10px;
     font-size: smaller;
@@ -372,11 +402,16 @@ justify-content: center;
     background: #007bff;
 }
 
+.info-button:hover{
+    background: #0099b8;
+    color: #fff;
+}
+
 /* End Buttons Style */
 
 /**************************************************************************************************************/
 .course-image .progress{
-    width: 100%;
+    width: 65%;
     height: 10px;
     /* border-radius: 8px; */
     border: 2px solid #f2f2f2;
@@ -409,22 +444,30 @@ a:hover svg#back{
 }
 .icon-report{
     fill: #fff !important;
-    position: absolute;
+    /* position: absolute;
     left: 0;
-    top: 0;
+    top: 0; */
 }
 .icon-report image{
     filter: invert(1);
 }
 .course-cards{
-    width: 23%;
+    width: 22%;
     margin-bottom: 10px;
-    justify-content: center;
+    /* justify-content: center; */
     background: #FFF;
     color: #000;
-    box-shadow: 1px 1px 15px 1px #e8e8e8;
-    position: relative;
+    box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%);
+    /* position: relative; */
 }
+
+.home-section .course-cards:hover , .home-section .text-center.course-image:hover {
+    position: relative;
+    top: -5px;
+}
+/* .text-center.course-image:hover {
+    box-shadow: 0px 0px 5px 0.5px #fb440036;
+} */
 
 button.next_prev {
     width: max-content;
@@ -452,8 +495,19 @@ button.next_prev {
 
 ul.video-list li .play{
     cursor: unset;
+    box-shadow: 0 0 5px #33333333;
 }
 
+ul.video-list li .text a {
+    color: #6a6a6a;
+    font-size: 15px;
+    /* font-family: 'Lato Light'; */
+    font-weight: normal;
+    text-transform: capitalize;
+}
+ul.video-list li:hover .text a {
+    font-weight: bold;
+}
 .req svg{
     width: 7px !important;
     height: 15px !important;
@@ -466,10 +520,9 @@ ul.video-list li .play{
     margin-bottom: 25px;
 }
 span.pdu {
-    background: #79c1dc;
+    background: #eaeaea;
     padding: 1px 10px;
     border-radius: 5px;
-    font-weight: 600;
     font-size: 12px;
 }
 .activity li{
@@ -498,8 +551,11 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 }
 
 .course-cards span {
-    font-family: 'Lato Regular';
-    font-size: 14px;
+    font-size: 16px;
+    font-family: 'Lato Semibold';
+    margin: 15px 0 0;
+    color: #707070;
+    display: block;
 }
 
 .certificate{
@@ -581,6 +637,73 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     font-size: 15px;
     color: #000;
 }
+#main-vue-element small {
+    line-height: 2.5rem;
+}
+.pop-up-content-wrap{
+    margin-top: 20px;
+}
+.close-btn{
+    top: 0 !important;
+    right: 20px !important;
+    color: #000 !important;
+}
+
+p.time-remaining:hover span , p.time-remaining:hover {
+    color: #121212 !important;
+}
+p.time-remaining svg path{
+    fill: #fb4400;
+}
+.review.dash-header{
+    padding: 20px 0;
+}
+.plyr input {
+    color: #fb4400 !important;
+    background: #fb4400;
+}
+button.plyr__controls__item.plyr__control:hover , button.plyr__control.plyr__control--overlaid , button.plyr__control.plyr__control--overlaid:hover , button.plyr__control:hover{
+    background: #fb4400 !important;
+}
+.modal .form-group.form-check.child{
+    margin: 15px 0 !important;
+    padding: 0 !important;
+}
+label.container-check.form-check-label{
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 30px !important;
+}
+label.container-check.form-check-label span.checkmark{
+    top: 0 !important;
+}
+/** alert */
+.error-notice{
+    margin:5px 0;
+    padding: 0
+    }
+
+    .error-notice .oaerror{
+    width:100%;
+    background-color: #ffffff;
+    padding:20px;
+    border:1px solid #eee;
+    border-left-width:5px;
+    border-radius: 3px;
+    /* margin:10px auto; */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    }
+
+    .error-notice .danger{
+    border-left-color: #d9534f;
+    background-color: rgba(217, 83, 79, 0.1);
+    }
+
+    .error-notice .danger strong{
+    color:#d9534f;
+    }
+    /* end alert */
 
 /******************************************************************************************************************/
 
@@ -601,7 +724,7 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         font-size: 12px;
     }
     .course-cards{
-        width: 40%;
+        width: 35%;
     }
     .certificate{
         padding: 60px 15px 30px;
@@ -622,6 +745,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+    .text-center.course-image.w-30.mb-4.mt-2.mb-md-0{
+        width: 40%;
+    }
     .course-cards span {
         display: block;
         margin-top: 25px;
@@ -629,18 +755,23 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .course-cards{
         width: 40%;
     }
-    .dash-header.d-flex.justify-content-between {
-        display: block !important;
-    }
     .dash-header.d-flex.justify-content-between ol.breadcrumb{
         margin-bottom: 10px;
     }
     .card.p-5.user-info {
         padding: 25px !important;
     }
+    p.time-remaining{
+        margin: 0;
+        margin-bottom: 15px;
+    }
 }
 
 @media (max-width: 768px) {
+    p.time-remaining{
+        margin: 0;
+        margin-bottom: 15px;
+    }
     .certificate-page {
         padding: 50px;
     }
@@ -650,6 +781,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     }
     .dash-header.course_info {
         padding: 25px 20px 0;
+    }
+    .col-xl-9.col-lg-8.col-md-12 .dash-header.course_info{
+        padding: 0;
     }
     .mx-md-4.course_info {
         padding: 0 10px;
@@ -694,9 +828,9 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         width: 35px;
         height: 35px;
     }
-    .course-cards > div {
+    /* .course-cards > div {
         display: inline-block;
-    }
+    } */
     .lms-header a.navbar-brand {
         padding: 12px 10px !important;
     }
@@ -708,7 +842,7 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
         width: 100%;
     }
     .course-cards {
-        width: 48% !important;
+        width: 37% !important;
     }
     main#main-vue-element{
         padding: 0 !important;
@@ -744,11 +878,12 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
 }
 
 @media (max-width: 576px){
+    .course-cards {
+        width: 65% !important;
+        margin: 5px auto;
+    }
     .calendar .sideb table th{
         font-size: 12px;
-    }
-    .course-cards {
-        width: 100% !important;
     }
     .lead{
         display: none;
@@ -771,16 +906,18 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .dash-header.d-flex.justify-content-between ol.breadcrumb{
         margin-bottom: 10px;
     }
-
+    .parent_next_prev {
+        justify-content: start;
+    }
     span.mx-2.d-flex span {
         display: none;
     }
     span.mx-2.d-flex svg#Layer_1 {
         width: 25px;
     }
-    .lms-header ul.navbar-nav li.user a{
+    /* .lms-header ul.navbar-nav li.user a{
         padding: 5px 0;
-    }
+    } */
     .congrats h1{
         font-size: 25px;
     }
@@ -812,7 +949,24 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     .messages .d-flex span {
         display: none;
     }
+    .course-cards {
+        width: 80% !important;
+        margin: 5px auto;
+    }
+    .card-header.d-flex.justify-content-between.align-items-center {
+        display: block !important;
+        text-align: center;
+    }
+    .card-header.d-flex.justify-content-between.align-items-center .d-flex.align-items-center {
+        justify-content: center;
+        margin-top: 15px;
+    }
+}
 
+@media (max-width: 350px){
+    .course-cards {
+        width: 100% !important;
+    }
 }
 
 @media (min-width: 2000px){

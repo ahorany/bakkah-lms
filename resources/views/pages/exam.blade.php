@@ -122,7 +122,7 @@
     ?>
 <div class="card p-5 user-info">
 
-        <div class="dash-header d-flex justify-content-between ">
+        <div class="dash-header d-flex justify-content-between align-items-center">
             @include('pages.templates.breadcrumb', [
                 'course_id'=>$exam->course->id,
                 'course_title'=>$exam->course->trans_title,
@@ -154,11 +154,11 @@
 
         <div class="row">
             @if(session()->has('status'))
-                {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-1 mb-2">
-                    <div class="card h-100">
-                        <div class="card-body" style="padding: 15px 30px; background: #fb4400;color: #fff;">
-                        {{session()->get('msg')}}
+                <div class="col-md-12">
+                    <div class="error-notice">
+                        <div class="oaerror danger">
+                            {{-- <strong>Error</strong>- --}}
+                            {{session()->get('msg')}}
                         </div>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
 
             <?php $users_exams_count = count($exam->exam->users_exams) ?>
 
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-5 mb-3">
                 <div class="card h-100" style="box-shadow: none; border: 1px solid gainsboro;">
                     <div class="card-body" style="padding: 15px 30px;">
                         <h4>Exam title : {{$exam->title}}</h4>
@@ -175,7 +175,7 @@
                         <p>Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
                         <p>Exam attempt count : {!! $exam->exam->attempt_count == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->attempt_count!!}</p>
                         <p>Your attempts  : {{$users_exams_count}}</p>
-                        <p>Mark  : {{$exam->exam->exam_mark}} </p>
+                        <p>Marks  : {{$exam->exam->exam_mark}} </p>
 
 
                         @if(count($exam->questions) == 0 || (\Carbon\Carbon::create($exam->exam->start_date)  > \Carbon\Carbon::now() && !is_null($exam->exam->start_date)))
@@ -201,7 +201,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-6 col-lg-8 mb-3">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-7 mb-3">
                 <div class="card pt-3 pl-3 h-100" style="padding: 15px 30px; box-shadow: none; border: 1px solid gainsboro;">
                     <h4 class="card-title">Exam Description</h4>
                     <div class="card-body">
@@ -222,6 +222,7 @@
                     <th scope="col">Review</th>
                     <th scope="col">Details</th>
                     <th scope="col">Time taken</th>
+                    <th scope="col">Pass Mark (%)</th>
                     <th scope="col">Status</th>
                     <th scope="col">Mark</th>
                     <th scope="col">Progress</th>
@@ -246,19 +247,26 @@
                         <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge badge-info p-2">Review</a>@else ---- @endif</td>
                         <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge badge-info p-2">View Result Details</a>@else ---- @endif</td>
                         <td>{{$diff??'0 seconds'}}</td>
+                        <td class="text-bold">{{($exam->exam->pass_mark??0).'%'}}</td>
+
                         <td class="text-bold">
-                            <span class="{{$attempt->status == 1 ? 'badge badge-success' : 'badge badge-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</span>
+{{--                            <span class="{{$attempt->status == 1 ? 'badge badge-success' : 'badge badge-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</span>--}}
+                       @if( (($exam->exam->exam_mark * $exam->exam->pass_mark) / 100) <= $attempt->mark)
+                          <span class="badge-green">Pass</span>
+                       @else
+                           <span class="badge-red">Fail</span>
+                       @endif
                         </td>
+
 
                         <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
                         <td>
                             @if($exam->exam->exam_mark && $exam->exam->exam_mark != 0)
                                 <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
-
-                                {{-- <small>{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '0%' }}</small> --}}
-                                <div class="progress">
-                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{($progress > 0) ? number_format($progress, 0, '.', ',') . '%' : '0'}};" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '' }}</div>
-                                </div>
+                                  <span>{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '0%' }}</span>
+{{--                                <div class="progress">--}}
+{{--                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{($progress > 0) ? number_format($progress, 0, '.', ',') . '%' : '0'}};" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '' }}</div>--}}
+{{--                                </div>--}}
                             @endif
                         </td>
                     </tr>
@@ -273,8 +281,23 @@
 @section('script')
 <script>
     function confirmNewAttempt(){
-        if( confirm('Are u sure ?') == false)
-            event.preventDefault()
+        // if( confirm('Are u sure ?') == false)
+        //     event.preventDefault()
+        Swal.fire({
+        title: 'Start the exam',
+        // text: "To start new attempt",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{{CustomRoute('user.preview.exam',$exam->id)}}";
+            }
+            // event.preventDefault()
+        })
+        event.preventDefault()
     }
 </script>
 @endsection

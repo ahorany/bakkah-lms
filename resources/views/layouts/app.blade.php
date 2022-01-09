@@ -14,13 +14,14 @@
 
     <link rel="icon" href="{{CustomAsset('assets/images/logo.png')}}">
     <link rel="stylesheet" href="{{CustomAsset('assets/css/bootstrap-grid.min.css')}}">
-    <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}">
-    <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}">
+    <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}?v={{time()}}">
+    <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}?v={{time()}}">
 
-    <link rel="stylesheet" href="{{CustomAsset('css/responsive.css')}}">
+    <link rel="stylesheet" href="{{CustomAsset('css/responsive.css')}}?v={{time()}}">
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @yield('style')
-
 </head>
 
 <body>
@@ -44,7 +45,7 @@
 </div>
 
 
-<script src="{{CustomAsset('assets/js/main.js')}}"></script>
+<script src="{{CustomAsset('assets/js/main.js')}}?v={{time()}}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>

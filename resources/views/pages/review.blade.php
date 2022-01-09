@@ -14,25 +14,84 @@
 @endsection
 
 @section('content')
-    <div class="dash-header course_info">
-        {{-- <ol class="breadcrumb">
-            <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
-            <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-            <li>{{$exam->exam->content->title}}</li>
-        </ol> --}}
-        <h2>{{$exam->exam->content->title}}</h2>
+{{--    <div class="dash-header course_info">--}}
+{{--        --}}{{-- <ol class="breadcrumb">--}}
+{{--            <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>--}}
+{{--            <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>--}}
+{{--            <li>{{$exam->exam->content->title}}</li>--}}
+{{--        </ol> --}}
+{{--        <h2>{{$exam->exam->content->title}}</h2>--}}
+{{--    </div>--}}
+
+<?php
+if( !is_null($next)){
+    if( $next->post_type != 'exam' ) {
+        $next_url = CustomRoute('user.course_preview',$next->id);
+    }else{
+        $next_url =  CustomRoute('user.exam',$next->id);
+    }
+}
+
+if(!is_null($previous)){
+    if($previous->post_type != 'exam'){
+        $previous_url = CustomRoute('user.course_preview',$previous->id);
+    }else{
+        $previous_url =  CustomRoute('user.exam',$previous->id);
+    }
+}
+?>
+
+{{-- @dd($exam) --}}
+<div class="dash-header d-flex justify-content-between review">
+    @include('pages.templates.breadcrumb', [
+        'course_id'=>$exam->exam->content->course->id,
+        'course_title'=>$exam->exam->content->course->trans_title,
+        'content_title'=>$exam->exam->content->title,
+        // 'content_title'=>__('education.Exam'),
+    ])
+    <div class="parent_next_prev">
+        @if($previous)
+            <button title="{{$previous->title}}" class="next_prev" onclick="location.href =  '{{$previous_url}}'">
+                <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                    <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
+                </svg>
+                <span>{{__('education.Previous')}}</span>
+            </button>
+        @endif
+
+        @if($next)
+            <button title="{{$next->title}}" onmouseleave="hide_next()" onmouseenter="show_next()" class="next next_prev" onclick="location.href = '{{$next_url}}'">
+                <span>{{__('education.Next')}}</span>
+                <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                    <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
+                </svg>
+            </button>
+        @endif
     </div>
-
-
+</div>
     <div class="row">
+        @if(session()->has('status'))
+            <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div>
+        @endif
+
         <div class="col-xl-9 col-lg-8 mb-4 mb-lg-0">
             @foreach($exam->exam->content->questions as $question)
              <div id="question_{{$loop->iteration}}" class="card p-30 q-card {{($loop->last) ? ' ' : 'mb-3'}}">
                 <div class="q-number">
                     Q{{$loop->iteration}}/{{count($exam->exam->content->questions)}}
-                    <small>({{$question->mark}} Marks)</small>
+                    @php
+                     $answers = 0;
+                    @endphp
+                    @foreach($question->answers as $answer)
+                        @if($answer->check_correct == 1)
+                            @php
+                                $answers++;
+                            @endphp
+                         @endif
+                    @endforeach
+                    <small>({{$question->mark}} {{$answers == 1 ? 'Mark' : 'Marks'}} )</small>
                 </div>
-                <h3 style="padding-right: 14%;">{!! $question->title!!}</h3>
+                <h3 style="padding-right: 25%;">{!! $question->title!!}</h3>
                  @foreach($question->answers as $answer)
                      <label class="custom-radio"> {{$answer->title}}
                          <input type="checkbox" disabled="true" @foreach($exam->user_answers as $user_answer) @if($user_answer->id == $answer->id ) @if($answer->check_correct == 0) checked class="incorrect-radio" @else checked @endif   @endif @endforeach>
@@ -45,13 +104,13 @@
                     @if($q->id == $question->id)
                         <?php $lock = true; ?>
                          <div>
-                            {{ $q->pivot->mark . '/' . $q->mark }} Marks
+                            {{ $q->pivot->mark . '/' . $q->mark }}  {{$answers == 1 ? 'Mark' : 'Marks'}}
                         </div>
                      @endif
                  @endforeach
 
                  @if(count($exam->user_questions) > 0 && !$lock)
-                     {{ '0' . '/' . $question->mark }} Marks
+                     {{ '0' . '/' . $question->mark }}  {{$answers == 1 ? 'Mark' : 'Marks'}}
                  @endif
 
                   <div>
@@ -75,7 +134,7 @@
              </div>
             @endforeach
 
-
+                <a href="{{CustomRoute('user.exam',$exam->exam->content->id)}}" class="form-control main-color">Exit Review</a>
 
         </div>
         <div class="col-xl-3 col-lg-4">
@@ -134,4 +193,15 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.getElementById("demo").innerHTML = "Next";
+    document.querySelector(".next").addEventListener("click", function(event){
+        window.location.href = '{{$next_url??null}}'
+    });
+
+</script>
+
 @endsection

@@ -3,7 +3,8 @@
 
 namespace App\Helpers;
 
-
+use App\Models\Training\Content;
+use App\Models\Training\Exam;
 use App\Models\Training\UserContent;
 use Illuminate\Support\Facades\DB;
 
@@ -114,14 +115,47 @@ class CourseContentHelper
       *  Validate prev if completed or not =>  ( IF not redirect back with alert msg )
     */
     public static function checkPrevContentIsCompleted($content_status , $previous){
-        if($content_status != 1){
-            if($previous){
-                $prev_user_content = UserContent::where('user_id',\auth()->id())
-                    ->where('content_id',$previous->id)
-                    ->where('is_completed',1)->first();
 
-                if (!$prev_user_content){
-                    return false;
+        if($content_status != 1){
+
+            if($previous){
+
+                $content = Content::find($previous->id);
+                $pass_mark = -1;
+                if($content->post_type=='exam'){
+                    $exam = Exam::where('content_id', $previous->id)->select('pass_mark')->first();
+                    $pass_mark = $exam->pass_mark;
+                }
+
+                if($pass_mark != 0){
+
+                    if($content->post_type=='scorm'){
+                        // $user_id = sprintf("%'.05d", auth()->user()->id);
+                        // $content_id = sprintf("%'.05d", $content->id);
+                        // $SCOInstanceID = (1).$user_id.(2).$content_id;
+                        $SCOInstanceID = ScormId($content->id);
+
+                        $sql = "SELECT * FROM `scormvars`
+                                    WHERE SCOInstanceID = $SCOInstanceID AND
+                                    varName = 'cmi.core.lesson_status'
+                                  ";
+
+                       $scormPrevDataWhenComplete =  DB::select(DB::raw($sql));
+                       $scormPrevDataWhenComplete = ($scormPrevDataWhenComplete[0]??null);
+                       if (!is_null($scormPrevDataWhenComplete) && $scormPrevDataWhenComplete->varValue != "completed"){
+                           return false;
+                       }
+
+                    }else{
+                        $prev_user_content = UserContent::where('user_id',\auth()->id())
+                            ->where('content_id', $previous->id)
+                            ->where('is_completed', 1)
+                            ->first();
+
+                        if (!$prev_user_content){
+                            return false;
+                        }
+                    }
                 }
             }
         }

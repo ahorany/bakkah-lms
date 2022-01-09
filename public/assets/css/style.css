@@ -358,7 +358,7 @@ ol {
 }
 
 .bg-third {
-  background: #1ca09a;
+  background: #1EBFB8;
 }
 
 .bg-fourth {
@@ -385,6 +385,7 @@ ol {
   appearance: none;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  text-transform: capitalize;
 }
 
 img {
@@ -654,28 +655,29 @@ li.has-dropdown {
 }
 
 li.has-dropdown .dropdown {
-  position: absolute;
-  right: 0;
-  top: 110%;
-  width: 250px;
-  z-index: 1000;
-  /* display: none; */
-  min-width: 10rem;
-  /* padding: 0.5rem 0; */
-  margin: 0;
-  font-size: 1rem;
-  color: #212529;
-  text-align: left;
-  list-style: none;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
+    position: absolute;
+    right: 0;
+    top: 110%;
+    width: 250px;
+    z-index: 1000;
+    min-width: 10rem;
+    margin: 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    /* border: 1px solid rgba(0, 0, 0, 0.15); */
+    box-shadow: 0 0 5px 1px #0000001a;
+    border-radius: 15px;
+    overflow: hidden;
+    padding: 0 20px;
 }
 
 li.has-dropdown .dropdown a {
   display: block;
-  padding: 10px 15px;
+  padding: 10px 0;
   color: #000;
   transition: all 0.15s ease-in-out;
 }
@@ -698,6 +700,7 @@ li.has-dropdown .dropdown a:hover {
 
 ol.breadcrumb {
   display: flex;
+  align-items: center;
 }
 
 ol.breadcrumb li {
@@ -718,7 +721,7 @@ ol.breadcrumb li a {
   font-size: 25px;
   margin: 0;
   margin-bottom: 10px;
-  font-family: "Lato Black";
+  font-family: "Lato Bold";
 }
 
 .card {
@@ -754,9 +757,12 @@ button.next_prev svg {
 }
 
 p.time-remaining {
-  display: flex;
-  align-items: center;
-  margin-top: 0;
+    display: flex;
+    align-items: center;
+    width: max-content;
+    margin: 0 auto;
+    padding: 5px 15px;
+    border-radius: 5px;
 }
 
 p.time-remaining svg {
@@ -797,8 +803,8 @@ p.time-remaining svg {
   border: 1px solid #ccc;
   background: transparent;
   box-sizing: unset;
-  width: 22px;
-  height: 22px;
+  width: 21px;
+  height: 21px;
 }
 
 .q-card label .radio-mark::after {
@@ -918,7 +924,6 @@ ol.answers li .icon.empty {
   text-align: center;
   line-height: 35px;
   border-radius: 50%;
-  font-weight: bold;
   margin-right: 10px;
 }
 
@@ -1009,7 +1014,7 @@ ol.answers li .icon.empty {
 .learning-file h3 {
   margin: 20px 30px;
   /* font-family: "Lato Black"; */
-  text-transform: uppercase;
+  text-transform: capitalize;
   font-size: 17px;
 }
 
@@ -1037,10 +1042,6 @@ ol.answers li .icon.empty {
 .learning-file ul li a:hover {
   background: #f9f9f9;
   color: var(--mainColor);
-}
-
-.learning-file ul li a:hover svg path {
-  fill: var(--mainColor);
 }
 
 .line-chart {
@@ -1095,20 +1096,22 @@ ul.video-list li .text p {
 }
 
 .course-cards {
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
   width: 48%;
   margin: 1%;
   color: #fff;
-  padding: 30px;
+  padding: 50px 30px;
   border-radius: 5px;
+  text-align: center;
 }
 
 .course-cards svg {
-width: 55px;
-    height: 55px;
-    padding: 10px;
-    border-radius: 0 0 15px 0;
+    width: 70px;
+    height: 70px;
+    padding: 15px;
+    border-radius: 50%;
+    outline: 7px solid rgb(168 168 168 / 20%);
 }
 
 .course-cards > div b {
@@ -1119,7 +1122,7 @@ width: 55px;
 
 .course-cards > div {
   text-align: center;
-  margin: 0px 20px;
+  /* margin: 0px 30px; */
 }
 
 ul.badges {
@@ -1470,13 +1473,13 @@ ul.badges li svg {
   .navbar .navbar-toggler svg {
     width: 20px;
   }
-  .course-cards {
+  /* .course-cards {
     width: 100%;
     justify-content: center;
   }
   .course-cards > div {
     width: 120px;
-  }
+  } */
   .calendar .sideb table th {
     font-size: 14px;
   }

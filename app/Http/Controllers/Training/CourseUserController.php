@@ -40,7 +40,23 @@ class CourseUserController extends Controller
     public function course_users()
     {
         $course_id = request()->course_id;
-        $course = Course::with(['upload', 'users'])->where('id',$course_id)->first();
+
+        $course = Course::where('id',$course_id);
+
+//        return $course;
+
+        if (\request()->has('user_search') && !is_null(request()->user_search)) {
+            $user_search = request()->user_search;
+            $course->with(['upload', 'users' => function($q) use ($user_search){
+                $q->where('name', 'like', '%' . $user_search . '%')->orWhere('email', 'like', '%' . $user_search . '%');
+            }]);
+        }else{
+            $course = $course->with(['upload', 'users']);
+        }
+
+        $course = $course->first();
+
+//        return $course;
         return view('training.courses.users.index', compact('course'));
     }
 

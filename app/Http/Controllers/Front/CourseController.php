@@ -203,16 +203,12 @@ class CourseController extends Controller
         return response()->json(['status' => 'success','data' => $total_rate ]);
     } // end function
 
-
-
     /****************************************************************************/
-
-
-
     /*
      * Preview Content Course ( Content Page )
      */
     public function preview_content($content_id){
+
         // Get content from DB
         $content = Content::whereId($content_id)
             ->with(['upload','course' ,'section'])->first();
@@ -225,10 +221,10 @@ class CourseController extends Controller
 
 
         // Check if user is not register in course AND user role not admin => ABORT(404)
-        if(!$this->checkUserCourseRegistrationAndRole($content->course->id)){
+        $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
+        if(!$user_course_register){
             abort(404);
         }// end if
-
 
         // Get next and prev
         $arr = CourseContentHelper::nextAndPreviouseQuery($content->course_id,$content->id,$content->order,$content->parent_id,$content->section->order);
@@ -238,15 +234,13 @@ class CourseController extends Controller
         $previous = ($previous[0]??null);
         // end next and prev
 
-
         //TODO: Ahoray
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
         if(!request()->has('preview')){
             if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
-                return redirect()->back()->with(["status" => 'danger',"msg" => "Can not open  content (Because the content is not completed) !!"]);
+                return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
             }// end if
         }
-
 
        /*
         *  Create New User Content OR
@@ -281,7 +275,23 @@ class CourseController extends Controller
         $time_limit = $content->time_limit;
 
 
-        return view('pages.file',compact('content','previous','next','enabled','time_limit'));
+        // Check user progress if grater than or equal complete progress for course
+        // When user course => completed_at is null => update completed at In Course Registration
+        // pop up status => preview else disable
+        $popup_compelte_status = false;
+        if ( ($content->course->complete_progress <= $user_course_register->progress)){
+            // Check if user course => completed_at is null => update completed at In Course Registration
+            if (!$user_course_register->completed_at){
+               CourseRegistration::where('user_id',auth()->id())
+                   ->where('course_id', $content->course->id)->update([
+                       'completed_at' => Carbon::now(),
+                   ]);
+
+                $popup_compelte_status = true;
+            } // end if
+        } // end if
+
+        return view('pages.file',compact('content','previous','next','enabled','time_limit','popup_compelte_status'));
     } // end function
 
     /*
@@ -295,7 +305,7 @@ class CourseController extends Controller
             return false;
         }
 
-        return true;
+        return $user_course_register;
     } // end function
 
 
@@ -336,12 +346,15 @@ class CourseController extends Controller
      * Get Content File Path
      */
     private function getContentFilePath($content_type){
+
         $file = "";
-        switch ($content_type){
-            case 'video': $file = public_path('upload/files/videos/'.$content->upload->file);  break;
-            case 'audio': $file = public_path('upload/files/audios/'.$content->upload->file);  break;
-            case 'presentation': $file = public_path('upload/files/presentations/'.$content->upload->file);  break;
-            case 'scorm': $file = public_path('upload/files/scorms/'.$content->upload->file);  break;
+        if(isset($content)){
+            switch ($content_type){
+                case 'video': $file = public_path('upload/files/videos/'.$content->upload->file);  break;
+                case 'audio': $file = public_path('upload/files/audios/'.$content->upload->file);  break;
+                case 'presentation': $file = public_path('upload/files/presentations/'.$content->upload->file);  break;
+                case 'scorm': $file = public_path('upload/files/scorms/'.$content->upload->file);  break;
+            }
         }
         return $file;
     } // end function
@@ -449,5 +462,6 @@ class CourseController extends Controller
 
 
     /****************************************************************************/
+
 
 } // End Class
