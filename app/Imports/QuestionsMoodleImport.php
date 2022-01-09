@@ -122,7 +122,7 @@ class QuestionsMoodleImport implements ToCollection
         // dd(request()->all());
 
         // $mark = 0;
-        $counter = 0;$q_no = 0; $title = '';
+        $counter = 0;$q_no = 0; $title = '';$mark = 0;
         foreach ($rows as $key => $value)
         {
             // dump($value[0]);
@@ -188,32 +188,16 @@ class QuestionsMoodleImport implements ToCollection
                     }
                     $answer_title = [];
                     // $mark += $row['default_garde'];
+                    $mark += 1;
                     $counter = 0;
                 }
             }
-
-
-            // elseif($counter == 1)
-            //     $answer_title[1] =  $row['title'];
-            // elseif($counter == 2)
-            //     $answer_title[2] =  $row['title'];
-            // elseif($counter == 3)
-            //     $answer_title[3] =  $row['title'];
-            // elseif($counter == 4)
-            //     $answer_title[4] =  $row['title'];
-            // elseif($counter == 5)
-            // {
-
-            // }
-
-            // $counter++;
-
         }
 
-        // $exam_id = Exam::where('content_id', request()->content_id)->first();
-        // DB::table('exams')
-        //     ->where('id',  $exam_id->id)
-        //     ->update(['exam_mark' => $mark]);
+        $exam_id = Exam::where('content_id', request()->content_id)->first();
+        DB::table('exams')
+            ->where('id',  $exam_id->id)
+            ->update(['exam_mark' => $mark]);
 
     }
 

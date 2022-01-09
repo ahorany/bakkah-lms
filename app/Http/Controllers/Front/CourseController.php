@@ -37,6 +37,7 @@ class CourseController extends Controller
      *  Course User page
      */
     public function course_details($course_id){
+
         // clear session => (Sidebar active color)
         session()->put('infastructure_id',-1);
 
