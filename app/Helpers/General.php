@@ -216,8 +216,6 @@ function array_without_empty($var){
     return ($var !== NULL && $var !== FALSE && $var !== "");
 }
 
-
-
 function deviation_improve_y($y_value)
 {
     return $y_value+($y_value*0.65);

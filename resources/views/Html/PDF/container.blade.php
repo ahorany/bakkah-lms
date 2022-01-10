@@ -167,19 +167,11 @@
     pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
     var container = document.getElementById('the-canvas');
 
-<<<<<<< HEAD
-    // var scale = screen.width/1000;
-    var pdfDoc = null,
-        pageNum = 1,
-        pageRendering = false,
-        pageNumPending = null;
-=======
 // var scale = screen.width/1000;
 var pdfDoc = null,
     pageNum = 1,
     pageRendering = false,
     pageNumPending = null
->>>>>>> c1a4fe778c15a30edeba0ba04e056f0b439b4841
 
     /**
      * Get page info from document, resize canvas accordingly, and render page.
