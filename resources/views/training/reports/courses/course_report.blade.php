@@ -13,6 +13,7 @@
                 <a href="{{route('training.coursesReportOverview',['id'=>$course_id])}}" class="group_buttons btn-sm">Overview</a>
                 <a  href="{{route('training.coursesReportUser',['id'=>$course_id])}}" class="group_buttons btn-sm">Users</a>
                 <a href="{{route('training.coursesReportTest',['id'=>$course_id])}}" class="group_buttons btn-sm">Tests</a>
+                <a href="{{route('training.scormsReportScorm',['course_id'=>$course_id])}}" class="group_buttons btn-sm">SCORMS</a>
                 {{-- <a href="{{route('training.course_users',['id'=>$course_id])}}" class="group_buttons btn-sm">Certificates</a> --}}
             </div>
         </div>
@@ -29,5 +30,9 @@
     @if(isset($tests))
         @include('training.reports.courses.tests')
     @endif
+
+    @if(isset($scorms))
+    @include('training.reports.scorms.scorms')
+@endif
 
 @endsection

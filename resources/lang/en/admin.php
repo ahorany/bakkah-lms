@@ -158,4 +158,8 @@ return [
     'users_manual'=>'Users Manual',
     'complete progress'=>'Complete Progress',
     'Pages'=>'Pages',
+    'scorms'=>'Scorms',
+    'attempts'=>'Attempts',
+    'course_name'=>'Course Name',
+
 ];

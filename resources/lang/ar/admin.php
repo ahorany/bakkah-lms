@@ -134,4 +134,8 @@ return [
     'users_manual'=>'Users Manual',
     'complete progress'=>'Complete Progress',
     'Pages'=>'Pages',
+    'scorms'=>'Scorms',
+    'attempts'=>'محاولات',
+    'course_name'=>'اسم الدورة',
+
 ];

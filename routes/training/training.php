@@ -24,15 +24,23 @@ Route::group([
 
 
             Route::get('/scormsReportOverview', 'ReportController@scormsReportOverview')->name('scormsReportOverview');
+            Route::get('/scormsReportScorms', 'ReportController@scormsReportScorms')->name('scormsReportScorms');
+            Route::get('/scorm_users', 'ReportController@scorm_users')->name('scorm_users');
+
+
+
 
             Route::get('/usersReportOverview', 'ReportController@usersReportOverview')->name('usersReportOverview');
             Route::get('/usersReportCourse', 'ReportController@usersReportCourse')->name('usersReportCourse');
             Route::get('/usersReportTest', 'ReportController@usersReportTest')->name('usersReportTest');
+            Route::get('/usersReportScorm', 'ReportController@usersReportScorm')->name('usersReportScorm');
+
 
 
             Route::get('/coursesReportOverview', 'ReportController@coursesReportOverview')->name('coursesReportOverview');
             Route::get('/coursesReportUser', 'ReportController@coursesReportUser')->name('coursesReportUser');
             Route::get('/coursesReportTest', 'ReportController@coursesReportTest')->name('coursesReportTest');
+
             Route::get('/course/clone/{course_id}', 'CourseController@cloneCourse')->name('clone.course');
 
             Route::get('/groupReportOverview', 'ReportController@groupReportOverview')->name('groupReportOverview');

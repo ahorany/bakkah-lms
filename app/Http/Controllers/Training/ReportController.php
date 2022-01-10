@@ -7,6 +7,8 @@ use App\Helpers\Active;
 use App\Http\Requests\Training\CourseRequest;
 use App\User;
 use App\Models\Training\Course;
+use App\Models\Training\Content;
+
 use App\Constant;
 use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,14 +28,66 @@ class ReportController extends Controller
     {
         // $user_id = request()->id;
         // $user = User::find($user_id);
-
-        $learners_no = DB::table('role_user')->where('role_id',3)->where('user_id',$user_id)->count();
-        $complete_courses_no = DB::table('courses_registration')->where('user_id',$user_id)->where('progress',100)->count();
-        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('user_id',$user_id)->count();
-        $courses_not_started = DB::table('courses_registration')->where('progress',0)->where('user_id',$user_id)->count();
+        $count = DB::table('scormvars_master')->distinct('content_id')->count();
+        // $contents_unique = array_unique($contents);
+        // $count = count($contents_unique);
+        $attempts = DB::table('scormvars_master')->count();
+        $passed =   DB::table('scormvars_master')->where('is_complete',1)->count();
         $overview = 1;
-        return view('training.reports.scorms.scorms',compact('user_id','learners_no','complete_courses_no',
-        'courses_in_progress','courses_not_started','overview', 'user'));
+        return view('training.reports.scorms.scorms_report',compact('count','attempts','passed','overview'));
+    }
+
+
+    public function scormsReportScorms()
+    {
+        $contents = DB::table('scormvars_master')->pluck('content_id')->toArray();
+        $contents_unique = array_unique($contents);
+        $scorms = Content::whereIn('id',$contents_unique);
+        $type = 'all';
+        $course = '';
+        if(isset(request()->course_id))
+        {
+            $type = 'course';
+            $scorms = $scorms->where('course_id',request()->course_id);
+            $course = Course::where('id',request()->course_id)->first();
+            // dd($course);
+        }
+
+
+        $scorms = $scorms->get();
+        // dd($scorms);
+        return view('training.reports.scorms.scorms_report',compact('scorms','type','course'));
+    }
+
+
+
+
+    public function scorm_users()
+    {
+        $scorm_id = request()->id;
+
+        // $completed_courses  = DB::table('user_groups')
+        // ->join('course_groups', function ($join) use($group_id) {
+        //     $join->on('course_groups.group_id', '=', 'user_groups.group_id')
+        //          ->where('user_groups.group_id',$group_id)
+        // })
+        // ->join('courses_registration as cr2','cr2.user_id','user_groups.user_id')
+        // ->count('cr2.course_id');
+
+        $users = DB::table('scormvars_master')
+                            ->join('users', function ($join) {
+            $join->on('scormvars_master.user_id', '=', 'users.id');
+        })->where('content_id',$scorm_id)->get();
+        // foreach($users_scorms as $sc)
+        //     $users_scorms_arr[] = $sc->user_id;
+        // $users = User::whereIn('id',$users_scorms_arr)->get();
+        // dd($users);
+        return view('training.reports.scorms.users',compact('users'));
+    }
+
+    public function usersReportScorm()
+    {
+        dd('here');
     }
 
     public function usersReportOverview()
@@ -48,7 +102,6 @@ class ReportController extends Controller
         $overview = 1;
         return view('training.reports.users.user_report',compact('user_id','learners_no','complete_courses_no',
         'courses_in_progress','courses_not_started','overview', 'user'));
-
     }
 
 
@@ -125,6 +178,8 @@ class ReportController extends Controller
         return view('training.reports.courses.course_report',compact('course_id', 'tests', 'course'));
 
     }
+
+
 
     public function groupReportOverview()
     {

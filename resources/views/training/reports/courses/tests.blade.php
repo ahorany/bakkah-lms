@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\DB;
         </td>
        <td>
             <?php
+
                 $completed = DB::table('user_exams')
                             ->where('exam_id',$post->id)
                             ->where('status',1)

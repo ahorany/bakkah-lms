@@ -24,13 +24,14 @@
                         </g>
                     </svg>
                     <div>
-                        <span>{{__('admin.courses')}}</span>
+                        <span>{{__('admin.scorms')}}</span>
                         <b>{{$count}}</b>
                     </div>
                 </div>
             @endif
 
-            @if(isset($assigned_learners))
+
+            @if(isset($attempts))
                 <div class="course-cards">
                     <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049" class="icon-report bg-main">
                         <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
@@ -45,13 +46,13 @@
                         </g>
                       </svg>
                     <div>
-                        <span>{{__('admin.assigned_learners')}}</span>
-                        <b>{{$assigned_learners}}</b>
+                        <span>{{__('admin.attempts')}}</span>
+                        <b>{{$attempts}}</b>
                     </div>
                 </div>
             @endif
 
-            @if(isset($assigned_instructors))
+            @if(isset($passed))
                 <div class="course-cards">
                     <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049" class="icon-report bg-main">
                         <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
@@ -66,13 +67,13 @@
                         </g>
                       </svg>
                    <div>
-                       <span>{{__('admin.assigned_instructors')}}</span>
-                       <b>{{$assigned_instructors}}</b>
+                       <span>{{__('admin.passed')}}</span>
+                       <b>{{$passed}}</b>
                    </div>
                </div>
             @endif
 
-            @if (isset($count))
+            {{-- @if (isset($count))
                 <div class="course-cards">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"  class="icon-report bg-third" id="bg-two" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                         <g>
@@ -87,9 +88,14 @@
 
                     </div>
                 </div>
-            @endif
+            @endif --}}
 
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(function(){
+            $(".overview").addClass("active");
+    });
+</script>
