@@ -22,6 +22,20 @@ class ReportController extends Controller
         Active::$folder     = 'reports';
     }
 
+    public function scormsReportOverview()
+    {
+        // $user_id = request()->id;
+        // $user = User::find($user_id);
+
+        $learners_no = DB::table('role_user')->where('role_id',3)->where('user_id',$user_id)->count();
+        $complete_courses_no = DB::table('courses_registration')->where('user_id',$user_id)->where('progress',100)->count();
+        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('user_id',$user_id)->count();
+        $courses_not_started = DB::table('courses_registration')->where('progress',0)->where('user_id',$user_id)->count();
+        $overview = 1;
+        return view('training.reports.scorms.scorms',compact('user_id','learners_no','complete_courses_no',
+        'courses_in_progress','courses_not_started','overview', 'user'));
+    }
+
     public function usersReportOverview()
     {
         $user_id = request()->id;

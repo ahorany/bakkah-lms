@@ -27,7 +27,7 @@ class AsideComposer
         ->distinct('infrastructures.id')
         ->select('infastructures.*')
         ->get();
-
+        // dd($user_pages);
         $user_pages_child = Infrastructure::join('infrastructure_role', 'infrastructure_role.infrastructure_id', 'infastructures.id')
         ->join('role_user', 'role_user.role_id', 'infrastructure_role.role_id')
         ->whereNotNull('infastructures.parent_id')
@@ -35,7 +35,7 @@ class AsideComposer
         ->distinct('infastructures.id')
         ->select('infastructures.*')
         ->get();
-
+        // dd($user_pages_child);
         // $view->with('asides', $asides);
         // $view->with('infastructures', $infastructures);
 

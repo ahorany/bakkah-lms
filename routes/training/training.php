@@ -23,6 +23,8 @@ Route::group([
             Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
 
 
+            Route::get('/scormsReportOverview', 'ReportController@scormsReportOverview')->name('scormsReportOverview');
+
             Route::get('/usersReportOverview', 'ReportController@usersReportOverview')->name('usersReportOverview');
             Route::get('/usersReportCourse', 'ReportController@usersReportCourse')->name('usersReportCourse');
             Route::get('/usersReportTest', 'ReportController@usersReportTest')->name('usersReportTest');
