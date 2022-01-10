@@ -6,7 +6,7 @@
 // $dbuser = "your_database_username";
 // $dbpass = "your_database_password";
 
-$dbname = "stagebak_lms";//env('DB_DATABASE');
+$dbname = "stagebak_lms1";//env('DB_DATABASE');
 $dbhost = "127.0.0.1";//env('DB_HOST');
 $dbuser = "root";//env('DB_USERNAME');
 $dbpass = "";//env('DB_PASSWORD');

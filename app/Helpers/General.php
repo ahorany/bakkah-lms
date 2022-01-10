@@ -216,8 +216,6 @@ function array_without_empty($var){
     return ($var !== NULL && $var !== FALSE && $var !== "");
 }
 
-
-
 function deviation_improve_y($y_value)
 {
     return $y_value+($y_value*0.65);
@@ -233,8 +231,8 @@ function deviation_improve_x($x_value)
 
 function ScormId($content_id){
 
-    $user_id = sprintf("%'.05d", auth()->user()->id);
-    $content_id1 = sprintf("%'.05d", $content_id);
+    $user_id = sprintf("%'.07d", auth()->user()->id);
+    $content_id1 = sprintf("%'.07d", $content_id);
     $SCOInstanceID = (1).$user_id.(2).$content_id1;
 
     return $SCOInstanceID;

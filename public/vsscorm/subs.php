@@ -136,6 +136,7 @@ function initializeSCO() {
 
 		// SCO launch and suspend data
 		initializeElement('cmi.launch_data',getFromLMS('cmi.launch_data'));
+		initializeElement('cmi.content_id',getFromLMS('cmi.content_id'));
 		initializeElement('cmi.suspend_data','');
 
 		// progress and completion tracking
@@ -211,6 +212,10 @@ function getFromLMS($varname) {
 		case 'cmi.launch_data':
 			$varvalue = "";
 			break;
+
+        case 'cmi.content_id':
+            $varvalue = $_REQUEST['content_id'];
+            break;
 
 		default:
 			$varvalue = '';
