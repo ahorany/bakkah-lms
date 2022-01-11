@@ -87,7 +87,29 @@ class ReportController extends Controller
 
     public function usersReportScorm()
     {
-        dd('here');
+        // $contents = DB::table('scormvars_master')->pluck('content_id')->toArray();
+        // $contents_unique = array_unique($contents);
+        // $scorms = Content::whereIn('id',$contents_unique);
+
+        $user_id = request()->user_id;
+        $user = User::find($user_id);
+
+        $scorms = DB::table('scormvars_master')
+        ->join('users', function ($join) {
+            $join->on('scormvars_master.user_id', '=', 'users.id');
+            })
+        ->join('contents', function ($join) {
+        $join->on('scormvars_master.content_id', '=', 'contents.id');
+        })
+        ->join('courses', function ($join) {
+            $join->on('courses.id', '=', 'contents.course_id');
+            })
+        ->where('scormvars_master.user_id',$user_id)->select('contents.id','courses.title as crtitle','contents.title as cotitle','scormvars_master.date','scormvars_master.score','scormvars_master.is_complete')->get();
+        // dd($scorms);
+
+        return view('training.reports.users.user_report',compact('user_id', 'scorms','user'));
+
+
     }
 
     public function usersReportOverview()

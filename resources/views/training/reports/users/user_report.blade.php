@@ -26,4 +26,8 @@
         @include('training.reports.users.tests')
     @endif
 
+    @if(isset($scorms))
+        @include('training.reports.users.scorms')
+    @endif
+
 @endsection
