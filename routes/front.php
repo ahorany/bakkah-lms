@@ -44,6 +44,7 @@ Route::group([
         Route::get('resume/{course_id}', [\App\Http\Controllers\Front\CourseController::class, 'resume'])->name('resume');
         Route::post('rate', [\App\Http\Controllers\Front\CourseController::class, 'user_rate'])->name('rate');
         Route::post('update_completed_status', [\App\Http\Controllers\Front\CourseController::class, 'update_completed_status'])->name('update_completed_status');
+        Route::get('/pdf/save_page', [\App\Http\Controllers\Front\CourseController::class, 'save_page'])->name('save_page');
 
 
 

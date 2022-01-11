@@ -385,7 +385,7 @@
         const file = iframe_el.parentElement;
 
         let file_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code
-        let user_id = {{ auth()->id() }} // It depends on your code too
+        let user_id = {{ auth()->id() }}        // It depends on your code too
         var post_type = "{{$content->post_type}}";
         fetch('{{url("file")}}/' +
                 file_id +

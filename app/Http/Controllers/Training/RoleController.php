@@ -74,7 +74,7 @@ class RoleController extends Controller
                 ->whereNull('parent_id')
                 ->orderBy('order')
                 ->get();
-
+                // dd($pages);
         $infrastructures = Infrastructure::where('type', 'aside')
                 ->whereNotNull('parent_id')
                 ->orderBy('order')

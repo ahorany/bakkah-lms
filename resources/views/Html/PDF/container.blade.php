@@ -102,6 +102,7 @@
             -ms-transform: rotate(360deg);
             -o-transform: rotate(360deg);
         }
+
     }
 
     /* by esraa eid 31-12-2021 */
@@ -115,8 +116,12 @@
             </svg>
         </button>
 
+        <div class="loading">
+            Loading ...
+        </div>
+        <div style="display:none;" id="after_loading">
         ( <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span> )
-
+        </div>
         <button id="next">
             <svg id="Group_92" data-name="Group 92" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="auto" viewBox="0 0 14.836 24.835">
                 <defs>
@@ -155,6 +160,7 @@
     </div>
     <canvas id="the-canvas"></canvas>
 </div>
+
 <script>
 
     var url = "{{CustomAsset('upload/files/presentations/'.$file)}}"
@@ -168,8 +174,10 @@
     var container = document.getElementById('the-canvas');
 
 // var scale = screen.width/1000;
+var pageNum = parseFloat('<?= $page_num??1 ?>');
+
+
 var pdfDoc = null,
-    pageNum = 1,
     pageRendering = false,
     pageNumPending = null
 
@@ -242,6 +250,7 @@ var pdfDoc = null,
             return;
         }
         pageNum--;
+        save_page(pageNum);
         queueRenderPage(pageNum);
     }
     document.getElementById('prev').addEventListener('click', onPrevPage);
@@ -254,6 +263,7 @@ var pdfDoc = null,
             return;
         }
         pageNum++;
+        save_page(pageNum);
         queueRenderPage(pageNum);
     }
     document.getElementById('next').addEventListener('click', onNextPage);
@@ -268,6 +278,9 @@ var pdfDoc = null,
 // Initial/first page rendering
         renderPage(pageNum);
         document.querySelector('.anim2').remove();
+        document.querySelector('.loading').remove();
+        document.getElementById("after_loading").style.display = "block";
+
     });
 
     document.addEventListener('keydown', logKey);
@@ -281,4 +294,22 @@ var pdfDoc = null,
             onPrevPage();
         }
     }
+
+    function save_page(pageNum)
+    {
+        var content_id = '<?= $content->id ?>';
+        axios.get("{{route('user.save_page')}}", {
+            params:{
+                content_id  : content_id,
+                pageNum     : pageNum,
+            }
+        })
+        .then(response => {
+        })
+        .catch(e => {
+        });
+    }
+
 </script>
+
+

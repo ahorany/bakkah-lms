@@ -8,6 +8,7 @@ use App\Models\Training\CourseRegistration;
 use App\Models\Training\UserContent;
 use Carbon\Carbon;
 use App\Models\Training\Course;
+use App\Models\Training\UserContentsPdf;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
@@ -290,9 +291,10 @@ class CourseController extends Controller
                 $popup_compelte_status = true;
             } // end if
         } // end if
-
-        return view('pages.file',compact('content','previous','next','enabled','time_limit','popup_compelte_status'));
+        $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',auth()->user()->id)->pluck('current_page')->first();
+        return view('pages.file',compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num'));
     } // end function
+
 
     /*
      *  IF user is not register in course AND user role not admin => return false
@@ -460,6 +462,19 @@ class CourseController extends Controller
             ]);
     } // end function
 
+    public function save_page()
+    {
+        // dump(request()->pageNum);
+        // dump(request()->content_id);
+        // dd(auth()->user()->id);
+
+        $content = UserContentsPdf::updateOrCreate([
+            'content_id' => request()->content_id,
+            'user_id' => auth()->user()->id
+        ],[
+            'current_page' => request()->pageNum,
+        ]);
+    }
 
     /****************************************************************************/
 
