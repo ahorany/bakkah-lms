@@ -174,8 +174,11 @@
                         <p>End date : {!!$exam->exam->end_date??'<span style="font-size:19px">∞</span>'!!}</p>
                         <p>Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
                         <p>Exam attempt count : {!! $exam->exam->attempt_count == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->attempt_count!!}</p>
-                        <p>Your attempts  : {{$users_exams_count}}</p>
-                        <p>Marks  : {{$exam->exam->exam_mark}} </p>
+                        <p>Your attempts : {{$users_exams_count}}</p>
+                        <p>Marks : {{$exam->exam->exam_mark}} </p>
+                        @if($exam->exam->pass_mark != 0)
+                            <p>Pass Mark : {{$exam->exam->pass_mark}} % </p>
+                        @endif
 
 
                         @if(count($exam->questions) == 0 || (\Carbon\Carbon::create($exam->exam->start_date)  > \Carbon\Carbon::now() && !is_null($exam->exam->start_date)))

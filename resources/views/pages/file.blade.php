@@ -270,7 +270,7 @@
                             <?php
                             $SCOInstanceID = ScormId($content->id);
                             ?>
-                            <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&content_id={{$content->id}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
+                            <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&content_id={{$content->id}}&course_id={{$content->course->id}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
                             @if(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html') ))
                                 <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
                             @elseif(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html') ))

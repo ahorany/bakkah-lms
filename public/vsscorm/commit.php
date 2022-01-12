@@ -31,10 +31,15 @@ require "config.php";
 dbConnect();
 
 // read SCOInstanceID
-$SCOInstanceID = $_REQUEST['SCOInstanceID'] * 1;
+$SCOInstanceID = $_REQUEST['SCOInstanceID'];// * 1;
+$content_id = $_REQUEST['content_id'];
+$user_id = $_REQUEST['user_id'];
+
 $data = $_REQUEST['data'];
 if (! is_array($data)) { $data = array($data); }
 
+$score = 0;
+$lesson_status = 0;
 // iterate through the data elements
 foreach ($data as $varname => $varvalue) {
 
@@ -42,10 +47,14 @@ foreach ($data as $varname => $varvalue) {
 	writeElement($varname,$varvalue);
 
 	// special cases - set appropriate values in the LMS tables when they are set by the course
-	if ($varname == "cmi.core.score.raw") { setInLMS('TestScore',$varvalue); }
-	if ($varname == "cmi.core.lesson_status") { setInLMS('Finished',$varvalue); }
-
+	if ($varname == "cmi.core.score.raw") { setInLMS('TestScore',$varvalue); $score = $varvalue; }
+	if ($varname == "cmi.core.lesson_status") { setInLMS('Finished',$varvalue); $lesson_status = $varvalue; }
 }
+
+WriteElementForMaster([
+    'lesson_status'=>$lesson_status,
+    'score'=>$score,
+]);
 
 // return value to the calling program
 print "true";

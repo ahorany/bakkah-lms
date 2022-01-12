@@ -32,7 +32,7 @@
                 </td>
                 <?php
                         $attempts = DB::table('scormvars_master')->where('content_id',$post->id)->count();
-                        $passed =   DB::table('scormvars_master')->where('content_id',$post->id)->where('is_complete',1)->count();
+                        $passed =   DB::table('scormvars_master')->where('content_id',$post->id)->where('lesson_status','completed')->count();
                         // dump($post->id.'--'.$passed);
                 ?>
                 <td class="px-1">

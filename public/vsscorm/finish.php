@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-/* 
+/*
 
 VS SCORM 1.2 RTE - finish.php
 Rev 2010-04-30-01
@@ -18,7 +18,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, 
+Foundation, Inc., 51 Franklin Street, Fifth Floor,
 Boston, MA 02110-1301, USA.
 
 */
@@ -31,7 +31,9 @@ require "config.php";
 dbConnect();
 
 // read form variables
-$SCOInstanceID = $_REQUEST['SCOInstanceID'] * 1;
+$SCOInstanceID = $_REQUEST['SCOInstanceID'];// * 1;
+$content_id = $_REQUEST['content_id'];
+$user_id = $_REQUEST['user_id'];
 
 // ------------------------------------------------------------------------------------
 // set cmi.core.lesson_status
@@ -42,6 +44,10 @@ $lessonstatus = readElement('cmi.core.lesson_status');
 // if it's 'not attempted', change it to 'completed'
 if ($lessonstatus == 'not attempted') {
 	writeElement('cmi.core.lesson_status','completed');
+    WriteElementForMaster([
+        'lesson_status'=>'completed',
+        'score'=>0,
+    ]);
 }
 
 // has a mastery score been specified in the IMS manifest file?
@@ -57,9 +63,17 @@ if ($masteryscore) {
 	// set cmi.core.lesson_status to passed/failed
 	if ($rawscore >= $masteryscore) {
 		writeElement('cmi.core.lesson_status','passed');
+        WriteElementForMaster([
+            'lesson_status'=>'passed',
+            'score'=>$rawscore,
+        ]);
 	}
 	else {
 		writeElement('cmi.core.lesson_status','failed');
+        WriteElementForMaster([
+            'lesson_status'=>'failed',
+            'score'=>$rawscore,
+        ]);
 	}
 
 }

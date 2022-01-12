@@ -75,12 +75,23 @@ function writeElement($VarName,$VarValue) {
 	// $safeVarName = mysql_escape_string($VarName);
 	// $safeVarValue = mysql_escape_string($VarValue);
 	// mysql_query("update scormvars set VarValue='$safeVarValue' where ((SCOInstanceID=$SCOInstanceID) and (VarName='$safeVarName'))",$link);
-
 	return;
-
 }
 
-function initializeElement($VarName,$VarValue) {
+function WriteElementForMaster($args=[]){
+
+    global $mysqli;
+	global $user_id;
+	global $content_id;
+
+    $score = ($args['score']!='')?$args['score']:0;
+    $sql = "update scormvars_master set lesson_status='".$args['lesson_status']."', score='".$score."'
+    where user_id='".$user_id."'
+    and content_id='".$content_id."'";
+    $mysqli -> query($sql);
+}
+
+function initializeElement($VarName,$VarValue, $master_id=null) {
 
 	global $mysqli;
 	global $SCOInstanceID;
@@ -91,7 +102,9 @@ function initializeElement($VarName,$VarValue) {
 
 	// if nothing found ...
 	if (! $result -> num_rows) {
-		$mysqli -> query("insert into scormvars (SCOInstanceID,VarName,VarValue) values ($SCOInstanceID,'$safeVarName','$safeVarValue')");
+
+		$mysqli -> query("insert into scormvars (SCOInstanceID,VarName,VarValue,master_id)
+        values ($SCOInstanceID,'$safeVarName','$safeVarValue','$master_id')");
 	}
 
 	// // make safe for the database
@@ -107,10 +120,41 @@ function initializeElement($VarName,$VarValue) {
 	// }
 }
 
+function initialize__scormvars_master($mysqli){
+
+    $result_master = $mysqli -> query("select count(id)
+    from scormvars_master
+    where user_id='".getFromLMS('cmi.core.student_id')."'
+    and content_id='".getFromLMS('cmi.core.content_id')."'
+    and course_id='".getFromLMS('cmi.core.course_id')."'");
+	list($count_master) = $result_master -> fetch_row();
+
+	$insert_id = null;
+    if ($result_master -> num_rows)
+    {
+        if($count_master==0)
+        {
+            $now = date("Y-m-d H:i:s");
+
+            $sql = "insert into scormvars_master (user_id, content_id
+            , course_id, created_by, updated_by
+            , created_at, updated_at, date) values ('".getFromLMS('cmi.core.student_id')."', '".getFromLMS('cmi.core.content_id')."'
+            , '".getFromLMS('cmi.core.course_id')."', '".getFromLMS('cmi.core.student_id')."'
+            , '".getFromLMS('cmi.core.student_id')."'
+            , '".$now."', '".$now."', '".$now."')";
+            $mysqli -> query($sql);
+			$insert_id = $mysqli->insert_id;
+        }
+    }
+	return $insert_id;
+}
+
 function initializeSCO() {
 
 	global $mysqli;
 	global $SCOInstanceID;
+
+    $master_id = initialize__scormvars_master($mysqli);
 
 	// has the SCO previously been initialized?
 	$result = $mysqli -> query("select count(VarName) from scormvars where (SCOInstanceID=$SCOInstanceID)");
@@ -123,32 +167,34 @@ function initializeSCO() {
 	if (! $count) {
 
 		// elements that tell the SCO which other elements are supported by this API
-		initializeElement('cmi.core._children','student_id,student_name,lesson_location,credit,lesson_status,entry,score,total_time,exit,session_time');
-		initializeElement('cmi.core.score._children','raw');
+		initializeElement('cmi.core._children','student_id,student_name,lesson_location,credit,lesson_status,entry,score,total_time,exit,session_time', $master_id);
+		initializeElement('cmi.core.score._children','raw', $master_id);
 
 		// student information
-		initializeElement('cmi.core.student_name',getFromLMS('cmi.core.student_name'));
-		initializeElement('cmi.core.student_id',getFromLMS('cmi.core.student_id'));
+		initializeElement('cmi.core.student_name',getFromLMS('cmi.core.student_name'), $master_id);
+		initializeElement('cmi.core.student_id',getFromLMS('cmi.core.student_id'), $master_id);
+
+		//
+		// initializeElement('cmi.core.content_id',getFromLMS('cmi.content_id'), $master_id);
 
 		// test score
-		initializeElement('cmi.core.score.raw','');
-		initializeElement('adlcp:masteryscore',getFromLMS('adlcp:masteryscore'));
+		initializeElement('cmi.core.score.raw','', $master_id);
+		initializeElement('adlcp:masteryscore',getFromLMS('adlcp:masteryscore'), $master_id);
 
 		// SCO launch and suspend data
-		initializeElement('cmi.launch_data',getFromLMS('cmi.launch_data'));
-		initializeElement('cmi.content_id',getFromLMS('cmi.content_id'));
-		initializeElement('cmi.suspend_data','');
+		initializeElement('cmi.launch_data',getFromLMS('cmi.launch_data'), $master_id);
+		initializeElement('cmi.suspend_data','', $master_id);
 
 		// progress and completion tracking
-		initializeElement('cmi.core.lesson_location','');
-		initializeElement('cmi.core.credit','credit');
-		initializeElement('cmi.core.lesson_status','not attempted');
-		initializeElement('cmi.core.entry','ab-initio');
-		initializeElement('cmi.core.exit','');
+		initializeElement('cmi.core.lesson_location','', $master_id);
+		initializeElement('cmi.core.credit','credit', $master_id);
+		initializeElement('cmi.core.lesson_status','not attempted', $master_id);
+		initializeElement('cmi.core.entry','ab-initio', $master_id);
+		initializeElement('cmi.core.exit','', $master_id);
 
 		// seat time
-		initializeElement('cmi.core.total_time','0000:00:00');
-		initializeElement('cmi.core.session_time','');
+		initializeElement('cmi.core.total_time','0000:00:00', $master_id);
+		initializeElement('cmi.core.session_time','', $master_id);
 
 	}
 
@@ -213,8 +259,12 @@ function getFromLMS($varname) {
 			$varvalue = "";
 			break;
 
-        case 'cmi.content_id':
+        case 'cmi.core.content_id':
             $varvalue = $_REQUEST['content_id'];
+            break;
+
+        case 'cmi.core.course_id':
+            $varvalue = $_REQUEST['course_id'];
             break;
 
 		default:

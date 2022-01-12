@@ -36,7 +36,7 @@ use App\Models\Training\CourseRegistration;
             <span class="td-title">{{$post->date}}</span>
         </td>
         <td>
-            @if($post->is_complete == 1)
+            @if($post->lesson_status == 'completed')
                 <span class="d-block badge badge-success mb-1 ">
                     PASSED
                 </span>

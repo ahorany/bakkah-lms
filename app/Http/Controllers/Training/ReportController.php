@@ -32,7 +32,7 @@ class ReportController extends Controller
         // $contents_unique = array_unique($contents);
         // $count = count($contents_unique);
         $attempts = DB::table('scormvars_master')->count();
-        $passed =   DB::table('scormvars_master')->where('is_complete',1)->count();
+        $passed =   DB::table('scormvars_master')->where('lesson_status','completed')->count();
         $overview = 1;
         return view('training.reports.scorms.scorms_report',compact('count','attempts','passed','overview'));
     }
@@ -104,7 +104,7 @@ class ReportController extends Controller
         ->join('courses', function ($join) {
             $join->on('courses.id', '=', 'contents.course_id');
             })
-        ->where('scormvars_master.user_id',$user_id)->select('contents.id','courses.title as crtitle','contents.title as cotitle','scormvars_master.date','scormvars_master.score','scormvars_master.is_complete')->get();
+        ->where('scormvars_master.user_id',$user_id)->select('contents.id','courses.title as crtitle','contents.title as cotitle','scormvars_master.date','scormvars_master.score','scormvars_master.lesson_status')->get();
         // dd($scorms);
 
         return view('training.reports.users.user_report',compact('user_id', 'scorms','user'));

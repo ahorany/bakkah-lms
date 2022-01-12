@@ -28,6 +28,8 @@ require "subs.php";
 
 // input data
 $SCOInstanceID = $_REQUEST['SCOInstanceID'];// * 1;
+$content_id = $_REQUEST['content_id'];
+$user_id = $_REQUEST['user_id'];
 
 //  read database login information and connect
 require "config.php";
@@ -121,6 +123,9 @@ function LMSCommit(dummyString) {
 	params += "&data[cmi.core.score.raw]="+urlencode(cache['cmi.core.score.raw']);
 	params += "&data[cmi.suspend_data]="+urlencode(cache['cmi.suspend_data']);
 
+    params += '&content_id=<?php print $content_id; ?>';
+    params += '&user_id=<?php print $user_id; ?>';
+
 	// request headers
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.setRequestHeader("Content-length", params.length);
@@ -160,7 +165,7 @@ function LMSFinish(dummyString) {
 	var d = new Date();
 
 	// set up request parameters - uses GET method
-	req.open('GET','finish.php?SCOInstanceID=<?php print $SCOInstanceID; ?>&code='+d.getTime(),false);
+	req.open('GET','finish.php?SCOInstanceID=<?php print $SCOInstanceID; ?>&content_id=<?php print $content_id; ?>&user_id=<?php print $user_id; ?>&code='+d.getTime(),false);
 
 	// submit to the server for processing
 	req.send(null);
