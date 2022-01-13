@@ -8,7 +8,7 @@
     letter-spacing: .1rem;
 }
 #main-vue-element .course-image {
-    padding-top: 25px;
+    /* padding-top: 25px; */
 }
 .progress-main {
     width: 60% !important;
@@ -140,7 +140,7 @@ svg {
                             transform="translate(10.125) rotate(90)" fill="#fb4400" />
                     </svg>
                     </a>
-                    <div class="dropdown d-none" style="left: 0; width: max-content !important;">
+                    <div class="dropdown d-none" style="left: 0; min-width:auto; width: max-content !important;">
                         <div class="p-2">
                            <template v-for="(item, index) in 5">
                               <span @click="review(item)" v-if="item <= rate">
@@ -207,6 +207,7 @@ svg {
                 @foreach($section->contents as $k => $content)
 
                 <li>
+<<<<<<< HEAD
                 {{-- <div v-if=>
                     <img  style="width:20px;"  src="{{$src_flag}}">
                 </div>
@@ -216,6 +217,10 @@ svg {
 
                 <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
                 <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
+=======
+                <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  ) href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
+                <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
+>>>>>>> 8ababcce9b7c1640a18c95da9363525627bac7ba
                 <span> {{$content->title}}</span>
                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                     <span class="svg">
@@ -260,28 +265,32 @@ svg {
         </div>
         </a>
         @endif
-        <div class="card p-30 learning-file activity" style="padding: 0 !important;">
+
+        @include('Html.activity-card', [
+            'activities'=>$activities,
+            'cls'=>'card p-30 activity',
+        ])
+        {{--<div class="card p-30 learning-file activity" style="padding: 0 !important;">
             <h3>{{__('education.Activity Completed')}}</h3>
             <ul style="list-style: none; padding: 0;">
-                <?php $lang = app()->getLocale(); ?>
+                <php $lang = app()->getLocale(); ?>
                 @foreach($activities as $activity)
                 <li>
                 @if($activity->type == 'exam')
-                <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">
-                <img  style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
-                <span>{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</span>
-                </a>
+                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.exam',$activity->content_id)}}">
+                    <img class="activity_icon" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
+                    <span>{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</span>
+                    </a>
                 @else
-                <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">
-                <img  style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
-                <span>{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</span>
-                </a>
+                    <a style="color: #6a6a6a !important;" href="{{ CustomRoute('user.course_preview',$activity->content_id)}}">
+                    <img class="activity_icon" src="{{CustomAsset('icons/activity.svg')}}" alt="activity_icon">
+                    <span>{{$activity->content_title}} - ({{ json_decode($activity->course_title)->$lang }})</span>
+                    </a>
                 @endif
                 </li>
                 @endforeach
             </ul>
-
-        </div>
+        </div>--}}
     </a>
     @endif
 </div>

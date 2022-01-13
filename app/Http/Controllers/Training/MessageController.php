@@ -104,10 +104,11 @@ class MessageController extends Controller
             $courses = CourseRegistration::where('user_id',auth()->user()->id)->with(['course.users'])->get();
         }
         $roles = Role::where('id','!=',3)->get();
-        return view('training.messages.form',compact('courses','roles'));
+        return view('training.messages.form',compact('courses', 'roles'));
     }
 
     public function sendMessage(){
+
         $rules = [
             "course_id"   => "required|exists:courses,id",
             "recipient_id"   => "required|exists:roles,id",
@@ -137,8 +138,9 @@ class MessageController extends Controller
             'description' => request()->description,
         ]);
 
-       $recipients = CourseRegistration::where('course_id', request()->course_id)->where('role_id',2)->get();
-
+       $recipients = CourseRegistration::where('course_id', request()->course_id)
+       ->whereIn('role_id', [2, 1])
+       ->get();
         foreach ($recipients as $recipient){
 
             RecipientMessage::create([
@@ -154,24 +156,22 @@ class MessageController extends Controller
             }
         }
 
-        $admins = User::whereHas('roles',function ($q){
-            $q->where('role_id',1);
-        })->get();
+        // $admins = User::whereHas('roles',function ($q){
+        //     $q->where('role_id', 1);
+        // })->get();
+        // foreach ($admins as $admin){
 
-        foreach ($admins as $admin){
+        //     RecipientMessage::create([
+        //         'user_id' => $admin->id,
+        //         'role_id' => 1,
+        //         'message_id' => $msg->id,
+        //     ]);
 
-            RecipientMessage::create([
-                'user_id' => $admin->id,
-                'role_id' => 1,
-                'message_id' => $msg->id,
-            ]);
-
-            if(env('SEND_MAIL')==true){
-                $user = User::where('id',$admin->id)->first();
-                Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
-            }
-        }
-
+        //     if(env('SEND_MAIL')==true){
+        //         $user = User::where('id',$admin->id)->first();
+        //         Mail::to($user->email)->send(new MessageMail($msg->id , $user->id));
+        //     }
+        // }
         return redirect()->route('user.messages.inbox',['type' => 'sent']);
     }
 
@@ -185,6 +185,7 @@ class MessageController extends Controller
 
 
     public function addreply(){
+
        $message =  Message::where('id',request()->message_id)
             ->with(['course'])
             ->first();

@@ -670,9 +670,10 @@ li.has-dropdown .dropdown {
     background-clip: padding-box;
     /* border: 1px solid rgba(0, 0, 0, 0.15); */
     box-shadow: 0 0 5px 1px #0000001a;
-    border-radius: 15px;
+    /* border-radius: 15px; */
+    border-radius: 5px;
     overflow: hidden;
-    padding: 0 20px;
+    /* padding: 0 20px; */
 }
 
 li.has-dropdown .dropdown a {

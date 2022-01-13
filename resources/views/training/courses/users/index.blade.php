@@ -84,7 +84,7 @@
         </div>
           <template v-if="course">
 
-            <table class="table table-striped" style="width: 97%; margin: 0 auto;">>
+            <table class="table table-striped" style="width: 97%; margin: 0 auto;">
                 <thead>
                 <tr>
                     <th scope="col">#</th>

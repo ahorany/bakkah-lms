@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserMail;
 use App\Notifications\sendTestNotfication;
 use App\User;
 use Carbon\Carbon;
 // use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Sitemap\SitemapGenerator;
 
@@ -39,6 +41,9 @@ class HomeController extends Controller
      *  Home Page
      */
     public function home() {
+
+        // Mail::to("abed_348@hotmail.com")->send(new UserMail(1 , '1111111'));
+        // dd('send');
         // clear session => (Sidebar active color)
         session()->put('infastructure_id',-1);
 
