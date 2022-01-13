@@ -138,7 +138,7 @@
                                     $count_questions += $data->count;
                                 @endphp
                                 <td>
-                                    {{$data->result??0}}
+                                    {{$data->result??null}}
                                     @php
                                         if($data->result == 0 || $data->total == 0){
                                             $width = 0;

@@ -46,6 +46,10 @@ svg {
            }
        }
    }
+
+    $src_flag = CustomAsset('icons/flag.svg');
+    $src_flag_focus = CustomAsset('icons/flag_focus.svg');
+
    ?>
 {{--
 <div class="dash-header course_info">
@@ -56,6 +60,7 @@ svg {
    <br>
 </div>
 --}}
+
 <div class="course_details">
     <div class="dash-header course-header d-flex align-items-md-end flex-column flex-md-row px-3">
         <div class="text-center course-image w-30 mb-4 mt-2 mb-md-0">
@@ -200,7 +205,15 @@ svg {
             @isset($section->contents)
             <ul>
                 @foreach($section->contents as $k => $content)
+
                 <li>
+                {{-- <div v-if=>
+                    <img  style="width:20px;"  src="{{$src_flag}}">
+                </div>
+                <div @if($content->flag == 1) @endif>
+                    <img  style="width:20px;"  src="{{$src_flag_focus}}">
+                </div> --}}
+
                 <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
                 <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
                 <span> {{$content->title}}</span>

@@ -78,11 +78,16 @@ class QuestionsImport implements ToCollection, WithHeadingRow
                     elseif($row['fraction_4'] == '100' && $i == 4)
                         $check_correct = 1;
 
-                    Answer::create([
-                        'title'             => $row['answer'.$i],
-                        'question_id'       => $question_id,
-                        'check_correct'     => $check_correct,
-                    ]);
+                    if($row['answer'.$i] != '')
+                    {
+                        // if()
+                        Answer::create([
+                            'title'             => $row['answer'.$i],
+                            'question_id'       => $question_id,
+                            'check_correct'     => $check_correct,
+                        ]);
+                    }
+
                 }
             }
             $mark += $row['default_garde'];
@@ -97,4 +102,9 @@ class QuestionsImport implements ToCollection, WithHeadingRow
 
 
 }
+
+// DELETE from answers where question_id in ( SELECT id FROM `questions` WHERE exam_id in (403,404,405,410) );
+// DELETE from question_units where question_id in ( SELECT id FROM `questions` WHERE exam_id in (403,404,405,410) );
+//DELETE from questions WHERE exam_id in (403,404,405,410);
+//update exams set exam_mark = 0 where `content_id` in (403,404,405,410);
 
