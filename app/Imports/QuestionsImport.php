@@ -26,7 +26,7 @@ class QuestionsImport implements ToCollection, WithHeadingRow
     {
 
         // dd(request()->all());
-        // dd($rows);
+
         $mark = 0;
         foreach ($rows as $row)
         {
@@ -55,6 +55,16 @@ class QuestionsImport implements ToCollection, WithHeadingRow
 
                 $question_id = DB::getPdo()->lastInsertId();
 
+                $units = explode(',',$row['unit_id']);
+                foreach($units as $unit)
+                {
+                    DB::table('question_units')->insert([
+                        [
+                            'unit_id'            => $unit,
+                            'question_id'        => $question_id,
+                        ],
+                    ]);
+                }
 
                 for($i=1;$i<=4;$i++)
                 {
