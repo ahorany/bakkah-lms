@@ -6,6 +6,13 @@
 
 @section('content')
 
+    <style>
+    @media (max-width: 767.98px) {
+        .p-5 {
+            padding: 1rem !important;
+        }
+    }
+    </style>
     <div class="container">
         <div class="card px-5 py-3 mb-2" style="direction: rtl;">
             <a href="{{route('user.messages.inbox')}}" class="cyan dflex">

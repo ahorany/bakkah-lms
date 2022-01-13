@@ -22,6 +22,19 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @yield('style')
+
+    <style>
+    .activity_icon {
+        width:28.126px;
+        height:28.127px;
+        vertical-align: middle;
+        color: rgb(106, 106, 106) !important;
+        filter: opacity(0.7);
+    }
+    .padding-list {
+        padding: 5px 10px !important;
+    }
+    </style>
 </head>
 
 <body>

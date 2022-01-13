@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body style="width: 90%; margin: 0 auto; font-family: sans-serif; text-align:center;">
-    <header style="background: url({{CustomAsset('images/email/Rectangle/1.png')}}); position: relative; height: 130px;">
+    <header style="background: url({{CustomAsset('images/email/Rectangle\ 1.png')}}); position: relative; height: 130px;">
         <img src="{{CustomAsset('images/email/top-img.png')}}" alt="" style="width: 100px; height:100px; position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%);">
     </header>
     <main style="text-align: center; width: 90%; margin: 80px auto 0;">

@@ -9,6 +9,18 @@
         line-height: 2.2;
         /* border-radius: 50%; */
     }
+    .svg-icons {
+        width: 18px;
+        height: 18px;
+        opacity: 0.3;
+        margin-top: 2px;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+    .svg-icons-h {
+        opacity: 0.9;
+        margin-right: 5px;
+    }
 </style>
 <header class="navbar navbar-dark sticky-top bg-white flex-md-nowrap p-0 shadow lms-header">
     <a class="navbar-brand col-md-3 col-lg-3 col-xl-2 me-0 px-3" href="{{CustomRoute('user.home')}}">
@@ -68,26 +80,20 @@
                     <div class="dropdown d-none">
                         <ul class="postition-relative">
                             <li>
-                                <a href="{{route('user.add_message')}}" style="border-bottom: 1px solid gainsboro;">
+                                {{-- style="border-bottom: 1px solid gainsboro;" --}}
+                                <a class="padding-list" href="{{route('user.add_message')}}">
                                     <span class="d-flex">
-                                        <svg  version="1.1" id="svg_icon1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  viewBox="0 0 60 60"  xml:space="preserve" style="margin-right: 4px;" >
-                                        <path d="M57.28,30.77c-0.25,0.89-0.57,1.75-1.22,2.44c-0.94,1-2.09,1.53-3.47,1.53c-5.55,0-11.1,0-16.65,0c-0.21,0-0.41,0-0.69,0
-                                        c0,0.23,0,0.43,0,0.64c0,5.57,0,11.13,0,16.7c0,2.37-1.73,4.34-4.08,4.67c-2.26,0.32-4.47-1.12-5.12-3.36
-                                        c-0.13-0.46-0.18-0.96-0.19-1.44c-0.01-5.53-0.01-11.06-0.01-16.6c0-0.19,0-0.37,0-0.61c-0.25,0-0.46,0-0.66,0
-                                        c-5.57,0-11.14,0-16.7,0c-2.16,0-4.08-1.52-4.55-3.6c-0.49-2.15,0.5-4.36,2.48-5.28c0.66-0.3,1.43-0.49,2.15-0.5
-                                        c5.55-0.04,11.1-0.02,16.65-0.02c0.19,0,0.38,0,0.64,0c0-0.23,0-0.44,0-0.64c0-5.5,0-10.99,0-16.49c0-2.48,1.36-4.21,3.78-4.81
-                                        c0.07-0.02,0.13-0.06,0.19-0.09c0.49,0,0.97,0,1.46,0c0.05,0.03,0.09,0.06,0.14,0.07c2.49,0.62,3.83,2.33,3.83,4.88
-                                        c0,5.48,0,10.96,0,16.44c0,0.2,0,0.4,0,0.64c0.28,0,0.48,0,0.69,0c5.55,0,11.1,0,16.65,0c1.38,0,2.53,0.53,3.47,1.53
-                                        c0.65,0.69,0.97,1.55,1.22,2.44C57.28,29.79,57.28,30.28,57.28,30.77z"/>
-                                        </svg>
+                                        <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/send-msg.svg')}}" alt="{{__('education.Send Message')}}"/>
                                         {{__('education.Send Message')}}
                                     </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('user.messages.inbox',['type'=>'sent'])}}" style="border-bottom: 1px solid gainsboro;">
+                                {{-- style="border-bottom: 1px solid gainsboro;" --}}
+                                <a class="padding-list" href="{{route('user.messages.inbox',['type'=>'sent'])}}">
                                     <span class="d-flex">
-                                        <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 4px;" xml:space="preserve">
+                                        <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/sent-item.svg')}}" alt="{{__('education.Sent Items')}}"/>
+                                        {{-- <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 4px;" xml:space="preserve">
                                             <path d="M4.4,46.85c0.51-1.03,1.39-1.53,2.43-1.93C33.1,34.91,59.35,24.89,85.6,14.86c1.09-0.42,2.1-0.46,3,0.39
                                                 c0.9,0.85,0.91,1.87,0.57,2.98C82.5,40.08,75.83,61.94,69.15,83.8c-0.68,2.24-2.46,2.82-4.35,1.42c-7.15-5.3-14.3-10.61-21.44-15.92
                                                 c-0.26-0.2-0.53-0.38-0.86-0.61c-0.26,0.51-0.51,0.96-0.74,1.42c-2.8,5.55-5.59,11.09-8.38,16.64c-0.67,1.33-1.66,1.9-2.83,1.66
@@ -99,15 +105,16 @@
                                                 C50.49,33.65,32.28,40.6,13.96,47.59z M33.45,75.04c0.05,0.02,0.1,0.03,0.14,0.05c0.13-0.23,0.26-0.46,0.38-0.7
                                                 c1.7-3.37,3.4-6.76,5.12-10.12c0.29-0.56,0.66-1.09,1.09-1.55c8.63-9.13,17.27-18.24,25.91-27.35c0.2-0.21,0.4-0.44,0.6-0.65
                                                 C55.66,42.4,44.74,50.17,33.83,57.96c-0.2,0.14-0.37,0.48-0.37,0.73C33.44,64.14,33.45,69.59,33.45,75.04z"/>
-                                            </svg>
+                                            </svg> --}}
                                         {{__('education.Sent Items')}}
                                     </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('user.messages.inbox',['type'=>'inbox'])}}">
+                                <a class="padding-list" href="{{route('user.messages.inbox',['type'=>'inbox'])}}">
                                     <span class="d-flex">
-                                        <svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 4px;"xml:space="preserve">
+                                        <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/inbox.svg')}}" alt="{{__('education.Inbox')}}"/>
+                                        {{-- <svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="margin-right: 4px;"xml:space="preserve">
                                             <g>
                                                 <path d="M93.14,87.2c-28.75,0-57.39,0-86.13,0c0-0.39,0-0.74,0-1.09c0-9-0.05-18.01,0.04-27.01c0.02-2.34,0.47-4.69,0.77-7.02
                                                     c0.55-4.26,1.14-8.52,1.71-12.78c0.64-4.76,1.28-9.53,1.91-14.29c0.5-3.79,1-7.58,1.5-11.36c0.04-0.32,0.1-0.65,0.16-1.02
@@ -119,7 +126,7 @@
                                                     c-0.15-0.02-0.24-0.04-0.33-0.04c-6.43,0-12.86,0-19.29-0.02c-0.61,0-0.71,0.27-0.82,0.78c-1.6,7.49-8.12,13.08-15.75,13.56
                                                     c-8,0.5-15.34-4.62-17.62-12.31c-0.19-0.65-0.36-1.32-0.53-1.97c-6.76,0-13.47,0-20.23,0C12.79,68.12,12.79,74.75,12.79,81.45z"/>
                                             </g>
-                                        </svg>
+                                        </svg> --}}
                                         {{__('education.Inbox')}}
                                     </span>
                                 </a>
@@ -154,14 +161,15 @@
 
             <div class="dropdown d-none">
                 <ul class="postition-relative">
-                    <li class="dropdown-item borderBottom" style="border-bottom: 1px solid gainsboro; padding: 15px 0;">
+                    {{-- style="border-bottom: 1px solid gainsboro;" --}}
+                    <li class="dropdown-item borderBottom padding-list">
                         <div>
                             <h2 style="font-size: 1rem; margin: 0; ">{{auth()->user()->trans_name}}</h2>
                             {{-- <small style="color: #73726c; font-weight:700;">{{$user_role_name}}</small> --}}
                         </div>
                     </li>
                     <li>
-                        <a href="{{route('user.info')}}" class="d-flex">
+                        <a href="{{route('user.info')}}" class="d-flex padding-list">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
                                 <style type="text/css">
                                     .st0{fill:#FFFFFF;}
@@ -180,7 +188,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('user.certificate')}}" class="d-flex">
+                        <a href="{{route('user.certificate')}}" class="d-flex padding-list">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
                                 <path id="Path_132" data-name="Path 132"
                                       d="M34.5,36h-12A1.5,1.5,0,0,1,21,34.5v-12A1.5,1.5,0,0,1,22.5,21h12A1.5,1.5,0,0,1,36,22.5v12A1.5,1.5,0,0,1,34.5,36Zm-12-13.5v12h12l0-12Zm12-7.5h-12A1.5,1.5,0,0,1,21,13.5V1.5A1.5,1.5,0,0,1,22.5,0h12A1.5,1.5,0,0,1,36,1.5v12A1.5,1.5,0,0,1,34.5,15ZM22.5,1.5v12h12l0-12ZM13.5,36H1.5A1.5,1.5,0,0,1,0,34.5v-12A1.5,1.5,0,0,1,1.5,21h12A1.5,1.5,0,0,1,15,22.5v12A1.5,1.5,0,0,1,13.5,36ZM1.5,22.5v12h12l0-12Zm12-7.5H1.5A1.5,1.5,0,0,1,0,13.5V1.5A1.5,1.5,0,0,1,1.5,0h12A1.5,1.5,0,0,1,15,1.5v12A1.5,1.5,0,0,1,13.5,15ZM1.5,1.5v12h12l0-12Z" />
@@ -191,7 +199,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('user.change_password')}}" class="d-flex">
+                        <a href="{{route('user.change_password')}}" class="d-flex padding-list">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve">
                                 <g>
                                     <path d="M51.34,6.77c1.51,0.22,3.02,0.41,4.52,0.66c6.68,1.13,12.72,3.76,18.18,7.75c0.16,0.11,0.32,0.22,0.65,0.45   c0-1.17-0.02-2.19,0.01-3.22c0.01-0.51,0.03-1.03,0.16-1.51c0.32-1.14,1.38-1.84,2.59-1.77c1.14,0.06,2.09,0.86,2.33,2.01   c0.07,0.36,0.1,0.73,0.1,1.1c0.01,2.81,0.01,5.62,0,8.42c0,2.16-0.69,2.95-2.8,3.32c-2.98,0.52-5.96,1.06-8.94,1.59   c-1.41,0.25-2.73-0.6-3.02-1.96c-0.3-1.39,0.49-2.73,1.9-3.04c1.24-0.28,2.5-0.46,3.75-0.69c0.19-0.03,0.37-0.1,0.84-0.24   c-1.82-1.13-3.39-2.23-5.07-3.13c-6.49-3.49-13.43-5.15-20.78-4.47C29.64,13.52,18.5,21.9,12.34,36.81   c-2.12,5.12-2.87,10.54-2.38,16.07c1.27,14.59,8.51,25.25,21.45,31.97c6.05,3.14,12.59,4.27,19.42,3.84   c15.64-0.97,29.36-11.7,34.13-26.82c1.18-3.76,1.72-7.61,1.8-11.54c0.03-1.33,0.95-2.38,2.18-2.53c1.29-0.16,2.44,0.57,2.81,1.82   c0.09,0.29,0.11,0.61,0.1,0.92c-0.07,10.32-3.34,19.52-9.9,27.48c-6.66,8.08-15.14,13.32-25.46,15.12   c-15.65,2.73-29.15-1.67-40.17-13.19c-5.99-6.27-9.56-13.82-11.05-22.35c-0.23-1.33-0.38-2.68-0.57-4.01c0-2.16,0-4.31,0-6.47   c0.19-1.34,0.34-2.68,0.57-4.01c1.51-8.68,5.23-16.27,11.3-22.66c6.85-7.22,15.2-11.65,25.05-13.17c1.14-0.18,2.28-0.33,3.42-0.5   C47.14,6.77,49.24,6.77,51.34,6.77z"/>
@@ -206,7 +214,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('user.logout')}}" class="d-flex">
+                        <a href="{{route('user.logout')}}" class="d-flex padding-list">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
                                 <style type="text/css">
                                     .st0{fill:#FFFFFF;}
