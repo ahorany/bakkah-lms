@@ -207,7 +207,6 @@ svg {
                 @foreach($section->contents as $k => $content)
 
                 <li>
-<<<<<<< HEAD
                 {{-- <div v-if=>
                     <img  style="width:20px;"  src="{{$src_flag}}">
                 </div>
@@ -217,10 +216,6 @@ svg {
 
                 <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
                 <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
-=======
-                <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  ) href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
-                <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
->>>>>>> 8ababcce9b7c1640a18c95da9363525627bac7ba
                 <span> {{$content->title}}</span>
                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                     <span class="svg">
