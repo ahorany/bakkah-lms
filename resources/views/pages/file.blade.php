@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
 
     <style>
-
         .custom-model-main {
             text-align: center;
             overflow: hidden;
@@ -250,7 +249,7 @@
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
 
-                        <style>
+                            <style>
                             #google-pdf-viewer {
                                 border: 1px solid #cccccc;
                                 width: 100%;

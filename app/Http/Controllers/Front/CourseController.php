@@ -40,7 +40,7 @@ class CourseController extends Controller
     public function course_details($course_id){
 
         // clear session => (Sidebar active color)
-        session()->put('infastructure_id',-1);
+        session()->put('infastructure_id', -1);
 
        // Get Course With Contents
         $course = $this->getCourseWithContents($course_id);
@@ -55,10 +55,11 @@ class CourseController extends Controller
         $total_rate = $this->getTotalRateForCourse($course->id);
 
         // Get User Course Activities
-        $activities = $this->getUserCourseActivities($course->id,\auth()->id());
-        $course_registration_id = CourseRegistration::where('course_id',$course->id)->where('user_id',\auth()->id())->pluck('id')->first();
+        $activities = $this->getUserCourseActivities($course->id, \auth()->id());
+        // $course_registration_id = CourseRegistration::where('course_id',$course->id)->where('user_id', \auth()->id())->pluck('id')->first();
+        $course_registration = CourseRegistration::where('course_id',$course->id)->where('user_id', \auth()->id())->select('id', 'role_id')->first();
 
-        return view('pages.course_details',compact('course','total_rate','activities','course_registration_id'));
+        return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration'));
     } // end function
 
 
@@ -66,6 +67,7 @@ class CourseController extends Controller
      * Get Course With Contents
      */
     private function getCourseWithContents($course_id){
+
         $course = Course::where('id',$course_id)->whereHas('users',function ($q){
             $q->where('users.id',\auth()->id());
         })->with(['users' => function($query){
@@ -94,6 +96,7 @@ class CourseController extends Controller
      * Get total rate for course
      */
     private function getTotalRateForCourse($course_id){
+
         $sql = 'SELECT AVG(rate) as total_rate
                 FROM `courses_registration`
                 WHERE course_id =' .$course_id;
@@ -107,22 +110,23 @@ class CourseController extends Controller
      * Get User Course Activities
      */
     private function getUserCourseActivities($course_id,$user_id){
+
         $sql = "SELECT contents.id as content_id,contents.post_type as type,
-                        courses.title as course_title,contents.title as content_title
-                        FROM contents
-                            INNER JOIN user_contents ON user_contents.content_id = contents.id
-                            INNER JOIN courses ON contents.course_id = courses.id
-                            INNER JOIN courses_registration ON courses_registration.course_id = courses.id
-                        WHERE
-                        contents.deleted_at IS NULL
-                        AND
-                         user_contents.user_id = $user_id
-                        AND
-                         courses_registration.user_id = $user_id
-                         AND
-                         courses.id = $course_id
-                         ORDER BY contents.order DESC
-                         LIMIT 5";
+            courses.title as course_title,contents.title as content_title
+            FROM contents
+                INNER JOIN user_contents ON user_contents.content_id = contents.id
+                INNER JOIN courses ON contents.course_id = courses.id
+                INNER JOIN courses_registration ON courses_registration.course_id = courses.id
+            WHERE
+            contents.deleted_at IS NULL
+            AND
+                user_contents.user_id = $user_id
+            AND
+                courses_registration.user_id = $user_id
+                AND
+                courses.id = $course_id
+                ORDER BY contents.order DESC
+                LIMIT 5";
         $activities =  DB::select(DB::raw($sql));
         return $activities;
    } // end function
@@ -220,7 +224,6 @@ class CourseController extends Controller
             abort(404);
         }// end if
 
-
         // Check if user is not register in course AND user role not admin => ABORT(404)
         $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
         if(!$user_course_register){
@@ -237,7 +240,7 @@ class CourseController extends Controller
 
         //TODO: Ahoray
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
-        if(!request()->has('preview')){
+        if(!request()->has('preview') && $user_course_register->role_id == 3){
             if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
                 return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
             }// end if
@@ -248,7 +251,7 @@ class CourseController extends Controller
         *  Update Start Time For User Content
         *  When User Open Content Page AND User Content Not Completed
         */
-        $is_completed = $this->createUserContentOrUpdate($content_id,$content->time_limit);
+        $is_completed = $this->createUserContentOrUpdate($content_id, $content->time_limit);
 
 
         // Check content is completed => enabled next button
@@ -257,10 +260,8 @@ class CourseController extends Controller
             $enabled = false;
         }// end if
 
-
        // Update Course Registration Progress When content have (role and path)
         $this->updateCourseRegistrationProgress($content->course_id,$content->role_and_path);
-
 
        // if downloadable status == true (Download file)
         if($content->downloadable == 1){
@@ -275,12 +276,11 @@ class CourseController extends Controller
         // get time limit content (duration in seconds)
         $time_limit = $content->time_limit;
 
-
         // Check user progress if grater than or equal complete progress for course
         // When user course => completed_at is null => update completed at In Course Registration
         // pop up status => preview else disable
         $popup_compelte_status = false;
-        if ( ($content->course->complete_progress <= $user_course_register->progress)){
+        if ($content->course->complete_progress <= $user_course_register->progress){
             // Check if user course => completed_at is null => update completed at In Course Registration
             if (!$user_course_register->completed_at){
                CourseRegistration::where('user_id',auth()->id())
@@ -291,6 +291,7 @@ class CourseController extends Controller
                 $popup_compelte_status = true;
             } // end if
         } // end if
+
         $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',auth()->user()->id)->pluck('current_page')->first();
         return view('pages.file',compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num'));
     } // end function
@@ -300,6 +301,7 @@ class CourseController extends Controller
      *  IF user is not register in course AND user role not admin => return false
      */
     private function checkUserCourseRegistrationAndRole($course_id){
+
         $user_course_register = CourseRegistration::where('course_id',$course_id)->where('user_id',\auth()->id())->first();
         $role_auth_is_admin = \auth()->user()->roles()->first();
 

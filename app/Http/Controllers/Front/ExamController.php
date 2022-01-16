@@ -57,12 +57,14 @@ class ExamController extends Controller
         $exam = Content::whereId($exam_id)
             ->with(['section','course','exam' => function($q){
                 return $q->with(['users_exams' => function($q){
-                    return $q->where('user_id',auth()->id());
+                    return $q->where('user_id', auth()->id());
                 }]);
             }])->first();
 
+        $user_course_register = $this->checkUserCourseRegistration($exam->course->id);
+
         // Validate User Course Registration And Exam is Exists Or Not
-        if( (!$this->checkUserCourseRegistration($exam->course->id)) || (!$exam->exam) ){
+        if( !$user_course_register || (!$exam->exam) ){
             abort(404);
         }
 
@@ -73,9 +75,8 @@ class ExamController extends Controller
         $next = $arr[1];
         $next = ($next[0]??null);
 
-
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
-        if(!CourseContentHelper::checkPrevContentIsCompleted($exam->status , $previous)){
+        if(!CourseContentHelper::checkPrevContentIsCompleted($exam->status , $previous) && $user_course_register->role_id==3){
             return redirect()->back()->with(["status" => 'danger',"msg" => "Can not open  content (Because the content is not completed) !!"]);
         }// end if
 
