@@ -249,13 +249,29 @@
                         @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
-{{--                            <iframe style="" width="100%" height="600px"   src='https://docs.google.com/viewer?&amp;embedded=true&url={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>--}}
 
+                        <style>
+                            #google-pdf-viewer {
+                                border: 1px solid #cccccc;
+                                width: 100%;
+                                height: 600px;
+                            }
+                            @media (max-width: 767.98px) {
 
+                                #google-pdf-viewer {
+                                    height: 554px;
+                                }
+                            }
 
+                            .output {
+                                background: #eee;
+                            }
+                            </style>
+                            <iframe id="google-pdf-viewer" style="" title="{{$content->title}}" sandbox="allow-scripts allow-same-origin allow-orientation-lock allow-top-navigation"
+                            src='https://docs.google.com/viewer?&amp;embedded=true&url={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
                             {{-- <embed width="100%" height="600px" id="update_file_source" src='' > --}}
                             {{-- <iframe width="100%" height="600px" id="update_file_source" src='' style="border: 1px solid #eaeaea;" ></iframe> --}}
-                            @include('Html.PDF.container', ['file'=>$content->upload->file??null])
+                            {{-- @include('Html.PDF.container', ['file'=>$content->upload->file??null]) --}}
 
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>

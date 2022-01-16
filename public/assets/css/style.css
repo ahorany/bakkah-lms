@@ -385,7 +385,7 @@ ol {
   appearance: none;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 img {
