@@ -137,5 +137,5 @@ return [
     'scorms'=>'Scorms',
     'attempts'=>'محاولات',
     'course_name'=>'اسم الدورة',
-
+    'hide from trainees'=>'Hide From Trainees',
 ];

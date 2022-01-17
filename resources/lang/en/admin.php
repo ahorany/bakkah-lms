@@ -161,5 +161,5 @@ return [
     'scorms'=>'Scorms',
     'attempts'=>'Attempts',
     'course_name'=>'Course Name',
-
+    'hide from trainees'=>'Hide From Trainees',
 ];

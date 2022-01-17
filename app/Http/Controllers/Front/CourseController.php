@@ -42,8 +42,10 @@ class CourseController extends Controller
         // clear session => (Sidebar active color)
         session()->put('infastructure_id', -1);
 
+        $course_registration = CourseRegistration::where('course_id', $course_id)->where('user_id', \auth()->id())->select('id', 'role_id')->first();
+
        // Get Course With Contents
-        $course = $this->getCourseWithContents($course_id);
+        $course = $this->getCourseWithContents($course_id, $course_registration->role_id);
 
         // validate if course exists or not
         if(!$course){
@@ -57,7 +59,7 @@ class CourseController extends Controller
         // Get User Course Activities
         $activities = $this->getUserCourseActivities($course->id, \auth()->id());
         // $course_registration_id = CourseRegistration::where('course_id',$course->id)->where('user_id', \auth()->id())->pluck('id')->first();
-        $course_registration = CourseRegistration::where('course_id',$course->id)->where('user_id', \auth()->id())->select('id', 'role_id')->first();
+        // $course_registration = CourseRegistration::where('course_id', $course->id)->where('user_id', \auth()->id())->select('id', 'role_id')->first();
 
         return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration'));
     } // end function
@@ -66,9 +68,9 @@ class CourseController extends Controller
     /*
      * Get Course With Contents
      */
-    private function getCourseWithContents($course_id){
+    private function getCourseWithContents($course_id, $role_id=3){
 
-        $course = Course::where('id',$course_id)->whereHas('users',function ($q){
+        $course = Course::where('id',$course_id)->whereHas('users', function ($q){
             $q->where('users.id',\auth()->id());
         })->with(['users' => function($query){
             $query->where('user_id',\auth()->id());
@@ -78,14 +80,19 @@ class CourseController extends Controller
             return $query->where(function ($q){
                 $q->where('post_type','intro_video')->orWhere('post_type','image');
             });
-        },'contents' => function($query){
+        },'contents' => function($query) use($role_id){
             $query->where('post_type','section')->with(['details',
                 'contents' => function($q){
                     return $q->orderBy('order');
                 },
                 'contents.details','contents.user_contents' => function($q){
                     return $q->where('user_id',\auth()->id());
-                }])->orderBy('order');
+                }])
+            ->orderBy('order');
+
+            if($role_id==3){
+                $query->where('hide_from_trainees', 0);
+            }
         }])->first();
 
         return $course;

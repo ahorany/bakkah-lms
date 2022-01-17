@@ -164,7 +164,7 @@ svg {
                      </div>
                 </li>
                 @if(!is_null($course->users[0]->pivot->progress))
-                <a href="{{route("user.resume",$course->id)}}" class="main-button main-color">Resume Course</a>
+                    <a href="{{route("user.resume",$course->id)}}" class="main-button main-color">Resume Course</a>
                 @endif
             </div>
         </div>
@@ -206,22 +206,24 @@ svg {
                 @foreach($section->contents as $k => $content)
 
                 <li>
-                {{-- <div v-if=>
-                    <img  style="width:20px;"  src="{{$src_flag}}">
-                </div>
-                <div @if($content->flag == 1) @endif>
-                    <img  style="width:20px;"  src="{{$src_flag_focus}}">
-                </div> --}}
+                @if($content->downloadable==1)
+                    <a href="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}" download>
+                        <img style="filter: opacity(1);" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
+                @else
                 <a @if((isset($content->user_contents[0]) || $content->status == 1) || $course_registration->role_id!=3)
-                        href="@if($content->post_type != 'exam')
+                        href="
+                        @if($content->post_type != 'exam')
                             {{CustomRoute('user.course_preview', $content->id)}}
                         @else
                             {{CustomRoute('user.exam', $content->id)}}
-                        @endif"
+                        @endif
+                        "
                     @else
                         style="color: #c1bebe" href="#" onclick="return false"
-                @endif>
-                <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
+                    @endif
+                >
+                <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
+                @endif
                 <span> {{$content->title}}</span>
                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                     <span class="svg">

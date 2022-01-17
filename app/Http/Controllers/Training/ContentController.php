@@ -78,7 +78,6 @@ class ContentController extends Controller
             'course_id'  =>'required|exists:courses,id',
 //            'excerpt'    =>  "required|string",
         ];
-
         $validator = Validator::make(\request()->all(), $rules);
 
         if($validator->fails()){
@@ -93,16 +92,15 @@ class ContentController extends Controller
             'course_id'  =>request()->course_id,
             'post_type'  => 'section',
             'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
+            'hide_from_trainees'  =>request()->hide_from_trainees??false,
         ]);
 
         $content->details()->create([
             'excerpt'    =>  request()->excerpt,
         ]);
-
         $content = Content::whereId($content->id)->with(['details','contents'])->first();
 //        $contents = Content::where('course_id',$course_id)->whereNull('parent_id')->with(['contents','details'])->latest()->get();
-        return response()->json([ 'status' => 'success','section' => $content]);
-
+        return response()->json([ 'status' => 'success', 'section' => $content]);
     }
 
     public function update_section()
@@ -120,10 +118,10 @@ class ContentController extends Controller
             return response()->json(['errors' => $validator->errors()]);
         }
 
-
         $content = Content::whereId(request()->content_id)->update([
             'title'      => request()->title,
             'course_id'  =>request()->course_id,
+            'hide_from_trainees'  =>request()->hide_from_trainees??false,
         ]);
 
         ContentDetails::updateOrCreate([
@@ -131,10 +129,7 @@ class ContentController extends Controller
         ],[
             'excerpt'    =>  request()->excerpt,
         ]);
-
-
-        return response()->json([ 'status' => 'success']);
-
+        return response()->json([ 'status' => 'success', 'section' => $content]);
     }
 
     private function contentValidation($type){

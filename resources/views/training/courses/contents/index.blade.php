@@ -6,13 +6,13 @@
 
 @section('table')
     <style>
-        .course_info button {
-            padding: .375rem .75rem !important;
-        }
+    .course_info button {
+        padding: .375rem .75rem !important;
+    }
 
-        .ql-container.ql-snow{
-            height: 200px;
-        }
+    .ql-container.ql-snow{
+        height: 200px;
+    }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
@@ -43,7 +43,7 @@
 
             <template v-if="contents">
                 <div class="sortable">
-                    <div class="card mb-2" v-for="(content,index) in contents" :key="content.id" :id="content.id">
+                    <div class="card mb-2" v-for="(content, index) in contents" :key="content.id" :id="content.id">
                         <div class="card-body" >
                             <div class="clearfix">
                                 <div class="row my-3">
@@ -53,11 +53,11 @@
                                             <i class="fa fa-chevron-up " aria-hidden="true"></i>
                                         </span>
                                         <h3 class="BtnGroupRows text-capitalize d-inline-block" style="font-size: 22px;">@{{content.title}}</h3>
+                                        <span class="badge badge-danger" v-if="content.hide_from_trainees==1">{{__('admin.hide from trainees')}}</span>
                                     </div>
                                     <div class="col-md-4 col-lg-4 text-right">
                                         <div class="BtnGroupRows" data-id="150">
                                             <button @click="OpenSectionEditModal(content.id)" class="yellow"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
-
                                             <button @click="deleteSection(content.id)"  class="red" ><i class="fa fa-trash"></i> Delete</button>
                                         </div>
                                     </div>
@@ -313,6 +313,16 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6 col-12" v-if="model_type == 'section'">
+                                    <div v-if="model_type == 'section'" class="form-group form-check child">
+                                        <label class="container-check form-check-label" for="hide_from_trainees" style="padding: 25px 30px 0; font-size: 15px;">
+                                            {{__('admin.hide from trainees')}}
+                                            <input class="form-check-input child" style="display: inline-block;" v-model="hide_from_trainees" id="hide_from_trainees" type="checkbox" name="hide_from_trainees">
+                                            <span class="checkmark" style="top: 26px;"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6 col-12" v-if="model_type != 'section' && model_type != 'exam'">
                                     <div v-if="model_type != 'section' && model_type != 'exam'" class="form-group form-check child">
                                         <label class="container-check form-check-label" for="downloadable" style="padding: 25px 30px 0; font-size: 15px;">
@@ -369,12 +379,12 @@ $(function() {
         update: function (event, ui) {
             var data = $(this).sortable();
 
-            console.log(data[0].childNodes)
+            // console.log(data[0].childNodes)
             arr = [];
             data[0].childNodes.forEach(function (ele,index) {
                 arr[index] = ele.id
             })
-            console.log(arr)
+            // console.log(arr)
             // POST to server using $.post or $.ajax
             data = {
                 _token: "{{ csrf_token() }}" ,
@@ -387,7 +397,7 @@ $(function() {
                 url: "{{ route('training.contents.save_order')  }}",
 
                 success: function (data) {
-                    console.log(data)
+                    // console.log(data)
                 }
             });
         }
@@ -415,6 +425,7 @@ $(function() {
             file_url : '',
             status : false,
             downloadable : false,
+            hide_from_trainees : false,
             shuffle_answers : false,
             start_date : '',
             end_date : '',
@@ -455,6 +466,7 @@ $(function() {
                 this.file_title = '';
                 this.status = false;
                 this.downloadable = false;
+                this.hide_from_trainees = false;
                 this.shuffle_answers = false;
                 this.url = '';
                 this.start_date = '';
@@ -491,6 +503,7 @@ $(function() {
             },
 
             OpenSectionEditModal : function(content_id){
+
                 let self = this;
                 this.clear(); // clear data
                 this.save_type  = 'edit';
@@ -501,11 +514,10 @@ $(function() {
                         self.title = section.title;
                         self.excerpt =  section.details ?  section.details.excerpt : '';
                         self.model_type = 'section';
+                        self.hide_from_trainees = section.hide_from_trainees;
                     }
                     return true ;
                 });
-
-
                 $('#ContentModal').modal('show')
             },
 
@@ -516,7 +528,6 @@ $(function() {
                 this.content_id = content_id;
                 this.save_type  = 'edit';
                 this.errors = {};
-
 
                 this.contents.forEach(function (section) {
                     if(section.id == parent_id){
@@ -563,11 +574,7 @@ $(function() {
                                        self.file_url =  content.url;
                                        self.file_title =  content.url;
                                    }
-
-
-
-                                console.log(content)
-
+                                // console.log(content)
                             }
                         })
                     }
@@ -583,7 +590,7 @@ $(function() {
                    this.contents = this.contents.filter(function (section) {
                        if(section.id == parent_id){
                            section.contents =  section.contents.filter(function (content) {
-                               console.log(content)
+                            //    console.log(content)
                                return  content.id != content_id;
                            })
                        }
@@ -625,6 +632,7 @@ $(function() {
             },
 
             saveSection : function(){
+
                 let self = this;
                 if (self.title == ''  || self.title == null) {
                     self.errors = {'title': 'The title field is required.'};
@@ -639,10 +647,10 @@ $(function() {
                             course_id : self.course_id,
                             status : self.status,
                             downloadable : self.downloadable,
+                            hide_from_trainees : self.hide_from_trainees,
                         })
                         .then(response => {
                             console.log(response['data']['errors'])
-
                             if(response['data']['errors']) {
                                 self.errors =  response['data']['errors']
                                 for (let property in self.errors) {
@@ -665,13 +673,12 @@ $(function() {
                             section.title = self.title  ;
                             section.details = section.details != null ? {excerpt : ''} : section.details.excerpt ;
                             section.details.excerpt  = self.excerpt;
-                            console.log(section)
+                            // console.log(section)
                         }
                         return true ;
                     });
 
-                    console.log(self.contents)
-
+                    // console.log(self.contents)
                     axios.post("{{route('training.update_section')}}",
                         {
                             title : self.title,
@@ -681,9 +688,10 @@ $(function() {
                             content_id : self.content_id,
                             status : self.status,
                             downloadable : self.downloadable,
+                            hide_from_trainees : self.hide_from_trainees,
                         })
                         .then(response => {
-                            console.log(response['data']['errors'])
+                            // console.log(response['data']['errors'])
                             if(response['data']['errors']) {
                                 self.errors =  response['data']['errors']
                                 for (let property in self.errors) {
@@ -691,6 +699,15 @@ $(function() {
                                 }
                             }else{
                                 this.errors = {};
+                                self.contents.forEach(function (section) {
+                                    if(section.id == self.content_id){
+                                        section.title = self.title;
+                                        section.details = section.details != null ? {excerpt : ''} : section.details.excerpt ;
+                                        section.details.excerpt  = self.excerpt;
+                                        section.hide_from_trainees  = self.hide_from_trainees;
+                                    }
+                                    return true ;
+                                });
                                 $('#ContentModal').modal('hide')
                             }
                         })
@@ -743,7 +760,7 @@ $(function() {
                         formData
                         ,config)
                         .then(response => {
-                           console.log(response)
+                        //    console.log(response)
                             if(response['data']['errors']) {
                                 self.errors =  response['data']['errors']
                                 for (let property in self.errors) {
@@ -811,7 +828,7 @@ $(function() {
                         formData
                         ,config)
                         .then(response => {
-                            console.log(response)
+                            // console.log(response)
 
                             if(response['data']['errors']) {
                                 self.errors =  response['data']['errors']

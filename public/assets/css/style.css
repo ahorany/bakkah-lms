@@ -1434,6 +1434,7 @@ ul.badges li svg {
 }
 
 @media (max-width: 576.98px) {
+
    .image{
         height: auto;
     }
@@ -1498,6 +1499,11 @@ ul.badges li svg {
   ol.breadcrumb li {
     margin-right: 8px;
   }
+  /* .course-cards {
+      width: 100% !important;
+      border-radius: 5px;
+      box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+  } */
 }
 /*
 @media (min-width: 991px) and (max-width: 1200px) {
