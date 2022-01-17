@@ -100,7 +100,7 @@ class CertificateControllerH extends Controller
     }
 
     public function update(CertificateRequest $request, Certificate $certificate){
-        // dd(request()->all());s
+        // dd(request()->all());
         $validated = $this->validated($request->validated());
         $validated['updated_by'] = auth()->user()->id;
 

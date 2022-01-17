@@ -18,7 +18,7 @@
 </a>
   {{-- <textarea style="width:100%;height:100px;" name="content_{{$post->id}}" class="form-control tinymce" rows="4">{{ $post->content }}</textarea> --}}
 
-  {!!Builder::Textarea('content_{{$post->id}}', null, $post->content??null, [
+  {!!Builder::Textarea('content_'.$post->id, null, $post->content??null, [
     'row'=>3,
     // 'attr'=>'maxlength="155"',
     // 'col'=>'col-md-12 upload_caption',
