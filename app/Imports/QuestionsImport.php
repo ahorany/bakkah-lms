@@ -78,9 +78,15 @@ class QuestionsImport implements ToCollection, WithHeadingRow
                     elseif($row['fraction_4'] == '100' && $i == 4)
                         $check_correct = 1;
 
-                    if($row['answer'.$i] != '')
+                    if($row['answer'.$i] == true)
+                        $row['answer'.$i] = 'TRUE';
+                    if($row['answer'.$i] == false)
+                        $row['answer'.$i] = 'FALSE';
+                   if( !is_null($row['answer'.$i])  )
+
+                    // if(!empty($row['answer'.$i]) && $row['answer'.$i] != '')
                     {
-                        // if()
+                        //
                         Answer::create([
                             'title'             => $row['answer'.$i],
                             'question_id'       => $question_id,
@@ -89,6 +95,7 @@ class QuestionsImport implements ToCollection, WithHeadingRow
                     }
 
                 }
+
             }
             $mark += $row['default_garde'];
 
