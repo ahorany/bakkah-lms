@@ -200,12 +200,20 @@ var pdfDoc = null,
             // const scale = 1.5;
             var viewport = page.getViewport({scale: 1});
             var scale = container.clientWidth / viewport.width;
-            viewport = page.getViewport({ scale });
-            const outputScale = window.devicePixelRatio || 1;
-            canvas.width = Math.floor(viewport.width * outputScale);
-            canvas.height = Math.floor(viewport.height * outputScale);
-            canvas.style.width = Math.floor(viewport.width) + "px";
-            canvas.style.height = Math.floor(viewport.height) + "px";
+            // console.log(container.clientWidth);
+            // console.log(viewport.width);
+            viewport = page.getViewport({ scale: scale });
+            canvas.width = viewport.width;
+            // canvas.width = 1052;
+            canvas.height = viewport.height;
+            // const outputScale = window.devicePixelRatio || 1;
+            // console.log(outputScale);
+            // canvas.width = Math.floor(viewport.width * outputScale);
+            // console.log(canvas.width);
+            // canvas.height = Math.floor(viewport.height * outputScale);
+            // canvas.style.width = "1052px";
+            // canvas.style.width = Math.floor(viewport.width) + "px";
+            // canvas.style.height = Math.floor(viewport.height) + "px";
 
             // Render PDF page into canvas context
             var renderContext = {

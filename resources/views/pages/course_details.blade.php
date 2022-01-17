@@ -49,7 +49,6 @@ svg {
 
     $src_flag = CustomAsset('icons/flag.svg');
     $src_flag_focus = CustomAsset('icons/flag_focus.svg');
-
    ?>
 {{--
 <div class="dash-header course_info">
@@ -207,20 +206,22 @@ svg {
                 @foreach($section->contents as $k => $content)
 
                 <li>
-<<<<<<< HEAD
                 {{-- <div v-if=>
                     <img  style="width:20px;"  src="{{$src_flag}}">
                 </div>
                 <div @if($content->flag == 1) @endif>
                     <img  style="width:20px;"  src="{{$src_flag_focus}}">
                 </div> --}}
-
-                <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  )     href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
+                <a @if((isset($content->user_contents[0]) || $content->status == 1) || $course_registration->role_id!=3)
+                        href="@if($content->post_type != 'exam')
+                            {{CustomRoute('user.course_preview', $content->id)}}
+                        @else
+                            {{CustomRoute('user.exam', $content->id)}}
+                        @endif"
+                    @else
+                        style="color: #c1bebe" href="#" onclick="return false"
+                @endif>
                 <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="Kiwi standing on oval">
-=======
-                <a @if( ( isset($content->user_contents[0]) )  || ($content->status == 1)  ) href=" @if($content->post_type != 'exam') {{CustomRoute('user.course_preview',$content->id)}} @else {{CustomRoute('user.exam',$content->id)}} @endif" @else style="color: #c1bebe" href="#"  onclick="return false"  @endif >
-                <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
->>>>>>> 8ababcce9b7c1640a18c95da9363525627bac7ba
                 <span> {{$content->title}}</span>
                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                     <span class="svg">
@@ -252,7 +253,7 @@ svg {
         @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress >= $course->complete_progress ) )
 
         {{-- class="green mb-1"  --}}
-        <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration_id ] )}}"
+        <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration->id ] )}}"
             target="_blank">
         <div class="text-center course-image certificate certification-card">
             <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
