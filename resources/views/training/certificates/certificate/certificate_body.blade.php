@@ -58,7 +58,7 @@
                 var adobeDCView = new AdobeDC.View({clientId: "288b6dcfd4b5432c9603f104dfb93981", divId: "adobe-dc-view"});
                 adobeDCView.previewFile({
                     content:{location: {url: "{{$show_pdf}}"}},
-                    metaData:{fileName: "{{$file_name_pdf}}"}
+                    metaData:{fileName: "{{$course_title}}"}
                 }, {showAnnotationTools: false, dockPageControls: false, showDownloadPDF: true,
                     showPrintPDF: true, showLeftHandPanel: false, showPageControls: false});
             });
