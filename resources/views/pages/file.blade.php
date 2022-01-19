@@ -273,19 +273,10 @@
                             {{-- @include('Html.PDF.container', ['file'=>$content->upload->file??null]) --}}
                             {{-- @include('Html.PDF.pdf', ['file'=>$content->upload->file??null]) --}}
                             {{-- <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script> --}}
-                            <div id="adobe-dc-view" style="height:600px;"></div>
-                            <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-                            <script type="text/javascript">
-                            	document.addEventListener("adobe_dc_view_sdk.ready", function(){
-                            		var adobeDCView = new AdobeDC.View({clientId: "288b6dcfd4b5432c9603f104dfb93981", divId: "adobe-dc-view"});
-                            		adobeDCView.previewFile({
-                            			content:{location: {url: "{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}"}},
-                            			metaData:{fileName: "{{$content->upload->file}}"}
-                            		}, {showAnnotationTools: false, dockPageControls: false, showDownloadPDF: false,
-                            			showPrintPDF: false, showLeftHandPanel: true, showPageControls: true});
-                            	});
-                            </script>
-
+                            @include('Html.PDF.adobe', [
+                                'file'=>CustomAsset('upload/files/presentations/'.$content->upload->file),
+                                'title'=>$content->title??null,
+                            ])
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
                         @else
