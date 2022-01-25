@@ -224,7 +224,7 @@
                                         </svg>
                                     </div> --}}
                                     {{-- class="svg-icons" --}}
-                                    <img style="width:35px; height:35px; opacity: 0.6;" src="{{CustomAsset('icons/video.svg')}}" alt="{{$next_video->title}}"/>
+                                    <img style="width:30px; height:30px; opacity: 0.6;" src="{{CustomAsset('icons/video.svg')}}" alt="{{$next_video->title}}"/>
                                     <div class="text" style="margin: 1px 5px; padding-top: 1px;">
                                         <h5><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </h5>
                                     </div>

@@ -156,7 +156,7 @@
 
                     <div class="col-xl-3 col-lg-4">
                         <div class="card h-100 p-30">
-                            <h4>Quiz</h4>
+                            <h2 class="mt-0">Quiz</h2>
                             <ol class="answers">
                                 <template v-if="page_type == 'exam' "  v-for="(question, index) in exam.questions">
                                     <li @click="searchAndOpenQuestion(question.id)" :key="question.id" >

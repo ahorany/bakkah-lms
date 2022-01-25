@@ -871,8 +871,8 @@ ol.answers li {
 }
 
 ol.answers li .icon {
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   display: flex;
   justify-content: center;

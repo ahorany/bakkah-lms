@@ -7,7 +7,7 @@
     <h4>SCORMS in <h3> {{$course->trans_title }}</h3> </h4>
 @endif
 <div class="card-body table-responsive p-0">
-    <table class="table table-hover table-condensed text-center">
+    <table class="table table-hover table-condensed text-center scorm">
       <thead>
         <tr>
             <th class="">{{__('admin.index')}}</th>
