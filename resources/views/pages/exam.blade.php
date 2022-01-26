@@ -123,7 +123,7 @@
 
     ?>
 
-<div class="card p-5 user-info">
+<div class="card p-5 user-info exam_page">
 
         <div class="dash-header d-flex justify-content-between align-items-center">
             @include('pages.templates.breadcrumb', [

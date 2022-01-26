@@ -180,6 +180,7 @@
         <br>
         {{-- <h1 style="text-transform:capitalize;">{{ $content->course->trans_title }}</h1> --}}
     </div>
+    <h3 style="text-transform:capitalize; display: none;" class="title_file_new">{{ $content->title }}</h3>
 
     <div class="row mx-0">
         @if(session()->has('status'))
@@ -197,7 +198,7 @@
         @endif
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="m-0" style="text-transform:capitalize;">{{ $content->title }}</h3>
+                <h3 class="m-0 title_file_old" style="text-transform:capitalize;">{{ $content->title }}</h3>
                 <div class="d-flex align-items-center">
 
 {{--                    <div class="title" style="margin-right: 15px;">--}}

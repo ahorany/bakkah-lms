@@ -1,6 +1,6 @@
 <div class="row mx-0 mb-5">
 
-    <div class="col-lg-12">
+    <div class="col-lg-12 p-0">
         <div class="card h-100 p-30">
 
             <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-center">

@@ -25,6 +25,7 @@ class MessageMail extends Mailable
         $message_content = Message::where('id',$this->message_id)->with(['user','course','replies'])->first();
         $recieve = User::where('id',$this->recieve_id)->first();
         $course = Course::where('id',$this->course_id)->first();
+        // dd($message_content);
 
         return $this->view('training.mails.message-mail',compact('recieve','message_content','course'));
     }

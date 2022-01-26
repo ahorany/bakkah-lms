@@ -588,6 +588,10 @@ nav#sidebarMenu ul li a svg path {
   fill: #000;
 }
 
+/* nav#sidebarMenu ul li a:hover #courses path , nav#sidebarMenu ul li a:hover #courses path line{
+    filter: inherit !important;
+} */
+
 .lms-header a.navbar-brand {
   background: var(--mainColor);
   color: #fff;
@@ -1013,7 +1017,7 @@ ol.answers li .icon.empty {
 }
 
 .learning-file h3 {
-  margin: 20px 30px;
+  margin: 30px 30px 15px;
   /* font-family: "Lato Black"; */
   text-transform: capitalize;
   font-size: 17px;
