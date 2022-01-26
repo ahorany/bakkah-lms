@@ -16,36 +16,37 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.date')}}</th>
             <th class="">{{__('admin.exam_mark')}}</th>
             <th class="">{{__('admin.exam_pass')}}</th>
+            <th class="">{{__('admin.trainee_mark')}}</th>
             <th class="">{{__('admin.result')}}</th>
 
         </tr>
       </thead>
       <tbody>
-      @foreach($tests as $post)
-      <tr data-id="{{$post->id}}">
+      @foreach($tests as $exam)
+      <tr data-id="{{$exam->id}}">
         <td>
           <span class="td-title px-1">{{$loop->iteration}}</span>
         </td>
         <td class="px-1">
-            <span style="display: block;">{{ $post->content_title }} </span>
+            <span style="display: block;">{{ $exam->content_title }} </span>
         </td>
         <td class="px-1">
-            <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->course_title) }} </span>
+            <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span>
         </td>
         <td class="px-1">
-            <span class="td-title">{{$post->time}}</span>
+            <span class="td-title">{{$exam->time}}</span>
         </td>
         <td class="px-1">
-            <span class="td-title">{{$post->exam_mark}}</span>
-        </td>
-        {{-- <td class="px-1">
-            <span class="td-title">{{$post->pass_mark}}</span>
-        </td> --}}
-        <td class="px-1">
-            <span class="badge badge-info">{{$post->mark}}</span>
+            <span class="td-title">{{$exam->exam_mark}}</span>
         </td>
         <td class="px-1">
-            @if($post->mark >= $post->pass_mark)
+            <span class="td-title">{{$exam->pass_mark}}%</span>
+        </td>
+        <td class="px-1">
+            <span class="badge badge-info">{{$exam->exam_trainee_mark}} / {{$exam->exam_mark}}</span>
+        </td>
+        <td class="px-1">
+            @if(($exam->exam_trainee_mark/$exam->exam_mark) >= $exam->pass_mark)
                 <span class="badge badge-success">{{__('admin.pass')}}</span>
             @else
                 <span class="badge badge-danger">{{__('admin.fail')}}</span>

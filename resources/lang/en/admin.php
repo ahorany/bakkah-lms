@@ -132,7 +132,7 @@ return [
     'test'=>'Test',
     'date'=>'Date',
     'exam_mark'=>'Exam Mark',
-    'exam_pass'=>'Exam Pass Mark',
+    'exam_pass'=>'Pass %',
     'attempt_mark'=>'Attempt Mark',
     'result'=>'Result',
     'fail'=>'Fail',
@@ -162,4 +162,5 @@ return [
     'attempts'=>'Attempts',
     'course_name'=>'Course Name',
     'hide from trainees'=>'Hide From Trainees',
+    'trainee_mark'=>'Trainee Mark',
 ];
