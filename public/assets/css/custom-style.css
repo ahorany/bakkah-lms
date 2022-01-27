@@ -817,6 +817,9 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 768px) {
+    .display-none{
+        display: none !important;
+    }
     .row.m-0.home-section {
         margin-top: 11px !important;
     }

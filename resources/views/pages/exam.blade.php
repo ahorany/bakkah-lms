@@ -207,15 +207,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-6 col-lg-7 mb-3">
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-7 mb-3 @if ($exam->details->excerpt == null) display-none @endif">
                 <div class="card pt-3 pl-3 h-100" style="padding: 15px 30px; box-shadow: none; border: 1px solid gainsboro;">
                     <h4 class="card-title">Exam Description</h4>
                     <div class="card-body">
                         <p class="card-text">{!!  $exam->details->excerpt == 'null' ? 'There is no description for this exam.' : $exam->details->excerpt  !!}</p>
-
                     </div>
                 </div>
-
             </div>
 
             <div class="col-12 mt-5">
