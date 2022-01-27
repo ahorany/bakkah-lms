@@ -41,7 +41,7 @@
                 $menu_open = $active=='active'?'menu-open':'';
                 ?>
 
-                <li class="nav-item {{$has_treeview}} {{$menu_open}}"><!--menu-open-->
+                <li class="nav-item admin {{$has_treeview}} {{$menu_open}}"><!--menu-open-->
                     {!!Builder::SidebarHref($aside, '#', $active)!!}
                     @if($has_treeview=='has-treeview')
                         <ul class="nav-treeview">
@@ -60,37 +60,20 @@
             @foreach($user_sidebar_courses->courses as $item)
                 <li class="nav-item">
                     <a class="nav-link {{ (url()->full() == CustomRoute('user.course_details',$item->id)) && (url()->full() != CustomRoute('user.home'))  ? 'active' : '' }}" href="{{CustomRoute('user.course_details',$item->id) }}">
-                        {{-- <svg version="1.1" id="courses" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                            viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-                        <style type="text/css">
-                            .st0{fill:none;stroke:#000000;stroke-width:3.7582;stroke-miterlimit:10;}
-                            .st1{fill:none;stroke:#000000;stroke-width:3.7582;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-                        </style>
-                        <path class="st0" d="M76.86,83.73H24.15c-5.58,0-10.11-4.53-10.11-10.11V25.37c0-5.58,4.53-10.11,10.11-10.11h52.71
-                            c5.58,0,10.11,4.53,10.11,10.11v48.25C86.97,79.2,82.44,83.73,76.86,83.73z"/>
-                        <line class="st1" x1="73.2" y1="36.25" x2="29.34" y2="36.25"/>
-                        <line class="st1" x1="64.64" y1="46.17" x2="36.37" y2="46.17"/>
-                        <line class="st1" x1="73.2" y1="56.08" x2="29.34" y2="56.08"/>
-                        <line class="st1" x1="73.2" y1="66" x2="29.34" y2="66"/>
-                        </svg> --}}
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve">
-                            <style type="text/css">
-                                .st0{fill:none;stroke:#fff;stroke-width:3.0215;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
-                                .st1{fill:none;stroke:#fff;stroke-width:3.0221;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
-                            </style>
-                            <g>
-                                <polyline class="st0" points="81.49,25.18 86.65,25.18 86.65,70.19 12.29,70.19 12.29,25.18 17.45,25.18 	"></polyline>
-                                <path class="st1" d="M31.38,83.94h36.19 M43.28,82.59V72.01 M55.66,82.59V72.01 M26.35,24.55c9.22,0,10.82,0,15.53,0 M26.35,32.64
-                                    c9.22,0,10.82,0,15.53,0 M26.35,40.74c9.22,0,10.82,0,15.53,0 M26.35,48.84c9.22,0,10.82,0,15.53,0 M18.96,16.33
-                                    c6.84,0,19.8,0,26.63,0l3.69,4.02c0,13.87,0,27.04,0,40.91l-3.69-4.02c-6.84,0-19.8,0-26.63,0C18.96,43.37,18.96,30.2,18.96,16.33
-                                    L18.96,16.33z M53.35,16.33l-3.69,4.02 M49.66,61.27l3.69-4.02 M53.35,57.25c6.84,0,19.79,0,26.63,0c0-13.87,0-27.04,0-40.91
-                                    c-6.84,0-19.79,0-26.63,0"></path>
-                                <polyline class="st0" points="79.99,57.77 79.99,63.65 18.95,63.65 18.95,57.64 	"></polyline>
-                                <path class="st1" d="M57.05,24.55c9.22,0,10.82,0,15.53,0 M57.05,32.64c9.22,0,10.82,0,15.53,0 M57.05,40.74
-                                    c9.22,0,10.82,0,15.53,0"></path>
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24.567" height="23.684" viewBox="0 0 24.567 23.684">
+                            <defs>
+                              <clipPath id="clip-path">
+                                <path id="Path_79" data-name="Path 79" d="M5.872-23.684a.527.527,0,0,0-.528.528h0v10.488H.527A.526.526,0,0,0,0-12.141H0V-3.2A3.2,3.2,0,0,0,3.2,0H21.367a3.2,3.2,0,0,0,3.2-3.2h0V-23.156a.527.527,0,0,0-.528-.528H5.872ZM6.4-3.2v-19.43H23.512V-3.2a2.148,2.148,0,0,1-2.145,2.144H5.573A3.185,3.185,0,0,0,6.4-3.2m-5.344,0v-8.415H5.344V-3.2A2.147,2.147,0,0,1,3.2-1.055h0A2.146,2.146,0,0,1,1.056-3.2m11.181-17.69L9.722-18.134l-.783-.829a.529.529,0,0,0-.746-.022h0a.528.528,0,0,0-.021.747h0L9.345-17a.526.526,0,0,0,.384.165h0A.526.526,0,0,0,10.119-17h0l2.9-3.173a.526.526,0,0,0-.034-.745h0a.523.523,0,0,0-.356-.138h0a.527.527,0,0,0-.39.171m1.978,2.244a.527.527,0,0,0-.528.527h0a.527.527,0,0,0,.528.528h6.763a.527.527,0,0,0,.527-.528h0a.526.526,0,0,0-.527-.527H14.215Zm-1.978,3.8L9.722-12.087l-.783-.829a.529.529,0,0,0-.746-.022h0a.528.528,0,0,0-.021.747h0l1.173,1.242a.529.529,0,0,0,.384.165h0a.533.533,0,0,0,.386-.172h0l2.9-3.174a.526.526,0,0,0-.034-.745h0a.526.526,0,0,0-.355-.138h0a.531.531,0,0,0-.391.172m1.978,1.991a.528.528,0,0,0-.528.527h0a.527.527,0,0,0,.528.528h6.763a.527.527,0,0,0,.527-.528h0a.527.527,0,0,0-.527-.527H14.215ZM12.237-8.794,9.722-6.04l-.783-.829a.528.528,0,0,0-.746-.02h0a.526.526,0,0,0-.021.745h0L9.345-4.9a.529.529,0,0,0,.384.165h0a.53.53,0,0,0,.386-.172h0l2.9-3.173a.527.527,0,0,0-.034-.746h0a.526.526,0,0,0-.355-.138h0a.531.531,0,0,0-.391.172m1.978,1.74a.527.527,0,0,0-.528.527h0A.527.527,0,0,0,14.215-6h6.763a.527.527,0,0,0,.527-.528h0a.526.526,0,0,0-.527-.527H14.215Z" fill="#bdbdbd"/>
+                              </clipPath>
+                            </defs>
+                            <g id="Group_57" data-name="Group 57" transform="translate(0 23.684)">
+                              <g id="Group_56" data-name="Group 56" clip-path="url(#clip-path)">
+                                <g id="Group_55" data-name="Group 55" transform="translate(12.284 -11.842)">
+                                  <path id="Path_78" data-name="Path 78" d="M-12.284-11.842H12.284V11.842H-12.284Z" fill="#bdbdbd"/>
+                                </g>
+                              </g>
                             </g>
                         </svg>
-
                         {{$item->trans_title}}
                     </a>
                 </li>
