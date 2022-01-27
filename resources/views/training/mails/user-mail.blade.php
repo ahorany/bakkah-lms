@@ -40,8 +40,8 @@
         <h3 style="color: #000; font-size: 20px; text-align: left;">To log in to your course, please use the following data:</h3>
         <table border="0" style="width: 100%; padding: 25px 15px;" cellspacing="0">
             <tr style="line-height: 1.5; text-align: left;">
-                <td>
-                    <div width="30">
+                <td width="30">
+                    <div>
                         <img src="{{CustomAsset('images/email/user_icon.png')}}" width="25" height="auto">
                     </div>
                 </td>
@@ -54,8 +54,8 @@
         @if (!is_Null($password))
             <table border="0" style="width: 100%; padding: 0 15px 25px;" cellspacing="0">
                     <tr style="line-height: 1.5; text-align: left;">
-                        <td>
-                            <div width="30">
+                        <td width="30">
+                            <div>
                                 <img src="{{CustomAsset('images/email/email_icon.png')}}" width="25" height="auto">
                             </div>
                         </td>
@@ -67,8 +67,8 @@
         @endif
         <table border="0" style="width: 100%; padding: 0 15px 25px;" cellspacing="0">
             <tr style="line-height: 1.5; text-align: left;">
-                <td>
-                    <div width="30">
+                <td width="30">
+                    <div>
                         <img src="{{CustomAsset('images/email/link_icon.png')}}" width="25" height="auto">
                     </div>
                 </td>
