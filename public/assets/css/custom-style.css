@@ -8,6 +8,9 @@
     left: 0;
     border-radius: 0 10px 10px 0;
 } */
+.nav-item.admin{
+    background: #efefef;
+}
 .scorm .group_buttons{
     display: inline-block;
 }
@@ -205,7 +208,7 @@ li.has-dropdown .dropdown span{
 
 .q-card {
     margin-bottom: 10px;
-    padding: 60px 15px !important;
+    padding: 15px !important;
 }
 .q-card h3 {
     font-size: 16px;
@@ -682,7 +685,7 @@ p.time-remaining svg path{
     fill: #fb4400;
 }
 .review.dash-header{
-    padding: 20px 0;
+    padding: 20px 12px
 }
 .plyr input {
     color: #fb4400 !important;
@@ -736,7 +739,7 @@ label.container-check.form-check-label span.checkmark{
         padding: 10px !important;
         background: #fafafa !important;
         margin: 10px 0 !important;
-        box-shadow: 0px 0px 5px rgb(0 0 0 / 5%);
+        box-shadow: 0px 0px 5px rgb(0 0 0 / 10%);
     }
     .correct_feedback h4{
         margin: 0 !important;
@@ -846,8 +849,7 @@ label.container-check.form-check-label span.checkmark{
         padding: 012px !important;
     }
     p.time-remaining{
-        margin: 0;
-        margin-bottom: 15px;
+        margin: 15px 0;
     }
     .certificate-page {
         padding: 50px;
@@ -971,7 +973,7 @@ label.container-check.form-check-label span.checkmark{
         font-size: 14px;
     }
     .q-card h3{
-        padding: 0 !important;
+        padding: 0px 50px 0 0 !important;
         font-size: 16px;
     }
     .card.p-5 , .card.px-5.py-4 {
@@ -1065,7 +1067,7 @@ label.container-check.form-check-label span.checkmark{
         display: none;
     }
     .course-cards {
-        width: 80% !important;
+        width: 100% !important;
         margin: 5px auto;
     }
     .card-header.d-flex.justify-content-between.align-items-center {

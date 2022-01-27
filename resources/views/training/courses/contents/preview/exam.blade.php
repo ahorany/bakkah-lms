@@ -16,15 +16,27 @@
 
 @section('content')
     <div class="dash-header">
-        <ol class="breadcrumb">
+        {{-- <ol class="breadcrumb">
             <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
             <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
             <li>{{$exam->title}}</li>
-        </ol>
+        </ol> --}}
         <div class="d-flex justify-content-between">
             <h1>{{$exam->title}}</h1>
 
-            <a class="yellow group_buttons mb-1 btn-sm pull-right" title="Preview" href="{{route('training.add_questions',$exam->exam->content->id)}}" target="{{$exam->content_id}}" style="border: 1px solid #ffc107;"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+            <a class="yellow d-flex items-align-center" style="height: max-content;" title="Preview" href="{{route('training.add_questions',$exam->exam->content->id)}}" target="{{$exam->content_id}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" style="margin-right: 5px;" viewBox="0 0 64.078 64.156">
+                    <g id="Group_330" data-name="Group 330" transform="translate(-2056.667 -217.856)">
+                      <path id="Path_175" data-name="Path 175" d="M2120.574,288.088c1.922-1.895,3.751-3.687,5.64-5.55.554.522,20.382,20.275,29.69,29.6a12.523,12.523,0,0,1,1.8,2.068,3.905,3.905,0,0,1-5.261,5.475,7.374,7.374,0,0,1-1.562-1.231C2141.026,308.607,2120.869,288.446,2120.574,288.088Z" transform="translate(-50.066 -50.673)" fill="#000"/>
+                      <path id="Path_176" data-name="Path 176" d="M2078.891,222.692l-17.31,17.272a38.428,38.428,0,0,1-3.752-4.377c-1.909-2.987-1.417-6.62,1.116-9.417,1.672-1.846,3.468-3.582,5.259-5.316,3.962-3.836,8.59-4.058,12.583-.276C2077.565,221.315,2078.891,222.692,2078.891,222.692Z" fill="#000"/>
+                      <path id="Path_177" data-name="Path 177" d="M2094.159,323.39s1.817-1.984,2.7-2.953c.787.771,1.341,1.355,1.92,1.934q13.968,13.958,27.927,27.927c.528.528,1.491,1.338,1.667,1.98a2.108,2.108,0,0,1-.487,2.1,2.362,2.362,0,0,1-1.932.493c-.489-.079-1.2-.862-1.615-1.272Q2109.664,338.93,2095,324.249C2094.774,324.018,2094.159,323.39,2094.159,323.39Z" transform="translate(-29.372 -80.363)" fill="#000"/>
+                      <path id="Path_178" data-name="Path 178" d="M2158.628,258.921s1.817-1.984,2.7-2.953c.787.771,1.341,1.355,1.92,1.934q13.969,13.958,27.927,27.927c.528.529,1.491,1.338,1.668,1.98a2.109,2.109,0,0,1-.488,2.1,2.36,2.36,0,0,1-1.931.493c-.489-.079-1.2-.862-1.615-1.272q-14.673-14.668-29.333-29.349C2159.242,259.549,2158.628,258.921,2158.628,258.921Z" transform="translate(-79.878 -29.858)" fill="#000"/>
+                      <path id="Path_179" data-name="Path 179" d="M2264.78,440.176c.667-2.663,1.9-3.7,4.473-4,3.322-.39,5.208-2.858,5.971-6.963a3.66,3.66,0,0,1,2.076-2.659l1.687-.771c1.591,6.342,3.138,12.509,4.8,19.121Z" transform="translate(-163.038 -162.892)" fill="#000"/>
+                    </g>
+                  </svg>
+
+                Edit
+            </a>
         </div>
     </div>
 
