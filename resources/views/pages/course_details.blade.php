@@ -15,7 +15,7 @@
     margin-top: 15px !important;
 }
 svg {
-    fill: #c6c6c6;
+    /* fill: #c6c6c6; */
     cursor: pointer;
     width: 20px;
 }

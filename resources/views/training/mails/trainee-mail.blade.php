@@ -10,8 +10,8 @@
         <h3 style="color: #000; font-size: 20px; text-align: left;">Please find all the needed instructions and materials by clicking this link:</h3>
         <table border="0" style="width: 100%; padding: 0 15px 25px;" cellspacing="0">
             <tr style="line-height: 1.5; text-align: left;">
-                <td>
-                    <div width="30">
+                <td width="30">
+                    <div>
                         <img src="{{CustomAsset('images/email/link_icon.png')}}" width="25" height="auto">
                     </div>
                 </td>

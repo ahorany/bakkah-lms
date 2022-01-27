@@ -2,7 +2,7 @@
 
 <main style="text-align: left; width: 90%; margin: 15px auto 0;">
     <div style="margin: 15px 0">
-        <h5 style="font-size: 20px; margin: 15px 0; text-align: left;">Dear {{$recieve->en_name}},</h5>
+        <h5 style="font-size: 18px; margin: 15px 0; text-align: left;">Dear {{$recieve->en_name}},</h5>
         <p style="font-size: 16px; margin: 15px 0; text-align: left;">{{$message_content->user->en_name}} has just sent you a message for the {{$course->trans_title}}, and the content of the message is the following:</p>
         <p style="font-size: 16px; text-align: left;">{{$message_content->description}}</p>
     </div>
