@@ -23,7 +23,24 @@
         </ol>
         <div class="d-flex justify-content-between">
             <h1>{{$exam->title}}</h1>
-
+            <?php
+            $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
+            $next_url = $NextPrevNavigation['next_url'];
+            $previous_url = $NextPrevNavigation['previous_url'];
+            ?>
+            @include('Html.next-prev-navigation', [
+                'next'=>$next,
+                'previous'=>$previous,
+                'previous_url'=>$previous_url,
+            ])
+            <script>
+                function NextBtn(){
+                    document.querySelector(".next").addEventListener("click", function(event){
+                        window.location.href = '{{$next_url??null}}'
+                    });
+                }
+                NextBtn();
+            </script>
             <a class="yellow group_buttons mb-1 btn-sm pull-right" title="Preview" href="{{route('training.add_questions',$exam->exam->content->id)}}" target="{{$exam->content_id}}" style="border: 1px solid #ffc107;"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
         </div>
     </div>
@@ -43,19 +60,15 @@
                             <span class="radio-mark"></span>
                         </label>
                     @endforeach
-
-                            <div>
-                                {{ $question->mark??0 . '/' . $q->mark }} Marks
-                            </div>
-
-
+                        <div>
+                            {{ $question->mark??0 . '/' . $q->mark }} Marks
+                        </div>
                     @if($question->feedback)
                         <div>
                             <h4 class="mb-0">Feedback : </h4>
                             <p class="mb-0">{{  $question->feedback }}</p>
                         </div>
                     @endif
-
                 </div>
             @endforeach
 
@@ -68,11 +81,11 @@
                         <li>
                             <a href="#question_{{$loop->iteration}}">
                                 <b style="color: #000;">{{$loop->iteration}}</b>
-                                    <div class="icon correct">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20.248" height="15.247" viewBox="0 0 20.248 15.247">
-                                            <path id="Path_121" data-name="Path 121" d="M252.452,339.764l-11,11-6.414-6.414" transform="translate(-233.618 -338.35)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="4"/>
-                                        </svg>
-                                    </div>
+                                <div class="icon correct">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20.248" height="15.247" viewBox="0 0 20.248 15.247">
+                                        <path id="Path_121" data-name="Path 121" d="M252.452,339.764l-11,11-6.414-6.414" transform="translate(-233.618 -338.35)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="4"/>
+                                    </svg>
+                                </div>
                             </a>
                         </li>
                     @endforeach

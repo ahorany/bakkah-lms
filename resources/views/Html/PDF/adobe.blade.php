@@ -18,7 +18,7 @@
         var adobeDCView = new AdobeDC.View({clientId: "288b6dcfd4b5432c9603f104dfb93981", divId: "adobe-dc-view"});
         adobeDCView.previewFile({
             content:{location: {url: "{{$file}}"}},
-            metaData:{fileName: "{{$title}}"}
+            metaData:{fileName: "{!!$title!!}"}
         }, {showAnnotationTools: false, dockPageControls: false, showDownloadPDF: false,
             showPrintPDF: false, showLeftHandPanel: true, showPageControls: true});
     });

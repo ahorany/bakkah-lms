@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\CourseContentHelper;
+
 class ContentController extends Controller
 {
 
@@ -475,10 +477,15 @@ class ContentController extends Controller
     }
 
     public function exam_preview_content($exam_id){
+
         $exam =  Content::where('id',$exam_id)->with(['exam','questions.answers'])->first();
-        return view('training.courses.contents.preview.exam', compact('exam'));
+
+        // Get next and prev
+        $arr = CourseContentHelper::NextAndPreviouseNavigation($exam);
+        $next = $arr['next'];
+        $previous = $arr['previous'];
+        // end next and prev
+
+        return view('training.courses.contents.preview.exam', compact('exam', 'next', 'previous'));
     }
-
-
-
 }

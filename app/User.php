@@ -159,4 +159,12 @@ class User extends Authenticatable
     public function groups(){
         return $this->belongsToMany(Group::class,'user_groups','user_id','group_id');
     }
+
+    public static function delegate_user_id(){
+
+        if(request()->has('delegate_user_id')){
+            return request()->delegate_user_id;
+        }
+        return auth()->id();
+    }
 }
