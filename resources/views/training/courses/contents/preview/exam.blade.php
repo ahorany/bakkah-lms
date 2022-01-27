@@ -21,8 +21,31 @@
             <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
             <li>{{$exam->title}}</li>
         </ol> --}}
+<<<<<<< HEAD
         <div class="d-flex justify-content-between align-items-center p-3">
             <h1 class="m-0">{{$exam->title}}</h1>
+=======
+        <div class="d-flex justify-content-between">
+            <h1>{{$exam->title}}</h1>
+            <?php
+            $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
+            $next_url = $NextPrevNavigation['next_url'];
+            $previous_url = $NextPrevNavigation['previous_url'];
+            ?>
+            @include('Html.next-prev-navigation', [
+                'next'=>$next,
+                'previous'=>$previous,
+                'previous_url'=>$previous_url,
+            ])
+            <script>
+                function NextBtn(){
+                    document.querySelector(".next").addEventListener("click", function(event){
+                        window.location.href = '{{$next_url??null}}'
+                    });
+                }
+                NextBtn();
+            </script>
+>>>>>>> fbbb7e3fb684b2703a2900cd46a79954dc28ca83
             <a class="yellow d-flex items-align-center" style="height: max-content;" title="Preview" href="{{route('training.add_questions',$exam->exam->content->id)}}" target="{{$exam->content_id}}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" style="margin-right: 5px;" viewBox="0 0 64.078 64.156">
                     <g id="Group_330" data-name="Group 330" transform="translate(-2056.667 -217.856)">
