@@ -731,6 +731,17 @@ label.container-check.form-check-label span.checkmark{
     }
     /* end alert */
 
+    .correct_feedback {
+        color: #5D5B5A !important;
+        padding: 10px !important;
+        background: #fafafa !important;
+        margin: 10px 0 !important;
+        box-shadow: 0px 0px 5px rgb(0 0 0 / 5%);
+    }
+    .correct_feedback h4{
+        margin: 0 !important;
+    }
+
 /******************************************************************************************************************/
 
 /* Media Query */
@@ -920,7 +931,12 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 768px) and (min-width: 576px){
-
+    .review.dash-header {
+        padding: 20px 12px;
+    }
+    .review.dash-header .parent_next_prev {
+        margin: 0 !important;
+    }
     .navbar .navbar-toggler {
         top: 20%;
         left: 200px;
@@ -938,6 +954,23 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 576px){
+    .review.dash-header {
+        padding: 20px 12px;
+    }
+    .review.dash-header button.next_prev{
+        margin: 0 5px 0 0 !important
+    }
+    .q-number small{
+        line-height: 2rem !important;
+    }
+    .q-number{
+        padding: 10px;
+        font-size: 14px;
+    }
+    .q-card h3{
+        padding: 0 !important;
+        font-size: 16px;
+    }
     .card.p-5 , .card.px-5.py-4 {
         padding: 15px !important;
     }

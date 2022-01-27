@@ -575,7 +575,8 @@ nav#sidebarMenu ul li a.active {
 }
 
 nav#sidebarMenu ul li a:hover path,
-nav#sidebarMenu ul li a.active path {
+nav#sidebarMenu ul li a.active path,
+nav#sidebarMenu ul li a.active polyline {
   fill: #fff;
 }
 
@@ -584,7 +585,7 @@ nav#sidebarMenu ul li a svg {
   height: 20px;
 }
 
-nav#sidebarMenu ul li a svg path {
+nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline {
   fill: #000;
 }
 
@@ -882,6 +883,7 @@ ol.answers li .icon {
   justify-content: center;
   align-items: center;
   margin: 5px auto 0;
+  padding: 3px;
 }
 
 ol.answers li .icon.correct {

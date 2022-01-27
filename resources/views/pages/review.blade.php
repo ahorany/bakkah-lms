@@ -69,7 +69,7 @@ if(!is_null($previous)){
         @endif
     </div>
 </div>
-    <div class="row">
+    <div class="row mx-0">
         @if(session()->has('status'))
             <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div>
         @endif
@@ -99,21 +99,26 @@ if(!is_null($previous)){
                      </label>
                  @endforeach
 
-             <?php $lock = false; ?>
-             @foreach($exam->user_questions as $q)
-                    @if($q->id == $question->id)
-                        <?php $lock = true; ?>
-                         <div>
-                            {{ $q->pivot->mark . '/' . $q->mark }}  {{$answers == 1 ? 'Mark' : 'Marks'}}
-                        </div>
-                     @endif
-                 @endforeach
 
-                 @if(count($exam->user_questions) > 0 && !$lock)
-                     {{ '0' . '/' . $question->mark }}  {{$answers == 1 ? 'Mark' : 'Marks'}}
-                 @endif
 
-                  <div>
+                    <div class="correct_feedback">
+                        <h4 class="mb-0">Your mark in this question: </h4>
+                        <?php $lock = false; ?>
+                        @foreach($exam->user_questions as $q)
+                            @if($q->id == $question->id)
+                                <?php $lock = true; ?>
+                                <div>
+                                    {{ $q->pivot->mark . '/' . $q->mark }}  {{$answers == 1 ? 'Mark' : 'Marks'}}
+                                </div>
+                            @endif
+                        @endforeach
+
+                        @if(count($exam->user_questions) > 0 && !$lock)
+                            {{ '0' . '/' . $question->mark }}  {{$answers == 1 ? 'Mark' : 'Marks'}}
+                        @endif
+                    </div>
+
+                  <div class="correct_feedback">
                      <h4 class="mb-0">Correct Answer: </h4>
                      @foreach($question->answers as $answer)
                          @if($answer->check_correct == 1)
@@ -125,9 +130,9 @@ if(!is_null($previous)){
                 </div>
 
                  @if($question->feedback)
-                     <div>
-                         <h4 class="mb-0">Feedback : </h4>
-                         <p class="mb-0">{{  $question->feedback }}</p>
+                     <div class="correct_feedback">
+                         <h4 class="mb-0">Feedback: </h4>
+                         <p class="m-0">{{  $question->feedback }}</p>
                      </div>
                  @endif
 
