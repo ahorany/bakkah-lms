@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Helpers\CourseContentHelper;
+use App\Models\Admin\Role;
 use App\Models\Training\Content;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\UserContent;
@@ -11,7 +12,7 @@ use App\Models\Training\Course;
 use App\Models\Training\UserContentsPdf;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
@@ -22,16 +23,11 @@ class CourseController extends Controller
      * (Course page , Course rate , Preview Content ,
      *  Resume Content, Update UserContent Completed Status)
      ********************************************************/
-
-
-
     public function __construct()
     {
         // User Must Be Auth To Use Any Method In This Class
         $this->middleware('auth');
     }
-
-
     /****************************************************************************/
 
     /*
@@ -225,17 +221,18 @@ class CourseController extends Controller
         $content = Content::whereId($content_id)
             ->with(['upload','course' ,'section'])->first();
 
-        // dd($content);
         // Check if content not found => ABORT(404)
         if (!$content){
             abort(404);
         }// end if
 
-        // Check if user is not register in course AND user role not admin => ABORT(404)
-        $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
-        if(!$user_course_register){
-            abort(404);
-        }// end if
+        if(!Gate::allows('is-admin')){
+            // Check if user is not register in course AND user role not admin => ABORT(404)
+            $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
+            // if(!$user_course_register){
+            //     abort(404);
+            // }// end if
+        }
 
         // Get next and prev
         $arr = CourseContentHelper::nextAndPreviouseQuery($content->course_id,$content->id,$content->order,$content->parent_id,$content->section->order);
@@ -247,10 +244,12 @@ class CourseController extends Controller
 
         //TODO: Ahoray
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
-        if(!request()->has('preview') && $user_course_register->role_id == 3){
-            if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
-                return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
-            }// end if
+        if(!Gate::allows('is-admin')){
+            if($user_course_register->role_id == 3){
+                if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
+                    return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
+                }// end if
+            }
         }
 
        /*
@@ -259,7 +258,6 @@ class CourseController extends Controller
         *  When User Open Content Page AND User Content Not Completed
         */
         $is_completed = $this->createUserContentOrUpdate($content_id, $content->time_limit);
-
 
         // Check content is completed => enabled next button
         $enabled = true;
@@ -287,20 +285,23 @@ class CourseController extends Controller
         // When user course => completed_at is null => update completed at In Course Registration
         // pop up status => preview else disable
         $popup_compelte_status = false;
-        if ($content->course->complete_progress <= $user_course_register->progress){
-            // Check if user course => completed_at is null => update completed at In Course Registration
-            if (!$user_course_register->completed_at){
-               CourseRegistration::where('user_id',auth()->id())
-                   ->where('course_id', $content->course->id)->update([
-                       'completed_at' => Carbon::now(),
-                   ]);
+        if(!Gate::allows('is-admin')){
 
-                $popup_compelte_status = true;
+            if ($content->course->complete_progress <= $user_course_register->progress){
+                // Check if user course => completed_at is null => update completed at In Course Registration
+                if (!$user_course_register->completed_at){
+                CourseRegistration::where('user_id',auth()->id())
+                    ->where('course_id', $content->course->id)->update([
+                        'completed_at' => Carbon::now(),
+                    ]);
+
+                    $popup_compelte_status = true;
+                } // end if
             } // end if
-        } // end if
+        }
 
         $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',auth()->user()->id)->pluck('current_page')->first();
-        return view('pages.file',compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num'));
+        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num'));
     } // end function
 
 
@@ -309,7 +310,9 @@ class CourseController extends Controller
      */
     private function checkUserCourseRegistrationAndRole($course_id){
 
-        $user_course_register = CourseRegistration::where('course_id',$course_id)->where('user_id',\auth()->id())->first();
+        $user_course_register = CourseRegistration::where('course_id', $course_id)
+        ->where('user_id',\auth()->id())
+        ->first();
         $role_auth_is_admin = \auth()->user()->roles()->first();
 
         if(!$user_course_register && ($role_auth_is_admin && $role_auth_is_admin->id != 1)){
