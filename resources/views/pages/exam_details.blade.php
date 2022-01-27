@@ -104,7 +104,7 @@
 
 @section('content')
     <div class="card p-5 user-info">
-        <div class="d-flex" style="justify-content: space-between;">
+        <div class="d-flex" style="justify-content: space-between; align-items:center;">
             <h4 class="m-0"><i class="fas fa-graduation-cap"></i> {{$exam_title}}</h4>
             <a style="width: 85px;" href="{{CustomRoute('user.exam',$exam_id)}}" class="cyan form-control">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="back" style="vertical-align: middle;" width="35%" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
@@ -114,7 +114,7 @@
 
 
         <div class="row">
-            <div class="col-12 mt-5">
+            <div class="col-12 mt-4">
                 <table class="table">
                     <thead>
                         <tr>

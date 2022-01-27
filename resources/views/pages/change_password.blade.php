@@ -50,7 +50,7 @@
                     @enderror
                 </div>
 
-                <button class="btn btn-primary btn-block mb-3">{{__('education.Change Password')}}</button>
+                <button class="main-color">{{__('education.Change Password')}}</button>
             </form>
         </div>
     </div>

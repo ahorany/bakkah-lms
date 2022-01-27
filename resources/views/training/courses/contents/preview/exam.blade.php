@@ -21,10 +21,8 @@
             <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
             <li>{{$exam->title}}</li>
         </ol> --}}
-        <div class="d-flex justify-content-between">
-            <h1>{{$exam->title}}</h1>
-<<<<<<< HEAD
-
+        <div class="d-flex justify-content-between align-items-center p-3">
+            <h1 class="m-0">{{$exam->title}}</h1>
             <a class="yellow d-flex items-align-center" style="height: max-content;" title="Preview" href="{{route('training.add_questions',$exam->exam->content->id)}}" target="{{$exam->content_id}}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" style="margin-right: 5px;" viewBox="0 0 64.078 64.156">
                     <g id="Group_330" data-name="Group 330" transform="translate(-2056.667 -217.856)">
@@ -35,34 +33,12 @@
                       <path id="Path_179" data-name="Path 179" d="M2264.78,440.176c.667-2.663,1.9-3.7,4.473-4,3.322-.39,5.208-2.858,5.971-6.963a3.66,3.66,0,0,1,2.076-2.659l1.687-.771c1.591,6.342,3.138,12.509,4.8,19.121Z" transform="translate(-163.038 -162.892)" fill="#000"/>
                     </g>
                   </svg>
-
                 Edit
             </a>
-=======
-            <?php
-            $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
-            $next_url = $NextPrevNavigation['next_url'];
-            $previous_url = $NextPrevNavigation['previous_url'];
-            ?>
-            @include('Html.next-prev-navigation', [
-                'next'=>$next,
-                'previous'=>$previous,
-                'previous_url'=>$previous_url,
-            ])
-            <script>
-                function NextBtn(){
-                    document.querySelector(".next").addEventListener("click", function(event){
-                        window.location.href = '{{$next_url??null}}'
-                    });
-                }
-                NextBtn();
-            </script>
-            <a class="yellow group_buttons mb-1 btn-sm pull-right" title="Preview" href="{{route('training.add_questions',$exam->exam->content->id)}}" target="{{$exam->content_id}}" style="border: 1px solid #ffc107;"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
->>>>>>> 94100227085d726ade8de1a069fdc7dc903908c8
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mx-0">
         <div class="col-xl-9 col-lg-8 mb-4 mb-lg-0">
             @foreach($exam->exam->content->questions as $question)
                 <div id="question_{{$loop->iteration}}" class="card p-30 q-card {{($loop->last) ? ' ' : 'mb-3'}}">
@@ -70,7 +46,7 @@
                         Q{{$loop->iteration}}/{{count($exam->exam->content->questions)}}
                         <small>({{$question->mark}} Marks)</small>
                     </div>
-                    <h3 style="padding-right: 7%;">{!! $question->title!!}</h3>
+                    <h3 style="padding-right: 15%;">{!! $question->title!!}</h3>
                     @foreach($question->answers as $answer)
                         <label class="custom-radio"> {{$answer->title}}
                             <input type="checkbox" disabled="true" @if($answer->check_correct == 1)  checked @endif >

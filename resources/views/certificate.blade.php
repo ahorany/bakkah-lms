@@ -7,7 +7,7 @@
 @section('content')
 
     <div class="container certificate-page">
-        <div class="row">
+        <div class="row mx-0">
             @foreach ($certificates as $certificate)
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                 <a href="#">

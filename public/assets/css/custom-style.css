@@ -739,7 +739,8 @@ label.container-check.form-check-label span.checkmark{
         padding: 10px !important;
         background: #fafafa !important;
         margin: 10px 0 !important;
-        box-shadow: 0px 0px 5px rgb(0 0 0 / 10%);
+        /* box-shadow: 0px 0px 5px rgb(0 0 0 / 6%); */
+        border: 1px solid rgb(0 0 0 / 6%);
     }
     .correct_feedback h4{
         margin: 0 !important;
@@ -757,9 +758,13 @@ label.container-check.form-check-label span.checkmark{
     .certificate .download img{
         width: 35px !important;
     }
+    .change-password .card-body , .change-password .card {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 }
 
-@media (max-width: 1199px) and (min-width: 991px) {
+@media (max-width: 1200px) and (min-width: 991px) {
     .calendar .sideb table th{
         font-size: 12px;
     }
@@ -771,6 +776,10 @@ label.container-check.form-check-label span.checkmark{
     }
     .certificate .download img{
         width: 35px !important;
+    }
+    .change-password .card-body , .change-password .card {
+        padding: 0 !important;
+        margin: 0 !important;
     }
 }
 
@@ -788,6 +797,10 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+    .change-password .card.px-5.mx-5 {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
     .m-bottom{
         margin-bottom: 24px;;
     }
@@ -820,6 +833,9 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 768px) {
+    .container.change-password {
+        margin: 20px auto;
+    }
     .display-none{
         display: none !important;
     }
@@ -852,7 +868,7 @@ label.container-check.form-check-label span.checkmark{
         margin: 15px 0;
     }
     .certificate-page {
-        padding: 50px;
+        padding: 50px 0;
     }
     .course-cards span {
         display: block;
@@ -933,9 +949,16 @@ label.container-check.form-check-label span.checkmark{
         font-size: 17px;
         font-weight: 700;
     }
+    .card.px-5.py-3.mb-2 {
+        margin-top: 10px;
+        padding: 15px !important;
+    }
 }
 
 @media (max-width: 768px) and (min-width: 576px){
+    .container {
+        max-width: 100% !important;
+    }
     .review.dash-header {
         padding: 20px 12px;
     }
@@ -1006,10 +1029,6 @@ label.container-check.form-check-label span.checkmark{
     }
     span.d-none.d-sm-block{
         display: inline-block;
-    }
-    .card.px-5.py-3.mb-2 {
-        margin-top: 10px;
-        padding: 15px !important;
     }
     .dash-header.d-flex.justify-content-between {
         display: block !important;
