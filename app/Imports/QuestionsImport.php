@@ -78,9 +78,9 @@ class QuestionsImport implements ToCollection, WithHeadingRow
                     elseif($row['fraction_4'] == '100' && $i == 4)
                         $check_correct = 1;
 
-                    if($row['answer'.$i] == true)
+                    if($row['answer'.$i] === true)
                         $row['answer'.$i] = 'TRUE';
-                    if($row['answer'.$i] == false)
+                    if($row['answer'.$i] === false)
                         $row['answer'.$i] = 'FALSE';
                    if( !is_null($row['answer'.$i])  )
 

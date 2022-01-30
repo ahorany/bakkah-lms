@@ -137,6 +137,8 @@ return [
     'scorms'=>'Scorms',
     'attempts'=>'محاولات',
     'course_name'=>'اسم الدورة',
+    'import_questions_little'=>'Import Questions Sim',
+
     'hide from trainees'=>'Hide From Trainees',
     'trainee_mark'=>'علامة المتدرب',
 ];
