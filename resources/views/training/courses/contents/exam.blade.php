@@ -109,7 +109,7 @@
                             {!!Builder::Submit('importQuestionsLittle', 'import_questions_little', 'green', null, [
                                 'icon'=>'far fa-file-excel',
                             ])!!}
-                            <a href="{{CustomAsset('samples/P3O_Practice Test_Foundation.xlsx')}}" download class="cyan" role="button"> Sample </a>
+                            <a href="{{CustomAsset('samples/sim.xlsx')}}" download class="cyan" role="button"> Sample </a>
                             <input type="hidden" name="content_id" value="{{$content->id}}">
                         </div>
                     </div>
