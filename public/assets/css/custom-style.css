@@ -208,7 +208,8 @@ li.has-dropdown .dropdown span{
 
 .q-card {
     margin-bottom: 10px;
-    padding: 15px !important;
+    /* padding: 15px !important; */
+    padding: 50px 15px 30px !important;
 }
 .q-card h3 {
     font-size: 16px;
@@ -751,6 +752,12 @@ label.container-check.form-check-label span.checkmark{
     }
     .correct_feedback h4{
         margin: 0 !important;
+    }
+    .border_false{
+        border: 1px solid rgb(255 0 0 / 50%)
+    }
+    .border_true{
+        border: 1px solid rgb(0 123 0 / 50%)
     }
 
 /******************************************************************************************************************/

@@ -243,6 +243,42 @@ body {
   transform: rotate(45deg);
 }
 
+/**/
+
+/* <div class="nav-icon crossed"></div> */
+
+.nav-icon{
+    margin-top: 10px;
+    margin-left: 5px;
+    position:relative;
+    width: 12px;
+    height: 2px;
+    background: red;
+  }
+  .nav-icon::before,.nav-icon::after{
+    position: absolute;
+    content: "";
+    width: 12px;
+    height: 2px;
+    background: red;
+  }
+  .nav-icon::before{
+    transform: translateY(-10px);
+  }
+  .nav-icon::after{
+    transform: translateY(10px);
+  }
+  .crossed{
+     transform:rotate(45deg)
+  }
+  .crossed::before{
+    opacity: 0;
+  }
+  .crossed::after{
+    transform:rotate(-90deg)
+  }
+/**/
+
 .social-media a {
   width: 30px;
   height: 30px;
@@ -909,11 +945,15 @@ ol.answers li .icon {
 }
 
 ol.answers li .icon.correct {
-  background: #06ae60;
+  /* background: #06ae60; */
+  border: 1px solid #06ae60;
+    padding: 4px;
 }
 
 ol.answers li .icon.incorrect {
-  background: #ff0000;
+  /* background: #ff2f00; */
+    border: 1px solid #ff2f00;
+    padding: 4px;
 }
 
 ol.answers li .icon.empty {
