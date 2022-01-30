@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\CourseContentHelper;
+
 class ContentController extends Controller
 {
 
@@ -78,7 +80,6 @@ class ContentController extends Controller
             'course_id'  =>'required|exists:courses,id',
 //            'excerpt'    =>  "required|string",
         ];
-
         $validator = Validator::make(\request()->all(), $rules);
 
         if($validator->fails()){
@@ -93,16 +94,15 @@ class ContentController extends Controller
             'course_id'  =>request()->course_id,
             'post_type'  => 'section',
             'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
+            'hide_from_trainees'  =>request()->hide_from_trainees??false,
         ]);
 
         $content->details()->create([
             'excerpt'    =>  request()->excerpt,
         ]);
-
         $content = Content::whereId($content->id)->with(['details','contents'])->first();
 //        $contents = Content::where('course_id',$course_id)->whereNull('parent_id')->with(['contents','details'])->latest()->get();
-        return response()->json([ 'status' => 'success','section' => $content]);
-
+        return response()->json([ 'status' => 'success', 'section' => $content]);
     }
 
     public function update_section()
@@ -120,10 +120,10 @@ class ContentController extends Controller
             return response()->json(['errors' => $validator->errors()]);
         }
 
-
         $content = Content::whereId(request()->content_id)->update([
             'title'      => request()->title,
             'course_id'  =>request()->course_id,
+            'hide_from_trainees'  =>request()->hide_from_trainees??false,
         ]);
 
         ContentDetails::updateOrCreate([
@@ -131,10 +131,7 @@ class ContentController extends Controller
         ],[
             'excerpt'    =>  request()->excerpt,
         ]);
-
-
-        return response()->json([ 'status' => 'success']);
-
+        return response()->json([ 'status' => 'success', 'section' => $content]);
     }
 
     private function contentValidation($type){
@@ -480,10 +477,15 @@ class ContentController extends Controller
     }
 
     public function exam_preview_content($exam_id){
+
         $exam =  Content::where('id',$exam_id)->with(['exam','questions.answers'])->first();
-        return view('training.courses.contents.preview.exam', compact('exam'));
+
+        // Get next and prev
+        $arr = CourseContentHelper::NextAndPreviouseNavigation($exam);
+        $next = $arr['next'];
+        $previous = $arr['previous'];
+        // end next and prev
+
+        return view('training.courses.contents.preview.exam', compact('exam', 'next', 'previous'));
     }
-
-
-
 }

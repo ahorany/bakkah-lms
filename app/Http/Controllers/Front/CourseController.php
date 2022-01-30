@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Front;
 
 use App\Helpers\CourseContentHelper;
+use App\Models\Admin\Role;
 use App\Models\Training\Content;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\UserContent;
 use Carbon\Carbon;
 use App\Models\Training\Course;
 use App\Models\Training\UserContentsPdf;
+use App\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
@@ -22,16 +24,11 @@ class CourseController extends Controller
      * (Course page , Course rate , Preview Content ,
      *  Resume Content, Update UserContent Completed Status)
      ********************************************************/
-
-
-
     public function __construct()
     {
         // User Must Be Auth To Use Any Method In This Class
         $this->middleware('auth');
     }
-
-
     /****************************************************************************/
 
     /*
@@ -39,58 +36,75 @@ class CourseController extends Controller
      */
     public function course_details($course_id){
 
+        $user_id = User::delegate_user_id();
+        $preview_gate_allows = Gate::allows('preview-gate');
+
         // clear session => (Sidebar active color)
         session()->put('infastructure_id', -1);
 
-       // Get Course With Contents
-        $course = $this->getCourseWithContents($course_id);
+        $course_registration = CourseRegistration::where('course_id', $course_id)
+        ->where('user_id', $user_id)
+        ->select('id', 'role_id')
+        ->first();
 
+        $role_id = (!$preview_gate_allows) ? $course_registration->role_id : -1;
+       // Get Course With Contents
+        $course = $this->getCourseWithContents($course_id, $role_id);
         // validate if course exists or not
         if(!$course){
             abort(404);
         }// end if
 
-
         // Get total rate for course
         $total_rate = $this->getTotalRateForCourse($course->id);
 
         // Get User Course Activities
-        $activities = $this->getUserCourseActivities($course->id, \auth()->id());
+        $activities = $this->getUserCourseActivities($course->id, $user_id);
         // $course_registration_id = CourseRegistration::where('course_id',$course->id)->where('user_id', \auth()->id())->pluck('id')->first();
-        $course_registration = CourseRegistration::where('course_id',$course->id)->where('user_id', \auth()->id())->select('id', 'role_id')->first();
-
-        return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration'));
+        // $course_registration = CourseRegistration::where('course_id', $course->id)->where('user_id', \auth()->id())->select('id', 'role_id')->first();
+        return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id'));
     } // end function
 
 
     /*
      * Get Course With Contents
      */
-    private function getCourseWithContents($course_id){
+    private function getCourseWithContents($course_id, $role_id=3){
 
-        $course = Course::where('id',$course_id)->whereHas('users',function ($q){
-            $q->where('users.id',\auth()->id());
-        })->with(['users' => function($query){
-            $query->where('user_id',\auth()->id());
-        },'course_rate' => function($query){
-            return $query->where('user_id',\auth()->id());
-        },'uploads' => function($query){
+        $course = Course::where('id', $course_id);
+
+        if(!Gate::allows('preview-gate')){
+
+            $course = $course->whereHas('users', function ($q){
+                $q->where('users.id', \auth()->id());
+            })->with(['users' => function($query){
+                $query->where('user_id', \auth()->id());
+            }, 'course_rate' => function($query){
+                return $query->where('user_id', \auth()->id());
+            }]);
+        }
+
+        $course = $course->with(['uploads' => function($query){
             return $query->where(function ($q){
-                $q->where('post_type','intro_video')->orWhere('post_type','image');
+                $q->where('post_type','intro_video')->orWhere('post_type', 'image');
             });
-        },'contents' => function($query){
+        }, 'contents' => function($query) use($role_id){
             $query->where('post_type','section')->with(['details',
                 'contents' => function($q){
                     return $q->orderBy('order');
                 },
                 'contents.details','contents.user_contents' => function($q){
-                    return $q->where('user_id',\auth()->id());
-                }])->orderBy('order');
+                    return $q->where('user_id', \auth()->id());
+                }])
+            ->orderBy('order');
+
+            if($role_id==3){
+                $query->where('hide_from_trainees', 0);
+            }
         }])->first();
 
         return $course;
     } // end function
-
 
     /*
      * Get total rate for course
@@ -214,36 +228,39 @@ class CourseController extends Controller
      */
     public function preview_content($content_id){
 
+        $preview_gate_allows = Gate::allows('preview-gate');
+
         // Get content from DB
         $content = Content::whereId($content_id)
             ->with(['upload','course' ,'section'])->first();
 
-        // dd($content);
         // Check if content not found => ABORT(404)
         if (!$content){
             abort(404);
         }// end if
 
-        // Check if user is not register in course AND user role not admin => ABORT(404)
-        $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
-        if(!$user_course_register){
-            abort(404);
-        }// end if
+        if(!$preview_gate_allows){
+            // Check if user is not register in course AND user role not admin => ABORT(404)
+            $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
+            // if(!$user_course_register){
+            //     abort(404);
+            // }// end if
+        }
 
         // Get next and prev
-        $arr = CourseContentHelper::nextAndPreviouseQuery($content->course_id,$content->id,$content->order,$content->parent_id,$content->section->order);
-        $previous = $arr[0];
-        $next = $arr[1];
-        $next = ($next[0]??null);
-        $previous = ($previous[0]??null);
+        $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
+        $next = $arr['next'];
+        $previous = $arr['previous'];
         // end next and prev
 
         //TODO: Ahoray
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
-        if(!request()->has('preview') && $user_course_register->role_id == 3){
-            if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
-                return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
-            }// end if
+        if(!$preview_gate_allows){
+            if($user_course_register->role_id == 3){
+                if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
+                    return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
+                }// end if
+            }
         }
 
        /*
@@ -252,7 +269,6 @@ class CourseController extends Controller
         *  When User Open Content Page AND User Content Not Completed
         */
         $is_completed = $this->createUserContentOrUpdate($content_id, $content->time_limit);
-
 
         // Check content is completed => enabled next button
         $enabled = true;
@@ -280,20 +296,23 @@ class CourseController extends Controller
         // When user course => completed_at is null => update completed at In Course Registration
         // pop up status => preview else disable
         $popup_compelte_status = false;
-        if ($content->course->complete_progress <= $user_course_register->progress){
-            // Check if user course => completed_at is null => update completed at In Course Registration
-            if (!$user_course_register->completed_at){
-               CourseRegistration::where('user_id',auth()->id())
-                   ->where('course_id', $content->course->id)->update([
-                       'completed_at' => Carbon::now(),
-                   ]);
+        if(!$preview_gate_allows){
 
-                $popup_compelte_status = true;
+            if ($content->course->complete_progress <= $user_course_register->progress){
+                // Check if user course => completed_at is null => update completed at In Course Registration
+                if (!$user_course_register->completed_at){
+                CourseRegistration::where('user_id',auth()->id())
+                    ->where('course_id', $content->course->id)->update([
+                        'completed_at' => Carbon::now(),
+                    ]);
+
+                    $popup_compelte_status = true;
+                } // end if
             } // end if
-        } // end if
+        }
 
         $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',auth()->user()->id)->pluck('current_page')->first();
-        return view('pages.file',compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num'));
+        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num'));
     } // end function
 
 
@@ -302,7 +321,9 @@ class CourseController extends Controller
      */
     private function checkUserCourseRegistrationAndRole($course_id){
 
-        $user_course_register = CourseRegistration::where('course_id',$course_id)->where('user_id',\auth()->id())->first();
+        $user_course_register = CourseRegistration::where('course_id', $course_id)
+        ->where('user_id',\auth()->id())
+        ->first();
         $role_auth_is_admin = \auth()->user()->roles()->first();
 
         if(!$user_course_register && ($role_auth_is_admin && $role_auth_is_admin->id != 1)){

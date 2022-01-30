@@ -1,7 +1,19 @@
-/* h1 , h2 , h3 , h4 , h5 ,h6,
-a, span , p , label, div, small{
-    text-transform: capitalize !important;
+/* a.nav-link.active:before {
+    content: '';
+    background: #fff;
+    height: 50px;
+    display: block;
+    width: 15px;
+    position: absolute;
+    left: 0;
+    border-radius: 0 10px 10px 0;
 } */
+li.admin{
+    background: #efefef;
+}
+.scorm .group_buttons{
+    display: inline-block;
+}
 .quill-editor-container .ql-editor>p{
     text-transform: none !important;
 }
@@ -116,6 +128,7 @@ li.has-dropdown .dropdown span{
 }
 .text-center.course-image {
     min-height: 197.35px !important;
+    /* min-height: max-content !important; */
 }
 
 /* checkbox */
@@ -181,9 +194,21 @@ li.has-dropdown .dropdown span{
 
 /* End Checkbox */
 
+.activity_icon {
+    width:28.126px;
+    height:28.127px;
+    vertical-align: middle;
+    color: rgb(106, 106, 106) !important;
+    filter: opacity(0.7);
+}
+
+.padding-list {
+    padding: 5px 10px !important;
+}
 
 .q-card {
     margin-bottom: 10px;
+    padding: 15px !important;
 }
 .q-card h3 {
     font-size: 16px;
@@ -193,7 +218,8 @@ li.has-dropdown .dropdown span{
     box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
 }
 ol.answers li .icon.empty {
-    background: #82bafe;
+    /* background: #82bafe; */
+    background: #f1f1f1;
 }
 ol.answers li{
     cursor: pointer;
@@ -216,6 +242,9 @@ ol.answers li{
 }
 .lms-header ul.navbar-nav > li {
     margin: 0 30px 0 0;
+}
+.course_details .activity h3 {
+    margin-top: 0;
 }
 /*************************************************************************************************************/
 
@@ -452,7 +481,7 @@ a:hover svg#back{
     filter: invert(1);
 }
 .course-cards{
-    width: 22%;
+    width: 23%;
     margin-bottom: 10px;
     /* justify-content: center; */
     background: #FFF;
@@ -656,7 +685,7 @@ p.time-remaining svg path{
     fill: #fb4400;
 }
 .review.dash-header{
-    padding: 20px 0;
+    padding: 20px 12px
 }
 .plyr input {
     color: #fb4400 !important;
@@ -705,6 +734,25 @@ label.container-check.form-check-label span.checkmark{
     }
     /* end alert */
 
+    .correct_feedback {
+        color: #5D5B5A !important;
+        padding: 10px !important;
+        background: #fafafa !important;
+        margin: 2px 0 !important;
+        /* box-shadow: 0px 0px 5px rgb(0 0 0 / 6%); */
+        border: 1px solid rgb(0 0 0 / 6%);
+    }
+    .correct_feedback.correct_answer {
+        background: #0080000f !important;
+    }
+    .correct_feedback.correct_answer {
+        background: #0080000f !important;
+        border: 1px solid #00800033;
+    }
+    .correct_feedback h4{
+        margin: 0 !important;
+    }
+
 /******************************************************************************************************************/
 
 /* Media Query */
@@ -717,20 +765,28 @@ label.container-check.form-check-label span.checkmark{
     .certificate .download img{
         width: 35px !important;
     }
+    .change-password .card-body , .change-password .card {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 }
 
-@media (max-width: 1199px) and (min-width: 991px) {
+@media (max-width: 1200px) and (min-width: 991px) {
     .calendar .sideb table th{
         font-size: 12px;
     }
     .course-cards{
-        width: 35%;
+        width: 48%;
     }
     .certificate{
         padding: 60px 15px 30px;
     }
     .certificate .download img{
         width: 35px !important;
+    }
+    .change-password .card-body , .change-password .card {
+        padding: 0 !important;
+        margin: 0 !important;
     }
 }
 
@@ -742,9 +798,25 @@ label.container-check.form-check-label span.checkmark{
     .certificate{
         padding: 60px 15px 30px;
     }
+    main#main-vue-element{
+        padding: 1rem !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+    .change-password .card.px-5.mx-5 {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .m-bottom{
+        margin-bottom: 24px;;
+    }
+    .dash-header.d-flex.justify-content-between.align-items-center{
+        display: block !important;
+    }
+    .parent_next_prev {
+        justify-content: start;
+    }
     .text-center.course-image.w-30.mb-4.mt-2.mb-md-0{
         width: 40%;
     }
@@ -753,7 +825,7 @@ label.container-check.form-check-label span.checkmark{
         margin-top: 25px;
     }
     .course-cards{
-        width: 40%;
+        width: 48%;
     }
     .dash-header.d-flex.justify-content-between ol.breadcrumb{
         margin-bottom: 10px;
@@ -768,12 +840,42 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 768px) {
+    .container.change-password {
+        margin: 20px auto;
+    }
+    .display-none{
+        display: none !important;
+    }
+    .row.m-0.home-section {
+        margin-top: 11px !important;
+    }
+    .m-bottom{
+        margin-bottom: 24px;;
+    }
+    .dash-header.d-flex.justify-content-between.align-items-center{
+        display: block !important;
+    }
+    .parent_next_prev {
+        justify-content: start;
+        margin-top: 15px;
+    }
+    .text-center.course-image {
+        min-height: max-content !important;
+    }
+    table.result_review td{
+        text-align: left !important;
+    }
+    .scorm_report{
+        padding: 15px;
+    }
+    .course_details .dash-header.course-header.d-flex.align-items-md-end.flex-column.flex-md-row.px-3{
+        padding: 012px !important;
+    }
     p.time-remaining{
-        margin: 0;
-        margin-bottom: 15px;
+        margin: 15px 0;
     }
     .certificate-page {
-        padding: 50px;
+        padding: 50px 0;
     }
     .course-cards span {
         display: block;
@@ -786,7 +888,7 @@ label.container-check.form-check-label span.checkmark{
         padding: 0;
     }
     .mx-md-4.course_info {
-        padding: 0 10px;
+        padding: 0;
     }
     .dash-header h1 {
         font-size: 25px;
@@ -842,7 +944,7 @@ label.container-check.form-check-label span.checkmark{
         width: 100%;
     }
     .course-cards {
-        width: 37% !important;
+        width: 48% !important;
     }
     main#main-vue-element{
         padding: 0 !important;
@@ -854,13 +956,22 @@ label.container-check.form-check-label span.checkmark{
         font-size: 17px;
         font-weight: 700;
     }
-    .m-bottom{
-        margin-bottom: 25px;;
+    .card.px-5.py-3.mb-2 {
+        margin-top: 10px;
+        padding: 15px !important;
     }
 }
 
 @media (max-width: 768px) and (min-width: 576px){
-
+    .container {
+        max-width: 100% !important;
+    }
+    .review.dash-header {
+        padding: 20px 12px;
+    }
+    .review.dash-header .parent_next_prev {
+        margin: 0 !important;
+    }
     .navbar .navbar-toggler {
         top: 20%;
         left: 200px;
@@ -878,8 +989,37 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 576px){
+    .review.dash-header {
+        padding: 20px 12px;
+    }
+    .review.dash-header button.next_prev{
+        margin: 0 5px 0 0 !important
+    }
+    .q-number small{
+        line-height: 2rem !important;
+    }
+    .q-number{
+        padding: 10px;
+        font-size: 14px;
+    }
+    .q-card h3{
+        padding: 0px 50px 0 0 !important;
+        font-size: 16px;
+    }
+    .card.p-5 , .card.px-5.py-4 {
+        padding: 15px !important;
+    }
+    table a.green.form-control {
+        display: inline;
+    }
+    svg#back{
+        width: 18px !important;
+    }
+    a.cyan , button.cyan , button.main-color, a.main-color , input.cyan , input.main-color , a.btn.btn-primary , button.btn.btn-primary{
+        font-size: 14px !important;
+    }
     .course-cards {
-        width: 65% !important;
+        width: 100% !important;
         margin: 5px auto;
     }
     .calendar .sideb table th{
@@ -896,9 +1036,6 @@ label.container-check.form-check-label span.checkmark{
     }
     span.d-none.d-sm-block{
         display: inline-block;
-    }
-    .card.px-5.py-3.mb-2 {
-        margin-top: 10px;
     }
     .dash-header.d-flex.justify-content-between {
         display: block !important;
@@ -930,9 +1067,15 @@ label.container-check.form-check-label span.checkmark{
     .text-center.course-image .download img{
         width: 60%;
     }
+    .home-section h2 {
+        text-align: center;
+    }
 }
 
 @media(max-width : 431px){
+    ol.breadcrumb {
+        display: none;
+    }
     span.d-none.d-sm-block{
         display: none;
     }
@@ -950,7 +1093,7 @@ label.container-check.form-check-label span.checkmark{
         display: none;
     }
     .course-cards {
-        width: 80% !important;
+        width: 100% !important;
         margin: 5px auto;
     }
     .card-header.d-flex.justify-content-between.align-items-center {
@@ -959,7 +1102,19 @@ label.container-check.form-check-label span.checkmark{
     }
     .card-header.d-flex.justify-content-between.align-items-center .d-flex.align-items-center {
         justify-content: center;
-        margin-top: 15px;
+    }
+    .dash-header.course_info {
+        display: none;
+    }
+    .title_file_new{
+        display: block !important;
+        padding: 0 10px;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .title_file_old{
+        display: none;
     }
 }
 

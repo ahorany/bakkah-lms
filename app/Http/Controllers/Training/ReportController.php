@@ -150,7 +150,8 @@ class ReportController extends Controller
         ->join('user_exams','user_exams.exam_id','exams.id')
         ->join('courses','courses.id','contents.course_id')
         ->where('user_exams.user_id',$user_id)
-        ->select('user_exams.id','contents.title as content_title','courses.title as course_title','user_exams.time','exams.exam_mark','exams.pass_mark','user_exams.mark')
+        ->select('user_exams.id', 'contents.title as content_title', 'courses.title as course_title', 'user_exams.time'
+        , 'exams.exam_mark', 'exams.pass_mark', 'user_exams.mark as exam_trainee_mark', 'user_exams.status')
         ->orderBy('user_exams.time')
         ->get();
         //dd($tests);

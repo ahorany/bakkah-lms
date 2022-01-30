@@ -317,7 +317,4 @@ var pdfDoc = null,
         .catch(e => {
         });
     }
-
 </script>
-
-

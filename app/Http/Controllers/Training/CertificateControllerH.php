@@ -396,6 +396,7 @@ class CertificateControllerH extends Controller
             'cart'=>$body['cart'],
             'data_for_qr'=>$body['data_for_qr'],
             'file_name_pdf'=>$body['file_name_pdf'],
+            'course_title'=>$course->trans_title,
         ]);
 
     }

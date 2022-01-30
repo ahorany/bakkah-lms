@@ -7,6 +7,7 @@ use App\Models\Training\Content;
 use App\Models\Training\Exam;
 use App\Models\Training\UserContent;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class CourseContentHelper
 {
@@ -73,18 +74,19 @@ class CourseContentHelper
       * Get Next And Previous Contents Data
     */
     public static function nextAndPreviouseQuery($course_id,$content_id,$content_order,$content_parent_id,$section_order){
+
         $sql = "SELECT contents.id , sections.id as section_id , contents.order,sections.order as section_order , contents.title,contents.post_type FROM `contents`
-                        INNER JOIN contents AS sections ON contents.parent_id = sections.id
-                        WHERE contents.course_id =  $course_id
-                        AND contents.id !=  $content_id
-                        AND contents.deleted_at IS NULL
-                        AND (
-                              (contents.order > $content_order  AND contents.parent_id = $content_parent_id)
-                                OR
-                              ( sections.order > ".$section_order.")
-                            )
-                         order BY sections.order , contents.order
-                         LIMIT 1";
+        INNER JOIN contents AS sections ON contents.parent_id = sections.id
+        WHERE contents.course_id =  $course_id
+        AND contents.id !=  $content_id
+        AND contents.deleted_at IS NULL
+        AND (
+                (contents.order > $content_order  AND contents.parent_id = $content_parent_id)
+                OR
+                ( sections.order > ".$section_order.")
+            )
+            order BY sections.order , contents.order
+            LIMIT 1";
 
         $next =  DB::select(DB::raw($sql));
 
@@ -105,10 +107,8 @@ class CourseContentHelper
 
         $previous =  DB::select(DB::raw($sql));
 
-
         return [$previous,$next];
     } // end function
-
 
 
     /*
@@ -162,5 +162,52 @@ class CourseContentHelper
         return true;
     } // end function
 
+    public static function NextAndPreviouseNavigation($content){
+
+        $arr = self::nextAndPreviouseQuery($content->course_id, $content->id, $content->order, $content->parent_id, $content->section->order);
+        $previous = $arr[0];
+        $next = $arr[1];
+        $next = ($next[0]??null);
+        $previous = ($previous[0]??null);
+
+        return compact('next', 'previous');
+    }
+
+    public static function NextPrevNavigation($next, $previous){
+
+        $next_url = '';
+        $previous_url = '';
+        if( !is_null($next)){
+            if( $next->post_type != 'exam') {
+                $next_url = CustomRoute('user.course_preview', $next->id);
+            }else{
+                if(Gate::allows('preview-gate')){
+                    $next_url =  CustomRoute('training.exam.preview.content', $next->id);
+                }
+                else{
+                    $next_url =  CustomRoute('user.exam', $next->id);
+                }
+            }
+        }
+
+        if(!is_null($previous)){
+            if($previous->post_type != 'exam'){
+                $previous_url = CustomRoute('user.course_preview', $previous->id);
+            }else{
+                if(Gate::allows('preview-gate')){
+                    $previous_url =  CustomRoute('training.exam.preview.content', $previous->id);
+                }
+                else{
+                    $previous_url =  CustomRoute('user.exam', $previous->id);
+                }
+            }
+        }
+
+        if(Gate::allows('preview-gate')){
+            $next_url .= '?preview=true';
+            $previous_url .= '?preview=true';
+        }
+        return compact('next_url', 'previous_url');
+    }
 
 } // End Class

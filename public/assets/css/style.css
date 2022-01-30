@@ -560,11 +560,16 @@ nav#sidebarMenu ul {
 
 nav#sidebarMenu ul li a {
   padding: 15px;
-  display: flex;
-  align-items: center;
+  display: inline-block;
+  width: 100%;
+  /* display: flex; */
+  /* align-items: center; */
   color: #000;
   /* border-left: 10px solid transparent; */
   transition: all 0.15s ease-in-out;
+}
+nav#sidebarMenu ul li a p {
+  display: inline-block;
 }
 
 nav#sidebarMenu ul li a:hover,
@@ -575,18 +580,40 @@ nav#sidebarMenu ul li a.active {
 }
 
 nav#sidebarMenu ul li a:hover path,
-nav#sidebarMenu ul li a.active path {
+nav#sidebarMenu ul li a.active path,
+nav#sidebarMenu ul li a.active polyline {
   fill: #fff;
 }
 
-nav#sidebarMenu ul li a svg {
-  width: 50px;
-  height: 20px;
+nav#sidebarMenu ul li.admin.title span {
+    font-size: 18px;
+    font-family: 'Lato Bold';
+    color: #1c1c1c;
+}
+nav#sidebarMenu ul li.admin.title svg {
+    width: 20px;
+    height: auto;
+    margin-right: 10px;
 }
 
-nav#sidebarMenu ul li a svg path {
+nav#sidebarMenu ul li.admin.title {
+    padding: 15px;
+    background: #ececec;
+}
+
+nav#sidebarMenu ul li a svg {
+    width: 20px;
+    height: auto;
+    margin-right: 10px;
+}
+
+nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#sidebarMenu ul li.admin.title svg path {
   fill: #000;
 }
+
+/* nav#sidebarMenu ul li a:hover #courses path , nav#sidebarMenu ul li a:hover #courses path line{
+    filter: inherit !important;
+} */
 
 .lms-header a.navbar-brand {
   background: var(--mainColor);
@@ -871,13 +898,14 @@ ol.answers li {
 }
 
 ol.answers li .icon {
-  width: 25px;
-  height: 25px;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 5px auto 0;
+  padding: 3px;
 }
 
 ol.answers li .icon.correct {
@@ -1013,7 +1041,7 @@ ol.answers li .icon.empty {
 }
 
 .learning-file h3 {
-  margin: 20px 30px;
+  margin: 30px 30px 15px;
   /* font-family: "Lato Black"; */
   text-transform: capitalize;
   font-size: 17px;
@@ -1434,6 +1462,7 @@ ul.badges li svg {
 }
 
 @media (max-width: 576.98px) {
+
    .image{
         height: auto;
     }
@@ -1498,6 +1527,11 @@ ul.badges li svg {
   ol.breadcrumb li {
     margin-right: 8px;
   }
+  /* .course-cards {
+      width: 100% !important;
+      border-radius: 5px;
+      box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+  } */
 }
 /*
 @media (min-width: 991px) and (max-width: 1200px) {

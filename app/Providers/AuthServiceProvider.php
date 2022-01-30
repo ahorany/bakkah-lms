@@ -26,5 +26,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+        Gate::define('preview-gate', function ($user) {
+
+            if($user->roles->first()->id==1 && request()->has('preview')){
+                return true;
+            }
+            return false;
+            // return $user->isAdmin;
+        });
     }
 }

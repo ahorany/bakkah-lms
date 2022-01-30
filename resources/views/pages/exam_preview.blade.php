@@ -101,7 +101,7 @@
                                 <small v-if="question.answers_count > 1" v-text=" '(' + (question.mark) + ' Marks)'"></small>
 
                             </div>
-                            <h3 v-html="question.title" style="padding-right: 25%;"></h3>
+                            <h3 v-html="question.title" style="padding-right: 15%;"></h3>
 
                            <template v-if="page_type == 'exam'">
                                 <label :for="answer.title + '_' + answer.id + '_' + answer.question_id"  v-if="question.answers_count == 1" v-for="answer in question.answers" class="custom-radio" > @{{ answer.title }}
@@ -156,7 +156,7 @@
 
                     <div class="col-xl-3 col-lg-4">
                         <div class="card h-100 p-30">
-                            <h4>Quiz</h4>
+                            <h2 class="mt-0">Quiz</h2>
                             <ol class="answers">
                                 <template v-if="page_type == 'exam' "  v-for="(question, index) in exam.questions">
                                     <li @click="searchAndOpenQuestion(question.id)" :key="question.id" >

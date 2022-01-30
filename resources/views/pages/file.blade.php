@@ -122,23 +122,10 @@
 
 @section('content')
     <?php
-    if( !is_null($next)){
-        if( $next->post_type != 'exam' ) {
-            $next_url = CustomRoute('user.course_preview',$next->id);
-        }else{
-            $next_url =  CustomRoute('user.exam',$next->id);
-        }
-    }
-
-    if(!is_null($previous)){
-        if($previous->post_type != 'exam'){
-            $previous_url = CustomRoute('user.course_preview',$previous->id);
-        }else{
-            $previous_url =  CustomRoute('user.exam',$previous->id);
-        }
-    }
+    $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
+    $next_url = $NextPrevNavigation['next_url'];
+    $previous_url = $NextPrevNavigation['previous_url'];
     ?>
-
     @if($popup_compelte_status)
         <div class="custom-model-main model-open">
             <div class="custom-model-inner">
@@ -180,6 +167,7 @@
         <br>
         {{-- <h1 style="text-transform:capitalize;">{{ $content->course->trans_title }}</h1> --}}
     </div>
+    <h3 style="text-transform:capitalize; display: none;" class="title_file_new">{{ $content->title }}</h3>
 
     <div class="row mx-0">
         @if(session()->has('status'))
@@ -197,41 +185,12 @@
         @endif
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="m-0" style="text-transform:capitalize;">{{ $content->title }}</h3>
-                <div class="d-flex align-items-center">
-
-{{--                    <div class="title" style="margin-right: 15px;">--}}
-{{--                        <span class="previous-title">--}}
-{{--                            <a id="title-prev" style="display: none; color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a>--}}
-{{--                        </span>--}}
-{{--                        <span class="next-title">--}}
-{{--                            <a id="title-next" style="display: none; color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a>--}}
-{{--                        </span>--}}
-{{--                    </div>--}}
-
-                    @if($previous)
-                    {{-- <span class="previous-title"><a style="color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a></span> --}}
-                        <button title="{{$previous->title}}" class="next_prev" onclick="location.href =  '{{$previous_url}}'">
-                            <svg id="Group_103" data-name="Group 103" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                                <path id="Path_99" data-name="Path 99" d="M161.171,218.961a1.511,1.511,0,0,1-1.02-.4l-11.823-10.909a1.508,1.508,0,0,1,0-2.215l11.823-10.912a1.508,1.508,0,0,1,2.045,2.215l-10.625,9.8,10.625,9.8a1.508,1.508,0,0,1-1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
-                            </svg>
-                            <span>{{__('education.Previous')}}</span>
-                        </button>
-                    @endif
-
-
-                    @if($next)
-                        <button title="{{$next->title}}"  class="next next_prev">
-                            <span id="demo">{{__('education.Next')}}</span>
-                            {{-- <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                               <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
-                           </svg> --}}
-                        </button>
-                            {{-- <span class="next-title"><a style="color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a></span> --}}
-                    @endif
-                </div>
-
-
+                <h3 class="m-0 title_file_old" style="text-transform:capitalize;">{{ $content->title }}</h3>
+                @include('Html.next-prev-navigation', [
+                    'next'=>$next,
+                    'previous'=>$previous,
+                    'previous_url'=>$previous_url,
+                ])
             </div>
             <div class="card-body">
                 @isset($content->upload->file)
@@ -249,7 +208,7 @@
                            <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
                         @elseif($content->upload->extension == 'pdf' )
 
-                            <style>
+                            {{--<style>
                             #google-pdf-viewer {
                                 border: 1px solid #cccccc;
                                 width: 100%;
@@ -261,17 +220,22 @@
                                     height: 554px;
                                 }
                             }
-
                             .output {
                                 background: #eee;
                             }
                             </style>
                             <iframe id="google-pdf-viewer" style="" title="{{$content->title}}" sandbox="allow-scripts allow-same-origin allow-orientation-lock allow-top-navigation"
                             src='https://docs.google.com/viewer?&amp;embedded=true&url={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                            --}}
                             {{-- <embed width="100%" height="600px" id="update_file_source" src='' > --}}
                             {{-- <iframe width="100%" height="600px" id="update_file_source" src='' style="border: 1px solid #eaeaea;" ></iframe> --}}
                             {{-- @include('Html.PDF.container', ['file'=>$content->upload->file??null]) --}}
-
+                            {{-- @include('Html.PDF.pdf', ['file'=>$content->upload->file??null]) --}}
+                            {{-- <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script> --}}
+                            @include('Html.PDF.adobe', [
+                                'file'=>CustomAsset('upload/files/presentations/'.$content->upload->file),
+                                'title'=>$content->title??null,
+                            ])
                         @elseif($content->upload->extension == 'xls' )
                             <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
                         @else
@@ -321,9 +285,13 @@
 
      <script>
         document.getElementById("demo").innerHTML = "Next";
-        document.querySelector(".next").addEventListener("click", function(event){
-        window.location.href = '{{$next_url??null}}'
-        });
+
+        function NextBtn(){
+            document.querySelector(".next").addEventListener("click", function(event){
+                window.location.href = '{{$next_url??null}}'
+            });
+        }
+        NextBtn();
     </script>
 @isset($content->upload->file)
     @if($content->post_type == 'video' )
@@ -515,9 +483,10 @@
 
                     document.querySelector(".next").insertAdjacentHTML('beforeend', svg_next);
 
-                    document.querySelector(".next").addEventListener("click", function(event){
+                    {{--document.querySelector(".next").addEventListener("click", function(event){
                         window.location.href = '{{$next_url??null}}'
-                    });
+                    });--}}
+                    NextBtn();
                 }
 
             }, 1000);
@@ -527,12 +496,11 @@
             document.getElementById("demo").innerHTML = "Next";
             document.querySelector(".next").insertAdjacentHTML('beforeend', svg_next);
 
-            document.querySelector(".next").addEventListener("click", function(event){
+            {{--document.querySelector(".next").addEventListener("click", function(event){
                 window.location.href = '{{$next_url??null}}'
-            });
+            });--}}
+            NextBtn();
         }
-
-
     </script>
 @endsection
 

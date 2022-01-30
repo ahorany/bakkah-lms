@@ -11,13 +11,13 @@
 		<div class="card card-default">
 
 		    <div class="card-body">
-		      <div class="container-fluid">
+		      {{-- <div class="container-fluid"> --}}
 		        <div class="row">
 
 		        	@yield('col9')
 
 		        </div>
-		      </div>
+		      {{-- </div> --}}
 		    </div>
 
 		</div>

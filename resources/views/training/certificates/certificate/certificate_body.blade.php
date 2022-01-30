@@ -32,17 +32,37 @@
     if(!isset($folder))
         $folder = 'certificate';
 
-
     $show_pdf = CustomAsset('certificates/'.$folder.'/'.$file_name_pdf.'.pdf');
     $physical_pdf = public_path() . '/certificates/'.$folder.'/'.$file_name_pdf.'.pdf';
-    // if(file_exists($physical_pdf)){
-    //     unlink($physical_pdf);
-    // }
-    // height="680px"
 ?>
 <div class="col-12 text-center">
     @if(file_exists($physical_pdf))
+        <?php /* ?>
         <embed class="embed_pdf" src="{!!$show_pdf!!}#view=Fit&=<?=time();?>" type="application/pdf" width="100%" height="680px" />
+        <?php */ ?>
+        <style>
+        #adobe-dc-view {
+            height: 600px;
+        }
+        @media (max-width: 767.98px) {
+
+            #adobe-dc-view {
+                height: 554px;
+            }
+        }
+        </style>
+        <div id="adobe-dc-view"></div>
+        <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("adobe_dc_view_sdk.ready", function(){
+                var adobeDCView = new AdobeDC.View({clientId: "288b6dcfd4b5432c9603f104dfb93981", divId: "adobe-dc-view"});
+                adobeDCView.previewFile({
+                    content:{location: {url: "{{$show_pdf}}"}},
+                    metaData:{fileName: "{{$course_title}}"}
+                }, {showAnnotationTools: false, dockPageControls: false, showDownloadPDF: true,
+                    showPrintPDF: true, showLeftHandPanel: false, showPageControls: false});
+            });
+        </script>
     @else
         <div style="direction: ltr;" class="alert alert-danger alert-dismissible" role="alert">
                 <strong>Certificate PDF Not Generated!</strong>

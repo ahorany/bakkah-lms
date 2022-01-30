@@ -132,7 +132,7 @@ return [
     'test'=>'Test',
     'date'=>'Date',
     'exam_mark'=>'Exam Mark',
-    'exam_pass'=>'Exam Pass Mark',
+    'exam_pass'=>'Pass %',
     'attempt_mark'=>'Attempt Mark',
     'result'=>'Result',
     'fail'=>'Fail',
@@ -161,5 +161,10 @@ return [
     'scorms'=>'Scorms',
     'attempts'=>'Attempts',
     'course_name'=>'Course Name',
+<<<<<<< HEAD
     'import_questions_little'=>'Import Questions Sim',
+=======
+    'hide from trainees'=>'Hide From Trainees',
+    'trainee_mark'=>'Trainee Mark',
+>>>>>>> ebf49361e61342ae070352b106756c29fa160aff
 ];

@@ -24,6 +24,7 @@ use App\Models\Training\Reply;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,11 +56,11 @@ class ExamController extends Controller
 
         // Get Exam Content
         $exam = Content::whereId($exam_id)
-            ->with(['section','course','exam' => function($q){
-                return $q->with(['users_exams' => function($q){
-                    return $q->where('user_id', auth()->id());
-                }]);
-            }])->first();
+        ->with(['section','course','exam' => function($q){
+            return $q->with(['users_exams' => function($q){
+                return $q->where('user_id', auth()->id());
+            }]);
+        }])->first();
 
         $user_course_register = $this->checkUserCourseRegistration($exam->course->id);
 
@@ -69,11 +70,17 @@ class ExamController extends Controller
         }
 
         // Get Next And Previous Contents Data
-        $arr =  CourseContentHelper::nextAndPreviouseQuery($exam->course_id,$exam->id,$exam->order,$exam->parent_id,$exam->section->order);
-        $previous = $arr[0];
-        $previous = ($previous[0]??null);
-        $next = $arr[1];
-        $next = ($next[0]??null);
+        // $arr =  CourseContentHelper::nextAndPreviouseQuery($exam->course_id,$exam->id,$exam->order,$exam->parent_id,$exam->section->order);
+        // $previous = $arr[0];
+        // $previous = ($previous[0]??null);
+        // $next = $arr[1];
+        // $next = ($next[0]??null);
+
+        // Get Next And Previous Contents Data
+        $arr = CourseContentHelper::NextAndPreviouseNavigation($exam);
+        $next = $arr['next'];
+        $previous = $arr['previous'];
+        // end next and prev
 
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
         if(!CourseContentHelper::checkPrevContentIsCompleted($exam->status , $previous) && $user_course_register->role_id==3){
@@ -98,6 +105,7 @@ class ExamController extends Controller
      * Check User Course Registration
      */
     private function checkUserCourseRegistration($course_id){
+
         return CourseRegistration::where('course_id',$course_id)
             ->where('user_id',\auth()->id())
             ->first();

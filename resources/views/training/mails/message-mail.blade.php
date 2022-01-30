@@ -1,22 +1,12 @@
-@extends('training.mails.master')
+@include('training.mails.layouts.header')
 
-@section('content')
-<table align="center" style="width: 600px; padding: 5px 0;padding-bottom:0;" cellspacing="0" cellpadding="0">
-    <tr>
-        <td style="direction: ltr; background: #fff; font-weight:300; font-size: 12px; color: #707070; font-family:sans-serif; padding: 0px 35px; line-height: 25px;border: 2px solid #d6d6d6;">
-            <div>
-                <br>
-                <div>Dear <b>{{$recieve->trans_name??null}},</b></div>
-                <p>From: {{$message_content->user->email}}</p>
-                <p>Subject: {{$message_content->title}}</p>
-                <p>Body: {{$message_content->description}}</p>
+<main style="text-align: left; width: 90%; margin: 15px auto 0;">
+    <div style="margin: 15px 0">
+        <h5 style="font-size: 18px; margin: 15px 0; text-align: left;">Dear {{$recieve->en_name}},</h5>
+        <p style="font-size: 16px; margin: 15px 0; text-align: left;">{{$message_content->user->en_name}} has just sent you a message for the {{$course->trans_title}}, and the content of the message is the following:</p>
+        <p style="font-size: 16px; text-align: left;">{{$message_content->description}}</p>
+    </div>
+    <p style="font-size: 16px; color: #fff; background: #fb4400; text-align: center; line-height: 1.5; border-radius: 5px; padding: 10px;">Regards.</p>
+</main>
 
-                <div>Best Regards,</div>
-                <div>{{__('education.app_title')}}</div>
-                <br>
-            </div>
-        </td>
-    </tr>
-</table>
-
-@endsection
+@include('training.mails.layouts.footer')
