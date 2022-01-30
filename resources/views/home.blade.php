@@ -444,9 +444,9 @@
                     data: [progress, not_complete, complete],
                     backgroundColor: [
                         // "#303d47",
-                        "#6d6e70",
-                        "#fd9a18",
                         "#00bcb3",
+                        "#eaeaea",
+                        "#fb4400",
                     ]
                 }]
         };
