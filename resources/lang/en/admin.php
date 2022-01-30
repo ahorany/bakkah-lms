@@ -161,5 +161,5 @@ return [
     'scorms'=>'Scorms',
     'attempts'=>'Attempts',
     'course_name'=>'Course Name',
-
+    'import_questions_little'=>'Import Questions Sim',
 ];

@@ -96,6 +96,24 @@
                     </div>
 
             </form>
+
+            <form action="{{ route('training.importQuestionsLittle') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+                @csrf
+                    <div class="col-md-6 px-0">
+                        <div class="add-question-file">
+                            {!!Builder::File('file', 'file', null, [])!!}
+                        </div>
+                    </div>
+                    <div class="col-md-6 px-0">
+                        <div class="import-question-file">
+                            {!!Builder::Submit('importQuestionsLittle', 'import_questions_little', 'green', null, [
+                                'icon'=>'far fa-file-excel',
+                            ])!!}
+                            <a href="{{CustomAsset('samples/P3O_Practice Test_Foundation.xlsx')}}" download class="cyan" role="button"> Sample </a>
+                            <input type="hidden" name="content_id" value="{{$content->id}}">
+                        </div>
+                    </div>
+            </form>
         </div>
 
         <template v-if="questions">

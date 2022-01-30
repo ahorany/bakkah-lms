@@ -86,7 +86,7 @@ Route::group([
         Route::post('courses/importQuestions', 'ImportController@importQuestions')->name('importQuestions');
         Route::post('courses/importQuestionsMoodle', 'ImportController@importQuestionsMoodle')->name('importQuestionsMoodle');
         Route::post('courses/importQuestionsCourse', 'ImportController@importQuestionsCourse')->name('importQuestionsCourse');
-
+        Route::post('courses/importQuestionsLittle', 'ImportController@importQuestionsLittle')->name('importQuestionsLittle');
 
         Route::post('courses/importResults', 'ImportController@importResults')->name('importResults');
 
