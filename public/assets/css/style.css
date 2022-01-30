@@ -560,11 +560,16 @@ nav#sidebarMenu ul {
 
 nav#sidebarMenu ul li a {
   padding: 15px;
-  display: flex;
-  align-items: center;
+  display: inline-block;
+  width: 100%;
+  /* display: flex; */
+  /* align-items: center; */
   color: #000;
   /* border-left: 10px solid transparent; */
   transition: all 0.15s ease-in-out;
+}
+nav#sidebarMenu ul li a p {
+  display: inline-block;
 }
 
 nav#sidebarMenu ul li a:hover,
@@ -580,12 +585,29 @@ nav#sidebarMenu ul li a.active polyline {
   fill: #fff;
 }
 
-nav#sidebarMenu ul li a svg {
-  width: 50px;
-  height: 20px;
+nav#sidebarMenu ul li.admin.title span {
+    font-size: 18px;
+    font-family: 'Lato Bold';
+    color: #1c1c1c;
+}
+nav#sidebarMenu ul li.admin.title svg {
+    width: 20px;
+    height: auto;
+    margin-right: 10px;
 }
 
-nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline {
+nav#sidebarMenu ul li.admin.title {
+    padding: 15px;
+    background: #ececec;
+}
+
+nav#sidebarMenu ul li a svg {
+    width: 20px;
+    height: auto;
+    margin-right: 10px;
+}
+
+nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#sidebarMenu ul li.admin.title svg path {
   fill: #000;
 }
 

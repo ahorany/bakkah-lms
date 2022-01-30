@@ -118,11 +118,11 @@ if(!is_null($previous)){
                         @endif
                     </div>
 
-                  <div class="correct_feedback">
+                  <div class="correct_feedback correct_answer">
                      <h4 class="mb-0">Correct Answer: </h4>
                      @foreach($question->answers as $answer)
                          @if($answer->check_correct == 1)
-                             <div style="color: #2a9055" >
+                             <div>
                                  {{  $answer->title }}
                              </div>
                          @endif
