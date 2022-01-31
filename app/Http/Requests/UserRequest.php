@@ -28,6 +28,15 @@ class UserRequest extends FormRequest
             $user_id = ','.request()->user_id;
         }
 
+
+
+        $course_id = 'required';
+
+         if($this->getMethod() == 'PATCH'){
+            $course_id = '';
+         }
+
+
         $args = [
             'en_name'=>'min:2|max:191',//|regex:/^[A-Za-z]*$/
             // 'ar_name'=>'min:2|max:191',
@@ -47,6 +56,7 @@ class UserRequest extends FormRequest
             'trainer_courses_for_certifications'=>'max:500',
             'password'=>'nullable|min:8|confirmed',
             'role' => 'required',
+            'course_id' => $course_id,
 //            'group_id' => '',
         ];
         // if(request('_method')!='PATCH'){
