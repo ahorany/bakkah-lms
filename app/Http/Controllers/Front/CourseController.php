@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Models\Training\Course;
 use App\Models\Training\UserContentsPdf;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -268,7 +269,9 @@ class CourseController extends Controller
         *  Update Start Time For User Content
         *  When User Open Content Page AND User Content Not Completed
         */
-        $is_completed = $this->createUserContentOrUpdate($content_id, $content->time_limit);
+        $dataArr = $this->createUserContentOrUpdate($content_id, $content->time_limit);
+        $userContent = $dataArr[0];
+        $is_completed = $dataArr[1];
 
         // Check content is completed => enabled next button
         $enabled = true;
@@ -312,7 +315,11 @@ class CourseController extends Controller
         }
 
         $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',auth()->user()->id)->pluck('current_page')->first();
-        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num'));
+
+        // user content flag (0 or 1)
+        $flag = $userContent->flag;
+
+        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num','flag'));
     } // end function
 
 
@@ -416,7 +423,7 @@ class CourseController extends Controller
             }
         }
 
-        return $is_completed;
+        return [$user_content,$is_completed];
     } // end function
 
 
@@ -497,6 +504,30 @@ class CourseController extends Controller
         ],[
             'current_page' => request()->pageNum,
         ]);
+    }
+
+
+    /*
+     * Update UserContent Flag
+     * (JS Code Send AJAX Request To Updated UserContent flag)
+     */
+    public function flag_content(Request $request){
+        // Get user content from DB
+        $user_content = UserContent::where('user_id' ,auth()->id())
+                                ->where('content_id',$request->content_id)
+                                ->first();
+
+        if (!$user_content){
+            abort(404);
+        }//end if
+
+        $flag = $user_content->flag == 0 ? 1 : 0;
+
+        $user_content->update([
+                  'flag' => $flag
+             ]);
+
+        return response()->json(['status' => true,'data' => $flag]);
     }
 
     /****************************************************************************/

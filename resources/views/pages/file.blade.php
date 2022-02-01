@@ -117,6 +117,10 @@
             .custom-model-inner{margin-top: 45px;}
         }
 
+        .flag-mark svg#Layer_1 path{
+            fill: #000;
+        }
+
     </style>
 @endsection
 
@@ -185,7 +189,18 @@
         @endif
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="m-0 title_file_old" style="text-transform:capitalize;">{{ $content->title }}</h3>
+                <div class="d-flex">
+                    <h3 class="m-0 title_file_old" style="text-transform:capitalize;margin-right: 10px!important;">{{ $content->title }}</h3>
+                    <span class="flag @if($flag != 0 ) flag-mark @endif" style="width: 25px;cursor: pointer" onclick="saveFlag({{$content->id}})">
+                        @if(file_exists(public_path('icons/file_flag.svg')))
+                            {!!  file_get_contents(public_path('icons/file_flag.svg'))  !!}
+                        @else
+                            Flag
+                        @endif
+                   </span>
+                </div>
+
+
                 @include('Html.next-prev-navigation', [
                     'next'=>$next,
                     'previous'=>$previous,
@@ -284,6 +299,22 @@
     @endif
 
      <script>
+         // save Flag
+         function saveFlag(content_id){
+              $('.flag').toggleClass('flag-mark')
+
+             $.post("{{route("user.flag_content")}}",
+                 {
+                     content_id : content_id,
+                     _token : "{{csrf_token()}}"
+
+                 },
+                 function(data, status){
+                     // console.log(data)
+                 })
+         }
+
+
         document.getElementById("demo").innerHTML = "Next";
 
         function NextBtn(){
