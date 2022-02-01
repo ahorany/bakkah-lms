@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\Mail\UserMail;
+use App\Models\Training\Course;
+use App\Models\Training\CourseRegistration;
 use App\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -143,6 +145,7 @@ class UserController extends Controller
         $activity_level = Constant::where('parent_id', 412)->get();
         $level_of_education = Constant::where('parent_id', 416)->get();
         $session_can_handle = Constant::where('parent_id', 421)->get();
+        $courses = Course::get();
 //        $groups = Group::all();
 
         $user_type = '';
@@ -175,6 +178,7 @@ class UserController extends Controller
             'session_can_handle' => $session_can_handle,
             'user_type' => $user_type,
             'roles' => $roles,
+            'courses' => $courses,
 //            'groups' => $groups,
         ]);
     }
@@ -205,6 +209,7 @@ class UserController extends Controller
         }
         //User::SetMorph($user->id);
         //        User::UploadFile($user);
+        // dd(request());
 
         $profile = $user->profile()->create([
             'iqama_number' => request()->iqama_number,
@@ -231,6 +236,13 @@ class UserController extends Controller
             'note' => request()->note,
         ]);
 
+
+        $course_registeration = CourseRegistration::create([
+            'user_id' => $user->id,
+            'course_id' => request()->course_id,
+            'role_id' => request()->role,
+        ]);
+
 //        $user->groups()->attach($groups);
         $this->uploadsPDF($profile, 'cv', null);
         $this->uploadsPDF($profile, 'certificates', null);
@@ -238,7 +250,7 @@ class UserController extends Controller
         // dd($user);
         // dd($request);
         $password = $request->password;
-        Mail::to($user->email)->send(new UserMail($user->id , $password));
+        Mail::to($user->email)->send(new UserMail($user->id , $password , request()->course_id));
 
         Active::$namespace = 'training';
         return Active::Inserted($user->trans_name,[
@@ -255,7 +267,9 @@ class UserController extends Controller
             ->get();
         $constants = Constant::where('parent_id', 30)->get();
         $countries = Constant::where('post_type', 'countries')->get();
-
+        $courses = Course::get();
+        $course_registeration = CourseRegistration::where('user_id',$user->id)->first();
+        $course = Course::where('id',$course_registeration->course_id)->first();
         $roles = Role::all();
         // $roles = [];
 
@@ -299,6 +313,9 @@ class UserController extends Controller
 //            'user_type' => $user_type,
             'roles' => $roles,
             'role_id' => $role_id,
+            'courses' => $courses,
+            'course' => $course,
+            'edit' => 'edit',
 //            'groups' => $groups,
 //            'user_groups' => $user_groups,
         ]);
@@ -370,8 +387,15 @@ class UserController extends Controller
         $this->uploadsPDF($user->profile, 'certificates', null);
         $this->uploadsPDF($user->profile, 'financial_info', null);
 
+        CourseRegistration::updateOrCreate([
+            'user_id' => $user->id
+        ],[
+            'course_id' => request()->course_id,
+            'role_id' => request()->role,
+        ]);
+
         $password = $request->password;
-        Mail::to($user->email)->send(new UserMail($user->id , $password));
+        Mail::to($user->email)->send(new UserMail($user->id , $password , request()->course_id));
 
         return Active::Updated($user->trans_name, [
             'post_type' => $post_type,

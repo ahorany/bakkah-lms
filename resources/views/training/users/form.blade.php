@@ -22,13 +22,28 @@
     {!! Builder::Input('email', 'email', null, ['col' => 'col-md-6']) !!}
     {!! Builder::Input('mobile', 'mobile', null, ['col' => 'col-md-6']) !!}
     {!! Builder::Select('gender_id', 'gender_id', $genders->where('parent_id', 42), null, [
-    'col' => 'col-md-6',
-    'model_title' => 'trans_name',
-]) !!}
+        'col' => 'col-md-6',
+        'model_title' => 'trans_name',
+    ]) !!}
+{{-- @dd(isset($eloquent)) --}}
+    @if (!isset($edit))
+    {!! Builder::Select('course_id', 'course_id', $courses, null, [
+        'col' => 'col-md-6',
+        'model_title' => 'trans_title',
+    ]) !!}
+    @endif
+
+    @if (isset($edit))
+    {!! Builder::Select('course_id', 'course_id', $courses, $course->id??null, [
+        'col' => 'col-md-6',
+        'model_title' => 'trans_title',
+        'disabled' => 'disabled',
+    ]) !!}
+    @endif
 
 {{--    {!! Builder::Select('group_id[]', 'group', $groups , null, [--}}
 {{--           'col' => 'col-md-6',--}}
-{{--           'model_title' => 'name',--}}
+{{--           'disabled' => 'disabled',--}}
 {{--           'multiple'=> 'multiple'--}}
 {{--        ]) !!}--}}
 

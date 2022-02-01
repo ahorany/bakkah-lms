@@ -233,7 +233,7 @@ svg {
                 <img style="filter: opacity(0.7);" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
                 @endif
                 <span> {{$content->title}}</span>
-                @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
+                @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
                     <span class="svg">
                         <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
                             <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>

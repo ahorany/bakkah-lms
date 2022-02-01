@@ -79,7 +79,12 @@ class Builder {
             $div .= '<a href="'.$href.'" class="nav-link '.$active.'">';
 
                 // $div .= '<i class="nav-icon '.($sidebar->icon??'fas fa-chart-pie').'"></i>';
-                $icon_content = file_get_contents(public_path('icons/sidebar/'.$sidebar->icon));
+
+               $icon_content = '';
+                if (file_exists(public_path('icons/sidebar/'.$sidebar->icon))){
+                    $icon_content = file_get_contents(public_path('icons/sidebar/'.$sidebar->icon));
+
+                }
 
                 $div .= '<span class="sidebar-icon">'.$icon_content.'</span>';
 

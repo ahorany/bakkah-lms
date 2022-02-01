@@ -99,10 +99,6 @@ class CourseUserController extends Controller
             });
         }
 
-//        $users->with(['roles' => function($q) use($user_type){
-//            return  $q->where('role_id',$user_type);
-//        }]);
-
         if($lock){
             if($user_type == 2 ){
                 $users->whereHas('roles' , function($q) use($user_type){
