@@ -140,4 +140,6 @@ return [
     'import_questions_little'=>'Import Questions Sim',
     'hide from trainees'=>'Hide From Trainees',
     'trainee_mark'=>'علامة المتدرب',
+    'trainee' => 'trainee',
+    'instructor' => 'instructor',
 ];

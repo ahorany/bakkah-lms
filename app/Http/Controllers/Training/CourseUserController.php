@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 
 class CourseUserController extends Controller
 {
@@ -37,6 +38,7 @@ class CourseUserController extends Controller
         ]);
         return response(['status'=>'success']);
     }
+
     public function course_users()
     {
         $course_id = request()->course_id;

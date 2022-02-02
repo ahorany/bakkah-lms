@@ -34,6 +34,14 @@
                                 </div>
                             </div>
 
+{{--                            <div class="col-md-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                        {!! Builder::SelectForCheckBox('trainee', request()->trainee) !!}--}}
+
+{{--                                        {!! Builder::SelectForCheckBox('instructor', request()->instructor) !!}--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
                             <div style="margin-top: 5px;">
                                 {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
                                 <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
