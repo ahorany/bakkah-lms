@@ -9,7 +9,8 @@
     border-radius: 0 10px 10px 0;
 } */
 span.flag_icon_false svg path , .flag svg path {
-    stroke: #d7d7d7;
+    /* stroke: #d7d7d7; */
+    stroke: gray;
     transform: rotate(15deg);
 }
 
@@ -1091,12 +1092,22 @@ label.container-check.form-check-label span.checkmark{
     }
 }
 
-@media(max-width : 431px){
+@media(max-width : 430.5px){
+    .lms-header a.navbar-brand {
+        width: 100%;
+        justify-content: center;
+    }
+    button.navbar-toggler.position-absolute.d-md-none.collapsed.me-auto.ms-3{
+        margin: 15px 5px !important;
+    }
     ol.breadcrumb {
         display: none;
     }
     span.d-none.d-sm-block{
         display: none;
+    }
+    .navbar-brand span.d-none.d-sm-block {
+        display: block !important;
     }
     .messages li.has-dropdown .dropdown{
         right: -80px;
@@ -1135,11 +1146,19 @@ label.container-check.form-check-label span.checkmark{
     .title_file_old{
         display: none;
     }
+    nav#sidebarMenu{
+        top: 3rem;
+    }
 }
 
 @media (max-width: 350px){
     .course-cards {
         width: 100% !important;
+    }
+}
+@media (max-width: 328.5px){
+    .lms-header ul.navbar-nav > li{
+        margin-right: 20px;
     }
 }
 

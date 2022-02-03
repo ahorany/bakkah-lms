@@ -60,7 +60,8 @@
                     @foreach(\Spatie\Permission\Models\Role::select('id','name')->get() as $role)
                         <li @if($role->id == $role_id) style="background: #eee;" @endif>
                             <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
-                                <span class="mx-1">
+                                <span class="d-flex">
+                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/star.svg')}}" alt="{{__('education.roles')}}"/>
                                     {{$role->name}}
                                 </span>
                             </a>
