@@ -715,6 +715,7 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 }
 .lms-header ul.navbar-nav li.user a {
   text-decoration: none;
+  text-transform: capitalize;
 }
 
 .lms-header ul.navbar-nav li.user a svg {
