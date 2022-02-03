@@ -8,6 +8,17 @@
     left: 0;
     border-radius: 0 10px 10px 0;
 } */
+span.flag_icon_false svg path , .flag svg path {
+    stroke: #d7d7d7;
+    transform: rotate(15deg);
+}
+
+span.flag_icon_true svg path , .flag-mark svg path {
+    /* fill: #fb4400; */
+    stroke: #fb4400;
+    transform: rotate(15deg);
+}
+
 li.admin{
     background: #efefef;
 }
