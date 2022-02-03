@@ -178,7 +178,7 @@ class UserProfileController extends Controller
             ]);
         }
 
-         return redirect()->back();
+         return redirect()->route('user.home');
     }// end function
 
 

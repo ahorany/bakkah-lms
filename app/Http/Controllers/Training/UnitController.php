@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Validator;
 class UnitController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('permission:units.list');
+    }
+
     public function index()
     {
         $course_id = request()->course_id;

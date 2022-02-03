@@ -20,7 +20,8 @@ class ReportController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:training.scormsReportOverview');
+        $this->middleware('permission:training.scormsReportOverview', ['only' => ['scormsReportOverview', 'scormsReportScorms']]);
+//        $this->middleware('permission:training.usersReportOverview', ['only' => ['usersReportOverview']]);
 
         Active::$namespace  = 'training';
         Active::$folder     = 'reports';

@@ -47,7 +47,7 @@
     <ul class="navbar-nav mx-0">
         <li class="has-dropdown user">
             <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role" href="#">
-                <span>{{__('admin.Change Role')}}</span>
+                <span>{{$role->name}}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
                     <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z" transform="translate(10.125) rotate(90)" fill="#000"></path>
                 </svg>
@@ -56,8 +56,9 @@
             @if (auth()->user()->roles()->first()->id == 1 || auth()->user()->delegation_role_id == 1)
               <div class="dropdown d-none">
                 <ul class="postition-relative">
+                    <?php $role_id = $role->id; ?>
                     @foreach(\Spatie\Permission\Models\Role::select('id','name')->get() as $role)
-                        <li>
+                        <li @if($role->id == $role_id) style="background: #eee;" @endif>
                             <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
                                 <span class="mx-1">
                                     {{$role->name}}

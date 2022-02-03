@@ -7,6 +7,11 @@ use App\Models\Training\Course;
 
 class RolePathController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:rolePath.list');
+    }
+
     public function rolePath(){
         $course_id = request()->course_id;
         $course = $this->courseContent($course_id);

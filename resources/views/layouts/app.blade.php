@@ -26,8 +26,11 @@
 </head>
 
 <body>
-<?php  $user_role_name = auth()->user()->roles()->select('roles.name')->first()->trans_name??null; ?>
+<?php // $user_role_name = auth()->user()->roles()->select('roles.name')->first()->trans_name??null; ?>
 <div class="container-max">
+    <?php
+    $role = auth()->user()->roles()->first();
+    ?>
 
     @include("layouts.header")
 

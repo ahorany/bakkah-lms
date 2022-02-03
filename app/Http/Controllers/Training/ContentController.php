@@ -18,6 +18,11 @@ use App\Helpers\CourseContentHelper;
 class ContentController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('permission:contents.list');
+    }
+
     public function reset_order_contents($course_id){
         $i = 0;
         $contents = Content::where('course_id',$course_id)

@@ -23,10 +23,17 @@ use Illuminate\Database\Eloquent\Builder;
 class CourseUserController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('permission:course.users.list');
+    }
+
+
+
     public function update_user_expire_date(){
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
 
         $user_id = \request()->user_id;
         $course_id = \request()->course_id;
@@ -63,9 +70,9 @@ class CourseUserController extends Controller
     }
 
     public function delete_user_course(){
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
         $user_id = \request()->user_id;
         $course_id = \request()->course_id;
         $user =  User::findOrFail($user_id);
@@ -75,9 +82,9 @@ class CourseUserController extends Controller
     }
 
     public function search_user_course(){
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
         $user_type = 2;
         if(\request()->type_user == 'trainee'){
             $user_type = 3;
@@ -114,9 +121,9 @@ class CourseUserController extends Controller
     }
 
     public function add_users_course(){
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
 
         $course = Course::find(\request()->course_id);
         if(!$course){

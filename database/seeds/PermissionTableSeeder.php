@@ -35,6 +35,18 @@ class PermissionTableSeeder extends Seeder
             ['restore course' ,'course.restore'],
 
 
+            // course contents
+            ['course contents' ,'course.contents.list'],
+
+            // course units
+            ['course units' ,'course.units.list'],
+
+            // course units
+            ['course users list' ,'course.users.list'],
+
+            // Course Role Path
+            ['role path' ,'rolePath.list'],
+
             // certificates
             ['certificates' ,'training.certificates.index'],
 
