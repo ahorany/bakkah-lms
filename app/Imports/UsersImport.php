@@ -66,12 +66,19 @@ class UsersImport implements ToCollection, WithHeadingRow
                 elseif($row['role'] == 'Trainee-Type')
                     $role_id = 3;
 
-                DB::table('role_user')->insert([
+                // DB::table('role_user')->insert([
+                //     [
+
+                //         'user_id' => $user_id,
+                //         'role_id'=>$role_id,
+
+                //     ],
+                // ]);
+
+                DB::table('model_has_roles')->insert([
                     [
-
-                        'user_id' => $user_id,
+                        'model_id' => $user_id,
                         'role_id'=>$role_id,
-
                     ],
                 ]);
             }
