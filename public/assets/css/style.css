@@ -698,6 +698,14 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
   border-radius: 50%;
 }
 
+.lms-header ul.navbar-nav li.has-dropdown a.nav-link.role {
+    width: max-content;
+    padding: 0 10px;
+    background: #eee;
+    border-radius: 3px;
+    color: #000 !important;
+}
+
 .lms-header ul.navbar-nav li a img {
   border-radius: 50%;
 }
