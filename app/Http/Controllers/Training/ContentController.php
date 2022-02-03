@@ -20,7 +20,7 @@ class ContentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:contents.list');
+        $this->middleware('permission:course.contents.list');
     }
 
     public function reset_order_contents($course_id){
