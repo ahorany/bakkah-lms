@@ -22,7 +22,11 @@ Route::get('/', function(){
     return redirect()->route('user.home');
 });
 
-
+Route::get('/clear-permissions', function(){
+    \Artisan::call('cache:forget spatie.permission.cache');
+    dd('dddd');
+    return redirect()->route('user.home');
+})->middleware('auth');
 
 Route::get('/clear-cache', function(){
     if(auth()->user()->id==1 || auth()->user()->id==2 || auth()->user()->id==3){

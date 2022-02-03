@@ -20,7 +20,7 @@ class UnitController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:units.list');
+        $this->middleware('permission:course.units.list');
     }
 
     public function index()

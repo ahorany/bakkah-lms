@@ -54,21 +54,21 @@
             </a>
 
             @if (auth()->user()->roles()->first()->id == 1 || auth()->user()->delegation_role_id == 1)
-              <div class="dropdown d-none">
-                <ul class="postition-relative">
-                    <?php $role_id = $role->id; ?>
-                    @foreach(\Spatie\Permission\Models\Role::select('id','name')->get() as $role)
-                        <li @if($role->id == $role_id) style="background: #eee;" @endif>
-                            <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
+                <div class="dropdown d-none">
+                    <ul class="postition-relative">
+                        <?php $role_id = $role->id; ?>
+                        @foreach(\Spatie\Permission\Models\Role::select('id','name')->get() as $role)
+                            <li @if($role->id == $role_id) style="background: #eee;" @endif>
+                                <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
                                 <span class="d-flex">
                                     <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/star.svg')}}" alt="{{__('education.roles')}}"/>
                                     {{$role->name}}
                                 </span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
         </li>
         <li class="has-dropdown user messages">
@@ -84,8 +84,8 @@
                         /* box-shadow: 1px 1px 5px #eaeaea; */
                         ">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px"
-                            viewBox="0 0 100 100" style="vertical-align: middle; fill: #5D5B5A; font-size:18px; width:23px;" xml:space="preserve">
+                                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px"
+                                 viewBox="0 0 100 100" style="vertical-align: middle; fill: #5D5B5A; font-size:18px; width:23px;" xml:space="preserve">
                                 <g>
                                     <path d="M45.91,12.57c0-1.23-0.03-2.59,0.01-3.95c0.05-2.18,1.22-3.64,3.22-4.1c2.12-0.48,4.39,1.03,4.68,3.18
                                         c0.12,0.92,0.08,1.86,0.1,2.79c0.01,0.71,0,1.42,0,2.06c1.9,0.53,3.77,0.88,5.5,1.57c10.3,4.07,16.38,11.58,18.09,22.55
@@ -165,17 +165,17 @@
         <li class="has-dropdown user">
             <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link" href="#">
                 <?php
-                    $url = '';
-                    if(auth()->user()->upload) {
-                        // if (file_exists(auth()->user()->upload->file) == false){
-                        //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
-                        // }else{
-                            $url = auth()->user()->upload->file;
-                            $url = CustomAsset('upload/full/'. $url);
-                        // }
-                    }else {
-                        $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
-                    }
+                $url = '';
+                if(auth()->user()->upload) {
+                    // if (file_exists(auth()->user()->upload->file) == false){
+                    //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
+                    // }else{
+                    $url = auth()->user()->upload->file;
+                    $url = CustomAsset('upload/full/'. $url);
+                    // }
+                }else {
+                    $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
+                }
                 ?>
                 <img style="width:35px;height:35px;object-fit:cover;border-radius: 50%;" src="{{$url}}" alt=" " />
 

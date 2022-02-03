@@ -55,7 +55,7 @@ class UserRequest extends FormRequest
             'gender_id' => '',
             'trainer_courses_for_certifications'=>'max:500',
             'password'=>'nullable|min:8|confirmed',
-            'role' => 'required',
+            'role' => 'required|exists:roles,id',
             'course_id' => $course_id,
 //            'group_id' => '',
         ];
