@@ -45,7 +45,7 @@
         <small>{{\auth()->user()->roles()->first()->trans_name}}</small>
     </span> --}}
     <ul class="navbar-nav mx-0">
-        <li class="has-dropdown">
+        <li class="has-dropdown user">
             <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role" href="#">
                 <span>{{__('admin.Change Role')}}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
