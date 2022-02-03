@@ -8,5 +8,5 @@
 </head>
 <body style="width: 100%; margin: 0 auto; font-family: sans-serif; text-align:center;">
     <header style="background: #f0f0f0;">
-        <img src="{{CustomAsset('images/email/img_header.png')}}" width="120" height="auto">
+        <img src="{{CustomAsset('images/email/img_header.png')}}" width="80" height="auto">
     </header>
