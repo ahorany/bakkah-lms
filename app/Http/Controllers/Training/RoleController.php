@@ -40,7 +40,8 @@ class RoleController extends Controller
         }
 
     	$count = $roles->count();
-    	$roles = $roles->page();
+    	$roles = $roles->paginate(100);
+    	// $roles = $roles->page();
 
         return Active::Index(compact('roles', 'count', 'post_type', 'trash'));
     }
