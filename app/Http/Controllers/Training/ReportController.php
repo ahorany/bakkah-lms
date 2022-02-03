@@ -80,6 +80,7 @@ class ReportController extends Controller
                             ->join('users', function ($join) {
             $join->on('scormvars_master.user_id', '=', 'users.id');
         })->where('content_id',$scorm_id)->get();
+        // dd($users);
         // foreach($users_scorms as $sc)
         //     $users_scorms_arr[] = $sc->user_id;
         // $users = User::whereIn('id',$users_scorms_arr)->get();
@@ -119,7 +120,7 @@ class ReportController extends Controller
         $user_id = request()->id;
         $user = User::find($user_id);
 
-        $learners_no = DB::table('role_user')->where('role_id',3)->where('user_id',$user_id)->count();
+        $learners_no = DB::table('model_has_roles')->where('role_id',3)->where('model_id',$user_id)->count();
         $complete_courses_no = DB::table('courses_registration')->where('user_id',$user_id)->where('progress',100)->count();
         $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('user_id',$user_id)->count();
         $courses_not_started = DB::table('courses_registration')->where('progress',0)->where('user_id',$user_id)->count();
@@ -238,8 +239,8 @@ class ReportController extends Controller
         // dd($group_id);
         $users   = DB::table('user_groups')
                         ->join('users','users.id','user_groups.user_id')
-                        ->join('role_user','role_user.user_id','users.id')
-                        ->join('roles','roles.id','role_user.role_id')
+                        ->join('model_has_roles','model_has_roles.model_id','users.id')
+                        ->join('roles','roles.id','model_has_roles.role_id')
                         ->where('user_groups.group_id',$group_id)
                         ->select('users.id','users.name','roles.name as role_name','users.last_login')
                         ->get();

@@ -54,13 +54,13 @@ class UserController extends Controller
         $users = $users->page();
 
 //return $users;
-        $learners_no = -1;
-//        $learners_no  = DB::table('role_user')->where('role_user.role_id',3);
-//        if (!is_null(request()->user_search)) {
-//            $learners_no = $learners_no->join('users','users.id','role_user.user_id');
-//            $learners_no = $this->SearchCond($learners_no);
-//        }
-//        $learners_no = $learners_no->count();
+// role_user -- model_has_roles
+       $learners_no  = DB::table('model_has_roles')->where('model_has_roles.role_id',3);
+       if (!is_null(request()->user_search)) {
+           $learners_no = $learners_no->join('users','users.id','model_has_roles.model_id');
+           $learners_no = $this->SearchCond($learners_no);
+       }
+       $learners_no = $learners_no->count();
         // dd($learners_no);
 
         $complete_courses_no = DB::table('courses_registration')->where('progress',100);
