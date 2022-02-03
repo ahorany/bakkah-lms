@@ -117,9 +117,6 @@
             .custom-model-inner{margin-top: 45px;}
         }
 
-        .flag-mark svg#Layer_1 path{
-            fill: #000;
-        }
 
     </style>
 @endsection
@@ -192,8 +189,8 @@
                 <div class="d-flex">
                     <h3 class="m-0 title_file_old" style="text-transform:capitalize;margin-right: 10px!important;">{{ $content->title }}</h3>
                     <span class="flag @if($flag != 0 ) flag-mark @endif" style="width: 25px;cursor: pointer" onclick="saveFlag({{$content->id}})">
-                        @if(file_exists(public_path('icons/file_flag.svg')))
-                            {!!  file_get_contents(public_path('icons/file_flag.svg'))  !!}
+                        @if(file_exists(public_path('icons/file_flag_old.svg')))
+                            {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
                         @else
                             Flag
                         @endif

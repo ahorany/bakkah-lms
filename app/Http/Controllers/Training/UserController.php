@@ -26,8 +26,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-
-        $this->middleware('permission:users.list', ['only' => ['index']]);
+        $this->middleware('permission:training.users.index', ['only' => ['index']]);
         $this->middleware('permission:users.create', ['only' => ['create','store']]);
         $this->middleware('permission:users.edit', ['only' => ['edit','update']]);
         $this->middleware('permission:users.delete', ['only' => ['destroy']]);

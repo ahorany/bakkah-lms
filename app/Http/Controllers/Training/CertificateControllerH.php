@@ -32,6 +32,8 @@ class CertificateControllerH extends Controller
 {
     public function __construct()
     {
+        $this->middleware('permission:training.certificates.index');
+
         Active::$namespace = 'training';
         Active::$folder = 'certificates';
     }

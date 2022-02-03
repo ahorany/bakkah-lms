@@ -146,5 +146,6 @@ Route::group([
         Route::post('/save/content/order', 'ContentController@save_content_order')->name('contents.save_order');
 
     });
+
 });
 

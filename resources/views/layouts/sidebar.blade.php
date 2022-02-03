@@ -1,3 +1,7 @@
+<?php
+$role = auth()->user()->roles()->first();
+?>
+
 <nav id="sidebarMenu" class="col-md-3 col-lg-3 col-xl-2 d-md-block bg-light sidebar collapse">
     <div class="position-sticky pt-3">
 
@@ -34,7 +38,8 @@
                 </a>
             </li>
 
-            @foreach($user_sidebar_courses->courses as $item)
+            @if($role && $role->id != 1)
+              @foreach($user_sidebar_courses->courses as $item)
                 <li class="nav-item">
                     <a class="nav-link {{ (url()->full() == CustomRoute('user.course_details',$item->id)) && (url()->full() != CustomRoute('user.home'))  ? 'active' : '' }}" href="{{CustomRoute('user.course_details',$item->id) }}">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24.567" height="23.684" viewBox="0 0 24.567 23.684">
@@ -55,7 +60,9 @@
                     </a>
                 </li>
             @endforeach
+            @endif
 
+            @if($role && $role->id != 3)
             <li class="admin title">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28.126" height="28.127" viewBox="0 0 28.126 28.127">
                     <g id="Group_71" data-name="Group 71" transform="translate(-92 -5.528)">
@@ -75,24 +82,29 @@
                     </g>
                   </svg>
 
-                <span>Admin</span>
+                  <span>{{$role->name}}</span>
             </li>
-            @foreach($user_pages as $aside)
+            @endif
+
+        @foreach($user_pages as $aside)
                 <?php
                 $has_treeview = is_null($aside->route_name) ? 'has-treeview' : '';
                 $active = ($aside->id==session('infastructure_parent_id')) && url()->full() != CustomRoute('user.home') ? 'active' : '';
                 $menu_open = $active=='active'?'menu-open':'';
                 ?>
 
+
                 <li class="nav-item admin {{$has_treeview}} {{$menu_open}}"><!--menu-open-->
                     {!!Builder::SidebarHref($aside, '#', $active)!!}
                     @if($has_treeview=='has-treeview')
                         <ul class="nav-treeview">
                             @foreach($user_pages_child as $infa_child)
-                                @if ($infa_child->parent_id == $aside->id)
+                                    @if ($infa_child->parent_id == $aside->id)
+                                    @can($infa_child->route_name)
                                     <li class="nav-item">
-                                        {!!Builder::SidebarHref($infa_child, null, '')!!}
-                                    </li>
+                                            {!!Builder::SidebarHref($infa_child, null, '')!!}
+                                        </li>
+                                    @endcan
                                 @endif
                             @endforeach
                         </ul>

@@ -5,13 +5,11 @@ use App\Models\Training\CourseRegistration;
 
 <div class="card courses">
   <div class="card-header">
-      {{-- {!!Builder::SetBtnParam([
-          'ppm'=>1,
-          'ppm111'=>2,
-      ])!!} --}}
-      @if(!checkUserIsTrainee())
-       {!!Builder::BtnGroupTable()!!}
-      @endif
+      <?php $create_role = false; ?>
+      @can('course.create')
+          <?php $create_role = true; ?>
+      @endcan
+    {!!Builder::BtnGroupTable($create_role)!!}
     {!!Builder::TableAllPosts($count, $courses->count())!!}
   </div>
   <div class="card-body table-responsive p-0">
@@ -31,6 +29,16 @@ use App\Models\Training\CourseRegistration;
         </tr>
       </thead>
       <tbody>
+
+      <?php $btn_roles = null; ?>
+      @can('course.edit')
+          <?php  $btn_roles[] = 'Edit'; ?>
+      @endcan
+
+      @can('course.delete')
+          <?php   $btn_roles[] = 'Destroy' ?>
+      @endcan
+
       @foreach($courses as $post)
       <tr data-id="{{$post->id}}">
         <td>
@@ -79,11 +87,12 @@ use App\Models\Training\CourseRegistration;
         </td> --}}
 
           <td class="d-sm-table-cell text-right">
-              @if(!checkUserIsTrainee())
-                {!!Builder::BtnGroupRows($post->trans_title, $post->id, [], [
+{{--              @if(!checkUserIsTrainee())--}}
+                {!!Builder::BtnGroupRows($post->trans_title, $post->id, $btn_roles, [
                     'post'=>$post->id,
                 ])!!}
-              @endif
+{{--              @endif--}}
+
               <a class="cyan" href="{{CustomRoute('user.course_details', $post->id) }}?preview=true">Preview</a>
               <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="cyan mt-1" ><i class="fa fa-pencil"></i> Report</a>
               @if(!request()->has('trash') && request()->trash != "trash")

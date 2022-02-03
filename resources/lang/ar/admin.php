@@ -142,4 +142,5 @@ return [
     'trainee_mark'=>'علامة المتدرب',
     'trainee' => 'trainee',
     'instructor' => 'instructor',
+    'Change Role' => 'Change Role',
 ];

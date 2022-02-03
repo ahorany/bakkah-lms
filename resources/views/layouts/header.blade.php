@@ -45,6 +45,27 @@
         <small>{{\auth()->user()->roles()->first()->trans_name}}</small>
     </span> --}}
     <ul class="navbar-nav mx-0">
+        <li class="has-dropdown">
+            <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link" href="#">
+                <span>{{__('admin.Change Role')}}</span>
+            </a>
+
+            @if (auth()->user()->roles()->first()->id == 1 || auth()->user()->delegation_role_id == 1)
+              <div class="dropdown d-none">
+                <ul class="postition-relative">
+                    @foreach(\Spatie\Permission\Models\Role::select('id','name')->get() as $role)
+                        <li>
+                            <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
+                                <span class="mx-1">
+                                    {{$role->name}}
+                                </span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+        </li>
         <li class="has-dropdown user messages">
             <ul class="navbar-nav mx-0">
                 <li class="has-dropdown user m-0">

@@ -166,4 +166,6 @@ return [
     'trainee_mark'=>'Trainee Mark',
     'trainee' => 'trainee',
     'instructor' => 'instructor',
+    'Change Role' => 'Change Role',
+    ''
 ];
