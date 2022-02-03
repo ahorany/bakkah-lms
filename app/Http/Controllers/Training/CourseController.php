@@ -21,6 +21,13 @@ class CourseController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('permission:training.courses.index', ['only' => ['index']]);
+        $this->middleware('permission:course.create', ['only' => ['create','store']]);
+        $this->middleware('permission:course.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:course.delete', ['only' => ['destroy']]);
+        $this->middleware('permission:course.restore', ['only' => ['restore']]);
+
+
         Active::$namespace = 'training';
         Active::$folder = 'courses';
     }
@@ -101,9 +108,9 @@ class CourseController extends Controller
 
     public function create(){
 
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
 //        $groups = Group::all();
         $partners = Partner::GetPartners('partners', -1, false, 1, 0);
         $certificate_types = Constant::where('parent_id', 323)->get();
@@ -118,9 +125,9 @@ class CourseController extends Controller
 
     public function store(CourseRequest $request){
 
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
         $validated = $this->Validated($request->validated());
         $validated['created_by'] = auth()->user()->id;
 
@@ -140,9 +147,9 @@ class CourseController extends Controller
     }
 
     public function edit(Course $course){
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
         $partners = Partner::GetPartners('partners', -1, false, 1, 0);
         $certificate_types = Constant::where('parent_id', 323)->get();
         $certificate_ids = Certificate::whereNull('parent_id')->get();
@@ -153,9 +160,9 @@ class CourseController extends Controller
     }
 
     public function update(CourseRequest $request, Course $course){
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
         $validated = $this->Validated($request->validated());
         Course::find($course->id)->update($validated);
         Course::SetMorph($course->id);
@@ -173,17 +180,17 @@ class CourseController extends Controller
 
 
     public function destroy(Course $course){
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
         Course::where('id', $course->id)->SoftTrash();
         return Active::Deleted($course->trans_title);
     }
 
     public function restore($course){
-        if(checkUserIsTrainee()){
-            abort(404);
-        }
+//        if(checkUserIsTrainee()){
+//            abort(404);
+//        }
         Course::where('id', $course)->RestoreFromTrash();
         $course = Course::where('id', $course)->first();
         return Active::Restored($course->trans_title);

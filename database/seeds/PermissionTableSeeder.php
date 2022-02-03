@@ -11,20 +11,41 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
+
             // roles
-           ['roles list' ,'roles.list'],
-           ['roles create' ,'roles.create'],
-           ['roles edit' ,'roles.edit'],
-           ['roles delete' ,'roles.delete'],
-           ['roles show' ,'roles.show'],
+           ['list roles' ,'training.roles.index'],
+           ['create roles' ,'roles.create'],
+           ['edit role' ,'roles.edit'],
+           ['delete roles' ,'roles.delete'],
+           ['restore roles' ,'roles.restore'],
 
             // users
-            ['users list' ,'users.list'],
-            ['users create' ,'users.create'],
-            ['users edit' ,'users.edit'],
-            ['users delete' ,'users.delete'],
+            ['list users' ,'training.users.index'],
+            ['create users' ,'users.create'],
+            ['edit users' ,'users.edit'],
+            ['delete users' ,'users.delete'],
+            ['restore users' ,'users.restore'],
+
+
+            // course
+            ['list course' ,'training.courses.index'],
+            ['create course' ,'course.create'],
+            ['edit course' ,'course.edit'],
+            ['delete course' ,'course.delete'],
+            ['restore course' ,'course.restore'],
+
+
+            // certificates
+            ['certificates' ,'training.certificates.index'],
+
+
+            // scorms
+            ['scorms' ,'training.scormsReportOverview'],
+
+
 
         ];
+
         foreach ($permissions as $permission) {
             Permission::create([
                 'title' => $permission[0],

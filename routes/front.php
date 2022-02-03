@@ -30,6 +30,7 @@ Route::group([
         Route::get('/home', [\App\Http\Controllers\Front\HomeController::class, 'home'])->name('home');
         Route::get('/certificate', [\App\Http\Controllers\Front\HomeController::class, 'certificate'])->name('certificate');
         Route::get('/congrats', [\App\Http\Controllers\Front\HomeController::class, 'congrats'])->name('congrats');
+        Route::get('/change/role/{id}',  [UserProfileController::class, 'change_role'])->name('change.role');
 
         Route::get('/logout',  [UserProfileController::class, 'logout'])->name('logout');
         Route::get('/info', [UserProfileController::class, 'info'])->name('info');
@@ -65,6 +66,7 @@ Route::group([
         Route::get('/reply_message/{id}', [\App\Http\Controllers\Training\MessageController::class,'replyMessage'])->name('reply_message');
         Route::get('/add_reply', [\App\Http\Controllers\Training\MessageController::class,'addReply'])->name('add_reply');
         Route::get('/search_subject', [\App\Http\Controllers\Training\MessageController::class,'searchSubject'])->name('search_subject');
+
 
 
 

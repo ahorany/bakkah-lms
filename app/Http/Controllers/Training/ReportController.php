@@ -20,6 +20,8 @@ class ReportController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('permission:training.scormsReportOverview');
+
         Active::$namespace  = 'training';
         Active::$folder     = 'reports';
     }

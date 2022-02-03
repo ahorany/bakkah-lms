@@ -41,6 +41,9 @@ class UserProfileController extends Controller
     {
         // User Must Be Auth To Use Any Method In This Class
         $this->middleware('auth');
+
+        // Permissions
+//        $this->middleware('permission:user.change.role', ['only' => ['change_role']]);
     }
 
 
@@ -138,6 +141,45 @@ class UserProfileController extends Controller
 
         return redirect()->back();
     } // end function
+
+
+
+
+
+    /*
+     * Admin Change Role (To Preview another roles)
+     */
+    public function change_role($role_id){
+        $user = \auth()->user();
+        $user_role = $user->roles()->first();
+
+        if ( !($user_role->id == 1 || $user->delegation_role_id == 1 ) ){
+            abort(404);
+        }
+
+
+        if ($role_id == 1){
+            // update user role
+            DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+            $user->assignRole([$role_id]);
+
+            // update  delegation_role_id to return status (Admin)
+            User::whereId($user->id)->update([
+                'delegation_role_id' => null,
+            ]);
+        }else{
+            // update user role
+            DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+            $user->assignRole([$role_id]);
+
+            // update  delegation_role_id to return status (Admin)
+            User::whereId($user->id)->update([
+                'delegation_role_id' => 1,
+            ]);
+        }
+
+         return redirect()->back();
+    }// end function
 
 
 
