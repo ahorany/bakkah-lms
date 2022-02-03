@@ -644,8 +644,11 @@ class Builder {
 	static function BtnGroupRows($title, $id, $array=array(), $args=array()){
 
 		$btn = '<div class="BtnGroupRows" data-id="'.$id.'">';
-		if(count($array)==0)
-			$array = ['Edit', 'Destroy', 'Trans'];
+		if (is_null($array)){
+            $array = [];
+        }else if(count($array)==0){
+            $array = ['Edit', 'Destroy', 'Trans'];
+        }
 
 		if(is_null(self::$trash)){
 			foreach($array as $key => $value){

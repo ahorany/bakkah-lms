@@ -41,11 +41,7 @@
     ]) !!}
     @endif
 
-{{--    {!! Builder::Select('group_id[]', 'group', $groups , null, [--}}
-{{--           'col' => 'col-md-6',--}}
-{{--           'disabled' => 'disabled',--}}
-{{--           'multiple'=> 'multiple'--}}
-{{--        ]) !!}--}}
+
 
     @if ($post_type == 'users')
         {!! Builder::Password('password', 'password', null, ['type' => 'password', 'col' => 'col-md-6']) !!}
@@ -54,8 +50,15 @@
 
     {!! Builder::Select('role', 'role', $roles, $role_id??null, [
     'col' => 'col-md-6',
-    'model_title' => 'trans_name',
+    'model_title' => 'name',
     ]) !!}
+
+{{--    {!! Builder::Select('roles[]', 'roles', $roles , null, [--}}
+{{--       'col' => 'col-md-6',--}}
+{{--       'multiple'=> 'multiple',--}}
+{{--           'model_title' => 'name',--}}
+
+{{--    ]) !!}--}}
 
     {{--    <div class="col-md-12">--}}
 {{--        <div class="form-group">--}}

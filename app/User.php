@@ -19,11 +19,14 @@ use App\Models\Training\Wishlist;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use Notifiable, TrashTrait, ImgTrait, JsonTrait;
     use PostMorphTrait;
+    use HasRoles;
+
 
     protected $date = [
         'updated_at', 'created_at', 'deleted_at', 'two_factor_expires_at',
@@ -120,10 +123,10 @@ class User extends Authenticatable
         return $this->belongsTo(Constant::class, 'gender_id', 'id');
     }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class,'role_user','user_id','role_id');
-    }
+//    public function roles()
+//    {
+//        return $this->belongsToMany(Role::class,'role_user','user_id','role_id');
+//    }
 
     public function carts(){
         return $this->hasMany(Cart::class, 'user_id', 'id');

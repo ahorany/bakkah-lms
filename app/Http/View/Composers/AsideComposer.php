@@ -21,17 +21,17 @@ class AsideComposer
     //    ->get();
 
         $user_pages = Infrastructure::join('infrastructure_role', 'infrastructure_role.infrastructure_id', 'infastructures.id')
-        ->join('role_user', 'role_user.role_id', 'infrastructure_role.role_id')
+        ->join('model_has_roles', 'model_has_roles.role_id', 'infrastructure_role.role_id')
         ->whereNull('infastructures.parent_id')
-        ->where('user_id', auth()->user()->id)
+        ->where('model_id', auth()->user()->id)
         ->distinct('infrastructures.id')
         ->select('infastructures.*')
         ->get();
-        // dd($user_pages);
+//         dd($user_pages);
         $user_pages_child = Infrastructure::join('infrastructure_role', 'infrastructure_role.infrastructure_id', 'infastructures.id')
-        ->join('role_user', 'role_user.role_id', 'infrastructure_role.role_id')
+        ->join('model_has_roles', 'model_has_roles.role_id', 'infrastructure_role.role_id')
         ->whereNotNull('infastructures.parent_id')
-        ->where('user_id', auth()->user()->id)
+        ->where('model_id', auth()->user()->id)
         ->distinct('infastructures.id')
         ->select('infastructures.*')
         ->get();

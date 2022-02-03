@@ -180,6 +180,9 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
 
+        Spatie\Permission\PermissionServiceProvider::class,
+
+
     ],
 
     /*

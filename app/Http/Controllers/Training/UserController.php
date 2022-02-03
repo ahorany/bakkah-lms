@@ -9,7 +9,6 @@ use DB;
 use App\User;
 use App\Constant;
 use App\Helpers\Active;
-use App\Models\Admin\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
@@ -21,76 +20,48 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Stmt\GroupUse;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function __construct()
     {
+
+        $this->middleware('permission:users.list', ['only' => ['index']]);
+        $this->middleware('permission:users.create', ['only' => ['create','store']]);
+        $this->middleware('permission:users.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:users.delete', ['only' => ['destroy']]);
+
+
+
         Active::$namespace = 'training';
         Active::$folder = 'users';
     }
 
     public function index()
     {
-
         $post_type = GetPostType('users');
         $trash = GetTrash();
 
-        $users = User::with(['upload','roles']);
+        $users = User::with(['upload','roles' => function($q){
+            $q->select('id','name');
+        }]);
 
         if (!is_null(request()->user_search)) {
             $users = $this->SearchCond($users);
         }
 
-        // if(!is_null(request()->role)) {
-        //     $users = $users->where(function($query){
-        //         $query->where('user_type', request()->role);
-        //     });
-        // }
-        $user_type = '';
-//        if (!is_null(request()->post_type) && request()->post_type == 'users') {
-//            //$post_type = GetPostType('trainers');
-//            $users = $users->where('user_type', 41)->orWhereNull('user_type');
-//            $user_type = 41;
-//        }
-//
-//        if (!is_null(request()->post_type) && request()->post_type == 'trainers') {
-//            //$post_type = GetPostType('trainers');
-//            $users = $users->where('user_type', 326);
-//            $user_type = 326;
-//        }
-//
-//        if (!is_null(request()->post_type) && request()->post_type == 'employees') {
-//            //$post_type = GetPostType('employees');
-//            $users = $users->orWhere('user_type', 315);
-//            $user_type = 315;
-//        }
-//
-//        if (!is_null(request()->post_type) && request()->post_type == 'developers') {
-//            //$post_type = GetPostType('employees');
-//            $users = $users->where('user_type', 402);
-//            $user_type = 402;
-//        }
-//
-//        if (!is_null(request()->post_type) && request()->post_type == 'on-demand-team') {
-//            //$post_type = GetPostType('employees');
-//            $users = $users->where('user_type', 403);
-//            $user_type = 403;
-//        }
-
-        // dump($users->toSql());
-
         $count = $users->count();
         $users = $users->page();
 
-        // dd($users);
-        // $posts = User::with('upload');
-        $learners_no  = DB::table('role_user')->where('role_user.role_id',3);
-        if (!is_null(request()->user_search)) {
-            $learners_no = $learners_no->join('users','users.id','role_user.user_id');
-            $learners_no = $this->SearchCond($learners_no);
-        }
-        $learners_no = $learners_no->count();
+//return $users;
+        $learners_no = -1;
+//        $learners_no  = DB::table('role_user')->where('role_user.role_id',3);
+//        if (!is_null(request()->user_search)) {
+//            $learners_no = $learners_no->join('users','users.id','role_user.user_id');
+//            $learners_no = $this->SearchCond($learners_no);
+//        }
+//        $learners_no = $learners_no->count();
         // dd($learners_no);
 
         $complete_courses_no = DB::table('courses_registration')->where('progress',100);
@@ -98,6 +69,8 @@ class UserController extends Controller
             $complete_courses_no = $complete_courses_no->join('users','users.id','courses_registration.user_id');
             $complete_courses_no = $this->SearchCond($complete_courses_no);
         }
+
+
         $complete_courses_no = $complete_courses_no->count();
 
         $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('progress','>',0);
@@ -105,6 +78,8 @@ class UserController extends Controller
             $courses_in_progress = $courses_in_progress->join('users','users.id','courses_registration.user_id');
             $courses_in_progress = $this->SearchCond($courses_in_progress);
         }
+
+
         $courses_in_progress = $courses_in_progress->count();
         $courses_not_started = DB::table('courses_registration')->where('progress',0);
         if (!is_null(request()->user_search)) {
@@ -128,6 +103,8 @@ class UserController extends Controller
         return $eloquent1;
     }
 
+
+
     public function create()
     {
         $post_type = GetPostType('users');
@@ -138,8 +115,7 @@ class UserController extends Controller
             ->get();
         $countries = Constant::where('post_type', 'countries')->get();
 
-        $roles = Role::all();
-        // $roles = [];
+        $roles = Role::select('id','name')->get();
 
         $training_field = Constant::where('parent_id', 404)->get();
         $activity_level = Constant::where('parent_id', 412)->get();
@@ -187,20 +163,15 @@ class UserController extends Controller
     {
 
         $validated = $request->validated();
-//        return $validated;
-//        $groups = [];
-//        foreach ($validated['group_id'] as $key => $group){
-//            $groups[] = $key ;
-//        }
         $validated['name'] = null;
         $validated['trainer_courses_for_certifications'] = null;
         $validated['created_by'] = auth()->user()->id;
         $validated['updated_by'] = auth()->user()->id;
         $validated['password'] = $request->password ? bcrypt($request->password) : bcrypt('bakkah');
-        //dd($validated);
+
         $user = User::create($validated);
 
-        $user->roles()->attach([request()->role]);
+        $user->assignRole([request()->role]);
 
         $post_type = request()->post_type;
 
@@ -270,7 +241,7 @@ class UserController extends Controller
         $courses = Course::get();
         $course_registeration = CourseRegistration::where('user_id',$user->id)->first();
         $course = Course::where('id',$course_registeration->course_id)->first();
-        $roles = Role::all();
+        $roles = Role::select('id','name')->get();
         // $roles = [];
 
         $training_field = Constant::where('parent_id', 404)->get();
@@ -348,7 +319,8 @@ class UserController extends Controller
             ]);
         }
 
-        $user->roles()->sync([request()->role]);
+        DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+        $user->assignRole([request()->role]);
 //        $user->groups()->sync($groups);
 
         User::UploadFile($user, ['method' => 'update']);

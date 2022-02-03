@@ -14,7 +14,11 @@ use App\Models\Training\CourseRegistration;
 @include('training.reports.users.dashboard')
 <div class="card courses">
   <div class="card-header">
-    {!!Builder::BtnGroupTable()!!}
+      <?php $create_role = false; ?>
+      @can('users.create')
+          <?php $create_role = true; ?>
+      @endcan
+    {!!Builder::BtnGroupTable($create_role)!!}
     {!!Builder::TableAllPosts($count, $users->count())!!}
   </div>
   <div class="card-body table-responsive p-0">
@@ -36,6 +40,15 @@ use App\Models\Training\CourseRegistration;
         </tr>
       </thead>
       <tbody>
+      <?php $btn_roles = null; ?>
+          @can('users.edit')
+              <?php  $btn_roles[] = 'Edit'; ?>
+          @endcan
+
+          @can('users.delete')
+              <?php   $btn_roles[] = 'Destroy' ?>
+          @endcan
+
       @foreach($users as $post)
       <tr data-id="{{$post->id}}">
         <td>
@@ -53,9 +66,20 @@ use App\Models\Training\CourseRegistration;
         </td>
         {{-- <td class="px-1"> <span class="td-title">{{$post->job_title??null}}</span> </td> --}}
         <td class="px-1">
-            @if(isset($post->roles[0]))
-                <span class="td-title {{($post->roles[0]->id == 1) ? 'badge-blue' : (($post->roles[0]->id == 2) ? 'badge-pink' : (($post->roles[0]->id == 3) ? 'badge-green' : ''))}} ">{{$post->roles[0]->trans_name??null}}</span>
-            @endif
+            <?php
+              $roles_class = [
+                  1 => 'badge-blue',
+                  2 => 'badge-pink',
+                  3 => 'badge-green',
+                  4 => 'badge-blue',
+              ];
+            ?>
+            @foreach($post->roles as $role)
+                <span class="td-title {{ $roles_class[$role->id] }} ">{{$role->name}}</span>
+            @endforeach
+{{--            @if(isset($post->roles))--}}
+{{--                <span class="td-title {{($post->roles[0]->id == 1) ? 'badge-blue' : (($post->roles[0]->id == 2) ? 'badge-pink' : (($post->roles[0]->id == 3) ? 'badge-green' : ''))}} ">{{$post->roles[0]->trans_name??null}}</span>--}}
+{{--            @endif--}}
         </td>
         <td class="px-1">
             <span class="td-title">{{$post->company??null}}</span>
@@ -72,7 +96,7 @@ use App\Models\Training\CourseRegistration;
             <span style="display: block;" class="td-title">  {{ $assigned_courses }}</span>
         </td>
         <td class="px-1">
-            {!!Builder::BtnGroupRows($post->trans_name, $post->id, [], [
+            {!!Builder::BtnGroupRows($post->trans_name, $post->id, $btn_roles, [
                 'post'=>$post->id,
             ])!!}
             <a href="{{route('training.usersReportOverview',['id'=>$post->id])}}" target="blank" class="cyan my-1" ><i class="fa fa-pencil"></i> Report</a>
