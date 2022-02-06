@@ -23,6 +23,7 @@
                 'attr'=>'maxlength="1000"',
             ])!!}
 
+            {!!Builder::Select('category_id', 'category_id', $categories, null, ['col'=>'col-md-6', 'model_title'=>'trans_title',])!!}
 {{--            {!!Builder::Select('group_id', 'group', $groups, null, ['col'=>'col-md-12','model_title' => 'name']) !!}--}}
 
             {{Builder::SetPrefix('training.')}}

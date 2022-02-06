@@ -55,6 +55,7 @@ class CourseRequest extends FormRequest
             'material_cost'=>'nullable|numeric|max:1500',
             'partner_id'=>'',
             'certificate_type_id'=>'',
+            'category_id'=>'required',
             'certificate_id'=>'',
             'type_id'=>'',
             'show_in_website'=>'',

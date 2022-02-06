@@ -143,4 +143,5 @@ return [
     'trainee' => 'trainee',
     'instructor' => 'instructor',
     'Change Role' => 'Change Role',
+    'category'=>'التصنيف',
 ];

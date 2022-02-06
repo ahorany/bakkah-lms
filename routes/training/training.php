@@ -98,6 +98,10 @@ Route::group([
         Route::patch('/courses/{course}/restore', 'CourseController@restore')->name('courses.restore');
 
 
+        Route::resource('categories', 'CategoryController');
+        Route::patch('/categories/{category}/restore', 'CategoryController@restore')->name('categories.restore');
+
+
 //        Route::resource('training_options', 'TrainingOptionController');
 //        Route::patch('/training_options/{training_option}/restore', 'TrainingOptionController@restore')->name('training_options.restore');
 

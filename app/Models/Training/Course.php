@@ -13,6 +13,7 @@ use App\Traits\PostMorphTrait;
 use App\Traits\SeoTrait;
 use App\Traits\TrashTrait;
 use App\Traits\UserTrait;
+use App\Models\Training\Category;
 use App\User;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -134,6 +135,9 @@ class Course extends Model
     }
 
 
+    public function category(){
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
 
 
     ///////////// lms //////////////
