@@ -56,6 +56,10 @@ class CourseController extends Controller
         if (!is_null(request()->course_search)) {
             $courses = $this->SearchCond($courses);
         }
+        if (request()->category_id != -1)
+        {
+            $courses = $courses->where('courses.category_id', request()->category_id);
+        }
 
 
         // $categories = Constant::where('post_type', 'course')->get();
@@ -95,8 +99,9 @@ class CourseController extends Controller
             $completed_learners = $this->SearchCond($completed_learners);
         }
         $completed_learners = $completed_learners->count();
+        $categories = Category::get();
         // dd($completed_learners);
-        return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors','completed_learners'));
+        return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors','completed_learners','categories'));
     }
 
 

@@ -31,12 +31,14 @@
                             {!! Builder::Hidden('post_type', $post_type) !!}
                             {!! Builder::Hidden('trash') !!}
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text"  name="course_search"  class="form-control input_search" placeholder="Course Title" value="{{request()->course_search??null}}" >
                                 </div>
                             </div>
-
+                            <div class="col-md-6">
+                                {!!Builder::Select('category_id', 'category_id', $categories, null, ['col'=>'col-md-6', 'model_title'=>'trans_title',])!!}
+                            </div>
                             <div style="margin-top: 5px;"> {{-- class="col-md-6"  --}}
                                 {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
                                 <button type="reset" class="cyan" >{{__('admin.clear')}}</button>

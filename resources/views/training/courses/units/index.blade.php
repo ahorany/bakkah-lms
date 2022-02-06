@@ -157,7 +157,7 @@
               }
             },
             template: `
-                         <li @click.stop="open = (!open)"> (@{{item.id }})  @{{item.title }} <i v-if="item.s && item.s.length > 0" class="fa fa-chevron-down" aria-hidden="true"></i>
+                         <li @click.stop="open = (!open)"> (@{{item.unit_no }})  @{{item.title }} <i v-if="item.s && item.s.length > 0" class="fa fa-chevron-down" aria-hidden="true"></i>
 
                                   <button @click.stop="$root.deleteUnit(course.units,item.id)" class="btn text-danger btn-sm" >
                                            <i class="fa fa-trash"></i></button>
@@ -177,7 +177,7 @@
                 template: `<ul v-if="items.length > 0">
                       <template v-for="child in items">
                          <tree v-if="child.s" :item="child"/>
-                         <li @click.stop="open = (!open)" class="last" v-else>@{{child.title }}
+                         <li @click.stop="open = (!open)" class="last" v-else>(@{{child.unit_no }})  @{{child.title }}
                               <button @click.stop="$root.deleteUnit(course.units,child.id)"  class="btn btn-sm text-danger" >
                                        <i class="fa fa-trash"></i></button>
                               <button @click.stop="$root.edit(child,child.id)" type="button" class="btn text-info btn-sm px-3" id="answer" ><i style="color:#000;" class="fa fa-pencil"></i></button>
