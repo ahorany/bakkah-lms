@@ -4,6 +4,9 @@ namespace App\Imports;
 use App\Models\Training\Question;
 use App\Models\Training\Answer;
 use App\Models\Training\Exam;
+use App\Models\Training\Content;
+use App\Models\Training\Unit;
+
 // use App\Models\Training\Session;
 
 use App\Models\Training\Attendant;
@@ -54,18 +57,23 @@ class QuestionsImport implements ToCollection, WithHeadingRow
                 ]);
 
                 $question_id = DB::getPdo()->lastInsertId();
-
+                $content = Content::where('id',request()->content_id)->first();
                 $units = explode(',',$row['unit_id']);
                 foreach($units as $unit)
                 {
-                    DB::table('question_units')->insert([
-                        [
-                            'unit_id'            => $unit,
-                            'question_id'        => $question_id,
-                        ],
-                    ]);
+                    $unit = Unit::where('unit_no',$unit)->where('course_id',$content->course_id)->first();
+                    if(isset($unit->id))
+                    {
+                        $unit = Unit::where('unit_no',$unit)->where('course_id',$content->course_id)->first();
+                        DB::table('question_units')->insert([
+                            [
+                                'unit_id'            => $unit->id,
+                                'question_id'        => $question_id,
+                            ],
+                        ]);
+                    }
                 }
-
+                // dd(300);
                 for($i=1;$i<=4;$i++)
                 {
                     $check_correct = 0;
