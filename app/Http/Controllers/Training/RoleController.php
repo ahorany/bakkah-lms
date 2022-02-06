@@ -33,9 +33,9 @@ class RoleController extends Controller
         // ======= Not Trainees ========
         $roles = Role::where('id', '<>', 3)->with('permissions');
 
-        if(!is_null(request()->user_search)) {
+        if(!is_null(request()->role_search)) {
             $roles = $roles->where(function($query){
-                $query->where('name', 'like', '%'.request()->user_search.'%');
+                $query->where('name', 'like', '%'.request()->role_search.'%');
             });
         }
 

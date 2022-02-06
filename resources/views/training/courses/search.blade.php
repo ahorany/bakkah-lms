@@ -30,21 +30,13 @@
                             {!! Builder::Hidden('page', request()->page??1) !!}
                             {!! Builder::Hidden('post_type', $post_type) !!}
                             {!! Builder::Hidden('trash') !!}
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text"  name="course_search"  class="form-control input_search" placeholder="Course Title" value="{{request()->course_search??null}}" >
+                            {!!Builder::Input('course_search', 'course_search',request()->course_search??null,['col'=>'col-md-6'])!!}
+                            {!!Builder::Select('category_id', 'category_id', $categories, request()->category_id??null, ['col'=>'col-md-6', 'model_title'=>'trans_title',])!!}
+                            <div class="col-md-12">
+                                <div style="margin-top: 5px;">
+                                    {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
+                                    <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                {!!Builder::Select('category_id', 'category_id', $categories, null, ['col'=>'col-md-6', 'model_title'=>'trans_title',])!!}
-                            </div>
-                            <div style="margin-top: 5px;"> {{-- class="col-md-6"  --}}
-                                {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
-                                <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
-                                {{-- {!! Builder::Submit('clear', 'clear', 'btn-default', 'eraser') !!}
-                                --}}
-
                             </div>
                         </div>
                     </div>

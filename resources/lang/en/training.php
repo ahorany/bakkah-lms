@@ -84,8 +84,8 @@ return [
     'finished'=>'أنهي أو أنهت',
     'hourOrHours'=>'ساعة أو ساعات',
     'certificate_id'=>'Certificate',
-
-
+    'user_search'=>'User Search',
+    'role_search'=>'Role Search',
 
 
 ];

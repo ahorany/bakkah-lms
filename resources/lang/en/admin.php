@@ -168,4 +168,5 @@ return [
     'instructor' => 'instructor',
     'Change Role' => 'Change Role',
     'category'=>'Category',
+    'category_search'=>'Category Search',
 ];

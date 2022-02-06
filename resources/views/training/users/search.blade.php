@@ -26,17 +26,12 @@
                         {!! Builder::Hidden('page', request()->page??1) !!}
                         {!! Builder::Hidden('post_type', $post_type) !!}
                         {!! Builder::Hidden('trash') !!}
-
+                        {!!Builder::Input('user_search', 'user_search',request()->user_search??null,['col'=>'col-md-12'])!!}
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <input type="text" name="user_search"  class="form-control input_search" placeholder="Name, Email, Mobile, Job Title, Comapny" value="{{request()->user_search??null}}">
+                            <div style="margin-left:0px;margin-top: 5px;">
+                                {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
+                                <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
                             </div>
-                        </div>
-
-                        <div style="margin-left:0px;margin-top: 5px;"> {{-- class="col-md-6"  --}}
-                            {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
-                            <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
-                            {{-- {!! Builder::Submit('clear', 'clear', 'btn-default', 'eraser') !!} --}}
                         </div>
                     </div>
                 </div>
