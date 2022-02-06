@@ -80,7 +80,7 @@
             border-bottom: 1px solid #ddd;
             display: block;
             font-size: .8em;
-            text-align: right;
+            text-align: left;
         }
 
         table td::before {

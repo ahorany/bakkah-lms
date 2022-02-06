@@ -153,7 +153,7 @@ if(!is_null($previous)){
              </div>
             @endforeach
 
-                <a href="{{CustomRoute('user.exam',$exam->exam->content->id)}}" class="form-control main-color">Exit Review</a>
+                <a href="{{CustomRoute('user.exam',$exam->exam->content->id)}}" class="form-control main-color exit-preview">Exit Review</a>
 
         </div>
         <div class="col-xl-3 col-lg-4">

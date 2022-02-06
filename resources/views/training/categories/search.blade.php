@@ -9,7 +9,7 @@
     display: inline-block;
 }
 .form-inline .form-group .form-control {
-    width: 60%;
+    width: 100%;
     height: calc(2rem + 2px);
 }
 .form-inline > div {

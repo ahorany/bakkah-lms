@@ -566,7 +566,7 @@ class Builder {
 	}
 
 	static function Edit($title, $id){
-		return self::GridHref('edit', $title, $id, 'yellow edit', 'pencil', 'edit');
+		return self::GridHref('edit', $title, $id, 'yellow', 'pencil', 'edit');
 	}
 
     static function Dublicate($title, $id){
