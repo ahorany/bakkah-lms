@@ -168,4 +168,5 @@ return [
     'instructor' => 'instructor',
     'Change Role' => 'Change Role',
     'category'=>'Category',
+    'import_type'=>'Import Type',
 ];
