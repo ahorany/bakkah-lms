@@ -227,13 +227,11 @@ li.has-dropdown .dropdown span{
 
 .q-card {
     margin-bottom: 10px;
-    /* padding: 15px !important; */
-    padding: 50px 15px 30px !important;
+    padding: 10px 20% 20px 20px !important;
 }
 
 .q-card h3 {
     font-size: 16px;
-
 }
 .q-card label{
     box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
@@ -1060,7 +1058,7 @@ label.container-check.form-check-label span.checkmark{
         font-size: 14px;
     }
     .q-card h3{
-        padding: 0px 50px 0 0 !important;
+        /* padding: 0px 50px 0 0 !important; */
         font-size: 16px;
     }
     .card.p-5 , .card.px-5.py-4 {

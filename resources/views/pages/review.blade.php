@@ -106,7 +106,7 @@ if(!is_null($previous)){
                     @endforeach
                     <small>({{$question->mark}} {{$answers == 1 ? 'Mark' : 'Marks'}} )</small>
                 </div>
-                <h3 style="padding-right: 15%;">{!! $question->title!!}</h3>
+                <h3>{!! $question->title!!}</h3>
                  @foreach($question->answers as $answer)
                      <label class="custom-radio @foreach($exam->user_answers as $user_answer) @if($user_answer->id == $answer->id ) @if($answer->check_correct == 0) border_false @else border_true @endif @endif @endforeach"
                       > {{$answer->title}}

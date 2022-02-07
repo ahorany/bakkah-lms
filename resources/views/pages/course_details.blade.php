@@ -202,7 +202,7 @@ svg {
         @foreach($course->contents as $key => $section)
         <div class="card learning-file mb-3">
             <h3>{{$section->title}}</h3>
-            <div style="margin: 0px 40px;">{!! $section->details->excerpt??null !!}</div>
+            <div style="margin: 0px 30px;">{!! $section->details->excerpt??null !!}</div>
             @isset($section->contents)
                 <ul>
                     @foreach($section->contents as $k => $content)

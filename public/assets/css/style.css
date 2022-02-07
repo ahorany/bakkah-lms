@@ -596,10 +596,10 @@ nav#sidebarMenu ul {
 
 nav#sidebarMenu ul li a {
   padding: 15px;
-  display: inline-block;
+  /* display: inline-block; */
   width: 100%;
-  /* display: flex; */
-  /* align-items: center; */
+  display: flex;
+  align-items: center;
   color: #000;
   /* border-left: 10px solid transparent; */
   transition: all 0.15s ease-in-out;
@@ -635,6 +635,8 @@ nav#sidebarMenu ul li.admin.title svg {
 nav#sidebarMenu ul li.admin.title {
     padding: 15px;
     background: #ececec;
+    display: flex;
+    align-items: center;
 }
 
 nav#sidebarMenu ul li a svg {
@@ -1109,9 +1111,9 @@ ol.answers li .icon.empty {
   height: 20px;
 }
 
-.learning-file ul li a span {
+/* .learning-file ul li a span {
   margin: 0 3px 0 10px;
-}
+} */
 
 .learning-file ul li a span.svg {
     margin-left: auto;
