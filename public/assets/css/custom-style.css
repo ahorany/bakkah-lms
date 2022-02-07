@@ -578,7 +578,7 @@ span.pdu {
     margin-bottom: 20px;
     display: flex;
     justify-content: start;
-    align-items: flex-start;
+    align-items: self-start;
 }
 .activity li:hover {
     font-weight: 700;
@@ -1058,7 +1058,6 @@ label.container-check.form-check-label span.checkmark{
         font-size: 14px;
     }
     .q-card h3{
-        /* padding: 0px 50px 0 0 !important; */
         font-size: 16px;
     }
     .card.p-5 , .card.px-5.py-4 {
@@ -1108,9 +1107,6 @@ label.container-check.form-check-label span.checkmark{
     span.mx-2.d-flex svg#Layer_1 {
         width: 25px;
     }
-    /* .lms-header ul.navbar-nav li.user a{
-        padding: 5px 0;
-    } */
     .congrats h1{
         font-size: 25px;
     }
@@ -1218,6 +1214,7 @@ label.container-check.form-check-label span.checkmark{
         width: 100% !important;
     }
 }
+
 @media (min-width: 2000.5px){
     .course-image .image img {
         width: 50% !important;

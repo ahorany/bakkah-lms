@@ -51,47 +51,62 @@
             <tr style="line-height: 1.5; text-align: center;">
                 <td>
                     <div>
-                        <img src="{{CustomAsset('images/email/user_icon.png')}}" width="15" height="auto">
-                        <span style="font-size: 15px">{{$user->email}}</span>
+                        <table border="0" cellspacing="0">
+                            <tr>
+                                <td width="25">
+                                    <img src="{{CustomAsset('images/email/user_icon.png')}}" width="16" height="auto">
+                                </td>
+                                <td width="150">
+                                    <span style="font-size: 15px; margin: 0 0 0 10px;">{{$user->email}}</span>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </td>
-                {{-- <td>
-                    <span style="font-size: 15px">{{$user->email}}</span>
-                </td> --}}
             </tr>
         </table>
         @if (!is_Null($password))
             <table border="0" style="width: 100%; padding: 0 10px 15px;" cellspacing="0">
-                    <tr style="line-height: 1.5; text-align: center;">
-                        <td>
-                            <div>
-                                <img src="{{CustomAsset('images/email/email_icon.png')}}" width="15" height="auto">
-                                <span style="font-size: 15px;">{{$password}}</span>
-                            </div>
-                        </td>
-                        {{-- <td>
-                            <span style="font-size: 15px;">{{$password}}</span>
-                        </td> --}}
-                    </tr>
+                <tr style="line-height: 1.5; text-align: center;">
+                    <td>
+                        <div>
+                            <table border="0" cellspacing="0">
+                                <tr>
+                                    <td width="25">
+                                        <img src="{{CustomAsset('images/email/email_icon.png')}}" width="16" height="auto">
+                                    </td>
+                                    <td width="150">
+                                        <span style="font-size: 15px; margin: 0 0 0 10px;">{{$password}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
             </table>
         @endif
-        <table border="0" style="width: 100%; padding: 0 10px 15px;" cellspacing="0">
+        <table border="0" style="width: 100%; padding: 0 10px;" cellspacing="0">
             <tr style="line-height: 1.5; text-align: center;">
                 <td>
                     <div>
-                        <img src="{{CustomAsset('images/email/link_icon.png')}}" width="15" height="auto">
-                        <span style="font-size: 15px;"><a href="{{env('APP_URL')}}" style="text-decoration: none;">{{env('APP_URL')}}</a></span>
+                        <table border="0" cellspacing="0">
+                            <tr>
+                                <td width="25">
+                                    <img src="{{CustomAsset('images/email/link_icon.png')}}" width="16" height="auto">
+                                </td>
+                                <td width="150">
+                                    <span style="font-size: 15px; margin: 0 0 0 10px;"><a href="{{env('APP_URL')}}" style="text-decoration: none;">{{env('APP_URL')}}</a></span>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </td>
-                {{-- <td>
-                    <span style="font-size: 15px;"><a href="{{env('APP_URL')}}" style="text-decoration: none;">{{env('APP_URL')}}</a></span>
-                </td> --}}
             </tr>
         </table>
     </div>
     <p style="font-size: 14px; text-align: center;">Feel free to contact us if you have further questions or face any technical issue, and we’ll get touch with you in no time.</p>
-    <div width="100" style="width: 100px; margin: 0 auto;">
-        <p style="font-size: 14px; color: #fff; background: #fb4400; text-align: center; border-radius: 5px;"> Happy Learning! </p>
+    <div width="100" style="width: 150px; margin: 0 auto 15px;">
+        <span style="font-size: 14px; color: #fff; background: #fb4400; text-align: center; border-radius: 5px; padding: 2px 5px;"> Happy Learning! </span>
     </div>
 
 </main>
