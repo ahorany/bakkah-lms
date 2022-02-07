@@ -12,8 +12,8 @@
     </style>
     <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
-
     <div class="toLoad" id="questions">
+
         <div  class="course_info mb-3 card p-3">
             <div class="row">
                 <div class="col-md-10 col-10">
@@ -41,7 +41,11 @@
             </div>
         </div>
 
+
+
         <div class="card p-3 mb-3">
+            {!!Builder::Select('import_type', 'import_type', $import_types, null, ['col'=>'col-md-6 import_type', 'model_title'=>'trans_name'])!!}
+            <div class="importQuestions" >
             <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
                 @csrf
                     <div class="col-md-6 px-0">
@@ -59,8 +63,9 @@
                         </div>
                     </div>
             </form>
-            <hr>
-            <form action="{{ route('training.importQuestionsMoodle') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+            </div>
+            <div class="importQuestionsMoodle" >
+            <form action="{{ route('training.importQuestionsMoodle') }}" method="POST" enctype="multipart/form-data" class="row mx-0 ">
                 @csrf
                     <div class="col-md-6 px-0">
                         <div class="add-question-file">
@@ -77,8 +82,9 @@
                         </div>
                     </div>
             </form>
-            <br>
-            <form action="{{ route('training.importResults') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+            </div>
+            <div class="importResults" >
+            <form action="{{ route('training.importResults') }}" method="POST" enctype="multipart/form-data" class="row mx-0 ">
                 @csrf
                     <div class="col-md-6 px-0">
                         <div class="add-question-file">
@@ -96,8 +102,9 @@
                     </div>
 
             </form>
-
-            <form action="{{ route('training.importQuestionsLittle') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+            </div>
+            <div class="importQuestionsLittle" >
+            <form action="{{ route('training.importQuestionsLittle') }}" method="POST" enctype="multipart/form-data" class="row mx-0 ">
                 @csrf
                     <div class="col-md-6 px-0">
                         <div class="add-question-file">
@@ -114,6 +121,7 @@
                         </div>
                     </div>
             </form>
+            </div>
         </div>
 
         <template v-if="questions">
@@ -133,7 +141,6 @@
                     </div>
                 </div>
             </div>
-
         </template>
 
 	<div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
@@ -224,6 +231,9 @@
 </div>
 
 </div>
+
+
+
 
 @endsection
 
@@ -476,6 +486,34 @@
 
 	});
 
+
+</script>
+
+<script>
+
+    const selectElement = document.querySelector('.import_type');
+    document.getElementsByClassName('importQuestions')[0].style.display='none';
+    document.getElementsByClassName('importQuestionsMoodle')[0].style.display='none';
+    document.getElementsByClassName('importResults')[0].style.display='none';
+    document.getElementsByClassName('importQuestionsLittle')[0].style.display='none';
+
+
+    selectElement.addEventListener('change', (event) => {
+        document.getElementsByClassName('importQuestions')[0].style.display='none';
+        document.getElementsByClassName('importQuestionsMoodle')[0].style.display='none';
+        document.getElementsByClassName('importResults')[0].style.display='none';
+        document.getElementsByClassName('importQuestionsLittle')[0].style.display='none';
+
+        if(event.target.value == 499)
+            document.getElementsByClassName('importQuestions')[0].style.display='block';
+        else if(event.target.value == 500)
+            document.getElementsByClassName('importQuestionsMoodle')[0].style.display='block';
+        else if(event.target.value == 501)
+            document.getElementsByClassName('importQuestionsLittle')[0].style.display='block';
+        else if(event.target.value == 502)
+            document.getElementsByClassName('importResults')[0].style.display='block';
+
+    });
 
 </script>
 @endsection

@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Training;
 use App\Http\Controllers\Controller;
 use App\Models\Training\Answer;
 use App\Models\Training\Content;
+
 use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
 use App\Models\Training\Exam;
 use App\Models\Training\Question;
+use App\Constant;
+
 use App\Models\Training\QuestionUnit;
 use App\Models\Training\Unit;
 use Illuminate\Support\Facades\DB;
@@ -38,8 +41,9 @@ class QuestionController extends Controller
         $course_id = $content->course_id;
         $units = Unit::where('course_id',$course_id)->with(['subunits'])->get();
         $units = $this->buildTree($units);
-
-        return view('training.courses.contents.exam', compact('content','units','course_id'));
+        $import_types = Constant::where('post_type','imports')->get();
+        // dd($import_types);
+        return view('training.courses.contents.exam', compact('content','units','course_id','import_types'));
     }
 
     public function add_question(){
