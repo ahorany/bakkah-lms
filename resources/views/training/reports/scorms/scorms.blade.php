@@ -24,10 +24,10 @@
                 <span class="td-title px-1">{{$loop->iteration}}</span>
                 </td>
                 <td class="px-1">
-                     <a href="{{route('training.scorm_users',['id'=>$post->id])}}" class="group_buttons btn-sm">{{$post->title }}</a>
+                     <a href="{{route('training.scorm_users',['id'=>$post->id])}}" class="info-button btn-sm">{{$post->title }}</a>
                 </td>
                 <td class="px-1">
-                    <span style="display: block;"> <a href="{{route('training.scormsReportScorms',['course_id'=>$post->course->id])}}" class="group_buttons btn-sm">{{$post->course->trans_title}}</a> </span>
+                    <span style="display: block;"> <a href="{{route('training.scormsReportScorms',['course_id'=>$post->course->id])}}" class="info-button btn-sm">{{$post->course->trans_title}}</a> </span>
 
                 </td>
                 <?php

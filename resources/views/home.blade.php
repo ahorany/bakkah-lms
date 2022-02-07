@@ -6,7 +6,7 @@
 
 @section('content')
     {{-- @dd(auth()->user()->bio) --}}
-    <div class="row m-0 home-section">
+    <div class="row m-0 home-section hero">
         <div class="col-md-12 col-xl-12">
             <div class="card p-30 home-section">
                 <div class="row mx-0 align-items-center">
@@ -40,10 +40,10 @@
             return 0;
         }
     ?>
-    <div class="row mx-0 home-section">
+    <div class="row mx-0 home-section reports">
 
         <div class="col-lg-12">
-            <div class="card h-100 p-30">
+            <div class="card h-100 p-30 courses">
 
                 <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-center">
 
@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    <div class="course-cards">
+                    <div class="course-cards last">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="icon-report bg-five" id="bg-two" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                             <g>
                                 <path d="M31.97,55.25c-1.12,0-2.24,0-3.35,0c-0.16-0.03-0.32-0.07-0.48-0.1c-1.02-0.15-2.06-0.22-3.06-0.44   c-5.29-1.14-9.78-3.71-13.43-7.7c-3.29-3.6-5.38-7.8-6.21-12.61c-0.16-0.9-0.26-1.81-0.39-2.71c0-1.12,0-2.23,0-3.35   c0.03-0.14,0.07-0.28,0.09-0.42c0.11-0.86,0.17-1.73,0.34-2.58c1.24-6.24,4.33-11.37,9.37-15.25c5.96-4.6,12.73-6.22,20.12-4.86   c6.2,1.13,11.29,4.26,15.17,9.23c4.68,6,6.33,12.81,4.95,20.28c-1.14,6.18-4.29,11.22-9.21,15.13c-3.3,2.62-7.03,4.3-11.19,5.01   C33.78,55.01,32.87,55.12,31.97,55.25z M51.39,29.99C51.38,18.41,41.86,8.91,30.29,8.91C18.71,8.91,9.2,18.42,9.19,30   c-0.01,11.59,9.55,21.14,21.13,21.11C41.91,51.08,51.41,41.56,51.39,29.99z"/>
@@ -131,7 +131,7 @@
                     @forelse($courses->courses as $course)
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
                         <a href="{{CustomRoute('user.course_details',$course->id)}}">
-                        <div class="text-center course-image p-3">
+                        <div class="text-center course-image p-3 @if ($loop->last) last @endif">
                             <?php
                             $url = '';
                             // dd($course);

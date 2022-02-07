@@ -12,7 +12,7 @@
                         <div class="row">
                             {!! Builder::Hidden('page', request()->page??1) !!}
                             {!! Builder::Hidden('trash') !!}
-                            {!! Builder::Input('title', 'certificate_name', request()->name??null, ['col'=>'col-md-6'])!!}
+                            {!! Builder::Input('title', 'certificate_name', request()->title??null, ['col'=>'col-md-12'])!!}
                         </div>
                         {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
                         <button type="reset" class="cyan" >{{__('admin.clear')}}</button>

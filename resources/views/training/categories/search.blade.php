@@ -9,7 +9,7 @@
     display: inline-block;
 }
 .form-inline .form-group .form-control {
-    width: 60%;
+    width: 100%;
     height: calc(2rem + 2px);
 }
 .form-inline > div {
@@ -31,18 +31,12 @@
                             {!! Builder::Hidden('post_type', $post_type) !!}
                             {!! Builder::Hidden('trash') !!}
 
+                            {!! Builder::Input('category_search', 'category_search', request()->category_search??null, ['col'=>'col-md-12'])!!}
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text"  name="category_search"  class="form-control input_search" placeholder="Category Title" value="{{request()->category_search??null}}" >
+                                <div style="margin-top: 5px;">
+                                    {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
+                                    <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
                                 </div>
-                            </div>
-
-                            <div style="margin-top: 5px;"> {{-- class="col-md-6"  --}}
-                                {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
-                                <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
-                                {{-- {!! Builder::Submit('clear', 'clear', 'btn-default', 'eraser') !!}
-                                --}}
-
                             </div>
                         </div>
                     </div>

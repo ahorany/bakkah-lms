@@ -168,5 +168,9 @@ return [
     'instructor' => 'instructor',
     'Change Role' => 'Change Role',
     'category'=>'Category',
+<<<<<<< HEAD
     'import_type'=>'Import Type',
+=======
+    'category_search'=>'Category Search',
+>>>>>>> 6d1ed1bf25c23862e12f41be8326851ac0316577
 ];
