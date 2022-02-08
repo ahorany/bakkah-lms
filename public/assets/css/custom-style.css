@@ -1148,7 +1148,6 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 500.5px) {
-
     .card-header.d-flex.justify-content-between.align-items-center {
         display: flex !important;
         align-items: space-between;
@@ -1161,6 +1160,9 @@ label.container-check.form-check-label span.checkmark{
         font-weight: 500;
     }
     .title_file_old{
+        display: none;
+    }
+    .dash-header.course_info {
         display: none;
     }
 }
@@ -1212,9 +1214,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .card-header.d-flex.justify-content-between.align-items-center .d-flex.align-items-center {
         justify-content: center;
-    }
-    .dash-header.course_info {
-        display: none;
     }
     nav#sidebarMenu{
         top: 3rem;

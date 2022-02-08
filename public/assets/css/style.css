@@ -649,22 +649,19 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
   fill: #000;
 }
 
-/* nav#sidebarMenu ul li a:hover #courses path , nav#sidebarMenu ul li a:hover #courses path line{
-    filter: inherit !important;
-} */
-
 .lms-header a.navbar-brand {
   background: var(--mainColor);
   color: #fff;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 10px 0;
 }
 
 .lms-header a.navbar-brand img {
   filter: brightness(0) invert(1);
   width: 35px;
-  margin: 0 15px;
+  margin: 0 5px 0 0;
 }
 
 .lms-header ul.navbar-nav {
