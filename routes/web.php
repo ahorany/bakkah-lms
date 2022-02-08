@@ -24,7 +24,7 @@ Route::get('/', function(){
 
 Route::get('/clear-permissions', function(){
     \Artisan::call('cache:forget spatie.permission.cache');
-    dd('dddd');
+    // dd('dddd');
     return redirect()->route('user.home');
 })->middleware('auth');
 
