@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Training;
 
+use App\Helpers\CourseContentHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Training\Answer;
 use App\Models\Training\Content;
@@ -36,14 +37,33 @@ class QuestionController extends Controller
         return $branch;
     }
 
+//    public function add_questions($exam_id){
+//        $content = Content::where('id',$exam_id)->with(['questions.answers','questions.units'])->latest()->first();
+//        $course_id = $content->course_id;
+//        $units = Unit::where('course_id',$course_id)->with(['subunits'])->get();
+//        $units = $this->buildTree($units);
+//        $import_types = Constant::where('post_type','imports')->get();
+//        // dd($import_types);
+//        return view('training.courses.contents.exam', compact('content','units','course_id','import_types'));
+//
+//    }
+
     public function add_questions($exam_id){
-        $content = Content::where('id',$exam_id)->with(['questions.answers','questions.units'])->latest()->first();
+        $content = Content::where('id',$exam_id)->with(['exam','questions.answers','questions.units'])->latest()->first();
+
+        // Get next and prev
+        $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
+        $next = $arr['next'];
+        $previous = $arr['previous'];
+        // end next and prev
+
         $course_id = $content->course_id;
         $units = Unit::where('course_id',$course_id)->with(['subunits'])->get();
         $units = $this->buildTree($units);
         $import_types = Constant::where('post_type','imports')->get();
         // dd($import_types);
-        return view('training.courses.contents.exam', compact('content','units','course_id','import_types'));
+        return view('training.courses.contents.preview.exam', compact('content','units','course_id','import_types','next', 'previous'));
+
     }
 
     public function add_question(){

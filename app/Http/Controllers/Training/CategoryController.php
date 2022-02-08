@@ -22,7 +22,7 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('permission:training.categories.index', ['only' => ['index']]);
+         $this->middleware('permission:training.categories.index');
         // $this->middleware('permission:course.create', ['only' => ['create','store']]);
         // $this->middleware('permission:course.edit', ['only' => ['edit','update']]);
         // $this->middleware('permission:course.delete', ['only' => ['destroy']]);

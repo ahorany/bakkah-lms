@@ -55,6 +55,11 @@ class PermissionTableSeeder extends Seeder
             ['scorms' ,'training.scormsReportOverview'],
 
 
+            // categories
+            ['categories' ,'training.categories.index'],
+
+            // preview exam edit
+            ['edit preview exam' ,'preview.exam.edit'],
 
         ];
 

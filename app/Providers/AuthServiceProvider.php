@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('preview-gate', function ($user) {
 
 //            dd($user->hasRole(1));
-            if($user->roles->first()->id==1 && request()->has('preview')){
+            if($user->roles->first()->id == 1 && request()->has('preview')){
                 return true;
             }
             return false;

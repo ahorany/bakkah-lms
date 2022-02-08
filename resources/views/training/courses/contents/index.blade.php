@@ -112,9 +112,9 @@
                                     <td class="text-right">
                                         <div class="BtnGroupRows buttons" data-id="150">
                                             <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
-                                            <a v-if="entry.post_type == 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + entry.id" :target="entry.id">
-                                                <i class="fa fa-folder-open-o" aria-hidden="true"></i>
-                                            </a>
+{{--                                            <a v-if="entry.post_type == 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + entry.id" :target="entry.id">--}}
+{{--                                                <i class="fa fa-folder-open-o" aria-hidden="true"></i>--}}
+{{--                                            </a>--}}
                                            <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id + '?preview=true'" :target="entry.id">
                                                <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                                            </a>

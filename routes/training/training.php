@@ -59,7 +59,7 @@ Route::group([
             Route::post('/add_course_group', 'GroupCourseController@add_course_group')->name('add_courses_group');
             Route::post('/group_courses/delete', 'GroupCourseController@delete_course_group')->name('delete_course_group');
 
-            Route::get('/exam/preview-content/{content_id}', 'ContentController@exam_preview_content')->name('exam.preview.content');
+//            Route::get('/exam/preview-content/{content_id}', 'ContentController@exam_preview_content')->name('exam.preview.content');
 
             Route::get('certificates/preview', 'CertificateControllerH@preview')->name('certificates.preview');
             Route::get('certificates/add_new', 'CertificateControllerH@add_new')->name('certificates.add_new');
