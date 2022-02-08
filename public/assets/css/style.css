@@ -1110,6 +1110,10 @@ ol.answers li .icon.empty {
   width: 20px;
   height: 20px;
 }
+.learning-file ul li a .flag_icon_false svg {
+  width: 23px;
+  height: 23px;
+}
 
 /* .learning-file ul li a span {
   margin: 0 3px 0 10px;
@@ -1117,6 +1121,8 @@ ol.answers li .icon.empty {
 
 .learning-file ul li a span.svg {
     margin-left: auto;
+    width: 80px;
+    text-align: right;
 }
 
 .learning-file ul li a:hover {

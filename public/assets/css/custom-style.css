@@ -1164,7 +1164,17 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media(max-width : 430.5px){
-
+    .learning-file ul li a span.svg {
+        width: 65px;
+        text-align: right;
+    }
+    .learning-file ul li a{
+        padding: 6px 15px;
+        align-items: flex-start;
+    }
+    .learning-file h3{
+        margin: 30px 15px 0;
+    }
     .lms-header a.navbar-brand {
         width: 100%;
         justify-content: center;
