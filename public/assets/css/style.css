@@ -702,7 +702,7 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 
 .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role {
     width: max-content;
-    padding: 0 10px;
+    padding: 0 20px;
     background: #f7f7f7;
     border-radius: 3px;
     color: #000 !important;
@@ -1110,9 +1110,9 @@ ol.answers li .icon.empty {
   width: 20px;
   height: 20px;
 }
-.learning-file ul li a .flag_icon_false svg {
-  width: 23px;
-  height: 23px;
+.flag_icon_false svg , .flag_icon_true svg {
+  width: 23px !important;
+  height: 23px !important;
 }
 
 /* .learning-file ul li a span {

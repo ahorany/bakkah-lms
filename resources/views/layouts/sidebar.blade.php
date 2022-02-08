@@ -60,7 +60,7 @@
                 @endforeach
             @endif
 
-            @if($role && $role->id != 3)
+            {{-- @if($role && $role->id != 3)
                 <li class="admin title">
                     <span class="d-flex align-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28.126" height="28.127" viewBox="0 0 28.126 28.127">
@@ -83,7 +83,7 @@
                     </span>
                     <span>{{$role->name}}</span>
                 </li>
-            @endif
+            @endif --}}
 
             @foreach($user_pages as $aside)
                 <?php

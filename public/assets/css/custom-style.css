@@ -9,20 +9,20 @@
     border-radius: 0 10px 10px 0;
 } */
 span.flag_icon_false svg path , .flag svg path {
-    /* stroke: #d7d7d7; */
     stroke: gray;
     transform: rotate(15deg);
 }
 
 span.flag_icon_true svg path , .flag-mark svg path {
-    /* fill: #fb4400; */
     stroke: #fb4400;
     transform: rotate(15deg);
 }
 
-li.admin{
-    background: #efefef;
+span.flag.flag-mark svg path {
+    fill: #fb4400;
+    stroke: gray;
 }
+
 .scorm .group_buttons{
     display: inline-block;
 }
@@ -126,7 +126,7 @@ em u {
     width: 75% !important;
 }
 li.has-dropdown .dropdown{
-    width: 200px;
+    width: max-content;
 }
 li.has-dropdown .dropdown span{
     font-size: 14px;
@@ -222,7 +222,7 @@ li.has-dropdown .dropdown span{
 }
 
 .padding-list {
-    padding: 5px 10px !important;
+    padding: 5px 15px !important;
 }
 
 .q-card {
@@ -869,6 +869,12 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
+    .position-sticky.pt-3 {
+        padding: 0 !important;
+    }
+    .person-wrapper{
+        display: none;
+    }
     .home-section .card h3.mb-5 {
         margin: 0 !important;
         margin-bottom: 25px !important;
@@ -966,9 +972,6 @@ label.container-check.form-check-label span.checkmark{
         width: 35px;
         height: 35px;
     }
-    /* .course-cards > div {
-        display: inline-block;
-    } */
     .lms-header a.navbar-brand {
         padding: 12px 10px !important;
     }
@@ -1072,11 +1075,6 @@ label.container-check.form-check-label span.checkmark{
     a.cyan , button.cyan , button.main-color, a.main-color , input.cyan , input.main-color , a.btn.btn-primary , button.btn.btn-primary{
         font-size: 14px !important;
     }
-    .course-cards {
-        width: 100% !important;
-        margin: 0;
-        margin-bottom: 15px;
-    }
     .calendar .sideb table th{
         font-size: 12px;
     }
@@ -1125,12 +1123,16 @@ label.container-check.form-check-label span.checkmark{
     .course-cards {
         width: 100% !important;
         margin: 0;
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         display: flex;
         justify-content: space-evenly;
         align-items: center;
         padding: 20px 0 !important;
+        /* border-radius: 15px 15px 0 0 !important; */
+        border-bottom-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
     }
+
     .course-cards > div{
         width: 150px;
     }
@@ -1191,9 +1193,9 @@ label.container-check.form-check-label span.checkmark{
     .navbar-brand span.d-none.d-sm-block {
         display: block !important;
     }
-    .messages li.has-dropdown .dropdown{
+    /* .messages li.has-dropdown .dropdown{
         right: -80px;
-    }
+    } */
     .congrats h1 {
         font-size: 18px;
     }
