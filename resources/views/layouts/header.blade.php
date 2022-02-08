@@ -57,11 +57,11 @@
                 <div class="dropdown d-none">
                     <ul class="postition-relative">
                         <?php $role_id = $role->id; ?>
-                        @foreach(\Spatie\Permission\Models\Role::select('id','name')->get() as $role)
+                        @foreach(\Spatie\Permission\Models\Role::select('id','name','icon')->get() as $role)
                             <li @if($role->id == $role_id) style="background: #eee;" @endif>
                                 <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
                                 <span class="d-flex">
-                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/star.svg')}}" alt="{{__('education.roles')}}"/>
+                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
                                     {{$role->name}}
                                 </span>
                                 </a>
