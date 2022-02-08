@@ -326,7 +326,7 @@ svg {
 @section('script')
 <script>
    window.total_rate = {!! json_encode($total_rate) !!}
-   window.rate =  @json($course->course_rate->rate)
+   window.rate =  @json($course->course_rate->rate??null)
 
    new Vue({
    'el' : '#main-vue-element',
