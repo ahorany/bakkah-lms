@@ -83,86 +83,41 @@
             </div>
         </div>
 
+
         <div class="col-md-12 col-12">
             <div class="card p-3">
-                {!!Builder::Select('import_type', 'import_type', $import_types, null, ['col'=>'col-md-6 import_type', 'model_title'=>'trans_name'])!!}
-                <div class="importQuestions" >
-                    <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
-                        @csrf
-                        <div class="col-md-6 px-0">
-                            <div class="add-question-file">
-                                {!!Builder::File('file', 'file', null, [])!!}
-                            </div>
-                        </div>
-                        <div class="col-md-6 px-0">
-                            <div class="import-question-file">
-                                {!!Builder::Submit('importQuestions', 'import_questions', 'green', null, [
-                                    'icon'=>'far fa-file-excel',
-                                ])!!}
-                                <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="cyan" role="button"> Sample </a>
-                                <input type="hidden" name="content_id" value="{{$content->id}}">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="importQuestionsMoodle" >
-                    <form action="{{ route('training.importQuestionsMoodle') }}" method="POST" enctype="multipart/form-data" class="row mx-0 ">
-                        @csrf
-                        <div class="col-md-6 px-0">
-                            <div class="add-question-file">
-                                {!!Builder::File('file', 'file', null, [])!!}
-                            </div>
-                        </div>
-                        <div class="col-md-6 px-0">
-                            <div class="import-question-file">
-                                {!!Builder::Submit('importQuestionsMoodle', 'import_questions_moodle', 'green', null, [
-                                    'icon'=>'far fa-file-excel',
-                                ])!!}
-                                <a href="{{CustomAsset('samples/moodel_questions.xlsx')}}" download class="cyan" role="button"> Sample </a>
-                                <input type="hidden" name="content_id" value="{{$content->id}}">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="importResults" >
-                    <form action="{{ route('training.importResults') }}" method="POST" enctype="multipart/form-data" class="row mx-0 ">
-                        @csrf
-                        <div class="col-md-6 px-0">
-                            <div class="add-question-file">
-                                {!!Builder::File('file', 'file', null, [])!!}
-                            </div>
-                        </div>
-                        <div class="col-md-6 px-0">
-                            <div class="import-question-file">
-                                {!! Builder::Submit('importResults', 'importResults', 'green', null, [
-                                    'icon'=>'far fa-file-excel',
-                                ]) !!}
-                                <a href="{{CustomAsset('samples/learnerAnswers.xlsx')}}" download class="cyan" role="button"> Sample </a>
-                                <input type="hidden" name="content_id" value="{{$content->id}}">
-                            </div>
-                        </div>
 
-                    </form>
-                </div>
-                <div class="importQuestionsLittle" >
-                    <form action="{{ route('training.importQuestionsLittle') }}" method="POST" enctype="multipart/form-data" class="row mx-0 ">
-                        @csrf
-                        <div class="col-md-6 px-0">
-                            <div class="add-question-file">
-                                {!!Builder::File('file', 'file', null, [])!!}
-                            </div>
+                @if($errors->any())
+                    <div class="alert alert-danger" role="alert">
+                    {{ implode('', $errors->all(':message')) }}
+                    </div>
+                @endif
+
+                <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+
+                    @csrf
+                    <div class="col-md-6">
+                    {!! Builder::Select('import_type', 'import_type', $import_types, null, ['col'=>'import_type', 'model_title'=>'trans_name']) !!}
+                    </div>
+                    <div class="col-md-6">
+                        <div class="add-question-file">
+                            {!!Builder::File('file', 'file', null, [])!!}
                         </div>
-                        <div class="col-md-6 px-0">
-                            <div class="import-question-file">
-                                {!!Builder::Submit('importQuestionsLittle', 'import_questions_little', 'green', null, [
-                                    'icon'=>'far fa-file-excel',
-                                ])!!}
-                                <a href="{{CustomAsset('samples/sim.xlsx')}}" download class="cyan" role="button"> Sample </a>
-                                <input type="hidden" name="content_id" value="{{$content->id}}">
-                            </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="import-question-file">
+                            {!! Builder::Submit('import', 'import_questions', 'green', null, [
+                                'icon'=>'far fa-file-excel',
+                            ]) !!}
+
+                            {!! Builder::Submit('sample', 'sample', 'green', null, [
+                                'icon'=>'far fa-file-excel',
+                            ]) !!}
+                            <input type="hidden" name="content_id" value="{{$content->id}}">
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+
             </div>
         </div>
 
@@ -568,33 +523,7 @@
 
     </script>
 
-    <script>
 
-        const selectElement = document.querySelector('.import_type');
-        document.getElementsByClassName('importQuestions')[0].style.display='none';
-        document.getElementsByClassName('importQuestionsMoodle')[0].style.display='none';
-        document.getElementsByClassName('importResults')[0].style.display='none';
-        document.getElementsByClassName('importQuestionsLittle')[0].style.display='none';
-
-
-        selectElement.addEventListener('change', (event) => {
-            document.getElementsByClassName('importQuestions')[0].style.display='none';
-            document.getElementsByClassName('importQuestionsMoodle')[0].style.display='none';
-            document.getElementsByClassName('importResults')[0].style.display='none';
-            document.getElementsByClassName('importQuestionsLittle')[0].style.display='none';
-
-            if(event.target.value == 499)
-                document.getElementsByClassName('importQuestions')[0].style.display='block';
-            else if(event.target.value == 500)
-                document.getElementsByClassName('importQuestionsMoodle')[0].style.display='block';
-            else if(event.target.value == 501)
-                document.getElementsByClassName('importQuestionsLittle')[0].style.display='block';
-            else if(event.target.value == 502)
-                document.getElementsByClassName('importResults')[0].style.display='block';
-
-        });
-
-    </script>
 
     {{-- <script>
         $(document).ready(function(){

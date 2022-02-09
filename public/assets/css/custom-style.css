@@ -131,10 +131,10 @@ li.has-dropdown .dropdown{
 li.has-dropdown .dropdown span{
     font-size: 14px;
 }
-.import-question-file {
+/* .import-question-file {
     padding: 29px 0 0;
     text-align: right;
-}
+} */
 .col-md-12.file {
     padding: 0;
 }
