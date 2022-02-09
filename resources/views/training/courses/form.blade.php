@@ -83,7 +83,7 @@
                     <a href="{{route('training.units',['course_id'=>$eloquent->id])}}" class="green mb-1">Units</a>
                     <a href="{{route('training.course_users',['course_id'=>$eloquent->id])}}" class="green mb-1">Users</a>
                     <a href="{{route('training.role_path',['course_id'=>$eloquent->id])}}" class="green mb-1">Rule and Path</a> --}}
-                    @include('training.courses.contents.header',['course_id' => $eloquent])
+                    @include('training.courses.contents.header',['course_id' => $eloquent , 'courses_home' =>true])
                 </div>
             </div>
         @endif

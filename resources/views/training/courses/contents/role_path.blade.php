@@ -7,14 +7,8 @@
 @section('table')
     <div  class="course_info mb-3 card p-3">
         <div class="row">
-            <div class="col-md-10 col-10">
+            <div class="col-lg-12 col-md-12 col-12 text-right">
                 @include('training.courses.contents.header',['course_id' => $course->id, 'role_path' =>true])
-            </div>
-            <div class="col-md-2 col-2 text-right">
-                <div class="back">
-                    <a href="{{route('training.courses.index')}}" class="cyan mb-1">Course List</a>
-                    <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                </div>
             </div>
         </div>
     </div>

@@ -17,25 +17,20 @@
     <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
          <div class="toLoad" id="contents">
+            <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</h4>
             <div class="course_info mb-3 card p-3">
                 <div class="row">
-                    <div class="col-md-10 col-10">
-                        @include('training.courses.contents.header',['course_id' => $course->id, 'contents' =>true])
-                    </div>
-                    <div class="col-md-2 col-2 text-right">
-                        <div class="back">
-                            <a href="{{route('training.courses.index')}}" class="cyan mb-1">Course List</a>
-                        </div>
-                    </div>
-
                     @if(!checkUserIsTrainee())
-                        <div class="col-md-12 col-12">
-                            <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
+                        <div class="col-lg-3 col-md-4 col-12">
+                            {{-- <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span> --}}
 
-                            <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
+                            <button type="button" @click="OpenModal('section',null)" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
                             </button>
                         </div>
                     @endif
+                    <div class="col-lg-9 col-md-8 col-12 text-right">
+                        @include('training.courses.contents.header',['course_id' => $course->id, 'contents' =>true])
+                    </div>
                 </div>
             </div>
 

@@ -109,25 +109,23 @@
 
         </div>
 
+        <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</h4>
+
         <div  class="course_info mb-3 card p-3">
             <div class="row">
-                <div class="col-md-10 col-10">
-                    @include('training.courses.contents.header',['course_id' => $course->id, 'units' =>true])
-                </div>
-                <div class="col-md-2 col-2 text-right">
-                    <div class="back">
-                        <a href="{{route('training.courses.index')}}" class="cyan mb-1">Course List</a>
-                        <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                    </div>
-                </div>
 
-                <div class="col-md-12 col-12">
-                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
+                <div class="col-lg-3 col-md-4 col-12">
 
-                    <button type="button" @click="OpenModal()" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
+
+                    <button type="button" @click="OpenModal()" class="group_buttons mb-1 btn-sm">
                         <i class="fa fa-plus"></i> {{__('admin.add_unit')}}
                     </button>
                 </div>
+
+                <div class="col-lg-9 col-md-8 col-12 text-right">
+                    @include('training.courses.contents.header',['course_id' => $course->id, 'units' =>true])
+                </div>
+
             </div>
         </div>
 

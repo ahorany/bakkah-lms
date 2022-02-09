@@ -914,6 +914,9 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
+    .head_courses{
+        justify-content: start !important;
+    }
     .position-sticky.pt-3 {
         padding: 0 !important;
     }
