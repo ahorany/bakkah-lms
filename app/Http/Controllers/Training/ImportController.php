@@ -105,16 +105,16 @@ class ImportController extends Controller
     // }
 
 
-    // public function importResults()
-    // {
-    //     // dd(request()->all());
+    public function importResults()
+    {
+        // dd(request()->all());
 
-    //     return $this->import(new ResultsImport);
-    // }
-    // public function importQuestionsCourse()
-    // {
-    //     return $this->import(new QuestionsCourseImport);
-    // }
+        return $this->import(new ResultsImport);
+    }
+    public function importQuestionsCourse()
+    {
+        return $this->import(new QuestionsCourseImport);
+    }
 
 
 }
