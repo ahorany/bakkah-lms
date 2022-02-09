@@ -878,6 +878,10 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (min-width: 767.5px) and (max-width: 991.5px) {
+    .navigation_preview{
+        margin: 0 !important;
+        height: 100% !important;
+    }
     .change-password .card.px-5.mx-5 {
         padding: 0 !important;
         margin: 0 !important;
@@ -914,6 +918,10 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
+    .navigation_preview{
+        margin: 0 !important;
+        height: 100% !important;
+    }
     .head_courses{
         justify-content: start !important;
     }

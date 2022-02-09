@@ -24,15 +24,13 @@
 
     <div class="row mx-0" id="questions">
 
-        <div class="col-md-12 col-12">
-            <div class="dash-header">
-                {{-- <ol class="breadcrumb">
-                    <li><a href="{{CustomRoute('user.home')}}">Dashboard</a></li>
-                    <li><a href="{{CustomRoute('user.home')}}">My Courses</a></li>
-                    <li>{{$exam->title}}</li>
-                </ol> --}}
-                <div class="d-flex justify-content-between">
-                    <h1>{{$content->title}}</h1>
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between flex-wrap my-3">
+                <div class="d-flex align-items-center flex-wrap">
+                    <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course : {{$content->course->trans_title}}</h4>
+                    <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Exam : {{$content->title}}</h4>
+                </div>
+                <div>
                     <?php
                     $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
                     $next_url = $NextPrevNavigation['next_url'];
@@ -51,32 +49,19 @@
                         }
                         NextBtn();
                     </script>
-
                 </div>
             </div>
         </div>
-
         <div class="col-md-12 col-12">
             <div  class="course_info mb-3 card p-3">
                 <div class="row">
-                    <div class="col-md-10 col-10">
-                        @include('training.courses.contents.header',['course_id' => $course_id, 'contents' =>true , 'units' => false])
-                    </div>
-                    <div class="col-md-2 col-2 text-right">
-                        <div class="back">
-                            <a href="{{route('training.courses.index')}}" class="cyan mb-1">Course List</a>
-                            <a href="{{route('training.contents',['course_id'=>$content->course_id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 col-12">
-                        <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$content->course->trans_title}}</span>
-                        <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Exam Title : {{$content->title}}</span>
-
+                    <div class="col-lg-3 col-md-4 col-12">
                         <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
                             <i class="fa fa-plus"></i> {{__('admin.add_question')}}
                         </button>
-
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-12">
+                        @include('training.courses.contents.header',['course_id' => $course_id, 'contents' =>true , 'units' => false])
                     </div>
 
                 </div>

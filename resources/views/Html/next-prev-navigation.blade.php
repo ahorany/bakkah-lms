@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center">
+<div class="d-flex align-items-center flex-wrap">
     @if($previous)
     {{-- <span class="previous-title"><a style="color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a></span> --}}
         <button title="{{$previous->title}}" class="next_prev" onclick="location.href ='{{$previous_url}}'">
