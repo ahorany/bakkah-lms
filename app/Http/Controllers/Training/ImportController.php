@@ -65,14 +65,12 @@ class ImportController extends Controller
         // dd(request()->all());
         if(request()->import_type > 0)
         {
-
             $class_name = Constant::where('id',request()->import_type)->first();
 
-            if(request()->flag=="import")
+            if(request()->has("import"))
                 return $this->import(new $class_name->excerpt);
-            elseif(request()->flag=="sample")
+            elseif(request()->has("sample"))
                 return response()->download($class_name->slug);
-
         }
 
         Active::Flash('Not Imported', __('flash.choose_mporot_type'), 'danger');
