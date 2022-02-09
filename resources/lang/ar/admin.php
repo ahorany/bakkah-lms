@@ -145,4 +145,5 @@ return [
     'Change Role' => 'Change Role',
     'category'=>'التصنيف',
     'import_type'=>'Import Type',
+    'sample'=>'Sample',
 ];
