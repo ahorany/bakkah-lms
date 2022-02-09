@@ -40,7 +40,7 @@
 
 
         <div class="course_info">
-            @include('training.courses.users.search',['course_id' => $course->id])
+            {{-- @include('training.courses.users.search',['course_id' => $course->id]) --}}
 
             <div class="card p-3 mb-3">
             <div class="row">
@@ -84,7 +84,7 @@
         </div>
           <template v-if="course">
 
-            <table class="table table-striped" style="width: 97%; margin: 0 auto;">
+            <table class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
