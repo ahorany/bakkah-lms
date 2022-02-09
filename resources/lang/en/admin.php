@@ -170,4 +170,5 @@ return [
     'category'=>'Category',
     'import_type'=>'Import Type',
     'category_search'=>'Category Search',
+    'sample'=>'Sample',
 ];
