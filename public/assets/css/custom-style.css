@@ -131,10 +131,10 @@ li.has-dropdown .dropdown{
 li.has-dropdown .dropdown span{
     font-size: 14px;
 }
-.import-question-file {
+/* .import-question-file {
     padding: 29px 0 0;
     text-align: right;
-}
+} */
 .col-md-12.file {
     padding: 0;
 }
@@ -781,6 +781,51 @@ label.container-check.form-check-label span.checkmark{
     .border_true{
         border: 1px solid rgb(0 123 0 / 50%)
     }
+    .preview-exam{
+        overflow: revert;
+        margin: 0 !important;
+        margin-top: 40px !important;
+        border-top-left-radius: 0 !important;
+        padding-top: 25px !important;
+    }
+    .preview-exam .action_preview{
+        position: absolute;
+        padding: 4px 8px;
+        top: -35px;
+        left: -1px;
+        background: #fff;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: 5px 5px 0 0;
+    }
+    .preview-exam.q-card label .radio-mark::after{
+        top: 3px;
+        left: 7px;
+        width: 6px;
+        height: 12px;
+    }
+    .navigation_preview{
+        margin-top: 40px;
+        height: calc(100% - 40px) !important;
+    }
+    .navigation_preview .answers a:hover {
+        text-decoration: none;
+    }
+    .action_preview button {
+        padding: 1px 7px !important;
+        /* display: none; */
+    }
+    /* .action_preview span.setting , .action_preview span.left{
+        display: inline-block;
+        border: 1px solid gray;
+        color: gray;
+        border-radius: 5px;
+        padding: 1px 7px !important;
+        cursor: pointer;
+    }
+    .action_preview span.setting:hover , .action_preview span.left:hover{
+        background: gray;
+        color: #fff;
+    } */
 
 /******************************************************************************************************************/
 
@@ -1223,6 +1268,9 @@ label.container-check.form-check-label span.checkmark{
 @media (max-width: 350.5px){
     .course-cards {
         width: 100% !important;
+    }
+    .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role{
+        padding: 0 20px;
     }
 }
 

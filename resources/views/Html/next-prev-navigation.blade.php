@@ -1,14 +1,4 @@
 <div class="d-flex align-items-center">
-
-{{--                    <div class="title" style="margin-right: 15px;">--}}
-{{--                        <span class="previous-title">--}}
-{{--                            <a id="title-prev" style="display: none; color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a>--}}
-{{--                        </span>--}}
-{{--                        <span class="next-title">--}}
-{{--                            <a id="title-next" style="display: none; color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a>--}}
-{{--                        </span>--}}
-{{--                    </div>--}}
-
     @if($previous)
     {{-- <span class="previous-title"><a style="color: #9c9c9c;" href="{{$previous_url}}">({{$previous->title}})</a></span> --}}
         <button title="{{$previous->title}}" class="next_prev" onclick="location.href ='{{$previous_url}}'">
@@ -21,11 +11,12 @@
 
     @if($next)
         <button title="{{$next->title}}" class="next next_prev">
-            <span id="demo">{{__('education.Next')}}</span>
-            {{-- <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
-                <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
-            </svg> --}}
+            <span id="demo">
+                <span>{{__('education.Next')}}</span>
+                <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">
+                    <path id="Path_99" data-name="Path 99" d="M149.351,218.961a1.511,1.511,0,0,0,1.02-.4l11.823-10.909a1.508,1.508,0,0,0,0-2.215l-11.823-10.912a1.508,1.508,0,0,0-2.045,2.215l10.625,9.8-10.625,9.8a1.508,1.508,0,0,0,1.025,2.616Z" transform="translate(-147.843 -194.126)" fill="#fff"/>
+                </svg>
+            </span>
         </button>
-            {{-- <span class="next-title"><a style="color: #9c9c9c;" href="{{$next_url}}">({{$next->title}})</a></span> --}}
     @endif
 </div>
