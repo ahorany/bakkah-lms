@@ -63,28 +63,23 @@ class ImportController extends Controller
     public function importQuestions()
     {
         // dd(request()->all());
-        return $this->import(new QuestionsImport);
-    }
-    public function importQuestionsLittle()
-    {
-        return $this->import(new QuestionsLittleImport);
+        if(request()->import_type > 0)
+        {
+
+            $class_name = Constant::where('id',request()->import_type)->first();
+
+            if(request()->flag=="import")
+                return $this->import(new $class_name->excerpt);
+            elseif(request()->flag=="sample")
+                return response()->download($class_name->slug);
+
+        }
+
+        Active::Flash('Not Imported', __('flash.choose_mporot_type'), 'danger');
+        return back();
+
     }
 
-    public function importQuestionsMoodle()
-    {
-        return $this->import(new QuestionsMoodleImport);
-    }
-
-    public function importQuestionsCourse()
-    {
-        return $this->import(new QuestionsCourseImport);
-    }
-    public function importResults()
-    {
-        // dd(request()->all());
-
-        return $this->import(new ResultsImport);
-    }
 
 
 
@@ -100,6 +95,28 @@ class ImportController extends Controller
 
         return back();
     }
+
+  // public function importQuestionsLittle()
+    // {
+    //     return $this->import(new QuestionsLittleImport);
+    // }
+
+    // public function importQuestionsMoodle()
+    // {
+    //     return $this->import(new QuestionsMoodleImport);
+    // }
+
+
+    // public function importResults()
+    // {
+    //     // dd(request()->all());
+
+    //     return $this->import(new ResultsImport);
+    // }
+    // public function importQuestionsCourse()
+    // {
+    //     return $this->import(new QuestionsCourseImport);
+    // }
 
 
 }

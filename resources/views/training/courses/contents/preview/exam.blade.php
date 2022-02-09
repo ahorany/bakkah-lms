@@ -82,8 +82,45 @@
 
 
         <div class="card p-3 mb-3">
-            {!!Builder::Select('import_type', 'import_type', $import_types, null, ['col'=>'col-md-6 import_type', 'model_title'=>'trans_name'])!!}
-            <div class="importQuestions" >
+
+            @if($errors->any())
+            <div class="alert alert-danger" role="alert">
+            {{ implode('', $errors->all(':message')) }}
+            </div>
+            @endif
+
+            <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
+
+                @csrf
+                <div class="col-md-6 px-0">
+                {!! Builder::Select('import_type', 'import_type', $import_types, null, ['col'=>'col-md-6 import_type', 'model_title'=>'trans_name']) !!}
+                </div>
+                <div class="col-md-3 px-0">
+                    <div class="add-question-file">
+                        {!!Builder::File('file', 'file', null, [])!!}
+                    </div>
+                </div>
+                <div class="col-md-3 px-0">
+                    <div class="import-question-file">
+                        {{-- {!! Builder::Submit('import', 'import_questions', 'green', null, [
+                            'icon'=>'far fa-file-excel',
+                        ]) !!}
+
+                        {!! Builder::Submit('sample', 'sample', 'green', null, [
+                            'icon'=>'far fa-file-excel',
+                        ]) !!} --}}
+                        <button type="submit" onmousedown="import_flag()" name="import" class="green"><i class="far fa-file-excel"></i> Import Questions</button>
+
+                        <button type="submit" onmousedown="sample_flag()" name="import" class="green">Sample</button>
+
+                        {{-- <a href="{{CustomAsset('samples/examQuestionsAnswers.xlsx')}}" download class="cyan" role="button"> Sample </a> --}}
+
+                        <input type="hidden" name="content_id" value="{{$content->id}}">
+                        <input type="hidden" name="flag" id="flag" value="">
+                    </div>
+                </div>
+            </form>
+            {{-- <div class="importQuestions" >
                 <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
                     @csrf
                     <div class="col-md-6 px-0">
@@ -159,7 +196,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </div> --}}
         </div>
 
 
@@ -627,29 +664,37 @@
 
     <script>
 
-        const selectElement = document.querySelector('.import_type');
-        document.getElementsByClassName('importQuestions')[0].style.display='none';
-        document.getElementsByClassName('importQuestionsMoodle')[0].style.display='none';
-        document.getElementsByClassName('importResults')[0].style.display='none';
-        document.getElementsByClassName('importQuestionsLittle')[0].style.display='none';
+function import_flag() {
+  document.getElementById("flag").value = "import";
+}
+function sample_flag() {
+  document.getElementById("flag").value = "sample";
+}
 
 
-        selectElement.addEventListener('change', (event) => {
-            document.getElementsByClassName('importQuestions')[0].style.display='none';
-            document.getElementsByClassName('importQuestionsMoodle')[0].style.display='none';
-            document.getElementsByClassName('importResults')[0].style.display='none';
-            document.getElementsByClassName('importQuestionsLittle')[0].style.display='none';
+        // const selectElement = document.querySelector('.import_type');
+        // document.getElementsByClassName('importQuestions')[0].style.display='none';
+        // document.getElementsByClassName('importQuestionsMoodle')[0].style.display='none';
+        // document.getElementsByClassName('importResults')[0].style.display='none';
+        // document.getElementsByClassName('importQuestionsLittle')[0].style.display='none';
 
-            if(event.target.value == 499)
-                document.getElementsByClassName('importQuestions')[0].style.display='block';
-            else if(event.target.value == 500)
-                document.getElementsByClassName('importQuestionsMoodle')[0].style.display='block';
-            else if(event.target.value == 501)
-                document.getElementsByClassName('importQuestionsLittle')[0].style.display='block';
-            else if(event.target.value == 502)
-                document.getElementsByClassName('importResults')[0].style.display='block';
 
-        });
+        // selectElement.addEventListener('change', (event) => {
+        //     document.getElementsByClassName('importQuestions')[0].style.display='none';
+        //     document.getElementsByClassName('importQuestionsMoodle')[0].style.display='none';
+        //     document.getElementsByClassName('importResults')[0].style.display='none';
+        //     document.getElementsByClassName('importQuestionsLittle')[0].style.display='none';
+
+        //     if(event.target.value == 499)
+        //         document.getElementsByClassName('importQuestions')[0].style.display='block';
+        //     else if(event.target.value == 500)
+        //         document.getElementsByClassName('importQuestionsMoodle')[0].style.display='block';
+        //     else if(event.target.value == 501)
+        //         document.getElementsByClassName('importQuestionsLittle')[0].style.display='block';
+        //     else if(event.target.value == 502)
+        //         document.getElementsByClassName('importResults')[0].style.display='block';
+
+        // });
 
     </script>
 

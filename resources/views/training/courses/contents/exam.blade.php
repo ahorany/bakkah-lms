@@ -45,6 +45,7 @@
 
         <div class="card p-3 mb-3">
             {!!Builder::Select('import_type', 'import_type', $import_types, null, ['col'=>'col-md-6 import_type', 'model_title'=>'trans_name'])!!}
+
             <div class="importQuestions" >
             <form action="{{ route('training.importQuestions') }}" method="POST" enctype="multipart/form-data" class="row mx-0">
                 @csrf
