@@ -26,6 +26,10 @@
 
                             <button type="button" @click="OpenModal('section',null)" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
                             </button>
+
+                            <button type="button" @click="OpenModal('gift',null)" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_gift')}}
+                            </button>
+
                         </div>
                     @endif
                     <div class="col-lg-9 col-md-8 col-12 text-right">
@@ -66,7 +70,7 @@
                                 </div>
                             </div>
 
-                            <div v-if="content.details" class="my-2" v-html="content.details.excerpt">}</div>
+                            <div v-if="content.details" class="my-2" v-html="content.details.excerpt"></div>
 
                             <table class="table" id="content-items">
                                 <thead>
@@ -148,12 +152,34 @@
                                     </div>
                                 </div>
 
-                                <div v-if="model_type != 'exam' && model_type != 'scorm'" class="col-md-6 col-12">
+                                <div v-if="model_type != 'exam' && model_type != 'scorm' && model_type != 'gift'" class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Time Limit (seconds) </label>
                                         <input min="0" type="number" v-model="time_limit" name="time_limit" class="form-control" placeholder="time limit">
                                         <div v-show="'time_limit' in errors">
                                             <span style="color: red;font-size: 13px">@{{ errors.time_limit }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                    <div v-if="model_type == 'gift'" class="form-group form-check child">
+                                        <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
+                                            {{__('admin.is_aside')}}
+                                            <input class="form-check-input child" style="display: inline-block;" v-model="is_aside" id="enabled" type="checkbox" name="status">
+                                            <span class="checkmark" style="top: 26px;"></span>
+                                        </label>
+
+                                        {{-- <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status"> --}}
+                                        {{-- <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label> --}}
+                                    </div>
+
+                                <div v-if="model_type != 'exam' && model_type != 'scorm' && model_type == 'gift'" class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Open After (progress) % </label>
+                                        <input min="0" type="number" v-model="open_after" name="open_after" class="form-control" placeholder="open after">
+                                        <div v-show="'open_after' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.open_after }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -256,7 +282,7 @@
                                     </div>
                                 </div>
 
-                                <div v-else-if="model_type != 'video'" class="modal-diff-content">
+                                <div v-else-if="model_type != 'video' && model_type != 'gift'" class="modal-diff-content">
                                     <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 200MB)</div>
 
                                     <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
@@ -268,7 +294,7 @@
                                     </div>
                                 </div>
 
-                                <div v-else class="modal-diff-content">
+                                <div v-else-if="model_type != 'gift'" class="modal-diff-content">
                                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                         <li class="nav-item mr-1">
                                             <a class="nav-link active cyan" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
@@ -316,7 +342,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12" v-if="model_type != 'section' && model_type != 'exam'">
+                                <div class="col-md-6 col-12" v-if="model_type != 'section' && model_type != 'exam' && model_type != 'gift'">
                                     <div v-if="model_type != 'section' && model_type != 'exam'" class="form-group form-check child">
                                         <label class="container-check form-check-label" for="downloadable" style="padding: 25px 30px 0; font-size: 15px;">
                                             {{__('admin.downloadable')}}
@@ -326,7 +352,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
-                                    <div v-if="model_type != 'section'" class="form-group form-check child">
+                                    <div v-if="model_type != 'section' && model_type != 'gift'" class="form-group form-check child">
                                         <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
                                             {{__('admin.Enabeld Status')}}
                                             <input class="form-check-input child" style="display: inline-block;" v-model="status" id="enabled" type="checkbox" name="status">
@@ -413,10 +439,12 @@ $(function() {
             content_id : '',
             title: '',
             time_limit: 0,
+            open_after: 0,
 			excerpt : '',
             file_title : '',
             file_url : '',
             status : false,
+            is_aside : false,
             downloadable : false,
             hide_from_trainees : false,
             shuffle_answers : false,
@@ -455,8 +483,10 @@ $(function() {
                 this.title = '';
                 this.excerpt = '';
                 this.time_limit = 0;
+                this.open_after = 0;
                 this.file_url = '';
                 this.file_title = '';
+                this.is_aside = false;
                 this.status = false;
                 this.downloadable = false;
                 this.hide_from_trainees = false;
@@ -506,8 +536,14 @@ $(function() {
                     if(section.id == content_id){
                         self.title = section.title;
                         self.excerpt =  section.details ?  section.details.excerpt : '';
-                        self.model_type = 'section';
+                        self.model_type = section.post_type;
                         self.hide_from_trainees = section.hide_from_trainees;
+
+                        if(self.model_type == 'gift'){
+                            self.open_after = section.gift.open_after;
+                            self.is_aside = section.is_aside == 1 ? true : false;
+
+                        }
                     }
                     return true ;
                 });
@@ -885,10 +921,106 @@ $(function() {
                 }
             },
 
+
+            saveGift : function(){
+                let self = this;
+                let formData = new FormData();
+
+                formData.append('course_id', self.course_id);
+                formData.append('content_id', self.content_id);
+                formData.append('title', self.title);
+                formData.append('open_after', self.open_after);
+                formData.append('type', self.model_type);
+                formData.append('is_aside', self.is_aside);
+
+                if(self.save_type == 'add'){
+
+                    axios.post("{{route('training.add_gift')}}",
+                        formData
+                        )
+                        .then(response => {
+                            if(response['data']['errors']) {
+                                self.errors =  response['data']['errors']
+                                for (let property in self.errors) {
+                                    self.errors[property] = self.errors[property][0];
+                                }
+                            }else{
+                                this.contents.push(response.data.data);
+                                this.errors = {};
+
+                                $('#ContentModal').modal('hide')
+                            }
+
+
+                        })
+                        .catch(e => {
+                            console.log('errors')
+                            console.log(e)
+                        });
+                }else{
+                    self.contents.forEach(function (gift) {
+                        if(gift.id == self.content_id){
+                            gift.title = self.title  ;
+                            gift.is_aside = self.is_aside;
+                            gift.gift.open_after = self.open_after;
+                        }
+                        return true ;
+                    });
+
+                    this.contents.forEach(function (section) {
+                        if(section.id == self.section_id){
+                            section.contents.forEach(function (content) {
+                                if(content.id == self.content_id) {
+                                    content.title = self.title;
+                                    content.is_aside = self.is_aside;
+                                    content.post_type = self.model_type;
+                                    content.gift.open_after = self.open_after;
+                                }
+                            })
+                        }
+                        return true ;
+                    });
+
+                    axios.post("{{route('training.update_gift')}}",
+                        formData
+                        )
+                        .then(response => {
+                            console.log(response)
+
+                            if(response['data']['errors']) {
+                                self.errors =  response['data']['errors']
+                                for (let property in self.errors) {
+                                    self.errors[property] = self.errors[property][0];
+                                }
+                            }else{
+                                self.contents.forEach(function (section) {
+                                    if(section.id == response.data.data.id) {
+                                        console.log(response.data)
+                                        section.title =  response.data.data.title;
+                                        section.is_aside =  response.data.data.is_aside;
+                                        section.gift.open_after =  response.data.data.gift.open_after;
+                                    }
+                                    return true ;
+                                });
+
+
+                                this.errors = {};
+                                $('#ContentModal').modal('hide')
+                            }
+
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        });
+                }
+            },
+
 			save: function(){
 				let self = this;
 				if(self.model_type == 'section'){
                     this.saveSection();
+                }else if(self.model_type == 'gift'){
+                    this.saveGift();
                 }else{
 				    if(this.validateContent()) {
                         return;
@@ -982,6 +1114,17 @@ $(function() {
                 }
                 return false;
             },
+
+
+            assets(path){
+		        return "{{CustomAsset('upload/files/gifts')}}" + '/' + path
+            }
+
+
+
+
+
+
 
 		},
 	});

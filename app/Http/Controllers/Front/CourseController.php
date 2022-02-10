@@ -61,6 +61,8 @@ class CourseController extends Controller
 
         // Get User Course Activities
         $activities = $this->getUserCourseActivities($course->id, $user_id);
+
+//        return $course;
         // $course_registration_id = CourseRegistration::where('course_id',$course->id)->where('user_id', \auth()->id())->pluck('id')->first();
         // $course_registration = CourseRegistration::where('course_id', $course->id)->where('user_id', \auth()->id())->select('id', 'role_id')->first();
         return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id'));
@@ -90,7 +92,7 @@ class CourseController extends Controller
                 $q->where('post_type','intro_video')->orWhere('post_type', 'image');
             });
         }, 'contents' => function($query) use($role_id){
-            $query->where('post_type','section')->with(['details',
+            $query->where('parent_id',null)->with(['details',
                 'contents' => function($q){
                     return $q->orderBy('order');
                 },

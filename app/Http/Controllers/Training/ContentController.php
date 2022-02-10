@@ -9,6 +9,7 @@ use App\Models\Training\Content;
 use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
 use App\Models\Training\Exam;
+use App\Models\Training\Gift;
 use App\Models\Training\Question;
 use App\Models\Training\Unit;
 use Carbon\Carbon;
@@ -24,6 +25,85 @@ class ContentController extends Controller
     {
         $this->middleware('permission:course.contents.list');
     }
+
+    private function giftValidation(){
+        // validation
+        $rules = [
+            'title'      => "required|string",
+            'course_id'  =>'required|exists:courses,id',
+//            'file'      =>  'nullable|file|mimes:jpg,jpeg,png',
+            'open_after'      => "required|numeric|gt:-1|max:100",
+            'is_aside'      => "required",
+        ];
+
+
+        $validator = Validator::make(\request()->all(), $rules);
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
+        return null;
+    }
+
+
+    public function add_gift(){
+        $validate = $this->giftValidation();
+
+        if($validate){
+            return response()->json(['errors' => $validate]);
+        }
+
+        $course_id = request()->course_id;
+        $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE course_id = $course_id  AND parent_id IS NULL"));
+
+        $content = Content::create([
+            'title'      => request()->title,
+            'course_id'  =>request()->course_id,
+            'post_type'  => 'gift',
+            'is_aside'  => request()->is_aside == "true" ? 1 : 0,
+            'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
+        ]);
+
+          Gift::create([
+              'open_after' => \request()->open_after,
+              'content_id' => $content->id,
+          ]);
+
+//        if(request()->hasFile('file')) {
+//            Content::UploadFile($content, ['folder_path' => public_path('upload/files/gifts')]);
+//        }
+        $content = Content::whereId($content->id)->with(['details','contents','gift'])->first();
+        return response()->json([ 'status' => 'success', 'data' => $content]);
+    }
+
+    public function update_gift(){
+        $validate = $this->giftValidation();
+
+        if($validate){
+            return response()->json(['errors' => $validate]);
+        }
+
+
+        $content = Content::where('id',\request()->content_id)->update([
+            'title' => request()->title,
+            'is_aside'  => request()->is_aside == "true" ? 1 : 0,
+        ]);
+
+        Gift::where('content_id',request()->content_id)->update([
+            'open_after' => \request()->open_after,
+        ]);
+
+//        if(request()->hasFile('file')){
+//            Content::UploadFile(Content::where('id', request()->content_id)->first(), ['method' => 'update', 'folder_path' => public_path('upload/files/gifts')]);
+//        }
+
+
+        $content = Content::whereId(\request()->content_id)->with(['details','contents','gift'])->first();
+        return response()->json([ 'status' => 'success', 'data' => $content]);
+    }
+
+
 
     public function reset_order_contents($course_id){
         $i = 0;
@@ -63,7 +143,7 @@ class ContentController extends Controller
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
         $contents = Content::where('course_id',$course_id)
             ->whereNull('parent_id')
-            ->with(['contents' => function($q){
+            ->with(['gift','contents' => function($q){
                 $q->with(['upload','details','exam'])->withCount('questions')->orderBy('order');
             },'details','exams'])
             ->orderBy('order')
@@ -107,7 +187,7 @@ class ContentController extends Controller
         $content->details()->create([
             'excerpt'    =>  request()->excerpt,
         ]);
-        $content = Content::whereId($content->id)->with(['details','contents'])->first();
+        $content = Content::whereId($content->id)->with(['details','contents','gift'])->first();
 //        $contents = Content::where('course_id',$course_id)->whereNull('parent_id')->with(['contents','details'])->latest()->get();
         return response()->json([ 'status' => 'success', 'section' => $content]);
     }
