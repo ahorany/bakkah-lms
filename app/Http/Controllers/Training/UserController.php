@@ -366,8 +366,8 @@ class UserController extends Controller
         ]);
 
 
-//        $password = $request->password;
-//        Mail::to($user->email)->send(new UserMail($user->id , $password , request()->course_id));
+       $password = $request->password;
+       Mail::to($user->email)->send(new UserMail($user->id , $password , request()->course_id));
 
         return Active::Updated($user->trans_name, [
             'post_type' => $post_type,
