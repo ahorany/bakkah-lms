@@ -503,11 +503,10 @@ a:hover svg#back{
 .course-cards{
     width: 23%;
     margin-bottom: 10px;
-    /* justify-content: center; */
+    border-bottom: 3px solid;
     background: #FFF;
     color: #000;
     box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 5%);
-    /* position: relative; */
 }
 
 .home-section .course-cards:hover , .home-section .text-center.course-image:hover {
@@ -812,20 +811,14 @@ label.container-check.form-check-label span.checkmark{
     }
     .action_preview button {
         padding: 1px 7px !important;
-        /* display: none; */
     }
-    /* .action_preview span.setting , .action_preview span.left{
-        display: inline-block;
-        border: 1px solid gray;
-        color: gray;
-        border-radius: 5px;
-        padding: 1px 7px !important;
-        cursor: pointer;
+    span.icon_role{
+        display: flex;
+        justify-content: start;
     }
-    .action_preview span.setting:hover , .action_preview span.left:hover{
-        background: gray;
-        color: #fff;
-    } */
+    span.icon_role img{
+        margin-right: 0 !important;
+    }
 
 /******************************************************************************************************************/
 
@@ -1184,9 +1177,11 @@ label.container-check.form-check-label span.checkmark{
         justify-content: space-evenly;
         align-items: center;
         padding: 20px 0 !important;
-        /* border-radius: 15px 15px 0 0 !important; */
-        border-bottom-left-radius: 0px !important;
-        border-bottom-right-radius: 0px !important;
+        border: none;
+        border-left: 3px solid;
+    }
+    .reports .card {
+        border-radius: 0 !important;
     }
 
     .course-cards > div{
@@ -1251,9 +1246,6 @@ label.container-check.form-check-label span.checkmark{
     .navbar-brand span.d-none.d-sm-block {
         display: block !important;
     }
-    /* .messages li.has-dropdown .dropdown{
-        right: -80px;
-    } */
     .congrats h1 {
         font-size: 18px;
     }
@@ -1266,7 +1258,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .course-cards {
         width: 100% !important;
-        /* margin: 5px auto; */
     }
     .card-header.d-flex.justify-content-between.align-items-center .d-flex.align-items-center {
         justify-content: center;
@@ -1277,11 +1268,11 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 350.5px){
-    .course-cards {
-        width: 100% !important;
-    }
     .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role{
-        padding: 0 20px;
+        width: 100px;
+    }
+    .course-cards {
+        justify-content: center;
     }
 }
 

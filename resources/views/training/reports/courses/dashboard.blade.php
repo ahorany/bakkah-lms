@@ -1,11 +1,11 @@
-<div class="row mb-5">
+<div class="row mb-5 mx-0">
 
     <div class="col-lg-12">
         <div class="card h-100 p-30">
 
             <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-center">
             @if(isset($count))
-                <div class="course-cards" style="border-bottom: 3px solid rgb(48 61 71 / 50%)">
+                <div class="course-cards" style="border-color: rgb(48 61 71 / 50%)">
                     <svg version="1.1" class="icon-report bg-four" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve">
                         <style type="text/css">
                             .st0{fill:none;stroke:#fff;stroke-width:3.0215;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
@@ -31,7 +31,7 @@
             @endif
 
             @if(isset($assigned_learners))
-                <div class="course-cards" style="border-bottom: 3px solid rgb(251 68 0 / 50%);">
+                <div class="course-cards" style="border-color: rgb(251 68 0 / 50%);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049" class="icon-report bg-main">
                         <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
                           <g id="Group_319" data-name="Group 319" transform="translate(448.818 -55.416)">
@@ -52,7 +52,7 @@
             @endif
 
             @if(isset($assigned_instructors))
-                <div class="course-cards" style="border-bottom: 3px solid rgb(251 68 0 / 50%);">
+                <div class="course-cards" style="border-color: rgb(251 68 0 / 50%);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049" class="icon-report bg-main">
                         <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
                           <g id="Group_319" data-name="Group 319" transform="translate(448.818 -55.416)">
@@ -73,7 +73,7 @@
             @endif
 
             @if (isset($count))
-                <div class="course-cards" style="border-bottom: 3px solid rgb(30 191 184 / 50%);">
+                <div class="course-cards" style="border-color: rgb(30 191 184 / 50%);">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"  class="icon-report bg-third" id="bg-two" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
                         <g>
                             <path d="M31.97,55.25c-1.12,0-2.24,0-3.35,0c-0.16-0.03-0.32-0.07-0.48-0.1c-1.02-0.15-2.06-0.22-3.06-0.44   c-5.29-1.14-9.78-3.71-13.43-7.7c-3.29-3.6-5.38-7.8-6.21-12.61c-0.16-0.9-0.26-1.81-0.39-2.71c0-1.12,0-2.23,0-3.35   c0.03-0.14,0.07-0.28,0.09-0.42c0.11-0.86,0.17-1.73,0.34-2.58c1.24-6.24,4.33-11.37,9.37-15.25c5.96-4.6,12.73-6.22,20.12-4.86   c6.2,1.13,11.29,4.26,15.17,9.23c4.68,6,6.33,12.81,4.95,20.28c-1.14,6.18-4.29,11.22-9.21,15.13c-3.3,2.62-7.03,4.3-11.19,5.01   C33.78,55.01,32.87,55.12,31.97,55.25z M51.39,29.99C51.38,18.41,41.86,8.91,30.29,8.91C18.71,8.91,9.2,18.42,9.19,30   c-0.01,11.59,9.55,21.14,21.13,21.11C41.91,51.08,51.41,41.56,51.39,29.99z"/>

@@ -698,10 +698,10 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 }
 
 .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role {
-    width: max-content;
-    padding: 0 30px;
+    width: 120px;
     background: #f7f7f7;
     border-radius: 3px;
+    justify-content: space-around;
     color: #000 !important;
     border: 1px solid #dcdcdc59;
 }
