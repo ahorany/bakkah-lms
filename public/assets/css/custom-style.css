@@ -1178,8 +1178,7 @@ label.container-check.form-check-label span.checkmark{
         align-items: center;
         padding: 20px 0 !important;
         border: none;
-        border-radius: 0 !important;
-        border-left: 5px solid;
+        border-left: 3px solid;
     }
     .reports .card {
         border-radius: 0 !important;
