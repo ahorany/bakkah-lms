@@ -51,6 +51,7 @@
                                         </span>
                                         <h3 class="BtnGroupRows text-capitalize d-inline-block" style="font-size: 22px;">@{{content.title}}</h3>
                                         <span class="badge badge-danger" v-if="content.hide_from_trainees==1">{{__('admin.hide from trainees')}}</span>
+                                        <span class="badge badge-secondary" v-if="content.post_type=='gift'">{{__('admin.Gift')}}</span>
                                     </div>
                                     <div class="col-md-4 col-lg-4 text-right">
                                         <div class="BtnGroupRows" data-id="150">

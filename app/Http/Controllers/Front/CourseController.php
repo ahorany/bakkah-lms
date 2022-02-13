@@ -92,7 +92,7 @@ class CourseController extends Controller
                 $q->where('post_type','intro_video')->orWhere('post_type', 'image');
             });
         }, 'contents' => function($query) use($role_id){
-            $query->where('parent_id',null)->with(['details',
+            $query->where('parent_id',null)->with(['gift','details',
                 'contents' => function($q){
                     return $q->orderBy('order');
                 },
@@ -230,13 +230,12 @@ class CourseController extends Controller
      * Preview Content Course ( Content Page )
      */
     public function preview_content($content_id){
-
         $preview_gate_allows = Gate::allows('preview-gate');
 
         // Get content from DB
         $content = Content::whereId($content_id)
-            ->with(['upload','course' ,'section'])->first();
-
+            ->with(['upload','course' ,'section.gift'])->first();
+//return $content;
         // Check if content not found => ABORT(404)
         if (!$content){
             abort(404);
@@ -245,9 +244,16 @@ class CourseController extends Controller
         if(!$preview_gate_allows){
             // Check if user is not register in course AND user role not admin => ABORT(404)
             $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
-            // if(!$user_course_register){
-            //     abort(404);
-            // }// end if
+             if(!$user_course_register){
+                 abort(404);
+             }// end if
+        }
+
+        if(!$preview_gate_allows){
+            // Check if content type is Gift  => Check open After Progress IF NOT => ABORT(404)
+            if (!$this->checkContentTypeGiftOpenAfter($content,$user_course_register)){
+                return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
+            }// end if
         }
 
         // Get next and prev
@@ -302,7 +308,6 @@ class CourseController extends Controller
         // pop up status => preview else disable
         $popup_compelte_status = false;
         if(!$preview_gate_allows){
-
             if ($content->course->complete_progress <= $user_course_register->progress){
                 // Check if user course => completed_at is null => update completed at In Course Registration
                 if (!$user_course_register->completed_at){
@@ -317,6 +322,8 @@ class CourseController extends Controller
         }
 
         $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',auth()->user()->id)->pluck('current_page')->first();
+
+
 
         // user content flag (0 or 1)
         $flag = $userContent->flag;
@@ -402,12 +409,12 @@ class CourseController extends Controller
     private function createUserContentOrUpdate($content_id,$content_time_limit){
         $user_content =  UserContent::where('user_id' , \auth()->id())
             ->where('content_id' , $content_id)->first();
-
         if(!$user_content){ // create user content when not find
             $is_completed = 1;
             if($content_time_limit){ // if content has time limit => The new user content is_completed
                 $is_completed = 0;
             }
+
             $user_content = UserContent::create([
                 'user_id'      => \auth()->id(),
                 'content_id'   => $content_id,
@@ -416,8 +423,9 @@ class CourseController extends Controller
             ]);
         }else{ // update start time to now time when user content exists and (not completed)
             $is_completed = $user_content->is_completed;
+
             if($is_completed == 0){
-                $user_content = UserContent::where('user_id' , \auth()->id())
+                 UserContent::where('user_id' , \auth()->id())
                     ->where('content_id' , $content_id)
                     ->update([
                         'start_time'   => Carbon::now(),
@@ -429,6 +437,15 @@ class CourseController extends Controller
     } // end function
 
 
+    /*
+     *
+     */
+    private function checkContentTypeGiftOpenAfter($content,$user_course_register){
+        if($content->status == 1 || $user_course_register->progress >= $content->section->gift->open_after){
+            return true;
+        }
+            return false;
+    }
 
     /****************************************************************************/
 

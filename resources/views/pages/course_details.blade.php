@@ -229,7 +229,9 @@ svg {
                                 }
                             }
                             ?>
-                            <a @if((isset($content->user_contents[0]) || $content->status == 1) || $role_id!=3)
+
+
+                            <a @if((isset($content->user_contents[0]) || $content->status == 1 || ($section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ) || $role_id!=3)
                                     href="{{$url}}"
                                 @else
                                     style="color: #c1bebe" href="#" onclick="return false"
@@ -331,7 +333,7 @@ svg {
                                                     }
                                                 }
                                                 ?>
-                                                <a @if((isset($content->user_contents[0]) || $content->status == 1) || $role_id!=3)
+                                                <a @if((isset($content->user_contents[0]) || $content->status == 1 || ($section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ) || $role_id!=3)
                                                    href="{{$url}}"
                                                    @else
                                                    style="color: #c1bebe" href="#" onclick="return false"
