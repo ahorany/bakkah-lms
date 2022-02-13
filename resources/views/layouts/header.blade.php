@@ -47,7 +47,10 @@
     <ul class="navbar-nav mx-0">
         <li class="has-dropdown user">
             <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role" href="#">
-                <span>{{$role->name}}</span>
+                <span class="icon_role">
+                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
+                    {{$role->name}}
+                </span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
                     <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z" transform="translate(10.125) rotate(90)" fill="#000"></path>
                 </svg>

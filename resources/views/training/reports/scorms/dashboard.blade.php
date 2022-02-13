@@ -5,7 +5,7 @@
 
             <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-center">
             @if(isset($count))
-                <div class="course-cards" style="border-bottom: 3px solid rgb(48 61 71 / 50%);">
+                <div class="course-cards" style="border-color: rgb(48 61 71 / 50%);">
                     <svg version="1.1" class="icon-report bg-four" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve">
                         <style type="text/css">
                             .st0{fill:none;stroke:#fff;stroke-width:3.0215;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
@@ -32,7 +32,7 @@
 
 
             @if(isset($attempts))
-                <div class="course-cards" style="border-bottom: 3px solid rgb(251 68 0 / 50%);">
+                <div class="course-cards" style="border-color: rgb(251 68 0 / 50%);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049" class="icon-report bg-main">
                         <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
                           <g id="Group_319" data-name="Group 319" transform="translate(448.818 -55.416)">
@@ -53,7 +53,7 @@
             @endif
 
             @if(isset($passed))
-                <div class="course-cards" style="border-bottom: 3px solid rgb(251 68 0 / 50%);">
+                <div class="course-cards" style="border-color: rgb(251 68 0 / 50%);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="85.644" height="75.049" viewBox="0 0 85.644 75.049" class="icon-report bg-main">
                         <g id="Group_178" data-name="Group 178" transform="translate(-448.032 56.166)">
                           <g id="Group_319" data-name="Group 319" transform="translate(448.818 -55.416)">
