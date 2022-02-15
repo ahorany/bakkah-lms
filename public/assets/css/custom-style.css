@@ -628,10 +628,10 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     color: #000;
     margin: 0;
     margin-top: 5px;
-    min-height: 65px;
+    min-height: 50px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
 }
 
 .certificate .completed {
@@ -819,6 +819,12 @@ label.container-check.form-check-label span.checkmark{
     span.icon_role img{
         margin-right: 0 !important;
     }
+    .exam-simulator .learning-file ul li a{
+        padding: 0;
+        margin-bottom: 15px;
+        align-items: flex-start;
+        text-align: left;
+    }
 
 /******************************************************************************************************************/
 
@@ -936,7 +942,7 @@ label.container-check.form-check-label span.checkmark{
 
 @media (max-width: 1300.5px) and (min-width: 1200.5px) {
     .certificate{
-        padding: 60px 15px 30px;
+        padding: 40px 15px;
     }
 
     .certificate .download img{
@@ -968,15 +974,21 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 1025.5px) {
+    .no-img.certificate-img img {
+        width: 15%;
+    }
     .change-password .card .card-body{
         padding: 0 !important;
         margin: 0 !important;
     }
     .certificate{
-        padding: 60px 15px 30px;
+        padding: 40px 15px;
     }
     main#main-vue-element{
         padding: 1rem !important;
+    }
+    .exam-simulator .no-img.certificate-img img{
+        width: 10%;
     }
 }
 
@@ -1271,7 +1283,10 @@ label.container-check.form-check-label span.checkmark{
         padding: 60px 20px;
     }
     .certificate-img img {
-        width: 40%;
+        width: 45%;
+    }
+    .exam-simulator .certificate-img img {
+        width: 15%;
     }
     .text-center.course-image .download img{
         width: 60%;

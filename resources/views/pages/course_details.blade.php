@@ -247,20 +247,20 @@ svg {
                                                 @endif
                                                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                     <span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
-                                                        <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
-                                                        <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#4cdd42"/>
-                                                    </svg>
-                                                </span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
+                                                            <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
+                                                            <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#4cdd42"/>
+                                                        </svg>
+                                                    </span>
                                                 @else
                                                     <span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 59 59">
-                                                        <g id="Check_2" data-name="Check 2" transform="translate(-0.2 0.2)">
-                                                        <rect id="Check_2_Background_" data-name="Check 2 (Background)" width="59" height="59" transform="translate(0.2 -0.2)" fill="none"/>
-                                                        <path id="_22_Check" data-name="22 Check" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(5.2 4.8)" fill="none" stroke="#d7d7d7" stroke-width="2" stroke-dasharray="0 0"/>
-                                                        </g>
-                                                    </svg>
-                                                </span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 59 59">
+                                                            <g id="Check_2" data-name="Check 2" transform="translate(-0.2 0.2)">
+                                                            <rect id="Check_2_Background_" data-name="Check 2 (Background)" width="59" height="59" transform="translate(0.2 -0.2)" fill="none"/>
+                                                            <path id="_22_Check" data-name="22 Check" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(5.2 4.8)" fill="none" stroke="#d7d7d7" stroke-width="2" stroke-dasharray="0 0"/>
+                                                            </g>
+                                                        </svg>
+                                                    </span>
                                                 @endif
                                             </span>
                                         </a>
@@ -292,12 +292,11 @@ svg {
                         @endif
 
                         @if(!is_null($course_registration))
-                            {{-- class="green mb-1"  --}}
                             <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration->id ] )}}"
                                 target="_blank">
-                                <div class="text-center course-image certificate certification-card">
+                                <div class="text-center course-image certificate certification-card exam-simulator">
                                     <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
-                                        <img src="{{CustomAsset('icons/lock_close.svg')}}" height="auto" width="30%">
+                                        <img src="{{CustomAsset('icons/lock_close.svg')}}" height="auto" width="15%">
                                     </div>
                                     <div>
                                         <h2>Exam Simulation</h2>
@@ -305,23 +304,42 @@ svg {
                                             <small style="line-height: revert !important;"><span style="color: #fb4400 !important;">Note:</span> you can open this feture free when you complete the Coures</small>
                                         </span>
                                     </div>
-                                </div>
-                            </a>
-                        @endif
+                                    <hr class="mx-auto my-4" style="width: 80%;">
+                                    <div class="learning-file">
+                                        <ul>
+                                            <li>
+                                                <a href="#" style="color: #c1bebe" href="#" onclick="return false">
+                                                    <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/lock_close.svg')}}" alt="aaa">
 
-                        @if(!is_null($course_registration))
-                            {{-- class="green mb-1"  --}}
-                            <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration->id ] )}}"
-                                target="_blank">
-                                <div class="text-center course-image certificate certification-card">
-                                    <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
-                                        <img src="{{CustomAsset('icons/lock_open.svg')}}" height="auto" width="30%">
-                                    </div>
-                                    <div>
-                                        <h2>Exam Simulation</h2>
-                                        <span>
-                                            <small style="line-height: revert !important;"><span style="color: #fb4400 !important;">Note:</span> you can open this feture free when you complete the Coures</small>
-                                        </span>
+                                                    <span> aaaaaaaaaaaa</span>
+                                                    <span class="svg">
+                                                        <span>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
+                                                                <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
+                                                                <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#4cdd42"/>
+                                                            </svg>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="color: #c1bebe" href="#" onclick="return false">
+                                                    <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/lock_close.svg')}}" alt="aaa">
+
+                                                    <span> aaaaaaaaaaaa</span>
+                                                    <span class="svg">
+                                                        <span>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 59 59">
+                                                                <g id="Check_2" data-name="Check 2" transform="translate(-0.2 0.2)">
+                                                                <rect id="Check_2_Background_" data-name="Check 2 (Background)" width="59" height="59" transform="translate(0.2 -0.2)" fill="none"/>
+                                                                <path id="_22_Check" data-name="22 Check" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(5.2 4.8)" fill="none" stroke="#d7d7d7" stroke-width="2" stroke-dasharray="0 0"/>
+                                                                </g>
+                                                            </svg>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </a>

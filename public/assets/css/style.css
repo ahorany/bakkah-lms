@@ -1088,6 +1088,9 @@ ol.answers li .icon.empty {
 .learning-file {
   padding-bottom: 20px;
 }
+.exam-simulator .learning-file {
+  padding-bottom: 0px;
+}
 
 .learning-file h3 {
   margin: 30px 30px 15px;
