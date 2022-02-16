@@ -173,4 +173,5 @@ return [
     'sample'=>'Sample',
     'Gift'=>'Gift',
     'add_gift'=>'Add Gift',
+    'Free'=>'Free',
 ];

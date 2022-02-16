@@ -230,16 +230,19 @@ svg {
                             }
                             ?>
 
+{{--                                    @dump($content->paid_status == 504 || ( isset($course->users[0]) && $course->users[0]->pivot->paid_status == 503 && $content->paid_status == 503))--}}
 
-                            <a @if((isset($content->user_contents[0]) || $content->status == 1 || ($section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ) || $role_id!=3)
+                            <a @if(($content->paid_status == 504 || ( isset($course->users[0]) && $course->users[0]->pivot->paid_status == 503 && $content->paid_status == 503)) && (isset($content->user_contents[0]) || $content->status == 1 || ($section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ) || $role_id!=3  )
                                     href="{{$url}}"
                                 @else
                                     style="color: #c1bebe" href="#" onclick="return false"
                                 @endif
                             >
+
                                 <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
                             @endif
                                 <span> {{$content->title}}</span>
+                                <label class="mx-1" style="color: #fb4400;"> | {{$content->paid_status == 504 ? 'Free' : 'Paid' }}</label>
                                 <span class="svg">
                                     @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
                                         <span class="flag_icon_true">
@@ -343,7 +346,7 @@ svg {
                                                     @endif
                                                     <span> {{$content->title}}</span>
                                                     <span class="svg">
-                                    @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
+                                           @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
                                                             <span class="flag_icon_true">
                                             @if(file_exists(public_path('icons/file_flag_old.svg')))
                                                                     {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
@@ -376,6 +379,7 @@ svg {
                                 </span>
                                                 </a>
                                 </li>
+
                             @endforeach
                         </ul>
                     @endisset

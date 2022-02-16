@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UnitController extends Controller
 {
@@ -33,6 +34,7 @@ class UnitController extends Controller
         if (!$course) abort(404);
 
         $units = $this->buildTree($course->units);
+
         return view('training.courses.units.index',compact('course','units'));
     }
 
@@ -58,21 +60,97 @@ class UnitController extends Controller
     }
 
 
-    public function add_unit(){
+
+    private function validationUnit($type = 'add'){
         // validation
         $rules = [
             'title' => 'required',
             'course_id'  =>'required|exists:courses,id',
-           ];
+            'unit_no'   => ['required',
+                Rule::unique('units')
+                    ->where('course_id',request()->course_id)
+            ]
+        ];
+
+        if ($type == 'update'){
+            $rules['unit_id']  = 'required|exists:units,id';
+
+            $rules['unit_no'] = ['required',
+                 Rule::unique('units')
+                     ->ignore(\request()->unit_id, 'id')
+                     ->where('course_id',request()->course_id)];
+        }
 
         $validator = Validator::make(\request()->all(), $rules);
 
-        foreach ( request()->subunits as $subunit ) {
+        foreach ( request()->subunits as $index => $subunit ) {
             if (is_null($subunit['title'])) {
-                  $validator->getMessageBag()->add('subunits', 'All subunits field required');
-                   break;
+                $validator->getMessageBag()->add('subunits', 'All subunits field required');
+                break;
+            }
+            if (is_null($subunit['unit_no'])) {
+                $validator->getMessageBag()->add('subunits', 'All subunits unit no field required');
+                break;
+            }else{
+                foreach ( request()->subunits as $key => $s ) {
+                    if ($index != $key && $subunit['unit_no'] == $s['unit_no']){
+                        $validator->getMessageBag()->add('subunits', 'All subunits unit no field must be unique');
+                        break;
+                    }
+                }
+            }
+
+        }
+
+
+
+        if ($type == 'update'){
+            foreach ( request()->subunits as $subunit ) {
+                if ($subunit['unit_no'] == \request()->unit_no){
+                    $validator->getMessageBag()->add('unit_no', 'All unit no  field must be unique');
+                    $validator->getMessageBag()->add('subunits', 'All subunits unit no field must be unique');
+                    break;
+                }
+                if (!is_null($subunit['unit_no'])) {
+                    $unit = Unit::select('id')
+                        ->where('course_id',\request()->course_id)
+                        ->where('unit_no',$subunit['unit_no'])
+                        ->where('id','!=',$subunit['id'])
+                        ->first();
+                    if ($unit){
+                        $validator->getMessageBag()->add('subunits', 'All subunits unit no field must be unique');
+                        break;
+                    }
+                }
+            }
+
+        }else{
+            foreach ( request()->subunits as $subunit ) {
+                if ($subunit['unit_no'] == \request()->unit_no){
+                    $validator->getMessageBag()->add('unit_no', 'All unit no  field must be unique');
+                    $validator->getMessageBag()->add('subunits', 'All subunits unit no field must be unique');
+                    break;
+                }
+                if (!is_null($subunit['unit_no'])) {
+                    $unit = Unit::select('id')
+                        ->where('course_id',\request()->course_id)
+                        ->where('unit_no',$subunit['unit_no'])
+                        ->first();
+                    if ($unit){
+                        $validator->getMessageBag()->add('subunits', 'All subunits unit no field must be unique');
+                        break;
+                    }
+                }
             }
         }
+
+        return $validator;
+    }
+
+
+    public function add_unit(){
+
+        $validator = $this->validationUnit();
 
         if(count($validator->errors()) > 0 ){
             return response()->json(['errors' => $validator->errors()]);
@@ -82,6 +160,7 @@ class UnitController extends Controller
         $unit = Unit::create([
                'title' => request()->title,
                'course_id' => request()->course_id,
+               'unit_no' => request()->unit_no,
         ]);
 
         foreach ( request()->subunits as $subunit ){
@@ -90,6 +169,7 @@ class UnitController extends Controller
                     'title' => $subunit['title'],
                     'course_id' => request()->course_id,
                     'parent_id' => $unit->id,
+                    'unit_no' => $subunit['unit_no'],
                 ]);
             }
         }
@@ -100,20 +180,7 @@ class UnitController extends Controller
     }
 
     public function update_unit(){
-        // validation
-        $rules = [
-            'title' => 'required',
-            'course_id'  =>'required|exists:courses,id',
-        ];
-
-        $validator = Validator::make(\request()->all(), $rules);
-
-        foreach ( request()->subunits as $subunit ) {
-            if (is_null($subunit['title'])) {
-                $validator->getMessageBag()->add('subunits', 'All subunits field required');
-                break;
-            }
-        }
+        $validator = $this->validationUnit('update');
 
         if(count($validator->errors()) > 0 ){
             return response()->json(['errors' => $validator->errors()]);
@@ -122,6 +189,7 @@ class UnitController extends Controller
         $unit = Unit::whereId(request()->unit_id)->update([
             'title' => request()->title,
             'course_id' => request()->course_id,
+            'unit_no' =>\request()->unit_no,
         ]);
 
         if ($unit){
@@ -131,6 +199,7 @@ class UnitController extends Controller
                         'id' => $subunit['id']
                     ],[
                         'title' => $subunit['title'],
+                        'unit_no' => $subunit['unit_no'],
                         'course_id' => request()->course_id,
                         'parent_id' => request()->unit_id,
                     ]);

@@ -70,6 +70,15 @@
                     <div class="modal-body">
                         <div class="col-md-12">
                             <div class="form-group">
+
+                                <div class="form-group">
+                                    <label>Unit id </label>
+                                    <input class="d-block" type="text" v-model="unit_no" placeholder="Unit id" >
+                                    <div v-show="'unit_no' in errors">
+                                        <span style="color: red;font-size: 13px">@{{ errors.unit_no }}</span>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label>Title </label>
                                     <textarea  v-model="title" name="title" class="form-control w-100" placeholder="title"></textarea>
@@ -79,6 +88,8 @@
                                 </div>
 
 
+
+
                                 <div class="mt-1">
 
                                     <button @click.prevent="addSubUnitBox()" class="main-color mb-3"><i class="fa fa-plus" aria-hidden="true"></i> Add Sub Unit</button>
@@ -86,6 +97,7 @@
                                         <span style="color: red;font-size: 13px">@{{ errors.subunits }}</span>
                                     </div>
                                     <div v-for="(subunit,index) in subunits" class="form-group">
+                                        <input class="w-25 form-control" style="display: inline-block;" type="text" v-model="subunit.unit_no" name="title" placeholder="unit no">
                                         <input class="w-75 form-control" style="display: inline-block;" type="text" v-model="subunit.title" name="title" placeholder="title">
                                         <button @click.stop="deleteUnit(course.units,subunit.id,index)" class="red">
                                             <i class="fa fa-trash"></i><!-- Delete --> </button>
@@ -155,7 +167,7 @@
               }
             },
             template: `
-                         <li @click.stop="open = (!open)"> (@{{item.unit_no }})  @{{item.title }} <i v-if="item.s && item.s.length > 0" class="fa fa-chevron-down" aria-hidden="true"></i>
+                         <li @click.stop="open = (!open)"><span v-if="item.unit_no">(@{{item.unit_no }})</span>  @{{item.title }} <i v-if="item.s && item.s.length > 0" class="fa fa-chevron-down" aria-hidden="true"></i>
 
                                   <button @click.stop="$root.deleteUnit(course.units,item.id)" class="btn text-danger btn-sm" >
                                            <i class="fa fa-trash"></i></button>
@@ -175,7 +187,7 @@
                 template: `<ul v-if="items.length > 0">
                       <template v-for="child in items">
                          <tree v-if="child.s" :item="child"/>
-                         <li @click.stop="open = (!open)" class="last" v-else>(@{{child.unit_no }})  @{{child.title }}
+                         <li @click.stop="open = (!open)" class="last" v-else><span v-if="child.unit_no">(@{{child.unit_no }})</span>  @{{child.title }}
                               <button @click.stop="$root.deleteUnit(course.units,child.id)"  class="btn btn-sm text-danger" >
                                        <i class="fa fa-trash"></i></button>
                               <button @click.stop="$root.edit(child,child.id)" type="button" class="btn text-info btn-sm px-3" id="answer" ><i style="color:#000;" class="fa fa-pencil"></i></button>
@@ -198,6 +210,7 @@
                     errors: {},
                     model_type : 'units',
                     counter : 0,
+                    unit_no : '',
                 },
                 created: function () {
                     this.course.units = this.units;
@@ -267,6 +280,7 @@
                     OpenModal: function () {
                         // clear
                         this.title = '';
+                        this.unit_no = '';
                         this.subunits = [];
                         this.save_type = 'add';
                         this.errors = {};
@@ -298,6 +312,7 @@
                         // this.searchTree(element, unit_id)
                         this.searchNodeFromTree(this.course.units,unit_id)
                         this.title = element.title;
+                        this.unit_no = element.unit_no;
                         this.subunits = element.s??[];
                         $('#ContentModal').modal('show')
                     },
@@ -310,6 +325,7 @@
                                     title : self.title,
                                     course_id : self.course.id,
                                     subunits : self.subunits,
+                                    unit_no : self.unit_no,
                                 })
                                 .then(response => {
                                     console.log(response)
@@ -335,6 +351,7 @@
                                     course_id : self.course.id,
                                     subunits : self.subunits,
                                     unit_id : self.unit_id,
+                                    unit_no : self.unit_no,
                                 })
                                 .then(response => {
                                     console.log(response)
@@ -373,13 +390,14 @@
 
 
                     addSubUnitBox : function () {
-                        this.subunits.push({'id': null, 'title': ''});
+                        this.subunits.push({'id': null, 'title': '','unit_no' : ''});
                     },
 
 
 
                     clear: function () {
                         this.title = '';
+                        this.unit_no = '';
                         this.subunits = [];
                         this.errors = {};                  },
                 }

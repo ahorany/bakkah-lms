@@ -4,16 +4,24 @@
     <title>{{__('education.Course Content')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-@section('table')
+@section('style')
     <style>
-    .course_info button {
-        padding: .375rem .75rem !important;
-    }
+        .course_info button {
+            padding: .375rem .75rem !important;
+        }
 
-    .ql-container.ql-snow{
-        height: 200px;
-    }
+        .ql-container.ql-snow{
+            height: 200px;
+        }
+
+        span.checkmark.disabeld_check {
+            background-color: #eee !important;
+        }
     </style>
+@endsection
+
+@section('table')
+
     <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
          <div class="toLoad" id="contents">
@@ -354,9 +362,22 @@
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div v-if="model_type != 'section' && model_type != 'gift'" class="form-group form-check child">
-                                        <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
+                                        <label class="container-check form-check-label" for="paid_status" style="padding: 25px 30px 0; font-size: 15px;">
                                             {{__('admin.Enabeld Status')}}
-                                            <input class="form-check-input child" style="display: inline-block;" v-model="status" id="enabled" type="checkbox" name="status">
+                                            <input :disabled="disabled_check" class="form-check-input child" style="display: inline-block;" v-model="status" id="paid_status" type="checkbox" >
+                                            <span :class="{'disabeld_check' : disabled_check}"  class="checkmark" style="top: 26px;"></span>
+                                        </label>
+
+                                        {{-- <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status"> --}}
+                                        {{-- <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label> --}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div v-if="model_type != 'section' && model_type != 'gift'" class="form-group form-check child">
+                                        <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
+                                            {{__('admin.Free')}}
+                                            <input  class="form-check-input child" style="display: inline-block;" v-model="paid_status" id="enabled" type="checkbox"  name="paid_status">
                                             <span class="checkmark" style="top: 26px;"></span>
                                         </label>
 
@@ -444,6 +465,8 @@ $(function() {
 			excerpt : '',
             file_title : '',
             file_url : '',
+            paid_status : false,
+            disabled_check : false,
             status : false,
             is_aside : false,
             downloadable : false,
@@ -479,6 +502,16 @@ $(function() {
                 },
             }
 		},
+        watch:{
+            paid_status : function (value) {
+                if(value){
+                    this.status = true;
+                    this.disabled_check = true;
+                }else{
+                    this.disabled_check = false;
+                }
+            }
+        },
 		methods: {
 		    clear : function(){
                 this.title = '';
@@ -487,6 +520,7 @@ $(function() {
                 this.open_after = 0;
                 this.file_url = '';
                 this.file_title = '';
+                this.paid_status = false;
                 this.is_aside = false;
                 this.status = false;
                 this.downloadable = false;
@@ -566,6 +600,7 @@ $(function() {
                                     self.title = content.title;
                                     self.time_limit = content.time_limit;
                                     self.status = content.status == 1 ? true : false;
+                                    self.paid_status = content.paid_status == 504 ? true : false;
                                     self.downloadable = content.downloadable == 1 ? true : false;
                                     self.excerpt =  content.details ?  content.details.excerpt : '';
                                     // self.duration =  content.duration ?  content.details.duration : '';
@@ -773,6 +808,7 @@ $(function() {
                 formData.append('excerpt', self.excerpt);
                 formData.append('url', self.url);
                 formData.append('status', self.status);
+                formData.append('paid_status', self.paid_status);
                 formData.append('downloadable', self.downloadable);
                 formData.append('type', self.model_type);
                 formData.append('file', self.file);
@@ -828,6 +864,7 @@ $(function() {
                                 if(content.id == self.content_id) {
                                     content.title = self.title;
                                     content.status = self.status;
+                                    content.paid_status = self.paid_status == "true" ? 504 : 503;
                                     content.time_limit = self.time_limit;
                                     content.downloadable = self.downloadable;
                                     if(content.details ){
@@ -873,6 +910,7 @@ $(function() {
                                                  content.title =  response.data.data.title;
                                                  content.time_limit =  response.data.data.time_limit;
                                                  content.status =  response.data.data.status;
+                                                 content.paid_status =  response.data.data.paid_status;
                                                  content.downloadable =  response.data.data.downloadable;
 
                                                  content.url = response.data.data.url;
