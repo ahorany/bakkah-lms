@@ -676,7 +676,7 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     font-family: 'Lato Light';
     font-size: 25px;
     margin: 0;
-    padding-top: 5px;
+    padding-top: 10px;
 }
 
 .congrats h1{

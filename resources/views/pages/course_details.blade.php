@@ -24,7 +24,7 @@
         padding: 2px 0;
     }
     .free{
-        background: gainsboro;
+        background: #ececec;
         padding: 2px 10px;
         font-size: 10px;
         border-radius: 20px;
@@ -385,7 +385,7 @@
                                             {{--                                                    <small style="line-height: revert !important;"><span style="color: #fb4400 !important;">Note:</span> you can open this feture free when you complete the Coures</small>--}}
                                             {{--                                                </span>--}}
                                         </div>
-                                        <hr class="mx-auto my-3" style="width: 80%;">
+                                        <hr class="my-3">
                                         <div class="learning-file">
                                             @isset($section->contents)
                                                 <ul>
