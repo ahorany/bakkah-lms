@@ -175,6 +175,6 @@ return [
     'add_gift'=>'Add Gift',
     'Free'=>'Free',
     'Registered'=>'Registered',
-    'True'=>'True',
-    'False'=>'False',
+    'True'=>'Register',
+    'False'=>'Not Register',
 ];
