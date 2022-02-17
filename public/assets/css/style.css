@@ -974,7 +974,7 @@ ol.answers li .icon.empty {
   padding: 15px;
   background: #fff;
   border-radius: 5px;
-  /*box-shadow: 0 0 6px rgb(0 0 0 / 10%);*/
+  box-shadow: 0 0 6px rgb(0 0 0 / 10%);
 }
 
 .course-image .progress {
