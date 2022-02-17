@@ -33,7 +33,7 @@ class ContentController extends Controller
             'course_id'  =>'required|exists:courses,id',
 //            'file'      =>  'nullable|file|mimes:jpg,jpeg,png',
             'open_after'      => "required|numeric|gt:-1|max:100",
-            'is_aside'      => "required",
+//            'is_aside'      => "required",
         ];
 
 
@@ -61,7 +61,8 @@ class ContentController extends Controller
             'title'      => request()->title,
             'course_id'  =>request()->course_id,
             'post_type'  => 'gift',
-            'is_aside'  => request()->is_aside == "true" ? 1 : 0,
+            'is_aside'  => 1,
+//            'is_aside'  => request()->is_aside == "true" ? 1 : 0,
             'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
         ]);
 
@@ -87,7 +88,8 @@ class ContentController extends Controller
 
         $content = Content::where('id',\request()->content_id)->update([
             'title' => request()->title,
-            'is_aside'  => request()->is_aside == "true" ? 1 : 0,
+            'is_aside'  => 1,
+//            'is_aside'  => request()->is_aside == "true" ? 1 : 0,
         ]);
 
         Gift::where('content_id',request()->content_id)->update([
@@ -294,7 +296,6 @@ class ContentController extends Controller
     public function add_content(){
 
         $validate = $this->contentValidation(request()->type);
-//        return \request();
 
         if($validate){
             return response()->json(['errors' => $validate]);
@@ -303,6 +304,12 @@ class ContentController extends Controller
 
         $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE parent_id= $parent_id  "));
 
+        $paid_status = request()->paid_status == 'true' ? 504 : 503;
+        if (request()->is_gift == "true"){
+            $paid_status = 503 ;
+        }
+
+
         if(\request()->type == 'exam'){
             $content = Content::create([
                 'title'      => request()->title,
@@ -310,8 +317,8 @@ class ContentController extends Controller
                 'post_type'  => request()->type,
                 'parent_id'  => request()->content_id,
                 'status' => request()->status == 'true' ? 1 : 0,
-                'paid_status' => request()->paid_status == 'true' ? 504 : 503,
-                'downloadable' => request()->downloadable == 'true' ? 1 : 0,
+                'paid_status' => $paid_status,
+                'downloadable' =>  0,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
             $content->details()->create([
@@ -333,14 +340,18 @@ class ContentController extends Controller
             ]);
 
         }else{
+            $downloadable = request()->downloadable == 'true' ? 1 : 0;
+            if (request()->type == 'scorm' || (\request()->has("url") && \request()->url != "" && \request()->url != null)){
+                $downloadable = 0;
+            }
             $content = Content::create([
                 'title'      => request()->title,
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
                 'url' => request()->url == 'null' ? null : request()->url,
                 'status' => request()->status == 'true' ? 1 : 0,
-                'paid_status' => request()->paid_status == 'true' ? 504 : 503,
-                'downloadable' => request()->downloadable == 'true' ? 1 : 0,
+                'paid_status' => $paid_status,
+                'downloadable' =>$downloadable,
                 'parent_id'  => request()->content_id,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
                 'time_limit'=> request()->time_limit,
@@ -485,12 +496,18 @@ class ContentController extends Controller
             return response()->json(['errors' => $validate]);
         }
 
+        $paid_status = request()->paid_status == 'true' ? 504 : 503;
+        if (request()->is_gift == "true"){
+            $paid_status = 503 ;
+        }
+
+
         if (\request()->type == 'exam') {
             $content = Content::whereId(request()->content_id)->update([
                 'title' => request()->title,
                 'status' => request()->status == 'true' ? 1 : 0,
-                'paid_status' => request()->paid_status == 'true' ? 504 : 503,
-                'downloadable' => request()->downloadable == 'true' ? 1 : 0,
+                'paid_status' => $paid_status,
+                'downloadable' =>  0,
             ]);
             ContentDetails::where('content_id', request()->content_id)->update([
                 'excerpt' => request()->excerpt,
@@ -508,13 +525,18 @@ class ContentController extends Controller
             ]);
 
         } else {
+            $downloadable = request()->downloadable == 'true' ? 1 : 0;
+            if (request()->type == 'scorm' || (\request()->has("url") && \request()->url != "" && \request()->url != null)){
+                $downloadable = 0;
+            }
+
             $content = Content::whereId(request()->content_id)
                 ->update([
                     'title' => request()->title,
                     'url' => request()->url == 'null' ? null : request()->url,
                     'status' => request()->status == 'true' ? 1 : 0,
-                    'paid_status' => request()->paid_status == 'true' ? 504 : 503,
-                    'downloadable' => request()->downloadable == 'true' ? 1 : 0,
+                    'paid_status' => $paid_status,
+                    'downloadable' => $downloadable,
                     'time_limit' => request()->time_limit,
                 ]);
 
