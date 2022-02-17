@@ -85,6 +85,7 @@
                     <th scope="col">Type</th>
                     <th scope="col">Progress</th>
                     @if(!checkUserIsTrainee())
+                        <th scope="col">Is Free</th>
                         <th scope="col">Expire Date</th>
                         <th scope="col">Action</th>
                     @endif
@@ -103,9 +104,15 @@
 
                     @if(!checkUserIsTrainee())
                             <td>
+                                <input :checked="user.pivot.paid_status == 504 ? true : false"  @change="updateIsFree($event,user.id)"   type="checkbox" >
+                            </td>
+
+
+                            <td>
                                 <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
 
                             </td>
+
                             <td>
                                 <button @click="updateUserExpireDate(user.id)" class="primary" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa"></i> Update</button>
                                 <button @click="deleteUser(user.id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
@@ -349,7 +356,42 @@
                         .catch(e => {
                             console.log(e)
                         });
-                }
+                },
+
+
+               updateIsFree: function (e,user_id) {
+                let self = this;
+                   console.log(user_id)
+                axios.post("{{route('training.update_user_is_free')}}",
+                    {
+                        'course_id' : self.course.id ,
+                        'user_id'   : user_id ,
+                        'is_free'   : e.target.checked,
+                    }
+                )
+                    .then(response => {
+                        console.log(response)
+                        // self.search_users = response.data.users;
+                        // $('#ContentModal').modal('hide')
+
+                        let user = self.course.users.filter(function (user,index) {
+                            return user.id == user_id;
+                        })
+
+                        console.log(user);
+                        self.msg_alert = user[0].email
+
+                        self.alert = true;
+                        setTimeout(
+                            function() {
+                                self.alert = false;
+                            }, 2000);
+
+                    })
+                    .catch(e => {
+                        console.log(e)
+                    });
+            }
             }
 	});
 </script>

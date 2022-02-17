@@ -26,6 +26,11 @@
             {!!Builder::Select('category_id', 'category_id', $categories, null, ['col'=>'col-md-6', 'model_title'=>'trans_title',])!!}
 {{--            {!!Builder::Select('group_id', 'group', $groups, null, ['col'=>'col-md-12','model_title' => 'name']) !!}--}}
 
+
+            {!!Builder::Input('ref_id', 'ref_id', null, ['col'=>'col-md-6'])!!}
+
+
+
             {{Builder::SetPrefix('training.')}}
             {!!Builder::Textarea('en_accredited_notes', 'en_accredited_notes', null, [
                 'row'=>8,

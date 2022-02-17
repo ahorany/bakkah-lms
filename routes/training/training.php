@@ -114,6 +114,7 @@ Route::group([
         Route::post('/add_users_course', 'CourseUserController@add_users_course')->name('add_users_course');
         Route::post('/course_users/delete', 'CourseUserController@delete_user_course')->name('delete_user_course');
         Route::post('/course_users/update', 'CourseUserController@update_user_expire_date')->name('update_user_expire_date');
+        Route::post('/update_user_is_free', 'CourseUserController@update_user_is_free')->name('update_user_is_free');
 
         Route::get('/contents', 'ContentController@contents')->name('contents');
         Route::post('/add_section', 'ContentController@add_section')->name('add_section');

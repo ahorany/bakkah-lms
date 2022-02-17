@@ -26,6 +26,7 @@ class CourseRequest extends FormRequest
         return [
             'en_title'=>'required|min:2|max:250',
             'ar_title'=>'required|min:2|max:250',
+            'ref_id'=>'required|max:200',
             'en_excerpt'=>'max:1000',//required|min:2|
             'ar_excerpt'=>'max:1000',//required|min:2|
             'en_accredited_notes'=>'max:1000',

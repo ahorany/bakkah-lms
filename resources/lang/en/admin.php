@@ -174,6 +174,7 @@ return [
     'Gift'=>'Gift',
     'add_gift'=>'Add Gift',
     'Free'=>'Free',
+    'ref_id'=>'Ref id',
     'Registered'=>'Registered',
     'True'=>'Register',
     'False'=>'Not Register',
