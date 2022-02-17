@@ -174,4 +174,6 @@ return [
     'Gift'=>'Gift',
     'add_gift'=>'Add Gift',
     'Free'=>'Free',
+    'ref_id'=>'Ref id',
+
 ];

@@ -146,4 +146,5 @@ return [
     'category'=>'التصنيف',
     'import_type'=>'Import Type',
     'sample'=>'Sample',
+    'ref_id'=>'Ref id',
 ];

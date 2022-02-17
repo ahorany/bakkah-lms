@@ -69,6 +69,23 @@ class CourseUserController extends Controller
         return view('training.courses.users.index', compact('course'));
     }
 
+
+    public function update_user_is_free(){
+        $paid_status = 503;
+        $user =  User::findOrFail(\request()->user_id);
+        $course =  Course::findOrFail(\request()->course_id);
+
+        $course_registration = CourseRegistration::where('user_id',\request()->user_id)->where('course_id',\request()->course_id)->first();
+         if (\request()->is_free == true){
+             $paid_status = 504;
+         }
+        CourseRegistration::where('user_id',$user->id)->where('course_id',$course->id)->update([
+            'paid_status' => $paid_status
+        ]);
+        return response()->json(['status' => 'success']);
+    }
+
+
     public function delete_user_course(){
 //        if(checkUserIsTrainee()){
 //            abort(404);
