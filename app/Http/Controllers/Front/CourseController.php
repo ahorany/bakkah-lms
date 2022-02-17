@@ -250,20 +250,25 @@ class CourseController extends Controller
                  abort(404);
              }// end if
 
-
             // check if content is free or => paid and user paid this course else ABORT(404)
-            if (!isset($content->user_contents[0]) && $content->status != 1 && ($content->paid_status == 503 && $user_course_register->paid_status != 503)){
+            if ($content->section->post_type == 'section' && !isset($content->user_contents[0]) && $content->status != 1 && ($content->paid_status == 503 && $user_course_register->paid_status != 503)){
                 return redirect()->back()->with(["status" => 'danger',"msg" => "You can't open the content because it is paid."]);
-            }
-        }
+            } // end if
+
+        } // end if
 
 
+
+
+        // gift status and check open after
         if( !$preview_gate_allows && $content->section->post_type == 'gift'){
             // Check if content type is Gift  => Check open After Progress IF NOT => ABORT(404)
             if (!$this->checkContentTypeGiftOpenAfter($content,$user_course_register)){
                 return redirect()->back()->with(["status" => 'danger',"msg" => "You can't unbox the gift until you complete the required sections."]);
             }// end if
-        }
+        }// end if
+
+
 
         // Get next and prev
         $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
@@ -283,6 +288,7 @@ class CourseController extends Controller
             }
         }
 
+
        /*
         *  Create New User Content OR
         *  Update Start Time For User Content
@@ -298,8 +304,11 @@ class CourseController extends Controller
             $enabled = false;
         }// end if
 
+
+
        // Update Course Registration Progress When content have (role and path)
         $this->updateCourseRegistrationProgress($content->course_id,$content->role_and_path);
+
 
        // if downloadable status == true (Download file)
         if($content->downloadable == 1){
@@ -311,8 +320,11 @@ class CourseController extends Controller
         }// end if
 
 
+
         // get time limit content (duration in seconds)
         $time_limit = $content->time_limit;
+
+
 
         // Check user progress if grater than or equal complete progress for course
         // When user course => completed_at is null => update completed at In Course Registration
@@ -332,6 +344,28 @@ class CourseController extends Controller
             } // end if
         }
 
+
+
+
+        // (isset($content->section->gift) && $user_course_register->progress >= $content->section->gift->open_after)
+        $popup_gift_status = false;
+        if(!$preview_gate_allows){
+            if (isset($content->section->gift) && $user_course_register->progress >= $content->section->gift->open_after){
+                // Check if user course => open_gift_at is null => update open_gift_at at In Course Registration
+                if (!$user_course_register->open_gift_at){
+                    CourseRegistration::where('user_id',auth()->id())
+                        ->where('course_id', $content->course->id)->update([
+                            'open_gift_at' => Carbon::now(),
+                        ]);
+
+                    $popup_gift_status = true;
+                } // end if
+            } // end if
+        }
+
+
+
+
         $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',auth()->user()->id)->pluck('current_page')->first();
 
 
@@ -339,7 +373,7 @@ class CourseController extends Controller
         // user content flag (0 or 1)
         $flag = $userContent->flag;
 
-        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num','flag'));
+        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','popup_gift_status','page_num','flag'));
     } // end function
 
 

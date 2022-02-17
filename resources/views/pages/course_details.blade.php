@@ -33,6 +33,9 @@
     .learning-file ul li a:hover .free {
         color: #000;
     }
+    .text-gift span.text{
+        color: rgb(193, 190, 190) !important;
+    }
     @media (max-width: 576px){
         .progress-main {
             width: 100% !important;
@@ -352,11 +355,11 @@
                                                     <img src="{{CustomAsset('icons/open.svg')}}" height="auto" width="30%">
                                                 </div>
                                                 <div>
-                                                    <h1>Pay Now!</h1>
+                                                    <h1>Unlock the Full Course Now!</h1>
                                                     <p>
-                                                        You have successfully completed the course. Can’t wait for to hear the good news about you getting certified!
+                                                        We're happy you're enjoying the course already! You are one step away from unlocking the rest of the course.
                                                     </p>
-                                                    <a id="pay_btn" target="_blank" href="#" class="main-color px-4 my-4">Go To Pay Page</a>
+                                                    <a id="pay_btn" target="_blank" href="#" class="main-color px-4 my-4">Go to Payment Page</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -380,10 +383,10 @@
                                             @endif
                                         </div>
                                         <div>
-                                            <h2>{{$section->title}}</h2>
-                                            {{--                                                <span>--}}
-                                            {{--                                                    <small style="line-height: revert !important;"><span style="color: #fb4400 !important;">Note:</span> you can open this feture free when you complete the Coures</small>--}}
-                                            {{--                                                </span>--}}
+                                            <h2 class="mb-4">{{$section->title}}</h2>
+                                            <span>
+                                                <small style="line-height: revert !important;"><span style="color: #fb4400 !important;">Note:</span> you can open this feture free when you complete the Coures</small>
+                                            </span>
                                         </div>
                                         <hr class="mx-auto my-3" style="width: 80%;">
                                         <div class="learning-file">
@@ -419,14 +422,15 @@
                                                                         <a @if($content_show)
                                                                            href="{{$url}}"
                                                                            @else
-                                                                           style="color: #c1bebe" href="#" onclick="return false"
+                                                                           class="text-gift" href="#" onclick="return false"
                                                                             @endif >
                                                                             <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
 
 
-                                                                            <span>{{$content->title}}</span>
+                                                                            <span class="text">{{$content->title}}</span>
 
-                                                                            <span class="svg">
+                                                                            @if($content_show)
+                                                                             <span class="svg">
                                                                                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                                                     <span>
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
@@ -445,6 +449,7 @@
                                                                                     </span>
                                                                                 @endif
                                                                            </span>
+                                                                            @endif
                                                                         </a>
                                                             @endif
                                                         </li>
@@ -460,11 +465,12 @@
 
 
 
+                    @if(count($activities) > 0)
                         @include('Html.activity-card', [
                          'activities'=>$activities,
                          'cls'=>'card p-30 activity',
                      ])
-
+                   @endif
 
                 </div>
             </div>
@@ -579,7 +585,6 @@
 
         function pupupPay(event,url) {
             event.preventDefault()
-            alert(url)
             $("#pay_btn").attr('href',url);
             $(".custom-model-main").addClass('model-open');
         }

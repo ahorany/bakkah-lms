@@ -16,16 +16,13 @@
     $previous_url = $NextPrevNavigation['previous_url'];
     ?>
     @if($popup_compelte_status)
-        <div class="custom-model-main model-open">
+        <div class="custom-model-main custom-model-main-cert model-open">
             <div class="custom-model-inner">
                 <div class="custom-model-wrap">
                     <div class="close-btn">×</div>
                     <div class="pop-up-content-wrap">
                         <div class="congrats">
                             <div class="text-center course-image">
-                                {{-- <a href="#" class="download">
-                                    <img src="{{CustomAsset('icons/download.svg')}}" width="50px" alt="">
-                                </a> --}}
                                 <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
                                     <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
                                 </div>
@@ -45,6 +42,34 @@
         </div>
     @endif
 
+
+
+    @if($popup_gift_status)
+        <div class="custom-model-main custom-model-main-gift model-open">
+            <div class="custom-model-inner">
+                <div class="custom-model-wrap">
+                    <div class="close-btn">×</div>
+                    <div class="pop-up-content-wrap">
+                        <div class="congrats">
+                            <div class="text-center course-image">
+                                <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
+                                    <img src="{{CustomAsset('icons/open.svg')}}" height="auto" width="30%">
+                                </div>
+                                <div>
+                                    <h1>Congratulations Gift!</h1>
+                                    <p>
+                                        You have successfully completed the course. Can’t wait for to hear the good news about you getting certified! <br><br>
+                                        Good Luck in your exam
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-overlay"></div>
+        </div>
+    @endif
 
     <div class="dash-header course_info">
         @include('pages.templates.breadcrumb', [
@@ -175,10 +200,11 @@
 @section("script")
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @if($popup_compelte_status)
+    @if($popup_compelte_status || $popup_gift_status)
     <script>
         $(".close-btn, .bg-overlay").click(function(){
-            $(".custom-model-main").removeClass('model-open');
+            $(".custom-model-main-gift").removeClass('model-open');
+            $(".custom-model-main-cert").removeClass('model-open');
         });
     </script>
     @endif
