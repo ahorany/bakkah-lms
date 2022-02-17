@@ -13,6 +13,7 @@ define('VAT', 15);
 define('green_attendance_rate', 15);
 define('USD_PRICE', 3.75);
 define('ZOOM_COST', 86);
+define('PAY_COURSE_BAKKAH_URL', 'https://bakkah.com/sessions/');
 
 
 define('COMPLETED_PROGRESS', 100);

@@ -233,8 +233,11 @@ class CourseController extends Controller
 
         // Get content from DB
         $content = Content::whereId($content_id)
-            ->with(['upload','course' ,'section.gift'])->first();
-//return $content;
+            ->with(['upload','course' ,'section.gift','user_contents' => function($q){
+                $q->where('user_id',auth()->id());
+            }])->first();
+
+
         // Check if content not found => ABORT(404)
         if (!$content){
             abort(404);
@@ -249,20 +252,16 @@ class CourseController extends Controller
 
 
             // check if content is free or => paid and user paid this course else ABORT(404)
-            if ($content->paid_status == 503 && $user_course_register->paid_status != 503){
-                 dd('لازم تدفع هاهاهاهاهاهاهاهاهاهاهاهاها');
-                 abort(404);
+            if (!isset($content->user_contents[0]) && $content->status != 1 && ($content->paid_status == 503 && $user_course_register->paid_status != 503)){
+                return redirect()->back()->with(["status" => 'danger',"msg" => "You can't open the content because it is paid."]);
             }
-
-
-
         }
 
-        if( !$preview_gate_allows ){
+
+        if( !$preview_gate_allows && $content->section->post_type == 'gift'){
             // Check if content type is Gift  => Check open After Progress IF NOT => ABORT(404)
             if (!$this->checkContentTypeGiftOpenAfter($content,$user_course_register)){
-                dd('ddddddddddd');
-                return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
+                return redirect()->back()->with(["status" => 'danger',"msg" => "You can't unbox the gift until you complete the required sections."]);
             }// end if
         }
 

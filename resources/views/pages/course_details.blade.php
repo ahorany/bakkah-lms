@@ -204,7 +204,16 @@
                                     @foreach($section->contents as $k => $content)
                                         <li>
                                             @if($content->downloadable==1)
-                                                <a href="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}" download>
+                                                <?php
+                                                $folder_name = '';
+                                                    switch ($type){
+                                                        case 'video': $folder_name = 'videos'; break;
+                                                        case 'audio': $folder_name = 'audios'; break;
+                                                        case 'presentation': $folder_name = 'presentations'; break;
+                                                        default : $folder_name = '';
+                                                    }
+                                                ?>
+                                                <a href="{{CustomAsset('upload/files/'.$folder_name.'/'.$content->upload->file)}}" download>
                                                     <img style="filter: opacity(1);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
                                                     @else
                                                         <?php
@@ -233,8 +242,7 @@
                                                                  }else if( $content->status == 1 || (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 503 && $content->paid_status == 503) ){ // if content paid and user pay course
                                                                      $content_show = true;
                                                                  }else{ // if course paid and user not pay course
-                                                                     $popup_pay_status = true;
-                                                                     $url = "/paynow";
+                                                                     $popup_pay_status = true; // preview pop up pay now
                                                                  }
                                                            }else if ( $content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
                                                                 $content_show = true;
@@ -246,10 +254,10 @@
                                                             <a @if($content_show)
                                                                href="{{$url}}"
                                                                @elseif($popup_pay_status)
-                                                               style="color: #c1bebe" href="#" onclick="pupupPay(event)"
+                                                               style="color: #c1bebe" href="#" onclick="pupupPay(event,'{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}')"
                                                                @else
                                                                style="color: #c1bebe" href="#" onclick="return false"
-                                                                @endif
+                                                               @endif
                                                             >
 
                                                             <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
@@ -331,7 +339,7 @@
                                                     <p>
                                                         You have successfully completed the course. Can’t wait for to hear the good news about you getting certified!
                                                     </p>
-                                                    <a target="_blank" href="https://abc.sa/" class="main-color px-4 my-4">Go To Pay Page</a>
+                                                    <a id="pay_btn" target="_blank" href="#" class="main-color px-4 my-4">Go To Pay Page</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -452,6 +460,7 @@
 
 @section('script')
 
+
     <script>
             window.total_rate = {!! json_encode($total_rate) !!}
             window.rate =  @json($course->course_rate->rate??null)
@@ -553,8 +562,10 @@
             $(".custom-model-main").removeClass('model-open');
         });
 
-        function pupupPay(event) {
+        function pupupPay(event,url) {
             event.preventDefault()
+            alert(url)
+            $("#pay_btn").attr('href',url);
             $(".custom-model-main").addClass('model-open');
         }
     </script>
