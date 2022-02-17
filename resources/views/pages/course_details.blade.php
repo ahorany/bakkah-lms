@@ -73,12 +73,8 @@
                 <?php
                 $url = '';
                 if($course->upload != null) {
-                    // if ($url == ''){
-                    //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
-                    // }else{
                     $url = $course->upload->file;
                     $url = CustomAsset('upload/full/'. $url);
-                    // }
                 }else {
                     $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . $course->trans_title;
                 }
@@ -217,7 +213,7 @@
                                             @if($content->downloadable==1)
                                                 <?php
                                                 $folder_name = '';
-                                                    switch ($type){
+                                                    switch ($content->post_type){
                                                         case 'video': $folder_name = 'videos'; break;
                                                         case 'audio': $folder_name = 'audios'; break;
                                                         case 'presentation': $folder_name = 'presentations'; break;
