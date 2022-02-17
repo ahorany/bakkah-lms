@@ -174,4 +174,7 @@ return [
     'Gift'=>'Gift',
     'add_gift'=>'Add Gift',
     'Free'=>'Free',
+    'Registered'=>'Registered',
+    'True'=>'True',
+    'False'=>'False',
 ];

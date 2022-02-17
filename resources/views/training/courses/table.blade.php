@@ -24,6 +24,7 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.delivery_methods')}}</th>
             <th class="">{{__('admin.assigned_learners')}}</th>
             <th class="">{{__('admin.completed_learners')}}</th>
+            <th class="">{{__('admin.Registered')}}</th>
             <th class="">{{__('admin.image')}}</th>
             {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
             <th class="text-right">{{__('admin.action')}}</th>
@@ -83,12 +84,22 @@ use App\Models\Training\CourseRegistration;
 
              <span class="td-title">{{$completed_learners}}</span>
         </td>
+        <td>
+            <?php
+            $registered = DB::table('courses_registration')
+                                    ->where('course_id',$post->id)
+                                    ->where('user_id',auth()->user()->id)->count();
+            ?>
+             <span class="td-title">
+                 @if($registered>0)
+                    <span class="badge-green">{{__('admin.True')}}</span>
+                @else
+                    <span class="badge-red">{{__('admin.False')}}</span>
+                 @endif
+             </span>
+        </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
-        {{-- <td class="d-sm-table-cell" style="font-size: 13px;">
-            <span class="author">
-              {!!$post->published_at!!}<br>
-            </span>
-        </td> --}}
+
 
           <td class="d-sm-table-cell text-right">
 {{--              @if(!checkUserIsTrainee())--}}

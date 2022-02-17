@@ -100,7 +100,7 @@ class CourseController extends Controller
         }
         $completed_learners = $completed_learners->count();
         $categories = Category::get();
-        // dd($completed_learners);
+        // dd($courses);
         return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors','completed_learners','categories'));
     }
 

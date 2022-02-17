@@ -146,4 +146,7 @@ return [
     'category'=>'التصنيف',
     'import_type'=>'Import Type',
     'sample'=>'Sample',
+    'Registered'=>'Registered',
+    'True'=>'True',
+    'False'=>'False',
 ];
