@@ -21,6 +21,17 @@
     }
     .certification-card span {
         color: rgb(106, 106, 106) !important;
+        padding: 2px 0;
+    }
+    .free{
+        background: gainsboro;
+        padding: 2px 10px;
+        font-size: 10px;
+        border-radius: 20px;
+        font-family: 'Lato Bold';
+    }
+    .learning-file ul li a:hover .free {
+        color: #000;
     }
     @media (max-width: 576px){
         .progress-main {
@@ -198,7 +209,7 @@
                     @foreach($course_collect[0] as $key => $section)
                         <div class="card learning-file mb-3">
                             <h3>{{$section->title}}</h3>
-                            <div style="margin: 0px 15px;">{!! $section->details->excerpt??null !!}</div>
+                            <div style="margin: 0px 30px;">{!! $section->details->excerpt??null !!}</div>
                             @isset($section->contents)
                                 <ul>
                                     @foreach($section->contents as $k => $content)
@@ -262,8 +273,17 @@
 
                                                             <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
                                                             @endif
-                                                            <span> {{$content->title}}</span>
-                                                             <span class="mx-1" style="color: #fb4400;"> | {{$content->paid_status == 504 ? 'Free' : 'Paid' }}</span>
+                                                            <span>
+                                                                {{$content->title}}
+                                                                @if ($content->paid_status == 504)
+                                                                    <span>
+                                                                        {{-- <span class="mx-1">|</span> --}}
+                                                                        <span class="mx-1 free">{{$content->paid_status == 504 ? 'Free' : '' }}</span>
+                                                                    </span>
+                                                                @endif
+                                                            </span>
+
+
                                                             <span class="svg">
                                                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
                                                                     <span class="flag_icon_true">
@@ -368,7 +388,7 @@
 {{--                                                    <small style="line-height: revert !important;"><span style="color: #fb4400 !important;">Note:</span> you can open this feture free when you complete the Coures</small>--}}
 {{--                                                </span>--}}
                                             </div>
-                                            <hr class="mx-auto my-4" style="width: 80%;">
+                                            <hr class="mx-auto my-3" style="width: 80%;">
                                             <div class="learning-file">
                                                 @isset($section->contents)
                                                       <ul>

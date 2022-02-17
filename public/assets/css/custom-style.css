@@ -628,7 +628,7 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     color: #000;
     margin: 0;
     margin-top: 5px;
-    min-height: 50px;
+    /* min-height: 50px; */
     display: flex;
     justify-content: center;
     align-items: baseline;
@@ -987,12 +987,19 @@ label.container-check.form-check-label span.checkmark{
     main#main-vue-element{
         padding: 1rem !important;
     }
-    .exam-simulator .no-img.certificate-img img{
-        width: 10%;
-    }
+
 }
 
 @media (min-width: 767.5px) and (max-width: 991.5px) {
+    .col-lg-8.mb-5.mb-lg-0.course_info {
+        margin: 0 !important;
+    }
+    .exam-simulator .no-img.certificate-img img{
+        width: 7%;
+    }
+    .text-center.course-image.certificate.certification-card {
+        border-radius: 0;
+    }
     .navigation_preview{
         margin: 0 !important;
         height: 100% !important;
@@ -1033,6 +1040,15 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
+    .col-lg-8.mb-5.mb-lg-0.course_info {
+        margin: 0 !important;
+    }
+    .exam-simulator .no-img.certificate-img img{
+        width: 7%;
+    }
+    .text-center.course-image.certificate.certification-card {
+        border-radius: 0;
+    }
     .navigation_preview{
         margin: 0 !important;
         height: 100% !important;
@@ -1324,6 +1340,9 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 500.5px) {
+    .exam-simulator .no-img.certificate-img img {
+        width: 15%;
+    }
     .card-header.d-flex.justify-content-between.align-items-center {
         display: flex !important;
         align-items: space-between;
@@ -1341,9 +1360,13 @@ label.container-check.form-check-label span.checkmark{
     .dash-header.course_info {
         display: none;
     }
+    .no-img.certificate-img img {
+        width: 25%;
+    }
 }
 
 @media(max-width : 430.5px){
+
     .learning-file ul li a span.svg {
         width: 65px;
         text-align: right;
