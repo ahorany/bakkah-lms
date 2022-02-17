@@ -62,7 +62,6 @@ class CourseController extends Controller
         // Get User Course Activities
         $activities = $this->getUserCourseActivities($course->id, $user_id);
 
-//        return $course;
         // $course_registration_id = CourseRegistration::where('course_id',$course->id)->where('user_id', \auth()->id())->pluck('id')->first();
         // $course_registration = CourseRegistration::where('course_id', $course->id)->where('user_id', \auth()->id())->select('id', 'role_id')->first();
         return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id'));
@@ -247,11 +246,22 @@ class CourseController extends Controller
              if(!$user_course_register){
                  abort(404);
              }// end if
+
+
+            // check if content is free or => paid and user paid this course else ABORT(404)
+            if ($content->paid_status == 503 && $user_course_register->paid_status != 503){
+                 dd('لازم تدفع هاهاهاهاهاهاهاهاهاهاهاهاها');
+                 abort(404);
+            }
+
+
+
         }
 
-        if(!$preview_gate_allows){
+        if( !$preview_gate_allows ){
             // Check if content type is Gift  => Check open After Progress IF NOT => ABORT(404)
             if (!$this->checkContentTypeGiftOpenAfter($content,$user_course_register)){
+                dd('ddddddddddd');
                 return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
             }// end if
         }
@@ -261,6 +271,8 @@ class CourseController extends Controller
         $next = $arr['next'];
         $previous = $arr['previous'];
         // end next and prev
+
+
 
         //TODO: Ahoray
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
@@ -441,7 +453,7 @@ class CourseController extends Controller
      *
      */
     private function checkContentTypeGiftOpenAfter($content,$user_course_register){
-        if($content->status == 1 || $user_course_register->progress >= $content->section->gift->open_after){
+        if($content->status == 1 || (isset($content->section->gift) && $user_course_register->progress >= $content->section->gift->open_after)){
             return true;
         }
             return false;
