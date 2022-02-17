@@ -174,6 +174,12 @@ return [
     'Gift'=>'Gift',
     'add_gift'=>'Add Gift',
     'Free'=>'Free',
+<<<<<<< HEAD
     'ref_id'=>'Ref id',
 
+=======
+    'Registered'=>'Registered',
+    'True'=>'True',
+    'False'=>'False',
+>>>>>>> 133243307e7a52c651282519f1d9211b29851325
 ];

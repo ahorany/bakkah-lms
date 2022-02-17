@@ -146,5 +146,11 @@ return [
     'category'=>'التصنيف',
     'import_type'=>'Import Type',
     'sample'=>'Sample',
+<<<<<<< HEAD
     'ref_id'=>'Ref id',
+=======
+    'Registered'=>'Registered',
+    'True'=>'True',
+    'False'=>'False',
+>>>>>>> 133243307e7a52c651282519f1d9211b29851325
 ];

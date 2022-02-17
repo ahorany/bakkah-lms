@@ -15,6 +15,10 @@
         <a href="{{route('training.role_path',['course_id'=>$course_id])}}" class="@isset($role_path) @if($role_path == true) active @else '' @endif @endisset @isset($green) green @else cyan @endisset mb-1 ml-1 btn-sm d-inline-block">Rule and Path</a>
     @endcan
 
+    <a href="{{CustomRoute('user.course_details', ['course_id'=>$course_id]) }}?preview=true" class="@isset($green) green @else cyan @endisset mb-1 ml-1">
+        <span>Preview</span>
+    </a>
+
     @if(!isset($courses_home))
         <a href="{{route('training.courses.index')}}" class="@isset($green) green @else cyan @endisset mb-1 ml-1">
             <span>Course List</span>
