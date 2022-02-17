@@ -327,7 +327,6 @@
                 </div>
                 <div class="col-lg-4 course_info">
                     @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress >= $course->complete_progress ))
-
                         @if(!is_null($course_registration))
                             {{-- class="green mb-1"  --}}
                             <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration->id ] )}}"
@@ -343,6 +342,8 @@
                                 </div>
                             </a>
                         @endif
+                    @endif
+
 
                         <div class="custom-model-main">
                             <div class="custom-model-inner">
@@ -373,63 +374,63 @@
 
                         @if(isset($course_collect[1]))
                             @foreach($course_collect[1] as  $key => $section)
-                                    <div>
-                                        <div class="text-center course-image certificate certification-card exam-simulator">
-                                            <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
-                                                @if(isset($course->users[0]) &&  $section->gift->open_after <= $course->users[0]->pivot->progress)
-                                                  <img src="{{CustomAsset('icons/lock_open.svg')}}" height="auto" width="15%">
-                                                @else
-                                                  <img src="{{CustomAsset('icons/lock_close.svg')}}" height="auto" width="15%">
-                                                @endif
-                                            </div>
-                                            <div>
-                                                <h2>{{$section->title}}</h2>
-{{--                                                <span>--}}
-{{--                                                    <small style="line-height: revert !important;"><span style="color: #fb4400 !important;">Note:</span> you can open this feture free when you complete the Coures</small>--}}
-{{--                                                </span>--}}
-                                            </div>
-                                            <hr class="mx-auto my-3" style="width: 80%;">
-                                            <div class="learning-file">
-                                                @isset($section->contents)
-                                                      <ul>
-                                                          @foreach($section->contents as $k => $content)
-                                                                   <li>
-                                                                        @if($content->downloadable==1)
-                                                                           <a href="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}" download>
-                                                                             <img style="filter: opacity(1);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
-                                                                        @else
-                                                                            <?php
-                                                                            $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
-                                                                            if($content->post_type != 'exam'){
-                                                                                $url = CustomRoute('user.course_preview', $content->id).$preview_url;
-                                                                            }else{
-                                                                                if(Gate::allows('preview-gate')){
-                                                                                    $url = CustomRoute('training.exam.preview.content', $content->id).$preview_url;
-                                                                                }
-                                                                                else{
-                                                                                    $url = CustomRoute('user.exam', $content->id).$preview_url;
-                                                                                }
+                                <div>
+                                    <div class="text-center course-image certificate certification-card exam-simulator">
+                                        <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
+                                            @if(isset($course->users[0]) &&  $section->gift->open_after <= $course->users[0]->pivot->progress)
+                                                <img src="{{CustomAsset('icons/lock_open.svg')}}" height="auto" width="15%">
+                                            @else
+                                                <img src="{{CustomAsset('icons/lock_close.svg')}}" height="auto" width="15%">
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <h2>{{$section->title}}</h2>
+                                            {{--                                                <span>--}}
+                                            {{--                                                    <small style="line-height: revert !important;"><span style="color: #fb4400 !important;">Note:</span> you can open this feture free when you complete the Coures</small>--}}
+                                            {{--                                                </span>--}}
+                                        </div>
+                                        <hr class="mx-auto my-3" style="width: 80%;">
+                                        <div class="learning-file">
+                                            @isset($section->contents)
+                                                <ul>
+                                                    @foreach($section->contents as $k => $content)
+                                                        <li>
+                                                            @if($content->downloadable==1)
+                                                                <a href="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}" download>
+                                                                    <img style="filter: opacity(1);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
+                                                                    @else
+                                                                        <?php
+                                                                        $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
+                                                                        if($content->post_type != 'exam'){
+                                                                            $url = CustomRoute('user.course_preview', $content->id).$preview_url;
+                                                                        }else{
+                                                                            if(Gate::allows('preview-gate')){
+                                                                                $url = CustomRoute('training.exam.preview.content', $content->id).$preview_url;
                                                                             }
-                                                                            ?>
+                                                                            else{
+                                                                                $url = CustomRoute('user.exam', $content->id).$preview_url;
+                                                                            }
+                                                                        }
+                                                                        ?>
 
-                                                                       <?php
-                                                                       $content_show = false;
-                                                                       if ($content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
-                                                                           $content_show = true;
-                                                                       }
+                                                                        <?php
+                                                                        $content_show = false;
+                                                                        if ($content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
+                                                                            $content_show = true;
+                                                                        }
 
-                                                                       ?>
-                                                                            <a @if($content_show)
-                                                                               href="{{$url}}"
-                                                                               @else
-                                                                               style="color: #c1bebe" href="#" onclick="return false"
-                                                                                @endif >
+                                                                        ?>
+                                                                        <a @if($content_show)
+                                                                           href="{{$url}}"
+                                                                           @else
+                                                                           style="color: #c1bebe" href="#" onclick="return false"
+                                                                            @endif >
                                                                             <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
 
 
-                                                                                <span>{{$content->title}}</span>
+                                                                            <span>{{$content->title}}</span>
 
-                                                                                <span class="svg">
+                                                                            <span class="svg">
                                                                                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                                                     <span>
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
@@ -437,7 +438,7 @@
                                                                                             <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#4cdd42"/>
                                                                                         </svg>
                                                                                     </span>
-                                                                                  @else
+                                                                                @else
                                                                                     <span>
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 59 59">
                                                                                             <g id="Check_2" data-name="Check 2" transform="translate(-0.2 0.2)">
@@ -446,31 +447,29 @@
                                                                                             </g>
                                                                                         </svg>
                                                                                     </span>
-                                                                               @endif
+                                                                                @endif
                                                                            </span>
                                                                         </a>
-                                                                      @endif
-                                                                </li>
-                                                          @endforeach
-                                                      </ul>
+                                                            @endif
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
 
-                                                @endisset
-                                            </div>
+                                            @endisset
                                         </div>
                                     </div>
+                                </div>
                             @endforeach
                         @endif
 
 
 
-                            @include('Html.activity-card', [
-                             'activities'=>$activities,
-                             'cls'=>'card p-30 activity',
-                         ])
+                        @include('Html.activity-card', [
+                         'activities'=>$activities,
+                         'cls'=>'card p-30 activity',
+                     ])
 
 
-
-                    @endif
                 </div>
             </div>
         @endif
