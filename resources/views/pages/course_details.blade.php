@@ -14,8 +14,10 @@
         width: 60% !important;
         margin-top: 15px !important;
     }
+    .svghover {
+        fill: #fb4400;
+    }
     svg {
-        /* fill: #c6c6c6; */
         cursor: pointer;
         width: 20px;
     }
@@ -24,27 +26,26 @@
         padding: 2px 0;
     }
     .free{
-        background: #ececec;
+        background: #fb4400;
+        color: #fff;
         padding: 2px 10px;
         font-size: 10px;
         border-radius: 20px;
         font-family: 'Lato Bold';
     }
-    .learning-file ul li a:hover .free {
-        color: #000;
-    }
     .text-gift span.text{
         color: rgb(193, 190, 190) !important;
     }
+    .gray-icon{
+        filter: opacity(0.3) !important;
+    }
+
     @media (max-width: 576px){
         .progress-main {
             width: 100% !important;
         }
     }
 
-    .svghover {
-        fill: #fb4400;
-    }
 </style>
 
 @section('content')
@@ -268,9 +269,9 @@
                                                             <a @if($content_show)
                                                                href="{{$url}}"
                                                                @elseif($popup_pay_status)
-                                                               style="color: #c1bebe" href="#" onclick="pupupPay(event,'{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}')"
+                                                                href="#" class="gray-icon" onclick="pupupPay(event,'{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}')"
                                                                @else
-                                                               style="color: #c1bebe" href="#" onclick="return false"
+                                                                href="#" class="gray-icon" onclick="return false"
                                                                @endif
                                                             >
 
@@ -304,22 +305,17 @@
                                                                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                                     <span>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
-                                                            <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
-                                                            <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#4cdd42"/>
+                                                            <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
+                                                            <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#fff"/>
                                                         </svg>
                                                     </span>
-                                                                @else
-                                                                    <span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 59 59">
-                                                            <g id="Check_2" data-name="Check 2" transform="translate(-0.2 0.2)">
-                                                            <rect id="Check_2_Background_" data-name="Check 2 (Background)" width="59" height="59" transform="translate(0.2 -0.2)" fill="none"/>
-                                                            <path id="_22_Check" data-name="22 Check" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(5.2 4.8)" fill="none" stroke="#d7d7d7" stroke-width="2" stroke-dasharray="0 0"/>
-                                                            </g>
-                                                        </svg>
+                                                        @else
+                                                            <span>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52"><path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#ccc" stroke-width="3" stroke-dasharray="0 0"></path> <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#ccc"></path></svg>
+                                                            </span>
+                                                        @endif
                                                     </span>
-                                                                @endif
-                                            </span>
-                                                        </a>
+                                                </a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -426,34 +422,28 @@
                                                                         <a @if($content_show)
                                                                            href="{{$url}}"
                                                                            @else
-                                                                           class="text-gift" href="#" onclick="return false"
+                                                                           class="gray-icon" href="#" onclick="return false"
                                                                             @endif >
-                                                                            <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
+                                                                            <img style="margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
 
 
                                                                             <span class="text">{{$content->title}}</span>
 
-                                                                            @if($content_show)
                                                                              <span class="svg">
+                                                                                 {{-- @dd(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1) --}}
                                                                                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                                                     <span>
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
-                                                                                            <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
-                                                                                            <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#4cdd42"/>
+                                                                                            <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
+                                                                                            <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#fff"/>
                                                                                         </svg>
                                                                                     </span>
                                                                                 @else
                                                                                     <span>
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 59 59">
-                                                                                            <g id="Check_2" data-name="Check 2" transform="translate(-0.2 0.2)">
-                                                                                            <rect id="Check_2_Background_" data-name="Check 2 (Background)" width="59" height="59" transform="translate(0.2 -0.2)" fill="none"/>
-                                                                                            <path id="_22_Check" data-name="22 Check" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(5.2 4.8)" fill="none" stroke="#d7d7d7" stroke-width="2" stroke-dasharray="0 0"/>
-                                                                                            </g>
-                                                                                        </svg>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52"><path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#ccc" stroke-width="3" stroke-dasharray="0 0"></path> <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#ccc"></path></svg>
                                                                                     </span>
                                                                                 @endif
                                                                            </span>
-                                                                            @endif
                                                                         </a>
                                                             @endif
                                                         </li>
