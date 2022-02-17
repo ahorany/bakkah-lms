@@ -56,6 +56,7 @@
                 </svg>
             </a>
 
+{{--            @dd(auth()->user()->roles()->first()->id == 1 || auth()->user()->delegation_role_id == 1)--}}
             @if (auth()->user()->roles()->first()->id == 1 || auth()->user()->delegation_role_id == 1)
                 <div class="dropdown d-none">
                     <ul class="postition-relative">

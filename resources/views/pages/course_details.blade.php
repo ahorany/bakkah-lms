@@ -173,6 +173,10 @@
                         @if(!is_null($course->users[0]->pivot->progress))
                             <a href="{{route("user.resume",$course->id)}}" class="main-button main-color">Resume Course</a>
                         @endif
+
+                        @if($course->users[0]->pivot->paid_status != 503)
+                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="main-button main-color">Pay Now</a>
+                        @endif
                     </div>
                 @endif
             </div>
@@ -232,7 +236,7 @@
                                                             $url = CustomRoute('user.course_preview', $content->id).$preview_url;
                                                         }else{
                                                             if(Gate::allows('preview-gate')){
-                                                                $url = CustomRoute('training.exam.preview.content', $content->id).$preview_url;
+                                                                $url = CustomRoute('training.add_questions', $content->id).$preview_url;
                                                             }
                                                             else{
                                                                 $url = CustomRoute('user.exam', $content->id).$preview_url;
@@ -404,7 +408,7 @@
                                                                             $url = CustomRoute('user.course_preview', $content->id).$preview_url;
                                                                         }else{
                                                                             if(Gate::allows('preview-gate')){
-                                                                                $url = CustomRoute('training.exam.preview.content', $content->id).$preview_url;
+                                                                                $url = CustomRoute('training.add_questions', $content->id).$preview_url;
                                                                             }
                                                                             else{
                                                                                 $url = CustomRoute('user.exam', $content->id).$preview_url;

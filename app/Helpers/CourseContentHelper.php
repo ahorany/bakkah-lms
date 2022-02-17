@@ -182,7 +182,7 @@ class CourseContentHelper
                 $next_url = CustomRoute('user.course_preview', $next->id);
             }else{
                 if(Gate::allows('preview-gate')){
-                    $next_url =  CustomRoute('training.exam.preview.content', $next->id);
+                    $next_url =  CustomRoute('training.add_questions', $next->id);
                 }
                 else{
                     $next_url =  CustomRoute('user.exam', $next->id);
@@ -195,7 +195,7 @@ class CourseContentHelper
                 $previous_url = CustomRoute('user.course_preview', $previous->id);
             }else{
                 if(Gate::allows('preview-gate')){
-                    $previous_url =  CustomRoute('training.exam.preview.content', $previous->id);
+                    $previous_url =  CustomRoute('training.add_questions', $previous->id);
                 }
                 else{
                     $previous_url =  CustomRoute('user.exam', $previous->id);
