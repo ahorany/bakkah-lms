@@ -92,9 +92,9 @@ use App\Models\Training\CourseRegistration;
             ?>
              <span class="td-title">
                  @if($registered>0)
-                    <span class="badge-green">{{__('admin.True')}}</span>
+                    <span class="badge-green d-block">{{__('admin.True')}}</span>
                 @else
-                    <span class="badge-red">{{__('admin.False')}}</span>
+                    <span class="badge-red d-block">{{__('admin.False')}}</span>
                  @endif
              </span>
         </td>
