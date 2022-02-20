@@ -5,101 +5,97 @@
 @endsection
 
 @section('style')
-<style>
-    table {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        table-layout: fixed;
-    }
-
-    table tbody tr {
-        background-color: #f8f8f8;
-        border: 1px solid #ddd;
-        padding: .35em;
-    }
-
-    table thead tr{
-        background-color: #f0f0f0;
-        border: 1px solid #ddd;
-        padding: .35em;
-    }
-
-        table th,
-        table td {
-        padding: .625em;
-        text-align: center;
-    }
-
-        table th {
-        font-size: .85em;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-    }
-
-    .progress {
-        background: gainsboro;
-        border-radius: 5px;
-        overflow: hidden;
-        color: #fff;
-    }
-    .progress-bar{
-        width: 50%;
-        margin: 0 !important;
-    }
-
-    @media screen and (max-width: 1150px) {
+    <style>
         table {
-            border: 0;
-        }
-
-        table caption {
-            font-size: 1.3em;
-        }
-
-        table thead {
-            border: none;
-            clip: rect(0 0 0 0);
-            height: 1px;
-            margin: -1px;
-            overflow: hidden;
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
             padding: 0;
-            position: absolute;
-            width: 1px;
+            width: 100%;
+            table-layout: fixed;
         }
 
-        table tr {
-            border-bottom: 3px solid #ddd;
-            display: block;
-            margin-bottom: .625em;
+        table tbody tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
         }
 
-        table td {
-            border-bottom: 1px solid #ddd;
-            display: block;
-            font-size: .8em;
-            text-align: left;
+        table thead tr{
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: .35em;
         }
 
-        table td::before {
-            /*
-            * aria-label has no advantage, it won't be read inside a table
-            content: attr(aria-label);
-            */
-            content: attr(data-label);
-            float: left;
-            font-weight: bold;
+            table th,
+            table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+            table th {
+            font-size: .85em;
+            letter-spacing: .1em;
             text-transform: uppercase;
         }
 
-        table td:last-child {
-            border-bottom: 0;
+        .progress {
+            background: gainsboro;
+            border-radius: 5px;
+            overflow: hidden;
+            color: #fff;
         }
-    }
+        .progress-bar{
+            width: 50%;
+            margin: 0 !important;
+        }
 
-</style>
+        @media screen and (max-width: 1150px) {
+            table {
+                border: 0;
+            }
+
+            table caption {
+                font-size: 1.3em;
+            }
+
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: left;
+            }
+
+            table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+
+    </style>
 @endsection
 
 @section('content')
@@ -120,7 +116,6 @@
             }
         }
 
-
     ?>
 
 <div class="card p-5 user-info exam_page">
@@ -131,7 +126,6 @@
                 'course_title'=>$exam->course->trans_title,
                 'section_title' => $exam->section->title,
                 'content_title'=>$exam->title,
-                // 'content_title'=>__('education.Exam'),
             ])
             <div class="parent_next_prev">
                 @if($previous)
@@ -155,12 +149,11 @@
         </div>
         <br>
 
-        <div class="row">
+        <div class="row mx-0">
             @if(session()->has('status'))
                 <div class="col-md-12">
                     <div class="error-notice">
                         <div class="oaerror danger">
-                            {{-- <strong>Error</strong>- --}}
                             {{session()->get('msg')}}
                         </div>
                     </div>
@@ -218,69 +211,66 @@
             </div>
 
             <div class="col-12 mt-5">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col"># Attempt</th>
-                    <th scope="col">Your Start Time</th>
-                    <th scope="col">Your End Time</th>
-                    <th scope="col">Review</th>
-                    <th scope="col">Details</th>
-                    <th scope="col">Time taken</th>
-                    <th scope="col">Pass Mark (%)</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Mark</th>
-                    <th scope="col">Progress</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($exam->exam->users_exams as $attempt)
+                <table class="table">
+                    <thead>
                     <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$attempt->time}}</td>
-                        <td >{{$attempt->end_attempt??'-----'}}</td>
-                        <?php
-
-                        $date1 = new DateTime( $attempt->time);
-                        $date2 = new DateTime($attempt->end_attempt);
-                        $interval = $date1->diff($date2);
-                        $diff = '';
-
-                        $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
-                        ?>
-
-                        <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge badge-info p-2">Review</a>@else ---- @endif</td>
-                        <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge badge-info p-2">View Result Details</a>@else ---- @endif</td>
-                        <td>{{$diff??'0 seconds'}}</td>
-                        <td class="text-bold">{{($exam->exam->pass_mark??0).'%'}}</td>
-
-                        <td class="text-bold">
-{{--                            <span class="{{$attempt->status == 1 ? 'badge badge-success' : 'badge badge-danger' }}">{{$attempt->status == 1 ? 'Complete' : 'Not Complete'}}</span>--}}
-                       @if( (($exam->exam->exam_mark * $exam->exam->pass_mark) / 100) <= $attempt->mark)
-                          <span class="badge-green">Pass</span>
-                       @else
-                           <span class="badge-red">Fail</span>
-                       @endif
-                        </td>
-
-
-                        <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
-                        <td>
-                            @if($exam->exam->exam_mark && $exam->exam->exam_mark != 0)
-                                <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
-                                  <span>{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '0%' }}</span>
-{{--                                <div class="progress">--}}
-{{--                                    <div class="mx-auto progress-bar @if($progress < 50) bg-danger @endif"  role="progressbar" style="width: {{($progress > 0) ? number_format($progress, 0, '.', ',') . '%' : '0'}};" aria-valuenow="{{$progress}}" aria-valuemin="0" aria-valuemax="100">{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '' }}</div>--}}
-{{--                                </div>--}}
-                            @endif
-                        </td>
+                        <th scope="col"># Attempt</th>
+                        <th scope="col">Your Start Time</th>
+                        <th scope="col">Your End Time</th>
+                        <th scope="col">Review</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Time taken</th>
+                        <th scope="col">Pass Mark (%)</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Mark</th>
+                        <th scope="col">Progress</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($exam->exam->users_exams as $attempt)
+                        <tr>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$attempt->time}}</td>
+                            <td >{{$attempt->end_attempt??'-----'}}</td>
+                            <?php
+
+                            $date1 = new DateTime( $attempt->time);
+                            $date2 = new DateTime($attempt->end_attempt);
+                            $interval = $date1->diff($date2);
+                            $diff = '';
+
+                            $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
+                            ?>
+
+                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge badge-info p-2">Review</a>@else ---- @endif</td>
+                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge badge-info p-2">View Result Details</a>@else ---- @endif</td>
+                            <td>{{$diff??'0 seconds'}}</td>
+                            <td class="text-bold">{{($exam->exam->pass_mark??0).'%'}}</td>
+
+                            <td class="text-bold">
+                        @if( (($exam->exam->exam_mark * $exam->exam->pass_mark) / 100) <= $attempt->mark)
+                            <span class="badge-green">Pass</span>
+                        @else
+                            <span class="badge-red">Fail</span>
+                        @endif
+                            </td>
+
+
+                            <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
+                            <td>
+                                @if($exam->exam->exam_mark && $exam->exam->exam_mark != 0)
+                                    <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
+                                    <span>{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '0%' }}</span>
+
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('script')

@@ -1,10 +1,10 @@
-<div class="row">
+<div class="row mx-0">
     <div class="col-md-12">
         @include('Html.alert')
         @include('Html.errors')
     </div>
 </div>
-<div class="row">
+<div class="row mx-0 pt-2">
 	<div class="col-md-9">
 		@csrf
 		{!!Builder::Hidden('post_type', $post_type)!!}

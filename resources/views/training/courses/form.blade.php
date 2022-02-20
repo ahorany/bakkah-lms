@@ -29,8 +29,6 @@
 
             {!!Builder::Input('ref_id', 'ref_id', null, ['col'=>'col-md-6'])!!}
 
-
-
             {{Builder::SetPrefix('training.')}}
             {!!Builder::Textarea('en_accredited_notes', 'en_accredited_notes', null, [
                 'row'=>8,

@@ -496,8 +496,8 @@ img {
 
 .signin .logo {
   position: absolute;
-  left: 80px;
-  top: 60px;
+  left: 5%;
+  top: 5%;
 }
 
 .signin-form {
