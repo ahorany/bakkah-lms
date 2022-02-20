@@ -39,7 +39,6 @@ class CertificateControllerH extends Controller
     }
 
     public function index(){
-
         $post_type = 'certificate';
         $trash = GetTrash();
         $certificates = Certificate::whereNull('parent_id');

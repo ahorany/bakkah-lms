@@ -9,7 +9,7 @@ class AsideComposer
 {
 	public function compose(View $view){
 
-        $user_pages = Infrastructure::select('Infrastructures.*')->get();
+        $user_pages = Infrastructure::all();
         $view->with('user_pages', $user_pages);
 
 
