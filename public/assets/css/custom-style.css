@@ -1,12 +1,15 @@
 .form-control{
     appearance: auto;
 }
-.lms-header ul.navbar-nav li.has-dropdown a.nav-link.role.not_admin{
-    color: rgb(0 0 0 / 15%) !important;
+
+.lms-header ul.navbar-nav li.user a.nav-link.role.not_admin{
+    border: none;
 }
-.lms-header ul.navbar-nav li.has-dropdown a.nav-link.role.not_admin .svg-icons-h , .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin svg{
-    opacity: 0.15;
+
+.lms-header ul.navbar-nav li.user a.nav-link.role.not_admin svg{
+    display: none;
 }
+
 span.flag_icon_false svg path , .flag svg path {
     stroke: gray;
     transform: rotate(15deg);
