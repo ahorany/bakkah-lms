@@ -3,8 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\SEO\Seo;
-use App\Models\SEO\Postkeyword;
 use App\Traits\TrashTrait;
 use App\User;
 
@@ -30,13 +28,5 @@ class Eloquent extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    //Moved to SeoTrait
-    public function seo(){
-        return $this->morphOne(Seo::class, 'seoable');
-    }
 
-    //Moved to SeoTrait
-    public function postkeyword(){
-        return $this->morphMany(Postkeyword::class, 'seokeywordable');
-    }
 }

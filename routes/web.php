@@ -21,44 +21,12 @@ Route::group([
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Route::get('/', function(){
     return redirect()->route('user.home');
 });
 
 Route::get('/clear-permissions', function(){
     \Artisan::call('cache:forget spatie.permission.cache');
-    // dd('dddd');
     return redirect()->route('user.home');
 })->middleware('auth');
 

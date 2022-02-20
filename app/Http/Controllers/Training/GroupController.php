@@ -18,6 +18,8 @@ class GroupController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('permission:training.groups.index');
+
         Active::$namespace = 'training';
         Active::$folder = 'groups';
     }

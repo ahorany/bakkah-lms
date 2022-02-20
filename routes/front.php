@@ -27,7 +27,10 @@ Route::group([
 ], function() {
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
-        Route::get('/home', [\App\Http\Controllers\Front\HomeController::class, 'home'])->name('home');
+        Route::get('/home', [\App\Http\Controllers\Front\HomeController::class, 'home'])->name('home')->middleware('SetSideBarItemActiveBySession:user.home');
+
+
+
         Route::get('/certificate', [\App\Http\Controllers\Front\HomeController::class, 'certificate'])->name('certificate');
         Route::get('/congrats', [\App\Http\Controllers\Front\HomeController::class, 'congrats'])->name('congrats');
         Route::get('/change/role/{id}',  [UserProfileController::class, 'change_role'])->name('change.role');

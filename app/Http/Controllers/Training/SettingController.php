@@ -18,6 +18,8 @@ class SettingController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('permission:training.settings.index');
+
         Active::$namespace = 'training';
         Active::$folder = 'settings';
     }

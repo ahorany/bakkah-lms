@@ -41,7 +41,7 @@ class CourseController extends Controller
         $preview_gate_allows = Gate::allows('preview-gate');
 
         // clear session => (Sidebar active color)
-        session()->put('infastructure_id', -1);
+        session()->put('Infrastructure_id', -1);
 
         $course_registration = CourseRegistration::where('course_id', $course_id)
         ->where('user_id', $user_id)

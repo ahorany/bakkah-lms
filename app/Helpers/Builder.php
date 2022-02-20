@@ -71,10 +71,10 @@ class Builder {
             $href = !is_null($sidebar->route_name)?route($sidebar->route_name, $args):'#';
             $psth_to__check = str_replace(Request::root().'/',"", $href);
 
-            $active = ($sidebar->id == session('infastructure_id')) ? 'active' : $active;
+            $active = ($sidebar->id == session('Infrastructure_id')) ? 'active' : $active;
 //            $active = ($sidebar->id== (url()->full() == route($sidebar->route_name, $args)) ) && (url()->full() != CustomRoute('user.home'))  ? 'active' : $active;
-    //        $active = (session('infastructure_id') != 'user') ? 'active' : '';
-    //        dump(session('infastructure_id'));
+    //        $active = (session('Infrastructure_id') != 'user') ? 'active' : '';
+    //        dump(session('Infrastructure_id'));
 
             $div .= '<a href="'.$href.'" class="nav-link '.$active.'">';
 

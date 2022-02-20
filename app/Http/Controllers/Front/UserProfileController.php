@@ -14,7 +14,7 @@ use App\Models\Training\UserQuestion;
 use App\User;
 use App\Constant;
 use App\Models\Admin\Role;
-use App\Models\Admin\Upload;
+use App\Models\Training\Upload;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Training\Course;

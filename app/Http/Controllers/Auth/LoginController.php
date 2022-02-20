@@ -40,12 +40,5 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated(Request $request, $user)
-    {
-        if(env('Two_Factor_Login')==true)
-        {
-            $user->generateTwoFactorCode();
-            $user->notify(new TwoFactorCode());
-        }
-    }
+
 }

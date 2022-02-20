@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Training;
 
 use App\Helpers\Active;
+use App\Http\Requests\Training\RoleRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\RoleRequest;
-use App\Infrastructure;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Models\Training\Role;
 
 class RoleController extends Controller
 {
@@ -40,8 +39,7 @@ class RoleController extends Controller
         }
 
     	$count = $roles->count();
-    	$roles = $roles->paginate(100);
-    	// $roles = $roles->page();
+    	$roles = $roles->page();
 
         return Active::Index(compact('roles', 'count', 'post_type', 'trash'));
     }
@@ -51,19 +49,6 @@ class RoleController extends Controller
         $role = new Role;
         $permission = Permission::get();
         return Active::Create(['eloquent'=>$role, 'object'=>ٌRole::class,'permission' => $permission]);
-
-//        $pages = Infrastructure::where('type', 'aside')
-//                ->whereNull('parent_id')
-//                ->orderBy('order')
-//                ->get();
-//
-//        $infrastructures = Infrastructure::where('type', 'aside')
-//                ->whereNotNull('parent_id')
-//                ->orderBy('order')
-//                ->get();
-
-//        $role = new Role;
-//        return Active::Create(['eloquent'=>$role, 'object'=>ٌRole::class, 'pages'=>$pages, 'infrastructures'=>$infrastructures]);
     }
 
     public function store(RoleRequest $request){

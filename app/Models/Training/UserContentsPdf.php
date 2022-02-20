@@ -6,8 +6,6 @@ use App\Traits\DetailMorphTrait;
 use App\Traits\ImgTrait;
 use App\Traits\Json\ExcerptTrait;
 use App\Traits\JsonTrait;
-use App\Traits\PostMorphTrait;
-use App\Traits\SeoTrait;
 use App\Traits\TrashTrait;
 use App\Traits\UserTrait;
 

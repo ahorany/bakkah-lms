@@ -45,7 +45,7 @@ class HomeController extends Controller
         // Mail::to("abed_348@hotmail.com")->send(new UserMail(1 , '1111111'));
         // dd('send');
         // clear session => (Sidebar active color)
-        session()->put('infastructure_id',-1);
+        session()->put('Infrastructure_id',-1);
 
         // Get all user courses registration
         $courses =  User::where('id',\auth()->id())->with(['courses' => function($q){

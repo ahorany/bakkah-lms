@@ -11,42 +11,8 @@
                 <p style="font-size: 14px; text-align: center;">Through this email, we will guide you in clear steps how to log in to your LMS account, but first you need to take into consideration the following:</p>
             @endif
         @endisset
-
     </div>
-    @isset($course)
-        @if ($course->training_option_id == 11)
-            <div style="margin: 15px 0; background: #f8f8f8; border-radius: 5px;">
-                <table border="0" style="padding: 10px 15px;" cellspacing="0">
-                    <tr style="text-align: center;">
-                        <td width="60">
-                            <div>
-                                <img src="{{CustomAsset('images/email/d2.png')}}" style="vertical-align: bottom;" width="50" height="auto">
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <span>You are on <strong>Self-Paced</strong> system in which you can study the materials according to your availability</span>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <table border="0" style="padding: 0px 15px 25px;" cellspacing="0">
-                    <tr style="text-align: center;">
-                        <td width="60">
-                            <div>
-                                <img src="{{CustomAsset('images/email/d1.png')}}" style="vertical-align: bottom;" width="50" height="auto">
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <span>The course material will be fully in <strong>English</strong></span>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        @endif
-    @endisset
+
 
     <table border="0"  width="400" style="margin: 0 auto;" cellspacing="0">
         <tr>

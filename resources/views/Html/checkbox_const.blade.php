@@ -1,10 +1,10 @@
 <?php
-$Infastructure = \App\Infastructure::where('post_type', $const_type)
+$Infrastructure = \App\Infrastructure::where('post_type', $const_type)
   ->where('route_name', 'admin.constants.index')->first();
 ?>
-@if(isset($Infastructure->icon))
+@if(isset($Infrastructure->icon))
 <div class="card card-default mb-2">
-  <div class="card-header"><i class="{{$Infastructure->icon}}"></i> {{$Infastructure->trans_title}}</div>
+  <div class="card-header"><i class="{{$Infrastructure->icon}}"></i> {{$Infrastructure->trans_title}}</div>
   <div class="card-body">
   	<?php
     $constants = \App\Constant::where('post_type', $const_type)->get();

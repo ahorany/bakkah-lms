@@ -32,8 +32,7 @@
         "pusher/pusher-php-server": "~3.0",
         "spatie/laravel-cookie-consent": "^2.12",
         "spatie/laravel-permission": "^4.0",
-        "spatie/laravel-sitemap": "^5.8",
-        "zanysoft/laravel-zip": "^1.0"
+        "spatie/laravel-sitemap": "^5.8"
     },
     "require-dev": {
         "facade/ignition": "^1.16.15",
