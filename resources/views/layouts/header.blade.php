@@ -40,13 +40,9 @@
 
     </button>
 
-    {{-- <span class="ml-auto">
-        <h5 class="mb-0" style="font-weight: 700;">{{auth()->user()->trans_name}}</h5>
-        <small>{{\auth()->user()->roles()->first()->trans_name}}</small>
-    </span> --}}
     <ul class="navbar-nav mx-0">
         <li class="has-dropdown user">
-            <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role" href="#">
+            <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role @if(!auth()->user()->hasRole(['Admin']) && is_null(auth()->user()->delegation_role_id)) not_admin @endif" href="#">
                 <span class="icon_role">
                     <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
                     {{$role->name}}
@@ -56,7 +52,6 @@
                 </svg>
             </a>
 
-{{--            @dd(auth()->user()->roles()->first()->id == 1 || auth()->user()->delegation_role_id == 1)--}}
             @if (auth()->user()->roles()->first()->id == 1 || auth()->user()->delegation_role_id == 1)
                 <div class="dropdown d-none">
                     <ul class="postition-relative">
