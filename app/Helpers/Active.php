@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Helpers;
-use App\Infastructure;
+use App\Infrastructure;
 
 class Active {
 
@@ -119,25 +119,25 @@ class Active {
         if(request()->has('group_slug') && !empty(request()->group_slug)){
             $post_type .= '-'.request()->group_slug;
         }
-		$infastructure = Infastructure::where('type', $type)
+		$Infrastructure = Infrastructure::where('type', $type)
 		->where('post_type', $post_type)
         ->where('route_name', $route_name)
         ->first();
 
-		if(isset($infastructure->id)){
-			session()->put('infastructure_id', $infastructure->id);
-			session()->put('infastructure__title', $infastructure->trans_title);
-			session()->put('infastructure_parent_id', $infastructure->parent_id);
-			session()->put('infastructure__icon', $infastructure->icon);
+		if(isset($Infrastructure->id)){
+			session()->put('Infrastructure_id', $Infrastructure->id);
+			session()->put('Infrastructure__title', $Infrastructure->trans_title);
+			session()->put('Infrastructure_parent_id', $Infrastructure->parent_id);
+			session()->put('Infrastructure__icon', $Infrastructure->icon);
 
 			//
-			$infastructure2 = Infastructure::where('type', $type)
-			->find($infastructure->parent_id);
-			if($infastructure2){
-				session()->put('infastructure_parent_id2', $infastructure2->parent_id);
+			$Infrastructure2 = Infrastructure::where('type', $type)
+			->find($Infrastructure->parent_id);
+			if($Infrastructure2){
+				session()->put('Infrastructure_parent_id2', $Infrastructure2->parent_id);
 			}
 			else{
-				session()->pull('infastructure_parent_id2');
+				session()->pull('Infrastructure_parent_id2');
 			}
 		}
 		else {
@@ -146,15 +146,15 @@ class Active {
     }
 
     static function LinkForget(){
-        if(session()->has('infastructure_id'))
+        if(session()->has('Infrastructure_id'))
 		{
-			session()->forget('infastructure_id');
-			session()->forget('infastructure_parent_id');
-			session()->forget('infastructure__title');
-			session()->forget('infastructure__icon');
+			session()->forget('Infrastructure_id');
+			session()->forget('Infrastructure_parent_id');
+			session()->forget('Infrastructure__title');
+			session()->forget('Infrastructure__icon');
 
-			if(session()->has('infastructure_parent_id2'))
-				session()->forget('infastructure_parent_id2');
+			if(session()->has('Infrastructure_parent_id2'))
+				session()->forget('Infrastructure_parent_id2');
         }
     }
 }

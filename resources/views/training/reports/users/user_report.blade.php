@@ -10,7 +10,6 @@
                 <a  href="{{route('training.usersReportCourse',['id'=>$user_id])}}" class="group_buttons btn-sm">Courses</a>
                 <a href="{{route('training.usersReportTest',['id'=>$user_id])}}" class="group_buttons btn-sm">Tests</a>
                 <a href="{{route('training.usersReportScorm',['user_id'=>$user_id])}}" class="group_buttons btn-sm">SCORM</a>
-                {{-- <a href="{{route('training.course_users',['id'=>$user_id])}}" class="group_buttons btn-sm">Certificates</a> --}}
             </div>
         </div>
     </div>

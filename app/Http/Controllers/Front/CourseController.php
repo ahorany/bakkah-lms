@@ -41,7 +41,7 @@ class CourseController extends Controller
         $preview_gate_allows = Gate::allows('preview-gate');
 
         // clear session => (Sidebar active color)
-        session()->put('infastructure_id', -1);
+        session()->put('Infrastructure_id', -1);
 
         $course_registration = CourseRegistration::where('course_id', $course_id)
         ->where('user_id', $user_id)
@@ -61,6 +61,7 @@ class CourseController extends Controller
 
         // Get User Course Activities
         $activities = $this->getUserCourseActivities($course->id, $user_id);
+
         // $course_registration_id = CourseRegistration::where('course_id',$course->id)->where('user_id', \auth()->id())->pluck('id')->first();
         // $course_registration = CourseRegistration::where('course_id', $course->id)->where('user_id', \auth()->id())->select('id', 'role_id')->first();
         return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id'));
@@ -90,7 +91,7 @@ class CourseController extends Controller
                 $q->where('post_type','intro_video')->orWhere('post_type', 'image');
             });
         }, 'contents' => function($query) use($role_id){
-            $query->where('post_type','section')->with(['details',
+            $query->where('parent_id',null)->with(['gift','details',
                 'contents' => function($q){
                     return $q->orderBy('order');
                 },
@@ -228,12 +229,14 @@ class CourseController extends Controller
      * Preview Content Course ( Content Page )
      */
     public function preview_content($content_id){
-
         $preview_gate_allows = Gate::allows('preview-gate');
 
         // Get content from DB
         $content = Content::whereId($content_id)
-            ->with(['upload','course' ,'section'])->first();
+            ->with(['upload','course' ,'section.gift','user_contents' => function($q){
+                $q->where('user_id',auth()->id());
+            }])->first();
+
 
         // Check if content not found => ABORT(404)
         if (!$content){
@@ -243,16 +246,37 @@ class CourseController extends Controller
         if(!$preview_gate_allows){
             // Check if user is not register in course AND user role not admin => ABORT(404)
             $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
-            // if(!$user_course_register){
-            //     abort(404);
-            // }// end if
-        }
+             if(!$user_course_register){
+                 abort(404);
+             }// end if
+
+            // check if content is free or => paid and user paid this course else ABORT(404)
+            if ($content->section->post_type == 'section' && !isset($content->user_contents[0]) && $content->status != 1 && ($content->paid_status == 503 && $user_course_register->paid_status != 503)){
+                return redirect()->back()->with(["status" => 'danger',"msg" => "You can't open the content because it is paid."]);
+            } // end if
+
+        } // end if
+
+
+
+
+        // gift status and check open after
+        if( !$preview_gate_allows && $content->section->post_type == 'gift'){
+            // Check if content type is Gift  => Check open After Progress IF NOT => ABORT(404)
+            if (!$this->checkContentTypeGiftOpenAfter($content,$user_course_register)){
+                return redirect()->back()->with(["status" => 'danger',"msg" => "You can't unbox the gift until you complete the required sections."]);
+            }// end if
+        }// end if
+
+
 
         // Get next and prev
         $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
         $next = $arr['next'];
         $previous = $arr['previous'];
         // end next and prev
+
+
 
         //TODO: Ahoray
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
@@ -263,6 +287,7 @@ class CourseController extends Controller
                 }// end if
             }
         }
+
 
        /*
         *  Create New User Content OR
@@ -279,8 +304,11 @@ class CourseController extends Controller
             $enabled = false;
         }// end if
 
+
+
        // Update Course Registration Progress When content have (role and path)
         $this->updateCourseRegistrationProgress($content->course_id,$content->role_and_path);
+
 
        // if downloadable status == true (Download file)
         if($content->downloadable == 1){
@@ -292,15 +320,17 @@ class CourseController extends Controller
         }// end if
 
 
+
         // get time limit content (duration in seconds)
         $time_limit = $content->time_limit;
+
+
 
         // Check user progress if grater than or equal complete progress for course
         // When user course => completed_at is null => update completed at In Course Registration
         // pop up status => preview else disable
         $popup_compelte_status = false;
         if(!$preview_gate_allows){
-
             if ($content->course->complete_progress <= $user_course_register->progress){
                 // Check if user course => completed_at is null => update completed at In Course Registration
                 if (!$user_course_register->completed_at){
@@ -314,12 +344,36 @@ class CourseController extends Controller
             } // end if
         }
 
+
+
+
+        // (isset($content->section->gift) && $user_course_register->progress >= $content->section->gift->open_after)
+        $popup_gift_status = false;
+        if(!$preview_gate_allows){
+            if (isset($content->section->gift) && $user_course_register->progress >= $content->section->gift->open_after){
+                // Check if user course => open_gift_at is null => update open_gift_at at In Course Registration
+                if (!$user_course_register->open_gift_at){
+                    CourseRegistration::where('user_id',auth()->id())
+                        ->where('course_id', $content->course->id)->update([
+                            'open_gift_at' => Carbon::now(),
+                        ]);
+
+                    $popup_gift_status = true;
+                } // end if
+            } // end if
+        }
+
+
+
+
         $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',auth()->user()->id)->pluck('current_page')->first();
+
+
 
         // user content flag (0 or 1)
         $flag = $userContent->flag;
 
-        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','page_num','flag'));
+        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','popup_gift_status','page_num','flag'));
     } // end function
 
 
@@ -400,12 +454,12 @@ class CourseController extends Controller
     private function createUserContentOrUpdate($content_id,$content_time_limit){
         $user_content =  UserContent::where('user_id' , \auth()->id())
             ->where('content_id' , $content_id)->first();
-
         if(!$user_content){ // create user content when not find
             $is_completed = 1;
             if($content_time_limit){ // if content has time limit => The new user content is_completed
                 $is_completed = 0;
             }
+
             $user_content = UserContent::create([
                 'user_id'      => \auth()->id(),
                 'content_id'   => $content_id,
@@ -414,8 +468,9 @@ class CourseController extends Controller
             ]);
         }else{ // update start time to now time when user content exists and (not completed)
             $is_completed = $user_content->is_completed;
+
             if($is_completed == 0){
-                $user_content = UserContent::where('user_id' , \auth()->id())
+                 UserContent::where('user_id' , \auth()->id())
                     ->where('content_id' , $content_id)
                     ->update([
                         'start_time'   => Carbon::now(),
@@ -427,6 +482,15 @@ class CourseController extends Controller
     } // end function
 
 
+    /*
+     *
+     */
+    private function checkContentTypeGiftOpenAfter($content,$user_course_register){
+        if($content->status == 1 || (isset($content->section->gift) && $user_course_register->progress >= $content->section->gift->open_after)){
+            return true;
+        }
+            return false;
+    }
 
     /****************************************************************************/
 

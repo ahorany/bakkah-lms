@@ -2,7 +2,7 @@
 
 namespace App\Models\Training;
 
-use App\Models\Admin\Upload;
+use App\Models\Training\Upload;
 use App\Traits\FileTrait;
 use App\Traits\ImgTrait;
 use App\Traits\TrashTrait;
@@ -46,4 +46,9 @@ class Content extends Model
     public function user_contents(){
         return $this->belongsToMany(User::class,'user_contents','content_id','user_id')->withPivot('user_id' ,'content_id','is_completed','flag');;
     }
+
+    public function gift(){
+        return $this->hasOne(Gift::class,'content_id');
+    }
+
 }

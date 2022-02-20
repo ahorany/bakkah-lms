@@ -4,38 +4,41 @@
     <title>{{__('education.Course Content')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-@section('table')
+@section('style')
     <style>
-    .course_info button {
-        padding: .375rem .75rem !important;
-    }
+        .course_info button {
+            padding: .375rem .75rem !important;
+        }
 
-    .ql-container.ql-snow{
-        height: 200px;
-    }
+        .ql-container.ql-snow{
+            height: 200px;
+        }
+
+        span.checkmark.disabeld_check {
+            background-color: #eee !important;
+        }
     </style>
+@endsection
+
+@section('table')
+
     <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
          <div class="toLoad" id="contents">
+            <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</h4>
             <div class="course_info mb-3 card p-3">
                 <div class="row">
-                    <div class="col-md-10 col-10">
-                        @include('training.courses.contents.header',['course_id' => $course->id, 'contents' =>true])
-                    </div>
-                    <div class="col-md-2 col-2 text-right">
-                        <div class="back">
-                            <a href="{{route('training.courses.index')}}" class="cyan mb-1">Course List</a>
-                        </div>
-                    </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <button type="button" @click="OpenModal('section',null)" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
+                            </button>
 
-                    @if(!checkUserIsTrainee())
-                        <div class="col-md-12 col-12">
-                            <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
-
-                            <button type="button" @click="OpenModal('section',null)" style="padding: 2px 8px;" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
+                            <button type="button" @click="OpenModal('gift',null)" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_gift')}}
                             </button>
                         </div>
-                    @endif
+
+                    <div class="col-lg-9 col-md-8 col-12 text-right">
+                        @include('training.courses.contents.header',['course_id' => $course->id, 'contents' =>true])
+                    </div>
                 </div>
             </div>
 
@@ -48,10 +51,11 @@
                                     <div class="col-md-8 col-lg-8">
                                         <span class="icon-bottom mr-1" style="cursor: pointer; vertical-align: text-bottom;">
                                             <i class="fa fa-chevron-down d-none" aria-hidden="true"></i>
-                                            <i class="fa fa-chevron-up " aria-hidden="true"></i>
+                                            <i class="fa faq-chevron-up " aria-hidden="true"></i>
                                         </span>
                                         <h3 class="BtnGroupRows text-capitalize d-inline-block" style="font-size: 22px;">@{{content.title}}</h3>
                                         <span class="badge badge-danger" v-if="content.hide_from_trainees==1">{{__('admin.hide from trainees')}}</span>
+                                        <span class="badge badge-secondary" v-if="content.post_type=='gift'">{{__('admin.Gift')}}</span>
                                     </div>
                                     <div class="col-md-4 col-lg-4 text-right">
                                         <div class="BtnGroupRows" data-id="150">
@@ -61,17 +65,17 @@
                                     </div>
                                     <div class="mt-3 col-md-12 col-lg-12">
                                         <div>
-                                            <button style="font-size: 90%;" type="button" @click="OpenModal('video',content.id)" class="cyan" id="video" ><i class="fa fa-video-camera" aria-hidden="true"></i> {{__('admin.video')}}</button>
-                                            <button style="font-size: 90%;" type="button" @click="OpenModal('audio',content.id)" class="cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
-                                            <button style="font-size: 90%;" type="button" @click="OpenModal('presentation',content.id)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
-                                            <button style="font-size: 90%;" type="button" @click="OpenModal('scorm',content.id)" class="cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
-                                            <button style="font-size: 90%;" type="button" @click="OpenModal('exam',content.id)" class="cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('video',content)" class="cyan" id="video" ><i class="fa fa-video-camera" aria-hidden="true"></i> {{__('admin.video')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('audio',content)" class="cyan" id="audio" ><i class="fa fa-headphones"></i> {{__('admin.audio')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('presentation',content)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('scorm',content)" class="cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('exam',content)" class="cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div v-if="content.details" class="my-2" v-html="content.details.excerpt">}</div>
+                            <div v-if="content.details" class="my-2" v-html="content.details.excerpt"></div>
 
                             <table class="table" id="content-items">
                                 <thead>
@@ -110,9 +114,7 @@
                                     <td class="text-right">
                                         <div class="BtnGroupRows buttons" data-id="150">
                                             <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
-{{--                                            <a v-if="entry.post_type == 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/training/exam/preview-content/' + entry.id" :target="entry.id">--}}
-{{--                                                <i class="fa fa-folder-open-o" aria-hidden="true"></i>--}}
-{{--                                            </a>--}}
+
                                            <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id + '?preview=true'" :target="entry.id">
                                                <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                                            </a>
@@ -128,6 +130,7 @@
                                 </tbody>
                             </table>
                             <br>
+
                         </div>
                     </div>
                 </div>
@@ -153,12 +156,23 @@
                                     </div>
                                 </div>
 
-                                <div v-if="model_type != 'exam' && model_type != 'scorm'" class="col-md-6 col-12">
+                                <div v-if="model_type != 'exam' && model_type != 'scorm' && model_type != 'gift'" class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Time Limit (seconds) </label>
                                         <input min="0" type="number" v-model="time_limit" name="time_limit" class="form-control" placeholder="time limit">
                                         <div v-show="'time_limit' in errors">
                                             <span style="color: red;font-size: 13px">@{{ errors.time_limit }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div v-if="model_type != 'exam' && model_type != 'scorm' && model_type == 'gift'" class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Open After (progress) % </label>
+                                        <input min="0" type="number" v-model="open_after" name="open_after" class="form-control" placeholder="open after">
+                                        <div v-show="'open_after' in errors">
+                                            <span style="color: red;font-size: 13px">@{{ errors.open_after }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -242,18 +256,10 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-md-6 col-12">
-                                            <div class="modal-diff-content form-group">
-                                                <label for="shuffle" class="m-0">Shuffle Answers</label>
-                                                <input id="shuffle" type="checkbox" v-model="shuffle_answers" name="shuffle_answers">
-                                                <div v-show="'shuffle_answers' in errors">
-                                                    <span style="color: red;font-size: 13px">@{{ errors.shuffle_answers }}</span>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-
                                     </div>
                                 </template>
+
+
                                 <div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content my-2">
                                     <editor v-model="excerpt" theme="snow" :options="options" :placeholder="'Details'"></editor>
                                     <div v-show="'excerpt' in errors">
@@ -261,7 +267,7 @@
                                     </div>
                                 </div>
 
-                                <div v-else-if="model_type != 'video'" class="modal-diff-content">
+                                <div v-else-if="model_type != 'video' && model_type != 'gift'" class="modal-diff-content">
                                     <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 200MB)</div>
 
                                     <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
@@ -273,7 +279,7 @@
                                     </div>
                                 </div>
 
-                                <div v-else class="modal-diff-content">
+                                <div v-else-if="model_type != 'gift'" class="modal-diff-content">
                                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                         <li class="nav-item mr-1">
                                             <a class="nav-link active cyan" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-file" aria-selected="true">Upload</a>
@@ -301,6 +307,14 @@
                                             <div class="progress">
                                                 <div class="progress-bar" role="progressbar" :style="{'width' : progress}"  aria-valuemin="0" aria-valuemax="100">@{{ progress }}</div>
                                             </div>
+                                            <div class="form-group form-check child">
+                                                <label class="container-check form-check-label" for="downloadable" style="padding: 25px 30px 0; font-size: 15px;">
+                                                    {{__('admin.downloadable')}}
+                                                    <input class="form-check-input child" style="display: inline-block;" v-model="downloadable" id="downloadable" type="checkbox" name="downloadable">
+                                                    <span class="checkmark" style="top: 26px;"></span>
+                                                </label>
+                                            </div>
+
                                         </div>
                                         <div class="tab-pane fade" id="pills-url" role="tabpanel" aria-labelledby="pills-url-tab">
                                             <input type="url" v-model="url" class="form-control" placeholder="Enter url">
@@ -321,7 +335,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12" v-if="model_type != 'section' && model_type != 'exam'">
+                                <div class="col-md-6 col-12" v-if="model_type != 'section' && model_type != 'exam' && model_type != 'gift' && model_type != 'scorm' &&  model_type != 'video' ">
                                     <div v-if="model_type != 'section' && model_type != 'exam'" class="form-group form-check child">
                                         <label class="container-check form-check-label" for="downloadable" style="padding: 25px 30px 0; font-size: 15px;">
                                             {{__('admin.downloadable')}}
@@ -330,41 +344,50 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
-                                    <div v-if="model_type != 'section'" class="form-group form-check child">
-                                        <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
-                                            {{__('admin.Enabeld Status')}}
-                                            <input class="form-check-input child" style="display: inline-block;" v-model="status" id="enabled" type="checkbox" name="status">
-                                            <span class="checkmark" style="top: 26px;"></span>
-                                        </label>
 
-                                        {{-- <input class="form-check-input child" v-model="status" id="1" type="checkbox" name="status"> --}}
-                                        {{-- <label class="form-check-label" for="1">{{__('admin.Enabeld Status')}}</label> --}}
+                                <div class="col-md-6 col-12">
+                                    <div v-if="model_type != 'section' && model_type != 'gift'" class="form-group form-check child">
+                                        <label class="container-check form-check-label" for="paid_status" style="padding: 25px 30px 0; font-size: 15px;">
+                                            {{__('admin.Enabeld Status')}}
+                                            <input :disabled="disabled_check" class="form-check-input child" style="display: inline-block;" v-model="status" id="paid_status" type="checkbox" >
+                                            <span :class="{'disabeld_check' : disabled_check}"  class="checkmark" style="top: 26px;"></span>
+                                        </label>
                                     </div>
                                 </div>
 
-                                {{-- <div class="row mx-0">
-
-                                </div> --}}
+                                <div class="col-md-6 col-12">
+                                    <div v-if="model_type != 'section' && model_type != 'gift' && !is_gift" class="form-group form-check child">
+                                        <label class="container-check form-check-label" for="enabled" style="padding: 25px 30px 0; font-size: 15px;">
+                                            {{__('admin.Free')}}
+                                            <input  class="form-check-input child" style="display: inline-block;" v-model="paid_status" id="enabled" type="checkbox"  name="paid_status">
+                                            <span class="checkmark" style="top: 26px;"></span>
+                                        </label>
+                                    </div>
+                                </div>
 
                                 <div v-if="file_url" class="d-flex items-align-center">
                                     <p class="mr-1">File : </p>
                                     <div><i class="fa fa-file"></i> <a :href="file_url" v-text="file_title" style="font-family: 'Lato Semibold'; text-decoration: none; font-size: 12px;"></a></div>
                                 </div>
-                            </div>
+                            </div>  {{-- end modal body  --}}
+
 
                             <div class="modal-footer">
                                 <button type="button" class="red" data-dismiss="modal">{{__('admin.close')}}</button>
                                 <button type="reset" class="cyan" @click="clear()">{{__('admin.clear')}}</button>
                                 <button type="button"  @click="save()" class="green">{{__('admin.save')}}</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </template>
+                            </div> {{-- end .modal-footer  --}}
+                        </div> {{-- end .modal-content  --}}
+                    </div> {{-- end .modal-dialog  --}}
+                </div> {{-- end .modal  --}}
+            </template> {{-- end if contents  --}}
 
         </div>
 @endsection
+
+
+
+
 
 @section('script')
 
@@ -402,10 +425,14 @@ $(function() {
     });
 });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.min.js" type="text/javascript"></script>
+
+
 <script>
+    Vue.config.devtools = true;
+
     window.contents = {!! json_encode($contents??[]) !!}
     window.public_path = {!! json_encode(CustomAsset('upload')??'') !!}
 	var contents = new Vue({
@@ -418,10 +445,15 @@ $(function() {
             content_id : '',
             title: '',
             time_limit: 0,
+            open_after: 0,
 			excerpt : '',
             file_title : '',
             file_url : '',
+            is_gift : false,
+            paid_status : false,
+            disabled_check : false,
             status : false,
+            is_aside : false,
             downloadable : false,
             hide_from_trainees : false,
             shuffle_answers : false,
@@ -455,13 +487,27 @@ $(function() {
                 },
             }
 		},
+        watch:{
+            paid_status : function (value) {
+                if(value){
+                    this.status = true;
+                    this.disabled_check = true;
+                }else{
+                    this.disabled_check = false;
+                }
+            }
+        },
 		methods: {
 		    clear : function(){
                 this.title = '';
                 this.excerpt = '';
                 this.time_limit = 0;
+                this.open_after = 0;
                 this.file_url = '';
                 this.file_title = '';
+                this.is_gift = false;
+                this.paid_status = false;
+                this.is_aside = false;
                 this.status = false;
                 this.downloadable = false;
                 this.hide_from_trainees = false;
@@ -491,11 +537,17 @@ $(function() {
 
             },
 
-            OpenModal : function(type,content_id){
+            OpenModal : function(type,content){
                this.clear(); // clear data
                this.save_type  = 'add';
                this.model_type = type;
-               this.content_id = content_id;
+               if(content){
+                   this.content_id = content.id;
+                   this.is_gift = content.post_type == 'gift' ? true : false;
+
+               }else{
+                   this.content_id = null;
+               }
                this.errors = {};
                $('#ContentModal').modal('show')
             },
@@ -511,8 +563,14 @@ $(function() {
                     if(section.id == content_id){
                         self.title = section.title;
                         self.excerpt =  section.details ?  section.details.excerpt : '';
-                        self.model_type = 'section';
+                        self.model_type = section.post_type;
                         self.hide_from_trainees = section.hide_from_trainees;
+
+                        if(self.model_type == 'gift'){
+                            self.open_after = section.gift.open_after;
+                            self.is_aside = section.is_aside == 1 ? true : false;
+
+                        }
                     }
                     return true ;
                 });
@@ -529,11 +587,14 @@ $(function() {
 
                 this.contents.forEach(function (section) {
                     if(section.id == parent_id){
+                        console.log(section)
+                        self.is_gift = section.post_type == 'gift' ? true : false;
                          section.contents.forEach(function (content) {
                             if(content.id == content_id) {
                                     self.title = content.title;
                                     self.time_limit = content.time_limit;
                                     self.status = content.status == 1 ? true : false;
+                                    self.paid_status = content.paid_status == 504 ? true : false;
                                     self.downloadable = content.downloadable == 1 ? true : false;
                                     self.excerpt =  content.details ?  content.details.excerpt : '';
                                     // self.duration =  content.duration ?  content.details.duration : '';
@@ -741,6 +802,7 @@ $(function() {
                 formData.append('excerpt', self.excerpt);
                 formData.append('url', self.url);
                 formData.append('status', self.status);
+                formData.append('paid_status', self.paid_status);
                 formData.append('downloadable', self.downloadable);
                 formData.append('type', self.model_type);
                 formData.append('file', self.file);
@@ -751,6 +813,7 @@ $(function() {
                 formData.append('attempt_count', self.attempt_count);
                 formData.append('pass_mark', self.pass_mark);
                 formData.append('shuffle_answers', self.shuffle_answers);
+                formData.append('is_gift', self.is_gift);
 
                 if(self.save_type == 'add'){
 
@@ -796,6 +859,7 @@ $(function() {
                                 if(content.id == self.content_id) {
                                     content.title = self.title;
                                     content.status = self.status;
+                                    content.paid_status = self.paid_status == "true" ? 504 : 503;
                                     content.time_limit = self.time_limit;
                                     content.downloadable = self.downloadable;
                                     if(content.details ){
@@ -841,6 +905,7 @@ $(function() {
                                                  content.title =  response.data.data.title;
                                                  content.time_limit =  response.data.data.time_limit;
                                                  content.status =  response.data.data.status;
+                                                 content.paid_status =  response.data.data.paid_status;
                                                  content.downloadable =  response.data.data.downloadable;
 
                                                  content.url = response.data.data.url;
@@ -890,10 +955,106 @@ $(function() {
                 }
             },
 
+
+            saveGift : function(){
+                let self = this;
+                let formData = new FormData();
+
+                formData.append('course_id', self.course_id);
+                formData.append('content_id', self.content_id);
+                formData.append('title', self.title);
+                formData.append('open_after', self.open_after);
+                formData.append('type', self.model_type);
+                formData.append('is_aside', self.is_aside);
+
+                if(self.save_type == 'add'){
+
+                    axios.post("{{route('training.add_gift')}}",
+                        formData
+                        )
+                        .then(response => {
+                            if(response['data']['errors']) {
+                                self.errors =  response['data']['errors']
+                                for (let property in self.errors) {
+                                    self.errors[property] = self.errors[property][0];
+                                }
+                            }else{
+                                this.contents.push(response.data.data);
+                                this.errors = {};
+
+                                $('#ContentModal').modal('hide')
+                            }
+
+
+                        })
+                        .catch(e => {
+                            console.log('errors')
+                            console.log(e)
+                        });
+                }else{
+                    self.contents.forEach(function (gift) {
+                        if(gift.id == self.content_id){
+                            gift.title = self.title  ;
+                            gift.is_aside = self.is_aside;
+                            gift.gift.open_after = self.open_after;
+                        }
+                        return true ;
+                    });
+
+                    this.contents.forEach(function (section) {
+                        if(section.id == self.section_id){
+                            section.contents.forEach(function (content) {
+                                if(content.id == self.content_id) {
+                                    content.title = self.title;
+                                    content.is_aside = self.is_aside;
+                                    content.post_type = self.model_type;
+                                    content.gift.open_after = self.open_after;
+                                }
+                            })
+                        }
+                        return true ;
+                    });
+
+                    axios.post("{{route('training.update_gift')}}",
+                        formData
+                        )
+                        .then(response => {
+                            console.log(response)
+
+                            if(response['data']['errors']) {
+                                self.errors =  response['data']['errors']
+                                for (let property in self.errors) {
+                                    self.errors[property] = self.errors[property][0];
+                                }
+                            }else{
+                                self.contents.forEach(function (section) {
+                                    if(section.id == response.data.data.id) {
+                                        console.log(response.data)
+                                        section.title =  response.data.data.title;
+                                        section.is_aside =  response.data.data.is_aside;
+                                        section.gift.open_after =  response.data.data.gift.open_after;
+                                    }
+                                    return true ;
+                                });
+
+
+                                this.errors = {};
+                                $('#ContentModal').modal('hide')
+                            }
+
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        });
+                }
+            },
+
 			save: function(){
 				let self = this;
 				if(self.model_type == 'section'){
                     this.saveSection();
+                }else if(self.model_type == 'gift'){
+                    this.saveGift();
                 }else{
 				    if(this.validateContent()) {
                         return;
@@ -988,17 +1149,30 @@ $(function() {
                 return false;
             },
 
+
+            assets(path){
+		        return "{{CustomAsset('upload/files/gifts')}}" + '/' + path
+            }
+
+
+
+
+
+
+
 		},
 	});
 </script>
 
-    <script>
-        $(document).ready(function(){
-            $('.icon-bottom').click(function() {
-                $(this).parents('.card-body').children('#content-items').toggle("fast");
-                $('i.fa.fa-chevron-up').toggle();
-                $('i.fa.fa-chevron-down').toggleClass('d-none');
-            });
-        })
-    </script>
+
+<script>
+    $(document).ready(function(){
+        $('.icon-bottom').click(function() {
+            $(this).parents('.card-body').children('#content-items').toggle("fast");
+            $('i.fa.fa-chevron-up').toggle();
+            $('i.fa.fa-chevron-down').toggleClass('d-none');
+        });
+    })
+</script>
+
 @endsection

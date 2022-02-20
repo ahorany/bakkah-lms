@@ -496,8 +496,8 @@ img {
 
 .signin .logo {
   position: absolute;
-  left: 80px;
-  top: 60px;
+  left: 5%;
+  top: 5%;
 }
 
 .signin-form {
@@ -595,7 +595,7 @@ nav#sidebarMenu ul {
 }
 
 nav#sidebarMenu ul li a {
-  padding: 15px;
+  padding: 15px 30px;
   /* display: inline-block; */
   width: 100%;
   display: flex;
@@ -698,12 +698,12 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 }
 
 .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role {
-    width: max-content;
-    padding: 0 30px;
+    width: 120px;
     background: #f7f7f7;
     border-radius: 3px;
+    justify-content: space-around;
     color: #000 !important;
-    border: 1px solid gainsboro;
+    border: 1px solid #dcdcdc59;
 }
 
 .lms-header ul.navbar-nav li a img {
@@ -1087,6 +1087,9 @@ ol.answers li .icon.empty {
 
 .learning-file {
   padding-bottom: 20px;
+}
+.exam-simulator .learning-file {
+  padding-bottom: 0px;
 }
 
 .learning-file h3 {

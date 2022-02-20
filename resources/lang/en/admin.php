@@ -171,4 +171,11 @@ return [
     'import_type'=>'Import Type',
     'category_search'=>'Category Search',
     'sample'=>'Sample',
+    'Gift'=>'Gift',
+    'add_gift'=>'Add Gift',
+    'Free'=>'Free',
+    'ref_id'=>'Ref id',
+    'Registered'=>'Registered',
+    'True'=>'Register',
+    'False'=>'Not Register',
 ];

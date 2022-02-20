@@ -9,6 +9,7 @@ use App\Models\Training\Content;
 use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
 use App\Models\Training\Exam;
+use App\Models\Training\Gift;
 use App\Models\Training\Question;
 use App\Models\Training\Unit;
 use Carbon\Carbon;
@@ -24,6 +25,87 @@ class ContentController extends Controller
     {
         $this->middleware('permission:course.contents.list');
     }
+
+    private function giftValidation(){
+        // validation
+        $rules = [
+            'title'      => "required|string",
+            'course_id'  =>'required|exists:courses,id',
+//            'file'      =>  'nullable|file|mimes:jpg,jpeg,png',
+            'open_after'      => "required|numeric|gt:-1|max:100",
+//            'is_aside'      => "required",
+        ];
+
+
+        $validator = Validator::make(\request()->all(), $rules);
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
+        return null;
+    }
+
+
+    public function add_gift(){
+        $validate = $this->giftValidation();
+
+        if($validate){
+            return response()->json(['errors' => $validate]);
+        }
+
+        $course_id = request()->course_id;
+        $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE course_id = $course_id  AND parent_id IS NULL"));
+
+        $content = Content::create([
+            'title'      => request()->title,
+            'course_id'  =>request()->course_id,
+            'post_type'  => 'gift',
+            'is_aside'  => 1,
+//            'is_aside'  => request()->is_aside == "true" ? 1 : 0,
+            'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
+        ]);
+
+          Gift::create([
+              'open_after' => \request()->open_after,
+              'content_id' => $content->id,
+          ]);
+
+//        if(request()->hasFile('file')) {
+//            Content::UploadFile($content, ['folder_path' => public_path('upload/files/gifts')]);
+//        }
+        $content = Content::whereId($content->id)->with(['details','contents','gift'])->first();
+        return response()->json([ 'status' => 'success', 'data' => $content]);
+    }
+
+    public function update_gift(){
+        $validate = $this->giftValidation();
+
+        if($validate){
+            return response()->json(['errors' => $validate]);
+        }
+
+
+        $content = Content::where('id',\request()->content_id)->update([
+            'title' => request()->title,
+            'is_aside'  => 1,
+//            'is_aside'  => request()->is_aside == "true" ? 1 : 0,
+        ]);
+
+        Gift::where('content_id',request()->content_id)->update([
+            'open_after' => \request()->open_after,
+        ]);
+
+//        if(request()->hasFile('file')){
+//            Content::UploadFile(Content::where('id', request()->content_id)->first(), ['method' => 'update', 'folder_path' => public_path('upload/files/gifts')]);
+//        }
+
+
+        $content = Content::whereId(\request()->content_id)->with(['details','contents','gift'])->first();
+        return response()->json([ 'status' => 'success', 'data' => $content]);
+    }
+
+
 
     public function reset_order_contents($course_id){
         $i = 0;
@@ -63,7 +145,7 @@ class ContentController extends Controller
         $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
         $contents = Content::where('course_id',$course_id)
             ->whereNull('parent_id')
-            ->with(['contents' => function($q){
+            ->with(['gift','contents' => function($q){
                 $q->with(['upload','details','exam'])->withCount('questions')->orderBy('order');
             },'details','exams'])
             ->orderBy('order')
@@ -107,7 +189,7 @@ class ContentController extends Controller
         $content->details()->create([
             'excerpt'    =>  request()->excerpt,
         ]);
-        $content = Content::whereId($content->id)->with(['details','contents'])->first();
+        $content = Content::whereId($content->id)->with(['details','contents','gift'])->first();
 //        $contents = Content::where('course_id',$course_id)->whereNull('parent_id')->with(['contents','details'])->latest()->get();
         return response()->json([ 'status' => 'success', 'section' => $content]);
     }
@@ -214,7 +296,6 @@ class ContentController extends Controller
     public function add_content(){
 
         $validate = $this->contentValidation(request()->type);
-//        return \request();
 
         if($validate){
             return response()->json(['errors' => $validate]);
@@ -223,6 +304,12 @@ class ContentController extends Controller
 
         $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE parent_id= $parent_id  "));
 
+        $paid_status = request()->paid_status == 'true' ? 504 : 503;
+        if (request()->is_gift == "true"){
+            $paid_status = 503 ;
+        }
+
+
         if(\request()->type == 'exam'){
             $content = Content::create([
                 'title'      => request()->title,
@@ -230,7 +317,8 @@ class ContentController extends Controller
                 'post_type'  => request()->type,
                 'parent_id'  => request()->content_id,
                 'status' => request()->status == 'true' ? 1 : 0,
-                'downloadable' => request()->downloadable == 'true' ? 1 : 0,
+                'paid_status' => $paid_status,
+                'downloadable' =>  0,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
             ]);
             $content->details()->create([
@@ -252,13 +340,18 @@ class ContentController extends Controller
             ]);
 
         }else{
+            $downloadable = request()->downloadable == 'true' ? 1 : 0;
+            if (request()->type == 'scorm' || (\request()->has("url") && \request()->url != "" && \request()->url != null)){
+                $downloadable = 0;
+            }
             $content = Content::create([
                 'title'      => request()->title,
                 'course_id'  =>request()->course_id,
                 'post_type'  => request()->type,
                 'url' => request()->url == 'null' ? null : request()->url,
                 'status' => request()->status == 'true' ? 1 : 0,
-                'downloadable' => request()->downloadable == 'true' ? 1 : 0,
+                'paid_status' => $paid_status,
+                'downloadable' =>$downloadable,
                 'parent_id'  => request()->content_id,
                 'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
                 'time_limit'=> request()->time_limit,
@@ -403,11 +496,18 @@ class ContentController extends Controller
             return response()->json(['errors' => $validate]);
         }
 
+        $paid_status = request()->paid_status == 'true' ? 504 : 503;
+        if (request()->is_gift == "true"){
+            $paid_status = 503 ;
+        }
+
+
         if (\request()->type == 'exam') {
             $content = Content::whereId(request()->content_id)->update([
                 'title' => request()->title,
                 'status' => request()->status == 'true' ? 1 : 0,
-                'downloadable' => request()->downloadable == 'true' ? 1 : 0,
+                'paid_status' => $paid_status,
+                'downloadable' =>  0,
             ]);
             ContentDetails::where('content_id', request()->content_id)->update([
                 'excerpt' => request()->excerpt,
@@ -425,12 +525,18 @@ class ContentController extends Controller
             ]);
 
         } else {
+            $downloadable = request()->downloadable == 'true' ? 1 : 0;
+            if (request()->type == 'scorm' || (\request()->has("url") && \request()->url != "" && \request()->url != null)){
+                $downloadable = 0;
+            }
+
             $content = Content::whereId(request()->content_id)
                 ->update([
                     'title' => request()->title,
                     'url' => request()->url == 'null' ? null : request()->url,
                     'status' => request()->status == 'true' ? 1 : 0,
-                    'downloadable' => request()->downloadable == 'true' ? 1 : 0,
+                    'paid_status' => $paid_status,
+                    'downloadable' => $downloadable,
                     'time_limit' => request()->time_limit,
                 ]);
 

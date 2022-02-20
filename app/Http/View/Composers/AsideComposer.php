@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\View\Composers;
-use App\Infastructure;
 use App\Infrastructure;
 use App\User;
 use Illuminate\View\View;
@@ -10,37 +9,9 @@ class AsideComposer
 {
 	public function compose(View $view){
 
-    //    $asides = Infastructure::where('type', 'aside')
-    //    ->whereNull('parent_id')
-    //    ->orderBy('order')
-    //    ->get();
-
-    //    $infastructures = Infastructure::where('type', 'aside')
-    //    ->whereNotNull('parent_id')
-    //    ->orderBy('order')
-    //    ->get();
-
-        $user_pages = Infrastructure::join('infrastructure_role', 'infrastructure_role.infrastructure_id', 'infastructures.id')
-        ->join('model_has_roles', 'model_has_roles.role_id', 'infrastructure_role.role_id')
-        ->whereNull('infastructures.parent_id')
-        ->where('model_id', auth()->user()->id)
-        ->distinct('infrastructures.id')
-        ->select('infastructures.*')
-        ->get();
-//         dd($user_pages);
-        $user_pages_child = Infrastructure::join('infrastructure_role', 'infrastructure_role.infrastructure_id', 'infastructures.id')
-        ->join('model_has_roles', 'model_has_roles.role_id', 'infrastructure_role.role_id')
-        ->whereNotNull('infastructures.parent_id')
-        ->where('model_id', auth()->user()->id)
-        ->distinct('infastructures.id')
-        ->select('infastructures.*')
-        ->get();
-        // dd($user_pages_child);
-        // $view->with('asides', $asides);
-        // $view->with('infastructures', $infastructures);
-
+        $user_pages = Infrastructure::select('Infrastructures.*')->get();
         $view->with('user_pages', $user_pages);
-        $view->with('user_pages_child', $user_pages_child);
+
 
         $user_sidebar_courses = User::whereId(auth()->id())->with(['courses'])->first();
         $view->with('user_sidebar_courses', $user_sidebar_courses);

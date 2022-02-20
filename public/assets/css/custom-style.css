@@ -1,13 +1,12 @@
-/* a.nav-link.active:before {
-    content: '';
-    background: #fff;
-    height: 50px;
-    display: block;
-    width: 15px;
-    position: absolute;
-    left: 0;
-    border-radius: 0 10px 10px 0;
-} */
+.form-control{
+    appearance: auto;
+}
+.lms-header ul.navbar-nav li.has-dropdown a.nav-link.role.not_admin{
+    color: rgb(0 0 0 / 15%) !important;
+}
+.lms-header ul.navbar-nav li.has-dropdown a.nav-link.role.not_admin .svg-icons-h , .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin svg{
+    opacity: 0.15;
+}
 span.flag_icon_false svg path , .flag svg path {
     stroke: gray;
     transform: rotate(15deg);
@@ -503,11 +502,10 @@ a:hover svg#back{
 .course-cards{
     width: 23%;
     margin-bottom: 10px;
-    /* justify-content: center; */
+    border-bottom: 3px solid;
     background: #FFF;
     color: #000;
     box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 5%);
-    /* position: relative; */
 }
 
 .home-section .course-cards:hover , .home-section .text-center.course-image:hover {
@@ -629,10 +627,10 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     color: #000;
     margin: 0;
     margin-top: 5px;
-    min-height: 65px;
+    /* min-height: 50px; */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
 }
 
 .certificate .completed {
@@ -677,6 +675,7 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     font-family: 'Lato Light';
     font-size: 25px;
     margin: 0;
+    padding-top: 10px;
 }
 
 .congrats h1{
@@ -812,28 +811,138 @@ label.container-check.form-check-label span.checkmark{
     }
     .action_preview button {
         padding: 1px 7px !important;
-        /* display: none; */
     }
-    /* .action_preview span.setting , .action_preview span.left{
-        display: inline-block;
-        border: 1px solid gray;
-        color: gray;
-        border-radius: 5px;
-        padding: 1px 7px !important;
-        cursor: pointer;
+    span.icon_role{
+        display: flex;
+        justify-content: start;
     }
-    .action_preview span.setting:hover , .action_preview span.left:hover{
-        background: gray;
-        color: #fff;
-    } */
+    span.icon_role img{
+        margin-right: 0 !important;
+    }
+    .exam-simulator .learning-file ul li a{
+        padding: 0;
+        margin-bottom: 15px;
+        align-items: flex-start;
+        text-align: left;
+    }
 
 /******************************************************************************************************************/
 
+.custom-model-main {
+    text-align: center;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; /* z-index: 1050; */
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    opacity: 0;
+    -webkit-transition: opacity 0.15s linear, z-index 0.15;
+    -o-transition: opacity 0.15s linear, z-index 0.15;
+    transition: opacity 0.15s linear, z-index 0.15;
+    z-index: -1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.model-open {
+    z-index: 99999;
+    opacity: 1;
+    overflow: hidden;
+}
+.custom-model-inner {
+    -webkit-transform: translate(0, -25%);
+    -ms-transform: translate(0, -25%);
+    transform: translate(0, -25%);
+    -webkit-transition: -webkit-transform 0.3s ease-out;
+    -o-transition: -o-transform 0.3s ease-out;
+    transition: -webkit-transform 0.3s ease-out;
+    -o-transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    display: inline-block;
+    vertical-align: middle;
+    width: 600px;
+    margin: 30px auto;
+    max-width: 97%;
+}
+.custom-model-wrap {
+    display: block;
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    background-clip: padding-box;
+    outline: 0;
+    text-align: left;
+    padding: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+.model-open .custom-model-inner {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+    position: relative;
+    z-index: 999;
+}
+.model-open .bg-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99;
+}
+.bg-overlay {
+    background: rgba(0, 0, 0, 0);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    -webkit-transition: background 0.15s linear;
+    -o-transition: background 0.15s linear;
+    transition: background 0.15s linear;
+}
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: -30px;
+    cursor: pointer;
+    z-index: 99;
+    font-size: 30px;
+    color: #fff;
+}
+
+@media screen and (min-width:800px){
+    .custom-model-main:before {
+        content: "";
+        display: inline-block;
+        height: auto;
+        vertical-align: middle;
+        margin-right: -0px;
+        height: 100%;
+    }
+}
+@media screen and (max-width:799px){
+    .custom-model-inner{margin-top: 45px;}
+}
+
+/*****************************************************************************************************************/
 /* Media Query */
 
 @media (max-width: 1300.5px) and (min-width: 1200.5px) {
     .certificate{
-        padding: 60px 15px 30px;
+        padding: 40px 15px;
     }
 
     .certificate .download img{
@@ -865,19 +974,39 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 1025.5px) {
+    .no-img.certificate-img img {
+        width: 15%;
+    }
     .change-password .card .card-body{
         padding: 0 !important;
         margin: 0 !important;
     }
     .certificate{
-        padding: 60px 15px 30px;
+        padding: 40px 15px;
     }
     main#main-vue-element{
         padding: 1rem !important;
     }
+    .signin-form {
+        width: 70%;
+    }
+
 }
 
 @media (min-width: 767.5px) and (max-width: 991.5px) {
+    .col-lg-8.mb-5.mb-lg-0.course_info {
+        margin: 0 !important;
+    }
+    .exam-simulator .no-img.certificate-img img{
+        width: 7%;
+    }
+    .text-center.course-image.certificate.certification-card {
+        border-radius: 0;
+    }
+    .navigation_preview{
+        margin: 0 !important;
+        height: 100% !important;
+    }
     .change-password .card.px-5.mx-5 {
         padding: 0 !important;
         margin: 0 !important;
@@ -914,6 +1043,41 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
+    .signin .logo {
+        right: 15% !important;
+        left: unset !important;
+        top: 75px !important;
+    }
+    .signin-form img {
+        width: 40%;
+        margin-top: 20px;
+    }
+    .card-default, .inputs {
+        width: 100%;
+    }
+    form .col-md-9 .card.form-buttons{
+        display: none;
+    }
+    form .col-md-3 {
+        display: flex;
+        flex-wrap: wrap-reverse;
+    }
+    .col-lg-8.mb-5.mb-lg-0.course_info {
+        margin: 0 !important;
+    }
+    .exam-simulator .no-img.certificate-img img{
+        width: 7%;
+    }
+    .text-center.course-image.certificate.certification-card {
+        border-radius: 0;
+    }
+    .navigation_preview{
+        margin: 0 !important;
+        height: 100% !important;
+    }
+    .head_courses{
+        justify-content: start !important;
+    }
     .position-sticky.pt-3 {
         padding: 0 !important;
     }
@@ -986,11 +1150,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .card.p-5.user-info {
         padding: 20px !important;
-    }
-    .signin .logo {
-        right: 15% !important;
-        left: unset !important;
-        top: 10% !important;
     }
     .signin .signin-form {
         width: 85% !important;
@@ -1066,6 +1225,15 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 576.5px){
+    .signin .logo {
+        top: 10% !important;
+    }
+    .home-section h3 {
+        text-align: center !important;
+    }
+    .change-password form.p-5 {
+        padding: 15px !important;
+    }
     .hero{
         display: none;
     }
@@ -1157,7 +1325,10 @@ label.container-check.form-check-label span.checkmark{
         padding: 60px 20px;
     }
     .certificate-img img {
-        width: 40%;
+        width: 45%;
+    }
+    .exam-simulator .certificate-img img {
+        width: 15%;
     }
     .text-center.course-image .download img{
         width: 60%;
@@ -1173,9 +1344,18 @@ label.container-check.form-check-label span.checkmark{
         justify-content: space-evenly;
         align-items: center;
         padding: 20px 0 !important;
-        /* border-radius: 15px 15px 0 0 !important; */
-        border-bottom-left-radius: 0px !important;
-        border-bottom-right-radius: 0px !important;
+        border: none;
+        border-left: 3px solid;
+        border-right: 1px solid #eaeaea !important;
+        border-top: 1px solid #eaeaea !important;
+        border-bottom: 1px solid #eaeaea !important;
+    }
+    .dashboard .card {
+        padding: 0 !important;
+        border: none;
+    }
+    .reports .card {
+        border-radius: 0 !important;
     }
 
     .course-cards > div{
@@ -1193,6 +1373,9 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 500.5px) {
+    .exam-simulator .no-img.certificate-img img {
+        width: 15%;
+    }
     .card-header.d-flex.justify-content-between.align-items-center {
         display: flex !important;
         align-items: space-between;
@@ -1210,9 +1393,15 @@ label.container-check.form-check-label span.checkmark{
     .dash-header.course_info {
         display: none;
     }
+    .no-img.certificate-img img {
+        width: 25%;
+    }
 }
 
 @media(max-width : 430.5px){
+    .signin .logo {
+        top: 9% !important;
+    }
     .learning-file ul li a span.svg {
         width: 65px;
         text-align: right;
@@ -1240,9 +1429,6 @@ label.container-check.form-check-label span.checkmark{
     .navbar-brand span.d-none.d-sm-block {
         display: block !important;
     }
-    /* .messages li.has-dropdown .dropdown{
-        right: -80px;
-    } */
     .congrats h1 {
         font-size: 18px;
     }
@@ -1255,7 +1441,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .course-cards {
         width: 100% !important;
-        /* margin: 5px auto; */
     }
     .card-header.d-flex.justify-content-between.align-items-center .d-flex.align-items-center {
         justify-content: center;
@@ -1266,11 +1451,11 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 350.5px){
-    .course-cards {
-        width: 100% !important;
-    }
     .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role{
-        padding: 0 20px;
+        width: 100px;
+    }
+    .course-cards {
+        justify-content: center;
     }
 }
 
@@ -1284,3 +1469,5 @@ label.container-check.form-check-label span.checkmark{
 }
 
 /* End Media Query */
+
+/******************************************************************************************************************/

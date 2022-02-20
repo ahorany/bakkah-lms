@@ -40,14 +40,13 @@
 
     </button>
 
-    {{-- <span class="ml-auto">
-        <h5 class="mb-0" style="font-weight: 700;">{{auth()->user()->trans_name}}</h5>
-        <small>{{\auth()->user()->roles()->first()->trans_name}}</small>
-    </span> --}}
     <ul class="navbar-nav mx-0">
         <li class="has-dropdown user">
-            <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role" href="#">
-                <span>{{$role->name}}</span>
+            <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role @if(!auth()->user()->hasRole(['Admin']) && is_null(auth()->user()->delegation_role_id)) not_admin @endif" href="#">
+                <span class="icon_role">
+                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
+                    {{$role->name}}
+                </span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
                     <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z" transform="translate(10.125) rotate(90)" fill="#000"></path>
                 </svg>
@@ -57,7 +56,7 @@
                 <div class="dropdown d-none">
                     <ul class="postition-relative">
                         <?php $role_id = $role->id; ?>
-                        @foreach(\Spatie\Permission\Models\Role::select('id','name','icon')->get() as $role)
+                        @foreach(\App\Models\Training\Role::select('id','name','icon')->get() as $role)
                             <li @if($role->id == $role_id) style="background: #eee;" @endif>
                                 <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
                                 <span class="d-flex">

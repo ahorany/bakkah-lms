@@ -32,7 +32,7 @@ class CertificateControllerH extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:training.certificates.index');
+        $this->middleware('permission:training.certificates.index', ['except' => ['certificate_dynamic']]);
 
         Active::$namespace = 'training';
         Active::$folder = 'certificates';

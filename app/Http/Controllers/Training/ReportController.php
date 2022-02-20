@@ -14,18 +14,39 @@ use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
-// use Illuminate\Support\Str;
 
 class ReportController extends Controller
 {
     public function __construct()
     {
         $this->middleware('permission:training.scormsReportOverview', ['only' => ['scormsReportOverview', 'scormsReportScorms']]);
-//        $this->middleware('permission:training.usersReportOverview', ['only' => ['usersReportOverview']]);
+        $this->middleware('permission:user.report', ['only' => ['usersReportOverview']]);
 
         Active::$namespace  = 'training';
         Active::$folder     = 'reports';
     }
+
+    /////////////////   Refactor code  /////////////////////////////
+
+
+    public function usersReportOverview()
+    {
+        $user_id = request()->id;
+        $user = User::findOrFail($user_id);
+
+        $learners_no = DB::table('model_has_roles')->where('role_id',3)->where('model_id',$user_id)->count();
+        $complete_courses_no = DB::table('courses_registration')->where('user_id',$user_id)->where('progress',100)->count();
+        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('user_id',$user_id)->count();
+        $courses_not_started = DB::table('courses_registration')->where('progress',0)->where('user_id',$user_id)->count();
+        $overview = 1;
+        return view('training.reports.users.user_report',compact('user_id','learners_no','complete_courses_no',
+            'courses_in_progress','courses_not_started','overview', 'user'));
+    }
+
+
+
+    //////////////////////////////////////////////////////////
+
 
     public function scormsReportOverview()
     {
@@ -114,20 +135,6 @@ class ReportController extends Controller
         return view('training.reports.users.user_report',compact('user_id', 'scorms','user'));
 
 
-    }
-
-    public function usersReportOverview()
-    {
-        $user_id = request()->id;
-        $user = User::find($user_id);
-
-        $learners_no = DB::table('model_has_roles')->where('role_id',3)->where('model_id',$user_id)->count();
-        $complete_courses_no = DB::table('courses_registration')->where('user_id',$user_id)->where('progress',100)->count();
-        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('user_id',$user_id)->count();
-        $courses_not_started = DB::table('courses_registration')->where('progress',0)->where('user_id',$user_id)->count();
-        $overview = 1;
-        return view('training.reports.users.user_report',compact('user_id','learners_no','complete_courses_no',
-        'courses_in_progress','courses_not_started','overview', 'user'));
     }
 
 

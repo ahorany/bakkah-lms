@@ -4,7 +4,6 @@ namespace App\Models\Training;
 
 
 use App\Traits\ImgTrait;
-use App\Traits\SeoTrait;
 use App\Traits\TrashTrait;
 use App\Traits\UserTrait;
 use App\User;
@@ -12,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    use TrashTrait,ImgTrait , SeoTrait;
+    use TrashTrait,ImgTrait;
     protected $guarded = [];
 
     public function users(){

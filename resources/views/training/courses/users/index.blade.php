@@ -26,117 +26,103 @@
             overflow-x: scroll;
         }
     }
-    /* @media (min-width: 1110px){
-        table{
-            display: table;
-        }
-    } */
+
 </style>
+
+
+<link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
+
 @endsection
 
 @section('table')
 
-    <link href="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.css" rel="stylesheet">
 
 
-        <div class="course_info">
-            {{-- @include('training.courses.users.search',['course_id' => $course->id]) --}}
+<div class="course_info">
+        <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</h4>
 
-            <div class="card p-3 mb-3">
+        <div class="card p-3 mb-3">
             <div class="row">
-
-                <template>
-                    <div style="direction: ltr;" class="alert alert-success alert-dismissible" :class="{'d-none': !alert}" role="alert"><!-- fade show-->
-                        <div>
-                            <strong v-text="msg_alert"></strong> Updated
+                    <template>
+                        <div style="direction: ltr;" class="alert alert-success alert-dismissible" :class="{'d-none': !alert}" role="alert"><!-- fade show-->
+                            <div>
+                                <strong v-text="msg_alert"></strong> Updated
+                            </div>
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <button type="button" class="close" data-dismiss="alert">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    </template>
+
+                    <div class="col-lg-3 col-md-4 col-12">
+                            <button type="button" @click="OpenModal('trainee')" class="group_buttons mb-1 btn-sm">
+                                <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_trainee')}}
+                            </button>
+
+                            <button type="button" @click="OpenModal('instructor')" class="group_buttons mb-1 btn-sm">
+                                <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_instructor')}}
+                            </button>
                     </div>
 
-                </template>
-
-                <div class="col-md-10 col-10">
-                    @include('training.courses.contents.header',['course_id' => $course->id, 'users' =>true])
-                </div>
-                <div class="col-md-2 col-2 text-right">
-                    <div class="back">
-                        <a href="{{route('training.courses.index')}}" class="cyan mb-1">Course List</a>
-                        <a href="{{route('training.courses.edit',[$course->id])}}" class="cyan mb-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                    <div class="col-lg-9 col-md-8 col-12 text-right">
+                        @include('training.courses.contents.header',['course_id' => $course->id, 'users' =>true])
                     </div>
-                </div>
-
-                <div class="col-md-12 col-12">
-                    <span style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</span>
-                    @if(!checkUserIsTrainee())
-                        <button type="button" @click="OpenModal('trainee')" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
-                            <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_trainee')}}
-                        </button>
-
-                        <button type="button" @click="OpenModal('instructor')" style="padding: 2px 8px !important;" class="group_buttons mb-1 btn-sm">
-                            <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_instructor')}}
-                        </button>
-                    @endif
-                </div>
-
             </div>
-        </div>
-          <template v-if="course">
+      </div>
 
+      <template v-if="course">
             <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Progress</th>
-                    @if(!checkUserIsTrainee())
-                        <th scope="col">Expire Date</th>
-                        <th scope="col">Action</th>
-                    @endif
-                </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(user,index) in course.users">
-                        <th scope="row" v-text="index + 1"></th>
-                        <td v-text="trans_title(user.name)"></td>
-                        <td v-text="user.email"></td>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Type</th>
+                <th scope="col">Progress</th>
+                <th scope="col">Is Free</th>
+                <th scope="col">Expire Date</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(user,index) in course.users">
+                    <th scope="row" v-text="index + 1"></th>
+                    <td v-text="trans_title(user.name)"></td>
+                    <td v-text="user.email"></td>
+                    <td>
+                        <span v-if="user.pivot != null && user.pivot.role_id == 2" class="badge-pink"> Instructor </span>
+                        <span v-if="user.pivot != null && user.pivot.role_id == 3" class="badge-green"> Trainee </span>
+                    </td>
+                    <td v-text="(user.pivot.progress??0) + '%'"></td>
+
                         <td>
-                            <span v-if="user.pivot != null && user.pivot.role_id == 2" class="badge-pink"> Instructor </span>
-                            <span v-if="user.pivot != null && user.pivot.role_id == 3" class="badge-green"> Trainee </span>
+                            <input :checked="user.pivot.paid_status == 504 ? true : false"  @change="updateIsFree($event,user.id)"   type="checkbox" >
                         </td>
-                        <td v-text="(user.pivot.progress??0) + '%'"></td>
-
-                    @if(!checkUserIsTrainee())
-                            <td>
-                                <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
-
-                            </td>
-                            <td>
-                                <button @click="updateUserExpireDate(user.id)" class="primary" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa"></i> Update</button>
-                                <button @click="deleteUser(user.id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
-                            </td>
-                        @endif
-                    </tr>
-
-                </tbody>
-            </table>
 
 
-            @if(!checkUserIsTrainee())
-              <div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
+                        <td>
+                            <input :value="moment(users_expire_date[user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">
+
+                        </td>
+
+                        <td>
+                            <button @click="updateUserExpireDate(user.id)" class="primary" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa"></i> Update</button>
+                            <button @click="deleteUser(user.id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
+                        </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+            <div class="modal fade" id="ContentModal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add @{{ type_user }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add @{{ type_user }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
                 <div class="container row mx-0 mt-2">
 
@@ -190,17 +176,18 @@
                     <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
                     <button type="button"  class="green" @click="save()">{{__('admin.save')}}</button>
                 </div>
+              </div>
+              </div>
             </div>
-        </div>
-             @endif
-           </template>
-    </div>
+       </template>
+</div>
 @endsection
+
+
 
 @section('script')
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
-
 <script src="https://cdn.jsdelivr.net/npm/@morioh/v-quill-editor/dist/editor.min.js" type="text/javascript"></script>
 <script>
         window.lang = '{!!app()->getLocale()!!}'
@@ -357,7 +344,42 @@
                         .catch(e => {
                             console.log(e)
                         });
-                }
+                },
+
+
+               updateIsFree: function (e,user_id) {
+                let self = this;
+                   console.log(user_id)
+                axios.post("{{route('training.update_user_is_free')}}",
+                    {
+                        'course_id' : self.course.id ,
+                        'user_id'   : user_id ,
+                        'is_free'   : e.target.checked,
+                    }
+                )
+                    .then(response => {
+                        console.log(response)
+                        // self.search_users = response.data.users;
+                        // $('#ContentModal').modal('hide')
+
+                        let user = self.course.users.filter(function (user,index) {
+                            return user.id == user_id;
+                        })
+
+                        console.log(user);
+                        self.msg_alert = user[0].email
+
+                        self.alert = true;
+                        setTimeout(
+                            function() {
+                                self.alert = false;
+                            }, 2000);
+
+                    })
+                    .catch(e => {
+                        console.log(e)
+                    });
+            }
             }
 	});
 </script>
