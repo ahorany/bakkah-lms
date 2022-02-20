@@ -1,25 +1,30 @@
 .form-control{
     appearance: auto;
 }
-.lms-header ul.navbar-nav li.has-dropdown a.nav-link.role.not_admin{
-    color: rgb(0 0 0 / 15%) !important;
+
+.lms-header ul.navbar-nav li.user a.nav-link.role.not_admin{
+    border: none;
+    background: transparent;
+    width: max-content;
 }
-.lms-header ul.navbar-nav li.has-dropdown a.nav-link.role.not_admin .svg-icons-h , .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin svg{
-    opacity: 0.15;
+
+.lms-header ul.navbar-nav li.user a.nav-link.role.not_admin svg{
+    display: none;
 }
+
 span.flag_icon_false svg path , .flag svg path {
     stroke: gray;
     transform: rotate(15deg);
 }
 
 span.flag_icon_true svg path , .flag-mark svg path {
-    stroke: #fb4400;
+    fill: #fb4400;
     transform: rotate(15deg);
 }
 
 span.flag.flag-mark svg path {
     fill: #fb4400;
-    stroke: gray;
+    stroke: #fb4400;
 }
 
 .scorm .group_buttons{

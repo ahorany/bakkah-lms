@@ -18,8 +18,25 @@ use Illuminate\Http\Request;
 //});
 
 
-Route::group(['middleware'=>['apiToken'], 'as'=>'api.'], function() {
-    Route::post('users/add','\App\Http\Controllers\Api\UserApiController@add_users')->name('users.add');
+//Route::group(['middleware'=>['apiToken'], 'as'=>'api.'], function() {
+//    Route::post('users/add','\App\Http\Controllers\Api\UserApiController@add_users')->name('users.add');
+//
+//});
+
+
+
+Route::group([
+    'middleware' => 'api',
+    'namespace' => '\App\Http\Controllers\Api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('sign', 'AuthController@signup');
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
 
 });
 
