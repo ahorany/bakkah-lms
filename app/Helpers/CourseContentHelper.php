@@ -80,6 +80,7 @@ class CourseContentHelper
         WHERE contents.course_id =  $course_id
         AND contents.id !=  $content_id
         AND contents.deleted_at IS NULL
+        AND sections.hide_from_trainees = 0
         AND (
                 (contents.order > $content_order  AND contents.parent_id = $content_parent_id)
                 OR
@@ -96,6 +97,7 @@ class CourseContentHelper
                        WHERE contents.course_id = $course_id
                        AND contents.id !=  $content_id
                        AND contents.deleted_at IS NULL
+                       AND sections.hide_from_trainees = 0
                        AND  (
                               (contents.order < $content_order AND contents.parent_id = $content_parent_id)
                                 OR
