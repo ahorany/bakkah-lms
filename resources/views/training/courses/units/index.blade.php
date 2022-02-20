@@ -70,42 +70,56 @@
                     <div class="modal-body">
                         <div class="col-md-12">
                             <div class="form-group">
-
-                                <div class="form-group">
-                                    <label>Unit id </label>
-                                    <input class="d-block" type="text" v-model="unit_no" placeholder="Unit id" >
-                                    <div v-show="'unit_no' in errors">
-                                        <span style="color: red;font-size: 13px">@{{ errors.unit_no }}</span>
+                                <div class="row mx-0">
+                                    <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label>Unit id </label>
+                                            <input class="form-control w-100" type="text" v-model="unit_no" placeholder="Unit id" >
+                                            <div v-show="'unit_no' in errors">
+                                                <span style="color: red;font-size: 13px">@{{ errors.unit_no }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 col-12">
+                                        <div class="form-group">
+                                            <label>Title </label>
+                                            <input  v-model="title" name="title" class="form-control w-100" placeholder="title" />
+                                            <div v-show="'title' in errors">
+                                                <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label>Title </label>
-                                    <textarea  v-model="title" name="title" class="form-control w-100" placeholder="title"></textarea>
-                                    <div v-show="'title' in errors">
-                                        <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
+                                <div class="row mx-0">
+                                    <div class="col-md-12">
+                                        <hr>
                                     </div>
                                 </div>
-
-
-
-
                                 <div class="mt-1">
-
-                                    <button @click.prevent="addSubUnitBox()" class="main-color mb-3"><i class="fa fa-plus" aria-hidden="true"></i> Add Sub Unit</button>
-                                    <div class="mb-2" v-show="'subunits' in errors">
-                                        <span style="color: red;font-size: 13px">@{{ errors.subunits }}</span>
+                                    <div class="row mx-0">
+                                        <div class="col-md-12 col-12">
+                                            <button @click.prevent="addSubUnitBox()" class="main-color mb-3"><i class="fa fa-plus" aria-hidden="true"></i> Add Sub Unit</button>
+                                            <div class="mb-2" v-show="'subunits' in errors">
+                                                <span style="color: red;font-size: 13px">@{{ errors.subunits }}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div v-for="(subunit,index) in subunits" class="form-group">
-                                        <input class="w-25 form-control" style="display: inline-block;" type="text" v-model="subunit.unit_no" name="title" placeholder="unit no">
-                                        <input class="w-75 form-control" style="display: inline-block;" type="text" v-model="subunit.title" name="title" placeholder="title">
-                                        <button @click.stop="deleteUnit(course.units,subunit.id,index)" class="red">
-                                            <i class="fa fa-trash"></i><!-- Delete --> </button>
+                                        <div class="row mx-0">
+                                            <div class="col-md-3 col-12">
+                                                <input class="form-control" style="display: inline-block;" type="text" v-model="subunit.unit_no" name="title" placeholder="unit no">
+                                            </div>
+                                            <div class="col-md-8 col-10">
+                                                <input class="form-control" style="display: inline-block;" type="text" v-model="subunit.title" name="title" placeholder="title">
+                                            </div>
+                                            <div class="col-md-1 col-2">
+                                                <button @click.stop="deleteUnit(course.units,subunit.id,index)" class="red">
+                                                    <i class="fa fa-trash"></i><!-- Delete --> </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
 
                         <div class="modal-footer">

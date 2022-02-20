@@ -2,7 +2,7 @@
     <title>{{__('education.User Reports')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-<div class="row mb-5 mx-0">
+<div class="row mb-5 mx-0 dashboard">
 
     <div class="col-lg-12">
         <div class="card h-100 p-30">

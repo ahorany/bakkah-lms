@@ -623,7 +623,7 @@ class Builder {
 	}
 
 	static function BtnGroupForm($hasBack=true){
-		$btn = '<div class="card card-default">
+		$btn = '<div class="card card-default form-buttons">
 		  <div class="card-body">';
 		$btn .= '<div class="BtnGroupForm">';
 			if($hasBack)// used in users.form_old.blade.php
@@ -839,7 +839,7 @@ class Builder {
 		// self::setTrash($trash);
 		return '<div class="content">
 		<div class="container-fluid">
-		<div class="row">
+		<div class="row mx-0">
 		<div class="col-12">';
 	}
 

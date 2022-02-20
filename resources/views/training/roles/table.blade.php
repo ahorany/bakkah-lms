@@ -15,7 +15,7 @@
               <th class="">{{__('admin.index')}}</th>
               <th class="">{{__('admin.name')}}</th>
               <th class="">{{__('admin.pages')}}</th>
-              <th class="d-none d-sm-table-cell text-right px-5">{{__('admin.action')}}</th>
+              <th class="d-sm-table-cell text-right px-5">{{__('admin.action')}}</th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +43,7 @@
                 @endforeach
             </td>
 
-            <td class="d-none d-sm-table-cell text-right">{!!Builder::BtnGroupRows($role->trans_name, $role->id, $btn_roles, [
+            <td class="d-sm-table-cell text-right">{!!Builder::BtnGroupRows($role->trans_name, $role->id, $btn_roles, [
                 'post'=>$role->id,
             ])!!}</td>
             </tr>

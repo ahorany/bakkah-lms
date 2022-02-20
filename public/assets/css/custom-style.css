@@ -988,6 +988,9 @@ label.container-check.form-check-label span.checkmark{
     main#main-vue-element{
         padding: 1rem !important;
     }
+    .signin-form {
+        width: 70%;
+    }
 
 }
 
@@ -1041,6 +1044,25 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
+    .signin .logo {
+        right: 15% !important;
+        left: unset !important;
+        top: 75px !important;
+    }
+    .signin-form img {
+        width: 40%;
+        margin-top: 20px;
+    }
+    .card-default, .inputs {
+        width: 100%;
+    }
+    form .col-md-9 .card.form-buttons{
+        display: none;
+    }
+    form .col-md-3 {
+        display: flex;
+        flex-wrap: wrap-reverse;
+    }
     .col-lg-8.mb-5.mb-lg-0.course_info {
         margin: 0 !important;
     }
@@ -1130,11 +1152,6 @@ label.container-check.form-check-label span.checkmark{
     .card.p-5.user-info {
         padding: 20px !important;
     }
-    .signin .logo {
-        right: 15% !important;
-        left: unset !important;
-        top: 10% !important;
-    }
     .signin .signin-form {
         width: 85% !important;
         padding: 50px 25px !important;
@@ -1209,6 +1226,15 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 576.5px){
+    .signin .logo {
+        top: 10% !important;
+    }
+    .home-section h3 {
+        text-align: center !important;
+    }
+    .change-password form.p-5 {
+        padding: 15px !important;
+    }
     .hero{
         display: none;
     }
@@ -1321,6 +1347,13 @@ label.container-check.form-check-label span.checkmark{
         padding: 20px 0 !important;
         border: none;
         border-left: 3px solid;
+        border-right: 1px solid #eaeaea !important;
+        border-top: 1px solid #eaeaea !important;
+        border-bottom: 1px solid #eaeaea !important;
+    }
+    .dashboard .card {
+        padding: 0 !important;
+        border: none;
     }
     .reports .card {
         border-radius: 0 !important;
@@ -1367,7 +1400,9 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media(max-width : 430.5px){
-
+    .signin .logo {
+        top: 9% !important;
+    }
     .learning-file ul li a span.svg {
         width: 65px;
         text-align: right;
