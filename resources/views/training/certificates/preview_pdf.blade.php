@@ -39,7 +39,11 @@ if(isset($certificate->upload->file))
                 // }
                 if (strpos($child->content,  '${from_date_en}') !== false)
                 {
-                    $child->content=  str_replace('${from_date_en}',($course_registration->created_at->format('d F,Y')??null),$child->content);
+
+                    $s = $course_registration->date_from;
+                    $date = strtotime($s);
+                    $date_from = date('d F,Y', $date);
+                    $child->content=  str_replace('${from_date_en}',($date_from??null),$child->content);
                 }
                 // if (strpos($child->content,  '${to_date_ar}') !== false)
                 // {
@@ -48,10 +52,10 @@ if(isset($certificate->upload->file))
                 // }
                 if (strpos($child->content,  '${to_date_en}') !== false)
                 {
-                    $s = $course_registration->expire_date;
+                    // dd($course_registration->date_to->format('d F,Y'));
+                    $s = $course_registration->date_to;
                     $date = strtotime($s);
                     $expire_date = date('d F,Y', $date);
-
                     $child->content=  str_replace('${to_date_en}',$expire_date??null,$child->content);
                 }
 

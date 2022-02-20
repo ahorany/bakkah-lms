@@ -23,7 +23,13 @@
         }
     }
 </style>
-
+{{-- @dd($course) --}}
+@include('pages.templates.breadcrumb', [
+    'course_id'=>$course->id,
+    'course_title'=>$course->trans_title,
+    // 'section_title' => $content->section->title,
+    // 'content_title'=>$content->title,
+])
 {{-- @include('training.certificates.certificate.content') --}}
 <?php
     // $show_pdf3 = env('APP_URL') . 'certificates/certificate/'.$file_name_pdf.'.pdf';
