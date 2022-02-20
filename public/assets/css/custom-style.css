@@ -1,13 +1,17 @@
-/* a.nav-link.active:before {
-    content: '';
-    background: #fff;
-    height: 50px;
-    display: block;
-    width: 15px;
-    position: absolute;
-    left: 0;
-    border-radius: 0 10px 10px 0;
-} */
+.form-control{
+    appearance: auto;
+}
+
+.lms-header ul.navbar-nav li.user a.nav-link.role.not_admin{
+    border: none;
+    background: transparent;
+    width: max-content;
+}
+
+.lms-header ul.navbar-nav li.user a.nav-link.role.not_admin svg{
+    display: none;
+}
+
 span.flag_icon_false svg path , .flag svg path {
     stroke: gray;
     transform: rotate(15deg);
