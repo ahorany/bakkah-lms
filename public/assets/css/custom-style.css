@@ -4,6 +4,8 @@
 
 .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin{
     border: none;
+    background: transparent;
+    width: max-content;
 }
 
 .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin svg{
