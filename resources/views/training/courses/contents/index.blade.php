@@ -28,7 +28,6 @@
             <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</h4>
             <div class="course_info mb-3 card p-3">
                 <div class="row">
-                    @if(!checkUserIsTrainee())
                         <div class="col-lg-3 col-md-4 col-12">
                             <button type="button" @click="OpenModal('section',null)" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_section')}}
                             </button>
@@ -36,7 +35,6 @@
                             <button type="button" @click="OpenModal('gift',null)" class="group_buttons mb-1 btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>{{__('admin.add_gift')}}
                             </button>
                         </div>
-                    @endif
 
                     <div class="col-lg-9 col-md-8 col-12 text-right">
                         @include('training.courses.contents.header',['course_id' => $course->id, 'contents' =>true])
@@ -433,6 +431,8 @@ $(function() {
 
 
 <script>
+    Vue.config.devtools = true;
+
     window.contents = {!! json_encode($contents??[]) !!}
     window.public_path = {!! json_encode(CustomAsset('upload')??'') !!}
 	var contents = new Vue({

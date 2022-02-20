@@ -16,6 +16,8 @@ class BrancheController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('permission:training.branches.index');
+
         Active::$namespace = 'training';
         Active::$folder = 'branches';
     }

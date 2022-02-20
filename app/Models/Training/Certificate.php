@@ -6,8 +6,6 @@ use App\Constant;
 use App\Traits\ImgTrait;
 use App\Traits\Json\ExcerptTrait;
 use App\Traits\JsonTrait;
-use App\Traits\PostMorphTrait;
-use App\Traits\SeoTrait;
 use App\Traits\TrashTrait;
 use App\Traits\UserTrait;
 use Carbon\Carbon;
@@ -17,8 +15,8 @@ use Laravel\Scout\Searchable;
 
 class Certificate extends Model
 {
-    use TrashTrait, ImgTrait, PostMorphTrait;
-    use JsonTrait, ExcerptTrait, UserTrait, SeoTrait;
+    use TrashTrait, ImgTrait;
+    use JsonTrait, ExcerptTrait, UserTrait;
 
     protected $guarded = ['en_title', 'ar_title'];
 }

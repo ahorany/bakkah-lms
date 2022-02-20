@@ -61,7 +61,7 @@
                 <div class="dropdown d-none">
                     <ul class="postition-relative">
                         <?php $role_id = $role->id; ?>
-                        @foreach(\Spatie\Permission\Models\Role::select('id','name','icon')->get() as $role)
+                        @foreach(\App\Models\Training\Role::select('id','name','icon')->get() as $role)
                             <li @if($role->id == $role_id) style="background: #eee;" @endif>
                                 <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
                                 <span class="d-flex">

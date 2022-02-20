@@ -2,7 +2,7 @@
 
 namespace App\Models\Training;
 
-use App\Models\Admin\Upload;
+use App\Models\Training\Upload;
 use App\Traits\FileTrait;
 use App\Traits\ImgTrait;
 use App\Traits\TrashTrait;

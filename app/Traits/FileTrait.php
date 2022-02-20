@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Traits;
-use App\Models\Admin\Upload;
+use App\Models\Training\Upload;
 
 Trait FileTrait
 {

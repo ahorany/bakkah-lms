@@ -2,20 +2,14 @@
 
 namespace App;
 
-use App\Models\Admin\Detail;
-use App\Models\Admin\PostMorph;
-use App\Models\Training\Discount\Discount;
-use App\Models\Training\Session;
-use App\Models\Training\XeroAccount;
 use App\Traits\Json\ExcerptTrait;
 use App\Traits\JsonTrait;
-use App\Traits\SeoTrait;
 use App\Traits\TransTrait;
 use Laravel\Scout\Searchable;
 
 class Constant extends Eloquent
 {
-    use JsonTrait, SeoTrait, ExcerptTrait;
+    use JsonTrait,ExcerptTrait;
     use Searchable;
     use TransTrait;
 

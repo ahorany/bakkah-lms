@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Upload;
+use App\Models\Training\Upload;
 use App\User;
 use Illuminate\Support\Facades\URL;
 

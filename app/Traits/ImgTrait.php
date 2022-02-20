@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 use Intervention\Image\Facades\Image;
-use App\Models\Admin\Upload;
+use App\Models\Training\Upload;
 use Illuminate\Support\Facades\Mail;
 
 Trait ImgTrait

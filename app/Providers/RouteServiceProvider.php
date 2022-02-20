@@ -20,8 +20,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
         $this->mapWebRoutes();
-        $this->mapEducationRoutes();
-        $this->mapAdminRoutes();
         $this->mapTrainingRoutes();
         $this->mapFrontRoutes();
 
@@ -41,34 +39,15 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/front.php'));
     }
 
-    protected function mapEducationRoutes()
-    {
-        Route::middleware('web')
-            //  ->namespace($this->namespace.'\Front\Education')
-             ->group(base_path('routes/education/education.php'));
-    }
-
-    protected function mapAdminRoutes()
-    {
-        Route::middleware(['web', 'localeSessionRedirect']) ///////
-             ->namespace($this->namespace.'\Admin')
-             ->group(base_path('routes/admin/admin.php'));
-    }
-
     protected function mapTrainingRoutes()
     {
-        $this->TrainingRoutes('training');
+        Route::middleware('web')
+            ->namespace($this->namespace.'\Training')
+            ->group(base_path('routes/training.php'));
     }
 
-    protected function mapEvaluationRoutes()
-    {
-        $this->TrainingRoutes('evaluation');
-    }
 
-    protected function mapCertificatesRoutes()
-    {
-        $this->TrainingRoutes('certificate');
-    }
+
 
     protected function mapApiRoutes()
     {
@@ -78,10 +57,5 @@ class RouteServiceProvider extends ServiceProvider
              ->group(base_path('routes/api.php'));
     }
 
-    /** Privates */
-    private function TrainingRoutes($route){
-        Route::middleware(['web', 'localeSessionRedirect'])
-            ->namespace($this->namespace.'\Training')
-            ->group(base_path('routes/training/'.$route.'.php'));
-    }
+
 }
