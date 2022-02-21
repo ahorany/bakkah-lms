@@ -387,7 +387,9 @@ class CertificateControllerH extends Controller
     public function certificate_dynamic() {
 
         // $course = Course::find(request()->course_registration_id);
-        $course_registration = CourseRegistration::find(request()->course_registration_id);
+            $course_registration = CourseRegistration::join('sessions','sessions.id','=','courses_registration.session_id')
+            ->whereNotNull('courses_registration.session_id')
+            ->find(request()->course_registration_id);
         // dd($course_registration);
 
         $course = Course::find($course_registration->course_id);
@@ -398,6 +400,7 @@ class CertificateControllerH extends Controller
             'data_for_qr'=>$body['data_for_qr'],
             'file_name_pdf'=>$body['file_name_pdf'],
             'course_title'=>$course->trans_title,
+            'course'=>$body['course'],
         ]);
 
     }
@@ -538,10 +541,12 @@ class CertificateControllerH extends Controller
                 $file_name = public_path() . '/certificates/certificate/'.$file_name_pdf.'.pdf';
                 $mpdf->Output($file_name,'F');
             }
+
+            // dd($course);
             if(isset($array['certificate_id']) && $array['certificate_id'] != '')
-                return compact('cart', 'data_for_qr', 'file_name_pdf');
+                return compact('cart', 'data_for_qr', 'file_name_pdf','course');
             else
-                return view('training.certificates.certificate.index', compact('cart', 'data_for_qr','file_name_pdf'));
+                return view('training.certificates.certificate.index', compact('cart', 'data_for_qr','file_name_pdf','course'));
         }
         else
             return 0;

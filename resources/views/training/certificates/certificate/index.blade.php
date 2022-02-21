@@ -2,6 +2,6 @@
 
 @section('table')
 
-    @include('training.certificates.certificate.certificate_body')
+@include('training.certificates.certificate.certificate_body')
 
 @endsection
