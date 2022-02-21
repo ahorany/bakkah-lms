@@ -47,11 +47,6 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -66,7 +61,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
 
 
     public function getRememberToken()
