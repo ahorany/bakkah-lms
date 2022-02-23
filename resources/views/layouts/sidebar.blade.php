@@ -32,7 +32,7 @@
         @if(!auth()->user()->hasRole(['Admin']))
             @foreach($user_sidebar_courses->courses as $item)
                 <li class="nav-item">
-                    <a class="nav-link {{ (url()->full() == CustomRoute('user.course_details',$item->id)) && (url()->full() != CustomRoute('user.home'))  ? 'active' : '' }}" href="{{CustomRoute('user.course_details',$item->id) }}">
+                    <a class="nav-link {{ ( session()->get('active_sidebar_route_name') == -1) &&  (url()->full() == CustomRoute('user.course_details',$item->id)) && (url()->full() != CustomRoute('user.home'))  ? 'active' : '' }}" href="{{CustomRoute('user.course_details',$item->id) }}">
                         <span class="d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36" viewBox="0 0 24.567 23.684">
                                 <defs>

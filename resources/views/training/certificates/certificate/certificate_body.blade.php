@@ -23,7 +23,15 @@
         }
     }
 </style>
-
+{{-- @dd($course) --}}
+@if(isset($course))
+@include('pages.templates.breadcrumb', [
+    'course_id'=>$course->id,
+    'course_title'=>$course->trans_title,
+    // 'section_title' => $content->section->title,
+    // 'content_title'=>$content->title,
+])
+@endif
 {{-- @include('training.certificates.certificate.content') --}}
 <?php
     // $show_pdf3 = env('APP_URL') . 'certificates/certificate/'.$file_name_pdf.'.pdf';
@@ -39,7 +47,7 @@
     @if(file_exists($physical_pdf))
         <?php /* ?>
         <embed class="embed_pdf" src="{!!$show_pdf!!}#view=Fit&=<?=time();?>" type="application/pdf" width="100%" height="680px" />
-        <?php */ ?>
+        <?php */  ?>
         <style>
         #adobe-dc-view {
             height: 600px;
@@ -58,7 +66,7 @@
                 var adobeDCView = new AdobeDC.View({clientId: "288b6dcfd4b5432c9603f104dfb93981", divId: "adobe-dc-view"});
                 adobeDCView.previewFile({
                     content:{location: {url: "{{$show_pdf}}"}},
-                    metaData:{fileName: "{{$course_title}}"}
+                    metaData:{fileName: "{{$course_title??'preview_pdf'}}"}
                 }, {showAnnotationTools: false, dockPageControls: false, showDownloadPDF: true,
                     showPrintPDF: true, showLeftHandPanel: false, showPageControls: false});
             });
