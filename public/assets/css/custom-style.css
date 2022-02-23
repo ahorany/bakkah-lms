@@ -19,6 +19,7 @@ span.flag_icon_false svg path , .flag svg path {
 
 span.flag_icon_true svg path , .flag-mark svg path {
     fill: #fb4400;
+    stroke: #fb4400;
     transform: rotate(15deg);
 }
 
