@@ -56,10 +56,9 @@
                                     <img src="{{CustomAsset('icons/open.svg')}}" height="auto" width="30%">
                                 </div>
                                 <div>
-                                    <h1>Congratulations Gift!</h1>
+                                    <h1>Woohoo, Congrats!</h1>
                                     <p>
-                                        You have successfully completed the course. Can’t wait for to hear the good news about you getting certified! <br><br>
-                                        Good Luck in your exam
+                                        We’re glad you made it. Enjoy your gift now!
                                     </p>
                                 </div>
                             </div>
