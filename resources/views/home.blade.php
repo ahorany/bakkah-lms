@@ -69,7 +69,7 @@
                         </svg>
                         <div>
                             <span>My Courses</span>
-                            <b>{{count($courses->courses)}}</b>
+                            <b>{{((count($courses->courses) > 10) || (count($courses->courses) == 0) ? count($courses->courses) : '0'.count($courses->courses))}}</b>
                         </div>
                     </div>
 
