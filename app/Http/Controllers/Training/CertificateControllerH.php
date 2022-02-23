@@ -387,9 +387,11 @@ class CertificateControllerH extends Controller
     public function certificate_dynamic() {
 
         // $course = Course::find(request()->course_registration_id);
-            $course_registration = CourseRegistration::join('sessions','sessions.id','=','courses_registration.session_id')
-            ->whereNotNull('courses_registration.session_id')
-            ->find(request()->course_registration_id);
+        $course_registration = CourseRegistration::leftJoin('sessions', function($query){
+            $query->on('sessions.id','=','courses_registration.session_id')
+            ->whereNotNull('courses_registration.session_id');
+        })
+        ->find(request()->course_registration_id);
         // dd($course_registration);
 
         $course = Course::find($course_registration->course_id);
@@ -402,10 +404,7 @@ class CertificateControllerH extends Controller
             'course_title'=>$course->trans_title,
             'course'=>$body['course'],
         ]);
-
     }
-
-
 
     public function certificate_body($array=null) {
         // dd($array);
