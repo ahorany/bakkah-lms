@@ -279,7 +279,8 @@
                                                             @endif
                                                             <span>
                                                                 {{$content->title}}
-                                                                @if ($content->paid_status == 504)
+{{--                                                                @if ($content->paid_status == 504)--}}
+                                                                @if (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 504 && $content->paid_status == 504)
                                                                     <span>
                                                                         {{-- <span class="mx-1">|</span> --}}
                                                                         <span class="mx-1 free">{{$content->paid_status == 504 ? 'Free' : '' }}</span>
@@ -385,7 +386,7 @@
                                         <div>
                                             <h2 class="mb-4">{{$section->title}}</h2>
                                             <span>
-                                                <div style="color: #fb4400 !important;">Complete & Get a Gift </div> 
+                                                <div style="color: #fb4400 !important;">Complete & Get a Gift </div>
                                                 <small style="line-height: revert !important;">Something awesome is waiting for you. But unfortunately, you can’t get your gift till you make a progress in this course.</small>
                                             </span>
                                         </div>
