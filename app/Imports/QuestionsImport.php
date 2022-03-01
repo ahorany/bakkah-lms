@@ -58,6 +58,7 @@ class QuestionsImport implements ToCollection, WithHeadingRow
 
                 $question_id = DB::getPdo()->lastInsertId();
                 $content = Content::where('id',request()->content_id)->first();
+                // dd($content);
                 $units = explode(',',$row['unit_id']);
                 foreach($units as $unit)
                 {

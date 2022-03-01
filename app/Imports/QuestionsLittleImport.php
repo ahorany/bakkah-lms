@@ -27,8 +27,6 @@ class QuestionsLittleImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
 
-
-
         $mark = 0;
         foreach ($rows as $row)
         {
