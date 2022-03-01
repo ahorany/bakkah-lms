@@ -60,9 +60,9 @@ class QuestionsImport implements ToCollection, WithHeadingRow
                 $content = Content::where('id',request()->content_id)->first();
                 // dd($content);
                 $units = explode(',',$row['unit_id']);
-                foreach($units as $unit)
+                foreach($units as $u)
                 {
-                    $unit = Unit::where('unit_no',$unit)->where('course_id',$content->course_id)->first();
+                    $unit = Unit::where('unit_no',$u)->where('course_id',$content->course_id)->first();
                     if(isset($unit->id))
                     {
                         DB::table('question_units')->insert([
@@ -109,6 +109,7 @@ class QuestionsImport implements ToCollection, WithHeadingRow
 
         }
         $exam_id = Exam::where('content_id', request()->content_id)->first();
+
         DB::table('exams')
         ->where('id',  $exam_id->id)
         ->update(['exam_mark' => $mark]);
