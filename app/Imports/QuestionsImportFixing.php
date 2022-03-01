@@ -27,13 +27,10 @@ class QuestionsImportFixing implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
-
         // dd(request()->all());
-
         $mark = 0;
         foreach ($rows as $row)
         {
-
             if($row['question_text'] != '')
             {
                 $question_id = DB::table('questions')->where('exam_id',request()->content_id)
@@ -57,7 +54,6 @@ class QuestionsImportFixing implements ToCollection, WithHeadingRow
                         }
                     }
                 }
-
 
             }
 

@@ -51,9 +51,9 @@ class QuestionsLittleImport implements ToCollection, WithHeadingRow
                 $question_id = DB::getPdo()->lastInsertId();
                 $content = Content::where('id',request()->content_id)->first();
                 $units = explode(',',$row['chapter']);
-                foreach($units as $unit)
+                foreach($units as $u)
                 {
-                    $unit = Unit::where('unit_no',$unit)->where('course_id',$content->course_id)->first();
+                    $unit = Unit::where('unit_no',$u)->where('course_id',$content->course_id)->first();
                     if(isset($unit->id))
                     {
                         DB::table('question_units')->insert([
