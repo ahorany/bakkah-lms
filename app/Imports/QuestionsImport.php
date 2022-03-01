@@ -65,7 +65,6 @@ class QuestionsImport implements ToCollection, WithHeadingRow
                     $unit = Unit::where('unit_no',$unit)->where('course_id',$content->course_id)->first();
                     if(isset($unit->id))
                     {
-                        $unit = Unit::where('unit_no',$unit)->where('course_id',$content->course_id)->first();
                         DB::table('question_units')->insert([
                             [
                                 'unit_id'            => $unit->id,

@@ -16,7 +16,6 @@ use App\Imports\QuestionsLittleImport;
 use App\Imports\QuestionsMoodleImport;
 use App\Imports\QuestionsCourseImport;
 
-
 use App\Imports\ResultsImport;
 use App\Imports\CoursesImport;
 use App\Imports\UsersImport;
@@ -41,7 +40,6 @@ class ImportController extends Controller
         return Active::Index();
     }
 
-
     public function importCourses()
     {
         return $this->import(new CoursesImport);
@@ -51,15 +49,16 @@ class ImportController extends Controller
     {
         return $this->import(new UsersImport);
     }
+
     public function importUsersCourses()
     {
         return $this->import(new UsersCoursesImport);
     }
+
     public function importUsersGroups()
     {
         return $this->import(new UsersGroupsImport);
     }
-
 
     public function importQuestions()
     {
