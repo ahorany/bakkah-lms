@@ -279,7 +279,8 @@
                                                             @endif
                                                             <span>
                                                                 {{$content->title}}
-                                                                @if ($content->paid_status == 504)
+{{--                                                                @if ($content->paid_status == 504)--}}
+                                                                @if (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 504 && $content->paid_status == 504)
                                                                     <span>
                                                                         {{-- <span class="mx-1">|</span> --}}
                                                                         <span class="mx-1 free">{{$content->paid_status == 504 ? 'Free' : '' }}</span>
@@ -355,11 +356,11 @@
                                                     <img src="{{CustomAsset('icons/open.svg')}}" height="auto" width="30%">
                                                 </div>
                                                 <div>
-                                                    <h1>Unlock the Full Course Now!</h1>
+                                                    <h1>Unlock Full Course!</h1>
                                                     <p>
-                                                        We're happy you're enjoying the course already! You are one step away from unlocking the rest of the course.
+                                                        We’re glad you enjoy the course so far. Don’t miss the chance of unlocking the full modules, you’re just one step away!
                                                     </p>
-                                                    <a id="pay_btn" target="_blank" href="#" class="main-color px-4 my-4">Go to Payment Page</a>
+                                                    <a id="pay_btn" target="_blank" href="#" class="main-color px-4 my-4">Pay Now</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -385,7 +386,8 @@
                                         <div>
                                             <h2 class="mb-4">{{$section->title}}</h2>
                                             <span>
-                                                <small style="line-height: revert !important;"><span style="color: #fb4400 !important;">Note:</span> you can open this feture free when you complete the Coures</small>
+                                                <div style="color: #fb4400 !important;">Complete & Get a Gift </div>
+                                                <small style="line-height: revert !important;">Something awesome is waiting for you. But unfortunately, you can’t get your gift till you make a progress in this course.</small>
                                             </span>
                                         </div>
                                         <hr class="my-3">

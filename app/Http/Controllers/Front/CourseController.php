@@ -36,6 +36,7 @@ class CourseController extends Controller
      *  Course User page
      */
     public function course_details($course_id){
+        session()->put('active_sidebar_route_name',-1);
 
         $user_id = User::delegate_user_id();
         $preview_gate_allows = Gate::allows('preview-gate');
