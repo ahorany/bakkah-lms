@@ -11,6 +11,7 @@ use App\Constant;
 use App\Models\Training\Group;
 use Illuminate\Database\Eloquent\Builder;
 use App\Imports\QuestionsImport;
+use App\Imports\QuestionsImportFixing;
 use App\Imports\QuestionsLittleImport;
 use App\Imports\QuestionsMoodleImport;
 use App\Imports\QuestionsCourseImport;
