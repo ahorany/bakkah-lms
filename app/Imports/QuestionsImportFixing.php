@@ -27,13 +27,10 @@ class QuestionsImportFixing implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
-
         // dd(request()->all());
-
         $mark = 0;
         foreach ($rows as $row)
         {
-
             if($row['question_text'] != '')
             {
                 $question_id = DB::table('questions')->where('exam_id',request()->content_id)
@@ -43,12 +40,11 @@ class QuestionsImportFixing implements ToCollection, WithHeadingRow
                     $content = Content::where('id',request()->content_id)->first();
                     // dd($content);
                     $units = explode(',',$row['unit_id']);
-                    foreach($units as $unit)
+                    foreach($units as $u)
                     {
-                        $unit = Unit::where('unit_no',$unit)->where('course_id',$content->course_id)->first();
+                        $unit = Unit::where('unit_no',$u)->where('course_id',$content->course_id)->first();
                         if(isset($unit->id))
                         {
-                            $unit = Unit::where('unit_no',$unit)->where('course_id',$content->course_id)->first();
                             DB::table('question_units')->insert([
                                 [
                                     'unit_id'            => $unit->id,
@@ -58,7 +54,6 @@ class QuestionsImportFixing implements ToCollection, WithHeadingRow
                         }
                     }
                 }
-
 
             }
 

@@ -23,8 +23,6 @@ Route::group([
                 Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
             });
 
-
-
          Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.courses.index'], function(){
             Route::resource('courses', 'CourseController');
             Route::patch('/courses/{course}/restore', 'CourseController@restore')->name('courses.restore');
@@ -41,7 +39,6 @@ Route::group([
             Route::post('courses/importUsersGroups', 'ImportController@importUsersGroups')->name('importUsersGroups');
             Route::post('courses/importQuestions', 'ImportController@importQuestions')->name('importQuestions');
             Route::post('courses/importQuestionsCourse', 'ImportController@importQuestionsCourse')->name('importQuestionsCourse');
-
 
 
 

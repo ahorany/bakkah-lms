@@ -108,10 +108,6 @@ class CourseController extends Controller
     }
 
 
-
-
-
-
 //////////////////////// Create Course /////////////////////////////////////////////
     public function create(){
         $certificate_types = Constant::where('parent_id', 323)->get();
@@ -130,10 +126,6 @@ class CourseController extends Controller
 
         return Active::Inserted($course->trans_title);
     }
-
-
-
-
 
 //////////////////////// Edit Course /////////////////////////////////////////////
 

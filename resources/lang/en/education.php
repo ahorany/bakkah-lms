@@ -96,4 +96,6 @@ return [
     "Certificates" => 'Certificates',
     'Activity Completed'=>'Activity Completed',
     'Materials'=>'Materials',
+    'categories'=>'Categories',
+    'scorm_Reports'=>'Scorm Reports',
 ];
