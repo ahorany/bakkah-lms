@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\UserMail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Spatie\Permission\Models\Role;
+use App\Models\Training\Role;
 
 class UserController extends Controller
 {

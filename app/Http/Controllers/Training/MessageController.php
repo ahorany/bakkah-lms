@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Helpers\Active;
 use App\Http\Requests\Training\CourseRequest;
 use App\Models\Admin\Partner;
-use App\Models\Admin\Role;
+use App\Models\Training\Role;
 use App\Models\Training\Course;
 use App\Constant;
 use App\Mail\MessageMail;

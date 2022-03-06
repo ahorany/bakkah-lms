@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Training;
 
 use App\Http\Controllers\Controller;
 use App\Mail\TraineeMail;
-use App\Models\Admin\Role;
+use App\Models\Training\Role;
 use App\Models\Training\Answer;
 use App\Models\Training\Content;
 use App\Models\Training\ContentDetails;
