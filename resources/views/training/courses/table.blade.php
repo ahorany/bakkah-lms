@@ -109,11 +109,11 @@ use App\Models\Training\CourseRegistration;
 {{--              @endif--}}
 
               {{-- <a class="cyan" href="{{CustomRoute('user.course_details', $post->id) }}?preview=true">Preview</a> --}}
+              @if( (!request()->has('trash') && request()->trash != "trash") || request()->trash == "" )
 
               <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="cyan mt-1" >
                 {{-- <i class="fa fa-pencil"></i> --}}
                 Report</a>
-              @if(!request()->has('trash') && request()->trash != "trash")
                 <div class="my-1">
                     @include('training.courses.contents.header',['course_id' => $post->id, 'green' =>true , 'courses_home' =>true ])
                     {{-- <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="green">Contents</a>
