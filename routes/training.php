@@ -23,6 +23,13 @@ Route::group([
                 Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
             });
 
+
+            Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.sessions.index'], function(){
+                Route::resource('sessions', 'SessionController');
+                Route::patch('/sessions/{session}/restore', 'SessionController@restore')->name('sessions.restore');
+            });
+
+
          Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.courses.index'], function(){
             Route::resource('courses', 'CourseController');
             Route::patch('/courses/{course}/restore', 'CourseController@restore')->name('courses.restore');

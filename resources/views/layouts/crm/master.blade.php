@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="{{CustomAsset('assets/css/bootstrap-grid.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
+    <link rel="stylesheet" href="https://bakkah.com/public/admin-dist/select2/select2-bootstrap4.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="{{CustomAsset('assets/css/style.css')}}?v={{time()}}">
     <link rel="stylesheet" href="{{CustomAsset('assets/css/custom-style.css')}}?v={{time()}}">
 
@@ -35,10 +38,39 @@
             font-weight: 600 !important;
             margin-bottom: 5px !important;
         }
+
+
+        span.select2 {
+
+            width: 100% !important;
+
+        }
+
+
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+
+            top: 7px !important;
+
+        }
+
+
+
+        .select2-container .select2-selection--single {
+
+            height: calc(2.25rem + 2px) !important;
+
+        }
+
+
+
+
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 </head>
 
 <body>
