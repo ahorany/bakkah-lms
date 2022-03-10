@@ -176,7 +176,7 @@
                         @endif
 
                         @if($course->users[0]->pivot->paid_status != 503)
-                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="px-4 main-color">Pay Now</a>
+                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="mx-0 px-4 main-color">Pay Now</a>
                         @endif
                     </div>
                 @endif
