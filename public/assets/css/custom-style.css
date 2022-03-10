@@ -152,9 +152,24 @@ li.has-dropdown .dropdown span{
 }
 .text-center.course-image {
     min-height: 197.35px !important;
-    /* min-height: max-content !important; */
+    position: relative;
+    overflow: hidden;
 }
-
+.course-image span.status{
+    position: absolute;
+    top: -5px;
+    left: -35px;
+    display: block;
+    color: #fff;
+    background: #fb4400;
+    width: 100px;
+    text-align: center;
+    transform: rotate(-45deg);
+    padding: 10px 0 5px;
+    font-size: 12px;
+    line-height: 2;
+    font-family: 'Lato Bold';
+}
 /* checkbox */
 
 .container-check {

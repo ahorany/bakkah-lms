@@ -6,7 +6,7 @@
     <div style="margin: 15px 0">
         <h5 style="font-size: 15px; margin: 15px 0; text-align: center;">Dear {{$user->en_name}},</h5>
         <p style="font-size: 14px; margin: 15px 0; text-align: center;">Congrats! You’re officially a Bakkah learner.</p>
-        <p style="font-size: 14px; margin: 15px 0; text-align: center;">Thank you for enrolling in {{$course->trans_title}} Course.</p>
+        <p style="font-size: 14px; margin: 15px 0; text-align: center;">Thank you for enrolling in <span style="font-size: 16px; font-family: 700;">{{$course->trans_title}} </span> Course.</p>
     </div>
 
     <table border="0"  width="400" style="margin: 0 auto;" cellspacing="0">
