@@ -20,17 +20,6 @@
         width: 75%;
     }
 
-    .row-instructor{
-        background: #f2f2f2;
-    }
-
-    .row-default{
-        background: #ffffff;
-    }
-
-    .row-trainee{
-        background: #ecdfdf;
-    }
     @media (max-width: 1100px){
         table{
             display: block;
@@ -107,8 +96,7 @@
                     <td v-text="(course_user.progress??0) + '%'"></td>
 
                         <td>
-                            <span v-if="course_user.paid_status == 503" class="badge-pink"> Paid </span>
-                            <span v-if="course_user.paid_status == 504" class="badge-green"> Free </span>
+                            <input disabled :checked="course_user.paid_status == 504 ? true : false"  type="checkbox" >
                         </td>
 
 
@@ -117,11 +105,11 @@
 {{--                        </td>--}}
 
                     <td>
-                        <span v-if="course_user.expire_date"  class="badge-pink"> @{{ course_user.expire_date }}</span>
+                        <span  class="badge-pink"> @{{ course_user.expire_date }}</span>
                     </td>
 
                         <td>
-                            <button @click="deleteUser(course_user.user_id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
+                            <button @click="deleteUser(course_user.id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
                         </td>
                 </tr>
 
@@ -167,7 +155,7 @@
 {{--                            <input   type="datetime-local" v-model="expire_date" name="expire_date" class="w-100 form-control d-inline-block" placeholder="Expire date">--}}
 {{--                        </div>--}}
 
-                        <table class="table" style="width: 97%; margin: 0 auto;">
+                        <table class="table table-striped" style="width: 97%; margin: 0 auto;">
                             <thead>
                             <tr>
                                 <th scope="col">Select</th>
@@ -179,27 +167,29 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr :class="{'row-instructor' : search_user.role_id == 2 , 'row-trainee' : search_user.role_id == 3 , 'row-default' : (search_user.role_id != 2 && search_user.role_id != 3) }" v-for="(search_user,index) in search_users">
-                                <th scope="row"><input type="checkbox" @change="addUser(search_user,$event)" :checked="isCheckedUser(search_user.user_id)"></th>
+                            <tr v-for="(search_user,index) in search_users">
+                                <th scope="row"><input type="checkbox"></th>
                                 <td v-text="trans_title(search_user.user_name)"></td>
                                 <td v-text="search_user.email"></td>
                                 <td>
-                                    <select @change="changeRoleId(search_user,$event.target.value)" v-model="search_user.role_id">
-                                        <option  value="2">Instructor</option>
-                                        <option  value="3">Trainee</option>
+                                    <select @change="changeRoleId(index,search_user.user_id,$event.target.value)">
+                                        <option value="-1">Choose Value..</option>
+                                        <option :selected="search_user.role_id == 2" value="2">Trainee</option>
+                                        <option :selected="search_user.role_id == 3" value="3">Instructor</option>
                                     </select>
-{{--                                    <div class="form-group"><input  type="checkbox" class="mx-3" style="display: inline-block;"></div>--}}
+{{--                                    <div class="form-group"><input @change="addUser(search_user.id,$event)" :checked="isCheckedUser(search_user.id)" type="checkbox" class="mx-3" style="display: inline-block;"></div>--}}
                                 </td>
 
                                 <td>
-                                    <select @change="changePaidStatus(search_user,$event.target.value)" v-model="search_user.paid_status">
-                                        <option value="504">Free</option>
-                                        <option value="503">Paid</option>
+                                    <select @change="changePaidStatus(index,search_user.user_id,$event.target.value)" >
+                                        <option value="-1">Choose Value..</option>
+                                        <option :selected="search_user.paid_status == 504" value="504">Free</option>
+                                        <option :selected="search_user.paid_status == 503" value="503">Paid</option>
                                     </select>
                                 </td>
 
                                 <td>
-                                   <input @change="changeExpireDate(search_user,$event.target.value)"  :value="moment(search_user.expire_date).format('YYYY-MM-DDTHH:mm')" type="datetime-local" name="expire_date" class="w-100 form-control d-inline-block" placeholder="Expire date">
+                                   <input @change="changeExpireDate(index,search_user.user_id,$event.target.value)"  :value="moment(search_user.expire_date).format('YYYY-MM-DDTHH:mm')" type="datetime-local" name="expire_date" class="w-100 form-control d-inline-block" placeholder="Expire date">
                                 </td>
 
 
@@ -241,8 +231,7 @@
             search_username : '',
             search_email    : '',
             search_users    : [] ,
-            add_users : [],
-            delete_users : [],
+            add_users : {},
             // expire_date : '' ,
             // users_expire_date    : {} ,
             // alert:false,
@@ -251,6 +240,11 @@
         created(){
 		    let self = this
             console.log(this.course_users)
+           // this.course_users.forEach(function (course_user,index) {
+           //     self.users_expire_date[course_user.id] = course_user.expire_date;
+           // })
+           //
+           //  console.log(self.users_expire_date)
         },
         methods : {
             OpenModal : function(type){
@@ -276,43 +270,41 @@
                             console.log(e)
                         });
            },
+            changeRoleId : function(index,user_id,value){
+                this.search_users[index]['role_id'] = value
+                this.add_users[user_id] =  this.search_users[index];
+            },
+            changePaidStatus: function(index,user_id,value){
+                this.search_users[index]['paid_status'] = value
+                this.add_users[user_id] =  this.search_users[index];
+            },
+            changeExpireDate: function(index,user_id,value){
+                this.search_users[index]['expire_date'] = moment(value).format('YYYY-MM-DDTHH:mm')
+                this.add_users[user_id] =  this.search_users[index];
+            },
 
             save : function(){
                     let self = this;
                     axios.post("{{route('training.add_users_course')}}",
                         {
-                            'users' : self.add_users,
-                            'delete_users' : self.delete_users,
-                            'course_id' : self.course.id,
+                            'users' : self.add_users ,
+                            'course_id' : self.course.id ,
                         }
                     )
                     .then(response => {
+                        // console.log(response.data)
                         var self = this
                         if(response.data.status == 'success'){
-
-                            this.course_users.forEach(function (item,index) {
-                                self.add_users.forEach(function (user,i) {
-                                    if(user.user_id == item.user_id){
-                                        self.course_users[index] = user
-                                        self.add_users.splice(i,1)
+                                Object.keys(self.add_users).forEach((key) => {
+                                    var index = self.checkUserIfExists(self.add_users[key]['user_id'])
+                                    if(index != -1){
+                                        self.course_users[index] = self.add_users[key]
+                                    }else{
+                                        self.course_users.push( self.add_users[key])
                                     }
-                                })
-                            })
+                                });
 
-                            this.course_users.push(...(this.add_users))
-
-
-                            this.course_users.forEach(function (item,index) {
-                                 self.delete_users.forEach(function (user) {
-                                     if(user.user_id == item.user_id){
-                                         self.course_users.splice(index,1)
-                                     }
-                                 })
-                             })
-
-                            self.add_users    = [];
-                            self.delete_users = [];
-                            self.search_users = [];
+                            self.add_users = {};
                             $('#ContentModal').modal('hide')
                         }
                     })
@@ -321,163 +313,63 @@
                      });
                 },
 
-            changeRoleId : function(search_user,value){
-                var self = this;
-                var lock = true
-
-                // if search_users and not add
-                this.search_users.forEach(function (item,index) {
-                    if(item.user_id == search_user.user_id){
-                        self.search_users[index]['role_id'] = value
+            checkUserIfExists : function (user_id){
+                var i =  -1;
+                this.course_users.forEach(function (course_user,index) {
+                    if(user_id == course_user['user_id']){
+                        i =  index;
                     }
                 })
-
-                // if search_users and add
-                this.add_users.forEach(function (item,index) {
-                    if(item.user_id == search_user.user_id){
-                        self.add_users[index]['role_id'] = value
-                        lock = false
-                    }
-                })
-
-
-                // if course_users and search_user and not add => push to add
-                if(lock && self.isCheckedUser(search_user.user_id)){
-                    search_user['role_id'] = value
-                    self.add_users.push(search_user);
-                }
-
-            },
-
-            changePaidStatus : function(search_user,value){
-                var self = this;
-                var lock = true
-
-                // if search_users and not add
-                this.search_users.forEach(function (item,index) {
-                    if(item.user_id == search_user.user_id){
-                        self.search_users[index]['paid_status'] = value
-                    }
-                })
-
-                // if search_users and add
-                this.add_users.forEach(function (item,index) {
-                    if(item.user_id == search_user.user_id){
-                        self.add_users[index]['paid_status'] = value
-                        lock = false
-                    }
-                })
-
-
-                // if course_users and search_user and not add => push to add
-                if(lock && self.isCheckedUser(search_user.user_id)){
-                    search_user['paid_status'] = value
-                    self.add_users.push(search_user);
-                }
-
-            },
-
-            changeExpireDate: function(search_user,value){
-                var self = this;
-                var lock = true
-
-                // if search_users and not add
-                this.search_users.forEach(function (item,index) {
-                    if(item.user_id == search_user.user_id){
-                        self.search_users[index]['expire_date'] = moment(value).format('YYYY-MM-DDTHH:mm')
-                    }
-                })
-
-                // if search_users and add
-                this.add_users.forEach(function (item,index) {
-                    if(item.user_id == search_user.user_id){
-                        self.add_users[index]['expire_date'] = moment(value).format('YYYY-MM-DDTHH:mm')
-                        lock = false
-                    }
-                })
-
-
-                // if course_users and search_user and not add => push to add
-                if(lock && self.isCheckedUser(search_user.user_id)){
-                    search_user['expire_date'] = moment(value).format('YYYY-MM-DDTHH:mm')
-                    self.add_users.push(search_user);
-                }
-
-            },
-
-
-            isCheckedUser : function (user_id) {
-                    let self = this;
-                     let user = self.course_users.filter(function (user,index) {
-                          return user.user_id == user_id;
-                     })
-                       if(user && user.length == 0){
-                           return false;
-                       }
-                       return true;
-                },
-
-            addUser : function (search_user,event) {
-                    if (event.target.checked) {
-                        if(!search_user['role_id']){
-                            search_user['role_id'] = 2;
-                        }
-
-                        if(!search_user['paid_status']){
-                            search_user['paid_status'] = 504;
-                        }
-
-                        this.delete_users = this.delete_users.filter(function (user) {
-                            return user.user_id != search_user.user_id
-                        })
+                return i;
+            }
 
 
 
 
-                        if(!this.isCheckedUser(search_user.user_id)){
-                            this.add_users.push(search_user);
-                        }else{
-                            var lock = true
-                            this.add_users.forEach(function (user,index) {
-                               if(user.user_id == search_user.user_id){
-                                   this.add_users[index] = search_user;
-                                   lock = false
-                               }
-                            })
 
-                            if(lock){
-                                this.add_users.push(search_user);
-                            }
-                        }
+            {{--    isCheckedUser : function (user_id) {--}}
+            {{--        let self = this;--}}
+            {{--         let user = self.course.users.filter(function (user,index) {--}}
+            {{--              return user.id == user_id;--}}
+            {{--         })--}}
+            {{--           if(user && user.length == 0){--}}
+            {{--               return false;--}}
+            {{--           }--}}
+            {{--           return true;--}}
+            {{--    },--}}
+            {{--    addUser : function (user_id,event) {--}}
+            {{--        if (event.target.checked) {--}}
+            {{--            this.add_users[user_id] = true;--}}
+            {{--        }else{--}}
+            {{--            this.add_users[user_id] = false;--}}
+            {{--        }--}}
+            {{--    },--}}
 
-                    }else{
-                        this.add_users = this.add_users.filter(function (user) {
-                            return user.user_id != search_user.user_id
-                        })
+            {{--    deleteUser : function (user_id) {--}}
+            {{--        let self = this;--}}
+            {{--        if(confirm('Are you sure ?')){--}}
 
-                        if(this.isCheckedUser(search_user.user_id)){
-                            this.delete_users.push(search_user);
-                        }
-                    }
-                },
+            {{--            self.course.users = self.course.users.filter(function (user,index) {--}}
+            {{--                  return (user.id != user_id)--}}
+            {{--            })--}}
 
-            deleteUser : function (user_id) {
-                    let self = this;
-                    if(confirm('Are you sure ?')){
-                        self.course_users = self.course_users.filter(function (user,index) {
-                              return (user.user_id != user_id)
-                        })
-                        axios.post("{{route('training.delete_user_course')}}",
-                            {
-                                'course_id' : self.course.id ,
-                                'user_id'   : user_id ,
-                            }
-                        ).then(response => {}
-                        ).catch(e => { console.log(e) });
-                    }
-          },
+            {{--            axios.post("{{route('training.delete_user_course')}}",--}}
+            {{--                {--}}
+            {{--                    'course_id' : self.course.id ,--}}
+            {{--                    'user_id'   : user_id ,--}}
+            {{--                }--}}
+            {{--            )--}}
+            {{--                .then(response => {--}}
+            {{--                    console.log(response)--}}
+            {{--                    // self.search_users = response.data.users;--}}
+            {{--                    // $('#ContentModal').modal('hide')--}}
 
-
+            {{--                })--}}
+            {{--                .catch(e => {--}}
+            {{--                    console.log(e)--}}
+            {{--                });--}}
+            {{--        }--}}
+            {{--   },--}}
             {{--    // trans_name : function (data) {--}}
             {{--    //    return JSON.parse(data)[this.lang];--}}
             {{--    //  },--}}

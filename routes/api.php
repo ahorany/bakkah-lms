@@ -18,10 +18,10 @@ use Illuminate\Http\Request;
 //});
 
 
-//Route::group(['middleware'=>['apiToken'], 'as'=>'api.'], function() {
-//    Route::post('users/add','\App\Http\Controllers\Api\UserApiController@add_users')->name('users.add');
-//
-//});
+Route::group(['middleware'=>['apiToken'], 'as'=>'api.'], function() {
+    Route::post('users/add','\App\Http\Controllers\Api\UserApiController@add_users')->name('users.add');
+
+});
 
 
 
