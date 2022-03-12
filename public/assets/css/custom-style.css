@@ -152,9 +152,24 @@ li.has-dropdown .dropdown span{
 }
 .text-center.course-image {
     min-height: 197.35px !important;
-    /* min-height: max-content !important; */
+    position: relative;
+    overflow: hidden;
 }
-
+.course-image span.status{
+    position: absolute;
+    top: -5px;
+    left: -35px;
+    display: block;
+    color: #fff;
+    background: #fb4400;
+    width: 100px;
+    text-align: center;
+    transform: rotate(-45deg);
+    padding: 10px 0 5px;
+    font-size: 12px;
+    line-height: 2;
+    font-family: 'Lato Bold';
+}
 /* checkbox */
 
 .container-check {
@@ -1170,7 +1185,7 @@ label.container-check.form-check-label span.checkmark{
     }
     .navbar .navbar-toggler {
         position: static !important;
-        width: 30px;
+        width: 25px;
         height: 25px;
         padding: 1px 6px;
     }
@@ -1430,7 +1445,7 @@ label.container-check.form-check-label span.checkmark{
         filter: inherit;
     }
     button.navbar-toggler.position-absolute.d-md-none.collapsed.me-auto.ms-3{
-        margin: 15px 5px !important;
+        margin: 10px 5px !important;
     }
     ol.breadcrumb {
         display: none;
@@ -1464,10 +1479,17 @@ label.container-check.form-check-label span.checkmark{
 
 @media (max-width: 350.5px){
     .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role{
-        width: 100px;
+        width: 145px;
     }
     .course-cards {
         justify-content: center;
+    }
+}
+
+@media (max-width: 330.5px){
+    .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role{
+        width: 126px;
+        font-size: 12px;
     }
 }
 

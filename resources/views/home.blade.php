@@ -69,7 +69,7 @@
                         </svg>
                         <div>
                             <span>My Courses</span>
-                            <b>{{((count($courses->courses) > 10) || (count($courses->courses) == 0) ? count($courses->courses) : '0'.count($courses->courses))}}</b>
+                            <b>{{((count($courses->courses) > 9) || (count($courses->courses) == 0) ? count($courses->courses) : '0'.count($courses->courses))}}</b>
                         </div>
                     </div>
 
@@ -120,7 +120,7 @@
             </div>
         </div>
     </div>
-
+{{-- @dd($courses) --}}
     @if (count($courses->courses) > 0)
         <div class="row mx-0 home-section">
             <div class="col-xl-12 col-md-12">
@@ -132,18 +132,18 @@
                             <a href="{{CustomRoute('user.course_details',$course->id)}}">
                             <div class="text-center course-image p-3 @if ($loop->last) last @endif">
                                 <?php
-                                $url = '';
-                                // dd($course);
-                                if($course->upload != null) {
-                                    // if (file_exists($course->upload->file) == false){
-                                    //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . $course->trans_title;
-                                    // }else{
-                                        $url = $course->upload->file;
-                                        $url = CustomAsset('upload/thumb200/'. $url);
-                                    // }
-                                }else {
-                                    $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . $course->trans_title;
-                                }
+                                    $url = '';
+                                    // dd($course);
+                                    if($course->upload != null) {
+                                        // if (file_exists($course->upload->file) == false){
+                                        //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . $course->trans_title;
+                                        // }else{
+                                            $url = $course->upload->file;
+                                            $url = CustomAsset('upload/thumb200/'. $url);
+                                        // }
+                                    }else {
+                                        $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . $course->trans_title;
+                                    }
                                 ?>
                                 @isset($course->upload->file)
                                     <div class="image" style="height: 120px; display:flex; align-items: center; justify-content: center;">
@@ -154,6 +154,9 @@
                                         <img src="{{$url}}" height="auto" width="100px">
                                     </div>
                                 @endisset
+                                @if($course->pivot->paid_status == 504)
+                                    <span class="status">Free</span>
+                                @endif
                                 <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 50px; font-weight:normal; display: flex; justify-content: center; align-items: center;">
                                     {{$course->trans_title}}
                                 </h3>
