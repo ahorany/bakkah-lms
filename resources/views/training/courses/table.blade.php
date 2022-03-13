@@ -18,10 +18,10 @@ use App\Models\Training\CourseRegistration;
         <tr>
             <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
+            <th class="">{{__('admin.delivery_methods')}}</th>
             <th class="">{{__('admin.course_code')}}</th>
             <th class="">{{__('admin.category')}}</th>
             <th class="">{{__('admin.course_pdus')}}</th>
-            <th class="">{{__('admin.delivery_methods')}}</th>
             <th class="">{{__('admin.assigned_learners')}}</th>
             <th class="">{{__('admin.completed_learners')}}</th>
             <th class="">{{__('admin.Registered')}}</th>
@@ -49,6 +49,11 @@ use App\Models\Training\CourseRegistration;
         <td>
             <span style="display: block;" class="title">{{$post->trans_title ?? null}}</span>
         </td>
+
+       <td>
+          <span class="td-title">{{$post->deliveryMethod->trans_name}}</span>
+       </td>
+
         <td>
             <span class="td-title">{{$post->code ?? null}}</span>
         </td>
@@ -58,9 +63,7 @@ use App\Models\Training\CourseRegistration;
         <td>
             <span class="td-title">{{$post->PDUs ?? null}}</span>
         </td>
-        <td>
-            <span class="td-title">{{$post->deliveryMethod->trans_name}}</span>
-        </td>
+
         <td>
             <?php
                 $trainee_count =   DB::table('courses_registration')

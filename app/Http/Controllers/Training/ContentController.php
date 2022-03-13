@@ -341,7 +341,7 @@ class ContentController extends Controller
 
         }else{
             $downloadable = request()->downloadable == 'true' ? 1 : 0;
-            if (request()->type == 'scorm' || (\request()->has("url") && \request()->url != "" && \request()->url != null)){
+            if (request()->type == 'scorm' || (\request()->has("url") && \request()->url != "" && \request()->url != null && \request()->url != "null")){
                 $downloadable = 0;
             }
             $content = Content::create([
@@ -525,10 +525,12 @@ class ContentController extends Controller
             ]);
 
         } else {
+
             $downloadable = request()->downloadable == 'true' ? 1 : 0;
-            if (request()->type == 'scorm' || (\request()->has("url") && \request()->url != "" && \request()->url != null)){
+            if (request()->type == 'scorm' || (\request()->has("url") && \request()->url != "" && \request()->url != null && \request()->url != "null")){
                 $downloadable = 0;
             }
+
 
             $content = Content::whereId(request()->content_id)
                 ->update([
