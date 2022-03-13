@@ -2,6 +2,7 @@
     appearance: auto;
 }
 
+
 .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin{
     border: none;
     background: transparent;
@@ -288,6 +289,24 @@ ol.answers li{
 /*************************************************************************************************************/
 
 /* Buttons Style */
+.badge{
+    color: #fff;
+    padding: 2px 10px;
+    font-size: smaller;
+    border-radius: 3px;
+}
+.self-paced{
+    background: #2c9675;
+}
+.live-online{
+    background: #d6c11b;
+}
+.exam-simulator{
+    background: #FFA065;
+}
+.instructor-led{
+    background: #5ec000;
+}
 .badge-blue{
     background: #8dabf7;
     color: #fff;
@@ -1167,7 +1186,7 @@ label.container-check.form-check-label span.checkmark{
         font-size: 25px;
     }
     main#main-vue-element {
-        padding: 15px 25px !important;
+        padding: 20px 10px !important;
     }
     .card.p-5.user-info {
         padding: 20px !important;
@@ -1209,9 +1228,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .course-cards {
         width: 48% !important;
-    }
-    main#main-vue-element{
-        padding: 0 !important;
     }
     .course_details .course-image{
         box-shadow: none !important;

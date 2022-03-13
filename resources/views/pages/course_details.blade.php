@@ -104,6 +104,15 @@
                 {{$course->PDUs}} PDUs
                 </span>
                 @endif
+                @php
+                    $type = [
+                        '11' => 'self-paced',
+                        '13' => 'live-online',
+                        '353' => 'exam-simulator',
+                        '383' => 'instructor-led',
+                    ];
+                @endphp
+                <span class="badge mx-1 {{ $type[$course->deliveryMethod->id] }}">{{$course->deliveryMethod->trans_name}}</span>
                 <div class="rating">
                     <span class="total_rate" v-text="total_rate"></span>
                     <template v-for="item in 5">

@@ -41,6 +41,15 @@ use App\Models\Training\CourseRegistration;
           <?php   $btn_roles[] = 'Destroy' ?>
       @endcan
 
+      @php
+          $type = [
+            '11' => 'self-paced',
+            '13' => 'live-online',
+            '353' => 'exam-simulator',
+            '383' => 'instructor-led',
+        ];
+      @endphp
+
       @foreach($courses as $post)
       <tr data-id="{{$post->id}}">
         <td>
@@ -59,7 +68,7 @@ use App\Models\Training\CourseRegistration;
             <span class="td-title">{{$post->PDUs ?? null}}</span>
         </td>
         <td>
-            <span class="td-title">{{$post->deliveryMethod->trans_name}}</span>
+            <span class="td-title"><span class="badge {{ $type[$post->deliveryMethod->id] }}">{{$post->deliveryMethod->trans_name}}</span></span>
         </td>
         <td>
             <?php

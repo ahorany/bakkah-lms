@@ -160,6 +160,15 @@
                                 <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 50px; font-weight:normal; display: flex; justify-content: center; align-items: center;">
                                     {{$course->trans_title}}
                                 </h3>
+                                @php
+                                    $type = [
+                                        '11' => 'self-paced',
+                                        '13' => 'live-online',
+                                        '353' => 'exam-simulator',
+                                        '383' => 'instructor-led',
+                                    ];
+                                @endphp
+                                <span class="badge my-1 {{ $type[$course->deliveryMethod->id] }}">{{$course->deliveryMethod->trans_name}}</span>
 
                                 <div class="progress">
                                     <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
