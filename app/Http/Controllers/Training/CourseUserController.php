@@ -12,6 +12,7 @@ use App\Models\Training\Course;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\Exam;
 use App\Models\Training\Question;
+use App\Models\Training\Session;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -36,10 +37,15 @@ class CourseUserController extends Controller
         $course = DB::select($sql,$bindings);
 
 
-        $sql = "SELECT courses_registration.id,courses_registration.role_id,courses_registration.progress,courses_registration.user_id,
+        $sql = "SELECT courses_registration.id,sessions.date_from,sessions.date_to,courses_registration.session_id,courses_registration.role_id,courses_registration.progress,courses_registration.user_id,
                 courses_registration.expire_date,courses_registration.paid_status,users.name as user_name,users.email FROM `courses_registration`
                  INNER  JOIN users ON users.id = courses_registration.user_id AND users.deleted_at IS NULL
+                 LEFT JOIN sessions ON sessions.id =  courses_registration.session_id
                  WHERE courses_registration.course_id = ?";
+
+        $sessions = Session::select('id','date_from','date_to')->where('course_id',$course_id)->get();
+
+
 
         if (\request()->has('user_search') && !is_null(request()->user_search)) {
             $user_search = request()->user_search;
@@ -68,7 +74,8 @@ class CourseUserController extends Controller
 //
 //        $course = $course->first();
 
-        return view('training.courses.users.index', compact('course','course_users'));
+//        return $sessions;
+        return view('training.courses.users.index', compact('course','course_users','sessions'));
     }
 
     public function search_user_course(){
@@ -78,7 +85,7 @@ class CourseUserController extends Controller
         $course_id = request()->course_id;
         $bindings = [];
 
-        $sql = "SELECT courses_registration.id,courses_registration.role_id,courses_registration.progress,courses_registration.user_id,
+        $sql = "SELECT courses_registration.id,courses_registration.session_id,courses_registration.role_id,courses_registration.progress,courses_registration.user_id,
                 courses_registration.expire_date,courses_registration.paid_status,users.id as user_id,users.name as user_name,users.email
                 FROM users
                 LEFT JOIN courses_registration ON users.id = courses_registration.user_id
@@ -157,15 +164,16 @@ class CourseUserController extends Controller
         foreach (request()->users as  $user){
                 CourseRegistration::updateOrcreate(
                     [
-                        'user_id' => $user['user_id'],
-                        'course_id' => $course->id
+                        'user_id'        => $user['user_id'],
+                        'course_id'      => $course->id
                     ],
                     [
-                        'user_id'    => $user['user_id'],
-                        'course_id'  => $course->id,
-                        'expire_date'=> $user['expire_date'],
-                        'role_id'    => $user['role_id'],
+                        'user_id'        => $user['user_id'],
+                        'course_id'      => $course->id,
+                        'expire_date'    => $user['expire_date'],
+                        'role_id'        => $user['role_id'],
                         'paid_status'    => $user['paid_status'],
+                        'session_id'     => $user['session_id'],
                     ]
                 );
 //                if($course->role_id == 3){

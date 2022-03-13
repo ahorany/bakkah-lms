@@ -18,10 +18,10 @@ use App\Models\Training\CourseRegistration;
         <tr>
             <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
+            <th class="">{{__('admin.delivery_methods')}}</th>
             <th class="">{{__('admin.course_code')}}</th>
             <th class="">{{__('admin.category')}}</th>
             <th class="">{{__('admin.course_pdus')}}</th>
-            <th class="">{{__('admin.delivery_methods')}}</th>
             <th class="">{{__('admin.assigned_learners')}}</th>
             <th class="">{{__('admin.completed_learners')}}</th>
             <th class="">{{__('admin.Registered')}}</th>
@@ -41,15 +41,6 @@ use App\Models\Training\CourseRegistration;
           <?php   $btn_roles[] = 'Destroy' ?>
       @endcan
 
-      @php
-          $type = [
-            '11' => 'self-paced',
-            '13' => 'live-online',
-            '353' => 'exam-simulator',
-            '383' => 'instructor-led',
-        ];
-      @endphp
-
       @foreach($courses as $post)
       <tr data-id="{{$post->id}}">
         <td>
@@ -58,6 +49,21 @@ use App\Models\Training\CourseRegistration;
         <td>
             <span style="display: block;" class="title">{{$post->trans_title ?? null}}</span>
         </td>
+
+       <td>
+            <span class="td-title">
+                @php
+                    $type = [
+                        '11' => 'self-paced',
+                        '13' => 'live-online',
+                        '353' => 'exam-simulator',
+                        '383' => 'instructor-led',
+                    ];
+                @endphp
+              <span class="badge {{ $type[$post->deliveryMethod->id] }}">{{$post->deliveryMethod->trans_name}}</span>
+            </span>
+       </td>
+
         <td>
             <span class="td-title">{{$post->code ?? null}}</span>
         </td>
@@ -66,9 +72,6 @@ use App\Models\Training\CourseRegistration;
         </td>
         <td>
             <span class="td-title">{{$post->PDUs ?? null}}</span>
-        </td>
-        <td>
-            <span class="td-title"><span class="badge {{ $type[$post->deliveryMethod->id] }}">{{$post->deliveryMethod->trans_name}}</span></span>
         </td>
         <td>
             <?php

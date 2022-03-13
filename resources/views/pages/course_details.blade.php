@@ -227,19 +227,7 @@
                                 <ul>
                                     @foreach($section->contents as $k => $content)
                                         <li>
-                                            @if($content->downloadable==1)
-                                                <?php
-                                                $folder_name = '';
-                                                    switch ($content->post_type){
-                                                        case 'video': $folder_name = 'videos'; break;
-                                                        case 'audio': $folder_name = 'audios'; break;
-                                                        case 'presentation': $folder_name = 'presentations'; break;
-                                                        default : $folder_name = '';
-                                                    }
-                                                ?>
-                                                <a href="{{CustomAsset('upload/files/'.$folder_name.'/'.$content->upload->file)}}" download>
-                                                    <img style="filter: opacity(1);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
-                                                    @else
+
                                                         <?php
                                                         $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
                                                         if($content->post_type != 'exam'){
@@ -285,7 +273,6 @@
                                                             >
 
                                                             <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
-                                                            @endif
                                                             <span>
                                                                 {{$content->title}}
 {{--                                                                @if ($content->paid_status == 504)--}}
@@ -405,11 +392,7 @@
                                                 <ul>
                                                     @foreach($section->contents as $k => $content)
                                                         <li>
-                                                            @if($content->downloadable==1)
-                                                                <a href="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}" download>
-                                                                    <img style="filter: opacity(1);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
-                                                                    @else
-                                                                        <?php
+                                                                      <?php
                                                                         $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
                                                                         if($content->post_type != 'exam'){
                                                                             $url = CustomRoute('user.course_preview', $content->id).$preview_url;
@@ -456,7 +439,7 @@
                                                                                 @endif
                                                                            </span>
                                                                         </a>
-                                                            @endif
+
                                                         </li>
                                                     @endforeach
                                                 </ul>

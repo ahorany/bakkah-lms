@@ -92,6 +92,7 @@
                 <th scope="col">Progress</th>
                 <th scope="col">Is Free</th>
                 <th scope="col">Expire Date</th>
+                <th scope="col">Session</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
@@ -118,6 +119,11 @@
 
                     <td>
                         <span v-if="course_user.expire_date"  class="badge-pink"> @{{ course_user.expire_date }}</span>
+                    </td>
+
+
+                    <td>
+                        <span v-if="course_user.session_id"  class="badge-pink" v-text="'SID: ('+ course_user.session_id + ') | ' + moment(course_user.date_from).format('DD-MM-YYYY') +' | ' + moment(course_user.date_to).format('DD-MM-YYYY') "></span>
                     </td>
 
                         <td>
@@ -175,6 +181,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Role</th>
                                 <th scope="col">Paid Status</th>
+                                <th scope="col">Session</th>
                                 <th scope="col">Expire date</th>
                             </tr>
                             </thead>
@@ -195,6 +202,13 @@
                                     <select @change="changePaidStatus(search_user,$event.target.value)" v-model="search_user.paid_status">
                                         <option value="504">Free</option>
                                         <option value="503">Paid</option>
+                                    </select>
+                                </td>
+
+
+                                <td>
+                                    <select @change="changeSession(search_user,$event.target.value)" v-model="search_user.session_id">
+                                        <option v-for="(session,index) in sessions" :value="session.id" v-text="'SID: ('+ session.id + ') | ' + moment(session.date_from).format('DD-MM-YYYY') +' | ' + moment(session.date_to).format('DD-MM-YYYY') "></option>
                                     </select>
                                 </td>
 
@@ -232,12 +246,14 @@
         window.lang = '{!!app()->getLocale()!!}'
         window.course = {!! json_encode($course[0]??'') !!}
         window.course_users = {!! json_encode($course_users??[]) !!}
+        window.sessions = {!! json_encode($sessions??[]) !!}
 	var contents = new Vue({
         el:'#main-vue-element',
         data : {
             course_users : window.course_users,
-            lang : window.lang,
-            course : window.course,
+            lang     : window.lang,
+            course   : window.course,
+            sessions : window.sessions,
             search_username : '',
             search_email    : '',
             search_users    : [] ,
@@ -250,7 +266,7 @@
         },
         created(){
 		    let self = this
-            console.log(this.course_users)
+            console.log(this.sessions)
         },
         methods : {
             OpenModal : function(type){
@@ -404,8 +420,33 @@
                 }
 
             },
+            changeSession : function(search_user,value){
+                var self = this;
+                var lock = true
+
+                // if search_users and not add
+                this.search_users.forEach(function (item,index) {
+                    if(item.user_id == search_user.user_id){
+                        self.search_users[index]['session_id'] = value
+                    }
+                })
+
+                // if search_users and add
+                this.add_users.forEach(function (item,index) {
+                    if(item.user_id == search_user.user_id){
+                        self.add_users[index]['session_id'] = value
+                        lock = false
+                    }
+                })
 
 
+                // if course_users and search_user and not add => push to add
+                if(lock && self.isCheckedUser(search_user.user_id)){
+                    search_user['session_id'] = value
+                    self.add_users.push(search_user);
+                }
+
+            },
             isCheckedUser : function (user_id) {
                     let self = this;
                      let user = self.course_users.filter(function (user,index) {

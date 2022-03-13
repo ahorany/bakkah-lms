@@ -107,6 +107,20 @@
                             Flag
                         @endif
                    </span>
+                    @if($content->downloadable==1)
+                        <?php
+                        $folder_name = '';
+                        switch ($content->post_type){
+                            case 'video': $folder_name = 'videos'; break;
+                            case 'audio': $folder_name = 'audios'; break;
+                            case 'presentation': $folder_name = 'presentations'; break;
+                            default : $folder_name = '';
+                        }
+                        ?>
+                        <a href="{{CustomAsset('upload/files/'.$folder_name.'/'.$content->upload->file)}}" download>
+                            <img style="filter: opacity(1);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
+                        </a>
+                    @endif
                 </div>
 
 
