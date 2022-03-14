@@ -184,7 +184,8 @@ class ExamController extends Controller
                     $q->where('end_date','>',Carbon::now())->orWhere('end_date',null);
                 });
             },'questions.answers' => function($q){
-                return $q->select('id','title','question_id')->inRandomOrder();
+                return $q->select('id','title','question_id');
+//                    ->inRandomOrder();
             },'questions' => function($q){
                 $q->select('id','title','mark','exam_id','unit_id')->withCount(['answers' => function ($query){
                     $query->where('check_correct' ,1);
