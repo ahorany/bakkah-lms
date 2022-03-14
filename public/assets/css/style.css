@@ -64,16 +64,10 @@ body {
 .sidebar {
   position: fixed;
   top: 0;
-  /* rtl:raw: */
-  /* right: 0; */
-
   bottom: 0;
-  /* rtl:remove */
   left: 0;
   z-index: 100;
-  /* Behind the navbar */
-  padding: 70px 0 0;
-  /* Height of navbar */
+  padding: 65px 0 0;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
   overflow-y: auto;
 }
@@ -87,8 +81,9 @@ body {
 }
 
 .navbar .navbar-toggler {
-  top: 0.25rem;
+  top: 50%;
   right: 1rem;
+  transform: translateY(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -660,8 +655,8 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 
 .lms-header a.navbar-brand img {
   filter: brightness(0) invert(1);
-  width: 35px;
-  margin: 0 5px 0 0;
+  width: 40px;
+  margin: 0 5px;
 }
 
 .lms-header ul.navbar-nav {
@@ -1497,8 +1492,8 @@ ul.badges li svg {
 @media (max-width: 767.98px) {
   .sidebar {
     /* top: 4rem; */
-    width: 90%;
-    left: -90%;
+    width: 100%;
+    left: -100%;
     transition: all 0.2s ease;
   }
 

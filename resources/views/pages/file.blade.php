@@ -82,7 +82,7 @@
     </div>
     <h3 style="text-transform:capitalize; display: none;" class="title_file_new">{{ $content->title }}</h3>
 
-    <div class="row mx-0">
+    <div class="row mx-0 file">
         @if(session()->has('status'))
             {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
             <div class="container">
