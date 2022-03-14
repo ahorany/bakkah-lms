@@ -1,7 +1,24 @@
+
+.dropdown-sidebar ul{
+    height: 0;
+    display: none !important;
+    transition: all 3s ease !important;
+    background: #fff !important;
+}
+ .dropdown-sidebar.active ul{
+    display: block !important;
+    height: 100% !important;
+}
+/********************************/
 .form-control{
     appearance: auto;
 }
-
+.mobile-none{
+    display: revert !important;
+}
+.mobile-show{
+    display: none !important;
+}
 
 .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin{
     border: none;
@@ -294,6 +311,7 @@ ol.answers li{
     padding: 2px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .self-paced{
     background: #2c9675;
@@ -313,6 +331,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .badge-pink{
     background: #b18db5;
@@ -320,6 +339,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .badge-lim{
     background: #b0ac27;
@@ -327,6 +347,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .badge-green{
     background: green;
@@ -334,6 +355,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .badge-red{
     background: #dc3545;
@@ -341,6 +363,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .main-color {
     background: transparent;
@@ -1083,6 +1106,12 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
+    .mobile-none{
+        display: none !important;
+    }
+    .mobile-show{
+        display: revert !important;
+    }
     .signin .logo {
         right: 15% !important;
         left: unset !important;
@@ -1186,7 +1215,7 @@ label.container-check.form-check-label span.checkmark{
         font-size: 25px;
     }
     main#main-vue-element {
-        padding: 20px 10px !important;
+        padding: 0 !important;
     }
     .card.p-5.user-info {
         padding: 20px !important;
@@ -1203,7 +1232,7 @@ label.container-check.form-check-label span.checkmark{
         font-size: 12px;
     }
     .navbar .navbar-toggler {
-        position: static !important;
+        position: absolute !important;
         width: 25px;
         height: 25px;
         padding: 1px 6px;
@@ -1240,6 +1269,13 @@ label.container-check.form-check-label span.checkmark{
         margin-top: 10px;
         padding: 15px !important;
     }
+
+    .lms-header a.navbar-brand img{
+        filter: inherit;
+    }
+    .lms-header a.navbar-brand{
+        background: transparent;
+    }
 }
 
 @media (max-width: 767.5px) and (min-width: 576.5px){
@@ -1251,9 +1287,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .review.dash-header .parent_next_prev {
         margin: 0 !important;
-    }
-    .lms-header a.navbar-brand {
-        padding: 12px 17.4px !important;
     }
     .text-center.course-image.w-30.mb-4.mb-md-0 {
         width: 100%;
@@ -1335,7 +1368,7 @@ label.container-check.form-check-label span.checkmark{
         height: 200px;
     }
     .lms-header a.navbar-brand img{
-        width: 35px;
+        width: 40px;
     }
     span.d-none.d-sm-block{
         display: inline-block;
@@ -1450,27 +1483,8 @@ label.container-check.form-check-label span.checkmark{
     .learning-file h3{
         margin: 30px 15px 0;
     }
-    .lms-header a.navbar-brand {
-        width: 100%;
-        justify-content: center;
-        color: #000;
-        background: #fff;
-        border-bottom: 1px solid gainsboro;
-    }
-    .lms-header a.navbar-brand img{
-        filter: inherit;
-    }
-    button.navbar-toggler.position-absolute.d-md-none.collapsed.me-auto.ms-3{
-        margin: 10px 5px !important;
-    }
     ol.breadcrumb {
         display: none;
-    }
-    span.d-none.d-sm-block{
-        display: none;
-    }
-    .navbar-brand span.d-none.d-sm-block {
-        display: block !important;
     }
     .congrats h1 {
         font-size: 18px;
@@ -1487,9 +1501,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .card-header.d-flex.justify-content-between.align-items-center .d-flex.align-items-center {
         justify-content: center;
-    }
-    nav#sidebarMenu{
-        top: 3rem;
     }
 }
 
