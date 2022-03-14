@@ -48,7 +48,7 @@
                                 @foreach ($roles as $role)
                                     {{-- @foreach ($course->course->users as $user) --}}
                                         {{-- <option value="{{$user->id}}">{{$user->trans_name}}</option> --}}
-                                        <option value="{{$role->id}}">{{$role->trans_name}}</option>
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
                                     {{-- @endforeach --}}
                                 @endforeach
                             </select>
