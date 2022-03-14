@@ -210,7 +210,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-5">
+            <div class="col-12 mt-4">
                 <table class="table">
                     <thead>
                     <tr>
