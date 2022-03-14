@@ -1,7 +1,24 @@
+
+.dropdown-sidebar ul{
+    height: 0;
+    display: none !important;
+    transition: all 3s ease !important;
+    background: #fff !important;
+}
+ .dropdown-sidebar.active ul{
+    display: block !important;
+    height: 100% !important;
+}
+/********************************/
 .form-control{
     appearance: auto;
 }
-
+.mobile-none{
+    display: revert !important;
+}
+.mobile-show{
+    display: none !important;
+}
 
 .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin{
     border: none;
@@ -278,7 +295,7 @@ ol.answers li{
     margin: 5px auto;
 }
 .shadow{
-    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 2%) !important;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 4%) !important;
 }
 .lms-header ul.navbar-nav > li {
     margin: 0 30px 0 0;
@@ -294,6 +311,7 @@ ol.answers li{
     padding: 2px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .self-paced{
     background: #2c9675;
@@ -313,6 +331,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .badge-pink{
     background: #b18db5;
@@ -320,6 +339,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .badge-lim{
     background: #b0ac27;
@@ -327,6 +347,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .badge-green{
     background: green;
@@ -334,6 +355,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .badge-red{
     background: #dc3545;
@@ -341,6 +363,7 @@ ol.answers li{
     padding: 0px 10px;
     font-size: smaller;
     border-radius: 3px;
+    width: max-content;
 }
 .main-color {
     background: transparent;
@@ -1083,6 +1106,27 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
+    .dashboard{
+        margin: 0;
+    }
+    .title_file_old{
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding-left: 15px;
+        background: #fff;
+        width: 80%;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        height: 64px;
+    }
+    .mobile-none{
+        display: none !important;
+    }
+    .mobile-show{
+        display: revert !important;
+    }
     .signin .logo {
         right: 15% !important;
         left: unset !important;
@@ -1144,9 +1188,6 @@ label.container-check.form-check-label span.checkmark{
     .m-bottom{
         margin-bottom: 24px;;
     }
-    .dash-header.d-flex.justify-content-between.align-items-center{
-        display: block !important;
-    }
     .parent_next_prev {
         justify-content: start;
         margin-top: 15px;
@@ -1160,9 +1201,6 @@ label.container-check.form-check-label span.checkmark{
     .scorm_report{
         padding: 15px;
     }
-    .course_details .dash-header.course-header.d-flex.align-items-md-end.flex-column.flex-md-row.px-3{
-        padding: 012px !important;
-    }
     p.time-remaining{
         margin: 15px 0;
     }
@@ -1173,20 +1211,17 @@ label.container-check.form-check-label span.checkmark{
         display: block;
         margin-top: 25px;
     }
-    .dash-header.course_info {
-        padding: 25px 20px 0;
+    .title_file_new {
+        display: none;
     }
-    .col-xl-9.col-lg-8.col-md-12 .dash-header.course_info{
-        padding: 0;
+    .dash-header{
+        display: none;
     }
     .mx-md-4.course_info {
         padding: 0;
     }
-    .dash-header h1 {
-        font-size: 25px;
-    }
     main#main-vue-element {
-        padding: 20px 10px !important;
+        padding: 0 !important;
     }
     .card.p-5.user-info {
         padding: 20px !important;
@@ -1203,7 +1238,7 @@ label.container-check.form-check-label span.checkmark{
         font-size: 12px;
     }
     .navbar .navbar-toggler {
-        position: static !important;
+        position: absolute !important;
         width: 25px;
         height: 25px;
         padding: 1px 6px;
@@ -1240,6 +1275,20 @@ label.container-check.form-check-label span.checkmark{
         margin-top: 10px;
         padding: 15px !important;
     }
+
+    .lms-header a.navbar-brand img{
+        filter: inherit;
+    }
+    .lms-header a.navbar-brand{
+        background: transparent;
+    }
+
+    ol.breadcrumb {
+        display: none;
+    }
+    .file .card{
+        flex-direction: column-reverse !important;
+    }
 }
 
 @media (max-width: 767.5px) and (min-width: 576.5px){
@@ -1251,9 +1300,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .review.dash-header .parent_next_prev {
         margin: 0 !important;
-    }
-    .lms-header a.navbar-brand {
-        padding: 12px 17.4px !important;
     }
     .text-center.course-image.w-30.mb-4.mb-md-0 {
         width: 100%;
@@ -1335,16 +1381,10 @@ label.container-check.form-check-label span.checkmark{
         height: 200px;
     }
     .lms-header a.navbar-brand img{
-        width: 35px;
+        width: 40px;
     }
     span.d-none.d-sm-block{
         display: inline-block;
-    }
-    .dash-header.d-flex.justify-content-between {
-        display: block !important;
-    }
-    .dash-header.d-flex.justify-content-between ol.breadcrumb{
-        margin-bottom: 10px;
     }
     .parent_next_prev {
         justify-content: start;
@@ -1417,19 +1457,7 @@ label.container-check.form-check-label span.checkmark{
         display: flex !important;
         align-items: space-between;
     }
-    .title_file_new{
-        display: block !important;
-        padding: 0 10px;
-        text-align: center;
-        font-size: 15px;
-        font-weight: 500;
-    }
-    .title_file_old{
-        display: none;
-    }
-    .dash-header.course_info {
-        display: none;
-    }
+
     .no-img.certificate-img img {
         width: 25%;
     }
@@ -1450,28 +1478,6 @@ label.container-check.form-check-label span.checkmark{
     .learning-file h3{
         margin: 30px 15px 0;
     }
-    .lms-header a.navbar-brand {
-        width: 100%;
-        justify-content: center;
-        color: #000;
-        background: #fff;
-        border-bottom: 1px solid gainsboro;
-    }
-    .lms-header a.navbar-brand img{
-        filter: inherit;
-    }
-    button.navbar-toggler.position-absolute.d-md-none.collapsed.me-auto.ms-3{
-        margin: 10px 5px !important;
-    }
-    ol.breadcrumb {
-        display: none;
-    }
-    span.d-none.d-sm-block{
-        display: none;
-    }
-    .navbar-brand span.d-none.d-sm-block {
-        display: block !important;
-    }
     .congrats h1 {
         font-size: 18px;
     }
@@ -1487,9 +1493,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .card-header.d-flex.justify-content-between.align-items-center .d-flex.align-items-center {
         justify-content: center;
-    }
-    nav#sidebarMenu{
-        top: 3rem;
     }
 }
 

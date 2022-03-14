@@ -1,4 +1,4 @@
-<div class="row mx-0 mb-5 dashboard">
+<div class="row mb-5 dashboard">
 
     <div class="col-lg-12 p-0">
         <div class="card h-100 p-30">
