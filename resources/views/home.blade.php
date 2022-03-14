@@ -6,10 +6,10 @@
 
 @section('content')
     {{-- @dd(auth()->user()->bio) --}}
-    <div class="row m-0 home-section hero">
+    <div class="row home-section hero">
         <div class="col-md-12 col-xl-12">
-            <div class="card p-30 home-section">
-                <div class="row mx-0 align-items-center">
+            <div class="card p-30">
+                <div class="row align-items-center">
                     <div class="col-lg-8">
                         <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
                         <p class="lead" style="text-transform: none !important;">
@@ -40,7 +40,7 @@
             return 0;
         }
     ?>
-    <div class="row mx-0 home-section reports">
+    <div class="row home-section reports">
         <div class="col-lg-12">
             <div class="card h-100 p-30 courses">
 
@@ -122,7 +122,7 @@
     </div>
 {{-- @dd($courses) --}}
     @if (count($courses->courses) > 0)
-        <div class="row mx-0 home-section">
+        <div class="row home-section">
             <div class="col-xl-12 col-md-12">
                 <div class="card p-30 ">
                     <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
@@ -186,7 +186,7 @@
         </div>
     @endif
 
-    <div class="row mx-0 home-section">
+    <div class="row home-section">
         <div class="col-lg-6 col-md-12 col-sm-12 col-12 m-bottom">
             <div class="card h-100 p-30">
                 <h3>Courses Progress Overview</h3>
@@ -203,7 +203,7 @@
     </div>
 
     @if($last_video)
-        <div class="row mx-0 home-section">
+        <div class="row home-section">
             <div class="col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
                 <div class="card h-100 p-30">
                     <h3>{{ __('education.Last Video View') }}</h3>

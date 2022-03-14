@@ -555,9 +555,6 @@ a:hover svg#back{
 }
 .icon-report{
     fill: #fff !important;
-    /* position: absolute;
-    left: 0;
-    top: 0; */
 }
 .icon-report image{
     filter: invert(1);
@@ -575,10 +572,6 @@ a:hover svg#back{
     position: relative;
     top: -5px;
 }
-/* .text-center.course-image:hover {
-    box-shadow: 0px 0px 5px 0.5px #fb440036;
-} */
-
 button.next_prev {
     width: max-content;
     padding: 8px;
@@ -594,15 +587,6 @@ button.next_prev {
     border: none;
     cursor: pointer;
 }
-/* button.next_prev:hover {
-    background-color: #7c9290;
-    color: #fff;
-    border: 1px solid transparent;
-} */
-/* button.next_prev:hover svg{
-    filter: none;
-} */
-
 ul.video-list li .play{
     cursor: unset;
     box-shadow: 0 0 5px #33333333;
@@ -680,11 +664,6 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     box-shadow: 1px 1px 10px 1px #f0f0f0;
     border: none;
 }
-
-/* .certificate:hover {
-    box-shadow: 1px 1px 10px 1px #f0f0f0;
-    border: none;
-} */
 
 .certificate h2{
     color: #000;
@@ -824,7 +803,6 @@ label.container-check.form-check-label span.checkmark{
         padding: 10px !important;
         background: #fafafa !important;
         margin: 2px 0 !important;
-        /* box-shadow: 0px 0px 5px rgb(0 0 0 / 6%); */
         border: 1px solid rgb(0 0 0 / 6%);
     }
     .correct_feedback.correct_answer {
@@ -1106,8 +1084,11 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
-    .dashboard{
+    .row{
         margin: 0;
+    }
+    .row>div{
+        margin-bottom: 24px !important;
     }
     .title_file_old{
         position: fixed;
@@ -1168,7 +1149,7 @@ label.container-check.form-check-label span.checkmark{
     .person-wrapper{
         display: none;
     }
-    .home-section .card h3.mb-5 {
+    .home-section .card h3 {
         margin: 0 !important;
         margin-bottom: 25px !important;
     }
@@ -1182,11 +1163,8 @@ label.container-check.form-check-label span.checkmark{
     .display-none{
         display: none !important;
     }
-    .row.m-0.home-section {
-        margin-top: 11px !important;
-    }
     .m-bottom{
-        margin-bottom: 24px;;
+        margin-bottom: 10px;
     }
     .parent_next_prev {
         justify-content: start;
@@ -1221,7 +1199,7 @@ label.container-check.form-check-label span.checkmark{
         padding: 0;
     }
     main#main-vue-element {
-        padding: 0 !important;
+        padding: 0.5rem !important;
     }
     .card.p-5.user-info {
         padding: 20px !important;
