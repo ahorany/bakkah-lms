@@ -93,18 +93,20 @@ if(!is_null($previous)){
             @foreach($exam->exam->content->questions as $question)
              <div id="question_{{$loop->iteration}}" class="card p-30 q-card {{($loop->last) ? ' ' : 'mb-3'}}">
                 <div class="q-number">
-                    Q{{$loop->iteration}}/{{count($exam->exam->content->questions)}}
-                    @php
-                     $answers = 0;
-                    @endphp
-                    @foreach($question->answers as $answer)
-                        @if($answer->check_correct == 1)
-                            @php
-                                $answers++;
-                            @endphp
-                         @endif
-                    @endforeach
-                    <small>({{$question->mark}} {{$answers == 1 ? 'Mark' : 'Marks'}} )</small>
+                    <div>
+                        <span>Q{{$loop->iteration}}/{{count($exam->exam->content->questions)}}</span>
+                        @php
+                            $answers = 0;
+                        @endphp
+                        @foreach($question->answers as $answer)
+                            @if($answer->check_correct == 1)
+                                @php
+                                    $answers++;
+                                @endphp
+                            @endif
+                        @endforeach
+                        <small>({{$question->mark}} {{$answers == 1 ? 'Mark' : 'Marks'}} )</small>
+                    </div>
                 </div>
                 <h3>{!! $question->title!!}</h3>
                  @foreach($question->answers as $answer)
@@ -157,7 +159,7 @@ if(!is_null($previous)){
 
         </div>
         <div class="col-xl-3 col-lg-4">
-            <div class="card h-100 p-30">
+            <div class="card quiz h-100 p-30">
                 <h4>Quiz</h4>
                 <ol class="answers">
                     @foreach($exam->exam->content->questions as $question)

@@ -211,7 +211,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12">
                 <table class="table">
                     <thead>
                     <tr>
@@ -219,7 +219,7 @@
                         <th scope="col">Your Start Time</th>
                         <th scope="col">Your End Time</th>
                         <th scope="col">Review</th>
-                        <th scope="col" style="width: 15%;">Details</th>
+                        <th scope="col" style="width: 18%;">Details</th>
                         <th scope="col">Time taken</th>
                         <th scope="col">Pass Mark (%)</th>
                         <th scope="col">Status</th>

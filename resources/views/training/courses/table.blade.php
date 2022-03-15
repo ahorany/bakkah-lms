@@ -56,7 +56,7 @@ use App\Models\Training\CourseRegistration;
                     $type = [
                         '11' => 'self-paced',
                         '13' => 'live-online',
-                        '353' => 'exam-simulator',
+                        '353' => 'exam-simulators',
                         '383' => 'instructor-led',
                     ];
                 @endphp

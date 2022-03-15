@@ -96,9 +96,11 @@
                         <template v-for="(question, index) in paginated" >
                            <div :ref="'question'+question.id" :id="'question'+question.id" :key="index" class="card p-30 q-card"><!-- h-100 -->
                             <div class="q-number">
-                                <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
-                                <small v-if="question.answers_count == 1" v-text=" '(' + (question.mark) + ' Mark)'"></small>
-                                <small v-if="question.answers_count > 1" v-text=" '(' + (question.mark) + ' Marks)'"></small>
+                                <div>
+                                    <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
+                                    <small v-if="question.answers_count == 1" v-text=" '(' + (question.mark) + ' Mark)'"></small>
+                                    <small v-if="question.answers_count > 1" v-text=" '(' + (question.mark) + ' Marks)'"></small>
+                                </div>
 
                             </div>
                             <h3 v-html="question.title"></h3>
@@ -118,7 +120,7 @@
                         </div>
                         </template>
 
-                        <div class="d-flex algin-items-center justify-content-between mt-4 buttons">
+                        <div :class="{'last-question':save_status && page_type == 'exam' }" class="d-flex algin-items-center justify-content-between mt-4 buttons">
 
                             <div class="navigation">
                                 {{-- <template v-if="prev_status"> --}}
@@ -155,7 +157,7 @@
                     </div>
 
                     <div class="col-xl-3 col-lg-4">
-                        <div class="card h-100 p-30">
+                        <div class="card quiz h-100 p-30">
                             <h2 class="mt-0">Quiz</h2>
                             <ol class="answers">
                                 <template v-if="page_type == 'exam' "  v-for="(question, index) in exam.questions">

@@ -9,6 +9,21 @@
     display: block !important;
     height: max-content !important;
 }
+.dropdown-sidebar>a{
+    position: relative;
+}
+.dropdown-sidebar>a::after{
+    content: '>';
+    position: absolute;
+    right: 10%;
+    font-weight: 700;
+    top: 28%;
+    transform: rotate(90deg);
+    width: max-content;
+}
+/* .dropdown-sidebar>a:checked::after{
+    transform: rotate(90deg);
+} */
 /********************************/
 .form-control{
     appearance: auto;
@@ -320,7 +335,7 @@ ol.answers li{
 .live-online{
     background: #d6c11b;
 }
-.exam-simulator{
+.exam-simulators{
     background: #FFA065;
 }
 .instructor-led{
@@ -975,6 +990,9 @@ label.container-check.form-check-label span.checkmark{
 p.lead.light.card {
     padding: 30px;
 }
+.last-question .navigation{
+    margin: 0 !important;
+}
 
 @media screen and (min-width:800px){
     .custom-model-main:before {
@@ -1103,6 +1121,10 @@ p.lead.light.card {
 }
 
 @media (max-width: 767.5px) {
+    .card.quiz {
+        padding: 0.5rem !important;
+        text-align: center;
+    }
     .dash-header h1{
         font-size: 20px;
     }
@@ -1311,14 +1333,37 @@ p.lead.light.card {
         padding: 20px 0.5rem;
     }
     .q-number{
-        padding: 5px 5px;
+        padding: 5px 10px;
         font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 120px;
+        font-family: 'Lato Bold';
     }
     .q-number small{
-        line-height: 3 !important;
+        line-height: 2 !important;
+        font-size: 12px;
+        position: relative;
+    }
+    .q-number div{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+    }
+    .q-number div::before{
+        content: '';
+        display: block;
+        position: absolute;
+        left: 45%;
+        width: 2px;
+        height: 100%;
+        background: #fff;
     }
     .q-card{
-        padding: 10px 10% 20px 20px !important;
+        padding: 20px 10px !important;
     }
 }
 
@@ -1336,9 +1381,6 @@ p.lead.light.card {
 }
 
 @media (max-width: 576.5px){
-    .q-card{
-        padding: 10px 15% 20px 20px !important;
-    }
     .signin .logo {
         top: 10% !important;
     }

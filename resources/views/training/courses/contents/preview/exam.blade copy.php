@@ -214,7 +214,7 @@
         </div>
 
         <div class="col-xl-3 col-lg-4">
-            <div class="card h-100 p-30 navigation_preview">
+            <div class="card quiz h-100 p-30 navigation_preview">
                 <h4>Quiz Navigation</h4>
                 <ol class="answers">
                     @foreach($content->questions as $question)

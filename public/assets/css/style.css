@@ -584,7 +584,7 @@ img {
   object-fit: cover;
 }
 nav#sidebarMenu ul {
-  padding: 0;
+  padding: 0 0 30px;
   list-style: none;
   margin: 0;
 }
