@@ -11,15 +11,20 @@
 }
 .dropdown-sidebar>a{
     position: relative;
+    justify-content: space-between;
 }
-.dropdown-sidebar>a::after{
-    content: '>';
-    position: absolute;
-    right: 10%;
-    font-weight: 700;
-    top: 28%;
-    transform: rotate(90deg);
-    width: max-content;
+nav#sidebarMenu ul li a span.drop-icon svg{
+    width: 12px !important;
+    transition: all 0.5s ease;
+}
+nav#sidebarMenu ul li a span.title{
+    display: flex;
+    align-items: self-start;
+    padding-right: 10px;
+}
+.dropdown-sidebar.active span.drop-icon svg{
+    transform: rotate(180deg);
+    transition: all 0.5s ease;
 }
 /* .dropdown-sidebar>a:checked::after{
     transform: rotate(90deg);
