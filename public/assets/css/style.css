@@ -598,6 +598,7 @@ nav#sidebarMenu ul li a {
   color: #000;
   /* border-left: 10px solid transparent; */
   transition: all 0.15s ease-in-out;
+  text-transform: capitalize;
 }
 nav#sidebarMenu ul li a p {
   display: inline-block;
