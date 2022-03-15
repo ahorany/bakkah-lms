@@ -71,7 +71,7 @@
 
     ?>
 
-    <div class="course_details">
+    <div class="course_details user-info">
         <div class="dash-header course-header d-flex align-items-md-end flex-column flex-md-row px-3">
             <div class="text-center course-image w-30 mb-4 mt-2 mb-md-0">
                 <?php
@@ -196,7 +196,7 @@
             <div class="row mx-0 my-4">
                 @if($video)
                     <div class="col-lg-9 col-xl-9 course_info">
-                        <p class="lead light">{{$course->trans_excerpt}}</p>
+                        <p class="lead light card">{{$course->trans_excerpt}}</p>
                     </div>
                     <div class="col-lg-3 col-xl-3">
                         <div class="card h-100 justify-content-center align-items-center p-3 video-btn">
@@ -207,7 +207,7 @@
                     </div>
                 @else
                     <div class="col-lg-12 col-xl-12 course_info">
-                        <p class="lead light card p-5">{{$course->trans_excerpt}}</p>
+                        <p class="lead light card">{{$course->trans_excerpt}}</p>
                     </div>
                 @endif
             </div>
@@ -222,7 +222,7 @@
                     @foreach($course_collect[0] as $key => $section)
                         <div class="card learning-file mb-3">
                             <h3>{{$section->title}}</h3>
-                            <div style="margin: 0px 30px;">{!! $section->details->excerpt??null !!}</div>
+                            <div class="excerpt-text">{!! $section->details->excerpt??null !!}</div>
                             @isset($section->contents)
                                 <ul>
                                     @foreach($section->contents as $k => $content)
@@ -450,8 +450,6 @@
                                 </div>
                             @endforeach
                         @endif
-
-
 
                     @if(count($activities) > 0)
                         @include('Html.activity-card', [

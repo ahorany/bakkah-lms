@@ -118,7 +118,7 @@
 
     ?>
 
-<div class="card p-5 user-info exam_page">
+    <div class="card p-5 user-info exam_page">
 
         <div class="dash-header d-flex justify-content-between align-items-center">
             @include('pages.templates.breadcrumb', [
@@ -147,9 +147,10 @@
                 @endif
             </div>
         </div>
+
         <br>
 
-        <div class="row mx-0">
+        <div class="row home-section">
             @if(session()->has('status'))
                 <div class="col-md-12">
                     <div class="error-notice">
@@ -165,7 +166,7 @@
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 mb-3">
                 <div class="card h-100" style="box-shadow: none; border: 1px solid gainsboro;">
                     <div class="card-body" style="padding: 15px 30px;">
-                        <h4>Exam title : {{$exam->title}}</h4>
+                        <h4 class="card-title">Exam title : {{$exam->title}}</h4>
                         <p>Start date : {{$exam->exam->start_date}}</p>
                         <p>End date : {!!$exam->exam->end_date??'<span style="font-size:19px">∞</span>'!!}</p>
                         <p>Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
@@ -218,7 +219,7 @@
                         <th scope="col">Your Start Time</th>
                         <th scope="col">Your End Time</th>
                         <th scope="col">Review</th>
-                        <th scope="col">Details</th>
+                        <th scope="col" style="width: 15%;">Details</th>
                         <th scope="col">Time taken</th>
                         <th scope="col">Pass Mark (%)</th>
                         <th scope="col">Status</th>
@@ -242,8 +243,8 @@
                             $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
                             ?>
 
-                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge badge-info p-2">Review</a>@else ---- @endif</td>
-                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge badge-info p-2">View Result Details</a>@else ---- @endif</td>
+                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge-blue p-2">Review</a>@else ---- @endif</td>
+                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge-red p-2">View Result Details</a>@else ---- @endif</td>
                             <td>{{$diff??'0 seconds'}}</td>
                             <td class="text-bold">{{($exam->exam->pass_mark??0).'%'}}</td>
 
