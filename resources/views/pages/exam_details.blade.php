@@ -80,10 +80,10 @@
             border-bottom: 1px solid #ddd;
             display: block;
             font-size: .8em;
-            text-align: right;
+            text-align: left;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            /* justify-content: space-between; */
         }
 
         table td::before {
@@ -91,6 +91,8 @@
             text-align: left;
             font-weight: bold;
             text-transform: uppercase;
+            min-width: 120px;
+            margin-right: 25px;
         }
 
         table td:last-child {
