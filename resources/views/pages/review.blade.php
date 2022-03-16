@@ -8,22 +8,16 @@
     <style>
         .custom-radio .radio-mark:after{
             border: none;
-            background: #06ae60;
             border-radius: 50%;
             width: 14px !important;
             height: 14px !important;
-            left: 3px !important;
+            left: 10px !important;
+        }
+        .correct-radio .radio-mark:after{
+            background: #06ae60;
         }
        .incorrect-radio + .radio-mark:after {
-            /* border: solid #f00 ; */
-           /* border-width: 0 3px 3px 0; */
-            border: none;
             background: red;
-            border-radius: 50%;
-            width: 14px !important;
-            height: 14px !important;
-            /* left: 3px !important; */
-            left: 10px !important;
         }
     </style>
 @endsection
