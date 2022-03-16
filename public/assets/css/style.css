@@ -878,7 +878,8 @@ p.time-remaining svg {
 }
 
 .q-card label .radio-mark {
-  top: 5px;
+  top: 50%;
+  transform: translateY(-50%);
   left: 10px;
   border: 1px solid #ccc;
   background: transparent;
