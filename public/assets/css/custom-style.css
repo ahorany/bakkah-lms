@@ -1152,6 +1152,9 @@ p.lead.light.card {
 }
 
 @media (max-width: 767.5px) {
+    br{
+        display: none;
+    }
     nav#sidebarMenu ul li a{
         padding: 10px 20px;
     }
@@ -1273,7 +1276,7 @@ p.lead.light.card {
     }
     .parent_next_prev {
         justify-content: start;
-        margin-top: 15px;
+        margin: 10px 0;
     }
     .text-center.course-image {
         min-height: max-content !important;
