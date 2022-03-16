@@ -227,12 +227,13 @@ body {
 
 /* Style the indicator (dot/circle) */
 .custom-radio .radio-mark:after {
-  left: 14px;
-  top: 7px;
-  width: 5px;
-  height: 10px;
-  border: solid #06ae60;
-  border-width: 0 3px 3px 0;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50% , -50%) !important;
+    width: 5px;
+    height: 10px;
+    border: solid #06ae60;
+    border-width: 0 3px 3px 0;
   /* -webkit-transform: rotate(45deg); */
   /* -ms-transform: rotate(45deg); */
   /* transform: rotate(45deg); */

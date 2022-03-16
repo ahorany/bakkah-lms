@@ -1139,6 +1139,9 @@ p.lead.light.card {
 }
 
 @media (max-width: 767.5px) {
+    p.time-remaining svg{
+        width: 25px;
+    }
     .title_file_old{
         position: fixed;
         top: 0;
@@ -1288,6 +1291,8 @@ p.lead.light.card {
     }
     p.time-remaining{
         margin: 15px 0;
+        font-size: 14px;
+        padding: 0 5px;
     }
     .certificate-page {
         padding: 50px 0;
@@ -1355,6 +1360,7 @@ p.lead.light.card {
     .q-card h3 {
         font-size: 17px;
         font-weight: 700;
+        margin: 5px 0;
     }
     .card.px-5.py-3.mb-2 {
         margin-top: 10px;
@@ -1406,7 +1412,7 @@ p.lead.light.card {
         border-left: 2px solid #fff;
     }
     .q-card{
-        padding: 20px 10px !important;
+        padding: 30px 10px !important;
     }
 }
 
