@@ -15,8 +15,8 @@
 .custom-radio .radio-mark::after {
     left: 2px !important;
     top: 2px !important;
-    width: 11px !important;
-    height: 11px !important;
+    width: 10px !important;
+    height: 10px !important;
     border: solid #06ae60;
     border-top-width: medium;
     border-right-width: medium;
@@ -98,6 +98,7 @@
                             <div class="q-number">
                                 <div>
                                     <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
+                                    <span class="line"></span>
                                     <small v-if="question.answers_count == 1" v-text=" '(' + (question.mark) + ' Mark)'"></small>
                                     <small v-if="question.answers_count > 1" v-text=" '(' + (question.mark) + ' Marks)'"></small>
                                 </div>

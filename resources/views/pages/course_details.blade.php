@@ -147,8 +147,8 @@
                 </div>
 
                 @if(!Gate::allows('preview-gate'))
-                    <div class="d-flex">
-                        <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px;">
+                    <div class="d-flex" style="flex-wrap: wrap;">
+                        <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px; margin-bottom: 5px;">
                             <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="main-button main-color review" href="#">
                                 {{__('education.Add a Review')}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
@@ -181,11 +181,11 @@
                             </div>
                         </li>
                         @if(!is_null($course->users[0]->pivot->progress))
-                            <a href="{{route("user.resume",$course->id)}}" class="main-button main-color">Resume Course</a>
+                            <a href="{{route("user.resume",$course->id)}}" class="main-button main-color" style="margin-right: 5px; margin-bottom: 5px;">Resume Course</a>
                         @endif
 
                         @if($course->users[0]->pivot->paid_status != 503)
-                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="mx-0 px-4 main-color">Pay Now</a>
+                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="mx-0 px-4 main-color" style="margin-right: 5px; margin-bottom: 5px;">Pay Now</a>
                         @endif
                     </div>
                 @endif

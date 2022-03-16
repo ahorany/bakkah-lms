@@ -125,6 +125,7 @@
                         <div class="q-number">
                             <div>
                                 <span>Q@{{index+1}}/@{{content.questions.length}}</span>
+                                <span class="line"></span>
                                 <small>(@{{question.mark}} Marks)</small>
                             </div>
                         </div>
@@ -157,7 +158,7 @@
 
         <div class="col-xl-3 col-lg-4">
             <div class="card h-100 p-30 navigation_preview">
-                <h4>Quiz Navigation</h4>
+                <h2>Quiz Navigation</h2>
                 <ol class="answers quiz">
                     @foreach($content->questions as $question)
                         <li>

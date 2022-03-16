@@ -17,6 +17,9 @@ nav#sidebarMenu ul li a span.drop-icon svg{
     width: 12px !important;
     transition: all 0.5s ease;
 }
+/* nav#sidebarMenu ul li a span.drop-icon{
+    padding-top: 5px;
+} */
 nav#sidebarMenu ul li a span.title{
     display: flex;
     align-items: self-start;
@@ -26,9 +29,7 @@ nav#sidebarMenu ul li a span.title{
     transform: rotate(180deg);
     transition: all 0.5s ease;
 }
-/* .dropdown-sidebar>a:checked::after{
-    transform: rotate(90deg);
-} */
+
 /********************************/
 .form-control{
     appearance: auto;
@@ -560,6 +561,10 @@ justify-content: center;
 }
 .progress-bar{
     background: #fb4400;
+    width: 50%;
+    margin: 0 !important;
+    position: relative;
+    height: 20px;
 }
 .lms-header ul.navbar-nav li.user a svg{
     margin: 0;
@@ -775,7 +780,7 @@ p.time-remaining svg path{
     fill: #fb4400;
 }
 .review.dash-header{
-    padding: 20px 0;
+    padding: 20px 8px;
 }
 .plyr input {
     color: #fb4400 !important;
@@ -996,7 +1001,14 @@ p.lead.light.card {
     padding: 30px;
 }
 .last-question .navigation{
-    margin: 0 !important;
+    margin: 0 0 20px !important;
+}
+.buttons.last-question {
+    display: block !important;
+    text-align: center;
+}
+.q-number div .line{
+    display: none;
 }
 
 @media screen and (min-width:800px){
@@ -1126,6 +1138,27 @@ p.lead.light.card {
 }
 
 @media (max-width: 767.5px) {
+    nav#sidebarMenu ul li a{
+        padding: 10px 20px;
+    }
+    .q-card label{
+        box-shadow: none;
+        border: 1px solid gainsboro;
+        margin-bottom: 5px;
+        padding: 10px 40px;
+    }
+    .q-card label .radio-mark{
+        top: 9px;
+    }
+    .exam_page .dash-header , .review.dash-header {
+        justify-content: end !important;
+    }
+    .details .d-flex{
+        padding: 12px;
+    }
+    .details .mt-4{
+        margin: 0 !important;
+    }
     .card.quiz {
         padding: 0.5rem !important;
         text-align: center;
@@ -1343,7 +1376,7 @@ p.lead.light.card {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 120px;
+        width: 130px;
         font-family: 'Lato Bold';
     }
     .q-number small{
@@ -1358,14 +1391,11 @@ p.lead.light.card {
         width: 100%;
         position: relative;
     }
-    .q-number div::before{
-        content: '';
+    .q-number div .line {
         display: block;
-        position: absolute;
-        left: 45%;
-        width: 2px;
-        height: 100%;
-        background: #fff;
+        /* width: 1px; */
+        height: 24px;
+        border-left: 2px solid #fff;
     }
     .q-card{
         padding: 20px 10px !important;
