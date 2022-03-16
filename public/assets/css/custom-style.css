@@ -1409,7 +1409,7 @@ p.lead.light.card {
         display: block;
         /* width: 1px; */
         height: 24px;
-        border-left: 2px solid #fff;
+        border-left: 1px solid #fff;
     }
     .q-card{
         padding: 30px 10px !important;

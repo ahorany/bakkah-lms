@@ -22,9 +22,9 @@
             border-radius: 50%;
             width: 14px !important;
             height: 14px !important;
-            left: 3px !important;
+            /* left: 3px !important; */
+            left: 10px !important;
         }
-
     </style>
 @endsection
 
