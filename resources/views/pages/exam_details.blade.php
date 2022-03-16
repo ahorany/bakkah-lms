@@ -45,12 +45,12 @@
         overflow: hidden;
         color: #fff;
     }
-    /* .progress-bar{
-        width: 50%;
-        margin: 0 !important;
-    } */
 
     @media screen and (max-width: 767px) {
+        .progress {
+            width: 75%;
+            margin-left: auto;
+        }
         table {
             border: 0;
         }
@@ -80,16 +80,15 @@
             border-bottom: 1px solid #ddd;
             display: block;
             font-size: .8em;
-            text-align: left;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         table td::before {
-            /*
-            * aria-label has no advantage, it won't be read inside a table
-            content: attr(aria-label);
-            */
             content: attr(data-label);
-            float: left;
+            text-align: left;
             font-weight: bold;
             text-transform: uppercase;
         }
@@ -136,13 +135,19 @@
                         @endphp
                         @foreach($units_rprt as $data)
                             <tr>
-                                <td>{{$loop->iteration}}</td>
-                                <td>{{$data->title}}</td>
-                                <td>{{$data->count}}</td>
+                                <td data-label="#">
+                                    <span>{{$loop->iteration}}</span>
+                                </td>
+                                <td data-label="title">
+                                    <span>{{$data->title}}</span>
+                                </td>
+                                <td data-label="count">
+                                    <span>{{$data->count}}</span>
+                                </td>
                                 @php
                                     $count_questions += $data->count;
                                 @endphp
-                                <td>
+                                <td data-label="result">
                                     {{-- <span>{{$data->result??null}}</span> --}}
                                     @php
                                         if($data->result == 0 || $data->total == 0){
@@ -157,14 +162,16 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{$data->total??0}}</td>
+                                <td data-label="total">
+                                    <span>{{$data->total??0}}</span>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-12">
                 <table class="table">
                     <thead>
@@ -180,11 +187,17 @@
                     <tbody>
                     @foreach($unit_marks as $data)
                         <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>Total Units</td>
-                            <td>{{$count_questions}}</td>
-                            <td>
-                                <span>{{$data->unit_marks??0}}</span>
+                            <td data-label="#">
+                                <span>{{$loop->iteration}}</span>
+                            </td>
+                            <td data-label="Total Title">
+                                <span>Total Units</span>
+                            </td>
+                            <td data-label="TotalCount">
+                                <span>{{$count_questions}}</span>
+                            </td>
+                            <td data-label="Total Result">
+                                {{-- <span>{{$data->unit_marks??0}}</span> --}}
                                 <?php
 
                                     if($data->unit_marks == 0 || $data->total_marks == 0){
@@ -200,8 +213,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
-                                {{$data->total_marks}}
+                            <td data-label="Total">
+                                <span>{{$data->total_marks}}</span>
                             </td>
                         </tr>
                     @endforeach

@@ -80,12 +80,15 @@
                 border-bottom: 1px solid #ddd;
                 display: block;
                 font-size: .8em;
-                text-align: left;
+                text-align: right;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
             }
 
             table td::before {
                 content: attr(data-label);
-                float: left;
+                text-align: left;
                 font-weight: bold;
                 text-transform: uppercase;
             }
@@ -232,36 +235,59 @@
                     </thead>
                     <tbody>
                     @foreach($exam->exam->users_exams as $attempt)
-                        <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$attempt->time}}</td>
-                            <td >{{$attempt->end_attempt??'-----'}}</td>
-                            <?php
-
+                        <?php
                             $date1 = new DateTime( $attempt->time);
                             $date2 = new DateTime($attempt->end_attempt);
                             $interval = $date1->diff($date2);
                             $diff = '';
 
                             $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
-                            ?>
-
-                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge-blue p-2">Review</a>@else ---- @endif</td>
-                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge-red p-2">View Result Details</a>@else ---- @endif</td>
-                            <td>{{$diff??'0 seconds'}}</td>
-                            <td class="text-bold">{{($exam->exam->pass_mark??0).'%'}}</td>
-
-                            <td class="text-bold">
-                        @if( (($exam->exam->exam_mark * $exam->exam->pass_mark) / 100) <= $attempt->mark)
-                            <span class="badge-green">Pass</span>
-                        @else
-                            <span class="badge-red">Fail</span>
-                        @endif
+                        ?>
+                        <tr>
+                            <td data-label="# Attempt">
+                                <span>{{$loop->iteration}}</span>
                             </td>
-
-
-                            <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
-                            <td>
+                            <td data-label="Your Start Time">
+                                <span>{{$attempt->time}}</span>
+                            </td>
+                            <td data-label="Your End Time">
+                                <span>{{$attempt->end_attempt??'-----'}}</span>
+                            </td>
+                            <td data-label="Review">
+                                @if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())
+                                    <span>
+                                        <a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge-blue p-2">Review</a>
+                                    </span>
+                                @else
+                                    <span>----</span>
+                                @endif
+                            </td>
+                            <td data-label="Details">
+                                @if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())
+                                    <span>
+                                        <a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge-red p-2">View Result Details</a>
+                                    </span>
+                                @else
+                                    <span>---- </span>
+                                @endif
+                            </td>
+                            <td data-label="Time taken">
+                                <span>{{$diff??'0 seconds'}}</span>
+                            </td>
+                            <td data-label="Pass Mark (%)" class="text-bold">
+                                <span>{{($exam->exam->pass_mark??0).'%'}}</span>
+                            </td>
+                            <td data-label="Status" class="text-bold">
+                                @if( (($exam->exam->exam_mark * $exam->exam->pass_mark) / 100) <= $attempt->mark)
+                                    <span class="badge-green">Pass</span>
+                                @else
+                                    <span class="badge-red">Fail</span>
+                                @endif
+                            </td>
+                            <td data-label="Mark">
+                                <span>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</span>
+                            </td>
+                            <td data-label="Progress">
                                 @if($exam->exam->exam_mark && $exam->exam->exam_mark != 0)
                                     <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
                                     <span>{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '0%' }}</span>
