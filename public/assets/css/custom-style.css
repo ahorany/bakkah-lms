@@ -1011,6 +1011,20 @@ p.lead.light.card {
     display: none;
 }
 
+.title_file_old{
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-left: 15px;
+    background: #fff;
+    width: 80%;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+
 @media screen and (min-width:800px){
     .custom-model-main:before {
         content: "";
@@ -1192,18 +1206,6 @@ p.lead.light.card {
     }
     .course-header{
         padding: 0 !important;
-    }
-    .title_file_old{
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding-left: 15px;
-        background: #fff;
-        width: 80%;
-        z-index: 99999;
-        display: flex;
-        align-items: center;
-        height: 64px;
     }
     .mobile-none{
         display: none !important;

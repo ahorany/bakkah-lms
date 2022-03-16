@@ -467,7 +467,7 @@ img {
   padding: 40px !important;
 }
 
-.navbar {
+header.navbar {
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -475,6 +475,7 @@ img {
   justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  height: 60px;
 }
 
 .sticky-top {
@@ -662,6 +663,7 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 .lms-header a.navbar-brand img {
   filter: brightness(0) invert(1);
   width: 40px;
+  height: auto;
   margin: 0 5px;
 }
 
