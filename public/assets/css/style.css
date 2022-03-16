@@ -468,14 +468,18 @@ img {
 }
 
 header.navbar {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  height: 60px;
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    height: 60px;
+    width: 100%;
+}
+main#main-vue-element {
+    margin-top: 60px;
 }
 
 .sticky-top {
