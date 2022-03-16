@@ -1150,6 +1150,9 @@ p.lead.light.card {
     .q-card label .radio-mark{
         top: 9px;
     }
+    .exam_page .card{
+        padding: 15px !important;
+    }
     .exam_page .dash-header , .review.dash-header {
         justify-content: end !important;
     }
@@ -1443,7 +1446,7 @@ p.lead.light.card {
         border-bottom: none;
     }
     .home-section .card {
-        padding: 15px 10px !important;
+        padding: 15px !important;
     }
     .home-section .courses {
         padding: 0 !important;

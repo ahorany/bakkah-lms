@@ -29,7 +29,7 @@
 @endsection
 
 @section('content')
-    <div class="d-flex p-3" style="justify-content: space-between; align-items:center;">
+    <div class="d-flex p-3" style="justify-content: space-between; align-items:center; flex-wrap: wrap;">
         <h2 class="m-0"><i class="fas fa-graduation-cap"></i> {{$exam->exam->content->title}}</h2>
         <a style="width: 85px;" href="{{CustomRoute('user.exam',$exam->exam->content->id)}}" class="cyan form-control">
             <span>

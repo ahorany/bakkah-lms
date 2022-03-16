@@ -164,8 +164,8 @@
             <?php $users_exams_count = count($exam->exam->users_exams) ?>
 
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 mb-3">
-                <div class="card h-100" style="box-shadow: none; border: 1px solid gainsboro;">
-                    <div class="card-body" style="padding: 15px 30px;">
+                <div class="card h-100" style="padding: 15px 30px; box-shadow: none; border: 1px solid gainsboro;">
+                    <div class="card-body">
                         <h4 class="card-title">Exam title : {{$exam->title}}</h4>
                         <p>Start date : {{$exam->exam->start_date}}</p>
                         <p>End date : {!!$exam->exam->end_date??'<span style="font-size:19px">∞</span>'!!}</p>

@@ -104,7 +104,7 @@
 
 @section('content')
     <div class="card p-5 user-info details">
-        <div class="d-flex" style="justify-content: space-between; align-items:center;">
+        <div class="d-flex" style="justify-content: space-between; align-items:center; flex-wrap: wrap;">
             <h2 class="m-0"><i class="fas fa-graduation-cap"></i> {{$exam_title}}</h2>
             <a style="width: 85px;" href="{{CustomRoute('user.exam',$exam_id)}}" class="cyan form-control">
                 <span>
