@@ -11,14 +11,8 @@
             border-radius: 50%;
             width: 14px !important;
             height: 14px !important;
-<<<<<<< HEAD
         }
         .custom-radio .radio-mark:after{
-=======
-            left: 10px !important;
-        }
-        .correct-radio .radio-mark:after{
->>>>>>> 5aee7bdf4b69cde92c235e18d65656aacf915732
             background: #06ae60;
         }
        .incorrect-radio + .radio-mark:after {

@@ -143,7 +143,7 @@
                                     $count_questions += $data->count;
                                 @endphp
                                 <td>
-                                    <span>{{$data->result??null}}</span>
+                                    {{-- <span>{{$data->result??null}}</span> --}}
                                     @php
                                         if($data->result == 0 || $data->total == 0){
                                             $width = 0;
@@ -153,7 +153,7 @@
                                     @endphp
                                     <div class="progress">
                                         <div class="mx-auto progress-bar " role="progressbar" style="width: {{($data->result != null) || ($data->total != null) ? ($width > 0 ? ($width . '%') : 0)  : 0}};" aria-valuenow="{{$data->result}}" aria-valuemin="0" aria-valuemax="100">
-                                            <span style="position: absolute; left: 10px;">{{($data->result != null) || ($data->total != null) ? ($width > 0 ? ($width . '%') : 0)  : 0}}</span>
+                                            <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);">{{($data->result != null) || ($data->total != null) ? ($width > 0 ? ($width . '%') : 0)  : 0}}</span>
                                         </div>
                                     </div>
                                 </td>

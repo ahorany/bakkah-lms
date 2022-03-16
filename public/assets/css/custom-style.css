@@ -1,4 +1,6 @@
-
+.swal2-container{
+    z-index: 999999999999999 !important;
+}
 .dropdown-sidebar ul{
     height: 0;
     display: none !important;
