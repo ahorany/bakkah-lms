@@ -32,15 +32,20 @@
 </style>
 @section('content')
 
-
-                  <div class="row MX-0 justify-content-end">
+                    <div class="d-flex mobile-show" style="align-items: center;">
+                        <h3 class="m-0 title_file_old">{{ $exam->exam->content->course->trans_title }}</h3>
+                    </div>
+                  <div class="row mx-0 mb-2 justify-content-end">
                     <div class="col-xl-9 col-lg-8 col-md-12">
-                        <div class="dash-header course_info">
-                            <h2>{{$exam->title}}</h2>
+                        <div class="dash-header course_info d-flex align-items-center justify-content-between">
+                            <h2 class="mobile-none">{{$exam->title}}</h2>
+                            <template v-if="save_status && page_type == 'exam' ">
+                                <button class="mobile-none form-control main-color my-2" @click.prevent="save()">Submit</button>
+                             </template>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-12">
-                        <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-between h-100">
                             <p v-if="page_type == 'exam' && !without_timer" class="time-remaining main-button">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="34.151" height="35.854" viewBox="0 0 34.151 35.854">
@@ -157,10 +162,6 @@
                                 </button>
                                 </template>
                             </div>
-
-                            <template v-if="save_status && page_type == 'exam' ">
-                               <button class="mobile-none form-control main-color" @click.prevent="save()">Submit</button>
-                            </template>
 
                         </div>
                     </div>

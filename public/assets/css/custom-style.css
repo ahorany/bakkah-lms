@@ -1010,6 +1010,11 @@ p.lead.light.card {
 .q-number div .line{
     display: none;
 }
+.dash-header.course_info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 
 @media screen and (min-width:800px){
@@ -1110,9 +1115,9 @@ p.lead.light.card {
     .m-bottom{
         margin-bottom: 24px;;
     }
-    .dash-header.d-flex.justify-content-between.align-items-center{
+    /* .dash-header.d-flex.justify-content-between.align-items-center{
         display: block !important;
-    }
+    } */
     .parent_next_prev {
         justify-content: start;
     }
