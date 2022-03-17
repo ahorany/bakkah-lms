@@ -40,7 +40,6 @@
         </a>
     </div>
 
-
     {{-- @php
         if( !is_null($next)){
             if( $next->post_type != 'exam' ) {

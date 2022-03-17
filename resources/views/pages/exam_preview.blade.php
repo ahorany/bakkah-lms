@@ -29,6 +29,16 @@
     -ms-transform: none !important;
     transform: none !important;
 }
+@media (max-width: 767.5px){
+    button.form-control.main-color{
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+    button.form-control.main-color:hover svg path{
+        stroke: #fff;
+    }
+}
 </style>
 @section('content')
 
@@ -36,16 +46,27 @@
                         <h3 class="m-0 title_file_old">{{ $exam->exam->content->course->trans_title }}</h3>
                     </div>
                   <div class="row mx-0 mb-2 justify-content-end">
-                    <div class="col-xl-9 col-lg-8 col-md-12">
+                    <div class="col-xl-9 col-lg-8 col-md-12 mobile-none">
                         <div class="dash-header course_info d-flex align-items-center justify-content-between">
-                            <h2 class="mobile-none">{{$exam->title}}</h2>
+                            <h2>{{$exam->title}}</h2>
                             <template v-if="save_status && page_type == 'exam' ">
-                                <button class="mobile-none form-control main-color my-2" @click.prevent="save()">Submit</button>
+                                <button class="form-control main-color my-2" @click.prevent="save()">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 133.02 104.113">
+                                            <g id="check" transform="translate(-1436.246 -232.059)">
+                                            <path id="Path_1" data-name="Path 1" d="M75,0,58.984,16.207l-16.8,17L28.711,46.843.937,74.949,0,75.9" transform="translate(1472.5 248.5)" fill="none" stroke="#fb4400" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_2" data-name="Path 2" d="M20,34.5l-3.71-6.4-1.707-2.944L9.563,16.5,7.187,12.4,2.75,4.744,0,0" transform="matrix(0.966, -0.259, 0.259, 0.966, 1448.8, 290.294)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_3" data-name="Path 3" d="M20,34.5l-3.71-6.4-1.707-2.944L7.187,12.4,2.75,4.744,0,0" transform="translate(1551.213 244.7) rotate(74.3)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <span class="mx-1">Finish Attemp</span>
+                                </button>
                              </template>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-12">
-                        <div class="d-flex align-items-center justify-content-between h-100">
+                        <div class="d-flex align-items-center justify-content-between h-100 flex-wrap">
                             <p v-if="page_type == 'exam' && !without_timer" class="time-remaining main-button">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="34.151" height="35.854" viewBox="0 0 34.151 35.854">
@@ -98,7 +119,18 @@
                                 <span class="mx-1">Remaining</span>
                             </p>
                             <template v-if="save_status && page_type == 'exam' ">
-                                <button class="mobile-show form-control main-color" @click.prevent="save()">Submit</button>
+                                <button class="mobile-show form-control main-color my-2" @click.prevent="save()">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 133.02 104.113">
+                                            <g id="check" transform="translate(-1436.246 -232.059)">
+                                            <path id="Path_1" data-name="Path 1" d="M75,0,58.984,16.207l-16.8,17L28.711,46.843.937,74.949,0,75.9" transform="translate(1472.5 248.5)" fill="none" stroke="#fb4400" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_2" data-name="Path 2" d="M20,34.5l-3.71-6.4-1.707-2.944L9.563,16.5,7.187,12.4,2.75,4.744,0,0" transform="matrix(0.966, -0.259, 0.259, 0.966, 1448.8, 290.294)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_3" data-name="Path 3" d="M20,34.5l-3.71-6.4-1.707-2.944L7.187,12.4,2.75,4.744,0,0" transform="translate(1551.213 244.7) rotate(74.3)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <span class="mx-1">Finish Attemp</span>
+                                </button>
                             </template>
                         </div>
                     </div>

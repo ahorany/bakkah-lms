@@ -124,7 +124,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th class="mobile-none" scope="col">#</th>
                             <th scope="col">title</th>
                             <th scope="col">count</th>
                             <th scope="col">result</th>
@@ -137,7 +137,7 @@
                         @endphp
                         @foreach($units_rprt as $data)
                             <tr>
-                                <td data-label="#">
+                                <td class="mobile-none" data-label="#">
                                     <span>{{$loop->iteration}}</span>
                                 </td>
                                 <td data-label="title">
@@ -178,7 +178,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th class="mobile-none" scope="col">#</th>
                         <th scope="col">Total Title</th>
                         <th scope="col">TotalCount</th>
                         <th scope="col">Total Result</th>
@@ -189,7 +189,7 @@
                     <tbody>
                     @foreach($unit_marks as $data)
                         <tr>
-                            <td data-label="#">
+                            <td class="mobile-none" data-label="#">
                                 <span>{{$loop->iteration}}</span>
                             </td>
                             <td data-label="Total Title">

@@ -849,10 +849,10 @@ label.container-check.form-check-label span.checkmark{
         margin: 0 !important;
     }
     .border_false{
-        border: 1px solid rgb(255 0 0 / 50%)
+        border: 1px solid rgb(255 0 0 / 50%) !important;
     }
     .border_true{
-        border: 1px solid rgb(0 123 0 / 50%)
+        border: 1px solid rgb(0 123 0 / 50%) !important;
     }
     .preview-exam{
         overflow: revert;
@@ -1297,7 +1297,7 @@ p.lead.light.card {
         padding: 15px;
     }
     p.time-remaining{
-        margin: 15px 0;
+        margin: 10px 0;
         font-size: 14px;
         padding: 0 5px;
     }

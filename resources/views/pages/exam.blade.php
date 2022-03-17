@@ -76,6 +76,10 @@
                 margin-bottom: .625em;
             }
 
+            table tr td span {
+                font-size: 14px;
+            }
+
             table td {
                 border-bottom: 1px solid #ddd;
                 display: block;
@@ -223,7 +227,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col"># Attempt</th>
+                        <th class="mobile-none" scope="col"># Attempt</th>
                         <th scope="col">Your Start Time</th>
                         <th scope="col">Your End Time</th>
                         <th scope="col">Review</th>
@@ -246,7 +250,7 @@
                             $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
                         ?>
                         <tr>
-                            <td data-label="# Attempt">
+                            <td class="mobile-none" data-label="# Attempt">
                                 <span>{{$loop->iteration}}</span>
                             </td>
                             <td data-label="Your Start Time">
