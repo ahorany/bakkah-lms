@@ -5,20 +5,20 @@
 @endsection
 
 @section('style')
-    <style>
-        .custom-radio .radio-mark:after , .incorrect-radio + .radio-mark:after{
-            border: none;
-            border-radius: 50%;
-            width: 14px !important;
-            height: 14px !important;
-        }
-        .custom-radio .radio-mark:after{
-            background: #06ae60;
-        }
-       .incorrect-radio + .radio-mark:after {
-            background: red;
-        }
-    </style>
+<style>
+    .custom-radio .radio-mark:after , .incorrect-radio + .radio-mark:after{
+        border: none;
+        border-radius: 50%;
+        width: 14px !important;
+        height: 14px !important;
+    }
+    .custom-radio .radio-mark:after{
+        background: #06ae60;
+    }
+    .incorrect-radio + .radio-mark:after {
+        background: red;
+    }
+</style>
 @endsection
 
 @section('content')
