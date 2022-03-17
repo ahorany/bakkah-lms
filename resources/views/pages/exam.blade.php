@@ -49,6 +49,9 @@
             width: 50%;
             margin: 0 !important;
         }
+        .exam_page .card .card-body * {
+            margin: 0 0 10px;
+        }
 
         @media screen and (max-width: 1150px) {
             table {
