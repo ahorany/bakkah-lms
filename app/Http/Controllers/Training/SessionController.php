@@ -40,39 +40,57 @@ class SessionController extends Controller
 
 
     public function create(){
-        $courses = Course::select('id','title')->get();
+        $courses = Course::select('id','title')->where('training_option_id','!=', 11)->get();
         return Active::Create(['courses' => $courses]);
     }
 
     public function store(SessionRequest $request){
         $validated = $request->validated();
         $validated['branche_id'] = 1;
+
+        $course = Course::select('id','title')
+            ->where('id',$validated['course_id'])
+            ->where('training_option_id','!=', 11)->first();
+        if (!$course){
+            abort(404);
+        }
+
         $session = Session::create($validated);
-        return Active::Inserted('');
+        return Active::Inserted('Session');
     }
 
     public function edit(Session $session){
-        $courses = Course::select('id','title')->get();
+        $courses = Course::select('id','title')->where('training_option_id','!=', 11)->get();
         return Active::Edit(['eloquent'=>$session,'courses'=> $courses]);
     }
 
     public function update(SessionRequest $request,Session $session){
         $validated = $request->validated();
         $validated['branche_id'] = 1;
+
+
+        $course = Course::select('id','title')
+            ->where('id',$validated['course_id'])
+            ->where('training_option_id','!=', 11)->first();
+        if (!$course){
+            abort(404);
+        }
+
+
         Session::find($session->id)->update($validated);
-        return Active::Updated('');
+        return Active::Updated('Session');
     }
 
 
     public function destroy(Session $session){
         Session::where('id', $session->id)->SoftTrash();
-        return Active::Deleted('');
+        return Active::Deleted('Session');
     }
 
     public function restore($session){
         Session::where('id', $session)->RestoreFromTrash();
         $session = Session::where('id', $session)->first();
-        return Active::Restored('');
+        return Active::Restored('The Session');
     }
 
 

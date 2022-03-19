@@ -27,7 +27,7 @@ class UserApiController
 
         $rules = [
             "name"                => "required|string",
-            "email"               => "required|email|unique:users,email",
+            "email"               => "required|email",
             "password"            => "required",
             "course_id"           => "required|exists:courses,ref_id",
             "session_id"          => $session_id,

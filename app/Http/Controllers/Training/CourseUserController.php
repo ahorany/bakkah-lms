@@ -33,7 +33,7 @@ class CourseUserController extends Controller
     {
         $course_id = request()->course_id;
         $bindings = [$course_id];
-        $sql = "SELECT courses.id,courses.title FROM `courses` WHERE courses.id = ?";
+        $sql = "SELECT courses.id,courses.title,courses.training_option_id FROM `courses` WHERE courses.id = ?";
         $course = DB::select($sql,$bindings);
 
 

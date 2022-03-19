@@ -61,13 +61,13 @@ class QuestionController extends Controller
         $units = Unit::where('course_id',$course_id)->with(['subunits'])->get();
         $units = $this->buildTree($units);
         $import_types = Constant::where('post_type','imports')->get();
-        // dd($import_types);
+
         return view('training.courses.contents.preview.exam', compact('content','units','course_id','import_types','next', 'previous'));
 
     }
 
     public function add_question(){
-//        return \request()->units_select;
+        return \request();
         // validation
         $rules = [
             "title"   => "required|string",
@@ -89,17 +89,13 @@ class QuestionController extends Controller
             return response()->json(['errors' => $validator->errors()]);
         }
 
-//        if ($validator->fails()) {
-//        }
-
-//        return $answer_validation;
 
         $question = Question::updateOrCreate(['id' => \request()->question_id],[
             'title' => \request()->title,
             'mark' => \request()->mark,
             'feedback' => \request()->feedback,
             'exam_id' => \request()->exam_id,
-//            'unit_id' => \request()->unit_id != -1 ? \request()->unit_id  : null ,
+            'question_type' => 'multichoice',
         ]);
 
         QuestionUnit::where('question_id', $question->id)->delete();
@@ -122,14 +118,12 @@ class QuestionController extends Controller
 
 
         foreach (request()->answers as $answer ){
-//            if(!is_null( $answer['title'])){
                 Answer::updateOrCreate(['id' => $answer['id'] ],[
                     'title' => $answer['title'],
                     'type' => 'multi_choice',
                     'check_correct' => $answer['check_correct'] ? 1 : 0,
                     'question_id' => $question->id,
                 ]);
-//            }
 
         }
 

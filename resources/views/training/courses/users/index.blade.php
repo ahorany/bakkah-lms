@@ -92,7 +92,7 @@
                 <th scope="col">Progress</th>
                 <th scope="col">Is Free</th>
                 <th scope="col">Expire Date</th>
-                <th scope="col">Session</th>
+                <th v-if="course.training_option_id != 11" scope="col">Session</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
@@ -122,7 +122,7 @@
                     </td>
 
 
-                    <td>
+                    <td v-if="course.training_option_id != 11">
                         <span v-if="course_user.session_id"  class="badge-pink" v-text="'SID: ('+ course_user.session_id + ') | ' + moment(course_user.date_from).format('DD-MM-YYYY') +' | ' + moment(course_user.date_to).format('DD-MM-YYYY') "></span>
                     </td>
 
@@ -181,7 +181,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Role</th>
                                 <th scope="col">Paid Status</th>
-                                <th scope="col">Session</th>
+                                <th v-if="course.training_option_id != 11" scope="col">Session</th>
                                 <th scope="col">Expire date</th>
                             </tr>
                             </thead>
@@ -206,7 +206,7 @@
                                 </td>
 
 
-                                <td>
+                                <td v-if="course.training_option_id != 11">
                                     <select @change="changeSession(search_user,$event.target.value)" v-model="search_user.session_id">
                                         <option v-for="(session,index) in sessions" :value="session.id" v-text="'SID: ('+ session.id + ') | ' + moment(session.date_from).format('DD-MM-YYYY') +' | ' + moment(session.date_to).format('DD-MM-YYYY') "></option>
                                     </select>
