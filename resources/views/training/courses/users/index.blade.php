@@ -50,36 +50,22 @@
 
 
 <div class="course_info">
-{{--        <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{$course->trans_title}}</h4>--}}
+        <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course Name : {{\App\Helpers\Lang::TransTitle($course[0]->title)}}</h4>
 
         <div class="card p-3 mb-3">
             <div class="row">
-{{--                    <template>--}}
-{{--                        <div style="direction: ltr;" class="alert alert-success alert-dismissible" :class="{'d-none': !alert}" role="alert"><!-- fade show-->--}}
-{{--                            <div>--}}
-{{--                                <strong v-text="msg_alert"></strong> Updated--}}
-{{--                            </div>--}}
-{{--                            <button type="button" class="close" data-dismiss="alert">--}}
-{{--                                <span aria-hidden="true">&times;</span>--}}
-{{--                            </button>--}}
-{{--                        </div>--}}
-{{--                    </template>--}}
-
                     <div class="col-lg-3 col-md-4 col-12">
                             <button type="button" @click="OpenModal()" class="group_buttons mb-1 btn-sm">
                                 <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_user')}}
                             </button>
-
-{{--                            <button type="button" @click="OpenModal('instructor')" class="group_buttons mb-1 btn-sm">--}}
-{{--                                <i class="fa fa-plus" aria-hidden="true"></i> {{__('admin.add_instructor')}}--}}
-{{--                            </button>--}}
                     </div>
 
                     <div class="col-lg-9 col-md-8 col-12 text-right">
-{{--                        @include('training.courses.contents.header',['course_id' => $course->id, 'users' =>true])--}}
+                        @include('training.courses.contents.header',['course_id' => $course[0]->id, 'users' =>true])
                     </div>
             </div>
       </div>
+
 
       <template v-if="course_users">
             <table class="table table-striped">
@@ -105,30 +91,25 @@
                         <span v-if="course_user.role_id == 2" class="badge-pink"> Instructor </span>
                         <span v-if="course_user.role_id == 3" class="badge-green"> Trainee </span>
                     </td>
+
                     <td v-text="(course_user.progress??0) + '%'"></td>
 
-                        <td>
-                            <span v-if="course_user.paid_status == 503" class="badge-pink"> Paid </span>
-                            <span v-if="course_user.paid_status == 504" class="badge-green"> Free </span>
-                        </td>
-
-
-{{--                        <td>--}}
-{{--                            <input :value="moment(users_expire_date[course_user.id]).format('YYYY-MM-DDTHH:mm')" @input="users_expire_date[course_user.id] = moment($event.target.value).format('YYYY-MM-DDTHH:mm')"  type="datetime-local" name="expire_date" class="form-control" placeholder="Expire date">--}}
-{{--                        </td>--}}
+                    <td>
+                        <span v-if="course_user.paid_status == 503" class="badge-pink"> Paid </span>
+                        <span v-if="course_user.paid_status == 504" class="badge-green"> Free </span>
+                    </td>
 
                     <td>
                         <span v-if="course_user.expire_date"  class="badge-pink"> @{{ course_user.expire_date }}</span>
                     </td>
 
-
                     <td v-if="course.training_option_id != 11">
                         <span v-if="course_user.session_id"  class="badge-pink" v-text="'SID: ('+ course_user.session_id + ') | ' + moment(course_user.date_from).format('DD-MM-YYYY') +' | ' + moment(course_user.date_to).format('DD-MM-YYYY') "></span>
                     </td>
 
-                        <td>
-                            <button @click="deleteUser(course_user.user_id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
-                        </td>
+                    <td>
+                        <button @click="deleteUser(course_user.user_id)" class="red" style="padding: 4px 8px !important; font-size: 12px;" ><i class="fa fa-trash"></i> Delete</button>
+                    </td>
                 </tr>
 
             </tbody>
@@ -259,14 +240,8 @@
             search_users    : [] ,
             add_users : [],
             delete_users : [],
-            // expire_date : '' ,
-            // users_expire_date    : {} ,
-            // alert:false,
-            // msg_alert: ''
         },
         created(){
-		    let self = this
-            console.log(this.sessions)
         },
         methods : {
             OpenModal : function(type){
@@ -518,78 +493,6 @@
                     }
           },
 
-
-            {{--    // trans_name : function (data) {--}}
-            {{--    //    return JSON.parse(data)[this.lang];--}}
-            {{--    //  },--}}
-            {{--    updateUserExpireDate: function (user_id) {--}}
-            {{--        let user_expire_date = this.users_expire_date[user_id];--}}
-            {{--        let self = this;--}}
-            {{--        axios.post("{{route('training.update_user_expire_date')}}",--}}
-            {{--            {--}}
-            {{--                'course_id' : self.course.id ,--}}
-            {{--                'user_id'   : user_id ,--}}
-            {{--                'expire_date'   : user_expire_date ,--}}
-            {{--            }--}}
-            {{--        )--}}
-            {{--            .then(response => {--}}
-            {{--                console.log(response)--}}
-            {{--                // self.search_users = response.data.users;--}}
-            {{--                // $('#ContentModal').modal('hide')--}}
-
-            {{--                let user = self.course.users.filter(function (user,index) {--}}
-            {{--                    return user.id == user_id;--}}
-            {{--                })--}}
-
-            {{--                console.log(user);--}}
-            {{--                self.msg_alert = user[0].email--}}
-
-            {{--                self.alert = true;--}}
-            {{--                setTimeout(--}}
-            {{--                    function() {--}}
-            {{--                        self.alert = false;--}}
-            {{--                    }, 2000);--}}
-
-            {{--            })--}}
-            {{--            .catch(e => {--}}
-            {{--                console.log(e)--}}
-            {{--            });--}}
-            {{--    },--}}
-
-
-            {{--   updateIsFree: function (e,user_id) {--}}
-            {{--    let self = this;--}}
-            {{--       console.log(user_id)--}}
-            {{--    axios.post("{{route('training.update_user_is_free')}}",--}}
-            {{--        {--}}
-            {{--            'course_id' : self.course.id ,--}}
-            {{--            'user_id'   : user_id ,--}}
-            {{--            'is_free'   : e.target.checked,--}}
-            {{--        }--}}
-            {{--    )--}}
-            {{--        .then(response => {--}}
-            {{--            console.log(response)--}}
-            {{--            // self.search_users = response.data.users;--}}
-            {{--            // $('#ContentModal').modal('hide')--}}
-
-            {{--            let user = self.course.users.filter(function (user,index) {--}}
-            {{--                return user.id == user_id;--}}
-            {{--            })--}}
-
-            {{--            console.log(user);--}}
-            {{--            self.msg_alert = user[0].email--}}
-
-            {{--            self.alert = true;--}}
-            {{--            setTimeout(--}}
-            {{--                function() {--}}
-            {{--                    self.alert = false;--}}
-            {{--                }, 2000);--}}
-
-            {{--        })--}}
-            {{--        .catch(e => {--}}
-            {{--            console.log(e)--}}
-            {{--        });--}}
-            {{--}--}}
             }
 	});
 </script>

@@ -46,7 +46,6 @@ class CourseUserController extends Controller
         $sessions = Session::select('id','date_from','date_to')->where('course_id',$course_id)->get();
 
 
-
         if (\request()->has('user_search') && !is_null(request()->user_search)) {
             $user_search = request()->user_search;
             $bindings[] = '%'.$user_search.'%';
@@ -56,27 +55,11 @@ class CourseUserController extends Controller
 
 
         $course_users = DB::select($sql,$bindings);
-
-//         dd($course_users);
-
-
-
-//        $course = Course::where('id',$course_id);
-//
-//        if (\request()->has('user_search') && !is_null(request()->user_search)) {
-//            $user_search = request()->user_search;
-//            $course->with(['upload', 'users' => function($q) use ($user_search){
-//                $q->where('name', 'like', '%' . $user_search . '%')->orWhere('email', 'like', '%' . $user_search . '%');
-//            }]);
-//        }else{
-//            $course = $course->with(['upload', 'users']);
-//        }
-//
-//        $course = $course->first();
-
-//        return $sessions;
         return view('training.courses.users.index', compact('course','course_users','sessions'));
     }
+
+
+
 
     public function search_user_course(){
         $lang = app()->getLocale();
@@ -108,48 +91,12 @@ class CourseUserController extends Controller
         }
 
         $users = DB::select($sql,$bindings);
-
-
-
-
-//        $user_type = 2;
-//        if(\request()->type_user == 'trainee'){
-//            $user_type = 3;
-//        }
-//        $users = User::query();
-//
-//        $lock = true;
-//        if(is_null(request()->email) && is_null(request()->name)){
-//            $users = [];
-//            $lock = false;
-//        }
-//        if(!is_null(request()->email)) {
-//            $users = $users->where(function($query){
-//                $query->where('email', 'like', '%'.request()->email.'%');
-//            });
-//        }
-//
-//        if(!is_null(request()->name)) {
-//            $users = $users->where(function($query){
-//                $query->where('name', 'like', '%'.request()->name.'%');
-//            });
-//        }
-//
-//        if($lock){
-//            if($user_type == 2 ){
-//                $users->whereHas('roles' , function($q) use($user_type){
-//                    $q->where('role_id','!=',3);
-//                });
-//            }
-//            $users = $users->get();
-//        }
-
         return response()->json([ 'status' => 'success' ,'users' => $users]);
     }
 
 
+
     public function add_users_course(){
-//        return request();
         $course = Course::find(\request()->course_id);
         if(!$course){
             return response()->json([ 'status' => 'fail']);
@@ -176,13 +123,14 @@ class CourseUserController extends Controller
                         'session_id'     => $user['session_id'],
                     ]
                 );
-//                if($course->role_id == 3){
-//                    $user = User::where('id',$key)->first();
-//                    Mail::to($user->email)->send(new TraineeMail($key , $course->id));
-//                }
+                if($user['role_id'] == 3){
+                    $user = User::where('id',$user['user_id'])->first();
+                    Mail::to($user->email)->send(new TraineeMail($user->id, $course->id));
+                }
         }
         return response()->json([ 'status' => 'success']);
     }
+
 
 
     public function delete_user_course(){
@@ -195,37 +143,4 @@ class CourseUserController extends Controller
     }
 
 
-
-
-    public function update_user_expire_date(){
-        $user_id = \request()->user_id;
-        $course_id = \request()->course_id;
-        $expire_date = \request()->expire_date;
-        $user =  User::findOrFail($user_id);
-        $course =  Course::findOrFail($course_id);
-        CourseRegistration::where('user_id',$user->id)->where('course_id',$course->id)->update([
-            'expire_date' => $expire_date
-        ]);
-        return response(['status'=>'success']);
-    }
-
-
-
-    public function update_user_is_free(){
-        $paid_status = 503;
-        $user =  User::findOrFail(\request()->user_id);
-        $course =  Course::findOrFail(\request()->course_id);
-
-        $course_registration = CourseRegistration::where('user_id',\request()->user_id)->where('course_id',\request()->course_id)->first();
-         if (\request()->is_free == true){
-             $paid_status = 504;
-         }
-        CourseRegistration::where('user_id',$user->id)->where('course_id',$course->id)->update([
-            'paid_status' => $paid_status
-        ]);
-        return response()->json(['status' => 'success']);
-    }
-
-
-
-}
+} // End Class
