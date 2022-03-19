@@ -127,8 +127,11 @@
 
 
                         <div class="q-number">
-                            Q@{{index+1}}/@{{content.questions.length}}
-                            <small>(@{{question.mark}} Marks)</small>
+                            <div>
+                                <span>Q@{{index+1}}/@{{content.questions.length}}</span>
+                                <span class="line"></span>
+                                <small>(@{{question.mark}} Marks)</small>
+                            </div>
                         </div>
                         <h3 style="padding-right: 15%;" v-html="question.title"></h3>
 
@@ -159,8 +162,8 @@
 
         <div class="col-xl-3 col-lg-4">
             <div class="card h-100 p-30 navigation_preview">
-                <h4>Quiz Navigation</h4>
-                <ol class="answers">
+                <h2>Quiz Navigation</h2>
+                <ol class="answers quiz">
                     @foreach($content->questions as $question)
                         <li>
                             <a href="#question_{{$loop->iteration}}">

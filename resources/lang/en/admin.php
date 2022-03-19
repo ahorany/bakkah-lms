@@ -89,7 +89,6 @@ return [
     'company' => 'Company',
     'mobile' => 'Mobile',
     'pages' => 'Pages',
-    'add_users' => 'Add User',
     'active' => 'Active',
     'en_pdf' => 'en pdf',
     'ar_pdf' => 'ar pdf',
@@ -178,4 +177,5 @@ return [
     'Registered'=>'Registered',
     'True'=>'Register',
     'False'=>'Not Register',
+    'add_user'=>'Add User',
 ];

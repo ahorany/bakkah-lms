@@ -71,7 +71,7 @@
 
     ?>
 
-    <div class="course_details">
+    <div class="course_details user-info">
         <div class="dash-header course-header d-flex align-items-md-end flex-column flex-md-row px-3">
             <div class="text-center course-image w-30 mb-4 mt-2 mb-md-0">
                 <?php
@@ -108,7 +108,7 @@
                     $type = [
                         '11' => 'self-paced',
                         '13' => 'live-online',
-                        '353' => 'exam-simulator',
+                        '353' => 'exam-simulators',
                         '383' => 'instructor-led',
                     ];
                 @endphp
@@ -147,8 +147,8 @@
                 </div>
 
                 @if(!Gate::allows('preview-gate'))
-                    <div class="d-flex">
-                        <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px;">
+                    <div class="d-flex" style="flex-wrap: wrap;">
+                        <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px; margin-bottom: 5px;">
                             <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="main-button main-color review" href="#">
                                 {{__('education.Add a Review')}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
@@ -181,11 +181,11 @@
                             </div>
                         </li>
                         @if(!is_null($course->users[0]->pivot->progress))
-                            <a href="{{route("user.resume",$course->id)}}" class="main-button main-color">Resume Course</a>
+                            <a href="{{route("user.resume",$course->id)}}" class="main-button main-color" style="margin-right: 5px; margin-bottom: 5px;">Resume Course</a>
                         @endif
 
                         @if($course->users[0]->pivot->paid_status != 503)
-                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="mx-0 px-4 main-color">Pay Now</a>
+                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="mx-0 px-4 main-color" style="margin-right: 5px; margin-bottom: 5px;">Pay Now</a>
                         @endif
                     </div>
                 @endif
@@ -196,7 +196,7 @@
             <div class="row mx-0 my-4">
                 @if($video)
                     <div class="col-lg-9 col-xl-9 course_info">
-                        <p class="lead light">{{$course->trans_excerpt}}</p>
+                        <p class="lead light card">{{$course->trans_excerpt}}</p>
                     </div>
                     <div class="col-lg-3 col-xl-3">
                         <div class="card h-100 justify-content-center align-items-center p-3 video-btn">
@@ -207,7 +207,7 @@
                     </div>
                 @else
                     <div class="col-lg-12 col-xl-12 course_info">
-                        <p class="lead light card p-5">{{$course->trans_excerpt}}</p>
+                        <p class="lead light card">{{$course->trans_excerpt}}</p>
                     </div>
                 @endif
             </div>
@@ -222,7 +222,7 @@
                     @foreach($course_collect[0] as $key => $section)
                         <div class="card learning-file mb-3">
                             <h3>{{$section->title}}</h3>
-                            <div style="margin: 0px 30px;">{!! $section->details->excerpt??null !!}</div>
+                            <div class="excerpt-text">{!! $section->details->excerpt??null !!}</div>
                             @isset($section->contents)
                                 <ul>
                                     @foreach($section->contents as $k => $content)
@@ -450,8 +450,6 @@
                                 </div>
                             @endforeach
                         @endif
-
-
 
                     @if(count($activities) > 0)
                         @include('Html.activity-card', [

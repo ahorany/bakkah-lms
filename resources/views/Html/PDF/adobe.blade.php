@@ -14,12 +14,18 @@
     <div id="adobe-dc-view"></div>
     <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
     <script type="text/javascript">
+
+        var showLeftHandPanel = true;
+        var x = window.matchMedia("(max-width: 767px)");
+        if (x.matches) { // If media query matches
+            showLeftHandPanel = false;
+        }
         document.addEventListener("adobe_dc_view_sdk.ready", function(){
             var adobeDCView = new AdobeDC.View({clientId: "{{env('PDF_EMBED_API')}}", divId: "adobe-dc-view"});
             adobeDCView.previewFile({
                 content:{location: {url: "{{$file}}"}},
                 metaData:{fileName: "{{$title}}"}
             }, {showAnnotationTools: false, dockPageControls: false, showDownloadPDF: false,
-                showPrintPDF: false, showLeftHandPanel: true, showPageControls: true});
+                showPrintPDF: false, showLeftHandPanel: showLeftHandPanel, showPageControls: true});
         });
     </script>

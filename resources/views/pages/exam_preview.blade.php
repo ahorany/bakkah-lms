@@ -15,8 +15,8 @@
 .custom-radio .radio-mark::after {
     left: 2px !important;
     top: 2px !important;
-    width: 11px !important;
-    height: 11px !important;
+    width: 10px !important;
+    height: 10px !important;
     border: solid #06ae60;
     border-top-width: medium;
     border-right-width: medium;
@@ -29,65 +29,110 @@
     -ms-transform: none !important;
     transform: none !important;
 }
+@media (max-width: 767.5px){
+    button.form-control.main-color{
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+    button.form-control.main-color:hover svg path{
+        stroke: #fff;
+    }
+}
 </style>
 @section('content')
 
-
-                  <div class="row MX-0 justify-content-end">
-                    <div class="col-xl-9 col-lg-8 col-md-12">
-                        <div class="dash-header course_info">
+                    <div class="d-flex mobile-show" style="align-items: center;">
+                        <h3 class="m-0 title_file_old">{{ $exam->exam->content->course->trans_title }}</h3>
+                    </div>
+                  <div class="row mx-0 mb-2 justify-content-end">
+                    <div class="col-xl-9 col-lg-8 col-md-12 mobile-none">
+                        <div class="dash-header course_info d-flex align-items-center justify-content-between">
                             <h2>{{$exam->title}}</h2>
+                            <template v-if="save_status && page_type == 'exam' ">
+                                <button class="form-control main-color my-2" @click.prevent="save()">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 133.02 104.113">
+                                            <g id="check" transform="translate(-1436.246 -232.059)">
+                                            <path id="Path_1" data-name="Path 1" d="M75,0,58.984,16.207l-16.8,17L28.711,46.843.937,74.949,0,75.9" transform="translate(1472.5 248.5)" fill="none" stroke="#fb4400" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_2" data-name="Path 2" d="M20,34.5l-3.71-6.4-1.707-2.944L9.563,16.5,7.187,12.4,2.75,4.744,0,0" transform="matrix(0.966, -0.259, 0.259, 0.966, 1448.8, 290.294)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_3" data-name="Path 3" d="M20,34.5l-3.71-6.4-1.707-2.944L7.187,12.4,2.75,4.744,0,0" transform="translate(1551.213 244.7) rotate(74.3)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <span class="mx-1">Finish Attemp</span>
+                                </button>
+                             </template>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-12">
-                        <p v-if="page_type == 'exam' && !without_timer" class="time-remaining main-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="34.151" height="35.854" viewBox="0 0 34.151 35.854">
-                                <g id="Group_122" data-name="Group 122" transform="translate(-1085.293 -313.029)">
-                                <g id="Group_121" data-name="Group 121" transform="translate(1085.293 313.029)">
-                                    <g id="Group_108" data-name="Group 108" transform="translate(19.269 20.974)">
-                                    <path id="Path_117" data-name="Path 117" d="M1110.64,352.445v-1.3a10.538,10.538,0,0,0,10.527-10.526h1.3A11.84,11.84,0,0,1,1110.64,352.445Z" transform="translate(-1110.64 -340.618)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_109" data-name="Group 109" transform="translate(16.13 17.836)">
-                                    <path id="Path_118" data-name="Path 118" d="M1109.65,342.771a3.14,3.14,0,1,1,3.141-3.14A3.143,3.143,0,0,1,1109.65,342.771Zm0-4.979a1.839,1.839,0,1,0,1.84,1.84A1.842,1.842,0,0,0,1109.65,337.792Z" transform="translate(-1106.51 -336.491)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_110" data-name="Group 110" transform="translate(15.623 22.712)">
-                                    <rect id="Rectangle_72" data-name="Rectangle 72" width="3.198" height="1.301" transform="matrix(0.548, -0.836, 0.836, 0.548, 0, 2.674)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_111" data-name="Group 111" transform="translate(20.106 12.488)">
-                                    <rect id="Rectangle_73" data-name="Rectangle 73" width="7.246" height="1.301" transform="translate(0 6.06) rotate(-56.746)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_112" data-name="Group 112" transform="translate(4.387 2.785)">
-                                    <path id="Path_119" data-name="Path 119" d="M1105.946,349.762a14.779,14.779,0,0,1-5.873-1.2l.514-1.2a13.583,13.583,0,1,0,7.132-25.948.651.651,0,0,1-.566-.645v-2.776h-2.413v2.776a.651.651,0,0,1-.566.645,13.606,13.606,0,0,0-11.808,13.465,13.8,13.8,0,0,0,.214,2.416l-1.281.228a15.088,15.088,0,0,1-.234-2.644,14.913,14.913,0,0,1,12.375-14.67v-2.867a.649.649,0,0,1,.65-.65h3.714a.651.651,0,0,1,.651.65v2.867a14.882,14.882,0,0,1-2.508,29.552Z" transform="translate(-1091.064 -316.693)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_113" data-name="Group 113" transform="translate(15.054)">
-                                    <path id="Path_120" data-name="Path 120" d="M1112.875,317.116h-7.129a.651.651,0,0,1-.651-.651v-2.786a.65.65,0,0,1,.651-.65h7.129a.651.651,0,0,1,.651.65v2.786A.652.652,0,0,1,1112.875,317.116Zm-6.479-1.3h5.829V314.33H1106.4Z" transform="translate(-1105.095 -313.029)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_114" data-name="Group 114" transform="translate(8.281 7.553)">
-                                    <rect id="Rectangle_74" data-name="Rectangle 74" width="1.301" height="2.435" transform="matrix(0.803, -0.596, 0.596, 0.803, 0, 0.776)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_115" data-name="Group 115" transform="translate(7.23 6.538)">
-                                    <rect id="Rectangle_75" data-name="Rectangle 75" width="2.953" height="1.301" transform="matrix(0.803, -0.596, 0.596, 0.803, 0, 1.76)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_116" data-name="Group 116" transform="translate(27.834 7.553)">
-                                    <rect id="Rectangle_76" data-name="Rectangle 76" width="2.435" height="1.301" transform="matrix(0.596, -0.803, 0.803, 0.596, 0, 1.955)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_117" data-name="Group 117" transform="translate(28.235 6.539)">
-                                    <rect id="Rectangle_77" data-name="Rectangle 77" width="1.301" height="2.953" transform="translate(0 1.044) rotate(-53.414)" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_118" data-name="Group 118" transform="translate(1.922 24.822)">
-                                    <rect id="Rectangle_78" data-name="Rectangle 78" width="6.776" height="1.301" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_119" data-name="Group 119" transform="translate(7.575 29.158)">
-                                    <rect id="Rectangle_79" data-name="Rectangle 79" width="4.716" height="1.301" fill="#575756"/>
-                                    </g>
-                                    <g id="Group_120" data-name="Group 120" transform="translate(0 32.522)">
-                                    <rect id="Rectangle_80" data-name="Rectangle 80" width="8.701" height="1.301" fill="#575756"/>
-                                    </g>
-                                </g>
-                                </g>
-                          </svg>
-                         <span id="demo"></span> Remaining
-                        </p>
+                        <div class="d-flex align-items-center justify-content-between h-100 flex-wrap">
+                            <p v-if="page_type == 'exam' && !without_timer" class="time-remaining main-button">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="34.151" height="35.854" viewBox="0 0 34.151 35.854">
+                                        <g id="Group_122" data-name="Group 122" transform="translate(-1085.293 -313.029)">
+                                        <g id="Group_121" data-name="Group 121" transform="translate(1085.293 313.029)">
+                                            <g id="Group_108" data-name="Group 108" transform="translate(19.269 20.974)">
+                                            <path id="Path_117" data-name="Path 117" d="M1110.64,352.445v-1.3a10.538,10.538,0,0,0,10.527-10.526h1.3A11.84,11.84,0,0,1,1110.64,352.445Z" transform="translate(-1110.64 -340.618)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_109" data-name="Group 109" transform="translate(16.13 17.836)">
+                                            <path id="Path_118" data-name="Path 118" d="M1109.65,342.771a3.14,3.14,0,1,1,3.141-3.14A3.143,3.143,0,0,1,1109.65,342.771Zm0-4.979a1.839,1.839,0,1,0,1.84,1.84A1.842,1.842,0,0,0,1109.65,337.792Z" transform="translate(-1106.51 -336.491)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_110" data-name="Group 110" transform="translate(15.623 22.712)">
+                                            <rect id="Rectangle_72" data-name="Rectangle 72" width="3.198" height="1.301" transform="matrix(0.548, -0.836, 0.836, 0.548, 0, 2.674)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_111" data-name="Group 111" transform="translate(20.106 12.488)">
+                                            <rect id="Rectangle_73" data-name="Rectangle 73" width="7.246" height="1.301" transform="translate(0 6.06) rotate(-56.746)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_112" data-name="Group 112" transform="translate(4.387 2.785)">
+                                            <path id="Path_119" data-name="Path 119" d="M1105.946,349.762a14.779,14.779,0,0,1-5.873-1.2l.514-1.2a13.583,13.583,0,1,0,7.132-25.948.651.651,0,0,1-.566-.645v-2.776h-2.413v2.776a.651.651,0,0,1-.566.645,13.606,13.606,0,0,0-11.808,13.465,13.8,13.8,0,0,0,.214,2.416l-1.281.228a15.088,15.088,0,0,1-.234-2.644,14.913,14.913,0,0,1,12.375-14.67v-2.867a.649.649,0,0,1,.65-.65h3.714a.651.651,0,0,1,.651.65v2.867a14.882,14.882,0,0,1-2.508,29.552Z" transform="translate(-1091.064 -316.693)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_113" data-name="Group 113" transform="translate(15.054)">
+                                            <path id="Path_120" data-name="Path 120" d="M1112.875,317.116h-7.129a.651.651,0,0,1-.651-.651v-2.786a.65.65,0,0,1,.651-.65h7.129a.651.651,0,0,1,.651.65v2.786A.652.652,0,0,1,1112.875,317.116Zm-6.479-1.3h5.829V314.33H1106.4Z" transform="translate(-1105.095 -313.029)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_114" data-name="Group 114" transform="translate(8.281 7.553)">
+                                            <rect id="Rectangle_74" data-name="Rectangle 74" width="1.301" height="2.435" transform="matrix(0.803, -0.596, 0.596, 0.803, 0, 0.776)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_115" data-name="Group 115" transform="translate(7.23 6.538)">
+                                            <rect id="Rectangle_75" data-name="Rectangle 75" width="2.953" height="1.301" transform="matrix(0.803, -0.596, 0.596, 0.803, 0, 1.76)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_116" data-name="Group 116" transform="translate(27.834 7.553)">
+                                            <rect id="Rectangle_76" data-name="Rectangle 76" width="2.435" height="1.301" transform="matrix(0.596, -0.803, 0.803, 0.596, 0, 1.955)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_117" data-name="Group 117" transform="translate(28.235 6.539)">
+                                            <rect id="Rectangle_77" data-name="Rectangle 77" width="1.301" height="2.953" transform="translate(0 1.044) rotate(-53.414)" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_118" data-name="Group 118" transform="translate(1.922 24.822)">
+                                            <rect id="Rectangle_78" data-name="Rectangle 78" width="6.776" height="1.301" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_119" data-name="Group 119" transform="translate(7.575 29.158)">
+                                            <rect id="Rectangle_79" data-name="Rectangle 79" width="4.716" height="1.301" fill="#575756"/>
+                                            </g>
+                                            <g id="Group_120" data-name="Group 120" transform="translate(0 32.522)">
+                                            <rect id="Rectangle_80" data-name="Rectangle 80" width="8.701" height="1.301" fill="#575756"/>
+                                            </g>
+                                        </g>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span id="demo"></span>
+                                <span class="mx-1">Remaining</span>
+                            </p>
+                            <template v-if="save_status && page_type == 'exam' ">
+                                <button class="mobile-show form-control main-color my-2" @click.prevent="save()">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 133.02 104.113">
+                                            <g id="check" transform="translate(-1436.246 -232.059)">
+                                            <path id="Path_1" data-name="Path 1" d="M75,0,58.984,16.207l-16.8,17L28.711,46.843.937,74.949,0,75.9" transform="translate(1472.5 248.5)" fill="none" stroke="#fb4400" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_2" data-name="Path 2" d="M20,34.5l-3.71-6.4-1.707-2.944L9.563,16.5,7.187,12.4,2.75,4.744,0,0" transform="matrix(0.966, -0.259, 0.259, 0.966, 1448.8, 290.294)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_3" data-name="Path 3" d="M20,34.5l-3.71-6.4-1.707-2.944L7.187,12.4,2.75,4.744,0,0" transform="translate(1551.213 244.7) rotate(74.3)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <span class="mx-1">Finish Attemp</span>
+                                </button>
+                            </template>
+                        </div>
                     </div>
                 </div>
 
@@ -96,9 +141,12 @@
                         <template v-for="(question, index) in paginated" >
                            <div :ref="'question'+question.id" :id="'question'+question.id" :key="index" class="card p-30 q-card"><!-- h-100 -->
                             <div class="q-number">
-                                <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
-                                <small v-if="question.answers_count == 1" v-text=" '(' + (question.mark) + ' Mark)'"></small>
-                                <small v-if="question.answers_count > 1" v-text=" '(' + (question.mark) + ' Marks)'"></small>
+                                <div>
+                                    <span v-text="'Q' + (index+indexStart+1) + '/' + (this.exam.questions.length) "></span>
+                                    <span class="line"></span>
+                                    <small v-if="question.answers_count == 1" v-text=" '(' + (question.mark) + ' Mark)'"></small>
+                                    <small v-if="question.answers_count > 1" v-text=" '(' + (question.mark) + ' Marks)'"></small>
+                                </div>
 
                             </div>
                             <h3 v-html="question.title"></h3>
@@ -118,7 +166,7 @@
                         </div>
                         </template>
 
-                        <div class="d-flex algin-items-center justify-content-between mt-4 buttons">
+                        <div :class="{'last-question':save_status && page_type == 'exam' }" class="d-flex align-items-center justify-content-between mt-4 buttons">
 
                             <div class="navigation">
                                 {{-- <template v-if="prev_status"> --}}
@@ -147,15 +195,11 @@
                                 </template>
                             </div>
 
-                            <template v-if="save_status && page_type == 'exam' ">
-                               <button class="form-control main-color" @click.prevent="save()">Submit</button>
-                            </template>
-
                         </div>
                     </div>
 
                     <div class="col-xl-3 col-lg-4">
-                        <div class="card h-100 p-30">
+                        <div class="card quiz h-100 p-30">
                             <h2 class="mt-0">Quiz</h2>
                             <ol class="answers">
                                 <template v-if="page_type == 'exam' "  v-for="(question, index) in exam.questions">

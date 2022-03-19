@@ -1,4 +1,6 @@
-
+.swal2-container{
+    z-index: 999999999999999 !important;
+}
 .dropdown-sidebar ul{
     height: 0;
     display: none !important;
@@ -7,8 +9,29 @@
 }
  .dropdown-sidebar.active ul{
     display: block !important;
-    height: 100% !important;
+    height: max-content !important;
 }
+.dropdown-sidebar>a{
+    position: relative;
+    justify-content: space-between;
+}
+nav#sidebarMenu ul li a span.drop-icon svg{
+    width: 12px !important;
+    transition: all 0.5s ease;
+}
+/* nav#sidebarMenu ul li a span.drop-icon{
+    padding-top: 5px;
+} */
+nav#sidebarMenu ul li a span.title{
+    display: flex;
+    align-items: self-start;
+    padding-right: 10px;
+}
+.dropdown-sidebar.active span.drop-icon svg{
+    transform: rotate(180deg);
+    transition: all 0.5s ease;
+}
+
 /********************************/
 .form-control{
     appearance: auto;
@@ -252,8 +275,9 @@ li.has-dropdown .dropdown span{
 /* End Checkbox */
 
 .activity_icon {
-    width:28.126px;
-    height:28.127px;
+    width:28px;
+    height:28px;
+    margin-right: 5px;
     vertical-align: middle;
     color: rgb(106, 106, 106) !important;
     filter: opacity(0.7);
@@ -265,7 +289,7 @@ li.has-dropdown .dropdown span{
 
 .q-card {
     margin-bottom: 10px;
-    padding: 10px 20% 20px 20px !important;
+    padding: 10px 13% 20px 20px !important;
 }
 
 .q-card h3 {
@@ -319,7 +343,7 @@ ol.answers li{
 .live-online{
     background: #d6c11b;
 }
-.exam-simulator{
+.exam-simulators{
     background: #FFA065;
 }
 .instructor-led{
@@ -332,6 +356,7 @@ ol.answers li{
     font-size: smaller;
     border-radius: 3px;
     width: max-content;
+    display: inline-block;
 }
 .badge-pink{
     background: #b18db5;
@@ -340,6 +365,7 @@ ol.answers li{
     font-size: smaller;
     border-radius: 3px;
     width: max-content;
+    display: inline-block;
 }
 .badge-lim{
     background: #b0ac27;
@@ -348,6 +374,7 @@ ol.answers li{
     font-size: smaller;
     border-radius: 3px;
     width: max-content;
+    display: inline-block;
 }
 .badge-green{
     background: green;
@@ -356,6 +383,7 @@ ol.answers li{
     font-size: smaller;
     border-radius: 3px;
     width: max-content;
+    display: inline-block;
 }
 .badge-red{
     background: #dc3545;
@@ -364,6 +392,7 @@ ol.answers li{
     font-size: smaller;
     border-radius: 3px;
     width: max-content;
+    display: inline-block;
 }
 .main-color {
     background: transparent;
@@ -534,6 +563,10 @@ justify-content: center;
 }
 .progress-bar{
     background: #fb4400;
+    width: 50%;
+    margin: 0 !important;
+    position: relative;
+    height: 20px;
 }
 .lms-header ul.navbar-nav li.user a svg{
     margin: 0;
@@ -555,9 +588,6 @@ a:hover svg#back{
 }
 .icon-report{
     fill: #fff !important;
-    /* position: absolute;
-    left: 0;
-    top: 0; */
 }
 .icon-report image{
     filter: invert(1);
@@ -575,10 +605,6 @@ a:hover svg#back{
     position: relative;
     top: -5px;
 }
-/* .text-center.course-image:hover {
-    box-shadow: 0px 0px 5px 0.5px #fb440036;
-} */
-
 button.next_prev {
     width: max-content;
     padding: 8px;
@@ -594,15 +620,6 @@ button.next_prev {
     border: none;
     cursor: pointer;
 }
-/* button.next_prev:hover {
-    background-color: #7c9290;
-    color: #fff;
-    border: 1px solid transparent;
-} */
-/* button.next_prev:hover svg{
-    filter: none;
-} */
-
 ul.video-list li .play{
     cursor: unset;
     box-shadow: 0 0 5px #33333333;
@@ -680,11 +697,6 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     box-shadow: 1px 1px 10px 1px #f0f0f0;
     border: none;
 }
-
-/* .certificate:hover {
-    box-shadow: 1px 1px 10px 1px #f0f0f0;
-    border: none;
-} */
 
 .certificate h2{
     color: #000;
@@ -770,7 +782,7 @@ p.time-remaining svg path{
     fill: #fb4400;
 }
 .review.dash-header{
-    padding: 20px 12px
+    padding: 20px 8px;
 }
 .plyr input {
     color: #fb4400 !important;
@@ -824,7 +836,6 @@ label.container-check.form-check-label span.checkmark{
         padding: 10px !important;
         background: #fafafa !important;
         margin: 2px 0 !important;
-        /* box-shadow: 0px 0px 5px rgb(0 0 0 / 6%); */
         border: 1px solid rgb(0 0 0 / 6%);
     }
     .correct_feedback.correct_answer {
@@ -838,10 +849,10 @@ label.container-check.form-check-label span.checkmark{
         margin: 0 !important;
     }
     .border_false{
-        border: 1px solid rgb(255 0 0 / 50%)
+        border: 1px solid rgb(255 0 0 / 50%) !important;
     }
     .border_true{
-        border: 1px solid rgb(0 123 0 / 50%)
+        border: 1px solid rgb(0 123 0 / 50%) !important;
     }
     .preview-exam{
         overflow: revert;
@@ -985,6 +996,28 @@ label.container-check.form-check-label span.checkmark{
     font-size: 30px;
     color: #fff;
 }
+.excerpt-text{
+    margin: 0 30px;
+}
+p.lead.light.card {
+    padding: 30px;
+}
+.last-question .navigation{
+    margin: 0 0 20px !important;
+}
+.buttons.last-question {
+    display: block !important;
+    text-align: center;
+}
+.q-number div .line{
+    display: none;
+}
+.dash-header.course_info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 @media screen and (min-width:800px){
     .custom-model-main:before {
@@ -996,6 +1029,7 @@ label.container-check.form-check-label span.checkmark{
         height: 100%;
     }
 }
+
 @media screen and (max-width:799px){
     .custom-model-inner{margin-top: 45px;}
 }
@@ -1034,6 +1068,9 @@ label.container-check.form-check-label span.checkmark{
         padding: 0 !important;
         margin: 0 !important;
     }
+    .q-card{
+        padding: 10px 20% 20px 20px !important;
+    }
 }
 
 @media (max-width: 1025.5px) {
@@ -1057,6 +1094,9 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (min-width: 767.5px) and (max-width: 991.5px) {
+    .q-card{
+        padding: 10px 18% 20px 20px !important;
+    }
     .col-lg-8.mb-5.mb-lg-0.course_info {
         margin: 0 !important;
     }
@@ -1077,9 +1117,9 @@ label.container-check.form-check-label span.checkmark{
     .m-bottom{
         margin-bottom: 24px;;
     }
-    .dash-header.d-flex.justify-content-between.align-items-center{
+    /* .dash-header.d-flex.justify-content-between.align-items-center{
         display: block !important;
-    }
+    } */
     .parent_next_prev {
         justify-content: start;
     }
@@ -1096,7 +1136,7 @@ label.container-check.form-check-label span.checkmark{
     .dash-header.d-flex.justify-content-between ol.breadcrumb{
         margin-bottom: 10px;
     }
-    .card.p-5.user-info {
+    .user-info {
         padding: 25px !important;
     }
     p.time-remaining{
@@ -1106,8 +1146,8 @@ label.container-check.form-check-label span.checkmark{
 }
 
 @media (max-width: 767.5px) {
-    .dashboard{
-        margin: 0;
+    p.time-remaining svg{
+        width: 25px;
     }
     .title_file_old{
         position: fixed;
@@ -1119,7 +1159,65 @@ label.container-check.form-check-label span.checkmark{
         z-index: 99999;
         display: flex;
         align-items: center;
-        height: 64px;
+        height: 60px;
+    }
+    br{
+        display: none;
+    }
+    nav#sidebarMenu ul li a{
+        padding: 10px 20px;
+    }
+    .q-card label{
+        box-shadow: none;
+        border: 1px solid gainsboro;
+        margin-bottom: 5px;
+        padding: 10px 10px 10px 40px;
+    }
+    /* .q-card label .radio-mark{
+        top: 9px;
+    } */
+    .exam_page .card{
+        padding: 15px !important;
+    }
+    .exam_page .dash-header , .review.dash-header {
+        justify-content: end !important;
+    }
+    .details .d-flex{
+        padding: 12px;
+    }
+    .details .mt-4{
+        margin: 0 !important;
+    }
+    .card.quiz {
+        padding: 0.5rem !important;
+        text-align: center;
+    }
+    .dash-header h1{
+        font-size: 20px;
+    }
+    h4.card-title {
+        margin: 0;
+    }
+    .excerpt-text{
+        margin: 0 15px;
+    }
+    p.lead.light.card , .card.activity{
+        margin: 0 !important;
+        padding: 15px !important;
+    }
+    .row{
+        margin: 0;
+    }
+    .row.home-section>div{
+        margin-bottom: 10px !important;
+        margin-top: 0 !important;
+        padding: 0;
+    }
+    .container-fluid{
+        padding: 0 !important;
+    }
+    .course-header{
+        padding: 0 !important;
     }
     .mobile-none{
         display: none !important;
@@ -1168,7 +1266,7 @@ label.container-check.form-check-label span.checkmark{
     .person-wrapper{
         display: none;
     }
-    .home-section .card h3.mb-5 {
+    .home-section .card h3 {
         margin: 0 !important;
         margin-bottom: 25px !important;
     }
@@ -1182,15 +1280,12 @@ label.container-check.form-check-label span.checkmark{
     .display-none{
         display: none !important;
     }
-    .row.m-0.home-section {
-        margin-top: 11px !important;
-    }
     .m-bottom{
-        margin-bottom: 24px;;
+        margin-bottom: 10px;
     }
     .parent_next_prev {
         justify-content: start;
-        margin-top: 15px;
+        margin: 10px 0;
     }
     .text-center.course-image {
         min-height: max-content !important;
@@ -1202,7 +1297,9 @@ label.container-check.form-check-label span.checkmark{
         padding: 15px;
     }
     p.time-remaining{
-        margin: 15px 0;
+        margin: 10px 0;
+        font-size: 14px;
+        padding: 0 5px;
     }
     .certificate-page {
         padding: 50px 0;
@@ -1217,14 +1314,14 @@ label.container-check.form-check-label span.checkmark{
     .dash-header{
         display: none;
     }
-    .mx-md-4.course_info {
-        padding: 0;
+    .course_info, .course_header {
+        padding: 0 !important;
     }
     main#main-vue-element {
         padding: 0 !important;
     }
-    .card.p-5.user-info {
-        padding: 20px !important;
+    .user-info{
+        padding: 0.5rem !important;
     }
     .signin .signin-form {
         width: 85% !important;
@@ -1270,6 +1367,7 @@ label.container-check.form-check-label span.checkmark{
     .q-card h3 {
         font-size: 17px;
         font-weight: 700;
+        margin: 5px 0;
     }
     .card.px-5.py-3.mb-2 {
         margin-top: 10px;
@@ -1289,14 +1387,45 @@ label.container-check.form-check-label span.checkmark{
     .file .card{
         flex-direction: column-reverse !important;
     }
+    .review.dash-header {
+        padding: 20px 0.5rem;
+    }
+    .q-number{
+        padding: 3px 10px;
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 130px;
+        font-family: 'Lato Bold';
+    }
+    .q-number small{
+        line-height: 2 !important;
+        font-size: 12px;
+        position: relative;
+        font-family: 'Lato Bold';
+    }
+    .q-number div{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+    }
+    .q-number div .line {
+        display: block;
+        /* width: 1px; */
+        height: 24px;
+        border-left: 1px solid #fff;
+    }
+    .q-card{
+        padding: 30px 10px !important;
+    }
 }
 
 @media (max-width: 767.5px) and (min-width: 576.5px){
     .container {
         max-width: 100% !important;
-    }
-    .review.dash-header {
-        padding: 20px 12px;
     }
     .review.dash-header .parent_next_prev {
         margin: 0 !important;
@@ -1335,7 +1464,7 @@ label.container-check.form-check-label span.checkmark{
         border-bottom: none;
     }
     .home-section .card {
-        padding: 15px 10px !important;
+        padding: 15px !important;
     }
     .home-section .courses {
         padding: 0 !important;
@@ -1343,25 +1472,15 @@ label.container-check.form-check-label span.checkmark{
     .lms-header ul.navbar-nav > li{
         margin-right: 20px;
     }
-    .review.dash-header {
-        padding: 20px 12px;
-    }
     .review.dash-header button.next_prev{
         margin: 0 5px 0 0 !important
-    }
-    .q-number small{
-        line-height: 2rem !important;
-    }
-    .q-number{
-        padding: 10px;
-        font-size: 14px;
     }
     .q-card h3{
         font-size: 16px;
     }
-    .card.p-5 , .card.px-5.py-4 {
+    /* .card.p-5 , .card.px-5.py-4 {
         padding: 15px !important;
-    }
+    } */
     table a.green.form-control {
         display: inline;
     }
@@ -1373,9 +1492,6 @@ label.container-check.form-check-label span.checkmark{
     }
     .calendar .sideb table th{
         font-size: 12px;
-    }
-    .lead{
-        display: none;
     }
     .card iframe {
         height: 200px;

@@ -150,4 +150,5 @@ return [
     'Registered'=>'Registered',
     'True'=>'Register',
     'False'=>'Not Register',
+    'add_user'=>'Add User',
 ];
