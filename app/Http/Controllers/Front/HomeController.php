@@ -64,7 +64,6 @@ class HomeController extends Controller
 
 
 
-
         // Get last video (user watched)
         $last_video = $this->getLastVideoForUser();
 
