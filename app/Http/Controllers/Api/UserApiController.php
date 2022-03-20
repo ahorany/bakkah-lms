@@ -20,7 +20,7 @@ class UserApiController
         $session_date_from = '';
         $session_date_to = '';
         if ($request->session_id){
-            $session_id        = "required|exists:sessions,ref_id";
+            $session_id        = "required";
             $session_date_from =  "required|date";
             $session_date_to   = "required|date";
         }
@@ -42,91 +42,96 @@ class UserApiController
     }
 
     public function add_users(Request $request){
-   try{
-        $validator = $this->validation($request);
-         if($validator->fails()){
-             return response()->json([
-                 'status' => 'fail',
-                 'code' => 403 ,
-                 'message' => "Validation Error" ,
-                 'errors' => $validator->errors()
-             ],403 );
-         }
+       try{
+            $validator = $this->validation($request);
+             if($validator->fails()){
+                 return response()->json([
+                     'status' => 'fail',
+                     'code' => 403 ,
+                     'message' => "Validation Error" ,
+                     'errors' => $validator->errors()
+                 ],403 );
+             }
 
 
-        if ($request->paid_status == 'paid'){
-            $paid_status = 503;
-        }else{
-            $paid_status = 504;
-        }
-
-      $user = $this->addUser($request);
-
-      $course = Course::select('id','ref_id')->where('ref_id',$request->course_id)->first();
-
-      $courseRegistration =  CourseRegistration::where( 'user_id',$user->id)
-            ->where('course_id',$course->id)
-            ->first();
-
-        if ($request->session_id){
-            $session = Session::firstOrCreate([
-                'ref_id' => $request->session_id,
-                'course_id' => $course->id,
-            ],[
-                'ref_id' => $request->session_id,
-                'date_from' => $request->session_date_from,
-                'date_to' => $request->session_date_to,
-                'course_id' => $course->id,
-                'branche_id' => 1,
-            ]);
-
-
-            if(!$courseRegistration){
-                $courseRegistration =  CourseRegistration::create([
-                    'user_id'     => $user->id,
-                    'course_id'   => $course->id,
-                    'role_id'     => 2,
-                    'expire_date' => $request->expire_date,
-                    'paid_status' => $paid_status,
-                    'session_id'  => $session->id,
-                ]);
+            if ($request->paid_status == 'paid'){
+                $paid_status = 503;
             }else{
-                $courseRegistration->update([
-                    'user_id'     => $user->id,
-                    'course_id'   => $course->id,
-                    'expire_date' => $request->expire_date,
-                    'paid_status' => $paid_status,
-                    'session_id'  => $session->id,
-                ]);
+                $paid_status = 504;
             }
 
-        }else{
-            if(!$courseRegistration){
-                $courseRegistration = CourseRegistration::create([
-                    'user_id'     => $user->id,
-                    'course_id'   => $course->id,
-                    'role_id'     => 2,
-                    'expire_date' => $request->expire_date,
-                    'paid_status' => $paid_status,
+          $user = $this->addUser($request);
+
+          $course = Course::select('id','ref_id')->where('ref_id',$request->course_id)->first();
+
+          $courseRegistration =  CourseRegistration::where( 'user_id',$user->id)
+                ->where('course_id',$course->id)
+                ->first();
+
+            if ($request->session_id){
+                $session = Session::firstOrCreate([
+                    'ref_id' => $request->session_id,
+                    'course_id' => $course->id,
+                ],[
+                    'date_from' => $request->session_date_from,
+                    'date_to' => $request->session_date_to,
+                    'branche_id' => 1,
                 ]);
+
+
+                if(!$courseRegistration){
+                    $courseRegistration =  CourseRegistration::create([
+                        'user_id'     => $user->id,
+                        'course_id'   => $course->id,
+                        'role_id'     => 2,
+                        'expire_date' => $request->expire_date,
+                        'paid_status' => $paid_status,
+                        'session_id'  => $session->id,
+                    ]);
+                }else{
+                    $courseRegistration->update([
+                        'user_id'     => $user->id,
+                        'course_id'   => $course->id,
+                        'expire_date' => $request->expire_date,
+                        'paid_status' => $paid_status,
+                        'session_id'  => $session->id,
+                    ]);
+                }
+
+            }else{
+                if(!$courseRegistration){
+                    $courseRegistration = CourseRegistration::create([
+                        'user_id'     => $user->id,
+                        'course_id'   => $course->id,
+                        'role_id'     => 2,
+                        'expire_date' => $request->expire_date,
+                        'paid_status' => $paid_status,
+                    ]);
+                }else{
+                    $courseRegistration->update([
+                        'user_id'     => $user->id,
+                        'course_id'   => $course->id,
+                        'expire_date' => $request->expire_date,
+                        'paid_status' => $paid_status,
+                    ]);
+                }
             }
-        }
 
 
-        return response()->json([
-            'status' => 'success',
-            'code' => 200,
-            'message' => "Add User Successfully" ,
-            'data' => ["user" => $courseRegistration]
-        ],200);
+            return response()->json([
+                'status' => 'success',
+                'code' => 200,
+                'message' => "Add User Successfully" ,
+                'data' => ["user" => $courseRegistration]
+            ],200);
 
-       }catch (\Exception $exception){
-           return response()->json([
-               'status' => 'fail',
-               'code' => 500 ,
-               'message' => "Server Error" ,
-           ],500 );
-       }
+           }catch (\Exception $exception){
+               return response()->json([
+                   'status' => 'fail',
+                   'code' => 500 ,
+                   'message' => "Server Error" ,
+               ],500 );
+           }
   }
 
 
