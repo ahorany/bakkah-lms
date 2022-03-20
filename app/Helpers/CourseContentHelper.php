@@ -76,7 +76,7 @@ class CourseContentHelper
     public static function nextAndPreviouseQuery($course_id,$content_id,$content_order,$content_parent_id,$section_order){
 
         $sql = "SELECT contents.id , sections.id as section_id , contents.order,sections.order as section_order , contents.title,contents.post_type FROM `contents`
-        INNER JOIN contents AS sections ON contents.parent_id = sections.id
+        INNER JOIN contents AS sections ON contents.parent_id = sections.id AND sections.deleted_at IS NULL
         WHERE contents.course_id =  $course_id
         AND contents.id !=  $content_id
         AND contents.deleted_at IS NULL
@@ -93,7 +93,7 @@ class CourseContentHelper
 
 
         $sql = "SELECT contents.id , contents.title,contents.post_type FROM `contents`
-                       INNER JOIN contents AS sections ON contents.parent_id = sections.id
+                       INNER JOIN contents AS sections ON contents.parent_id = sections.id AND sections.deleted_at IS NULL
                        WHERE contents.course_id = $course_id
                        AND contents.id !=  $content_id
                        AND contents.deleted_at IS NULL
