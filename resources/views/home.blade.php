@@ -166,7 +166,7 @@
                                     <span class="badge my-1 {{ $type[$course->training_option_id] }}">{{ \App\Helpers\Lang::TransTitle($course->training_option_name) }}</span>
 
                                     @if($course->training_option_id != 11 && $course->session_id)
-                                      <div class="my-1">{{\App\Helpers\Date::IsoFormat($course->date_from) .' | '.\App\Helpers\Date::IsoFormat($course->date_to)}}</div>
+                                      <div class="my-1 date">{{\App\Helpers\Date::IsoFormat($course->date_from) .' | '.\App\Helpers\Date::IsoFormat($course->date_to)}}</div>
                                     @endif
 
                                     <div class="progress">
