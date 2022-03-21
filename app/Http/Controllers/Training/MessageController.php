@@ -13,6 +13,7 @@ use App\Mail\MessageMail;
 use App\Mail\ReplyMail;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\Group;
+use App\Models\Training\Like;
 use App\Models\Training\Message;
 use App\Models\Training\RecipientMessage;
 use App\Models\Training\Reply;
@@ -37,7 +38,7 @@ class MessageController extends Controller
     public function inbox(){
 
         $condition = " WHERE";
-        $user_auth_role = \auth()->user()->roles()->first()->id ;
+        $user_auth_role = \auth()->user()->roles()->first()->id;
         $is_inbox = true;
         $post_type = 'course';
         $trash = GetTrash();
@@ -60,8 +61,8 @@ class MessageController extends Controller
         if($user_auth_role == 2){
             $condition = "AND";
             $sql .= " INNER JOIN courses_registration ON courses_registration.course_id = courses.id
-            WHERE courses_registration.user_id=".auth()->id()."
-            and courses_registration.role_id=2";
+            WHERE courses_registration.user_id=".auth()->id()."";
+            // and courses_registration.role_id=2
         }
 
         if($user_auth_role == 3) {
@@ -73,12 +74,13 @@ class MessageController extends Controller
             and courses_registration.role_id=3";
         }
 
-            // search
+        // search
         if (request()->has('search')){
             $search = request()->search;
             $sql .= " ".$condition." messages.title  LIKE '%$search%'";
         }
 
+        $type = "inbox";
         if (request()->has('type')){
             $type = request()->type;
             if ($type == "sent"){
@@ -91,7 +93,7 @@ class MessageController extends Controller
         $sql .= " GROUP BY messages.id";
 
         $messages = DB::select(DB::raw($sql));
-        return view('training.messages.index',compact('messages','is_inbox'));
+        return view('training.messages.index',compact('type', 'messages', 'is_inbox'));
     }
 
 
@@ -160,6 +162,7 @@ class MessageController extends Controller
     }
 
     public function replyMessage($id){
+
         $message = Message::where('id',$id)->with(['course.course','user','replies.user'])->first();
         if(!$message || !$message->course){
             abort(404);
@@ -211,7 +214,72 @@ class MessageController extends Controller
                 Mail::to($message->user->email)->send(new ReplyMail($reply->id , $message->user->id , $message->course_id));
             }
         }
-        return redirect()->route('user.messages.inbox');
+        return back();
+        // return redirect()->route('user.messages.inbox');
     }
 
+    public function like(){
+
+        $operation = request()->operation??'liked_it';
+
+        $table_name = request()->table_name??'messages';
+        $likeable_type = Constant::where('slug', $table_name)->pluck('id')->first();
+        $operation_type = Constant::where('post_type', $operation)->pluck('id')->first();
+
+        $query = DB::table($table_name)
+        ->where('id', request()->likeable_id);
+
+        $like = Like::where('likeable_id', request()->likeable_id)
+        ->where('likeable_type', $likeable_type)
+        ->where('operation', $operation_type)
+        ->where('created_by', auth()->id());
+
+        $like_old = $like->first();
+        if(is_null($like_old)){
+
+            $like_old_from_null = Like::where('likeable_id', request()->likeable_id)
+            ->where('likeable_type', $likeable_type)
+            ->where('created_by', auth()->id())
+            ->first();
+
+            Like::updateOrCreate([
+                'likeable_id'=>request()->likeable_id,
+                'likeable_type'=>$likeable_type,
+                'created_by'=>auth()->id(),
+                'updated_by'=>auth()->id(),
+            ], [
+                'operation'=>$operation_type,
+                'is_like'=>1,
+            ]);
+
+            if(is_null($like_old_from_null)){
+                $query->increment($operation);
+            }
+            else{
+
+                if($like_old_from_null->is_like!=0){
+                    $query->decrement(($operation=='liked_it')?'loved_it':'liked_it');
+                }
+                $query->increment($operation);
+            }
+        }
+        else{
+
+            $is_like = 1;
+            if($like_old->is_like==0){
+                $query->increment($operation);
+            }
+            else{
+                $query->decrement($operation);
+                $is_like = 0;
+            }
+
+            $like->update([
+                'is_like'=>$is_like,
+            ]);
+        }
+
+        $like_new = $like->first();
+        return $like_new;
+    }
 }

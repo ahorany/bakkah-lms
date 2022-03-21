@@ -15,4 +15,8 @@ class Reply extends Model
         return $this->belongsTo('App\User','user_id');
     }
 
+    public function likes(){
+        return $this->hasMany('App\Models\Training\Like', 'likeable_id')
+        ->where('likeable_type', 509);
+    }
 }

@@ -17,13 +17,10 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-
 Route::group(['middleware'=>['apiToken'], 'as'=>'api.'], function() {
     Route::post('users/add','\App\Http\Controllers\Api\UserApiController@add_users')->name('users.add');
 
 });
-
-
 
 Route::group([
     'middleware' => 'api',
@@ -31,12 +28,9 @@ Route::group([
     'prefix' => 'auth'
 
 ], function ($router) {
-
     Route::post('signup', 'AuthController@sign');
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-
 });
-

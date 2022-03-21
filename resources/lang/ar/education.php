@@ -25,4 +25,5 @@ return [
     'Materials'=>'Materials',
     'categories'=>'تصنيفات',
     'scorm_Reports'=>'Scorm Reports',
+    'Search'=>'بحث',
 ];

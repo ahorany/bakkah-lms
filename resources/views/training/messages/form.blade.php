@@ -14,6 +14,10 @@
     }
     </style>
     <div class="container">
+        <h1>
+            {{-- <img class="svg-icons svg-icons-h" src="http://127.0.0.1:8000/icons/send-msg.svg" alt="{{__('education.Sent Items')}}"> --}}
+            {{__('education.Sent Items')}}
+        </h1>
         <div class="card px-5 py-3 mb-2" style="direction: rtl;">
             <a href="{{route('user.messages.inbox')}}" class="cyan dflex">
                 Back
