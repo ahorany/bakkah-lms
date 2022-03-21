@@ -12,7 +12,6 @@ class AsideComposer
         $user_pages = Infrastructure::all();
         $view->with('user_pages', $user_pages);
 
-
         $user_sidebar_courses = User::whereId(auth()->id())->with(['courses'])->first();
         $view->with('user_sidebar_courses', $user_sidebar_courses);
 	}

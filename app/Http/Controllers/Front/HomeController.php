@@ -62,8 +62,6 @@ class HomeController extends Controller
                 WHERE users.id = ".\auth()->id()." AND users.deleted_at IS NULL";
        $courses = DB::select($sql);
 
-
-
         // Get last video (user watched)
         $last_video = $this->getLastVideoForUser();
 
