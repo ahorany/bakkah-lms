@@ -167,6 +167,8 @@
 
                                     @if($course->training_option_id != 11 && $course->session_id)
                                       <div class="my-1 date">{{\App\Helpers\Date::IsoFormat($course->date_from) .' | '.\App\Helpers\Date::IsoFormat($course->date_to)}}</div>
+                                    @else
+                                      <div class="my-1 date"></div>
                                     @endif
 
                                     <div class="progress">
