@@ -1156,6 +1156,12 @@ p.lead.light.card {
 }
 
 @media (max-width: 767.5px) {
+    div#message-app {
+        padding: 0;
+    }
+    #message-app .card.p-5 {
+        padding: 20px 0 !important;
+    }
     p.time-remaining svg{
         width: 25px;
     }

@@ -31,6 +31,16 @@
         letter-spacing: .1em;
         text-transform: uppercase;
         }
+        .title{
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .title h1{
+            margin: 0;
+            font-size: 22px;
+            font-family: 'Lato Bold';
+        }
 
         @media screen and (max-width: 900px) {
             table {
@@ -78,12 +88,6 @@
             <div class="col-md-12 col-md-12 mb-2">
                 <div class="card px-5 py-4">
                     <div class="row">
-                        <h1>
-                            {{[
-                                'sent'=>__('education.Sent Items'),
-                                'inbox'=>__('education.Inbox'),
-                            ][$type]??__('education.Inbox')}}
-                        </h1>
                         <div class="col-md-12">
                             <form action="{{route('user.messages.inbox')}}" method="GET">
                                 <div class="form-group">
@@ -114,6 +118,15 @@
 
             <div class="col-md-12 mb-2">
                 <div class="card p-5">
+                    <div class="title">
+                        <img class="svg-icons-h" width="25px" src="{{CustomAsset('icons/inbox.svg')}}" alt="{{__('education.Inbox')}}"/>
+                        <h1>
+                            {{[
+                                'sent'=>__('education.Sent Items'),
+                                'inbox'=>__('education.Inbox'),
+                            ][$type]??__('education.Inbox')}}
+                        </h1>
+                    </div>
                     <div class="add_message mb-2">
                         <a href="{{route('user.add_message')}}" class="main-color form-control" style="width: max-content;">
                             <svg width="12px" version="1.1" id="svg_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

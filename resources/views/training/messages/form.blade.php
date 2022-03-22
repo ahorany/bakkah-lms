@@ -7,17 +7,24 @@
 @section('content')
 
     <style>
-    @media (max-width: 767.98px) {
-        .p-5 {
-            padding: 1rem !important;
+        .title{
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
         }
-    }
+        .title h1{
+            margin: 0;
+            font-size: 22px;
+            font-family: 'Lato Bold';
+        }
+        @media (max-width: 767.98px) {
+            .p-5 {
+                padding: 1rem !important;
+            }
+        }
     </style>
     <div class="container">
-        <h1>
-            {{-- <img class="svg-icons svg-icons-h" src="http://127.0.0.1:8000/icons/send-msg.svg" alt="{{__('education.Sent Items')}}"> --}}
-            {{__('education.Sent Items')}}
-        </h1>
+
         <div class="card px-5 py-3 mb-2" style="direction: rtl;">
             <a href="{{route('user.messages.inbox')}}" class="cyan dflex">
                 Back
@@ -30,6 +37,12 @@
         <div class="card p-5">
             <form action="{{route('user.send_message')}}" method="GET">
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="title">
+                            <img class="svg-icons-h" width="25px" src="{{CustomAsset('icons/sent-item.svg')}}" alt="{{__('education.Sent Items')}}"/>
+                            <h1>{{__('education.Sent Items')}}</h1>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="form-group mb-3">
                             <label for="course">Choose Course:</label>

@@ -22,7 +22,7 @@
             border-left: 2px solid #eaeaea;
             border-bottom: 1px solid #eaeaea;
             margin-top: 10px;
-            margin-left: 5px !important;
+            /* margin-left: 5px !important; */
         }
         .head {
             display: flex;
@@ -50,58 +50,51 @@
         <div class="card p-5">
             <form action="{{route('user.add_reply')}}" method="GET">
                 <div class="row">
-                    {{-- <div class="col-md-3">
-                        <h2>{{$user->trans_name}}</h2>
-                    </div> --}}
                     <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="message-panel mb-2" style="background-color: #ffffff;">
-                                    <strong>{{__('education.Course')}}: </strong>
-                                    {{ \App\Helpers\Lang::TransTitle($message->course->course->title??null )}}
+                        <div class="message-panel mb-2" style="background-color: #ffffff;">
+                            <strong>{{__('education.Course')}}: </strong>
+                            {{ \App\Helpers\Lang::TransTitle($message->course->course->title??null )}}
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="message-panel">
+                                <div class="head mb-2">
+                                    <h4 class="username">
+                                        {{$message->user->trans_name??null}}
+                                    </h4>
+                                    <small style="line-height: 1.5rem; color:#999999;">{{$message->created_at}}</small>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <div class="message-panel">
-                                        <div class="head mb-2">
-                                            <h4 class="username">
-                                                {{$message->user->trans_name??null}}
-                                            </h4>
-                                            <small style="line-height: 1.5rem; color:#999999;">{{$message->created_at}}</small>
-                                        </div>
-                                        <hr>
-                                        <div class="pb-2">
-                                            {{-- <span><strong>{{__('education.Subject')}}: </strong></span> --}}
-                                            <strong>{{$message->title??null}}</strong>
-                                        </div>
-                                        <div class="pt-2 pb-2">
-                                            {{-- <span><strong>{{__('education.msg_description')}}: </strong></span> --}}
-                                            <label>{{$message->description??null}}</label>
-                                        </div>
-                                        @include('training.messages.like_reply_btn', [
-                                            'table_name'=>'messages',
-                                            'eloquent'=>$message,
-                                        ])
-                                    </div>
-                                    <br>
+                                <hr>
+                                <div class="pb-2">
+                                    {{-- <span><strong>{{__('education.Subject')}}: </strong></span> --}}
+                                    <strong>{{$message->title??null}}</strong>
+                                </div>
+                                <div class="pt-2 pb-2">
+                                    {{-- <span><strong>{{__('education.msg_description')}}: </strong></span> --}}
+                                    <label>{{$message->description??null}}</label>
+                                </div>
+                                @include('training.messages.like_reply_btn', [
+                                    'table_name'=>'messages',
+                                    'eloquent'=>$message,
+                                ])
+                            </div>
+                            <br>
 
-                                    @include('training.messages.replies', compact('message'))
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group mb-3">
-                                    <input type="hidden" name="message_id" value="{{$message->id}}">
-                                    <label for="reply"><strong>{{__('education.Reply')}}: </strong></label>
-                                    <textarea type="text" placeholder="Reply" name="reply" id="reply" class="form-control" style="height: 150px;"></textarea>
-                                    @error('reply')
-                                        <span style="color: red;">{{$message}}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group mb-3">
-                                    <input type="submit" class="main-color form-control" value="Submit">
-                                </div>
-                            </div>
+                            @include('training.messages.replies', compact('message'))
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group mb-3">
+                            <input type="hidden" name="message_id" value="{{$message->id}}">
+                            <label for="reply"><strong>{{__('education.Reply')}}: </strong></label>
+                            <textarea type="text" placeholder="Reply" name="reply" id="reply" class="form-control" style="height: 150px;"></textarea>
+                            @error('reply')
+                                <span style="color: red;">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group mb-3">
+                            <input type="submit" class="main-color form-control" value="Submit">
                         </div>
                     </div>
                 </div>
