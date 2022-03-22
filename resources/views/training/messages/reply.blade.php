@@ -131,9 +131,6 @@ var vrm = new Vue({
                 }
             })
             .then(response => {
-                self.liked_it[response.data['likeable_id']]='btn-primary';
-                // self.loved_it='btn-primary';
-                console.log(response.data);
             })
             .catch(e => {
                 console.log(e)
