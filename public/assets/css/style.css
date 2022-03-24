@@ -64,16 +64,10 @@ body {
 .sidebar {
   position: fixed;
   top: 0;
-  /* rtl:raw: */
-  /* right: 0; */
-
   bottom: 0;
-  /* rtl:remove */
   left: 0;
   z-index: 100;
-  /* Behind the navbar */
-  padding: 70px 0 0;
-  /* Height of navbar */
+  padding: 65px 0 0;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
   overflow-y: auto;
 }
@@ -87,8 +81,9 @@ body {
 }
 
 .navbar .navbar-toggler {
-  top: 0.25rem;
+  top: 50%;
   right: 1rem;
+  transform: translateY(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -232,15 +227,16 @@ body {
 
 /* Style the indicator (dot/circle) */
 .custom-radio .radio-mark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid #06ae60;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50% , -50%) !important;
+    width: 5px;
+    height: 10px;
+    border: solid #06ae60;
+    border-width: 0 3px 3px 0;
+  /* -webkit-transform: rotate(45deg); */
+  /* -ms-transform: rotate(45deg); */
+  /* transform: rotate(45deg); */
 }
 
 /**/
@@ -472,14 +468,19 @@ img {
   padding: 40px !important;
 }
 
-.navbar {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+header.navbar {
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    height: 60px;
+    width: 100%;
+}
+main#main-vue-element {
+    margin-top: 60px;
 }
 
 .sticky-top {
@@ -578,7 +579,7 @@ img {
 
 /* Sidebar with header */
 .person-wrapper {
-  margin: 20px 30px;
+  margin: 20px;
   text-align: center;
 }
 
@@ -594,15 +595,21 @@ nav#sidebarMenu ul {
   margin: 0;
 }
 
+nav#sidebarMenu ul.nav {
+  padding: 0 0 30px;
+}
+
+
 nav#sidebarMenu ul li a {
-  padding: 15px 30px;
+  padding: 15px 20px;
   /* display: inline-block; */
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   color: #000;
   /* border-left: 10px solid transparent; */
   transition: all 0.15s ease-in-out;
+  text-transform: capitalize;
 }
 nav#sidebarMenu ul li a p {
   display: inline-block;
@@ -660,8 +667,9 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 
 .lms-header a.navbar-brand img {
   filter: brightness(0) invert(1);
-  width: 35px;
-  margin: 0 5px 0 0;
+  width: 40px;
+  height: auto;
+  margin: 0 5px;
 }
 
 .lms-header ul.navbar-nav {
@@ -698,7 +706,7 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 }
 
 .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role {
-    width: 120px;
+    width: 150px;
     background: #f7f7f7;
     border-radius: 3px;
     justify-content: space-around;
@@ -865,19 +873,20 @@ p.time-remaining svg {
 }
 
 .q-card label {
-  padding: 8px 45px;
+  padding: 8px 40px;
   box-shadow: 0 6px 6px rgb(0 0 0 / 10%);
   border-radius: 8px;
 }
 
 .q-card label .radio-mark {
-  top: 5px;
+  top: 50%;
+  transform: translateY(-50%);
   left: 10px;
   border: 1px solid #ccc;
   background: transparent;
   box-sizing: unset;
-  width: 21px;
-  height: 21px;
+  width: 20px;
+  height: 20px;
 }
 
 .q-card label .radio-mark::after {
@@ -1497,8 +1506,8 @@ ul.badges li svg {
 @media (max-width: 767.98px) {
   .sidebar {
     /* top: 4rem; */
-    width: 90%;
-    left: -90%;
+    width: 100%;
+    left: -100%;
     transition: all 0.2s ease;
   }
 

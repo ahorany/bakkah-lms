@@ -10,6 +10,7 @@ use App\Models\Admin\Partner;
 use App\Models\Training\Branche;
 use App\Models\Training\Course;
 use App\Constant;
+use App\Models\Training\Role;
 use Illuminate\Database\Eloquent\Builder;
 
 class BrancheController extends Controller
@@ -17,6 +18,7 @@ class BrancheController extends Controller
     public function __construct()
     {
         $this->middleware('permission:training.branches.index');
+
 
         Active::$namespace = 'training';
         Active::$folder = 'branches';
@@ -44,7 +46,20 @@ class BrancheController extends Controller
         $validated['active'] = request()->has('active')?1:0;
 
         $branche= Branche::create($validated);
-        \App\Models\SEO\Seo::seo($branche);
+
+
+       $role =  Role::create(['name' => 'Admin','guard_name' => 'web','role_type_id' => 510,'branch_id' => $branche->id ,'icon' => 'admin.svg' ]);
+       $permissions = ["11","12","13","14","15","16","17","18","19","20","21","22",
+                       "23","24","25","26","27","28","29","30","31", "36","37" ];
+       $role->syncPermissions($permissions);
+
+
+        $role =  Role::create(['name' => 'Instructor','guard_name' => 'web','role_type_id' => 511,'branch_id' => $branche->id ,'icon' => 'instructor.svg' ]);
+        $role->syncPermissions(["21"]);
+
+        Role::create(['name' => 'trainee','guard_name' => 'web','role_type_id' => 512,'branch_id' => $branche->id ,'icon' => 'trainee.svg' ]);
+
+
         return Active::Inserted($branche->name);
     }
 
@@ -58,7 +73,6 @@ class BrancheController extends Controller
         $validated['active'] = request()->has('active')?1:0;
         Branche::find($branch->id)->update($validated);
         Branche::UploadFile($branch, ['method'=>'update']);
-        \App\Models\SEO\Seo::seo($branch);
         return Active::Updated($branch->name);
     }
 

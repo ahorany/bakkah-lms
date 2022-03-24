@@ -20,7 +20,11 @@ class Message extends Model
     }
 
     public function replies(){
-        return $this->hasMany('App\Models\Training\Reply','message_id');
+        return $this->hasMany('App\Models\Training\Reply', 'message_id');
     }
 
+    public function likes(){
+        return $this->hasMany('App\Models\Training\Like', 'likeable_id')
+        ->where('likeable_type', 508);
+    }
 }

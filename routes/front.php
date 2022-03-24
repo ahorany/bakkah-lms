@@ -34,6 +34,7 @@ Route::group([
         Route::get('/certificate', [\App\Http\Controllers\Front\HomeController::class, 'certificate'])->name('certificate');
         Route::get('/congrats', [\App\Http\Controllers\Front\HomeController::class, 'congrats'])->name('congrats');
         Route::get('/change/role/{id}',  [UserProfileController::class, 'change_role'])->name('change.role');
+        Route::get('/change/branch/{id}',  [UserProfileController::class, 'change_branch'])->name('change.branch');
 
         Route::get('/logout',  [UserProfileController::class, 'logout'])->name('logout');
         Route::get('/info', [UserProfileController::class, 'info'])->name('info');
@@ -69,17 +70,11 @@ Route::group([
         Route::get('/reply_message/{id}', [\App\Http\Controllers\Training\MessageController::class,'replyMessage'])->name('reply_message');
         Route::get('/add_reply', [\App\Http\Controllers\Training\MessageController::class,'addReply'])->name('add_reply');
         Route::get('/search_subject', [\App\Http\Controllers\Training\MessageController::class,'searchSubject'])->name('search_subject');
-
-
-
+        Route::get('/like', [\App\Http\Controllers\Training\MessageController::class, 'like'])->name('like');
 
 // Zoom Test
 //        Route::get('zoom/join', [UserProfileController::class, 'join_zoom'])->name('join_zoom');
 //        Route::post('zoom/add/join', [UserProfileController::class, 'add_join_zoom'])->name('add.join_zoom');
 //        Route::get('zoom/meeting', [UserProfileController::class, 'meeting'])->name('meeting');
-
-
     });
 });
-
-

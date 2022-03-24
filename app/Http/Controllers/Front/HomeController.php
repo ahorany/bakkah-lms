@@ -48,11 +48,19 @@ class HomeController extends Controller
         session()->put('Infrastructure_id',-1);
 
         // Get all user courses registration
-        $courses =  User::where('id',\auth()->id())->with(['courses' => function($q){
-            return $q->with(['training_option' , 'upload' => function($q){
-                return $q->where('post_type','image');
-            }]);
-        }])->first();
+        $sql = "SELECT courses.id , courses.title , courses.training_option_id,constants.name as training_option_name ,sessions.id as session_id,
+                       sessions.date_from,sessions.date_to,uploads.file,uploads.title as upload_title,uploads.excerpt,
+                       courses_registration.paid_status,courses_registration.progress
+                FROM users
+                INNER JOIN courses_registration ON courses_registration.user_id = users.id
+                INNER JOIN courses  ON courses_registration.course_id = courses.id AND courses.deleted_at IS NULL
+                LEFT  JOIN sessions ON sessions.id = courses_registration.session_id AND sessions.deleted_at IS NULL
+                LEFT  JOIN constants ON constants.id = courses.training_option_id AND constants.deleted_at IS NULL
+                INNER JOIN uploads ON  uploads.uploadable_type = 'App\\\Models\\\Training\\\Course'
+                                   AND uploads.uploadable_id = courses.id
+                                   AND uploads.deleted_at IS NULL
+                WHERE users.id = ".\auth()->id()." AND users.deleted_at IS NULL";
+       $courses = DB::select($sql);
 
         // Get last video (user watched)
         $last_video = $this->getLastVideoForUser();

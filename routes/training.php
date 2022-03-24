@@ -11,6 +11,8 @@ Route::group([
            Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.users.index'], function(){
                Route::resource('users', 'UserController');
                Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
+               Route::get('/get/user/data', 'UserController@getUserData')->name('getUserData');
+
                Route::get('/usersReportOverview', 'ReportController@usersReportOverview')->name('usersReportOverview');
                Route::get('/usersReportCourse', 'ReportController@usersReportCourse')->name('usersReportCourse');
                Route::get('/usersReportTest', 'ReportController@usersReportTest')->name('usersReportTest');
@@ -23,6 +25,11 @@ Route::group([
                 Route::patch('/roles/{role}/restore', 'RoleController@restore')->name('roles.restore');
             });
 
+
+            Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.sessions.index'], function(){
+                Route::resource('sessions', 'SessionController');
+                Route::patch('/sessions/{session}/restore', 'SessionController@restore')->name('sessions.restore');
+            });
 
 
          Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.courses.index'], function(){
@@ -44,7 +51,6 @@ Route::group([
 
 
 
-
             Route::get('/units', 'UnitController@index')->name('units');
             Route::get('/delete_unit', 'UnitController@delete_unit')->name('delete_unit');
             Route::post('/add_unit', 'UnitController@add_unit')->name('add_unit');
@@ -60,8 +66,6 @@ Route::group([
             Route::post('/search_user_course', 'CourseUserController@search_user_course')->name('search_user_course');
             Route::post('/add_users_course', 'CourseUserController@add_users_course')->name('add_users_course');
             Route::post('/course_users/delete', 'CourseUserController@delete_user_course')->name('delete_user_course');
-            Route::post('/course_users/update', 'CourseUserController@update_user_expire_date')->name('update_user_expire_date');
-            Route::post('/update_user_is_free', 'CourseUserController@update_user_is_free')->name('update_user_is_free');
 
 
 
@@ -156,6 +160,11 @@ Route::group([
         Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.branches.index'], function(){
             Route::resource('branches', 'BrancheController');
             Route::patch('/branches/{branche}/restore', 'BrancheController@restore')->name('branches.restore');
+
+//            Route::get('/branche_users', 'BrancheController@branche_users')->name('group_users');
+//            Route::post('/search_user_branches', 'BrancheController@search_user_branches')->name('search_user_branche');
+//            Route::post('/add_users_branches', 'BrancheController@add_users_branches')->name('add_users_branche');
+//            Route::post('/branches_users/delete', 'BrancheController@delete_user_branche')->name('delete_user_branche');
         });
 
 

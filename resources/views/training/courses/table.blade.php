@@ -18,10 +18,10 @@ use App\Models\Training\CourseRegistration;
         <tr>
             <th class="">{{__('admin.index')}}</th>
             <th class="">{{__('admin.name')}}</th>
+            <th class="">{{__('admin.delivery_methods')}}</th>
             <th class="">{{__('admin.course_code')}}</th>
             <th class="">{{__('admin.category')}}</th>
             <th class="">{{__('admin.course_pdus')}}</th>
-            <th class="">{{__('admin.delivery_methods')}}</th>
             <th class="">{{__('admin.assigned_learners')}}</th>
             <th class="">{{__('admin.completed_learners')}}</th>
             <th class="">{{__('admin.Registered')}}</th>
@@ -49,6 +49,21 @@ use App\Models\Training\CourseRegistration;
         <td>
             <span style="display: block;" class="title">{{$post->trans_title ?? null}}</span>
         </td>
+
+       <td>
+            <span class="td-title">
+                @php
+                    $type = [
+                        '11' => 'self-paced',
+                        '13' => 'live-online',
+                        '353' => 'exam-simulators',
+                        '383' => 'instructor-led',
+                    ];
+                @endphp
+              <span class="badge {{ $type[$post->deliveryMethod->id] }}">{{$post->deliveryMethod->trans_name}}</span>
+            </span>
+       </td>
+
         <td>
             <span class="td-title">{{$post->code ?? null}}</span>
         </td>
@@ -57,9 +72,6 @@ use App\Models\Training\CourseRegistration;
         </td>
         <td>
             <span class="td-title">{{$post->PDUs ?? null}}</span>
-        </td>
-        <td>
-            <span class="td-title">{{$post->deliveryMethod->trans_name}}</span>
         </td>
         <td>
             <?php
@@ -109,11 +121,11 @@ use App\Models\Training\CourseRegistration;
 {{--              @endif--}}
 
               {{-- <a class="cyan" href="{{CustomRoute('user.course_details', $post->id) }}?preview=true">Preview</a> --}}
+              @if( (!request()->has('trash') && request()->trash != "trash") || request()->trash == "" )
 
               <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="cyan mt-1" >
                 {{-- <i class="fa fa-pencil"></i> --}}
                 Report</a>
-              @if(!request()->has('trash') && request()->trash != "trash")
                 <div class="my-1">
                     @include('training.courses.contents.header',['course_id' => $post->id, 'green' =>true , 'courses_home' =>true ])
                     {{-- <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="green">Contents</a>

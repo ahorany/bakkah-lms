@@ -57,7 +57,11 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-12">
                         <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
-                            <i class="fa fa-plus"></i> {{__('admin.add_question')}}
+                            <i class="fa fa-plus"></i> Add multiple choice question
+                        </button>
+
+                        <button type="button" @click="OpenModal('fill_gap')" class="btn-sm group_buttons mb-1" style="width: max-content;">
+                            <i class="fa fa-plus"></i> Add fill gap question
                         </button>
                     </div>
                     <div class="col-lg-9 col-md-8 col-12">
@@ -122,8 +126,11 @@
 
 
                         <div class="q-number">
-                            Q@{{index+1}}/@{{content.questions.length}}
-                            <small>(@{{question.mark}} Marks)</small>
+                            <div>
+                                <span>Q@{{index+1}}/@{{content.questions.length}}</span>
+                                <span class="line"></span>
+                                <small>(@{{question.mark}} Marks)</small>
+                            </div>
                         </div>
                         <h3 style="padding-right: 15%;" v-html="question.title"></h3>
 
@@ -154,8 +161,8 @@
 
         <div class="col-xl-3 col-lg-4">
             <div class="card h-100 p-30 navigation_preview">
-                <h4>Quiz Navigation</h4>
-                <ol class="answers">
+                <h2>Quiz Navigation</h2>
+                <ol class="answers quiz">
                     @foreach($content->questions as $question)
                         <li>
                             <a href="#question_{{$loop->iteration}}">
@@ -214,7 +221,7 @@
                                 </div> --}}
                             </div>
 
-                            <div class="mt-4">
+                            <div v-if="model_type != 'fill_gap'" class="mt-4">
                                 <div class="mb-2" v-show="'answers' in errors">
                                     <span style="color: red;font-size: 13px">@{{ errors.answers }}</span>
                                 </div>
@@ -250,6 +257,7 @@
                 </div>
             </div>
         </div>
+
 
     </div>
 

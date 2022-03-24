@@ -26,6 +26,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('layouts.sidebar', AsideComposer::class);
+        view()->composer('layouts.app', AsideComposer::class);
+        view()->composer('layouts.crm.master', AsideComposer::class);
     }
 }

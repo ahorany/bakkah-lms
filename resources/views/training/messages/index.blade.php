@@ -31,6 +31,16 @@
         letter-spacing: .1em;
         text-transform: uppercase;
         }
+        .title{
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .title h1{
+            margin: 0;
+            font-size: 22px;
+            font-family: 'Lato Bold';
+        }
 
         @media screen and (max-width: 900px) {
             table {
@@ -81,7 +91,7 @@
                         <div class="col-md-12">
                             <form action="{{route('user.messages.inbox')}}" method="GET">
                                 <div class="form-group">
-                                    <label for="search">Search:</label>
+                                    <label for="search">{{__('education.Search')}}:</label>
                                     <input type="text" name="search" placeholder="Search Subject" id="search" class="form-control mb-2">
                                 </div>
                                 <div class="form-group">
@@ -96,7 +106,7 @@
                                             c-0.01-0.15-0.06-0.3-0.1-0.45C3.35,25.86,3.35,24.78,3.35,23.71z M39.36,25.28c-0.07-8.07-6.55-14.51-14.55-14.48
                                             c-7.97,0.03-14.5,6.42-14.48,14.55c0.02,8.09,6.6,14.53,14.62,14.47C32.91,39.77,39.43,33.19,39.36,25.28z"/>
                                         </svg>
-                                        Search
+                                        {{__('education.Search')}}
                                     </button>
                                     <input type="reset" name="reset" value="Clear" class="form-control cyan" style="width: max-content;">
                                 </div>
@@ -108,6 +118,15 @@
 
             <div class="col-md-12 mb-2">
                 <div class="card p-5">
+                    <div class="title">
+                        <img class="svg-icons-h" width="25px" src="{{CustomAsset('icons/inbox.svg')}}" alt="{{__('education.Inbox')}}"/>
+                        <h1>
+                            {{[
+                                'sent'=>__('education.Sent Items'),
+                                'inbox'=>__('education.Inbox'),
+                            ][$type]??__('education.Inbox')}}
+                        </h1>
+                    </div>
                     <div class="add_message mb-2">
                         <a href="{{route('user.add_message')}}" class="main-color form-control" style="width: max-content;">
                             <svg width="12px" version="1.1" id="svg_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -124,23 +143,23 @@
                                 c0,5.48,0,10.96,0,16.44c0,0.2,0,0.4,0,0.64c0.28,0,0.48,0,0.69,0c5.55,0,11.1,0,16.65,0c1.38,0,2.53,0.53,3.47,1.53
                                 c0.65,0.69,0.97,1.55,1.22,2.44C57.28,29.79,57.28,30.28,57.28,30.77z"/>
                             </svg>
-                            Send Message</a>
+                            {{__('education.Add New')}}</a>
                     </div>
 
                     <table class="result_review">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Course</th>
+                            <th>{{__('education.Course')}}</th>
                             @if($is_inbox)
-                            <th>Sender</th>
+                            <th>{{__('education.Sender')}}</th>
                             @else
-                            <th>Recipients</th>
+                            <th>{{__('education.Recipients')}}</th>
                             @endif
-                            <th>Subject</th>
-                            <th>Date</th>
-                            <th>Reply count</th>
-                            <th>Reply</th>
+                            <th>{{__('education.Subject')}}</th>
+                            <th>{{__('education.Date')}}</th>
+                            <th>{{__('education.Reply count')}}</th>
+                            <th>{{__('education.Reply')}}</th>
                         </tr>
 {{--                            <tr>--}}
 {{--                                <td>#</td>--}}

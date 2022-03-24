@@ -389,10 +389,14 @@ class CertificateControllerH extends Controller
         // $course = Course::find(request()->course_registration_id);
         $course_registration = CourseRegistration::leftJoin('sessions', function($query){
             $query->on('sessions.id','=','courses_registration.session_id')
-            ->whereNotNull('courses_registration.session_id');
+            ->whereNotNull('courses_registration.session_id')
+            ->whereNull('sessions.deleted_at');
         })
+        ->select('courses_registration.*'
+        , 'sessions.date_from', 'sessions.date_to', 'sessions.ref_id')
         ->find(request()->course_registration_id);
         // dd($course_registration);
+        // dd(request()->course_registration_id);
 
         $course = Course::find($course_registration->course_id);
         $body = $this->certificate_body(['certificate_id'=>$course->certificate_id,

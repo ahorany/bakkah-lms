@@ -23,9 +23,9 @@ class ReplyMail extends Mailable
 
     public function build()
     {
-        $message_content = Reply::where('id',$this->reply_id)->with(['user'])->first();
-        $recieve = User::where('id',$this->recieve_id)->first();
-        $course = Course::where('id',$this->course_id)->first();
+        $message_content = Reply::where('id', $this->reply_id)->with(['user'])->first();
+        $recieve = User::where('id', $this->recieve_id)->first();
+        $course = Course::where('id', $this->course_id)->first();
 
         return $this->view('training.mails.reply-mail',compact('recieve','message_content','course'));
     }

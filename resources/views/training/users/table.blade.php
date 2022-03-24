@@ -42,11 +42,11 @@ use App\Models\Training\CourseRegistration;
       <tbody>
       <?php $btn_roles = null; ?>
           @can('users.edit')
-              <?php  $btn_roles[] = 'Edit'; ?>
+              <?php $btn_roles[] = 'Edit'; ?>
           @endcan
 
           @can('users.delete')
-              <?php   $btn_roles[] = 'Destroy' ?>
+              <?php $btn_roles[] = 'Destroy' ?>
           @endcan
 
           <?php
@@ -57,7 +57,6 @@ use App\Models\Training\CourseRegistration;
               4 => 'badge-blue',
           ];
           ?>
-
           @foreach($users as $post)
             <tr data-id="{{$post->id}}">
                 <td>
@@ -78,7 +77,7 @@ use App\Models\Training\CourseRegistration;
 
                 <td class="px-1">
                     @foreach($post->roles as $role)
-                        <span class="td-title {{ $roles_class[$role->id] }} ">{{$role->name}}</span>
+                        <span class="td-title {{$roles_class[$role->id]??'badge-pink'}} ">{{$role->name}}</span>
                     @endforeach
                 </td>
                 <td class="px-1">
@@ -87,8 +86,6 @@ use App\Models\Training\CourseRegistration;
                 <td class="px-1">
                     <span class="td-title">{{$post->last_login??'Not logged in'}}</span>
                 </td>
-
-
                 <td class="px-1">
                     <?php
                         $assigned_courses = CourseRegistration::where('user_id',$post->id)->count();

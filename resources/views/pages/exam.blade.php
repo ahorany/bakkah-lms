@@ -49,6 +49,9 @@
             width: 50%;
             margin: 0 !important;
         }
+        .exam_page .card .card-body * {
+            margin: 0 0 10px;
+        }
 
         @media screen and (max-width: 1150px) {
             table {
@@ -76,18 +79,27 @@
                 margin-bottom: .625em;
             }
 
+            table tr td span {
+                font-size: 14px;
+            }
+
             table td {
                 border-bottom: 1px solid #ddd;
                 display: block;
                 font-size: .8em;
                 text-align: left;
+                display: flex;
+                align-items: center;
+                /* justify-content: space-between; */
             }
 
             table td::before {
                 content: attr(data-label);
-                float: left;
+                text-align: left;
                 font-weight: bold;
                 text-transform: uppercase;
+                min-width: 120px;
+                margin-right: 25px;
             }
 
             table td:last-child {
@@ -118,7 +130,7 @@
 
     ?>
 
-<div class="card p-5 user-info exam_page">
+    <div class="card p-5 user-info exam_page">
 
         <div class="dash-header d-flex justify-content-between align-items-center">
             @include('pages.templates.breadcrumb', [
@@ -127,6 +139,9 @@
                 'section_title' => $exam->section->title,
                 'content_title'=>$exam->title,
             ])
+            <div class="d-flex mobile-show" style="align-items: center;">
+                <h3 class="m-0 title_file_old">{{ $exam->course->trans_title }}</h3>
+            </div>
             <div class="parent_next_prev">
                 @if($previous)
                     <button title="{{$previous->title}}" class="next_prev" onclick="location.href =  '{{$previous_url}}'">
@@ -147,9 +162,10 @@
                 @endif
             </div>
         </div>
+
         <br>
 
-        <div class="row mx-0">
+        <div class="row home-section">
             @if(session()->has('status'))
                 <div class="col-md-12">
                     <div class="error-notice">
@@ -163,9 +179,9 @@
             <?php $users_exams_count = count($exam->exam->users_exams) ?>
 
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 mb-3">
-                <div class="card h-100" style="box-shadow: none; border: 1px solid gainsboro;">
-                    <div class="card-body" style="padding: 15px 30px;">
-                        <h4>Exam title : {{$exam->title}}</h4>
+                <div class="card h-100" style="padding: 15px 30px; box-shadow: none; border: 1px solid gainsboro;">
+                    <div class="card-body">
+                        <h4 class="card-title">Exam title : {{$exam->title}}</h4>
                         <p>Start date : {{$exam->exam->start_date}}</p>
                         <p>End date : {!!$exam->exam->end_date??'<span style="font-size:19px">∞</span>'!!}</p>
                         <p>Duration : {!! $exam->exam->duration == 0 ? '<span style="font-size:19px">∞</span>' : $exam->exam->duration . ' minutes' !!} </p>
@@ -210,7 +226,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-5">
+            <div class="col-12">
                 <table class="table">
                     <thead>
                     <tr>
@@ -218,7 +234,7 @@
                         <th scope="col">Your Start Time</th>
                         <th scope="col">Your End Time</th>
                         <th scope="col">Review</th>
-                        <th scope="col">Details</th>
+                        <th scope="col" style="width: 18%;">Details</th>
                         <th scope="col">Time taken</th>
                         <th scope="col">Pass Mark (%)</th>
                         <th scope="col">Status</th>
@@ -228,36 +244,59 @@
                     </thead>
                     <tbody>
                     @foreach($exam->exam->users_exams as $attempt)
-                        <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$attempt->time}}</td>
-                            <td >{{$attempt->end_attempt??'-----'}}</td>
-                            <?php
-
+                        <?php
                             $date1 = new DateTime( $attempt->time);
                             $date2 = new DateTime($attempt->end_attempt);
                             $interval = $date1->diff($date2);
                             $diff = '';
 
                             $diff =  $interval->h . " hours, " . $interval->i." minutes, ".$interval->s." seconds ";
-                            ?>
-
-                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge badge-info p-2">Review</a>@else ---- @endif</td>
-                            <td>@if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())<a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge badge-info p-2">View Result Details</a>@else ---- @endif</td>
-                            <td>{{$diff??'0 seconds'}}</td>
-                            <td class="text-bold">{{($exam->exam->pass_mark??0).'%'}}</td>
-
-                            <td class="text-bold">
-                        @if( (($exam->exam->exam_mark * $exam->exam->pass_mark) / 100) <= $attempt->mark)
-                            <span class="badge-green">Pass</span>
-                        @else
-                            <span class="badge-red">Fail</span>
-                        @endif
+                        ?>
+                        <tr>
+                            <td data-label="# Attempt">
+                                <span>{{$loop->iteration}}</span>
                             </td>
-
-
-                            <td>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</td>
-                            <td>
+                            <td data-label="Your Start Time">
+                                <span>{{$attempt->time}}</span>
+                            </td>
+                            <td data-label="Your End Time">
+                                <span>{{$attempt->end_attempt??'-----'}}</span>
+                            </td>
+                            <td data-label="Review">
+                                @if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())
+                                    <span>
+                                        <a href="{{CustomRoute('user.review.exam',$attempt->id)}}" class="badge-blue p-2">Review</a>
+                                    </span>
+                                @else
+                                    <span>----</span>
+                                @endif
+                            </td>
+                            <td data-label="Details">
+                                @if($attempt->status == 1 && $exam->exam->end_date <= \Carbon\Carbon::now())
+                                    <span>
+                                        <a href="{{CustomRoute('user.attempt_details.exam',$attempt->id)}}" class="badge-red p-2">View Result Details</a>
+                                    </span>
+                                @else
+                                    <span>---- </span>
+                                @endif
+                            </td>
+                            <td data-label="Time taken">
+                                <span>{{$diff??'0 seconds'}}</span>
+                            </td>
+                            <td data-label="Pass Mark (%)" class="text-bold">
+                                <span>{{($exam->exam->pass_mark??0).'%'}}</span>
+                            </td>
+                            <td data-label="Status" class="text-bold">
+                                @if( (($exam->exam->exam_mark * $exam->exam->pass_mark) / 100) <= $attempt->mark)
+                                    <span class="badge-green">Pass</span>
+                                @else
+                                    <span class="badge-red">Fail</span>
+                                @endif
+                            </td>
+                            <td data-label="Mark">
+                                <span>{{($attempt->mark??'-') . ' / ' . $exam->exam->exam_mark}}</span>
+                            </td>
+                            <td data-label="Progress">
                                 @if($exam->exam->exam_mark && $exam->exam->exam_mark != 0)
                                     <?php  $progress = ($attempt->mark / $exam->exam->exam_mark) * 100; $progress = round($progress,2)   ?>
                                     <span>{{($progress > 0) ? number_format($progress, 0, '.', ',').'%'  : '0%' }}</span>

@@ -11,218 +11,240 @@
 
 @section('content')
     <?php
-    $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
-    $next_url = $NextPrevNavigation['next_url'];
-    $previous_url = $NextPrevNavigation['previous_url'];
+        $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
+        $next_url = $NextPrevNavigation['next_url'];
+        $previous_url = $NextPrevNavigation['previous_url'];
     ?>
-    @if($popup_compelte_status)
-        <div class="custom-model-main custom-model-main-cert model-open">
-            <div class="custom-model-inner">
-                <div class="custom-model-wrap">
-                    <div class="close-btn">×</div>
-                    <div class="pop-up-content-wrap">
-                        <div class="congrats">
-                            <div class="text-center course-image">
-                                <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
-                                    <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
-                                </div>
-                                <div>
-                                    <h1>Congratulations!</h1>
-                                    <p>
-                                        You have successfully completed the course. Can’t wait for to hear the good news about you getting certified! <br><br>
-                                        Good Luck in your exam
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-overlay"></div>
-        </div>
-    @endif
 
-
-
-    @if($popup_gift_status)
-        <div class="custom-model-main custom-model-main-gift model-open">
-            <div class="custom-model-inner">
-                <div class="custom-model-wrap">
-                    <div class="close-btn">×</div>
-                    <div class="pop-up-content-wrap">
-                        <div class="congrats">
-                            <div class="text-center course-image">
-                                <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
-                                    <img src="{{CustomAsset('icons/open.svg')}}" height="auto" width="30%">
-                                </div>
-                                <div>
-                                    <h1>Woohoo, Congrats!</h1>
-                                    <p>
-                                        We’re glad you made it. Enjoy your gift now!
-                                    </p>
+    <div class="user-info">
+        @if($popup_compelte_status)
+            <div class="custom-model-main custom-model-main-cert model-open">
+                <div class="custom-model-inner">
+                    <div class="custom-model-wrap">
+                        <div class="close-btn">×</div>
+                        <div class="pop-up-content-wrap">
+                            <div class="congrats">
+                                <div class="text-center course-image">
+                                    <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
+                                        <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
+                                    </div>
+                                    <div>
+                                        <h1>Congratulations!</h1>
+                                        <p>
+                                            You have successfully completed the course. Can’t wait for to hear the good news about you getting certified! <br><br>
+                                            Good Luck in your exam
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="bg-overlay"></div>
             </div>
-            <div class="bg-overlay"></div>
-        </div>
-    @endif
-
-    <div class="dash-header course_info">
-        @include('pages.templates.breadcrumb', [
-            'course_id'=>$content->course->id,
-            'course_title'=>$content->course->trans_title,
-            'section_title' => $content->section->title,
-            'content_title'=>$content->title,
-        ])
-        <br>
-        {{-- <h1 style="text-transform:capitalize;">{{ $content->course->trans_title }}</h1> --}}
-    </div>
-    <h3 style="text-transform:capitalize; display: none;" class="title_file_new">{{ $content->title }}</h3>
-
-    <div class="row mx-0">
-        @if(session()->has('status'))
-            {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
-            <div class="container">
-                <div class="row">
-                    <div class="error-notice">
-                        <div class="oaerror danger">
-                              {{-- <strong>Error</strong>- --}}
-                              {{session()->get('msg')}}
-                        </div>
-                    </div>
-                </div>
-             </div>
         @endif
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <div class="d-flex">
-                    <h3 class="m-0 title_file_old" style="text-transform:capitalize;margin-right: 10px!important;">{{ $content->title }}</h3>
-                    <span class="flag @if($flag != 0 ) flag-mark @endif" style="width: 25px;cursor: pointer" onclick="saveFlag({{$content->id}})">
-                        @if(file_exists(public_path('icons/file_flag_old.svg')))
-                            {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
-                        @else
-                            Flag
-                        @endif
-                   </span>
+
+        @if($popup_gift_status)
+            <div class="custom-model-main custom-model-main-gift model-open">
+                <div class="custom-model-inner">
+                    <div class="custom-model-wrap">
+                        <div class="close-btn">×</div>
+                        <div class="pop-up-content-wrap">
+                            <div class="congrats">
+                                <div class="text-center course-image">
+                                    <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
+                                        <img src="{{CustomAsset('icons/open.svg')}}" height="auto" width="30%">
+                                    </div>
+                                    <div>
+                                        <h1>Woohoo, Congrats!</h1>
+                                        <p>
+                                            We’re glad you made it. Enjoy your gift now!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-
-                @include('Html.next-prev-navigation', [
-                    'next'=>$next,
-                    'previous'=>$previous,
-                    'previous_url'=>$previous_url,
-                ])
+                <div class="bg-overlay"></div>
             </div>
-            <div class="card-body">
-                @isset($content->upload->file)
-                    @if($content->post_type == 'video' )
-                        <video  playsinline controls class="video w-100" preload="metadata"  controlsList="nodownload" id="player">
-                            <source id="update_video_source" src="" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    @elseif($content->post_type == 'audio' )
-                        <audio controls>
-                            <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
-                        </audio>
-                    @elseif($content->post_type == 'presentation' )
-                        @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
-                           <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
-                        @elseif($content->upload->extension == 'pdf' )
+        @endif
 
-                            {{--<style>
-                            #google-pdf-viewer {
-                                border: 1px solid #cccccc;
-                                width: 100%;
-                                height: 600px;
-                            }
-                            @media (max-width: 767.98px) {
+        <div class="dash-header course_info">
+            @include('pages.templates.breadcrumb', [
+                'course_id'=>$content->course->id,
+                'course_title'=>$content->course->trans_title,
+                'section_title' => $content->section->title,
+                'content_title'=>$content->title,
+            ])
+            <br>
+            {{-- <h1 style="text-transform:capitalize;">{{ $content->course->trans_title }}</h1> --}}
+        </div>
+        <h3 style="text-transform:capitalize; display: none;" class="title_file_new">{{ $content->title }}</h3>
 
-                                #google-pdf-viewer {
-                                    height: 554px;
-                                }
-                            }
-                            .output {
-                                background: #eee;
-                            }
-                            </style>
-                            <iframe id="google-pdf-viewer" style="" title="{{$content->title}}" sandbox="allow-scripts allow-same-origin allow-orientation-lock allow-top-navigation"
-                            src='https://docs.google.com/viewer?&amp;embedded=true&url={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
-                            --}}
-                            {{-- <embed width="100%" height="600px" id="update_file_source" src='' > --}}
-                            {{-- <iframe width="100%" height="600px" id="update_file_source" src='' style="border: 1px solid #eaeaea;" ></iframe> --}}
-                            {{-- @include('Html.PDF.container', ['file'=>$content->upload->file??null]) --}}
-                            {{-- @include('Html.PDF.pdf', ['file'=>$content->upload->file??null]) --}}
-                            {{-- <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script> --}}
-                            @include('Html.PDF.adobe', [
-                                'file'=>CustomAsset('upload/files/presentations/'.$content->upload->file),
-                                'title'=>$content->title??null,
-                            ])
-                        @elseif($content->upload->extension == 'xls' )
-                            <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
-                        @else
-                            <iframe style="" width="100%" height="600px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
-                        @endif
-
-                    @elseif($content->post_type == 'scorm' )
-                        @if($content->upload->extension == 'pdf' )
-                            <iframe width="100%" height="600px" id="update_file_source" src='' ></iframe>
-                        @else
-                            <?php
-                            $SCOInstanceID = ScormId($content->id);
-                            ?>
-                            <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&content_id={{$content->id}}&course_id={{$content->course->id}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
-                            @if(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html') ))
-                                <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
-                            @elseif(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html') ))
-                                 <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+        <div class="row mx-0 file">
+            @if(session()->has('status'))
+                {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
+                <div class="container">
+                    <div class="row">
+                        <div class="error-notice">
+                            <div class="oaerror danger">
+                                {{-- <strong>Error</strong>- --}}
+                                {{session()->get('msg')}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="d-flex">
+                        <h3 class="m-0 title_file_old" style="text-transform:capitalize;margin-right: 10px!important;">{{ $content->title }}</h3>
+                        <span class="flag @if($flag != 0 ) flag-mark @endif" style="width: 25px;cursor: pointer" onclick="saveFlag({{$content->id}})">
+                            @if(file_exists(public_path('icons/file_flag_old.svg')))
+                                {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
                             @else
-                                <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/index_lms.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
-                           @endif
-
+                                Flag
+                            @endif
+                    </span>
+                        @if($content->downloadable==1)
+                            <?php
+                            $folder_name = '';
+                            switch ($content->post_type){
+                                case 'video': $folder_name = 'videos'; break;
+                                case 'audio': $folder_name = 'audios'; break;
+                                case 'presentation': $folder_name = 'presentations'; break;
+                                default : $folder_name = '';
+                            }
+                            ?>
+                            <a href="{{CustomAsset('upload/files/'.$folder_name.'/'.$content->upload->file)}}" download>
+                                <img style="filter: opacity(1);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
+                            </a>
                         @endif
-                    @else
-                        <iframe style="" width="100%" height="600px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
-                    @endif
-
-                @endisset
-{{--                    <iframe id="update_file_source" style="" width="100%" height="600px"  src='' ></iframe>--}}
+                    </div>
 
 
+                    @include('Html.next-prev-navigation', [
+                        'next'=>$next,
+                        'previous'=>$previous,
+                        'previous_url'=>$previous_url,
+                    ])
+                </div>
+                <div class="card-body">
+                    @isset($content->upload->file)
+                        @if($content->post_type == 'video' )
+                            {{--                        <video  playsinline controls class="video w-100" preload="metadata"  controlsList="nodownload" id="player">--}}
+                            {{--                            <source id="update_video_source" src="" type="video/mp4" />--}}
+                            {{--                            Your browser does not support the video tag.--}}
+                            {{--                        </video>--}}
+
+                            <video  playsinline controls class="video w-100" preload="metadata"  controlsList="nodownload" id="player">
+                                <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}" type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+
+                        @elseif($content->post_type == 'audio' )
+                            <audio controls>
+                                <source src="{{CustomAsset('upload/files/audios/'.$content->upload->file)}}">
+                            </audio>
+                        @elseif($content->post_type == 'presentation' )
+                            @if($content->upload->extension == 'jpeg' || $content->upload->extension ==  'png' )
+                                <img  src="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}">
+                            @elseif($content->upload->extension == 'pdf' )
+
+                                {{--<style>
+                                #google-pdf-viewer {
+                                    border: 1px solid #cccccc;
+                                    width: 100%;
+                                    height: 600px;
+                                }
+                                @media (max-width: 767.98px) {
+
+                                    #google-pdf-viewer {
+                                        height: 554px;
+                                    }
+                                }
+                                .output {
+                                    background: #eee;
+                                }
+                                </style>
+                                <iframe id="google-pdf-viewer" style="" title="{{$content->title}}" sandbox="allow-scripts allow-same-origin allow-orientation-lock allow-top-navigation"
+                                src='https://docs.google.com/viewer?&amp;embedded=true&url={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                                --}}
+                                {{-- <embed width="100%" height="600px" id="update_file_source" src='' > --}}
+                                {{-- <iframe width="100%" height="600px" id="update_file_source" src='' style="border: 1px solid #eaeaea;" ></iframe> --}}
+                                {{-- @include('Html.PDF.container', ['file'=>$content->upload->file??null]) --}}
+                                {{-- @include('Html.PDF.pdf', ['file'=>$content->upload->file??null]) --}}
+                                {{-- <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script> --}}
+                                @include('Html.PDF.adobe', [
+                                    'file'=>CustomAsset('upload/files/presentations/'.$content->upload->file),
+                                    'title'=>$content->title??null,
+                                ])
+                            @elseif($content->upload->extension == 'xls' )
+                                <a href='{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}'>{{$content->title}}</a>
+                            @else
+                                <iframe style="" width="100%" height="600px"   src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/presentations/'.$content->upload->file)}}' ></iframe>
+                            @endif
+
+                        @elseif($content->post_type == 'scorm' )
+                            @if($content->upload->extension == 'pdf' )
+                                <iframe width="100%" height="600px" id="update_file_source" src='' ></iframe>
+                            @else
+                                <?php
+                                $SCOInstanceID = ScormId($content->id);
+                                ?>
+                                <iframe src="{{CustomAsset('vsscorm/api.php')}}?SCOInstanceID={{$SCOInstanceID}}&content_id={{$content->id}}&course_id={{$content->course->id}}&user_id={{auth()->user()->id}}" name="API" style="display: none;"></iframe>
+                                @if(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html') ))
+                                    <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/scormdriver/indexAPI.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                                @elseif(file_exists( public_path('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html') ))
+                                    <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/interaction_html5.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                                @else
+                                    <iframe src="{{CustomAsset('upload/files/scorms/'.str_replace('.zip', '', $content->upload->file).'/index_lms.html')}}" name="course" style="display: block; width:100%;height:700px;border:none;"></iframe>
+                                @endif
+
+                            @endif
+                        @else
+                            <iframe style="" width="100%" height="600px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
+                        @endif
+
+                    @endisset
+                    {{--                    <iframe id="update_file_source" style="" width="100%" height="600px"  src='' ></iframe>--}}
+
+
+                </div>
             </div>
         </div>
     </div>
+
 @endsection
 
 @section("script")
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @if($popup_compelte_status || $popup_gift_status)
-    <script>
-        $(".close-btn, .bg-overlay").click(function(){
-            $(".custom-model-main-gift").removeClass('model-open');
-            $(".custom-model-main-cert").removeClass('model-open');
-        });
-    </script>
+        <script>
+            $(".close-btn, .bg-overlay").click(function(){
+                $(".custom-model-main-gift").removeClass('model-open');
+                $(".custom-model-main-cert").removeClass('model-open');
+            });
+        </script>
     @endif
 
-     <script>
-         // save Flag
-         function saveFlag(content_id){
-              $('.flag').toggleClass('flag-mark')
+    <script>
+        // save Flag
+        function saveFlag(content_id){
+            $('.flag').toggleClass('flag-mark')
 
-             $.post("{{route("user.flag_content")}}",
-                 {
-                     content_id : content_id,
-                     _token : "{{csrf_token()}}"
+            $.post("{{route("user.flag_content")}}",
+                {
+                    content_id : content_id,
+                    _token : "{{csrf_token()}}"
 
-                 },
-                 function(data, status){
-                     // console.log(data)
-                 })
-         }
+                },
+                function(data, status){
+                    // console.log(data)
+                })
+        }
 
 
         document.getElementById("demo").innerHTML = "Next";
@@ -234,135 +256,149 @@
         }
         NextBtn();
     </script>
-@isset($content->upload->file)
-    @if($content->post_type == 'video' )
-        <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
-        <script>
-
-        // video player
-        new Plyr('#player');
 
 
-        // Select the source and video tags
-        const player = document.querySelector("#update_video_source");
-        const vid = player.parentElement;
-
-        let video_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code
-        let user_id = {{ auth()->id() }} // It depends on your code too
-
-        fetch('{{url("video")}}/' +
-            video_id +
-            "&&" +
-            user_id,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        ) .then((x) => x.json())
-            .then( (x) => {
-                player.setAttribute("src", x.url+"#t=0.2");
-                vid.load();
-            })
+    @isset($content->upload->file)
+        @if($content->post_type == 'video' )
+            <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
+            <script>
+                // video player
+                new Plyr('#player');
+            </script>
+        @endif
+    @endisset
 
 
-        //////////////
 
-        vid.addEventListener("error", ()=>{
-            fetch(
-                "/video" +
-                '{{url("video")}}/' +
-                video_id +
-                "&&" +
-                user_id,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            )
-                .then((x) => x.json())
-                .then((x) => {
-                    let ct = vid.currentTime;
-                    player.setAttribute("src", x.url+"#t=0.2");
-                    vid.load();
-                    vid.addEventListener(
-                        "loadedmetadata",
-                        function() {
-                            this.currentTime = ct;
-                        },
-                        false
-                    );
-                    vid.play();
-                });
-        });
-    </script>
-    @endif
+    {{--@isset($content->upload->file)--}}
+    {{--    @if($content->post_type == 'video' )--}}
+    {{--        <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>--}}
+    {{--        <script>--}}
 
-    @if( ($content->post_type == 'presentation' || $content->post_type == 'scorm') && $content->upload->extension == 'pdf')
-      <script>
-
-        // Select the source and video tags
-        const iframe_el = document.querySelector("#update_file_source");
-        const file = iframe_el.parentElement;
-
-        let file_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code
-        let user_id = {{ auth()->id() }}        // It depends on your code too
-        var post_type = "{{$content->post_type}}";
-        fetch('{{url("file")}}/' +
-                file_id +
-                "&&" +
-                user_id +
-                "&&" +
-               post_type
-            ,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            ) .then((x) => x.json())
-                .then( (x) => {
-                    iframe_el.setAttribute("src", x.url+"#toolbar=0");
-                })
+    {{--        // video player--}}
+    {{--        new Plyr('#player');--}}
 
 
-        //////////////
+    {{--        // Select the source and video tags--}}
+    {{--        const player = document.querySelector("#update_video_source");--}}
+    {{--        const vid = player.parentElement;--}}
 
-        file.addEventListener("error", ()=>{
-            fetch(
-                "/file" +
-                '{{url("file")}}/' +
-                file_id +
-                "&&" +
-                user_id,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            )
-                .then((x) => x.json())
-                .then((x) => {
-                    let ct = file.currentTime;
-                    iframe_el.setAttribute("src", x.url+"#toolbar=0");
-                    file.addEventListener(
-                        "loadedmetadata",
-                        function() {
-                            this.currentTime = ct;
-                        },
-                        false
-                    );
-                });
-        });
-    </script>
-    @endif
-@endisset
-     <script>
+    {{--        let video_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code--}}
+    {{--        let user_id = {{ auth()->id() }} // It depends on your code too--}}
+
+    {{--        fetch('{{url("video")}}/' +--}}
+    {{--            video_id +--}}
+    {{--            "&&" +--}}
+    {{--            user_id,--}}
+    {{--            {--}}
+    {{--                method: "GET",--}}
+    {{--                headers: {--}}
+    {{--                    "Content-Type": "application/json",--}}
+    {{--                },--}}
+    {{--            }--}}
+    {{--        ) .then((x) => x.json())--}}
+    {{--            .then( (x) => {--}}
+    {{--                player.setAttribute("src", x.url+"#t=0.2");--}}
+    {{--                vid.load();--}}
+    {{--            })--}}
+
+
+    {{--        //////////////--}}
+
+    {{--        vid.addEventListener("error", ()=>{--}}
+    {{--            fetch(--}}
+    {{--                "/video" +--}}
+    {{--                '{{url("video")}}/' +--}}
+    {{--                video_id +--}}
+    {{--                "&&" +--}}
+    {{--                user_id,--}}
+    {{--                {--}}
+    {{--                    method: "GET",--}}
+    {{--                    headers: {--}}
+    {{--                        "Content-Type": "application/json",--}}
+    {{--                    },--}}
+    {{--                }--}}
+    {{--            )--}}
+    {{--                .then((x) => x.json())--}}
+    {{--                .then((x) => {--}}
+    {{--                    let ct = vid.currentTime;--}}
+    {{--                    player.setAttribute("src", x.url+"#t=0.2");--}}
+    {{--                    vid.load();--}}
+    {{--                    vid.addEventListener(--}}
+    {{--                        "loadedmetadata",--}}
+    {{--                        function() {--}}
+    {{--                            this.currentTime = ct;--}}
+    {{--                        },--}}
+    {{--                        false--}}
+    {{--                    );--}}
+    {{--                    vid.play();--}}
+    {{--                });--}}
+    {{--        });--}}
+    {{--    </script>--}}
+    {{--    @endif--}}
+
+    {{--    @if( ($content->post_type == 'presentation' || $content->post_type == 'scorm') && $content->upload->extension == 'pdf')--}}
+    {{--      <script>--}}
+
+    {{--        // Select the source and video tags--}}
+    {{--        const iframe_el = document.querySelector("#update_file_source");--}}
+    {{--        const file = iframe_el.parentElement;--}}
+
+    {{--        let file_id = {{$content->upload->id}};  // Getting the selected video id, it depends on your code--}}
+    {{--        let user_id = {{ auth()->id() }}        // It depends on your code too--}}
+    {{--        var post_type = "{{$content->post_type}}";--}}
+    {{--        fetch('{{url("file")}}/' +--}}
+    {{--                file_id +--}}
+    {{--                "&&" +--}}
+    {{--                user_id +--}}
+    {{--                "&&" +--}}
+    {{--               post_type--}}
+    {{--            ,--}}
+    {{--                {--}}
+    {{--                    method: "GET",--}}
+    {{--                    headers: {--}}
+    {{--                        "Content-Type": "application/json",--}}
+    {{--                    },--}}
+    {{--                }--}}
+    {{--            ) .then((x) => x.json())--}}
+    {{--                .then( (x) => {--}}
+    {{--                    iframe_el.setAttribute("src", x.url+"#toolbar=0");--}}
+    {{--                })--}}
+
+
+    {{--        //////////////--}}
+
+    {{--        file.addEventListener("error", ()=>{--}}
+    {{--            fetch(--}}
+    {{--                "/file" +--}}
+    {{--                '{{url("file")}}/' +--}}
+    {{--                file_id +--}}
+    {{--                "&&" +--}}
+    {{--                user_id,--}}
+    {{--                {--}}
+    {{--                    method: "GET",--}}
+    {{--                    headers: {--}}
+    {{--                        "Content-Type": "application/json",--}}
+    {{--                    },--}}
+    {{--                }--}}
+    {{--            )--}}
+    {{--                .then((x) => x.json())--}}
+    {{--                .then((x) => {--}}
+    {{--                    let ct = file.currentTime;--}}
+    {{--                    iframe_el.setAttribute("src", x.url+"#toolbar=0");--}}
+    {{--                    file.addEventListener(--}}
+    {{--                        "loadedmetadata",--}}
+    {{--                        function() {--}}
+    {{--                            this.currentTime = ct;--}}
+    {{--                        },--}}
+    {{--                        false--}}
+    {{--                    );--}}
+    {{--                });--}}
+    {{--        });--}}
+    {{--    </script>--}}
+    {{--    @endif--}}
+    {{--@endisset--}}
+    <script>
         var enabled = "{{$enabled}}";
 
         let svg_time =
@@ -383,55 +419,55 @@
                 event.preventDefault()
             });
             window.onload = function(){
-            var start_time = "{{$content->time_limit}}";
-            let t = new Date();
-            t = new Date(t.getTime() + (start_time * 1000));
-            var countDownDate = t.getTime();
+                var start_time = "{{$content->time_limit}}";
+                let t = new Date();
+                t = new Date(t.getTime() + (start_time * 1000));
+                var countDownDate = t.getTime();
 
 
-            document.querySelector(".next").insertAdjacentHTML('beforeend', svg_time);
+                document.querySelector(".next").insertAdjacentHTML('beforeend', svg_time);
 
-            var x = setInterval(function() {
-                var now = new Date().getTime();
-                var distance = countDownDate - now;
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                var x = setInterval(function() {
+                    var now = new Date().getTime();
+                    var distance = countDownDate - now;
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                document.getElementById("demo").innerHTML = hours + "h "
-                    + minutes + "m " + seconds + "s ";
+                    document.getElementById("demo").innerHTML = hours + "h "
+                        + minutes + "m " + seconds + "s ";
 
                     // document.getElementById("demo").nextElementSibling.
 
 
 
-                if (distance < 0) {
-                    clearInterval(x);
+                    if (distance < 0) {
+                        clearInterval(x);
 
-                    $.post("{{route("user.update_completed_status")}}",
-                        {
-                            content_id: {{$content->id}},
-                            _token: "{{csrf_token()}}"
+                        $.post("{{route("user.update_completed_status")}}",
+                            {
+                                content_id: {{$content->id}},
+                                _token: "{{csrf_token()}}"
 
-                        },
-                        function(data, status){
-                             console.log(data)
-                        });
+                            },
+                            function(data, status){
+                                console.log(data)
+                            });
 
 
-                    document.getElementById("demo").innerHTML = "Next";
-                    let el = document.getElementById('demo').nextElementSibling.remove();
+                        document.getElementById("demo").innerHTML = "Next";
+                        let el = document.getElementById('demo').nextElementSibling.remove();
 
-                    document.querySelector(".next").insertAdjacentHTML('beforeend', svg_next);
+                        document.querySelector(".next").insertAdjacentHTML('beforeend', svg_next);
 
-                    {{--document.querySelector(".next").addEventListener("click", function(event){
-                        window.location.href = '{{$next_url??null}}'
-                    });--}}
-                    NextBtn();
-                }
+                        {{--document.querySelector(".next").addEventListener("click", function(event){
+                            window.location.href = '{{$next_url??null}}'
+                        });--}}
+                        NextBtn();
+                    }
 
-            }, 1000);
-        }
+                }, 1000);
+            }
 
         }else{
             document.getElementById("demo").innerHTML = "Next";

@@ -14,9 +14,7 @@ class Category extends Model
     use JsonTrait, UserTrait;
 
 
-//    use Searchable;
-
-    protected $guarded = ['en_title', 'ar_title'];
+     protected $guarded = ['en_title', 'ar_title'];
 
 
 

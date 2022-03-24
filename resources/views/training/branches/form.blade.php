@@ -13,22 +13,22 @@
         'row'=>8,
         'attr'=>'maxlength="1000"',
     ])!!}
-    {!!Builder::CheckBox('active', 'active', null, ['col'=>'col-md-6'])!!}
     {!!Builder::DateTime('expire_date', 'expire_date')!!}
+    {!!Builder::CheckBox1('active', 'active', null, ['col'=>'col-md-6'])!!}
 
 @endsection
 
-@section('col3_block')
-    @if(isset($eloquent->id))
-    <div class="card card-default contents">
-        <div class="card-header">{{__('admin.contents')}}</div>
-        <div class="card-body">
-            <a class="green" href="{{route('training.group_users',['group_id' => $eloquent->id])}}">Users</a>
-            <a class="green" href="{{route('training.group_courses',['group_id' => $eloquent->id])}}">Courses</a>
-        </div>
-    </div>
-    @endif
-@endsection
+{{--@section('col3_block')--}}
+{{--    @if(isset($eloquent->id))--}}
+{{--    <div class="card card-default contents">--}}
+{{--        <div class="card-header">{{__('admin.contents')}}</div>--}}
+{{--        <div class="card-body">--}}
+{{--            <a class="green" href="{{route('training.group_users',['group_id' => $eloquent->id])}}">Users</a>--}}
+{{--            <a class="green" href="{{route('training.group_courses',['group_id' => $eloquent->id])}}">Courses</a>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    @endif--}}
+{{--@endsection--}}
 
 {{--@section('seo')--}}
 {{--    @include(ADMIN.'.SEO.form', ['post'=>$eloquent??null])--}}

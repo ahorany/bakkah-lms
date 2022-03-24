@@ -55,6 +55,10 @@ class CourseController extends Controller
             $courses = $courses->where('courses.category_id', request()->category_id);
         }
 
+        if (request()->has('training_option_id') && request()->training_option_id != -1){
+            $courses = $courses->where('courses.training_option_id', request()->training_option_id);
+        }
+
 
         $count = $courses->count();
         $courses = $courses->page();
@@ -65,8 +69,10 @@ class CourseController extends Controller
         $completed_learners = $this->getCompletedLearners();
 
         $categories = Category::get();
+        $delivery_methods = Constant::where('parent_id', 10)->get();
 
-        return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors','completed_learners','categories'));
+//        return $courses;
+        return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors','completed_learners','categories','delivery_methods'));
     }
 
 

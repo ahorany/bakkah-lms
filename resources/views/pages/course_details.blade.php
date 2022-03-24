@@ -71,7 +71,7 @@
 
     ?>
 
-    <div class="course_details">
+    <div class="course_details user-info">
         <div class="dash-header course-header d-flex align-items-md-end flex-column flex-md-row px-3">
             <div class="text-center course-image w-30 mb-4 mt-2 mb-md-0">
                 <?php
@@ -104,6 +104,15 @@
                 {{$course->PDUs}} PDUs
                 </span>
                 @endif
+                @php
+                    $type = [
+                        '11' => 'self-paced',
+                        '13' => 'live-online',
+                        '353' => 'exam-simulators',
+                        '383' => 'instructor-led',
+                    ];
+                @endphp
+                <span class="badge mx-1 {{ $type[$course->deliveryMethod->id] }}">{{$course->deliveryMethod->trans_name}}</span>
                 <div class="rating">
                     <span class="total_rate" v-text="total_rate"></span>
                     <template v-for="item in 5">
@@ -138,8 +147,8 @@
                 </div>
 
                 @if(!Gate::allows('preview-gate'))
-                    <div class="d-flex">
-                        <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px;">
+                    <div class="d-flex" style="flex-wrap: wrap;">
+                        <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px; margin-bottom: 5px;">
                             <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="main-button main-color review" href="#">
                                 {{__('education.Add a Review')}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
@@ -172,11 +181,11 @@
                             </div>
                         </li>
                         @if(!is_null($course->users[0]->pivot->progress))
-                            <a href="{{route("user.resume",$course->id)}}" class="main-button main-color">Resume Course</a>
+                            <a href="{{route("user.resume",$course->id)}}" class="main-button main-color" style="margin-right: 5px; margin-bottom: 5px;">Resume Course</a>
                         @endif
 
                         @if($course->users[0]->pivot->paid_status != 503)
-                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="main-button main-color">Pay Now</a>
+                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="mx-0 px-4 main-color" style="margin-right: 5px; margin-bottom: 5px;">Pay Now</a>
                         @endif
                     </div>
                 @endif
@@ -187,7 +196,7 @@
             <div class="row mx-0 my-4">
                 @if($video)
                     <div class="col-lg-9 col-xl-9 course_info">
-                        <p class="lead light">{{$course->trans_excerpt}}</p>
+                        <p class="lead light card">{{$course->trans_excerpt}}</p>
                     </div>
                     <div class="col-lg-3 col-xl-3">
                         <div class="card h-100 justify-content-center align-items-center p-3 video-btn">
@@ -198,7 +207,7 @@
                     </div>
                 @else
                     <div class="col-lg-12 col-xl-12 course_info">
-                        <p class="lead light card p-5">{{$course->trans_excerpt}}</p>
+                        <p class="lead light card">{{$course->trans_excerpt}}</p>
                     </div>
                 @endif
             </div>
@@ -213,24 +222,12 @@
                     @foreach($course_collect[0] as $key => $section)
                         <div class="card learning-file mb-3">
                             <h3>{{$section->title}}</h3>
-                            <div style="margin: 0px 30px;">{!! $section->details->excerpt??null !!}</div>
+                            <div class="excerpt-text">{!! $section->details->excerpt??null !!}</div>
                             @isset($section->contents)
                                 <ul>
                                     @foreach($section->contents as $k => $content)
                                         <li>
-                                            @if($content->downloadable==1)
-                                                <?php
-                                                $folder_name = '';
-                                                    switch ($content->post_type){
-                                                        case 'video': $folder_name = 'videos'; break;
-                                                        case 'audio': $folder_name = 'audios'; break;
-                                                        case 'presentation': $folder_name = 'presentations'; break;
-                                                        default : $folder_name = '';
-                                                    }
-                                                ?>
-                                                <a href="{{CustomAsset('upload/files/'.$folder_name.'/'.$content->upload->file)}}" download>
-                                                    <img style="filter: opacity(1);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
-                                                    @else
+
                                                         <?php
                                                         $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
                                                         if($content->post_type != 'exam'){
@@ -276,7 +273,6 @@
                                                             >
 
                                                             <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
-                                                            @endif
                                                             <span>
                                                                 {{$content->title}}
 {{--                                                                @if ($content->paid_status == 504)--}}
@@ -396,11 +392,7 @@
                                                 <ul>
                                                     @foreach($section->contents as $k => $content)
                                                         <li>
-                                                            @if($content->downloadable==1)
-                                                                <a href="{{CustomAsset('upload/files/presentations/'.$content->upload->file)}}" download>
-                                                                    <img style="filter: opacity(1);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/download.svg')}}" alt="{{$content->title}}">
-                                                                    @else
-                                                                        <?php
+                                                                      <?php
                                                                         $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
                                                                         if($content->post_type != 'exam'){
                                                                             $url = CustomRoute('user.course_preview', $content->id).$preview_url;
@@ -447,7 +439,7 @@
                                                                                 @endif
                                                                            </span>
                                                                         </a>
-                                                            @endif
+
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -458,8 +450,6 @@
                                 </div>
                             @endforeach
                         @endif
-
-
 
                     @if(count($activities) > 0)
                         @include('Html.activity-card', [

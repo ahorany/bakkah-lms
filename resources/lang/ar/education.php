@@ -23,4 +23,7 @@ return [
     'Add a Review' => "أضف تقييم",
     'Activity Completed'=>'Activity Completed',
     'Materials'=>'Materials',
+    'categories'=>'تصنيفات',
+    'scorm_Reports'=>'Scorm Reports',
+    'Search'=>'بحث',
 ];

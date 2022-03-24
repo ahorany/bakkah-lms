@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\UserMail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Spatie\Permission\Models\Role;
+use App\Models\Training\Role;
 
 class UserController extends Controller
 {
@@ -37,9 +37,15 @@ class UserController extends Controller
         $post_type = GetPostType('users');
         $trash = GetTrash();
 
-        $users = User::with(['upload','roles' => function($q){
-            $q->select('id','name');
-        }]);
+        $users = User::with(['roles' => function($q){
+            $q->select('id','name')->where('branch_id',getCurrentUserBranchData()->branch_id??1);
+        }])->whereHas('roles',function ($q){
+            $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)->where('roles.id','<>',4);
+        })->whereHas('branches',function ($q){
+            $q->where('branch_id',getCurrentUserBranchData()->branch_id??1);
+        });
+
+
 
         if (!is_null(request()->user_search)) {
             $users = $this->SearchUser($users);
@@ -106,14 +112,17 @@ class UserController extends Controller
         return $courses_not_started->count();
     }
 
-
 /////////////////////////////////  Create User   ///////////////////////////////////////////////
 
     public function create()
     {
         $post_type = GetPostType('users');
         $genders = Constant::where('parent_id', 42)->get();
-        $roles = Role::select('id','name')->get();
+        $current_user_branch =  getCurrentUserBranchData();
+        $roles = Role::select('id','name')->where(function ($q) use($current_user_branch){
+                                                  $q->where('branch_id',$current_user_branch->branch_id);
+                                              })->where('id','<>',4)->get();
+
 
         return Active::Create([
             'eloquent' => new User(),
@@ -126,17 +135,30 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $post_type = GetPostType('users');
-
         $validated = $request->validated();
-        $validated['name'] = null;
         $validated['created_by'] = auth()->user()->id;
         $validated['updated_by'] = auth()->user()->id;
-        $validated['password'] = bcrypt($request->password);
 
 
-        $user = User::create($validated);
+        $user = User::where('email',$request->email)->first();
+        if (!$user){
+            $user = User::create([
+                'email'      => $request->email,
+                'gender_id'  => $request->gender_id,
+                'password'   => $validated['password'],
+                'created_by' => $validated['created_by'],
+                'updated_by' => $validated['updated_by'],
+            ]);
+        }
+
         $user->assignRole([request()->role]);
 
+
+        \DB::table('user_branches')->insert([
+            'branch_id' => getCurrentUserBranchData()->branch_id,
+            'user_id'   => $user->id,
+            'name'      => $request->name,
+        ]);
 
         Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
 
@@ -153,8 +175,14 @@ class UserController extends Controller
     {
         $post_type = GetPostType('users');
         $genders = Constant::where('parent_id', 42)->get();
-        $roles = Role::select('id','name')->get();
-        $role_id = $user->roles()->select('roles.id')->first()->id??-1;
+
+        $current_user_branch =  getCurrentUserBranchData();
+        $roles = Role::select('id','name')->where(function ($q) use($current_user_branch){
+            $q->where('branch_id',$current_user_branch->branch_id);
+        })->where('id','<>',4)->get();
+
+        $role_id = $user->roles()->where('branch_id',$current_user_branch->branch_id)->select('roles.id')->first()->id??-1;
+
 
         return Active::Edit([
             'eloquent' => $user,
@@ -214,5 +242,19 @@ class UserController extends Controller
         return Active::Restored($user->trans_name);
     }
 
+
+
+    public function getUserData()
+    {
+       $user_branch =  \DB::select("SELECT users.email , users.gender_id ,users.mobile, user_branches.*  FROM user_branches
+                                    RIGHT JOIN users ON users.id = user_branches.user_id
+                                    WHERE  users.email = '".\request()->email."'
+                                    LIMIT 1");
+
+        if (isset($user_branch[0])){
+            return response()->json(['status' => true,'data' => $user_branch[0] ]);
+        }
+        return response()->json(['status' => false]);
+    }
 
 } // end class
