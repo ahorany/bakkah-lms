@@ -13,9 +13,5 @@ class Category extends Model
     use TrashTrait;
     use JsonTrait, UserTrait;
 
-
-     protected $guarded = ['en_title', 'ar_title'];
-
-
-
+    protected $guarded = ['en_title', 'ar_title'];
 }
