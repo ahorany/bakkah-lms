@@ -13,11 +13,5 @@ class Category extends Model
     use TrashTrait;
     use JsonTrait, UserTrait;
 
-
-//    use Searchable;
-
     protected $guarded = ['en_title', 'ar_title'];
-
-
-
 }

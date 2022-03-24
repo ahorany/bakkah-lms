@@ -11,13 +11,30 @@ define('COMPLETED_PROGRESS', 100);
 
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
+function is_super_admin(){
+    if(session()->get('is_super_admin')){
+        return true;
+    }
+    return false;
+}
+
+
+function getCurrentUserBranchData(){
+    if (session()->has('user_branch')){
+        return session('user_branch');
+    }
+    return  null;
+}
 
 
 function is_dynamic_certificate()
 {
     return 1;//1 OR 0
 }
+
 
 
 

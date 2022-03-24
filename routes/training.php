@@ -11,6 +11,8 @@ Route::group([
            Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.users.index'], function(){
                Route::resource('users', 'UserController');
                Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
+               Route::get('/get/user/data', 'UserController@getUserData')->name('getUserData');
+
                Route::get('/usersReportOverview', 'ReportController@usersReportOverview')->name('usersReportOverview');
                Route::get('/usersReportCourse', 'ReportController@usersReportCourse')->name('usersReportCourse');
                Route::get('/usersReportTest', 'ReportController@usersReportTest')->name('usersReportTest');
@@ -158,6 +160,11 @@ Route::group([
         Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.branches.index'], function(){
             Route::resource('branches', 'BrancheController');
             Route::patch('/branches/{branche}/restore', 'BrancheController@restore')->name('branches.restore');
+
+//            Route::get('/branche_users', 'BrancheController@branche_users')->name('group_users');
+//            Route::post('/search_user_branches', 'BrancheController@search_user_branches')->name('search_user_branche');
+//            Route::post('/add_users_branches', 'BrancheController@add_users_branches')->name('add_users_branche');
+//            Route::post('/branches_users/delete', 'BrancheController@delete_user_branche')->name('delete_user_branche');
         });
 
 

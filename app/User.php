@@ -2,14 +2,17 @@
 
 namespace App;
 
+use App\Models\Training\Branche;
 use App\Models\Training\Content;
 use App\Models\Training\Course;
 use App\Models\Training\Group;
 use App\Traits\ImgTrait;
 use App\Traits\JsonTrait;
 use App\Traits\TrashTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -25,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected $fillable = [
          'name', 'email', 'password','gender_id', 'created_by','updated_by', 'user_type',
-         'job_title', 'company','mobile','lang','bio','last_login'
+         'job_title', 'company','mobile','lang','bio','last_login','is_logout'
     ];
 
     /**
@@ -95,6 +98,35 @@ class User extends Authenticatable implements JWTSubject
 
     public function groups(){
         return $this->belongsToMany(Group::class,'user_groups','user_id','group_id');
+    }
+
+    public function branches(){
+        return $this->belongsToMany(Branche::class,'user_branches','user_id','branch_id')->withPivot('user_id','branch_id','name','bio');
+    }
+
+    /**
+     * A model may have multiple roles.
+     */
+    public function roles(): BelongsToMany
+    {
+        $rel =  $this->morphToMany(
+            config('permission.models.role'),
+            'model',
+            config('permission.table_names.model_has_roles'),
+            config('permission.column_names.model_morph_key'),
+            'role_id'
+        );
+
+
+        $current_user_branch = getCurrentUserBranchData();
+
+        if (!session('is_super_admin')) {
+            $rel = $rel->where(function ($q) use ($current_user_branch){
+                 $q->where('roles.branch_id',$current_user_branch->branch_id);
+            });
+        }
+
+        return $rel;
     }
 
 

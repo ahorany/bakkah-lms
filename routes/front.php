@@ -34,6 +34,7 @@ Route::group([
         Route::get('/certificate', [\App\Http\Controllers\Front\HomeController::class, 'certificate'])->name('certificate');
         Route::get('/congrats', [\App\Http\Controllers\Front\HomeController::class, 'congrats'])->name('congrats');
         Route::get('/change/role/{id}',  [UserProfileController::class, 'change_role'])->name('change.role');
+        Route::get('/change/branch/{id}',  [UserProfileController::class, 'change_branch'])->name('change.branch');
 
         Route::get('/logout',  [UserProfileController::class, 'logout'])->name('logout');
         Route::get('/info', [UserProfileController::class, 'info'])->name('info');

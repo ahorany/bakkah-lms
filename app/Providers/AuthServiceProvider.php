@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,15 +26,21 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
-        Gate::define('preview-gate', function ($user) {
 
-//            dd($user->hasRole(1));
-            if($user->roles->first()->id == 1 && request()->has('preview')){
+        Gate::before(function ($user, $ability) {
+             return is_super_admin();
+        });
+
+
+
+        Gate::define('preview-gate', function ($user) {
+            $branch_role_admin  = \App\Models\Training\Role::where('branch_id',getCurrentUserBranchData()->branch_id??1)
+                ->where('role_type_id',510)->first();
+
+            if($user->roles->first()->id == $branch_role_admin->id && request()->has('preview')){
                 return true;
             }
             return false;
-            // return $user->isAdmin;
         });
     }
 }

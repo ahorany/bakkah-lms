@@ -13,9 +13,20 @@
 
 
 @section('col9')
-    {!! Builder::Input('en_name', 'en_name', null, ['col' => 'col-md-6']) !!}
-    {!! Builder::Input('ar_name', 'ar_name', null, ['col' => 'col-md-6']) !!}
-    {!! Builder::Input('email', 'email', null, ['col' => 'col-md-6']) !!}
+
+    <div class="text-danger text-bold my-3 note" style="display: none">Note: This email already has an account. You only have to fill in these fields to be registered with your branch </div>
+
+
+    <div class="col-md-6 email">
+        <div class="form-group">
+            <label>Email </label>
+            <input maxlength="155" type="text" name="email" class="form-control" placeholder="Email" value="">
+        </div>
+    </div>
+
+
+
+    {!! Builder::Input('name', 'name', null, ['col' => 'col-md-6']) !!}
     {!! Builder::Input('mobile', 'mobile', null, ['col' => 'col-md-6']) !!}
     {!! Builder::Select('gender_id', 'gender_id', $genders->where('parent_id', 42), null, [
         'col' => 'col-md-6',
@@ -41,4 +52,37 @@
     <div class="image">
         @include('Html.image')
     </div>
+@endsection
+
+@section('script')
+<script>
+    window.lock = true
+        $( ".email input" ).blur(function() {
+            // if(window.lock) {
+                window.lock = false;
+
+                $.ajax({
+                    url: "{{route('training.getUserData')}}",
+                    data: {'email' : $(this).val()}
+                }).done(function(response) {
+                    if(response.status){
+                        $( ".name input" ).val(response.data.name)
+                        $( ".mobile input" ).val(response.data.mobile)
+                        $( "select[name='gender_id']" ).val(response.data.gender_id)
+                        $( ".password , .password_confirmation" ).css('display','none')
+                        $( ".note" ).css('display','block')
+                    }else{
+                        $( ".password , .password_confirmation" ).css('display','block')
+                        $( ".note" ).css('display','none')
+
+                    }
+                });
+
+
+
+            // }
+
+        });
+
+</script>
 @endsection
