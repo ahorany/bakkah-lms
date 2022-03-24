@@ -65,11 +65,9 @@
                                 </div>
                                 <hr>
                                 <div class="pb-2">
-                                    {{-- <span><strong>{{__('education.Subject')}}: </strong></span> --}}
                                     <strong>{{$message->title??null}}</strong>
                                 </div>
                                 <div class="pt-2 pb-2">
-                                    {{-- <span><strong>{{__('education.msg_description')}}: </strong></span> --}}
                                     <label>{{$message->description??null}}</label>
                                 </div>
                                 @include('training.messages.like_reply_btn', [
