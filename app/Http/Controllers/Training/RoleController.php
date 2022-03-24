@@ -29,8 +29,10 @@ class RoleController extends Controller
     	$post_type = GetPostType('roles');
     	$trash = GetTrash();
 
-        // ======= Not Trainees ========
-        $roles = Role::where('id', '<>', 3)->with('permissions');
+        $roles = Role::where(function ($q){
+            $q->where('branch_id',getCurrentUserBranchData()->branch_id??1);
+        })->with('permissions');
+
 
         if(!is_null(request()->role_search)) {
             $roles = $roles->where(function($query){
@@ -47,19 +49,30 @@ class RoleController extends Controller
     public function create()
     {
         $role = new Role;
-        $permission = Permission::get();
+        $permission = Permission::where('name','<>','training.branches.index')->get();
         return Active::Create(['eloquent'=>$role, 'object'=>ٌRole::class,'permission' => $permission]);
     }
 
     public function store(RoleRequest $request){
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
-        return Active::Inserted($role->name);
+        $permissions = $request->input('permission');
+        if (($key = array_search(34, $permissions)) !== false) {
+            array_splice($permissions, $key, 1);
+        }
+
+        $role = Role::create(['name' => $request->input('name'),
+                              'branch_id' => getCurrentUserBranchData()->branch_id??1]);
+
+        $role->syncPermissions($permissions);
+        return Active::Inserted($role->title);
     }
 
     public function edit(Role $role)
     {
-        $permission = Permission::get();
+        if ( is_super_admin() == false && ($role->branch_id != getCurrentUserBranchData()->branch_id) ){
+            abort(404);
+        }
+
+        $permission = Permission::where('name','<>','training.branches.index')->get();
         $rolePermissions = DB::table("role_has_permissions")
             ->where("role_has_permissions.role_id",$role->id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
@@ -70,21 +83,42 @@ class RoleController extends Controller
 
 
     public function update(RoleRequest $request, Role $role){
+        if (is_super_admin() == false && ($role->branch_id != getCurrentUserBranchData()->branch_id) ){
+            abort(404);
+        }
+
+        $permissions = $request->input('permission');
+        if (($key = array_search(34, $permissions)) !== false) {
+            array_splice($permissions, $key, 1);
+        }
+
         $role->name = $request->input('name');
         $role->save();
-        $role->syncPermissions($request->input('permission'));
+        $role->syncPermissions($permissions);
         return Active::Updated($role->name);
     }
 
     public function destroy(Role $role, Request $request){
+        if (is_super_admin() == false && ($role->branch_id != getCurrentUserBranchData()->branch_id) ){
+            abort(404);
+        }
+
         Role::where('id', $role->id)->SoftTrash();
-        return Active::Deleted($role->name);
+        return Active::Deleted($role->title);
     }
 
     public function restore($role){
+        $role_branch_id = Role::withTrashed()->select('branch_id')->whereId($role)->first()->branch_id;
+        if (!$role_branch_id){
+            abort(404);
+        }
+        if ( is_super_admin() == false && ($role_branch_id != getCurrentUserBranchData()->branch_id) ){
+            abort(404);
+        }
+
         Role::where('id', $role)->RestoreFromTrash();
         $role = Role::where('id', $role)->first();
-        return Active::Restored($role->trans_name);
+        return Active::Restored($role->title);
     }
 
 }

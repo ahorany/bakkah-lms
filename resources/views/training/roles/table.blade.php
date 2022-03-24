@@ -21,11 +21,11 @@
         <tbody>
         <?php $btn_roles = null; ?>
         @can('roles.edit')
-            <?php  $btn_roles[] = 'Edit'; ?>
+              <?php  $btn_roles[] = 'Edit'; ?>
         @endcan
 
         @can('roles.delete')
-            <?php   $btn_roles[] = 'Destroy' ?>
+                <?php   $btn_roles[] = 'Destroy' ?>
         @endcan
 
         @foreach($roles as $role)
@@ -43,9 +43,10 @@
                 @endforeach
             </td>
 
-            <td class="d-sm-table-cell text-right">{!!Builder::BtnGroupRows($role->trans_name, $role->id, $btn_roles, [
-                'post'=>$role->id,
-            ])!!}</td>
+                    <td class="d-sm-table-cell text-right">{!!Builder::BtnGroupRows($role->trans_name, $role->id, $btn_roles, [
+                    'post'=>$role->id,
+                    ])!!}</td>
+
             </tr>
         @endforeach
         </tbody>

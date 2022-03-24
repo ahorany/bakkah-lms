@@ -7,13 +7,13 @@ use App\Models\Training\Content;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\Exam;
 use App\Models\Training\Question;
+use App\Models\Training\Role;
 use App\Models\Training\UserAnswer;
 use App\Models\Training\UserContent;
 use App\Models\Training\UserExam;
 use App\Models\Training\UserQuestion;
 use App\User;
 use App\Constant;
-use App\Models\Admin\Role;
 use App\Models\Training\Upload;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use mysql_xdevapi\Session;
 
 class UserProfileController extends Controller
 {
@@ -145,40 +146,88 @@ class UserProfileController extends Controller
 
 
 
-
     /*
      * Admin Change Role (To Preview another roles)
      */
     public function change_role($role_id){
-        $user = \auth()->user();
-        $user_role = $user->roles()->first();
-
-        if ( !($user_role->id == 1 || $user->delegation_role_id == 1 ) ){
+        if (is_super_admin()){
             abort(404);
         }
 
+        $user = \auth()->user();
+        $user_role = $user->roles()->first();
 
-        if ($role_id == 1){
+        $user_branch = getCurrentUserBranchData();
+        if (!$user_branch){
+            abort(404);
+        }
+
+        $branch_role_admin  = Role::where('branch_id',$user_branch->branch_id)->where('role_type_id',510)->first();
+        if (!$branch_role_admin){
+            abort(404);
+        }
+
+        if ( !($user_role->id == $branch_role_admin->id || $user_branch->delegation_role_id == $branch_role_admin->id ) ){
+            abort(404);
+        }
+
+        if ($role_id == $branch_role_admin->id){
             // update user role
-            DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+            DB::table('model_has_roles')
+                ->join('roles','roles.id','=','model_has_roles.role_id')
+                ->where('model_has_roles.model_id',$user->id)
+                ->where('roles.branch_id',$user_branch->branch_id)
+                ->delete();
             $user->assignRole([$role_id]);
 
             // update  delegation_role_id to return status (Admin)
-            User::whereId($user->id)->update([
+            DB::table('user_branches')->where('id',$user_branch->id)->update([
                 'delegation_role_id' => null,
             ]);
+
+            $user_branch->delegation_role_id = null;
+            session()->put("user_branch", $user_branch);
         }else{
             // update user role
-            DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+            DB::table('model_has_roles')
+                ->join('roles','roles.id','=','model_has_roles.role_id')
+                ->where('model_has_roles.model_id',$user->id)
+                ->where('roles.branch_id',$user_branch->branch_id)
+                ->delete();
             $user->assignRole([$role_id]);
 
             // update  delegation_role_id to return status (Admin)
-            User::whereId($user->id)->update([
-                'delegation_role_id' => 1,
+            DB::table('user_branches')->where('id',$user_branch->id)->update([
+                'delegation_role_id' => $branch_role_admin->id,
             ]);
+
+
+            $user_branch->delegation_role_id = $branch_role_admin->id;
+            session()->put("user_branch", $user_branch);
         }
 
          return redirect()->route('user.home');
+    }// end function
+
+
+
+    /*
+     * Admin Change Branch (To Preview another Branch)
+     */
+    public function change_branch($branch_id){
+        if (is_super_admin()){
+            DB::table('user_branches')->where('user_id',\auth()->id())->update(['branch_id' => $branch_id]);
+        }
+
+       $user_branch = DB::select("SELECT branches.title ,  user_branches.id , user_branches.branch_id , user_branches.user_id ,user_branches.name , user_branches.bio , user_branches.expire_date , user_branches.delegation_role_id  FROM `user_branches`
+                                INNER JOIN branches ON branches.id = user_branches.branch_id AND branches.deleted_at IS NULL
+                                WHERE user_branches.user_id = ".\auth()->id()." AND user_branches.branch_id = ? AND user_branches.deleted_at IS NULL",[$branch_id]);
+
+        if (isset($user_branch[0])){
+            session()->put('user_branch',$user_branch[0]);
+        }
+
+        return redirect()->route('user.home');
     }// end function
 
 

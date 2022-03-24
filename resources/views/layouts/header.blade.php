@@ -39,37 +39,71 @@
         </svg>
 
     </button>
-
     <ul class="navbar-nav mx-0">
-        <li class="has-dropdown user mobile-none">
-            <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role @if(!auth()->user()->hasRole(['Admin']) && is_null(auth()->user()->delegation_role_id)) not_admin @endif" href="#">
-                <span class="icon_role">
-                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
-                    {{$role->name}}
-                </span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
-                    <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z" transform="translate(10.125) rotate(90)" fill="#000"></path>
-                </svg>
-            </a>
+{{--        @isset($role->id)--}}
+             <li class="has-dropdown user mobile-none">
+                <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role" href="#">
+                    <span>
+                        {{getCurrentUserBranchData()->title}}
+                    </span>
 
-            @if (auth()->user()->roles()->first()->id == 1 || auth()->user()->delegation_role_id == 1)
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
+                        <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z" transform="translate(10.125) rotate(90)" fill="#000"></path>
+                    </svg>
+                </a>
+
                 <div class="dropdown d-none">
-                    <ul class="postition-relative">
-                        <?php $role_id = $role->id; ?>
-                        @foreach(\App\Models\Training\Role::select('id','name','icon')->get() as $role)
-                            <li @if($role->id == $role_id) style="background: #eee;" @endif>
-                                <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
+                        <ul class="postition-relative">
+                            @foreach($user_branches as $branch)
+                                <li @if($branch->id == getCurrentUserBranchData()->branch_id) style="background: #eee;" @endif>
+                                    <a href="{{route('user.change.branch',$branch->id)}}" class="d-flex padding-list">
                                 <span class="d-flex">
-                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
-                                    {{$role->name}}
+                                    {{$branch->title}}
                                 </span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+            </li>
+
+             <li class="has-dropdown user mobile-none">
+                <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role @if(($role->role_type_id != 510 && !getCurrentUserBranchData()->delegation_role_id) || is_super_admin()) not_admin @endif" href="#">
+                    <span class="icon_role">
+                        <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
+                        {{$role->name}}
+                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
+                        <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z" transform="translate(10.125) rotate(90)" fill="#000"></path>
+                    </svg>
+                </a>
+
+
+            @if(!is_super_admin())
+                  @if ($role->role_type_id == 510  || getCurrentUserBranchData()->delegation_role_id != null)
+                    <div class="dropdown d-none">
+                        <ul class="postition-relative">
+                            <?php
+                               $role_id = $role->id;
+                            ?>
+                            @foreach($headerRoles as $role)
+                                <li @if($role->id == $role_id) style="background: #eee;" @endif>
+                                    <a href="{{route('user.change.role',$role->id)}}" class="d-flex padding-list">
+                                        <span class="d-flex">
+                                            <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
+                                            {{$role->name}}
+                                        </span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                  @endif
             @endif
         </li>
+
+{{--        @endisset--}}
+
         <li class="has-dropdown user messages mobile-none">
             <ul class="navbar-nav mx-0">
                 <li class="has-dropdown user m-0">
@@ -140,7 +174,7 @@
                     $url = auth()->user()->upload->file;
                     $url = CustomAsset('upload/full/'. $url);
                 }else {
-                    $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
+                    $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . getCurrentUserBranchData()->name;
                 }
                 ?>
                 <img style="width:35px;height:35px;object-fit:cover;border-radius: 50%;" src="{{$url}}" alt=" " />
@@ -155,7 +189,7 @@
                 <ul class="postition-relative">
                     <li class="dropdown-item borderBottom padding-list">
                         <div>
-                            <h2 style="font-size: 1rem; margin: 0; ">{{auth()->user()->trans_name}}</h2>
+                            <h2 style="font-size: 1rem; margin: 0; ">{{getCurrentUserBranchData()->name}}</h2>
                         </div>
                     </li>
                     <li>

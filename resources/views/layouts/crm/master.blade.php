@@ -29,43 +29,27 @@
     <link rel="stylesheet" href="{{CustomAsset('css/responsive.css')}}?v={{time()}}">
 
     @yield('style')
-    <style>
-        /*h1, h2, h3, h4, h5, h6 {*/
-
-        /*}*/
+<style>
         .person-wrapper h2{
             margin-top: 20px !important;
             font-weight: 600 !important;
             margin-bottom: 5px !important;
         }
 
-
         span.select2 {
-
             width: 100% !important;
-
         }
-
-
 
         .select2-container--default .select2-selection--single .select2-selection__arrow {
 
             top: 7px !important;
-
         }
-
-
 
         .select2-container .select2-selection--single {
-
             height: calc(2.25rem + 2px) !important;
-
         }
 
-
-
-
-    </style>
+</style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
@@ -74,8 +58,6 @@
 </head>
 
 <body>
-<?php // $user_role_name = auth()->user()->roles()->select('roles.name')->first()->trans_name??null; ?>
-<?php    $role = auth()->user()->roles()->first(); ?>
 
 <div class="container-max">
     @include("layouts.header")

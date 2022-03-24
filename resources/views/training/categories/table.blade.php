@@ -4,11 +4,7 @@ use App\Models\Training\CourseRegistration;
 
 <div class="card categories">
   <div class="card-header">
-      <?php $create_role = false; ?>
-      @can('course.create')
-          <?php $create_role = true; ?>
-      @endcan
-    {!!Builder::BtnGroupTable($create_role)!!}
+    {!!Builder::BtnGroupTable()!!}
     {!!Builder::TableAllPosts($count, $categories->count())!!}
   </div>
   <div class="card-body table-responsive p-0">
@@ -22,14 +18,6 @@ use App\Models\Training\CourseRegistration;
       </thead>
       <tbody>
 
-      <?php $btn_roles = null; ?>
-      @can('course.edit')
-          <?php  $btn_roles[] = 'Edit'; ?>
-      @endcan
-
-      @can('course.delete')
-          <?php   $btn_roles[] = 'Destroy' ?>
-      @endcan
 
       @foreach($categories as $post)
       <tr data-id="{{$post->id}}">
@@ -41,7 +29,7 @@ use App\Models\Training\CourseRegistration;
             </td>
 
             <td class="d-sm-table-cell text-right">
-                {!!Builder::BtnGroupRows($post->trans_title, $post->id, $btn_roles, [
+                {!!Builder::BtnGroupRows($post->trans_title, $post->id, ['Edit','Destroy'], [
                     'post'=>$post->id,
                 ])!!}
 

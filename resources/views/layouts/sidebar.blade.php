@@ -6,13 +6,13 @@
                     $url = auth()->user()->upload->file;
                     $url = CustomAsset('upload/full/'. $url);
             }else {
-                $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
+                $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . getCurrentUserBranchData()->name;
             }
         ?>
 
         <div class="person-wrapper">
             <img src="{{$url}}" alt=" ">
-            <h2 style="font-size: 20px; margin: 0;">{{auth()->user()->trans_name}}</h2>
+            <h2 style="font-size: 20px; margin: 0;">{{getCurrentUserBranchData()->name}}</h2>
             <hr>
         </div>
 
@@ -30,9 +30,10 @@
                 </a>
             </li>
 
-            @if(!auth()->user()->hasRole(['Admin']))
-                @foreach($user_sidebar_courses->courses as $item)
-                    <li class="nav-item">
+          @isset($role->id)
+              @if($role->role_type_id != 510)
+                    @foreach($user_sidebar_courses->courses as $item)
+                      <li class="nav-item">
                         <a class="nav-link {{ ( session()->get('active_sidebar_route_name') == -1) &&  (url()->full() == CustomRoute('user.course_details',$item->id)) && (url()->full() != CustomRoute('user.home'))  ? 'active' : '' }}" href="{{CustomRoute('user.course_details',$item->id) }}">
                             <span class="d-flex align-items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36" viewBox="0 0 24.567 23.684">
@@ -53,8 +54,10 @@
                             <span>{{$item->trans_title}}</span>
                         </a>
                     </li>
-                @endforeach
-            @endif
+                   @endforeach
+              @endif
+          @endisset
+
 
             @foreach($user_pages as $user_page)
                     @can($user_page->route_name)
@@ -74,54 +77,57 @@
                     @endcan
             @endforeach
 
-            <li class="mobile-show">
-                <div class="dropdown-sidebar">
-                    <a href="#">
-                        <span class="title">
-                            <span>
-                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-                                    <g>
-                                        <path d="M4.81,71.7c0.23-1.02,0.41-2.06,0.7-3.07c2.13-7.55,9.06-12.93,16.89-12.97c10.85-0.05,21.7-0.07,32.55,0
-                                            c9.65,0.06,17.51,7.97,17.61,17.63c0.05,4.41,0.02,8.82,0.01,13.23c0,1.82-1.17,3-2.98,3c-20.58,0.01-41.17,0-61.75,0.01
-                                            c-1.54,0-2.42-0.84-3.02-2.12C4.81,82.17,4.81,76.93,4.81,71.7z M66.87,83.83c0-3.87,0.27-7.71-0.06-11.5
-                                            c-0.54-6.27-5.67-10.99-11.73-11.02c-10.94-0.06-21.87-0.06-32.81,0c-5.78,0.03-10.97,4.61-11.61,10.35
-                                            c-0.33,2.99-0.16,6.04-0.2,9.07c-0.02,1.02,0,2.04,0,3.1C29.29,83.83,48.04,83.83,66.87,83.83z"/>
-                                        <path d="M38.67,48.1c-10.36-0.01-18.8-8.43-18.82-18.78c-0.02-10.37,8.47-18.85,18.85-18.85C49.08,10.48,57.57,19,57.52,29.35
-                                            C57.46,39.73,49.04,48.11,38.67,48.1z M38.64,42.45c7.28,0.02,13.22-5.87,13.23-13.14c0.01-7.22-5.89-13.16-13.1-13.19
-                                            c-7.28-0.03-13.22,5.84-13.27,13.11C25.45,36.48,31.37,42.43,38.64,42.45z"/>
-                                        <path d="M85.46,49.07c-0.55,0-0.87,0-1.19,0c-7.85,0-15.7,0-23.54,0c-2.02,0-3.29-1.23-3.19-3.04c0.08-1.34,1.12-2.44,2.46-2.57
-                                            c0.38-0.04,0.76-0.03,1.15-0.03c7.73,0,15.46,0,23.19,0c0.31,0,0.62,0,0.93,0c0.1-0.13,0.2-0.26,0.3-0.39
-                                            c-0.29-0.15-0.64-0.23-0.86-0.45c-3.11-3.08-6.2-6.19-9.3-9.28c-0.9-0.9-1.18-1.95-0.75-3.14c0.4-1.1,1.25-1.69,2.4-1.79
-                                            c1.01-0.09,1.79,0.38,2.49,1.08c4.56,4.58,9.14,9.15,13.71,13.72c0.35,0.35,0.73,0.68,1.07,1.04c1.13,1.2,1.15,2.88-0.01,4.04
-                                            c-4.98,4.99-9.98,9.98-14.98,14.95c-1.23,1.22-2.96,1.21-4.09,0.06c-1.11-1.14-1.06-2.86,0.16-4.1c3.07-3.09,6.15-6.16,9.22-9.23
-                                            C84.87,49.7,85.08,49.47,85.46,49.07z"/>
-                                    </g>
+            @if ($role->role_type_id == 510  || getCurrentUserBranchData()->delegation_role_id != null)
+                <li class="mobile-show">
+
+                        <div class="dropdown-sidebar">
+                         <a href="#">
+                            <span class="title">
+                                <span>
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                        <g>
+                                            <path d="M4.81,71.7c0.23-1.02,0.41-2.06,0.7-3.07c2.13-7.55,9.06-12.93,16.89-12.97c10.85-0.05,21.7-0.07,32.55,0
+                                                c9.65,0.06,17.51,7.97,17.61,17.63c0.05,4.41,0.02,8.82,0.01,13.23c0,1.82-1.17,3-2.98,3c-20.58,0.01-41.17,0-61.75,0.01
+                                                c-1.54,0-2.42-0.84-3.02-2.12C4.81,82.17,4.81,76.93,4.81,71.7z M66.87,83.83c0-3.87,0.27-7.71-0.06-11.5
+                                                c-0.54-6.27-5.67-10.99-11.73-11.02c-10.94-0.06-21.87-0.06-32.81,0c-5.78,0.03-10.97,4.61-11.61,10.35
+                                                c-0.33,2.99-0.16,6.04-0.2,9.07c-0.02,1.02,0,2.04,0,3.1C29.29,83.83,48.04,83.83,66.87,83.83z"/>
+                                            <path d="M38.67,48.1c-10.36-0.01-18.8-8.43-18.82-18.78c-0.02-10.37,8.47-18.85,18.85-18.85C49.08,10.48,57.57,19,57.52,29.35
+                                                C57.46,39.73,49.04,48.11,38.67,48.1z M38.64,42.45c7.28,0.02,13.22-5.87,13.23-13.14c0.01-7.22-5.89-13.16-13.1-13.19
+                                                c-7.28-0.03-13.22,5.84-13.27,13.11C25.45,36.48,31.37,42.43,38.64,42.45z"/>
+                                            <path d="M85.46,49.07c-0.55,0-0.87,0-1.19,0c-7.85,0-15.7,0-23.54,0c-2.02,0-3.29-1.23-3.19-3.04c0.08-1.34,1.12-2.44,2.46-2.57
+                                                c0.38-0.04,0.76-0.03,1.15-0.03c7.73,0,15.46,0,23.19,0c0.31,0,0.62,0,0.93,0c0.1-0.13,0.2-0.26,0.3-0.39
+                                                c-0.29-0.15-0.64-0.23-0.86-0.45c-3.11-3.08-6.2-6.19-9.3-9.28c-0.9-0.9-1.18-1.95-0.75-3.14c0.4-1.1,1.25-1.69,2.4-1.79
+                                                c1.01-0.09,1.79,0.38,2.49,1.08c4.56,4.58,9.14,9.15,13.71,13.72c0.35,0.35,0.73,0.68,1.07,1.04c1.13,1.2,1.15,2.88-0.01,4.04
+                                                c-4.98,4.99-9.98,9.98-14.98,14.95c-1.23,1.22-2.96,1.21-4.09,0.06c-1.11-1.14-1.06-2.86,0.16-4.1c3.07-3.09,6.15-6.16,9.22-9.23
+                                                C84.87,49.7,85.08,49.47,85.46,49.07z"/>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span>Permissions</span>
+                            </span>
+                            <span class="drop-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24.37" height="16.233" viewBox="0 0 24.37 16.233">
+                                    <path id="Line_Arrow_Right" data-name="Line Arrow Right" d="M3.967,0,0,4.048,12.185,16.233,24.37,4.048,20.4,0,12.185,8.3Z"/>
                                 </svg>
                             </span>
-                            <span>Permissions</span>
-                        </span>
-                        <span class="drop-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24.37" height="16.233" viewBox="0 0 24.37 16.233">
-                                <path id="Line_Arrow_Right" data-name="Line Arrow Right" d="M3.967,0,0,4.048,12.185,16.233,24.37,4.048,20.4,0,12.185,8.3Z"/>
-                            </svg>
-                        </span>
-                    </a>
-                    <ul>
-                        <?php $role_id = $role->id; ?>
-                        @foreach(\App\Models\Training\Role::select('id','name','icon')->get() as $role)
-                            <li class="nav-item" @if($role->id == $role_id) style="background: #eee;" @endif>
-                                <a class="nav-link {{  session()->get('active_sidebar_route_name') == $user_page->route_name ? 'active' : '' }}" href="{{route('user.change.role',$role->id)}}">
-                                    <span class="d-flex">
-                                        <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
-                                        {{$role->name}}
-                                    </span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </li>
+                        </a>
+                        <ul>
+                            <?php $role_id = $role->id; ?>
+                                @foreach($headerRoles as $role)
+                                <li class="nav-item" @if($role->id == $role_id) style="background: #eee;" @endif>
+                                    <a class="nav-link {{  session()->get('active_sidebar_route_name') == $user_page->route_name ? 'active' : '' }}" href="{{route('user.change.role',$role->id)}}">
+                                        <span class="d-flex">
+                                            <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
+                                            {{$role->name}}
+                                        </span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
 
+                </li>
+            @endif
             <li class="mobile-show">
                 <div class="dropdown-sidebar">
                     <a href="#">
