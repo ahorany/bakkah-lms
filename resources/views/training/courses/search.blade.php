@@ -1,6 +1,6 @@
 <style>
 .form-inline .form-group {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 .form-inline .form-group label {
     font-weight: normal !important;

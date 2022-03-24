@@ -4,7 +4,7 @@
 <main style="text-align: center; width: 90%; margin: 15px auto 0;">
 
     <div style="margin: 15px 0">
-        <h5 style="font-size: 15px; margin: 15px 0; text-align: center;">Dear {{$user->en_name}},</h5>
+        <h5 style="font-size: 15px; margin: 15px 0; text-align: center;">Dear {{$recieve->en_name}},</h5>
         <p style="font-size: 14px; margin: 15px 0; text-align: center;">{{$message_content->user->en_name}} has replied to your message for the {{$course->trans_title}}, and the reply is the following:</p>
         <p style="font-size: 14px; margin: 15px 0; text-align: center;">{{$message_content->description}}</p>
     </div>

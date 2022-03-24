@@ -380,7 +380,6 @@ class Builder {
 	}
 
     static function Select2($name, $title, $lists=null, $value=null, $array=array()){
-
 		if(is_null($lists))
 			return null;
 
@@ -420,6 +419,7 @@ class Builder {
                     if($name!='coin_id_insights'){
                         $div .= '<option value="-1">'.__('admin.choose_value').'</option>';
                     }
+
                     foreach($lists as $list)
                     {
                         if(is_array($val)) {

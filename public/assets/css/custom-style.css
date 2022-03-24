@@ -567,8 +567,9 @@ justify-content: center;
     width: max-content;
     margin: 0 auto;
     padding: 0 5px;
-    font-size: 14px;
+    font-size: 12px;
     font-family: 'Lato Light';
+    height: 20px;
 }
 .progress-bar{
     background: #fb4400;
@@ -1155,6 +1156,12 @@ p.lead.light.card {
 }
 
 @media (max-width: 767.5px) {
+    div#message-app {
+        padding: 0;
+    }
+    #message-app .card.p-5 {
+        padding: 20px 0 !important;
+    }
     p.time-remaining svg{
         width: 25px;
     }
