@@ -53,10 +53,10 @@ class HomeController extends Controller
                        courses_registration.paid_status,courses_registration.progress
                 FROM users
                 INNER JOIN courses_registration ON courses_registration.user_id = users.id
-                INNER JOIN courses  ON courses_registration.course_id = courses.id AND courses.deleted_at IS NULL
+                INNER JOIN courses  ON courses_registration.course_id = courses.id AND courses.branch_id = ".getCurrentUserBranchData()->branch_id." AND courses.deleted_at IS NULL
                 LEFT  JOIN sessions ON sessions.id = courses_registration.session_id AND sessions.deleted_at IS NULL
                 LEFT  JOIN constants ON constants.id = courses.training_option_id AND constants.deleted_at IS NULL
-                INNER JOIN uploads ON  uploads.uploadable_type = 'App\\\Models\\\Training\\\Course'
+                LEFT JOIN uploads ON  uploads.uploadable_type = 'App\\\Models\\\Training\\\Course'
                                    AND uploads.uploadable_id = courses.id
                                    AND uploads.deleted_at IS NULL
                 WHERE users.id = ".\auth()->id()." AND users.deleted_at IS NULL";
@@ -89,7 +89,7 @@ class HomeController extends Controller
         and cr.progress >= courses.complete_progress
         inner join uploads on courses.id = uploads.uploadable_id
         and uploads.uploadable_type like '%Course%'
-        where cr.user_id = ".\auth()->id());
+        where courses.branch_id = ".getCurrentUserBranchData()->branch_id." AND cr.user_id = ".\auth()->id());
         // dump($certificates);
 
         return view('certificate', compact('certificates'));
@@ -106,6 +106,7 @@ class HomeController extends Controller
         $sql = "SELECT user_contents.id ,contents.url as url, contents.id as content_id,
                uploads.file FROM user_contents
                   INNER JOIN contents ON  contents.id = user_contents.content_id
+                  INNER JOIN courses  ON contents.course_id = courses.id AND courses.branch_id = ".getCurrentUserBranchData()->branch_id." AND courses.deleted_at IS NULL
                   LEFT JOIN uploads  ON  contents.id = uploads.uploadable_id
                     WHERE user_contents.user_id = ".\auth()->id()."
                     AND (uploads.uploadable_type = 'App\\\\Models\\\\Training\\\\Content' OR contents.url IS NOT NULL)
@@ -125,6 +126,7 @@ class HomeController extends Controller
     private function getNextVideos ($last_video){
         $sql = "SELECT contents.id ,contents.title  FROM contents
                  INNER JOIN courses_registration ON courses_registration.course_id = contents.course_id
+                 INNER JOIN courses  ON courses_registration.course_id = courses.id AND courses.branch_id = ".getCurrentUserBranchData()->branch_id." AND courses.deleted_at IS NULL
                     WHERE contents.id > ".$last_video->content_id."
                     AND contents.post_type = 'video'
                     AND courses_registration.user_id =". \auth()->id() ."
@@ -138,14 +140,15 @@ class HomeController extends Controller
      * Get Completed Courses
      */
     private function getCompleteCourses(){
-        $sql = "SELECT COUNT(id) as courses_count,
-                case when (progress=100) then 1
-                     when ( progress= 0 OR progress is null) then 2
-                     when (progress<100 AND progress != 0) then 0
+        $sql = "SELECT COUNT(courses_registration.id) as courses_count,
+                case when (courses_registration.progress=100) then 1
+                     when ( courses_registration.progress= 0 OR courses_registration.progress is null) then 2
+                     when (courses_registration.progress<100 AND courses_registration.progress != 0) then 0
                 end as status
                 FROM courses_registration
-                WHERE user_id = ".\auth()->id()."
-                GROUP BY user_id, status
+                INNER JOIN courses  ON courses_registration.course_id = courses.id AND courses.branch_id = ".getCurrentUserBranchData()->branch_id." AND courses.deleted_at IS NULL
+                WHERE courses_registration.user_id = ".\auth()->id()."
+                GROUP BY courses_registration.user_id,status
                 ORDER By status";
 
         $complete_courses =  DB::select(DB::raw($sql));
@@ -163,7 +166,7 @@ class HomeController extends Controller
                        courses.title as course_title,contents.title as content_title
                        FROM contents
                             INNER JOIN user_contents ON user_contents.content_id = contents.id
-                            INNER JOIN courses ON contents.course_id = courses.id
+                            INNER JOIN courses  ON contents.course_id = courses.id AND courses.branch_id = ".getCurrentUserBranchData()->branch_id." AND courses.deleted_at IS NULL
                             INNER JOIN courses_registration ON courses_registration.course_id = courses.id
                         WHERE
                         contents.deleted_at IS NULL
