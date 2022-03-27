@@ -1027,6 +1027,25 @@ p.lead.light.card {
     justify-content: space-between;
     align-items: center;
 }
+.reply-actions {
+    margin-top: 20px;
+}
+.reply-actions button {
+    background: transparent;
+    border: transparent;
+}
+.reply-actions button svg {
+    width: 22px;
+}
+.reply-actions button.like svg:hover path , .reply-actions button.like.is_like svg path {
+    stroke: #007bff;
+}
+.reply-actions button.love svg:hover path , .reply-actions button.love.is_love svg path {
+    fill: #f00;
+}
+.reply-actions button.share svg:hover path , .reply-actions button.share.is_share svg path {
+    fill: green;
+}
 
 
 @media screen and (min-width:800px){

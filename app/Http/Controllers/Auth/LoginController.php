@@ -53,6 +53,7 @@ class LoginController extends Controller
                                          ORDER BY user_branches.id DESC LIMIT 1');
 
 
+
         if(isset($user_branch[0])) {
            session()->put('user_branch',$user_branch[0]);
         }else{
