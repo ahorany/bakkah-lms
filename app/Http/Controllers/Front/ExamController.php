@@ -60,7 +60,12 @@ class ExamController extends Controller
             return $q->with(['users_exams' => function($q){
                 return $q->where('user_id', auth()->id());
             }]);
-        }])->first();
+        }])->whereHas('course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+         })->first();
+        if (!$exam){
+            abort(404);
+        }
 
         $user_course_register = $this->checkUserCourseRegistration($exam->course->id);
 
@@ -122,6 +127,9 @@ class ExamController extends Controller
         $page_type = 'exam';
 
         $exam = $this->getExamDataFromDB($exam_id);
+        if (!$exam){
+            abort(404);
+        }
 
         // Validate User Course Registration
         $user_course_register = $this->checkUserCourseRegistration($exam->course->id);
@@ -190,7 +198,9 @@ class ExamController extends Controller
                 $q->select('id','title','mark','exam_id','unit_id')->withCount(['answers' => function ($query){
                     $query->where('check_correct' ,1);
                 }]);
-            }])->first();
+            }])->whereHas('course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+            })->first();
 
         return $exam;
     } // end function
@@ -279,7 +289,11 @@ class ExamController extends Controller
      */
     public function add_answers(){
         $user_exam =  UserExam::whereId(\request()->user_exam_id)
-            ->where('user_id',\auth()->id())->where('status',0)->with(['exam.content'])->first();
+            ->where('user_id',\auth()->id())->where('status',0)->with(['exam.content'])
+            ->whereHas('exam.content.course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->first();
         if (!$user_exam) abort(404);
 
         if(\request()->has('answer') && \request()->status != 'save'){
@@ -450,6 +464,9 @@ class ExamController extends Controller
                     $query->select('id','title');
                 }]);
             }])
+            ->whereHas('exam.content.course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+            })
             ->first();
 
         // Check If Attempt Is Exists
@@ -509,8 +526,14 @@ class ExamController extends Controller
             ->where('user_id',\auth()->id())
             ->where('status',1)
             ->with(['exam.content.questions.answers','user_answers','user_questions'])
+            ->whereHas('exam.content.course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+            })
             ->first();
 
+        if (!$exam){
+            abort(404);
+        }
 
         /*
          * Validate If Exam Expired Or Not

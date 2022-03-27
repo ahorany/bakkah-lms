@@ -74,7 +74,7 @@ class CourseController extends Controller
      */
     private function getCourseWithContents($course_id, $role_id=3){
 
-        $course = Course::where('id', $course_id);
+        $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
 
         if(!Gate::allows('preview-gate')){
 
@@ -188,6 +188,8 @@ class CourseController extends Controller
                         INNER JOIN user_contents ON contents.id = user_contents.content_id
                     WHERE courses.id = $course_id
                     AND
+                    courses.branch_id = ".getCurrentUserBranchData()->branch_id."
+                    AND
                     user_contents.user_id = $user_id
                     AND
                     courses.deleted_at IS NULL
@@ -211,7 +213,10 @@ class CourseController extends Controller
     public function user_rate(){
         // Check user Course Registration Or Not
       $course_registration = CourseRegistration::where('user_id',\auth()->id())
-            ->where('course_id',\request()->course_id)->first();
+            ->where('course_id',\request()->course_id)
+           ->whereHas('course',function ($q){
+              $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+          })->first();
         if (!$course_registration){
              return response()->json(['status' => 'error']);
         }
@@ -236,7 +241,9 @@ class CourseController extends Controller
         $content = Content::whereId($content_id)
             ->with(['upload','course' ,'section.gift','user_contents' => function($q){
                 $q->where('user_id',auth()->id());
-            }])->first();
+            }])->whereHas('course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+            })->first();
 
 
         // Check if content not found => ABORT(404)
@@ -388,7 +395,7 @@ class CourseController extends Controller
         ->first();
         $role_auth_is_admin = \auth()->user()->roles()->first();
 
-        if(!$user_course_register && ($role_auth_is_admin && $role_auth_is_admin->id != 1)){
+        if(!$user_course_register && ($role_auth_is_admin && $role_auth_is_admin->role_type_id != 510)){
             return false;
         }
 
@@ -559,10 +566,6 @@ class CourseController extends Controller
 
     public function save_page()
     {
-        // dump(request()->pageNum);
-        // dump(request()->content_id);
-        // dd(auth()->user()->id);
-
         $content = UserContentsPdf::updateOrCreate([
             'content_id' => request()->content_id,
             'user_id' => auth()->user()->id
