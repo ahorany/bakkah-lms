@@ -194,6 +194,83 @@
                     </ul>
                 </div>
             </li>
+            <li class="mobile-show">
+                <div class="dropdown-sidebar">
+                    <a href="#">
+                        <span class="title">
+                            <span>
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                    <g>
+                                        <path d="M51.11,9.62c1.29,0.51,2.7,0.83,3.86,1.56c3.04,1.9,4.33,5.15,3.85,9.16c0.16,0.08,0.34,0.18,0.53,0.26
+                                            c9.79,4.31,15.39,11.77,16.76,22.38c0.13,1.02,0.14,2.06,0.15,3.09c0.01,4.8,0.01,9.59,0.01,14.39c0,1.4,0.18,1.6,1.56,1.71
+                                            c4.45,0.37,7.99,3.34,8.77,7.37c1.12,5.69-3.15,10.96-8.95,11c-4.98,0.03-9.96,0.01-14.95,0.01c-0.29,0-0.58,0-0.92,0
+                                            c-0.52,3.5-2.14,6.32-5.01,8.36c-2.15,1.52-4.55,2.2-7.18,2.14c-4.9-0.11-10.49-3.88-11.39-10.5c-0.28,0-0.56,0-0.85,0
+                                            c-4.93,0-9.86,0.01-14.79,0c-5.44-0.01-9.52-4.29-9.31-9.71c0.17-4.22,3.75-8.04,8.03-8.56c0.32-0.04,0.63-0.07,0.95-0.09
+                                            c1.31-0.11,1.51-0.33,1.51-1.68c0-5.11-0.1-10.23,0.02-15.34c0.27-11.32,5.67-19.34,15.86-24.19c0.5-0.24,1.19-0.33,1.44-0.71
+                                            c0.24-0.35-0.01-1.02-0.02-1.54c-0.08-4.39,3.07-8.18,7.39-8.93c0.15-0.03,0.29-0.1,0.44-0.15C49.63,9.62,50.37,9.62,51.11,9.62z
+                                            M50,75.3c9.14,0,18.29,0.01,27.43-0.01c2.2,0,3.92-1.54,4.06-3.57c0.16-2.16-1.29-3.92-3.53-4.25c-0.63-0.09-1.27-0.08-1.89-0.2
+                                            c-3-0.62-5.05-3.14-5.06-6.26c-0.02-5.04-0.02-10.07,0-15.11c0.01-2.79-0.47-5.48-1.46-8.08c-4.51-11.81-17.85-17.21-28.96-11.5
+                                            c-7.39,3.8-11.31,10.05-11.56,18.4c-0.16,5.43-0.02,10.87-0.04,16.3c-0.01,3.12-2.06,5.64-5.07,6.25c-0.7,0.14-1.43,0.12-2.13,0.24
+                                            c-1.71,0.3-3.11,1.75-3.28,3.35c-0.2,1.79,0.72,3.47,2.36,4.09c0.65,0.25,1.39,0.33,2.09,0.33C31.98,75.31,40.99,75.3,50,75.3z
+                                            M56.34,80.59c-4.23,0-8.45,0-12.68,0c0.25,2.73,3.21,5.18,6.25,5.21C53.04,85.83,56.05,83.41,56.34,80.59z M53.61,18.95
+                                            c0.23-1.39-0.45-2.8-1.7-3.54c-1.32-0.79-2.96-0.69-4.18,0.24c-1.1,0.85-1.63,2.23-1.33,3.3C48.81,18.95,51.18,18.95,53.61,18.95z"
+                                            />
+                                        <path d="M15.97,41.13c-1.79,0.01-3.02-1.55-2.49-3.39c0.67-2.33,1.39-4.67,2.33-6.9c1.68-3.99,4.2-7.46,7.24-10.55
+                                            c0.83-0.84,1.8-1.11,2.9-0.71c1.05,0.38,1.6,1.19,1.69,2.29c0.08,0.98-0.43,1.7-1.08,2.37c-3.96,4.05-6.58,8.85-7.9,14.36
+                                            c-0.06,0.26-0.12,0.52-0.2,0.77C18.08,40.44,17.11,41.12,15.97,41.13z"/>
+                                        <path d="M86.62,38.37c0.01,1.43-0.94,2.56-2.2,2.74c-1.33,0.19-2.52-0.57-2.93-1.89c-0.48-1.57-0.87-3.17-1.45-4.7
+                                            c-1.49-3.94-3.76-7.4-6.72-10.4c-0.65-0.66-1.08-1.39-0.98-2.33c0.11-1.06,0.67-1.84,1.68-2.22c1.07-0.4,2.04-0.16,2.85,0.64
+                                            c2.11,2.11,3.93,4.44,5.46,7c1.96,3.27,3.35,6.78,4.2,10.49C86.58,37.96,86.6,38.23,86.62,38.37z"/>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span>Branches</span>
+                        </span>
+                        <span class="drop-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24.37" height="16.233" viewBox="0 0 24.37 16.233">
+                                <path id="Line_Arrow_Right" data-name="Line Arrow Right" d="M3.967,0,0,4.048,12.185,16.233,24.37,4.048,20.4,0,12.185,8.3Z"/>
+                            </svg>
+                        </span>
+                    </a>
+                    <ul>
+                        {{-- <li class="nav-item">
+                            <a class="nav-link" href="{{route('user.add_message')}}">
+                                <span class="d-flex">
+                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/send-msg.svg')}}" alt="{{__('education.Send Message')}}"/>
+                                    {{__('education.Send Message')}}
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('user.messages.inbox',['type'=>'sent'])}}">
+                                <span class="d-flex">
+                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/sent-item.svg')}}" alt="{{__('education.Sent Items')}}"/>
+                                    {{__('education.Sent Items')}}
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('user.messages.inbox',['type'=>'inbox'])}}">
+                                <span class="d-flex">
+                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/inbox.svg')}}" alt="{{__('education.Inbox')}}"/>
+                                    {{__('education.Inbox')}}
+                                </span>
+                            </a>
+                        </li> --}}
+                        @foreach($user_branches as $branch)
+                            {{-- @if($branch->id == getCurrentUserBranchData()->branch_id) style="background: #eee;" @endif --}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('user.change.branch',$branch->id)}}">
+                                    <span class="d-flex">
+                                        <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/send-msg.svg')}}" alt="{{__('education.Send Message')}}"/>
+                                        {{$branch->title}}
+                                    </span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </li>
 
             <li class="mobile-show">
                 <div class="dropdown-sidebar">
