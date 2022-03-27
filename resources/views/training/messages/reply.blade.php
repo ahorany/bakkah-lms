@@ -8,7 +8,7 @@
     <style>
         .message-panel {
             background-color: #f2f2f2;
-            padding: 15px;
+            padding: 15px 15px 5px;
             border-radius: 10px;
             border: 1px solid #eaeaea;
             border-left: 2px solid #d8d8d8;
