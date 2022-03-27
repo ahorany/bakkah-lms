@@ -10,17 +10,25 @@ use Illuminate\View\View;
 class AsideComposer
 {
 	public function compose(View $view){
+       $user = auth()->user();
 
         $user_pages = Infrastructure::all();
         $view->with('user_pages', $user_pages);
 
-        $role = auth()->user()->roles()->first();
+        $role = $user->roles()->first();
         $view->with('role', $role);
 
-//        if (isset($role) && $role->role_type_id == 510){
-            $user_sidebar_courses = User::whereId(auth()->id())->with(['courses'])->first();
+        if($role->role_type_id != 510){
+            $user_sidebar_courses = DB::select("SELECT courses.id , courses.title  FROM `courses_registration`
+                                                  INNER JOIN courses ON courses.id = courses_registration.course_id
+                                                          AND courses.deleted_at IS NULL
+                                                          AND courses.branch_id = ".getCurrentUserBranchData()->branch_id."
+                                                  WHERE courses_registration.user_id =".$user->id);
             $view->with('user_sidebar_courses', $user_sidebar_courses);
-//        }
+        }
+
+
+
 
         if (is_super_admin()){
             $user_branches = DB::select('SELECT * FROM branches');

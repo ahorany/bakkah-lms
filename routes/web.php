@@ -1,6 +1,4 @@
 <?php
-use App\Http\Controllers\Training\InterestController;
-Route::get('interest/{course_id}', [InterestController::class, 'target']);
 
 Route::group([
     'prefix'=>LaravelLocalization::setLocale(),

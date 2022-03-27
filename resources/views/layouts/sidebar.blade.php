@@ -32,7 +32,7 @@
 
           @isset($role->id)
               @if($role->role_type_id != 510)
-                    @foreach($user_sidebar_courses->courses as $item)
+                    @foreach($user_sidebar_courses as $item)
                       <li class="nav-item">
                         <a class="nav-link {{ ( session()->get('active_sidebar_route_name') == -1) &&  (url()->full() == CustomRoute('user.course_details',$item->id)) && (url()->full() != CustomRoute('user.home'))  ? 'active' : '' }}" href="{{CustomRoute('user.course_details',$item->id) }}">
                             <span class="d-flex align-items-center">
@@ -51,7 +51,7 @@
                                     </g>
                                 </svg>
                             </span>
-                            <span>{{$item->trans_title}}</span>
+                            <span>{{\App\Helpers\Lang::TransTitle($item->title)}}</span>
                         </a>
                     </li>
                    @endforeach
