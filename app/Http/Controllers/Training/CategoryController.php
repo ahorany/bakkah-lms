@@ -50,7 +50,6 @@ class CategoryController extends Controller
     }
 
     public function store(CategoryRequest $request){
-
         $validated = $this->Validated($request->validated());
         $validated['created_by'] = auth()->user()->id;
         $validated['updated_by'] = auth()->user()->id;

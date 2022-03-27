@@ -37,8 +37,8 @@ class UserController extends Controller
         $post_type = GetPostType('users');
         $trash = GetTrash();
 
-        $users = User::with(['roles' => function($q){
-            $q->select('id','name')->where('branch_id',getCurrentUserBranchData()->branch_id??1);
+        $users = User::with(['branches','roles' => function($q){
+            $q->select('id','name')->where('branch_id',getCurrentUserBranchData()->branch_id);
         }])->whereHas('roles',function ($q){
             $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)->where('roles.id','<>',4);
         })->whereHas('branches',function ($q){
@@ -125,7 +125,7 @@ class UserController extends Controller
 
 
         return Active::Create([
-            'eloquent' => new User(),
+//            'eloquent' => new User(),
             'genders' => $genders,
             'post_type' => $post_type,
             'roles' => $roles,
@@ -139,13 +139,15 @@ class UserController extends Controller
         $validated['created_by'] = auth()->user()->id;
         $validated['updated_by'] = auth()->user()->id;
 
-
         $user = User::where('email',$request->email)->first();
+
+
         if (!$user){
             $user = User::create([
                 'email'      => $request->email,
                 'gender_id'  => $request->gender_id,
-                'password'   => $validated['password'],
+                'mobile'     => $request->mobile,
+                'password'   => bcrypt($validated['password']),
                 'created_by' => $validated['created_by'],
                 'updated_by' => $validated['updated_by'],
             ]);
@@ -183,9 +185,20 @@ class UserController extends Controller
 
         $role_id = $user->roles()->where('branch_id',$current_user_branch->branch_id)->select('roles.id')->first()->id??-1;
 
+//        $user = $user->whereHas('branches' , function($q)  use($current_user_branch,$user){
+//            $q->where('branch_id',$current_user_branch->branch_id)->where('user_id',$user->id);
+//        })->with(['branches'])->get();
+
+        $user_branch = DB::table('user_branches')
+                      ->where('user_id',$user->id)
+                      ->where('branch_id',$current_user_branch->branch_id)->first();
+
+
+
 
         return Active::Edit([
             'eloquent' => $user,
+            'user_branch' => $user_branch,
             'post_type' => $post_type,
             'genders' => $genders,
             'roles' => $roles,
@@ -202,7 +215,12 @@ class UserController extends Controller
         $validated['updated_by'] = auth()->user()->id;
         unset($validated['password']);
 
-        $user->update($validated);
+
+        $user->update([
+            'gender_id'  => $request->gender_id,
+            'mobile'     => $request->mobile,
+            'updated_by' => $validated['updated_by'],
+            ]);
 
         if ($request->password) {
             $user->update([
@@ -210,8 +228,21 @@ class UserController extends Controller
             ]);
         }
 
-        DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+
+        \DB::table('user_branches')
+            ->where('user_id',$user->id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)
+            ->update([
+              'name' => $request->name,
+          ]);
+
+
+        DB::table('model_has_roles')->where('model_id',$user->id)
+            ->join('roles','roles.id','model_has_roles.role_id')
+            ->where('roles.branch_id',getCurrentUserBranchData()->branch_id)
+            ->delete();
         $user->assignRole([request()->role]);
+
 
         User::UploadFile($user, ['method' => 'update']);
 
@@ -246,10 +277,13 @@ class UserController extends Controller
 
     public function getUserData()
     {
-       $user_branch =  \DB::select("SELECT users.email , users.gender_id ,users.mobile, user_branches.*  FROM user_branches
+       $user_branch =  \DB::select("SELECT users.email , users.gender_id ,users.mobile, user_branches.*
+                                    FROM user_branches
                                     RIGHT JOIN users ON users.id = user_branches.user_id
+                                    INNER JOIN model_has_roles ON users.id = model_has_roles.model_id AND model_has_roles.role_id != 4
                                     WHERE  users.email = '".\request()->email."'
                                     LIMIT 1");
+
 
         if (isset($user_branch[0])){
             return response()->json(['status' => true,'data' => $user_branch[0] ]);

@@ -26,6 +26,79 @@ class ContentController extends Controller
         $this->middleware('permission:course.contents.list');
     }
 
+    public function contents()
+    {
+        $course_id = request()->course_id;
+        $course = Course::with(['upload', 'user'])->where('id',$course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+
+        if (!$course){
+            abort(404);
+        }
+
+        $contents = Content::where('course_id',$course_id)
+            ->whereNull('parent_id')
+            ->with(['gift','contents' => function($q){
+                $q->with(['upload','details','exam'])->withCount('questions')->orderBy('order');
+            },'details','exams'])
+            ->orderBy('order')
+            ->get();
+        return view('training.courses.contents.index', compact('course', 'contents'));
+    }
+
+    public function delete_content()
+    {
+        $course = Course::select('id')->whereId(request()->course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course){
+            abort(404);
+        }
+
+        $content_id = request()->content_id;
+        Content::where('course_id',$course->id)->where('id',$content_id)->delete();
+        return response()->json([ 'status' => 'success']);
+    }
+
+    public function add_section()
+    {
+        $rules = [
+            'title'      => "required|string",
+            'course_id'  =>'required|exists:courses,id',
+        ];
+        $validator = Validator::make(\request()->all(), $rules);
+
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()]);
+        }
+
+        $course_id = request()->course_id;
+        $course = Course::select('id')->whereId($course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course){
+            abort(404);
+        }
+
+        $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE course_id = $course_id  AND parent_id IS NULL"));
+
+        $content = Content::create([
+            'title'      => request()->title,
+            'course_id'  =>request()->course_id,
+            'post_type'  => 'section',
+            'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
+            'hide_from_trainees'  =>request()->hide_from_trainees??false,
+        ]);
+
+        $content->details()->create([
+            'excerpt'    =>  request()->excerpt,
+        ]);
+        $content = Content::whereId($content->id)->with(['details','contents','gift'])->first();
+//        $contents = Content::where('course_id',$course_id)->whereNull('parent_id')->with(['contents','details'])->latest()->get();
+        return response()->json([ 'status' => 'success', 'section' => $content]);
+    }
+
+
+
+
     private function giftValidation(){
         // validation
         $rules = [
@@ -139,60 +212,10 @@ class ContentController extends Controller
         return response()->json(['status' => true]);
     }
 
-    public function contents()
-    {
-        $course_id = request()->course_id;
-        $course = Course::with(['upload', 'user'])->where('id',$course_id)->first();
-        $contents = Content::where('course_id',$course_id)
-            ->whereNull('parent_id')
-            ->with(['gift','contents' => function($q){
-                $q->with(['upload','details','exam'])->withCount('questions')->orderBy('order');
-            },'details','exams'])
-            ->orderBy('order')
-//            ->orderBy('id')
-            ->get();
-//        return $contents;
-        return view('training.courses.contents.index', compact('course', 'contents'));
-    }
 
-    public function delete_content()
-    {
-        $content_id = request()->content_id;
-        Content::where('id',$content_id)->delete();
-        return response()->json([ 'status' => 'success']);
-    }
 
-    public function add_section()
-    {
-        $rules = [
-            'title'      => "required|string",
-            'course_id'  =>'required|exists:courses,id',
-//            'excerpt'    =>  "required|string",
-        ];
-        $validator = Validator::make(\request()->all(), $rules);
 
-        if($validator->fails()){
-            return response()->json(['errors' => $validator->errors()]);
-        }
 
-        $course_id = request()->course_id;
-        $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE course_id = $course_id  AND parent_id IS NULL"));
-
-        $content = Content::create([
-            'title'      => request()->title,
-            'course_id'  =>request()->course_id,
-            'post_type'  => 'section',
-            'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
-            'hide_from_trainees'  =>request()->hide_from_trainees??false,
-        ]);
-
-        $content->details()->create([
-            'excerpt'    =>  request()->excerpt,
-        ]);
-        $content = Content::whereId($content->id)->with(['details','contents','gift'])->first();
-//        $contents = Content::where('course_id',$course_id)->whereNull('parent_id')->with(['contents','details'])->latest()->get();
-        return response()->json([ 'status' => 'success', 'section' => $content]);
-    }
 
     public function update_section()
     {

@@ -37,15 +37,18 @@ class CourseController extends Controller
         $post_type = 'course';
         $trash = GetTrash();
 
-        // If auth user Instructor (Not All courses  just registared)
-        if(auth()->user()->hasRole(['Instructor'])){
+        $user = auth()->user()->roles()->first();
+
+        // If auth user Admin Or Super Admin => all courses
+        if(is_super_admin() || $user->role_type_id == 510){
+            $courses = Course::with(['upload', 'user','deliveryMethod']);
+        }else{  // (Not All courses  just registared)
             $courses = Course::with(['upload'])->whereHas('users', function($q){
                 return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',2);
             });
-
-        }else{ // if admin all courses
-            $courses = Course::with(['upload', 'user','deliveryMethod']);
         }
+
+        $courses->where('branch_id',getCurrentUserBranchData()->branch_id);
 
         if (request()->has('course_search') && !is_null(request()->course_search)) {
             $courses = $this->SearchCond($courses);
@@ -126,7 +129,7 @@ class CourseController extends Controller
     public function store(CourseRequest $request){
         $validated = $this->Validated($request->validated());
         $validated['created_by'] = auth()->user()->id;
-
+        $validated['branch_id']  = getCurrentUserBranchData()->branch_id;
         $course = Course::create($validated);
         $this->uploadsVideo($course, 'intro_video', null);
 
@@ -136,6 +139,9 @@ class CourseController extends Controller
 //////////////////////// Edit Course /////////////////////////////////////////////
 
     public function edit(Course $course){
+        if (getCurrentUserBranchData()->branch_id != $course->branch_id){
+            abort(404);
+        }
         $certificate_types = Constant::where('parent_id', 323)->get();
         $certificate_ids = Certificate::whereNull('parent_id')->get();
         $delivery_methods = Constant::where('parent_id', 10)->get();
@@ -146,6 +152,9 @@ class CourseController extends Controller
 
 
     public function update(CourseRequest $request, Course $course){
+        if (getCurrentUserBranchData()->branch_id != $course->branch_id){
+            abort(404);
+        }
         $validated = $this->Validated($request->validated());
 
         $course->update($validated);
@@ -161,7 +170,7 @@ class CourseController extends Controller
 //////////////////////// Destroy Course /////////////////////////////////////////////
 
     public function destroy(Course $course){
-        Course::where('id', $course->id)->SoftTrash();
+        Course::where('id', $course->id)->where('branch_id',getCurrentUserBranchData()->branch_id)->SoftTrash();
         return Active::Deleted($course->trans_title);
     }
 
@@ -169,7 +178,7 @@ class CourseController extends Controller
 //////////////////////// Restore Course /////////////////////////////////////////////
 
     public function restore($course){
-        Course::where('id', $course)->RestoreFromTrash();
+        Course::where('id', $course)->where('branch_id',getCurrentUserBranchData()->branch_id)->RestoreFromTrash();
         $course = Course::where('id', $course)->first();
         return Active::Restored($course->trans_title);
     }

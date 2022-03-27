@@ -64,7 +64,7 @@ use App\Models\Training\CourseRegistration;
                 </td>
 
                 <td class="px-1">
-                    <span style="display: block;">{{$post->trans_name}}</span>
+                    <span style="display: block;">{{$post->branches[0]->pivot->name}}</span>
                 </td>
 
                 <td class="px-1">

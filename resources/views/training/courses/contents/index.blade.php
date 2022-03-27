@@ -678,9 +678,11 @@ $(function() {
             },
 
             deleteRequest : function(content_id){
+		        var self = this;
                 axios.get("{{route('training.delete_content')}}",{
                     params : {
-                        content_id : content_id
+                        content_id : content_id,
+                        course_id : self.course_id
                     }
                 })
                     .then(response => {
