@@ -50,7 +50,6 @@
 
 @endsection
 
-
 @section('content')
      <div class="card p-5 user-info">
         <form action="{{ route('user.update', $user->id) }}" method="post" enctype="multipart/form-data">
@@ -58,15 +57,15 @@
             <?php
                 $url = '';
                 // dd(file_exists(auth()->user()->upload->file));
-                if(auth()->user()->upload) {
+                if($user->file) {
                     // if (file_exists(auth()->user()->upload->file) == false){
                     //     $url = 'https://ui-avatars.com/api/?background=fb4400&color=fff&name=' . auth()->user()->trans_name;
                     // }else{
-                        $url = auth()->user()->upload->file;
+                        $url = $user->file;
                         $url = CustomAsset('upload/full/'. $url);
                     // }
                 }else {
-                    $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . auth()->user()->trans_name;
+                    $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . $user->user_name;
                 }
             ?>
             <div class="d-md-flex">
@@ -86,28 +85,19 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="en_name">{{__('education.english_name')}}</label>
-                                <input name="en_name" value="{{json_decode(auth()->user()->name)->en}}" type="text" id="en_name" class="form-control">
-                                @error('en_name')
+                                <label for="name">{{__('education.name')}}</label>
+                                <input name="name" value="{{$user->user_name}}" type="text" id="name" class="form-control">
+                                @error('name')
                                 <small class="text-danger" style="color: red;">{{$message}}</small>
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="ar_name">{{__('education.arabic_name')}}</label>
-                                <input name="ar_name" value="{{json_decode(auth()->user()->name)->ar}}" type="text" id="ar_name" class="form-control">
-                                @error('ar_name')
-                                <small class="text-danger" style="color: red;">{{$message}}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-lg-6" style="display: none;">
-                            <div class="form-group">
-                                <label for="headline">{{__('education.Headline')}}</label>
-                                <input name="headline" value="{{auth()->user()->headline}}" type="text" id="headline" class="form-control">
-                            </div>
-                        </div>
+{{--                        <div class="col-lg-6" style="display: none;">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="headline">{{__('education.Headline')}}</label>--}}
+{{--                                <input name="headline" value="{{$user->headline}}" type="text" id="headline" class="form-control">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         {{-- <div class="col-lg-6">
                             <div class="form-group h-100">
                                 <label for="bio">{{__('education.Bio')}}</label>
@@ -117,10 +107,10 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="language">{{__('education.Language')}}</label>
-                                <select name="language" value="{{auth()->user()->language}}" class="form-control @error('language') is-invalid @enderror ">
+                                <select name="language" value="{{$user->lang}}" class="form-control @error('language') is-invalid @enderror ">
                                     <option value="-1">{{__('education.choose')}}</option>
-                                    <option value="en" {{(old('language', auth()->user()->lang)=='en')?'selected="selected"':''}}>English</option>
-                                    <option value="ar" {{(old('language', auth()->user()->lang)=='ar')?'selected="selected"':''}}>Arabic</option>
+                                    <option value="en" {{(old('language', $user->lang)=='en')?'selected="selected"':''}}>English</option>
+                                    <option value="ar" {{(old('language', $user->lang)=='ar')?'selected="selected"':''}}>Arabic</option>
                                 </select>
                                 @error('language')
                                     <small class="text-danger" style="color: red;">{{$message}}</small>
@@ -130,14 +120,14 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="email">{{__('education.email')}}</label>
-                                <input disabled="true" name="email" value="{{auth()->user()->email}}" type="text" id="email" class="form-control">
+                                <input disabled="true" name="email" value="{{$user->email}}" type="text" id="email" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>{{__('education.Gender')}}</label>
-                                <select name="gender_id" value="{{auth()->user()->gender_id}}" class="form-control @error('gender_id') is-invalid @enderror ">
+                                <select name="gender_id" value="{{$user->gender_id}}" class="form-control @error('gender_id') is-invalid @enderror ">
                                     <option value="-1">{{__('education.choose')}}</option>
                                     @foreach($genders as $gender)
                                         <option value="{{$gender->id}}" {{(old('gender_id', $user->gender_id)==$gender->id)?'selected="selected"':''}}>{{$gender->trans_name}}</option>
@@ -152,21 +142,21 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="mobile">{{__('education.Mobile')}}</label>
-                                <input name="mobile" value="{{auth()->user()->mobile}}" type="mobile" id="mobile" class="form-control">
+                                <input name="mobile" value="{{$user->mobile}}" type="mobile" id="mobile" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="company">{{__('education.Company')}}</label>
-                                <input name="company" value="{{auth()->user()->company}}" type="text" id="company" class="form-control">
+                                <input name="company" value="{{$user->company}}" type="text" id="company" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="job_title">{{__('education.Job Title')}}</label>
-                                <input name="job_title" value="{{auth()->user()->job_title}}" type="text" id="job_title" class="form-control">
+                                <input name="job_title" value="{{$user->job_title}}" type="text" id="job_title" class="form-control">
                             </div>
                         </div>
 
