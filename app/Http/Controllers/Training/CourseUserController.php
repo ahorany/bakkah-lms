@@ -60,12 +60,7 @@ class CourseUserController extends Controller
 
         $course_users = DB::select($sql,$bindings);
 
-
-        $roles = Role::where('branch_id',getCurrentUserBranchData()->branch_id)
-            ->whereIn('role_type_id',[511,512])->orderBy('role_type_id')->get();
-
-
-        return view('training.courses.users.index', compact('course','course_users','sessions','roles'));
+        return view('training.courses.users.index', compact('course','course_users','sessions'));
     }
 
 
@@ -139,7 +134,7 @@ class CourseUserController extends Controller
                         'user_id'        => $user['user_id'],
                         'course_id'      => $course->id,
                         'expire_date'    => $user['expire_date'],
-                        'role_id'        => $user['role_id'] == 511 ? $instructor_id : $trainee_id ,
+                        'role_id'        => $user['role_type_id'] == 511 ? $instructor_id : $trainee_id ,
                         'paid_status'    => $user['paid_status'],
                         'session_id'     => $user['session_id'],
                     ]
