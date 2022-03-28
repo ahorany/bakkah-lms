@@ -41,7 +41,7 @@ class CertificateControllerH extends Controller
     public function index(){
         $post_type = 'certificate';
         $trash = GetTrash();
-        $certificates = Certificate::whereNull('parent_id');
+        $certificates = Certificate::whereNull('parent_id')->where('branch_id',getCurrentUserBranchData()->branch_id);
 
         if(!is_null(request()->title)) {
             $certificates = $certificates->where(function($query){
@@ -70,6 +70,8 @@ class CertificateControllerH extends Controller
         $validated = $this->Validated($request->validated());
         $validated['created_by'] = auth()->user()->id;
         $validated['title'] = null;
+        $validated['branch_id'] = getCurrentUserBranchData()->branch_id;
+
         $certificate = Certificate::create($validated);
         $post_type = request()->post_type;
 
@@ -81,7 +83,9 @@ class CertificateControllerH extends Controller
     }
 
     public function edit(Certificate $certificate){
-
+        if($certificate->branch_id != getCurrentUserBranchData()->branch_id){
+            abort(404);
+        }
         $childs     = Certificate::where('parent_id',$certificate->id)->get();
 
         $aligns = Constant::where('post_type','align')->get();
@@ -101,9 +105,12 @@ class CertificateControllerH extends Controller
     }
 
     public function update(CertificateRequest $request, Certificate $certificate){
-        // dd(request()->all());
+        if($certificate->branch_id != getCurrentUserBranchData()->branch_id){
+            abort(404);
+        }
         $validated = $this->validated($request->validated());
         $validated['updated_by'] = auth()->user()->id;
+        $validated['branch_id'] = getCurrentUserBranchData()->branch_id;
 
         Certificate::find($certificate->id)->update($validated);
         $this->uploadsCertificate($certificate, 'background', 'en');
@@ -138,13 +145,12 @@ class CertificateControllerH extends Controller
     }
 
     public function destroy(Certificate $certificate, Request $request){
-        // dd();
-        Certificate::where('id', $certificate->id)->SoftTrash();
+        Certificate::where('id', $certificate->id)->where('branch_id',getCurrentUserBranchData()->branch_id)->SoftTrash();
         return Active::Deleted($certificate->trans_title);
     }
 
     public function restore($certificate){
-        Certificate::where('id', $certificate)->RestoreFromTrash();
+        Certificate::where('id', $certificate)->where('branch_id',getCurrentUserBranchData()->branch_id)->RestoreFromTrash();
 
         $certificate = Certificate::where('id', $certificate)->first();
         return Active::Restored($certificate->title);
@@ -200,6 +206,11 @@ class CertificateControllerH extends Controller
 
     public function preview()
     {
+        $certificate =  Certificate::whereId(\request()->id)
+                      ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$certificate){
+            abort(404);
+        }
         // dd(request()->all());
         foreach(request()->all() as $key => $value)
         {
@@ -262,6 +273,11 @@ class CertificateControllerH extends Controller
 
     public function add_new()
     {
+        $certificate =  Certificate::whereId(\request()->parent_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$certificate){
+            abort(404);
+        }
         $certificate = new Certificate;
         $certificate->parent_id = request()->parent_id;
         $certificate->save();
@@ -330,9 +346,11 @@ class CertificateControllerH extends Controller
     }
     public function replicate()
     {
-        // dd(200);
         $parent_id = request()->certificate;
-        $c = Certificate::where('id',$parent_id)->first();
+        $c = Certificate::where('id',$parent_id)->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$c){
+            abort(404);
+        }
 
         $json = $c->title;
         $json = json_decode($json, true);
