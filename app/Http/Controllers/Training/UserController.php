@@ -246,6 +246,9 @@ class UserController extends Controller
 
         User::UploadFile($user, ['method' => 'update']);
 
+        if ($request->password){
+            Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
+        }
 
         return Active::Updated($user->trans_name, [
             'post_type' => $post_type,
