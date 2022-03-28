@@ -239,7 +239,8 @@
                                 this.deleteNodeFromTree(arrayElements, unit_id)
                                 axios.get("{{route('training.delete_unit')}}",{
                                     params : {
-                                        id : unit_id
+                                        id : unit_id,
+                                        course_id : self.course.id,
                                     }
                                 })
                                     .then(response => {
