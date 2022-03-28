@@ -128,6 +128,12 @@ class ContentController extends Controller
         }
 
         $course_id = request()->course_id;
+        $course = Course::select('id')->whereId($course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course){
+            abort(404);
+        }
+
         $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE course_id = $course_id  AND parent_id IS NULL"));
 
         $content = Content::create([
@@ -158,6 +164,12 @@ class ContentController extends Controller
             return response()->json(['errors' => $validate]);
         }
 
+        $course_id = request()->course_id;
+        $course = Course::select('id')->whereId($course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course){
+            abort(404);
+        }
 
         $content = Content::where('id',\request()->content_id)->update([
             'title' => request()->title,
@@ -181,6 +193,12 @@ class ContentController extends Controller
 
 
     public function reset_order_contents($course_id){
+        $course = Course::select('id')->whereId($course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course){
+            abort(404);
+        }
+
         $i = 0;
         $contents = Content::where('course_id',$course_id)
             ->whereNull('parent_id')
@@ -231,6 +249,14 @@ class ContentController extends Controller
         if($validator->fails()){
             return response()->json(['errors' => $validator->errors()]);
         }
+
+        $course_id = request()->course_id;
+        $course = Course::select('id')->whereId($course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course){
+            abort(404);
+        }
+
 
         $content = Content::whereId(request()->content_id)->update([
             'title'      => request()->title,
@@ -323,6 +349,16 @@ class ContentController extends Controller
         if($validate){
             return response()->json(['errors' => $validate]);
         }
+
+        $course_id = request()->course_id;
+        $course = Course::select('id')->whereId($course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course){
+            abort(404);
+        }
+
+
+
         $parent_id = (int) request()->content_id;
 
         $max_order =  DB::select(DB::raw("SELECT MAX(`order`) as max_order FROM `contents` WHERE parent_id= $parent_id  "));
@@ -517,6 +553,13 @@ class ContentController extends Controller
 
         if($validate){
             return response()->json(['errors' => $validate]);
+        }
+
+        $course_id = request()->course_id;
+        $course = Course::select('id')->whereId($course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course){
+            abort(404);
         }
 
         $paid_status = request()->paid_status == 'true' ? 504 : 503;
