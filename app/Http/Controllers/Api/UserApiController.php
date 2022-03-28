@@ -78,7 +78,7 @@ class UserApiController
                 ],[
                     'date_from' => $request->session_date_from,
                     'date_to' => $request->session_date_to,
-                    'branche_id' => 1,
+                    'branch_id' => 1,
                 ]);
 
 
