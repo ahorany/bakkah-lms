@@ -120,9 +120,9 @@ class CourseController extends Controller
 //////////////////////// Create Course /////////////////////////////////////////////
     public function create(){
         $certificate_types = Constant::where('parent_id', 323)->get();
-        $certificate_ids = Certificate::whereNull('parent_id')->get();
+        $certificate_ids = Certificate::whereNull('parent_id')->where('branch_id',getCurrentUserBranchData()->branch_id)->get();
         $delivery_methods = Constant::where('parent_id', 10)->get();
-        $categories = Category::get();
+        $categories = Category::where('branch_id',getCurrentUserBranchData()->branch_id)->get();
         return Active::Create(compact( 'certificate_types','delivery_methods','certificate_ids','categories'));
     }
 
@@ -143,9 +143,9 @@ class CourseController extends Controller
             abort(404);
         }
         $certificate_types = Constant::where('parent_id', 323)->get();
-        $certificate_ids = Certificate::whereNull('parent_id')->get();
+        $certificate_ids = Certificate::whereNull('parent_id')->where('branch_id',getCurrentUserBranchData()->branch_id)->get();
         $delivery_methods = Constant::where('parent_id', 10)->get();
-        $categories = Category::get();
+        $categories = Category::where('branch_id',getCurrentUserBranchData()->branch_id)->get();
 
         return Active::Edit(['eloquent'=>$course, 'delivery_methods' => $delivery_methods,  'certificate_types'=>$certificate_types,'certificate_ids'=>$certificate_ids,'categories'=>$categories]);
     }

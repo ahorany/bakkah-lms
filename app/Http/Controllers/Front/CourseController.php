@@ -245,11 +245,11 @@ class CourseController extends Controller
                 $q->where('branch_id',getCurrentUserBranchData()->branch_id);
             })->first();
 
-
         // Check if content not found => ABORT(404)
         if (!$content){
             abort(404);
         }// end if
+
 
         if(!$preview_gate_allows){
             // Check if user is not register in course AND user role not admin => ABORT(404)
@@ -275,7 +275,6 @@ class CourseController extends Controller
                 return redirect()->back()->with(["status" => 'danger',"msg" => "You can't unbox the gift until you complete the required sections."]);
             }// end if
         }// end if
-
 
 
         // Get next and prev

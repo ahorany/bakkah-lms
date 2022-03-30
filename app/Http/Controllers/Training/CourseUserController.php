@@ -65,7 +65,6 @@ class CourseUserController extends Controller
 
 
 
-
     public function search_user_course(){
         $lang = app()->getLocale();
         $name = '%'.request()->name.'%';
@@ -86,12 +85,12 @@ class CourseUserController extends Controller
 
         if (\request()->name && request()->email){
             $bindings = [$name,$email];
-            $sql .= " WHERE JSON_VALUE(users.name, '$.$lang') LIKE ?  OR users.email LIKE ?";
+            $sql .= " WHERE user_branches.name LIKE ?  OR users.email LIKE ?";
         }
 
         if (\request()->name){
             $bindings = [$name];
-            $sql .= " WHERE JSON_VALUE(users.name, '$.$lang') LIKE ?";
+            $sql .= " WHERE user_branches.name LIKE ?";
         }
 
         if (request()->email){
@@ -101,7 +100,6 @@ class CourseUserController extends Controller
         $users = DB::select($sql,$bindings);
         return response()->json([ 'status' => 'success' ,'users' => $users]);
     }
-
 
 
     public function add_users_course(){
