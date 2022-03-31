@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     <div class="user-info">
         <div class="row home-section hero">
             <div class="col-md-12 col-xl-12">
