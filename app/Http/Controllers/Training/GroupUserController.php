@@ -7,7 +7,9 @@ use App\Models\Training\CourseRegistration;
 use App\Models\Training\Group;
 use App\Models\Training\GroupCourse;
 use App\Models\Training\GroupUser;
+use App\Models\Training\Role;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 
 class GroupUserController extends Controller
@@ -17,33 +19,44 @@ class GroupUserController extends Controller
     public function group_users()
     {
         $group_id = request()->group_id;
-        $group = Group::with(['upload', 'users'])->where('id',$group_id)->first();
-        // return $group;
+        $group = Group::with(['upload', 'users'])
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)
+            ->where('id',$group_id)->first();
+        if (!$group) abort(404);
         return view('training.groups.users.index', compact('group'));
     }
 
     public function delete_user_group(){
-        $user_id = \request()->user_id;
-        $group_id = \request()->group_id;
-        $user =  User::findOrFail($user_id);
-        $group =  Group::findOrFail($group_id);
-        $group_user = GroupUser::where('group_id',$group_id)->where('user_id',$user_id)->first();
+        $user = DB::select("SELECT * FROM users
+                                 INNER JOIN user_groups ON user_groups.user_id = ".\request()->user_id."
+                                                       AND user_groups.group_id = ".\request()->group_id);
+        if(!$user) abort(404);
+
+        $group =  Group::whereId(\request()->group_id)
+                        ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$group) abort(404);
+
+
+        $group_user = GroupUser::where('group_id',\request()->group_id)->where('user_id',\request()->user_id)->first();
         if(!$group_user){
             abort(404);
         }
-        $this->delete_user_from_course_registration($group->id,$user_id,$group_user->role_id);
+
+        $this->delete_user_from_course_registration($group->id,\request()->user_id,$group_user->role_id);
 
         GroupUser::where('user_id',$user->id)->where('group_id',$group->id)->delete();
         return response()->json(['status' => 'success']);
     }
 
     public function search_user_group(){
-        $user_type = 2;
+        $user_type = 511;
         if(\request()->user_type == 'trainee'){
-            $user_type = 3;
+            $user_type = 512;
         }
 
-       $users = User::query();
+       $users = User::whereHas('branches',function ($q){
+           $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+       });
 
        $lock = true;
        if(is_null(request()->email) && is_null(request()->name)){
@@ -65,14 +78,12 @@ class GroupUserController extends Controller
 
 
         if($lock){
-            if($user_type == 2 ){
+            if($user_type == 511 ){
                 $users->whereHas('roles' , function($q) use($user_type){
-                    $q->where('role_id','!=',3);
+                    $q->where('role_type_id','!=',512);
                 });
             }
 
-
-//            dd($users->toSql());
             $users = $users->get();
         }
 
@@ -111,16 +122,19 @@ class GroupUserController extends Controller
 
 
     public function add_users_group(){
-        $group = Group::find(\request()->group_id);
+        $group = Group::whereId(\request()->group_id)
+                      ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
 
         if(!$group){
             return response()->json([ 'status' => 'fail']);
         }
 
         if(request()->user_type == 'instructor'){
-            $type_id = 2;
+            $type_id = Role::select('id')->where('branch_id',getCurrentUserBranchData()->branch_id)
+                                         ->where('role_type_id',511)->first()->id;
         }else{
-            $type_id = 3;
+            $type_id = Role::select('id')->where('branch_id',getCurrentUserBranchData()->branch_id)
+                ->where('role_type_id',512)->first()->id;
         }
 
         foreach (\request()->users as $key =>  $value){
