@@ -1401,9 +1401,9 @@ p.lead.light.card {
     .dash-header{
         display: none;
     }
-    .course_info, .course_header {
+    /* .course_info, .course_header {
         padding: 0 !important;
-    }
+    } */
     main#main-vue-element {
         padding: 0 !important;
     }
@@ -1508,6 +1508,30 @@ p.lead.light.card {
     .q-card{
         padding: 30px 10px !important;
     }
+    #sidebar-content ul li a , #sidebar-content .dropdown-sidebar>a{
+        padding: 10px 20px;
+    }
+    #sidebar-content ul.nav .dropdown-sidebar.active ul{
+        background: #fff !important;
+    }
+    .card , .home-section .text-center.course-image.p-3 , #main-vue-element .course-image , .information-card{
+        box-shadow: none;
+        border: 1px solid gainsboro;
+    }
+    .reports .card{
+        padding: 15px !important;
+    }
+    .home-section .course-cards:hover, .home-section .text-center.course-image:hover {
+        top: 0;
+    }
+    .no-padding{
+        padding: 0 !important;
+    }
+    .information-card {
+        padding: 15px;
+        background: #fff;
+        border-radius: 5px;
+    }
 }
 
 @media (max-width: 767.5px) and (min-width: 576.5px){
@@ -1547,14 +1571,11 @@ p.lead.light.card {
         border-bottom: 1px solid gainsboro;
         border-radius: 0;
     }
-    .home-section .text-center.course-image.p-3.last{
+    /* .home-section .text-center.course-image.p-3.last{
         border-bottom: none;
-    }
+    } */
     .home-section .card {
         padding: 15px !important;
-    }
-    .home-section .courses {
-        padding: 0 !important;
     }
     .lms-header ul.navbar-nav > li{
         margin-right: 20px;

@@ -1,5 +1,10 @@
 var menu_btn = document.querySelector('.navbar-toggler');
 menu_btn.onclick = e => {
+     if(!document.querySelector('#sidebarMenu')){
+        menu_btn.dataset.bsTarget = '#sidebar-content'
+     }
+
+
     document.querySelector(menu_btn.dataset.bsTarget).classList.toggle('show');
     menu_btn.firstElementChild.classList.toggle('mobile-none');
     menu_btn.lastElementChild.classList.toggle('mobile-none')

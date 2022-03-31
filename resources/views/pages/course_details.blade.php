@@ -97,7 +97,7 @@
                 </div>
                 <small>{{$course->users[0]->pivot->progress??0}}% Complete</small>
             </div>
-            <div class="mx-md-4 course_info">
+            <div class="mx-md-4 course_info information-card">
                 <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
                 @if($course->PDUs > 0)
                     <span class="pdu">
@@ -206,7 +206,7 @@
                         </div>
                     </div>
                 @else
-                    <div class="col-lg-12 col-xl-12 course_info">
+                    <div class="col-lg-12 col-xl-12 course_info no-padding">
                         <p class="lead light card">{{$course->trans_excerpt}}</p>
                     </div>
                 @endif
@@ -215,10 +215,10 @@
 
         @if (isset($course_collect[0]))
             <div class="row mx-0 mt-3 course-content">
-                <div class="col-12 course_info">
+                <div class="col-12 course_info no-padding">
                     <h3>{{__('education.Materials')}}</h3>
                 </div>
-                <div class="col-lg-8 mb-5 mb-lg-0 course_info">
+                <div class="col-lg-8 mb-5 mb-lg-0 course_info no-padding">
                     @foreach($course_collect[0] as $key => $section)
                         <div class="card learning-file mb-3">
                             <h3>{{$section->title}}</h3>
@@ -275,10 +275,8 @@
                                                             <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
                                                             <span>
                                                                 {{$content->title}}
-{{--                                                                @if ($content->paid_status == 504)--}}
                                                                 @if (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 504 && $content->paid_status == 504)
                                                                     <span>
-                                                                        {{-- <span class="mx-1">|</span> --}}
                                                                         <span class="mx-1 free">{{$content->paid_status == 504 ? 'Free' : '' }}</span>
                                                                     </span>
                                                                 @endif
@@ -321,10 +319,9 @@
                         <!-- /.learning-file -->
                     @endforeach
                 </div>
-                <div class="col-lg-4 course_info">
+                <div class="col-lg-4 course_info no-padding">
                     @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress >= $course->complete_progress ))
                         @if(!is_null($course_registration))
-                            {{-- class="green mb-1"  --}}
                             <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $course_registration->id ] )}}"
                                target="_blank">
                                 <div class="text-center course-image certificate certification-card">
@@ -424,7 +421,7 @@
                                                                             <span class="text">{{$content->title}}</span>
 
                                                                              <span class="svg">
-                                                                                 {{-- @dd(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1) --}}
+
                                                                                 @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                                                     <span>
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">

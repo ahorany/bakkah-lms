@@ -122,67 +122,65 @@
             </div>
         </div>
         @if (count($courses) > 0)
-            <div class="row home-section">
-                <div class="col-xl-12 col-md-12">
-                    <div class="card p-30 ">
-                        <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
-                        <div class="row">
-                            @forelse($courses as $course)
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
-                                <a href="{{CustomRoute('user.course_details',$course->id)}}">
-                                <div class="text-center course-image p-3 @if ($loop->last) last @endif">
-                                    <?php
-                                        $url = '';
-                                        // dd($course);
-                                        if($course->file) {
-                                                $url = $course->file;
-                                                $url = CustomAsset('upload/thumb200/'. $url);
-                                        }else {
-                                            $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . \App\Helpers\Lang::TransTitle($course->title);
-                                        }
-                                    ?>
-                                    @if($course->file)
-                                        <div class="image" style="height: 120px; display:flex; align-items: center; justify-content: center;">
-                                            <img src="{{$url}}" height="auto" width="80%">
-                                        </div>
-                                    @else
-                                        <div class="image no-img" style="height: 120px; display:flex; align-items: center; justify-content: center;">
-                                            <img src="{{$url}}" height="auto" width="100px">
-                                        </div>
-                                    @endif
-                                    @if($course->paid_status == 504)
-                                        <span class="status">Free</span>
-                                    @endif
-                                    <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 50px; font-weight:normal; display: flex; justify-content: center; align-items: center;">
-                                        {{ \App\Helpers\Lang::TransTitle($course->title) }}
-                                    </h3>
-                                    @php
-                                        $type = [
-                                            '11' => 'self-paced',
-                                            '13' => 'live-online',
-                                            '353' => 'exam-simulators',
-                                            '383' => 'instructor-led',
-                                        ];
-                                    @endphp
-                                    <span class="badge my-1 {{ $type[$course->training_option_id] }}">{{ \App\Helpers\Lang::TransTitle($course->training_option_name) }}</span>
-
-                                    @if($course->training_option_id != 11 && $course->session_id)
-                                      <div class="my-1 date">{{\App\Helpers\Date::IsoFormat($course->date_from) .' | '.\App\Helpers\Date::IsoFormat($course->date_to)}}</div>
-                                    @else
-                                      <div class="my-1 date"></div>
-                                    @endif
-
-                                    <div class="progress">
-                                        <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
+            <div class="home-section">
+                <div class="card p-30 ">
+                    <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
+                    <div class="row">
+                        @forelse($courses as $course)
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4 no-padding">
+                            <a href="{{CustomRoute('user.course_details',$course->id)}}">
+                            <div class="text-center course-image p-3 @if ($loop->last) last @endif">
+                                <?php
+                                    $url = '';
+                                    // dd($course);
+                                    if($course->file) {
+                                            $url = $course->file;
+                                            $url = CustomAsset('upload/thumb200/'. $url);
+                                    }else {
+                                        $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . \App\Helpers\Lang::TransTitle($course->title);
+                                    }
+                                ?>
+                                @if($course->file)
+                                    <div class="image" style="height: 120px; display:flex; align-items: center; justify-content: center;">
+                                        <img src="{{$url}}" height="auto" width="80%">
                                     </div>
-                                    <small>{{$course->progress??0}}% Complete</small>
+                                @else
+                                    <div class="image no-img" style="height: 120px; display:flex; align-items: center; justify-content: center;">
+                                        <img src="{{$url}}" height="auto" width="100px">
+                                    </div>
+                                @endif
+                                @if($course->paid_status == 504)
+                                    <span class="status">Free</span>
+                                @endif
+                                <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 50px; font-weight:normal; display: flex; justify-content: center; align-items: center;">
+                                    {{ \App\Helpers\Lang::TransTitle($course->title) }}
+                                </h3>
+                                @php
+                                    $type = [
+                                        '11' => 'self-paced',
+                                        '13' => 'live-online',
+                                        '353' => 'exam-simulators',
+                                        '383' => 'instructor-led',
+                                    ];
+                                @endphp
+                                <span class="badge my-1 {{ $type[$course->training_option_id] }}">{{ \App\Helpers\Lang::TransTitle($course->training_option_name) }}</span>
+
+                                @if($course->training_option_id != 11 && $course->session_id)
+                                  <div class="my-1 date">{{\App\Helpers\Date::IsoFormat($course->date_from) .' | '.\App\Helpers\Date::IsoFormat($course->date_to)}}</div>
+                                @else
+                                  <div class="my-1 date"></div>
+                                @endif
+
+                                <div class="progress">
+                                    <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
                                 </div>
-                                </a>
+                                <small>{{$course->progress??0}}% Complete</small>
                             </div>
-                            @empty
-                            <p>Not found any course!!</p>
-                            @endforelse
+                            </a>
                         </div>
+                        @empty
+                        <p>Not found any course!!</p>
+                        @endforelse
                     </div>
                 </div>
             </div>
