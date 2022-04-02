@@ -17,7 +17,6 @@
         </div>
 
         <ul class="nav flex-column postition-relative">
-
             <li class="nav-item">
                 <a class="nav-link {{  session()->get('active_sidebar_route_name') == 'user.home' ? 'active' : '' }}" aria-current="page" href="{{route('user.home')}}">
                     <span>
@@ -30,10 +29,10 @@
                 </a>
             </li>
 
-          @isset($role->id)
-              @if($role->role_type_id != 510)
+            @isset($role->id)
+                @if($role->role_type_id != 510)
                     @foreach($user_sidebar_courses as $item)
-                      <li class="nav-item">
+                        <li class="nav-item">
                         <a class="nav-link {{ ( session()->get('active_sidebar_route_name') == -1) &&  (url()->full() == CustomRoute('user.course_details',$item->id)) && (url()->full() != CustomRoute('user.home'))  ? 'active' : '' }}" href="{{CustomRoute('user.course_details',$item->id) }}">
                             <span class="d-flex align-items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36" viewBox="0 0 24.567 23.684">
@@ -54,10 +53,9 @@
                             <span>{{\App\Helpers\Lang::TransTitle($item->title)}}</span>
                         </a>
                     </li>
-                   @endforeach
-              @endif
-          @endisset
-
+                    @endforeach
+                @endif
+            @endisset
 
             @foreach($user_pages as $user_page)
                     @can($user_page->route_name)
@@ -194,6 +192,7 @@
                     </ul>
                 </div>
             </li>
+
             <li class="mobile-show">
                 <div class="dropdown-sidebar">
                     <a href="#">
@@ -233,32 +232,7 @@
                         </span>
                     </a>
                     <ul>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="{{route('user.add_message')}}">
-                                <span class="d-flex">
-                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/send-msg.svg')}}" alt="{{__('education.Send Message')}}"/>
-                                    {{__('education.Send Message')}}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('user.messages.inbox',['type'=>'sent'])}}">
-                                <span class="d-flex">
-                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/sent-item.svg')}}" alt="{{__('education.Sent Items')}}"/>
-                                    {{__('education.Sent Items')}}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('user.messages.inbox',['type'=>'inbox'])}}">
-                                <span class="d-flex">
-                                    <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/inbox.svg')}}" alt="{{__('education.Inbox')}}"/>
-                                    {{__('education.Inbox')}}
-                                </span>
-                            </a>
-                        </li> --}}
                         @foreach($user_branches as $branch)
-                            {{-- @if($branch->id == getCurrentUserBranchData()->branch_id) style="background: #eee;" @endif --}}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('user.change.branch',$branch->id)}}">
                                     <span class="d-flex">
@@ -399,5 +373,3 @@
         </ul>
     </div>
 </nav>
-
-

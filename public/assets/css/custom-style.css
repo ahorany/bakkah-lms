@@ -19,9 +19,6 @@ nav#sidebarMenu ul li a span.drop-icon svg{
     width: 12px !important;
     transition: all 0.5s ease;
 }
-/* nav#sidebarMenu ul li a span.drop-icon{
-    padding-top: 5px;
-} */
 nav#sidebarMenu ul li a span.title{
     display: flex;
     align-items: self-start;
@@ -30,6 +27,60 @@ nav#sidebarMenu ul li a span.title{
 .dropdown-sidebar.active span.drop-icon svg{
     transform: rotate(180deg);
     transition: all 0.5s ease;
+}
+#sidebar-content ul li a {
+    padding: 15px 30px;
+    display: block;
+}
+#sidebar-content ul.nav li.nav-item a , #sidebar-content li .dropdown-sidebar>a {
+    color: #303d47;
+}
+#sidebar-content ul.nav li.nav-item:hover,
+#sidebar-content li:hover .dropdown-sidebar>a,
+#sidebar-content li.active .dropdown-sidebar>a,
+#sidebar-content ul.nav li.nav-item.active{
+    background: #303d47;
+}
+#sidebar-content ul.nav li.nav-item:hover a,
+#sidebar-content li:hover .dropdown-sidebar>a,
+#sidebar-content li.active .dropdown-sidebar>a,
+#sidebar-content ul.nav li.nav-item.active a{
+    color: #fff;
+}
+#sidebar-content ul.nav li.nav-item a svg,
+#sidebar-content li .dropdown-sidebar>a .title svg{
+    margin-right: 5px;
+    width: 20px;
+}
+#sidebar-content ul.nav li.nav-item:hover a svg path,
+#sidebar-content li:hover .dropdown-sidebar>a svg path,
+#sidebar-content ul.nav li.nav-item.active a svg path,
+#sidebar-content li.active .dropdown-sidebar>a svg path{
+    fill: #fff;
+}
+#sidebar-content .dropdown-sidebar>a {
+    position: relative;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+}
+#sidebar-content .dropdown-sidebar>a span.drop-icon svg{
+    width: 12px;
+    height: 12px;
+}
+#sidebar-content .dropdown-sidebar>a span.title span , #sidebar-content ul li.nav-item .d-flex span{
+    height: 20px;
+}
+/* #sidebar-content .dropdown-sidebar>a span.title span{
+    height: 12px;
+} */
+#sidebar-content .dropdown-sidebar>a span.title {
+    display: flex;
+    align-items: center;
+}
+#sidebar-content ul.nav .dropdown-sidebar.active ul{
+    background: transparent !important;
 }
 
 /********************************/
@@ -1350,9 +1401,9 @@ p.lead.light.card {
     .dash-header{
         display: none;
     }
-    .course_info, .course_header {
+    /* .course_info, .course_header {
         padding: 0 !important;
-    }
+    } */
     main#main-vue-element {
         padding: 0 !important;
     }
@@ -1457,6 +1508,30 @@ p.lead.light.card {
     .q-card{
         padding: 30px 10px !important;
     }
+    #sidebar-content ul li a , #sidebar-content .dropdown-sidebar>a{
+        padding: 10px 20px;
+    }
+    #sidebar-content ul.nav .dropdown-sidebar.active ul{
+        background: #fff !important;
+    }
+    .card , .home-section .text-center.course-image.p-3 , #main-vue-element .course-image , .information-card{
+        box-shadow: none;
+        border: 1px solid gainsboro;
+    }
+    .reports .card{
+        padding: 15px !important;
+    }
+    .home-section .course-cards:hover, .home-section .text-center.course-image:hover {
+        top: 0;
+    }
+    .no-padding{
+        padding: 0 !important;
+    }
+    .information-card {
+        padding: 15px;
+        background: #fff;
+        border-radius: 5px;
+    }
 }
 
 @media (max-width: 767.5px) and (min-width: 576.5px){
@@ -1496,14 +1571,11 @@ p.lead.light.card {
         border-bottom: 1px solid gainsboro;
         border-radius: 0;
     }
-    .home-section .text-center.course-image.p-3.last{
+    /* .home-section .text-center.course-image.p-3.last{
         border-bottom: none;
-    }
+    } */
     .home-section .card {
         padding: 15px !important;
-    }
-    .home-section .courses {
-        padding: 0 !important;
     }
     .lms-header ul.navbar-nav > li{
         margin-right: 20px;
