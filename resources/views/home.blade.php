@@ -47,9 +47,6 @@
                     <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-center">
 
                         <div class="course-cards" style="border-color: rgb(251 68 0 / 50%);">
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="71.3" viewBox="0 0 71.3 71.3" class="icon-report bg-main">
-                                <path id="Path_164" data-name="Path 164" d="M254.387,629.475h-8.913v8.912a8.91,8.91,0,0,1-8.912,8.913h-35.65A8.91,8.91,0,0,1,192,638.387v-35.65a8.91,8.91,0,0,1,8.913-8.912h8.913v-8.913A8.91,8.91,0,0,1,218.737,576h35.65a8.91,8.91,0,0,1,8.912,8.912v35.65a8.91,8.91,0,0,1-8.912,8.913Zm-53.475,8.912h35.65v-35.65h-35.65v35.65Zm53.475-53.475h-35.65v8.913h17.825a8.91,8.91,0,0,1,8.912,8.912v17.825h8.913v-35.65Z" transform="translate(-192 -576)" fill-rule="evenodd"></path>
-                            </svg> --}}
                             <svg version="1.1" class="icon-report bg-main" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve">
                                 <style type="text/css">
                                     .st0{fill:none;stroke:#fff;stroke-width:3.0215;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
@@ -230,12 +227,6 @@
                             <ul class="video-list">
                                 @foreach($next_videos as $next_video)
                                     <li>
-                                        {{-- <div class="play">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17.325" height="19.732" viewBox="0 0 17.325 19.732">
-                                                <path id="Path_92" data-name="Path 92" d="M1586.871,1153.329V1133.6l17.325,9.8Z" transform="translate(-1586.871 -1133.597)" fill="#fff"/>
-                                            </svg>
-                                        </div> --}}
-                                        {{-- class="svg-icons" --}}
                                         <img style="width:30px; height:30px; opacity: 0.6;" src="{{CustomAsset('icons/video.svg')}}" alt="{{$next_video->title}}"/>
                                         <div class="text" style="margin: 1px 5px; padding-top: 1px;">
                                             <h5><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </h5>
@@ -273,10 +264,8 @@
             ],
             datasets: [
                 {
-                    // data: [courses_count, progress, not_complete, complete],
                     data: [progress, not_complete, complete],
                     backgroundColor: [
-                        // "#303d47",
                         "#00bcb3",
                         "#eaeaea",
                         "#fb4400",
@@ -290,52 +279,6 @@
         });
 
     </script>
-{{--    <script>--}}
-{{--        var ctx = document.getElementById('myChart')--}}
-{{--        // eslint-disable-next-line no-unused-vars--}}
-{{--        var myChart = new Chart(ctx, {--}}
-{{--            type: 'line',--}}
-{{--            data: {--}}
-{{--                labels: [--}}
-{{--                    'Jan',--}}
-{{--                    'Feb',--}}
-{{--                    'Mar',--}}
-{{--                    'Apr',--}}
-{{--                    'May',--}}
-{{--                    'Jun',--}}
-{{--                    'Jul ',--}}
-{{--                    'Aug',--}}
-{{--                    'Sep',--}}
-{{--                    'Oct',--}}
-{{--                    'Nov',--}}
-{{--                    'Dec',--}}
-{{--                ],--}}
-{{--                datasets: [{--}}
-{{--                    data: [100, 50, 20, 155, 20, 33, 75, 88, 45, 90, 10, 50],--}}
-{{--                    lineTension: 0,--}}
-{{--                    backgroundColor: 'transparent',--}}
-{{--                    borderColor: '#D1D1D1',--}}
-{{--                    borderWidth: 2,--}}
-{{--                    pointBackgroundColor: '#fb4400'--}}
-{{--                }]--}}
-{{--            },--}}
-{{--            options: {--}}
-{{--                scales: {--}}
-{{--                    xAxes: [{--}}
-{{--                        gridLines: {--}}
-{{--                            display: false--}}
-{{--                        }--}}
-{{--                    }],--}}
-{{--                    yAxes: [{--}}
-{{--                        display: false,--}}
-{{--                    }]--}}
-{{--                },--}}
-{{--                legend: {--}}
-{{--                    display: false--}}
-{{--                }--}}
-{{--            }--}}
-{{--        })--}}
-{{--    </script>--}}
 @endsection
 
 

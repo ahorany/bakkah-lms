@@ -12,6 +12,7 @@ use App\Models\Training\Category;
 use App\Constant;
 use App\Models\Training\Certificate;
 use App\Models\Training\Group;
+use App\Models\Training\Role;
 use App\Models\Training\Unit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,8 +44,12 @@ class CourseController extends Controller
         if(is_super_admin() || $user->role_type_id == 510){
             $courses = Course::with(['upload', 'user','deliveryMethod']);
         }else{  // (Not All courses  just registared)
-            $courses = Course::with(['upload'])->whereHas('users', function($q){
-                return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',2);
+            $role_instructor_id = Role::select('id')->where('role_type_id')
+                                   ->where('branch_id',getCurrentUserBranchData()->branch_id)
+                                   ->first()->id;
+            $courses = Course::with(['upload'])
+                       ->whereHas('users', function($q) use($role_instructor_id){
+                return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',$role_instructor_id);
             });
         }
 
@@ -74,7 +79,6 @@ class CourseController extends Controller
         $categories = Category::get();
         $delivery_methods = Constant::where('parent_id', 10)->get();
 
-//        return $courses;
         return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors','completed_learners','categories','delivery_methods'));
     }
 
@@ -87,17 +91,31 @@ class CourseController extends Controller
     }
 
     private function getAssignedLearners(){
-        $assigned_learners = DB::table('courses_registration')->where('role_id',3);
+        $assigned_learners = DB::table('courses_registration')
+                              ->join('roles',function ($join){
+                                  $join->on('roles.id','=','courses_registration.role_id')
+                                       ->where('roles.role_type_id',512)
+                                       ->where('roles.deleted_at',null)
+                                       ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+                              });
+
         if(!is_null(request()->course_search)) {
             $assigned_learners = $assigned_learners->join('courses','courses.id','courses_registration.course_id');
-
             $assigned_learners = $this->SearchCond($assigned_learners);
         }
+
         return $assigned_learners->count();
     }
 
     private function getAssignedInstructors(){
-        $assigned_instructors = DB::table('courses_registration')->where('role_id',2);
+        $assigned_instructors = DB::table('courses_registration')
+            ->join('roles',function ($join){
+                $join->on('roles.id','=','courses_registration.role_id')
+                    ->where('roles.role_type_id',511)
+                    ->where('roles.deleted_at',null)
+                    ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+            });
+
         if(!is_null(request()->course_search)) {
             $assigned_instructors = $assigned_instructors->join('courses','courses.id','courses_registration.course_id');
 
@@ -107,7 +125,14 @@ class CourseController extends Controller
     }
 
     private function getCompletedLearners(){
-        $completed_learners = DB::table('courses_registration')->where('role_id',3)->where('progress',100);
+        $completed_learners = DB::table('courses_registration')
+            ->join('roles',function ($join){
+                $join->on('roles.id','=','courses_registration.role_id')
+                    ->where('roles.role_type_id',512)
+                    ->where('roles.deleted_at',null)
+                    ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->where('progress',100);
         if(!is_null(request()->course_search)) {
             $completed_learners = $completed_learners->join('courses','courses.id','courses_registration.course_id');
 

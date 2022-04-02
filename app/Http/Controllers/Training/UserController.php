@@ -77,7 +77,14 @@ class UserController extends Controller
     }
 
     private function getLearnersNo(){
-        $learners_no  = DB::table('model_has_roles')->where('model_has_roles.role_id',3);
+        $learners_no  = DB::table('model_has_roles')->join('roles',function ($join){
+            $join->on('roles.id','=','model_has_roles.role_id')
+                ->where('roles.role_type_id',512)
+                ->where('roles.deleted_at',null)
+                ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+        });
+
+
         if (!is_null(request()->user_search)) {
             $learners_no = $learners_no->join('users','users.id','model_has_roles.model_id');
             $learners_no = $this->SearchUser($learners_no);
@@ -86,7 +93,12 @@ class UserController extends Controller
     }
 
     private function getCompleteCoursesNo(){
-        $complete_courses_no = DB::table('courses_registration')->where('progress',100);
+        $complete_courses_no = DB::table('courses_registration')
+            ->join('courses',function ($join){
+                $join->on('courses.id','=','courses_registration.course_id')
+                    ->where('courses.deleted_at',null)
+                    ->where('courses.branch_id',getCurrentUserBranchData()->branch_id);
+            })->where('progress',100);
         if (!is_null(request()->user_search)) {
             $complete_courses_no = $complete_courses_no->join('users','users.id','courses_registration.user_id');
             $complete_courses_no = $this->SearchUser($complete_courses_no);
@@ -95,7 +107,13 @@ class UserController extends Controller
     }
 
     private function getCoursesInProgress(){
-        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('progress','>',0);
+        $courses_in_progress = DB::table('courses_registration')
+            ->join('courses',function ($join){
+                $join->on('courses.id','=','courses_registration.course_id')
+                    ->where('courses.deleted_at',null)
+                    ->where('courses.branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->where('progress','<',100)->where('progress','>',0);
         if (!is_null(request()->user_search)) {
             $courses_in_progress = $courses_in_progress->join('users','users.id','courses_registration.user_id');
             $courses_in_progress = $this->SearchUser($courses_in_progress);
@@ -104,7 +122,13 @@ class UserController extends Controller
     }
 
     private function getCoursesNotStarted(){
-        $courses_not_started = DB::table('courses_registration')->where('progress',0);
+        $courses_not_started = DB::table('courses_registration')
+            ->join('courses',function ($join){
+                $join->on('courses.id','=','courses_registration.course_id')
+                    ->where('courses.deleted_at',null)
+                    ->where('courses.branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->where('progress',0);
         if (!is_null(request()->user_search)) {
             $courses_not_started = $courses_not_started->join('users','users.id','courses_registration.user_id');
             $courses_not_started = $this->SearchUser($courses_not_started);
@@ -185,10 +209,7 @@ class UserController extends Controller
 
         $role_id = $user->roles()->where('branch_id',$current_user_branch->branch_id)->select('roles.id')->first()->id??-1;
 
-//        $user = $user->whereHas('branches' , function($q)  use($current_user_branch,$user){
-//            $q->where('branch_id',$current_user_branch->branch_id)->where('user_id',$user->id);
-//        })->with(['branches'])->get();
-
+        
         $user_branch = DB::table('user_branches')
                       ->where('user_id',$user->id)
                       ->where('branch_id',$current_user_branch->branch_id)->first();
