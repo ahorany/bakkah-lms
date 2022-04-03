@@ -209,7 +209,7 @@ class UserController extends Controller
 
         $role_id = $user->roles()->where('branch_id',$current_user_branch->branch_id)->select('roles.id')->first()->id??-1;
 
-        
+
         $user_branch = DB::table('user_branches')
                       ->where('user_id',$user->id)
                       ->where('branch_id',$current_user_branch->branch_id)->first();
