@@ -71,15 +71,12 @@ class CategoryController extends Controller
         }
         $validated = $this->Validated($request->validated());
         $validated['updated_by'] = auth()->user()->id;
-        Category::whereId($category->id)->where('branch_id',getCurrentUserBranchData()->branch_id)->update($validated);
+        $category->update($validated);
         return Active::Updated($category->trans_title);
     }
 
 
     public function destroy(Category $category){
-        if (getCurrentUserBranchData()->branch_id != $category->branch_id){
-            abort(404);
-        }
         Category::where('id', $category->id)->where('branch_id',getCurrentUserBranchData()->branch_id)->SoftTrash();
         return Active::Deleted($category->trans_title);
     }

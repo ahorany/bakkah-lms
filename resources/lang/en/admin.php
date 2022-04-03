@@ -178,4 +178,7 @@ return [
     'True'=>'Register',
     'False'=>'Not Register',
     'add_user'=>'Add User',
+    'course_title'=>'course title',
+    'date_from'=>'date from',
+    'date_to'=>'date to',
 ];

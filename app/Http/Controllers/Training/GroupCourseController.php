@@ -13,27 +13,30 @@ use App\Models\Training\GroupUser;
 class GroupCourseController extends Controller
 {
 
-
     public function group_courses ()
     {
         $group_id = request()->group_id;
-        $group = Group::with(['upload', 'courses'])->where('id',$group_id)->first();
+        $group = Group::with(['upload', 'courses'])->where('branch_id',getCurrentUserBranchData()->branch_id)
+                                                    ->where('id',$group_id)->first();
+        if (!$group) abort(404);
         return view('training.groups.courses.index', compact('group'));
     }
 
     public function delete_course_group(){
-        $course_id = \request()->course_id;
-        $group_id = \request()->group_id;
-        $course =  Course::findOrFail($course_id);
-        $group =  Group::findOrFail($group_id);
-        $this->delete_group_users_from_course_registration($group_id,$course_id);
+        $course =  Course::whereId(\request()->course_id)->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course) abort(404);
+
+        $group =  Group::whereId(\request()->group_id)->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$group) abort(404);
+
+        $this->delete_group_users_from_course_registration(\request()->group_id,\request()->course_id);
 
         GroupCourse::where('course_id',$course->id)->where('group_id',$group->id)->delete();
         return response()->json(['status' => 'success']);
     }
 
     public function search_course_group(){
-       $courses = Course::query();
+       $courses = Course::where('branch_id',getCurrentUserBranchData()->branch_id);
 
        $lock = true;
        if( is_null(request()->name)){
@@ -83,7 +86,7 @@ class GroupCourseController extends Controller
     }
 
         public function add_course_group(){
-        $group = Group::find(\request()->group_id);
+        $group = Group::whereId(\request()->group_id)->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
 
         if(!$group){
             return response()->json([ 'status' => 'fail']);

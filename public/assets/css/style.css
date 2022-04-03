@@ -67,7 +67,7 @@ body {
   bottom: 0;
   left: 0;
   z-index: 100;
-  padding: 65px 0 0;
+  padding: 60px 0 0;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
   overflow-y: auto;
 }
@@ -698,7 +698,7 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 .lms-header ul.navbar-nav li a.nav-link {
   display: flex;
   align-items: center;
-  width: 35px;
+  min-width: 35px;
   height: 35px;
   background: #eee;
   justify-content: center;
@@ -706,7 +706,7 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
 }
 
 .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role {
-    width: 150px;
+    min-width: 150px;
     background: #f7f7f7;
     border-radius: 3px;
     justify-content: space-around;
@@ -1550,7 +1550,7 @@ ul.badges li svg {
     padding: 12px 0 !important;
   }
   .lms-header ul.navbar-nav li a.nav-link {
-    width: 30px;
+    min-width: 30px;
     height: 30px;
   }
   .lms-header ul.navbar-nav li a svg {

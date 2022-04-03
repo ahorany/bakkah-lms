@@ -132,7 +132,7 @@ class MessageController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-       $msg = Message::create([
+        $msg = Message::create([
             'user_id' => auth()->user()->id,
             'course_id' => request()->course_id,
             'role_id' => request()->recipient_id,
@@ -140,15 +140,15 @@ class MessageController extends Controller
             'description' => request()->description,
         ]);
 
-       $recipients = CourseRegistration::where('course_id', request()->course_id)
-       ->whereIn('role_id', [2, 1])
-       ->get();
+        $recipients = CourseRegistration::where('course_id', request()->course_id)
+            ->whereIn('role_id', [2, 1])
+            ->get();
         foreach ($recipients as $recipient){
 
             RecipientMessage::create([
-               'user_id' => $recipient->user_id,
-               'role_id' => $recipient->role_id,
-               'message_id' => $msg->id,
+                'user_id' => $recipient->user_id,
+                'role_id' => $recipient->role_id,
+                'message_id' => $msg->id,
             ]);
 
             $user = User::where('id',$recipient->user_id)->first();
@@ -173,13 +173,13 @@ class MessageController extends Controller
 
     public function addreply(){
 
-       $message =  Message::where('id',request()->message_id)
+        $message =  Message::where('id',request()->message_id)
             ->with(['course'])
             ->first();
 
-       if(!$message || !$message->course){
-           abort(404);
-       }
+        if(!$message || !$message->course){
+            abort(404);
+        }
 
         $rules = [
             "reply"   => "required",
@@ -227,20 +227,20 @@ class MessageController extends Controller
         $operation_type = Constant::where('post_type', $operation)->pluck('id')->first();
 
         $query = DB::table($table_name)
-        ->where('id', request()->likeable_id);
+            ->where('id', request()->likeable_id);
 
         $like = Like::where('likeable_id', request()->likeable_id)
-        ->where('likeable_type', $likeable_type)
-        ->where('operation', $operation_type)
-        ->where('created_by', auth()->id());
+            ->where('likeable_type', $likeable_type)
+            ->where('operation', $operation_type)
+            ->where('created_by', auth()->id());
 
         $like_old = $like->first();
         if(is_null($like_old)){
 
             $like_old_from_null = Like::where('likeable_id', request()->likeable_id)
-            ->where('likeable_type', $likeable_type)
-            ->where('created_by', auth()->id())
-            ->first();
+                ->where('likeable_type', $likeable_type)
+                ->where('created_by', auth()->id())
+                ->first();
 
             Like::updateOrCreate([
                 'likeable_id'=>request()->likeable_id,

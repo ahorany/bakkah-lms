@@ -39,6 +39,7 @@ class CourseContentHelper
     public static function getUserCourseCountsCount($course_id){
         $sql = "SELECT COUNT(user_contents.id) as user_contents_count FROM user_contents
                INNER JOIN contents on user_contents.content_id = contents.id
+               INNER JOIN courses on courses.id = contents.course_id AND courses.deleted_at IS NULL AND courses.branch_id = ".getCurrentUserBranchData()->branch_id."
                WHERE user_contents.user_id =".\auth()->id()."
                AND  contents.deleted_at IS NULL
                AND  contents.role_and_path = 1
@@ -58,6 +59,7 @@ class CourseContentHelper
         // Get Contents Count
         $sql = "SELECT COUNT(id) as contents_count
                 FROM contents
+                INNER JOIN courses on courses.id = contents.course_id AND courses.deleted_at IS NULL AND courses.branch_id = ".getCurrentUserBranchData()->branch_id."
                 WHERE   course_id =". $course_id ."
                 AND parent_id IS NOT NULL
                 AND  deleted_at IS NULL
@@ -77,6 +79,7 @@ class CourseContentHelper
 
         $sql = "SELECT contents.id , sections.id as section_id , contents.order,sections.order as section_order , contents.title,contents.post_type FROM `contents`
         INNER JOIN contents AS sections ON contents.parent_id = sections.id AND sections.deleted_at IS NULL
+        INNER JOIN courses on courses.id = contents.course_id AND courses.deleted_at IS NULL AND courses.branch_id = ".getCurrentUserBranchData()->branch_id."
         WHERE contents.course_id =  $course_id
         AND contents.id !=  $content_id
         AND contents.deleted_at IS NULL
@@ -94,6 +97,7 @@ class CourseContentHelper
 
         $sql = "SELECT contents.id , contents.title,contents.post_type FROM `contents`
                        INNER JOIN contents AS sections ON contents.parent_id = sections.id AND sections.deleted_at IS NULL
+                       INNER JOIN courses on courses.id = contents.course_id AND courses.deleted_at IS NULL AND courses.branch_id = ".getCurrentUserBranchData()->branch_id."
                        WHERE contents.course_id = $course_id
                        AND contents.id !=  $content_id
                        AND contents.deleted_at IS NULL

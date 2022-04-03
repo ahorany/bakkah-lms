@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Training;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CourseRequest extends FormRequest
 {
@@ -42,7 +43,10 @@ class CourseRequest extends FormRequest
             'code'=>'max:20',
             'training_option_id'=>'required|exists:constants,id',
             'certificate_id'=>'required|exists:certificates,id',
-            'category_id'=>'required|exists:categories,id',
+            'category_id'   => ['required',
+                Rule::exists('categories','id')
+                    ->where('branch_id',getCurrentUserBranchData()->branch_id)
+            ],
             'file'=>'image|mimes:jpeg,png,jpg,gif,svg|max:20480',
             'intro_video'=>'file|mimes:mp4|max:20480',
             'ref_id'=>'required|string|max:200',

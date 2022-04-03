@@ -20,13 +20,12 @@
     <div class="col-md-6 email">
         <div class="form-group">
             <label>Email </label>
-            <input maxlength="155" type="text" name="email" class="form-control" placeholder="Email" value="">
+            <input maxlength="155" @isset($eloquent) disabled="true" @endisset type="text" name="email" class="form-control" placeholder="Email" value="{{isset($eloquent) ? $eloquent->email : null}}">
         </div>
     </div>
 
 
-
-    {!! Builder::Input('name', 'name', null, ['col' => 'col-md-6']) !!}
+    {!! Builder::Input('name', 'name',isset($user_branch) ? $user_branch->name : null, ['col' => 'col-md-6']) !!}
     {!! Builder::Input('mobile', 'mobile', null, ['col' => 'col-md-6']) !!}
     {!! Builder::Select('gender_id', 'gender_id', $genders->where('parent_id', 42), null, [
         'col' => 'col-md-6',
@@ -54,35 +53,32 @@
     </div>
 @endsection
 
-@section('script')
-<script>
-    window.lock = true
-        $( ".email input" ).blur(function() {
-            // if(window.lock) {
-                window.lock = false;
+@if(!isset($eloquent))
+    @section('script')
+       <script>
+            $( ".email input" ).blur(function() {
+                    $.ajax({
+                        url: "{{route('training.getUserData')}}",
+                        data: {'email' : $(this).val()}
+                    }).done(function(response) {
+                        if(response.status){
+                            $( ".name input" ).val(response.data.name)
+                            $( ".mobile input" ).val(response.data.mobile)
+                            $( "select[name='gender_id']" ).val(response.data.gender_id)
+                            $( ".password , .password_confirmation" ).css('display','none')
+                            // $( ".note" ).css('display','block')
+                            $( ".mobile input , select[name='gender_id']" ).attr('disabled',true)
+                        }else{
+                            $( ".password , .password_confirmation" ).css('display','block')
+                            // $( ".note" ).css('display','none')
+                            $( ".mobile input , select[name='gender_id']" ).attr('disabled',false)
+                            $( ".mobile input" ).val('')
+                            $( "select[name='gender_id']" ).val('-1')
 
-                $.ajax({
-                    url: "{{route('training.getUserData')}}",
-                    data: {'email' : $(this).val()}
-                }).done(function(response) {
-                    if(response.status){
-                        $( ".name input" ).val(response.data.name)
-                        $( ".mobile input" ).val(response.data.mobile)
-                        $( "select[name='gender_id']" ).val(response.data.gender_id)
-                        $( ".password , .password_confirmation" ).css('display','none')
-                        $( ".note" ).css('display','block')
-                    }else{
-                        $( ".password , .password_confirmation" ).css('display','block')
-                        $( ".note" ).css('display','none')
+                        }
+                    });
+            });
 
-                    }
-                });
-
-
-
-            // }
-
-        });
-
-</script>
-@endsection
+    </script>
+    @endsection
+@endif

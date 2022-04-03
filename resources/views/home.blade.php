@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     <div class="user-info">
         <div class="row home-section hero">
             <div class="col-md-12 col-xl-12">
@@ -47,9 +48,6 @@
                     <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-center">
 
                         <div class="course-cards" style="border-color: rgb(251 68 0 / 50%);">
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="71.3" height="71.3" viewBox="0 0 71.3 71.3" class="icon-report bg-main">
-                                <path id="Path_164" data-name="Path 164" d="M254.387,629.475h-8.913v8.912a8.91,8.91,0,0,1-8.912,8.913h-35.65A8.91,8.91,0,0,1,192,638.387v-35.65a8.91,8.91,0,0,1,8.913-8.912h8.913v-8.913A8.91,8.91,0,0,1,218.737,576h35.65a8.91,8.91,0,0,1,8.912,8.912v35.65a8.91,8.91,0,0,1-8.912,8.913Zm-53.475,8.912h35.65v-35.65h-35.65v35.65Zm53.475-53.475h-35.65v8.913h17.825a8.91,8.91,0,0,1,8.912,8.912v17.825h8.913v-35.65Z" transform="translate(-192 -576)" fill-rule="evenodd"></path>
-                            </svg> --}}
                             <svg version="1.1" class="icon-report bg-main" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve">
                                 <style type="text/css">
                                     .st0{fill:none;stroke:#fff;stroke-width:3.0215;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
@@ -121,67 +119,65 @@
             </div>
         </div>
         @if (count($courses) > 0)
-            <div class="row home-section">
-                <div class="col-xl-12 col-md-12">
-                    <div class="card p-30 ">
-                        <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
-                        <div class="row">
-                            @forelse($courses as $course)
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
-                                <a href="{{CustomRoute('user.course_details',$course->id)}}">
-                                <div class="text-center course-image p-3 @if ($loop->last) last @endif">
-                                    <?php
-                                        $url = '';
-                                        // dd($course);
-                                        if($course->file) {
-                                                $url = $course->file;
-                                                $url = CustomAsset('upload/thumb200/'. $url);
-                                        }else {
-                                            $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . \App\Helpers\Lang::TransTitle($course->title);
-                                        }
-                                    ?>
-                                    @if($course->file)
-                                        <div class="image" style="height: 120px; display:flex; align-items: center; justify-content: center;">
-                                            <img src="{{$url}}" height="auto" width="80%">
-                                        </div>
-                                    @else
-                                        <div class="image no-img" style="height: 120px; display:flex; align-items: center; justify-content: center;">
-                                            <img src="{{$url}}" height="auto" width="100px">
-                                        </div>
-                                    @endif
-                                    @if($course->paid_status == 504)
-                                        <span class="status">Free</span>
-                                    @endif
-                                    <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 50px; font-weight:normal; display: flex; justify-content: center; align-items: center;">
-                                        {{ \App\Helpers\Lang::TransTitle($course->title) }}
-                                    </h3>
-                                    @php
-                                        $type = [
-                                            '11' => 'self-paced',
-                                            '13' => 'live-online',
-                                            '353' => 'exam-simulators',
-                                            '383' => 'instructor-led',
-                                        ];
-                                    @endphp
-                                    <span class="badge my-1 {{ $type[$course->training_option_id] }}">{{ \App\Helpers\Lang::TransTitle($course->training_option_name) }}</span>
-
-                                    @if($course->training_option_id != 11 && $course->session_id)
-                                      <div class="my-1 date">{{\App\Helpers\Date::IsoFormat($course->date_from) .' | '.\App\Helpers\Date::IsoFormat($course->date_to)}}</div>
-                                    @else
-                                      <div class="my-1 date"></div>
-                                    @endif
-
-                                    <div class="progress">
-                                        <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
+            <div class="home-section">
+                <div class="card p-30 ">
+                    <h3 class="mb-5">{{ __('education.Course Overview') }}</h3>
+                    <div class="row">
+                        @forelse($courses as $course)
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4 no-padding">
+                            <a href="{{CustomRoute('user.course_details',$course->id)}}">
+                            <div class="text-center course-image p-3 @if ($loop->last) last @endif">
+                                <?php
+                                    $url = '';
+                                    // dd($course);
+                                    if($course->file) {
+                                            $url = $course->file;
+                                            $url = CustomAsset('upload/thumb200/'. $url);
+                                    }else {
+                                        $url = 'https://ui-avatars.com/api/?background=6a6a6a&color=fff&name=' . \App\Helpers\Lang::TransTitle($course->title);
+                                    }
+                                ?>
+                                @if($course->file)
+                                    <div class="image" style="height: 120px; display:flex; align-items: center; justify-content: center;">
+                                        <img src="{{$url}}" height="auto" width="80%">
                                     </div>
-                                    <small>{{$course->progress??0}}% Complete</small>
+                                @else
+                                    <div class="image no-img" style="height: 120px; display:flex; align-items: center; justify-content: center;">
+                                        <img src="{{$url}}" height="auto" width="100px">
+                                    </div>
+                                @endif
+                                @if($course->paid_status == 504)
+                                    <span class="status">Free</span>
+                                @endif
+                                <h3 style="color: #000; margin: 0; margin-top: 5px; min-height: 50px; font-weight:normal; display: flex; justify-content: center; align-items: center;">
+                                    {{ \App\Helpers\Lang::TransTitle($course->title) }}
+                                </h3>
+                                @php
+                                    $type = [
+                                        '11' => 'self-paced',
+                                        '13' => 'live-online',
+                                        '353' => 'exam-simulators',
+                                        '383' => 'instructor-led',
+                                    ];
+                                @endphp
+                                <span class="badge my-1 {{ $type[$course->training_option_id] }}">{{ \App\Helpers\Lang::TransTitle($course->training_option_name) }}</span>
+
+                                @if($course->training_option_id != 11 && $course->session_id)
+                                  <div class="my-1 date">{{\App\Helpers\Date::IsoFormat($course->date_from) .' | '.\App\Helpers\Date::IsoFormat($course->date_to)}}</div>
+                                @else
+                                  <div class="my-1 date"></div>
+                                @endif
+
+                                <div class="progress">
+                                    <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
                                 </div>
-                                </a>
+                                <small>{{$course->progress??0}}% Complete</small>
                             </div>
-                            @empty
-                            <p>Not found any course!!</p>
-                            @endforelse
+                            </a>
                         </div>
+                        @empty
+                        <p>Not found any course!!</p>
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -230,12 +226,6 @@
                             <ul class="video-list">
                                 @foreach($next_videos as $next_video)
                                     <li>
-                                        {{-- <div class="play">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17.325" height="19.732" viewBox="0 0 17.325 19.732">
-                                                <path id="Path_92" data-name="Path 92" d="M1586.871,1153.329V1133.6l17.325,9.8Z" transform="translate(-1586.871 -1133.597)" fill="#fff"/>
-                                            </svg>
-                                        </div> --}}
-                                        {{-- class="svg-icons" --}}
                                         <img style="width:30px; height:30px; opacity: 0.6;" src="{{CustomAsset('icons/video.svg')}}" alt="{{$next_video->title}}"/>
                                         <div class="text" style="margin: 1px 5px; padding-top: 1px;">
                                             <h5><a href="{{CustomRoute('user.course_preview',$next_video->id)}}">{{$next_video->title}}</a> </h5>
@@ -252,186 +242,6 @@
 @endsection
 
 @section('script')
-    <script>
-        var month = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        ];
-        var weekday = [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday"
-        ];
-        var weekdayShort = [
-            "sun",
-            "mon",
-            "tue",
-            "wed",
-            "thu",
-            "fri",
-            "sat"
-        ];
-        var monthDirection = 0;
-
-        function getNextMonth() {
-            monthDirection++;
-            var current;
-            var now = new Date();
-            if (now.getMonth() == 11) {
-                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
-                // current = new Date(now.getFullYear() + monthDirection, 0, 1);
-            } else {
-                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
-            }
-            initCalender(getMonth(current));
-        }
-
-        function getPrevMonth() {
-            monthDirection--;
-            var current;
-            var now = new Date();
-            if (now.getMonth() == 11) {
-                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
-                // current = new Date(now.getFullYear() + monthDirection, 0, 1);
-            } else {
-                current = new Date(now.getFullYear(), now.getMonth() + monthDirection, 1);
-            }
-            initCalender(getMonth(current));
-        }
-        Date.prototype.isSameDateAs = function (pDate) {
-            return (
-                this.getFullYear() === pDate.getFullYear() &&
-                this.getMonth() === pDate.getMonth() &&
-                this.getDate() === pDate.getDate()
-            );
-        };
-
-        function getMonth(currentDay) {
-            var now = new Date();
-            var currentMonth = month[currentDay.getMonth()];
-            var monthArr = [];
-            for (i = 1 - currentDay.getDate(); i < 31; i++) {
-                var tomorrow = new Date(currentDay);
-                tomorrow.setDate(currentDay.getDate() + i);
-                if (currentMonth !== month[tomorrow.getMonth()]) {
-                    break;
-                } else {
-                    monthArr.push({
-                        date: {
-                            weekday: weekday[tomorrow.getDay()],
-                            weekday_short: weekdayShort[tomorrow.getDay()],
-                            day: tomorrow.getDate(),
-                            month: month[tomorrow.getMonth()],
-                            year: tomorrow.getFullYear(),
-                            current_day: now.isSameDateAs(tomorrow) ? true : false,
-                            date_info: tomorrow
-                        }
-                    });
-                }
-            }
-            return monthArr;
-        }
-
-        function clearCalender() {
-
-            var tr = document.querySelectorAll('table tbody tr');
-
-            tr.forEach(element => {
-                element.querySelectorAll('td').forEach(function(td) {
-                    td.classList.remove('active', 'selectable', 'currentDay', 'between', 'hover');
-                    td.innerHTML = '';
-                })
-            })
-
-            document.querySelectorAll("td").forEach(function (td) {
-                td.removeEventListener('mouseenter', null);
-                td.removeEventListener('mouseleave', null);
-                td.removeEventListener('click', null);
-                // $(this).unbind('mouseenter').unbind('mouseleave');
-            });
-
-            clickCounter = 0;
-        }
-
-        function initCalender(monthData) {
-            var row = 0;
-            var classToAdd = "";
-            var currentDay = "";
-            var today = new Date();
-
-            clearCalender();
-            // var i = 0;
-            monthData.forEach(function (value) {
-                var weekday = value.date.weekday_short;
-                var day = value.date.day;
-                var column = 0;
-
-                document.querySelector(".sideb .header .month").innerHTML = value.date.month;
-                document.querySelector(".sideb .header .year").innerHTML = value.date.year;
-
-
-                if (value.date.current_day) {
-                    currentDay = "currentDay";
-                    classToAdd = "selectable";
-                }
-                if (today.getTime() < value.date.date_info.getTime()) {
-                    classToAdd = "selectable";
-
-                }
-                document.querySelectorAll("tr.weedays th").forEach(function (th) {
-                    if (th.dataset.weekday === weekday) {
-                        column = th.dataset.column;
-                        return;
-                    }
-                });
-
-                if(classToAdd.length) {
-                    document.querySelectorAll("tr.days")[row].querySelectorAll('td')[column].classList.add(classToAdd);
-                }
-
-                if(currentDay.length) {
-                    document.querySelectorAll("tr.days")[row].querySelectorAll('td')[column].classList.add(currentDay);
-                }
-
-                document.querySelectorAll("tr.days")[row].querySelectorAll('td')[column].innerHTML = day;
-
-                currentDay = "";
-                if (column == 6) {
-                    row++;
-                }
-            });
-
-            document.querySelectorAll("td.selectable")
-                .forEach(td => {
-                    td.addEventListener('click', () => {
-                        document.querySelectorAll('td.selectable').forEach(function(td) {
-                            td.classList.remove('active', 'between', 'hover');
-                            // td.classList.remove('active', 'between', 'hover', 'currentDay');
-                        })
-                        td.classList.toggle('active');
-                    })
-                })
-        }
-        initCalender(getMonth(new Date()));
-
-        document.querySelector(".fa-angle-left").onclick = () => getPrevMonth();
-        document.querySelector(".fa-angle-right").onclick = () => getNextMonth();
-
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script>
         var courses_count = @json(count($courses));
@@ -453,10 +263,8 @@
             ],
             datasets: [
                 {
-                    // data: [courses_count, progress, not_complete, complete],
                     data: [progress, not_complete, complete],
                     backgroundColor: [
-                        // "#303d47",
                         "#00bcb3",
                         "#eaeaea",
                         "#fb4400",
@@ -470,52 +278,6 @@
         });
 
     </script>
-{{--    <script>--}}
-{{--        var ctx = document.getElementById('myChart')--}}
-{{--        // eslint-disable-next-line no-unused-vars--}}
-{{--        var myChart = new Chart(ctx, {--}}
-{{--            type: 'line',--}}
-{{--            data: {--}}
-{{--                labels: [--}}
-{{--                    'Jan',--}}
-{{--                    'Feb',--}}
-{{--                    'Mar',--}}
-{{--                    'Apr',--}}
-{{--                    'May',--}}
-{{--                    'Jun',--}}
-{{--                    'Jul ',--}}
-{{--                    'Aug',--}}
-{{--                    'Sep',--}}
-{{--                    'Oct',--}}
-{{--                    'Nov',--}}
-{{--                    'Dec',--}}
-{{--                ],--}}
-{{--                datasets: [{--}}
-{{--                    data: [100, 50, 20, 155, 20, 33, 75, 88, 45, 90, 10, 50],--}}
-{{--                    lineTension: 0,--}}
-{{--                    backgroundColor: 'transparent',--}}
-{{--                    borderColor: '#D1D1D1',--}}
-{{--                    borderWidth: 2,--}}
-{{--                    pointBackgroundColor: '#fb4400'--}}
-{{--                }]--}}
-{{--            },--}}
-{{--            options: {--}}
-{{--                scales: {--}}
-{{--                    xAxes: [{--}}
-{{--                        gridLines: {--}}
-{{--                            display: false--}}
-{{--                        }--}}
-{{--                    }],--}}
-{{--                    yAxes: [{--}}
-{{--                        display: false,--}}
-{{--                    }]--}}
-{{--                },--}}
-{{--                legend: {--}}
-{{--                    display: false--}}
-{{--                }--}}
-{{--            }--}}
-{{--        })--}}
-{{--    </script>--}}
 @endsection
 
 

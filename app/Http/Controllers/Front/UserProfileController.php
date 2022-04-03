@@ -25,7 +25,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Session;
 
 class UserProfileController extends Controller
 {
@@ -102,10 +101,22 @@ class UserProfileController extends Controller
      * User Info Page
      */
     public function info() {
-        $user = User::with(['upload'])->findOrFail(auth()->user()->id);
+        $user = DB::select("SELECT users.id,user_branches.name as user_name, users.lang,users.email,users.mobile,
+                                        users.gender_id,users.company,users.job_title,uploads.file
+                                 FROM users
+                                 INNER JOIN user_branches ON users.id = user_branches.user_id
+                                            AND user_branches.deleted_at IS NULL
+                                            AND user_branches.branch_id = ".getCurrentUserBranchData()->branch_id."
+                                 LEFT JOIN uploads ON uploads.uploadable_id = users.id
+                                    AND uploads.deleted_at IS NULL
+                                    AND uploads.uploadable_type = 'App\\\User'
+                                 WHERE users.deleted_at IS NULL AND users.id =".\auth()->user()->id);
+        if(!$user){
+            abort(404);
+        }
+        $user = $user[0];
         $genders = Constant::where('parent_id', 42)->get();
-        $countries = Constant::where('post_type', 'countries')->get();
-        return view('pages.info',compact('user', 'genders', 'countries'));
+        return view('pages.info',compact('user', 'genders'));
     } // end function
 
 
@@ -118,25 +129,28 @@ class UserProfileController extends Controller
     public function update($id,Request $request){
 
         $request->validate([
-            'en_name' => 'required',
-            'ar_name' => 'required',
+            'name' => 'required',
             'file' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'language' => 'required',
             'gender_id' => 'required|exists:constants,id',
         ]);
 
-        $user = User::findOrFail($id);
+        $user = User::findOrFail(\auth()->id());
 
         $user->update([
-            'name'      => json_encode(["en" => $request->en_name, "ar" => $request->ar_name]),
-            'headline'  => $request->headline,
             'lang'      => $request->language,
-            'bio'       => $request->bio,
             'mobile'    => $request->mobile,
             'gender_id' => $request->gender_id,
             'company' => $request->company,
             'job_title' => $request->job_title,
         ]);
+
+        DB::table('user_branches')
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)
+            ->where('user_id',\auth()->id())
+            ->update([
+                'name'  =>  $request->name,
+            ]);
 
         User::UploadFile($user, ['method'=>'update']);
 

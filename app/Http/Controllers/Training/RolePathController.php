@@ -15,6 +15,9 @@ class RolePathController extends Controller
     public function rolePath(){
         $course_id = request()->course_id;
         $course = $this->courseContent($course_id);
+        if (!$course){
+            abort(404);
+        }
         return view('training.courses.contents.role_path', compact('course' , 'course_id'));
     }
 
@@ -22,6 +25,9 @@ class RolePathController extends Controller
         $contents = request()->contents;
         $course_id = request()->course_id;
         $course = $this->courseContent($course_id);
+        if (!$course){
+            abort(404);
+        }
         foreach($course->contents as $content){
             $content_course = Content::where('id',$content->id)->first();
             $content_course->update([
@@ -46,7 +52,7 @@ class RolePathController extends Controller
             return $q->where('course_id',$course_id)->with(['contents' => function($q){
                 $q->orderBy("order");
             }])->orderBy("order");
-        }])->first();
+        }])->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
 
         return $course;
     }

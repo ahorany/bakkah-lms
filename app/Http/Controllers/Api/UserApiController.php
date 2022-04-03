@@ -11,6 +11,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\UserMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserApiController
 {
@@ -42,16 +44,17 @@ class UserApiController
     }
 
     public function add_users(Request $request){
-       try{
+        // return $request;
+        try{
             $validator = $this->validation($request);
-             if($validator->fails()){
-                 return response()->json([
-                     'status' => 'fail',
-                     'code' => 403 ,
-                     'message' => "Validation Error" ,
-                     'errors' => $validator->errors()
-                 ],403 );
-             }
+            if($validator->fails()){
+                return response()->json([
+                    'status' => 'fail',
+                    'code' => 403 ,
+                    'message' => "Validation Error" ,
+                    'errors' => $validator->errors()
+                ],403 );
+            }
 
 
             if ($request->paid_status == 'paid'){
@@ -60,11 +63,11 @@ class UserApiController
                 $paid_status = 504;
             }
 
-          $user = $this->addUser($request);
+            $user = $this->addUser($request);
 
-          $course = Course::select('id','ref_id')->where('ref_id',$request->course_id)->first();
+            $course = Course::select('id','ref_id')->where('ref_id',$request->course_id)->first();
 
-          $courseRegistration =  CourseRegistration::where( 'user_id',$user->id)
+            $courseRegistration =  CourseRegistration::where( 'user_id',$user->id)
                 ->where('course_id',$course->id)
                 ->first();
 
@@ -75,7 +78,7 @@ class UserApiController
                 ],[
                     'date_from' => $request->session_date_from,
                     'date_to' => $request->session_date_to,
-                    'branche_id' => 1,
+                    'branch_id' => 1,
                 ]);
 
 
@@ -83,7 +86,7 @@ class UserApiController
                     $courseRegistration =  CourseRegistration::create([
                         'user_id'     => $user->id,
                         'course_id'   => $course->id,
-                        'role_id'     => 2,
+                        'role_id'     => 3,
                         'expire_date' => $request->expire_date,
                         'paid_status' => $paid_status,
                         'session_id'  => $session->id,
@@ -103,10 +106,12 @@ class UserApiController
                     $courseRegistration = CourseRegistration::create([
                         'user_id'     => $user->id,
                         'course_id'   => $course->id,
-                        'role_id'     => 2,
+                        'role_id'     => 3,
                         'expire_date' => $request->expire_date,
                         'paid_status' => $paid_status,
                     ]);
+
+
                 }else{
                     $courseRegistration->update([
                         'user_id'     => $user->id,
@@ -125,14 +130,14 @@ class UserApiController
                 'data' => ["user" => $courseRegistration]
             ],200);
 
-           }catch (\Exception $exception){
-               return response()->json([
-                   'status' => 'fail',
-                   'code' => 500 ,
-                   'message' => "Server Error" ,
-               ],500 );
-           }
-  }
+        }catch (\Exception $exception){
+            return response()->json([
+                'status' => 'fail',
+                'code' => 500 ,
+                'message' => "Server Error" ,
+            ],500 );
+        }
+    }
 
 
     private function addUser($request){
@@ -143,8 +148,12 @@ class UserApiController
         ],[
             'name'     => $request->name,
             'email'    => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => bcrypt("$request->password"),
         ]);
+
+        $user->assignRole([3]);
+        Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
+
         return $user;
     }
 

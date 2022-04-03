@@ -85,11 +85,11 @@
             <tbody>
                 <tr v-for="(course_user,index) in course_users">
                     <th scope="row" v-text="index + 1"></th>
-                    <td v-text="trans_title(course_user.user_name)"></td>
+                    <td v-text="course_user.user_name"></td>
                     <td v-text="course_user.email"></td>
                     <td>
-                        <span v-if="course_user.role_id == 2" class="badge-pink"> Instructor </span>
-                        <span v-if="course_user.role_id == 3" class="badge-green"> Trainee </span>
+                        <span  class="badge-pink" v-text="course_user.role_type_id == 511 ? 'Instructor' : 'Trainee' "></span>
+{{--                        <span v-if="course_user.role_id == 3" class="badge-green"> Trainee </span>--}}
                     </td>
 
                     <td v-text="(course_user.progress??0) + '%'"></td>
@@ -167,14 +167,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr :class="{'row-instructor' : search_user.role_id == 2 , 'row-trainee' : search_user.role_id == 3 , 'row-default' : (search_user.role_id != 2 && search_user.role_id != 3) }" v-for="(search_user,index) in search_users">
+                            <tr :class="{'row-instructor' : search_user.role_type_id == 5111 , 'row-trainee' : search_user.role_type_id == 512 , 'row-default' : (search_user.role_type_id != 511 && search_user.role_type_id != 512) }" v-for="(search_user,index) in search_users">
                                 <th scope="row"><input type="checkbox" @change="addUser(search_user,$event)" :checked="isCheckedUser(search_user.user_id)"></th>
-                                <td v-text="trans_title(search_user.user_name)"></td>
+                                <td v-text="search_user.user_name"></td>
                                 <td v-text="search_user.email"></td>
                                 <td>
-                                    <select @change="changeRoleId(search_user,$event.target.value)" v-model="search_user.role_id">
-                                        <option  value="2">Instructor</option>
-                                        <option  value="3">Trainee</option>
+                                    <select @change="changeRoleId(search_user,$event.target.value)" v-model="search_user.role_type_id">
+                                        <option  value="511">Instructor</option>
+                                        <option  value="512">Trainee</option>
                                     </select>
 {{--                                    <div class="form-group"><input  type="checkbox" class="mx-3" style="display: inline-block;"></div>--}}
                                 </td>
@@ -301,6 +301,7 @@
                                  })
                              })
 
+                            console.log(self.course_users)
                             self.add_users    = [];
                             self.delete_users = [];
                             self.search_users = [];
@@ -319,14 +320,14 @@
                 // if search_users and not add
                 this.search_users.forEach(function (item,index) {
                     if(item.user_id == search_user.user_id){
-                        self.search_users[index]['role_id'] = value
+                        self.search_users[index]['role_type_id'] = value
                     }
                 })
 
                 // if search_users and add
                 this.add_users.forEach(function (item,index) {
                     if(item.user_id == search_user.user_id){
-                        self.add_users[index]['role_id'] = value
+                        self.add_users[index]['role_type_id'] = value
                         lock = false
                     }
                 })
@@ -334,10 +335,9 @@
 
                 // if course_users and search_user and not add => push to add
                 if(lock && self.isCheckedUser(search_user.user_id)){
-                    search_user['role_id'] = value
+                    search_user['role_type_id'] = value
                     self.add_users.push(search_user);
                 }
-
             },
 
             changePaidStatus : function(search_user,value){
@@ -435,8 +435,8 @@
 
             addUser : function (search_user,event) {
                     if (event.target.checked) {
-                        if(!search_user['role_id']){
-                            search_user['role_id'] = 2;
+                        if(!search_user['role_type_id']){
+                            search_user['role_type_id'] = 512;
                         }
 
                         if(!search_user['paid_status']){

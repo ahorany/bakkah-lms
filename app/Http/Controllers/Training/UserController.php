@@ -37,8 +37,8 @@ class UserController extends Controller
         $post_type = GetPostType('users');
         $trash = GetTrash();
 
-        $users = User::with(['roles' => function($q){
-            $q->select('id','name')->where('branch_id',getCurrentUserBranchData()->branch_id??1);
+        $users = User::with(['branches','roles' => function($q){
+            $q->select('id','name')->where('branch_id',getCurrentUserBranchData()->branch_id);
         }])->whereHas('roles',function ($q){
             $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)->where('roles.id','<>',4);
         })->whereHas('branches',function ($q){
@@ -77,7 +77,14 @@ class UserController extends Controller
     }
 
     private function getLearnersNo(){
-        $learners_no  = DB::table('model_has_roles')->where('model_has_roles.role_id',3);
+        $learners_no  = DB::table('model_has_roles')->join('roles',function ($join){
+            $join->on('roles.id','=','model_has_roles.role_id')
+                ->where('roles.role_type_id',512)
+                ->where('roles.deleted_at',null)
+                ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+        });
+
+
         if (!is_null(request()->user_search)) {
             $learners_no = $learners_no->join('users','users.id','model_has_roles.model_id');
             $learners_no = $this->SearchUser($learners_no);
@@ -86,7 +93,12 @@ class UserController extends Controller
     }
 
     private function getCompleteCoursesNo(){
-        $complete_courses_no = DB::table('courses_registration')->where('progress',100);
+        $complete_courses_no = DB::table('courses_registration')
+            ->join('courses',function ($join){
+                $join->on('courses.id','=','courses_registration.course_id')
+                    ->where('courses.deleted_at',null)
+                    ->where('courses.branch_id',getCurrentUserBranchData()->branch_id);
+            })->where('progress',100);
         if (!is_null(request()->user_search)) {
             $complete_courses_no = $complete_courses_no->join('users','users.id','courses_registration.user_id');
             $complete_courses_no = $this->SearchUser($complete_courses_no);
@@ -95,7 +107,13 @@ class UserController extends Controller
     }
 
     private function getCoursesInProgress(){
-        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('progress','>',0);
+        $courses_in_progress = DB::table('courses_registration')
+            ->join('courses',function ($join){
+                $join->on('courses.id','=','courses_registration.course_id')
+                    ->where('courses.deleted_at',null)
+                    ->where('courses.branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->where('progress','<',100)->where('progress','>',0);
         if (!is_null(request()->user_search)) {
             $courses_in_progress = $courses_in_progress->join('users','users.id','courses_registration.user_id');
             $courses_in_progress = $this->SearchUser($courses_in_progress);
@@ -104,7 +122,13 @@ class UserController extends Controller
     }
 
     private function getCoursesNotStarted(){
-        $courses_not_started = DB::table('courses_registration')->where('progress',0);
+        $courses_not_started = DB::table('courses_registration')
+            ->join('courses',function ($join){
+                $join->on('courses.id','=','courses_registration.course_id')
+                    ->where('courses.deleted_at',null)
+                    ->where('courses.branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->where('progress',0);
         if (!is_null(request()->user_search)) {
             $courses_not_started = $courses_not_started->join('users','users.id','courses_registration.user_id');
             $courses_not_started = $this->SearchUser($courses_not_started);
@@ -125,7 +149,7 @@ class UserController extends Controller
 
 
         return Active::Create([
-            'eloquent' => new User(),
+//            'eloquent' => new User(),
             'genders' => $genders,
             'post_type' => $post_type,
             'roles' => $roles,
@@ -139,13 +163,15 @@ class UserController extends Controller
         $validated['created_by'] = auth()->user()->id;
         $validated['updated_by'] = auth()->user()->id;
 
-
         $user = User::where('email',$request->email)->first();
+
+
         if (!$user){
             $user = User::create([
                 'email'      => $request->email,
                 'gender_id'  => $request->gender_id,
-                'password'   => $validated['password'],
+                'mobile'     => $request->mobile,
+                'password'   => bcrypt($validated['password']),
                 'created_by' => $validated['created_by'],
                 'updated_by' => $validated['updated_by'],
             ]);
@@ -183,9 +209,17 @@ class UserController extends Controller
 
         $role_id = $user->roles()->where('branch_id',$current_user_branch->branch_id)->select('roles.id')->first()->id??-1;
 
+        
+        $user_branch = DB::table('user_branches')
+                      ->where('user_id',$user->id)
+                      ->where('branch_id',$current_user_branch->branch_id)->first();
+
+
+
 
         return Active::Edit([
             'eloquent' => $user,
+            'user_branch' => $user_branch,
             'post_type' => $post_type,
             'genders' => $genders,
             'roles' => $roles,
@@ -202,7 +236,12 @@ class UserController extends Controller
         $validated['updated_by'] = auth()->user()->id;
         unset($validated['password']);
 
-        $user->update($validated);
+
+        $user->update([
+            'gender_id'  => $request->gender_id,
+            'mobile'     => $request->mobile,
+            'updated_by' => $validated['updated_by'],
+            ]);
 
         if ($request->password) {
             $user->update([
@@ -210,11 +249,27 @@ class UserController extends Controller
             ]);
         }
 
-        DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+
+        \DB::table('user_branches')
+            ->where('user_id',$user->id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)
+            ->update([
+              'name' => $request->name,
+          ]);
+
+
+        DB::table('model_has_roles')->where('model_id',$user->id)
+            ->join('roles','roles.id','model_has_roles.role_id')
+            ->where('roles.branch_id',getCurrentUserBranchData()->branch_id)
+            ->delete();
         $user->assignRole([request()->role]);
+
 
         User::UploadFile($user, ['method' => 'update']);
 
+        if ($request->password){
+            Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
+        }
 
         return Active::Updated($user->trans_name, [
             'post_type' => $post_type,
@@ -246,10 +301,13 @@ class UserController extends Controller
 
     public function getUserData()
     {
-       $user_branch =  \DB::select("SELECT users.email , users.gender_id ,users.mobile, user_branches.*  FROM user_branches
+       $user_branch =  \DB::select("SELECT users.email , users.gender_id ,users.mobile, user_branches.*
+                                    FROM user_branches
                                     RIGHT JOIN users ON users.id = user_branches.user_id
+                                    INNER JOIN model_has_roles ON users.id = model_has_roles.model_id AND model_has_roles.role_id != 4
                                     WHERE  users.email = '".\request()->email."'
                                     LIMIT 1");
+
 
         if (isset($user_branch[0])){
             return response()->json(['status' => true,'data' => $user_branch[0] ]);

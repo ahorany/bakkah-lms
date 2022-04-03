@@ -12,6 +12,7 @@ use App\Models\Training\Category;
 use App\Constant;
 use App\Models\Training\Certificate;
 use App\Models\Training\Group;
+use App\Models\Training\Role;
 use App\Models\Training\Unit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -37,15 +38,22 @@ class CourseController extends Controller
         $post_type = 'course';
         $trash = GetTrash();
 
-        // If auth user Instructor (Not All courses  just registared)
-        if(auth()->user()->hasRole(['Instructor'])){
-            $courses = Course::with(['upload'])->whereHas('users', function($q){
-                return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',2);
-            });
+        $user = auth()->user()->roles()->first();
 
-        }else{ // if admin all courses
+        // If auth user Admin Or Super Admin => all courses
+        if(is_super_admin() || $user->role_type_id == 510){
             $courses = Course::with(['upload', 'user','deliveryMethod']);
+        }else{  // (Not All courses  just registared)
+            $role_instructor_id = Role::select('id')->where('role_type_id')
+                                   ->where('branch_id',getCurrentUserBranchData()->branch_id)
+                                   ->first()->id;
+            $courses = Course::with(['upload'])
+                       ->whereHas('users', function($q) use($role_instructor_id){
+                return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',$role_instructor_id);
+            });
         }
+
+        $courses->where('branch_id',getCurrentUserBranchData()->branch_id);
 
         if (request()->has('course_search') && !is_null(request()->course_search)) {
             $courses = $this->SearchCond($courses);
@@ -70,7 +78,6 @@ class CourseController extends Controller
         $categories = Category::get();
         $delivery_methods = Constant::where('parent_id', 10)->get();
 
-//        return $courses;
         return Active::Index(compact('courses', 'count', 'post_type', 'trash','assigned_learners','assigned_instructors','completed_learners','categories','delivery_methods'));
     }
 
@@ -83,17 +90,31 @@ class CourseController extends Controller
     }
 
     private function getAssignedLearners(){
-        $assigned_learners = DB::table('courses_registration')->where('role_id',3);
+        $assigned_learners = DB::table('courses_registration')
+                              ->join('roles',function ($join){
+                                  $join->on('roles.id','=','courses_registration.role_id')
+                                       ->where('roles.role_type_id',512)
+                                       ->where('roles.deleted_at',null)
+                                       ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+                              });
+
         if(!is_null(request()->course_search)) {
             $assigned_learners = $assigned_learners->join('courses','courses.id','courses_registration.course_id');
-
             $assigned_learners = $this->SearchCond($assigned_learners);
         }
+
         return $assigned_learners->count();
     }
 
     private function getAssignedInstructors(){
-        $assigned_instructors = DB::table('courses_registration')->where('role_id',2);
+        $assigned_instructors = DB::table('courses_registration')
+            ->join('roles',function ($join){
+                $join->on('roles.id','=','courses_registration.role_id')
+                    ->where('roles.role_type_id',511)
+                    ->where('roles.deleted_at',null)
+                    ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+            });
+
         if(!is_null(request()->course_search)) {
             $assigned_instructors = $assigned_instructors->join('courses','courses.id','courses_registration.course_id');
 
@@ -103,7 +124,14 @@ class CourseController extends Controller
     }
 
     private function getCompletedLearners(){
-        $completed_learners = DB::table('courses_registration')->where('role_id',3)->where('progress',100);
+        $completed_learners = DB::table('courses_registration')
+            ->join('roles',function ($join){
+                $join->on('roles.id','=','courses_registration.role_id')
+                    ->where('roles.role_type_id',512)
+                    ->where('roles.deleted_at',null)
+                    ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->where('progress',100);
         if(!is_null(request()->course_search)) {
             $completed_learners = $completed_learners->join('courses','courses.id','courses_registration.course_id');
 
@@ -116,16 +144,16 @@ class CourseController extends Controller
 //////////////////////// Create Course /////////////////////////////////////////////
     public function create(){
         $certificate_types = Constant::where('parent_id', 323)->get();
-        $certificate_ids = Certificate::whereNull('parent_id')->get();
+        $certificate_ids = Certificate::whereNull('parent_id')->where('branch_id',getCurrentUserBranchData()->branch_id)->get();
         $delivery_methods = Constant::where('parent_id', 10)->get();
-        $categories = Category::get();
+        $categories = Category::where('branch_id',getCurrentUserBranchData()->branch_id)->get();
         return Active::Create(compact( 'certificate_types','delivery_methods','certificate_ids','categories'));
     }
 
     public function store(CourseRequest $request){
         $validated = $this->Validated($request->validated());
         $validated['created_by'] = auth()->user()->id;
-
+        $validated['branch_id']  = getCurrentUserBranchData()->branch_id;
         $course = Course::create($validated);
         $this->uploadsVideo($course, 'intro_video', null);
 
@@ -135,16 +163,22 @@ class CourseController extends Controller
 //////////////////////// Edit Course /////////////////////////////////////////////
 
     public function edit(Course $course){
+        if (getCurrentUserBranchData()->branch_id != $course->branch_id){
+            abort(404);
+        }
         $certificate_types = Constant::where('parent_id', 323)->get();
-        $certificate_ids = Certificate::whereNull('parent_id')->get();
+        $certificate_ids = Certificate::whereNull('parent_id')->where('branch_id',getCurrentUserBranchData()->branch_id)->get();
         $delivery_methods = Constant::where('parent_id', 10)->get();
-        $categories = Category::get();
+        $categories = Category::where('branch_id',getCurrentUserBranchData()->branch_id)->get();
 
         return Active::Edit(['eloquent'=>$course, 'delivery_methods' => $delivery_methods,  'certificate_types'=>$certificate_types,'certificate_ids'=>$certificate_ids,'categories'=>$categories]);
     }
 
 
     public function update(CourseRequest $request, Course $course){
+        if (getCurrentUserBranchData()->branch_id != $course->branch_id){
+            abort(404);
+        }
         $validated = $this->Validated($request->validated());
 
         $course->update($validated);
@@ -160,7 +194,7 @@ class CourseController extends Controller
 //////////////////////// Destroy Course /////////////////////////////////////////////
 
     public function destroy(Course $course){
-        Course::where('id', $course->id)->SoftTrash();
+        Course::where('id', $course->id)->where('branch_id',getCurrentUserBranchData()->branch_id)->SoftTrash();
         return Active::Deleted($course->trans_title);
     }
 
@@ -168,7 +202,7 @@ class CourseController extends Controller
 //////////////////////// Restore Course /////////////////////////////////////////////
 
     public function restore($course){
-        Course::where('id', $course)->RestoreFromTrash();
+        Course::where('id', $course)->where('branch_id',getCurrentUserBranchData()->branch_id)->RestoreFromTrash();
         $course = Course::where('id', $course)->first();
         return Active::Restored($course->trans_title);
     }

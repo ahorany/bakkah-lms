@@ -27,7 +27,10 @@ class UnitController extends Controller
     public function index()
     {
         $course_id = request()->course_id;
-        $course = Course::select('id','title')->where('id',$course_id)->with(['units' => function($q) use ($course_id){
+        $course = Course::select('id','title')
+            ->where('id',$course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)
+            ->with(['units' => function($q) use ($course_id){
            return $q->where('course_id',$course_id)->with('subunits');
         }])->first();
 
@@ -55,6 +58,10 @@ class UnitController extends Controller
 
 
     public function delete_unit(){
+        $course = Course::where(\request()->course_id)->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course){
+            abort(404);
+        }
         Unit::whereId(request()->id)->delete();
         return response()->json(['status' => true]);
     }
@@ -149,6 +156,11 @@ class UnitController extends Controller
 
 
     public function add_unit(){
+        $course_id = Course::whereId(request()->course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course_id){
+            abort(404);
+        }
 
         $validator = $this->validationUnit();
 
@@ -180,6 +192,12 @@ class UnitController extends Controller
     }
 
     public function update_unit(){
+        $course_id = Course::whereId(request()->course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        if (!$course_id){
+            abort(404);
+        }
+
         $validator = $this->validationUnit('update');
 
         if(count($validator->errors()) > 0 ){
