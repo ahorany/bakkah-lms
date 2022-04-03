@@ -3,7 +3,7 @@
 @section('content')
     <div class="signin">
         <div class="logo"><img src="{{CustomAsset('assets/images/logo.png')}}" alt=""></div>
-        <div class="signin-form">
+        <div class="signin-form container">
             <div class="row">
                 <div class="col-md-6">
                     <form action="{{route('login')}}" method="POST">
