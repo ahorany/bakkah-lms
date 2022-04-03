@@ -64,6 +64,7 @@ class LoginController extends Controller
                                   WHERE model_has_roles.role_id = 4 AND model_has_roles.model_id = '.auth()->id());
 
         session()->put('is_super_admin',isset($data[0]));
+        // dd(getCurrentUserBranchData());
     }
 
 

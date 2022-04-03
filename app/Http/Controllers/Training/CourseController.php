@@ -71,7 +71,6 @@ class CourseController extends Controller
         $count = $courses->count();
         $courses = $courses->page();
 
-
         $assigned_learners = $this->getAssignedLearners();
         $assigned_instructors = $this->getAssignedInstructors();
         $completed_learners = $this->getCompletedLearners();
