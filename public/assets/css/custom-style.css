@@ -865,30 +865,31 @@ label.container-check.form-check-label span.checkmark{
     top: 0 !important;
 }
 /** alert */
-.error-notice{
-    margin:5px 0;
-    padding: 0
+    .error-notice{
+        margin-bottom:20px;
+        padding: 0
     }
 
     .error-notice .oaerror{
-    width:100%;
-    background-color: #ffffff;
-    padding:20px;
-    border:1px solid #eee;
-    border-left-width:5px;
-    border-radius: 3px;
-    /* margin:10px auto; */
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
+        width:100%;
+        background-color: #ffffff;
+        padding:15px;
+        border:1px solid #eee;
+        border-left-width:5px;
+        border-radius: 3px;
+        /* margin:10px auto; */
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
     }
 
     .error-notice .danger{
-    border-left-color: #d9534f;
-    background-color: rgba(217, 83, 79, 0.1);
+        border-left-color: #d9534f;
+        background-color: rgba(217, 83, 79, 0.1);
     }
 
-    .error-notice .danger strong{
-    color:#d9534f;
+    .error-notice .success{
+        border-left-color: #8fbc8f;
+        background-color: rgb(143 188 143 / 20%);
     }
     /* end alert */
 
@@ -1100,6 +1101,21 @@ p.lead.light.card {
 }
 
 
+@media screen and (min-width:1300px){
+    .container.change-password,
+    .container.change-password .card,
+    .container.change-password .card .card-body,
+    .container.change-password .card .card-body form{
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        margin-left: 5px !important;
+        margin-right: 5px !important;
+    }
+    .container.change-password {
+        width: 80%;
+        margin: 0 auto !important;
+    }
+}
 @media screen and (min-width:800px){
     .custom-model-main:before {
         content: "";

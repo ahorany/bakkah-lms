@@ -22,7 +22,7 @@
             border-left: 2px solid #eaeaea;
             border-bottom: 1px solid #eaeaea;
             margin-top: 10px;
-            /* margin-left: 5px !important; */
+            margin-left: 10px !important;
         }
         .head {
             display: flex;
@@ -114,7 +114,7 @@
                                     'eloquent'=>$message,
                                 ])
                             </div>
-                            <br>
+                            {{-- <br> --}}
 
                             @include('training.messages.replies', compact('message'))
                         </div>
