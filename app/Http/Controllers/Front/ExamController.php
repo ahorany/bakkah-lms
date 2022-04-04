@@ -47,7 +47,7 @@ class ExamController extends Controller
         $this->middleware('auth');
     }
 
-   /****************************************************************************/
+    /****************************************************************************/
 
     /*
      *  Exam Page Before Attempt => (This Page To Start Attempt)
@@ -56,13 +56,13 @@ class ExamController extends Controller
 
         // Get Exam Content
         $exam = Content::whereId($exam_id)
-        ->with(['section','course','exam' => function($q){
-            return $q->with(['users_exams' => function($q){
-                return $q->where('user_id', auth()->id());
-            }]);
-        }])->whereHas('course',function ($q){
+            ->with(['section','course','exam' => function($q){
+                return $q->with(['users_exams' => function($q){
+                    return $q->where('user_id', auth()->id());
+                }]);
+            }])->whereHas('course',function ($q){
                 $q->where('branch_id',getCurrentUserBranchData()->branch_id);
-         })->first();
+            })->first();
         if (!$exam){
             abort(404);
         }
@@ -294,7 +294,12 @@ class ExamController extends Controller
                 $q->where('branch_id',getCurrentUserBranchData()->branch_id);
             })
             ->first();
-        if (!$user_exam) abort(404);
+
+// dd($user_exam);
+        if (!$user_exam){
+            abort(404);
+        }
+
 
         if(\request()->has('answer') && \request()->status != 'save'){
             if(is_array(\request()->answer)) {
@@ -395,12 +400,12 @@ class ExamController extends Controller
          * When Content Have Role And Path && Grade Attempt >= Exam Pass Mark
          */
         if( $exam->content->role_and_path == 1 && ((($exam->exam_mark * $exam->pass_mark) / 100) <= $grade) ){
-             $this->updateUserCourseProgress( $exam->content->course_id);
-          } // end if
+            $this->updateUserCourseProgress( $exam->content->course_id);
+        } // end if
 
 
-         // Update User Content (Exam) Complete Status When Grade Attempt >= Exam Pass Mark
-         $this->updateExamCompleteStatus($grade,$user_exam->exam->content->id,$exam->exam_mark,$exam->pass_mark);
+        // Update User Content (Exam) Complete Status When Grade Attempt >= Exam Pass Mark
+        $this->updateExamCompleteStatus($grade,$user_exam->exam->content->id,$exam->exam_mark,$exam->pass_mark);
 
 
     } // end function
