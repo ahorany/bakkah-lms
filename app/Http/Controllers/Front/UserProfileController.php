@@ -90,8 +90,8 @@ class UserProfileController extends Controller
         $user->update([
             'password' => $password,
         ]);
-
-        return redirect(route('user.home'));
+        session()->flash('Success', 'Updated Success');
+        return view('pages.change_password');
     } // end function
 
 
@@ -102,20 +102,21 @@ class UserProfileController extends Controller
      */
     public function info() {
         $user = DB::select("SELECT users.id,user_branches.name as user_name, users.lang,users.email,users.mobile,
-                                        users.gender_id,users.company,users.job_title,uploads.file
-                                 FROM users
-                                 INNER JOIN user_branches ON users.id = user_branches.user_id
-                                            AND user_branches.deleted_at IS NULL
-                                            AND user_branches.branch_id = ".getCurrentUserBranchData()->branch_id."
-                                 LEFT JOIN uploads ON uploads.uploadable_id = users.id
-                                    AND uploads.deleted_at IS NULL
-                                    AND uploads.uploadable_type = 'App\\\User'
-                                 WHERE users.deleted_at IS NULL AND users.id =".\auth()->user()->id);
+            users.gender_id,users.company,users.job_title,uploads.file
+            FROM users
+            INNER JOIN user_branches ON users.id = user_branches.user_id
+            AND user_branches.deleted_at IS NULL
+            AND user_branches.branch_id = ".getCurrentUserBranchData()->branch_id."
+            LEFT JOIN uploads ON uploads.uploadable_id = users.id
+            AND uploads.deleted_at IS NULL
+            AND uploads.uploadable_type = 'App\\\User'
+            WHERE users.deleted_at IS NULL AND users.id =".\auth()->user()->id);
         if(!$user){
             abort(404);
         }
         $user = $user[0];
         $genders = Constant::where('parent_id', 42)->get();
+        session()->flash('Success', 'Updated Success');
         return view('pages.info',compact('user', 'genders'));
     } // end function
 

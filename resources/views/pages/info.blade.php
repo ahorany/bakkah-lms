@@ -52,6 +52,13 @@
 
 @section('content')
      <div class="card p-5 user-info">
+        @if (session()->has('Success'))
+            <div class="error-notice">
+                <div class="oaerror success">
+                    {{ session('Success') }}
+                </div>
+            </div>
+        @endif
         <form action="{{ route('user.update', $user->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             <?php
