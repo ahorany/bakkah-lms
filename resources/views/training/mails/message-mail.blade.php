@@ -18,7 +18,7 @@
     </table>
 
     <div width="100" style="margin: 0 auto 15px;">
-        <table style="font-size: 14px; color: #fff; background: #fb4400; text-align: center; border-radius: 5px; padding: 2px 5px; margin: 0 auto;">
+        <table style="font-size: 14px; color: #fff; background: var(--mainColor); text-align: center; border-radius: 5px; padding: 2px 5px; margin: 0 auto;">
             <tr>
                 <td>
                     <span> Regards. </span>

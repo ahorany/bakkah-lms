@@ -15,7 +15,7 @@
         margin-top: 15px !important;
     }
     .svghover {
-        fill: #fb4400;
+        fill: var(--mainColor);
     }
     svg {
         cursor: pointer;
@@ -26,7 +26,7 @@
         padding: 2px 0;
     }
     .free{
-        background: #fb4400;
+        background: var(--mainColor);
         color: #fff;
         padding: 2px 10px;
         font-size: 10px;
@@ -121,7 +121,7 @@
                                  viewBox="0 0 17.43 16.6">
                                 <path id="Path_39" data-name="Path 39"
                                       d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
-                                      transform="translate(-74.153 -183.355)" fill="#fb4400" />
+                                      transform="translate(-74.153 -183.355)" fill="var(--mainColor)" />
                             </svg>
                         </template>
                         <template v-if="item > stars && (item == half_star)">
@@ -132,7 +132,7 @@
                                       transform="translate(-146.334 -183.355)" fill="#c6c6c6" />
                                 <path id="Path_44" data-name="Path 44"
                                       d="M155.025,183.4l-2.753,5.228-5.938.966,4.2,4.313-.91,5.948,5.394-2.66.009,0Z"
-                                      transform="translate(-146.334 -183.298)" fill="#fb4400" />
+                                      transform="translate(-146.334 -183.298)" fill="var(--mainColor)" />
                             </svg>
                         </template>
                         <template v-if="item > stars && (item != (half_star))">
@@ -153,7 +153,7 @@
                                 {{__('education.Add a Review')}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
                                     <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"
-                                          transform="translate(10.125) rotate(90)" fill="#fb4400" />
+                                          transform="translate(10.125) rotate(90)" fill="var(--mainColor)" />
                                 </svg>
                             </a>
                             <div class="dropdown d-none" style="left: 0; min-width:auto; width: max-content !important;">
@@ -164,7 +164,7 @@
                                              viewBox="0 0 17.43 16.6">
                                             <path id="Path_39" data-name="Path 39"
                                                   d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
-                                                  transform="translate(-74.153 -183.355)" fill="#fb4400" />
+                                                  transform="translate(-74.153 -183.355)" fill="var(--mainColor)" />
                                         </svg>
                                     </span>
                                         <span @click="review(item)" v-if="item > rate">
@@ -379,7 +379,7 @@
                                         <div>
                                             <h2 class="mb-4">{{$section->title}}</h2>
                                             <span>
-                                                <div style="color: #fb4400 !important;">Complete & Get a Gift </div>
+                                                <div style="color: var(--mainColor) !important;">Complete & Get a Gift </div>
                                                 <small style="line-height: revert !important;">Something awesome is waiting for you. But unfortunately, you can’t get your gift till you make a progress in this course.</small>
                                             </span>
                                         </div>

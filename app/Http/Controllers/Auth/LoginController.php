@@ -46,7 +46,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
 
-        $user_branch = DB::select('SELECT branches.title ,  user_branches.id , user_branches.branch_id , user_branches.user_id ,user_branches.name , user_branches.bio , user_branches.expire_date , user_branches.delegation_role_id
+        $user_branch = DB::select('SELECT branches.title , branches.main_color , branches.description ,  user_branches.id , user_branches.branch_id , user_branches.user_id ,user_branches.name , user_branches.bio , user_branches.expire_date , user_branches.delegation_role_id
                                          FROM `user_branches`
                                          INNER JOIN branches ON branches.id = user_branches.branch_id AND branches.deleted_at IS NULL
                                          WHERE user_branches.user_id = '.$user->id.' AND user_branches.deleted_at IS NULL

@@ -22,7 +22,7 @@
         </table>
     </div>
     <p style="font-size: 16px; margin: 15px 0; text-align: left;">Can't wait to hear the big news about you getting certified!</p>
-    <p style="font-size: 16px; color: #fff; background: #fb4400; text-align: center; line-height: 1.5; border-radius: 5px; padding: 10px;">Best of luck!</p>
+    <p style="font-size: 16px; color: #fff; background: var(--mainColor); text-align: center; line-height: 1.5; border-radius: 5px; padding: 10px;">Best of luck!</p>
 </main>
 
 @include('training.mails.layouts.footer')

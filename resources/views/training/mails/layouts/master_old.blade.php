@@ -13,7 +13,7 @@
     <main style="text-align: center; width: 90%; margin: 80px auto 0;">
         <div style="margin-bottom: 50px;">
             <h5 style="font-size: 14px; margin: 15px 0;">Dear {{$user->en_name}}</h5>
-            <p style="font-size: 30px; font-weight: bold; margin: 15px 0; text-transform: uppercase; color: #fb4400;">Welcome onboard!</p>
+            <p style="font-size: 30px; font-weight: bold; margin: 15px 0; text-transform: uppercase; color: var(--mainColor);">Welcome onboard!</p>
             <p style="font-size: 15px; margin: 15px 0;">You have registered in LMS. We would like to welcome you and wish you a great learning experience!</p>
             <hr style="width: 40%; margin: 30px auto;">
             <p style="font-size: 17px;">This email is intended to provide you with the needed information before the beginning of the course to help you log in our LMS system and deal with the course properly.</p>
@@ -24,7 +24,7 @@
         </div>
         <hr style="margin: 0 auto;">
         <div style="padding: 30px 0; width: 90%; margin: 0 auto;">
-            <h3 style="color: #fb4400; font-size: 20px; margin-top: 0;">Here’s your details:</h3>
+            <h3 style="color: var(--mainColor); font-size: 20px; margin-top: 0;">Here’s your details:</h3>
             <table border="0" cellspacing="0" width="100%">
                 <tr>
                     <td width="40" style="text-align:left;">
@@ -58,7 +58,7 @@
         </div>
         <hr style="margin: 0 auto;">
         <p style="font-size: 17px; margin: 30px 0;">If you face any technical issues and need support, please feel free to contact our Training Department and we’ll get in touch with you in due time! </p>
-        <p style="font-size: 17px; color: #fff; background: #fb4400; text-align: center; border-radius: 6px; padding: 15px;">We hope you enjoy this learning experience and wish you best of luck! </p>
+        <p style="font-size: 17px; color: #fff; background: var(--mainColor); text-align: center; border-radius: 6px; padding: 15px;">We hope you enjoy this learning experience and wish you best of luck! </p>
     </main>
     <footer style="width: 90%; margin: 0 auto;">
         <table border="0" cellspacing="0" width="100%">
@@ -78,7 +78,7 @@
                     </a>
                     <div><small>Phone: +966 920003928</small></div>
                     <div><small>Privacy Policy | Contact Support</small></div>
-                    <div><small>© 2021 <span style="color: #fb4400;">Bakkah Inc.</span></small></div>
+                    <div><small>© 2021 <span style="color: var(--mainColor);">Bakkah Inc.</span></small></div>
                 </td>
                 <td width="350" style="text-align:right;">
                     <img src="{{CustomAsset('images/email/logo.png')}}" width="auto" height="60px" alt="">

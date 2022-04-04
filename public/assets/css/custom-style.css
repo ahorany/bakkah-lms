@@ -110,14 +110,14 @@ span.flag_icon_false svg path , .flag svg path {
 }
 
 span.flag_icon_true svg path , .flag-mark svg path {
-    fill: #fb4400;
-    stroke: #fb4400;
+    fill: var(--mainColor);
+    stroke: var(--mainColor);
     transform: rotate(15deg);
 }
 
 span.flag.flag-mark svg path {
-    fill: #fb4400;
-    stroke: #fb4400;
+    fill: var(--mainColor);
+    stroke: var(--mainColor);
 }
 
 .scorm .group_buttons{
@@ -190,7 +190,7 @@ a.review:hover svg path{
     font-family: "Lato Regular" !important;
 }
 .main-button {
-    /* background: #fb4400;
+    /* background: var(--mainColor);
     color: #fff;
     text-decoration: none; */
     color: #5D5B5A !important;
@@ -202,10 +202,10 @@ a.main-button svg path {
     fill:#5D5B5A !important;
 }
 a.main-button:hover svg path {
-    fill: #fb4400 !important
+    fill: var(--mainColor) !important
 }
 .main-button:hover {
-    color: #fb4400 !important
+    color: var(--mainColor) !important
 }
 .inputs .form-group {
     margin: 0 0 15px !important;
@@ -215,7 +215,7 @@ a.main-button:hover svg path {
 }
 em u {
     font-style: normal;
-    text-shadow: 0px 0px #fb4400;
+    text-shadow: 0px 0px var(--mainColor);
     color: #000;
     text-decoration: none;
 }
@@ -253,7 +253,7 @@ li.has-dropdown .dropdown span{
     left: -35px;
     display: block;
     color: #fff;
-    background: #fb4400;
+    background: var(--mainColor);
     width: 100px;
     text-align: center;
     transform: rotate(-45deg);
@@ -298,7 +298,7 @@ li.has-dropdown .dropdown span{
   }
 
   .container-check input:checked ~ .checkmark {
-    background-color: #fb4400;
+    background-color: var(--mainColor);
   }
 
   .container-check .checkmark:after {
@@ -448,8 +448,8 @@ ol.answers li{
 }
 .main-color {
     background: transparent;
-    color: #fb4400;
-    border: 1px solid #fb4400;
+    color: var(--mainColor);
+    border: 1px solid var(--mainColor);
     padding: 4px 10px;
     width: max-content;
     border-radius: 5px;
@@ -458,7 +458,7 @@ ol.answers li{
     font-weight: 500;
 }
 .main-color:hover {
-    background: #fb4400;
+    background: var(--mainColor);
     text-decoration: none;
     color: #fff;
 }
@@ -623,7 +623,7 @@ justify-content: center;
     height: 20px;
 }
 .progress-bar{
-    background: #fb4400;
+    background: var(--mainColor);
     width: 50%;
     margin: 0 !important;
     position: relative;
@@ -702,7 +702,7 @@ ul.video-list li:hover .text a {
 }
 
 .req svg path{
-    fill: #fb4400 !important;
+    fill: var(--mainColor) !important;
 }
 .home-section {
     margin-bottom: 25px;
@@ -840,17 +840,17 @@ p.time-remaining:hover span , p.time-remaining:hover {
     color: #121212 !important;
 }
 p.time-remaining svg path{
-    fill: #fb4400;
+    fill: var(--mainColor);
 }
 .review.dash-header{
     padding: 20px 8px;
 }
 .plyr input {
-    color: #fb4400 !important;
-    background: #fb4400;
+    color: var(--mainColor) !important;
+    background: var(--mainColor);
 }
 button.plyr__controls__item.plyr__control:hover , button.plyr__control.plyr__control--overlaid , button.plyr__control.plyr__control--overlaid:hover , button.plyr__control:hover{
-    background: #fb4400 !important;
+    background: var(--mainColor) !important;
 }
 .modal .form-group.form-check.child{
     margin: 15px 0 !important;

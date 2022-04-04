@@ -1,10 +1,4 @@
 /* Typography */
-:root {
-  --mainColor: #fb4400;
-  --secondColor: #303d47;
-  --thirdColor: #00bcb3;
-  --fourthColor: #fd9a18;
-}
 
 @font-face {
   font-family: "Lato Black";
@@ -511,7 +505,7 @@ main#main-vue-element {
 
 .bottom-bg {
   height: 40%;
-  background: var(--mainColor);
+  background: #fb4400;
   position: absolute;
   bottom: 0;
   width: 100%;

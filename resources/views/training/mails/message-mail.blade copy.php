@@ -6,7 +6,7 @@
         <p style="font-size: 16px; margin: 15px 0; text-align: left;">{{$message_content->user->en_name}} has just sent you a message for the {{$course->trans_title}}, and the content of the message is the following:</p>
         <p style="font-size: 16px; text-align: left;">{{$message_content->description}}</p>
     </div>
-    <p style="font-size: 16px; color: #fff; background: #fb4400; text-align: center; line-height: 1.5; border-radius: 5px; padding: 10px;">Regards.</p>
+    <p style="font-size: 16px; color: #fff; background: var(--mainColor); text-align: center; line-height: 1.5; border-radius: 5px; padding: 10px;">Regards.</p>
 </main>
 
 @include('training.mails.layouts.footer')

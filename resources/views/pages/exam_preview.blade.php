@@ -54,9 +54,9 @@
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 133.02 104.113">
                                             <g id="check" transform="translate(-1436.246 -232.059)">
-                                            <path id="Path_1" data-name="Path 1" d="M75,0,58.984,16.207l-16.8,17L28.711,46.843.937,74.949,0,75.9" transform="translate(1472.5 248.5)" fill="none" stroke="#fb4400" stroke-linejoin="round" stroke-width="15"/>
-                                            <path id="Path_2" data-name="Path 2" d="M20,34.5l-3.71-6.4-1.707-2.944L9.563,16.5,7.187,12.4,2.75,4.744,0,0" transform="matrix(0.966, -0.259, 0.259, 0.966, 1448.8, 290.294)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
-                                            <path id="Path_3" data-name="Path 3" d="M20,34.5l-3.71-6.4-1.707-2.944L7.187,12.4,2.75,4.744,0,0" transform="translate(1551.213 244.7) rotate(74.3)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_1" data-name="Path 1" d="M75,0,58.984,16.207l-16.8,17L28.711,46.843.937,74.949,0,75.9" transform="translate(1472.5 248.5)" fill="none" stroke="var(--mainColor)" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_2" data-name="Path 2" d="M20,34.5l-3.71-6.4-1.707-2.944L9.563,16.5,7.187,12.4,2.75,4.744,0,0" transform="matrix(0.966, -0.259, 0.259, 0.966, 1448.8, 290.294)" fill="none" stroke="var(--mainColor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_3" data-name="Path 3" d="M20,34.5l-3.71-6.4-1.707-2.944L7.187,12.4,2.75,4.744,0,0" transform="translate(1551.213 244.7) rotate(74.3)" fill="none" stroke="var(--mainColor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
                                             </g>
                                         </svg>
                                     </span>
@@ -123,9 +123,9 @@
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 133.02 104.113">
                                             <g id="check" transform="translate(-1436.246 -232.059)">
-                                            <path id="Path_1" data-name="Path 1" d="M75,0,58.984,16.207l-16.8,17L28.711,46.843.937,74.949,0,75.9" transform="translate(1472.5 248.5)" fill="none" stroke="#fb4400" stroke-linejoin="round" stroke-width="15"/>
-                                            <path id="Path_2" data-name="Path 2" d="M20,34.5l-3.71-6.4-1.707-2.944L9.563,16.5,7.187,12.4,2.75,4.744,0,0" transform="matrix(0.966, -0.259, 0.259, 0.966, 1448.8, 290.294)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
-                                            <path id="Path_3" data-name="Path 3" d="M20,34.5l-3.71-6.4-1.707-2.944L7.187,12.4,2.75,4.744,0,0" transform="translate(1551.213 244.7) rotate(74.3)" fill="none" stroke="#fb4400" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_1" data-name="Path 1" d="M75,0,58.984,16.207l-16.8,17L28.711,46.843.937,74.949,0,75.9" transform="translate(1472.5 248.5)" fill="none" stroke="var(--mainColor)" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_2" data-name="Path 2" d="M20,34.5l-3.71-6.4-1.707-2.944L9.563,16.5,7.187,12.4,2.75,4.744,0,0" transform="matrix(0.966, -0.259, 0.259, 0.966, 1448.8, 290.294)" fill="none" stroke="var(--mainColor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+                                            <path id="Path_3" data-name="Path 3" d="M20,34.5l-3.71-6.4-1.707-2.944L7.187,12.4,2.75,4.744,0,0" transform="translate(1551.213 244.7) rotate(74.3)" fill="none" stroke="var(--mainColor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
                                             </g>
                                         </svg>
                                     </span>

@@ -18,6 +18,12 @@
         opacity: 0.9;
         margin-right: 5px;
     }
+    :root {
+        --mainColor: {{ getCurrentUserBranchData()->main_color }};
+        --secondColor: #303d47;
+        --thirdColor: #00bcb3;
+        --fourthColor: #fd9a18;
+    }
 </style>
 
 <header class="navbar navbar-dark sticky-top bg-white flex-md-nowrap p-0 shadow lms-header">
@@ -253,5 +259,3 @@
         </li>
     </ul>
 </header>
-
-
