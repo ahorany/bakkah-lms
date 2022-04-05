@@ -234,9 +234,13 @@ class UserProfileController extends Controller
             DB::table('user_branches')->where('user_id',\auth()->id())->update(['branch_id' => $branch_id]);
         }
 
-       $user_branch = DB::select("SELECT branches.title , branches.main_color , branches.description ,  user_branches.id , user_branches.branch_id , user_branches.user_id ,user_branches.name , user_branches.bio , user_branches.expire_date , user_branches.delegation_role_id  FROM `user_branches`
-                                INNER JOIN branches ON branches.id = user_branches.branch_id AND branches.deleted_at IS NULL
-                                WHERE user_branches.user_id = ".\auth()->id()." AND user_branches.branch_id = ? AND user_branches.deleted_at IS NULL",[$branch_id]);
+       $user_branch = DB::select("SELECT branches.title , branches.main_color , branches.description ,  user_branches.id , user_branches.branch_id , user_branches.user_id ,user_branches.name , user_branches.bio , user_branches.expire_date , user_branches.delegation_role_id , uploads.file
+        FROM `user_branches`
+        INNER JOIN branches ON branches.id = user_branches.branch_id AND branches.deleted_at IS NULL
+        LEFT JOIN uploads ON uploads.uploadable_id = branches.id
+                            AND uploads.deleted_at IS NULL
+                            AND uploads.uploadable_type = 'App\\\Models\\\Training\\\Branche'
+        WHERE user_branches.user_id = ".\auth()->id()." AND user_branches.branch_id = ? AND user_branches.deleted_at IS NULL",[$branch_id]);
 
         if (isset($user_branch[0])){
             session()->put('user_branch',$user_branch[0]);
