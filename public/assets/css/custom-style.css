@@ -1,3 +1,8 @@
+.d-none{
+    display: none !important;
+}
+
+
 .swal2-container{
     z-index: 999999999999999 !important;
 }

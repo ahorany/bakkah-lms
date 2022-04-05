@@ -36,7 +36,7 @@
 
             @if(Route::current()->getName() != 'user.congrats')
                 @include("layouts.sidebar")
-                {{-- @include("layouts.sidebar-content") --}}
+                @yield('sidebar-content')
             @endif
 
             <main class="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-5" id="main-vue-element">

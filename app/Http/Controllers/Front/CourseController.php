@@ -72,7 +72,7 @@ class CourseController extends Controller
     /*
      * Get Course With Contents
      */
-    private function getCourseWithContents($course_id, $role_id=3){
+    private function getCourseWithContents($course_id, $role_id){
 
         $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
 
@@ -101,8 +101,11 @@ class CourseController extends Controller
                 }])
             ->orderBy('order');
 
-            if($role_id==3){
-                $query->where('hide_from_trainees', 0);
+            if($role_id != -1){
+                $role = \App\Models\Training\Role::where('id',$role_id)->first();
+                if ($role->role_type_id == 512){
+                    $query->where('hide_from_trainees', 0);
+                }
             }
         }])->first();
 
@@ -251,6 +254,7 @@ class CourseController extends Controller
         }// end if
 
 
+
         if(!$preview_gate_allows){
             // Check if user is not register in course AND user role not admin => ABORT(404)
             $user_course_register = $this->checkUserCourseRegistrationAndRole($content->course->id);
@@ -380,7 +384,14 @@ class CourseController extends Controller
         // user content flag (0 or 1)
         $flag = $userContent->flag;
 
-        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','popup_gift_status','page_num','flag'));
+
+
+        $role_id = (!$preview_gate_allows) ? $user_course_register->role_id : -1;
+        // Get Course With Contents
+        $course = $this->getCourseWithContents($content->course->id, $role_id);
+
+
+        return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','popup_gift_status','page_num','flag','course'));
     } // end function
 
 

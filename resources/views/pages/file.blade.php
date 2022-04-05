@@ -6,8 +6,14 @@
 
 @section('style')
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
-
 @endsection
+
+
+@section('sidebar-content')
+    @include("layouts.sidebar-content")
+@endsection
+
+
 
 @section('content')
     <?php

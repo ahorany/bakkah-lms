@@ -219,106 +219,101 @@
                     <h3>{{__('education.Materials')}}</h3>
                 </div>
                 <div class="col-lg-8 mb-5 mb-lg-0 course_info no-padding">
-                    @foreach($course_collect[0] as $key => $section)
-                        <div class="card learning-file mb-3">
+                   @foreach($course_collect[0] as $key => $section)
+                      <div class="card learning-file mb-3">
                             <h3>{{$section->title}}</h3>
                             <div class="excerpt-text">{!! $section->details->excerpt??null !!}</div>
-                            @isset($section->contents)
-                                <ul>
-                                    @foreach($section->contents as $k => $content)
-                                        <li>
+                          @isset($section->contents)
+                             <ul>
+                                @foreach($section->contents as $k => $content)
+                                  <li>
+                                        <?php
+                                            $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
+                                            if($content->post_type != 'exam'){
+                                                $url = CustomRoute('user.course_preview', $content->id).$preview_url;
+                                            }else{
+                                                if(Gate::allows('preview-gate')){
+                                                    $url = CustomRoute('training.add_questions', $content->id).$preview_url;
+                                                }
+                                                else{
+                                                    $url = CustomRoute('user.exam', $content->id).$preview_url;
+                                                }
+                                            }
+                                        ?>
 
-                                                        <?php
-                                                        $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
-                                                        if($content->post_type != 'exam'){
-                                                            $url = CustomRoute('user.course_preview', $content->id).$preview_url;
-                                                        }else{
-                                                            if(Gate::allows('preview-gate')){
-                                                                $url = CustomRoute('training.add_questions', $content->id).$preview_url;
-                                                            }
-                                                            else{
-                                                                $url = CustomRoute('user.exam', $content->id).$preview_url;
-                                                            }
-                                                        }
-                                                        ?>
+                                        <?php
+                                            $content_show = false;
+                                            $popup_pay_status = false;
+                                            if( isset($content->user_contents[0])  ){
+                                                $content_show = true;
+                                            }else if ($section->post_type != "section"){
+                                                 if ($content->paid_status == 504 && $content->status == 1 ){ // if free
+                                                     $content_show = true;
+                                                 }else if( $content->status == 1 || (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 503 && $content->paid_status == 503) ){ // if content paid and user pay course
+                                                     $content_show = true;
+                                                 }else{ // if course paid and user not pay course
+                                                     $popup_pay_status = true; // preview pop up pay now
+                                                 }
+                                           }else if ( $content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
+                                                $content_show = true;
+                                            }
 
+                                      ?>
 
-                                                        <?php
-                                                            $content_show = false;
-                                                            $popup_pay_status = false;
-                                                            if( isset($content->user_contents[0])  ){
-                                                                $content_show = true;
-                                                            }else if ($section->post_type == "section"){
-                                                                 if ($content->paid_status == 504 && $content->status == 1 ){ // if free
-                                                                     $content_show = true;
-                                                                 }else if( $content->status == 1 || (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 503 && $content->paid_status == 503) ){ // if content paid and user pay course
-                                                                     $content_show = true;
-                                                                 }else{ // if course paid and user not pay course
-                                                                     $popup_pay_status = true; // preview pop up pay now
-                                                                 }
-                                                           }else if ( $content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
-                                                                $content_show = true;
-                                                            }
-
-                                                         ?>
-
-
-                                                            <a @if($content_show)
-                                                               href="{{$url}}"
-                                                               @elseif($popup_pay_status)
-                                                                href="#" class="gray-icon" onclick="pupupPay(event,'{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}')"
-                                                               @else
-                                                                href="#" class="gray-icon" onclick="return false"
-                                                               @endif
-                                                            >
-
-                                                            <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
-                                                            <span>
-                                                                {{$content->title}}
-                                                                @if (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 504 && $content->paid_status == 504)
-                                                                    <span>
-                                                                        <span class="mx-1 free">{{$content->paid_status == 504 ? 'Free' : '' }}</span>
-                                                                    </span>
-                                                                @endif
-                                                            </span>
-
-
-                                                            <span class="svg">
-                                                @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
-                                                                    <span class="flag_icon_true">
-                                                        @if(file_exists(public_path('icons/file_flag_old.svg')))
-                                                                            {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
-                                                                        @endif
-                                                    </span>
-                                                                @else
-                                                                    <span class="flag_icon_false">
-                                                        @if(file_exists(public_path('icons/file_flag_old.svg')))
-                                                                            {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
-                                                                        @endif
-                                                    </span>
-                                                                @endif
-                                                                @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
-                                                                    <span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
-                                                            <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
-                                                            <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#fff"/>
-                                                        </svg>
-                                                    </span>
-                                                        @else
-                                                            <span>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52"><path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#ccc" stroke-width="3" stroke-dasharray="0 0"></path> <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#ccc"></path></svg>
-                                                            </span>
-                                                        @endif
-                                                    </span>
-                                                </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @endisset
-                        </div>
+                                        <a @if($content_show)
+                                           href="{{$url}}"
+                                           @elseif($popup_pay_status)
+                                            href="#" class="gray-icon" onclick="pupupPay(event,'{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}')"
+                                           @else
+                                            href="#" class="gray-icon" onclick="return false"
+                                           @endif
+                                        >
+                                           <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
+                                           <span>
+                                            {{$content->title}}
+                                            @if (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 504 && $content->paid_status == 504)
+                                                <span>
+                                                    <span class="mx-1 free">{{$content->paid_status == 504 ? 'Free' : '' }}</span>
+                                                </span>
+                                            @endif
+                                        </span>
+                                           <span class="svg">
+                            @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
+                                                <span class="flag_icon_true">
+                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
+                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
+                                                    @endif
+                                </span>
+                                            @else
+                                                <span class="flag_icon_false">
+                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
+                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
+                                                    @endif
+                                </span>
+                                            @endif
+                                            @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
+                                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
+                                        <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
+                                        <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#fff"/>
+                                    </svg>
+                                </span>
+                                    @else
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52"><path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#ccc" stroke-width="3" stroke-dasharray="0 0"></path> <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#ccc"></path></svg>
+                                        </span>
+                                    @endif
+                                </span>
+                                       </a>
+                                    </li>
+                                 @endforeach
+                             </ul>
+                         @endisset
+                      </div>
                         <!-- /.learning-file -->
-                    @endforeach
+                   @endforeach
                 </div>
+
                 <div class="col-lg-4 course_info no-padding">
                     @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress >= $course->complete_progress ))
                         @if(!is_null($course_registration))
@@ -463,8 +458,6 @@
 @endsection
 
 @section('script')
-
-
     <script>
             window.total_rate = {!! json_encode($total_rate) !!}
             window.rate =  @json($course->course_rate->rate??null)
