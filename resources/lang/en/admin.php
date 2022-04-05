@@ -181,4 +181,5 @@ return [
     'course_title'=>'course title',
     'date_from'=>'date from',
     'date_to'=>'date to',
+    'main_color'=>'Main Color',
 ];

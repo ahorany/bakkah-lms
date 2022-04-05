@@ -151,4 +151,5 @@ return [
     'True'=>'Register',
     'False'=>'Not Register',
     'add_user'=>'Add User',
+    'main_color'=>'اللون الأساسي',
 ];

@@ -67,7 +67,7 @@
             fill: #fff;
         }
         svg#svg_icon {
-            fill: #fb4400;
+            fill: var(--main-color);
         }
     </style>
 @endsection

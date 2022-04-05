@@ -41,8 +41,8 @@
                         </div>
                         @error('password')
                         <span style="color:#f93d3d" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            <strong>{{ $message }}</strong>
+                        </span>
                         @enderror
                         <div class="mb-3 form-group">
                             <label class="checkbox-lable"> Keep me signed in
@@ -50,7 +50,7 @@
                                 <span class="checkbox-mark"></span>
                             </label>
                         </div>
-                        <button class="btn btn-primary bold w-100 py-2">{{__('education.Sign In')}}</button>
+                        <button class="btn btn-primary bold w-100 py-2" style="background: #fb4400;">{{__('education.Sign In')}}</button>
                     </form>
                 </div>
                 <div class="col-md-6 text-center">

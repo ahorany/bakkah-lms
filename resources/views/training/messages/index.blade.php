@@ -77,7 +77,7 @@
             fill: #fff;
         }
         svg#svg_icon {
-            fill: #fb4400;
+            fill: var(--mainColor);
         }
     </style>
 @endsection

@@ -18,12 +18,20 @@
         opacity: 0.9;
         margin-right: 5px;
     }
+    :root {
+        --mainColor: {{ getCurrentUserBranchData()->main_color }};
+        --secondColor: #303d47;
+        --thirdColor: #00bcb3;
+        --fourthColor: #fd9a18;
+    }
 </style>
-
 <header class="navbar navbar-dark sticky-top bg-white flex-md-nowrap p-0 shadow lms-header">
     <a class="navbar-brand col-md-3 col-lg-3 col-xl-2 me-0 px-3" href="{{CustomRoute('user.home')}}">
-        <img src="{{CustomAsset('assets/images/logo.png')}}" alt="{{__('education.header_title')}}">
-        <span class="d-none d-sm-block mobile-none">BAKKAH <b>LMS</b></span>
+        @isset(getCurrentUserBranchData()->file)
+            <img src="{{CustomAsset('upload/full/'.getCurrentUserBranchData()->file)}}" alt="{{__('education.header_title')}}">
+        @else
+            <span class="d-none d-sm-block mobile-none"><b>{{ getCurrentUserBranchData()->title }}</b></span>
+        @endisset
     </a>
     <button class="navbar-toggler position-absolute d-md-none collapsed  me-auto ms-3" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
@@ -253,5 +261,3 @@
         </li>
     </ul>
 </header>
-
-

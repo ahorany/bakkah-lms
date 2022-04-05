@@ -14,11 +14,12 @@
                         <div class="col-lg-8">
                             <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
                             <p class="lead" style="text-transform: none !important;">
-                                Welcome to Bakkah Learning Management System!
+                                {{-- Welcome to Bakkah Learning Management System!
                                 <br>
                                 We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for students of all backgrounds and abilities.
                                 <br>
-                                A lot of Knowledge & fun are waiting for you, so let's get started.
+                                A lot of Knowledge & fun are waiting for you, so let's get started. --}}
+                                {{ getCurrentUserBranchData()->description }}
                             </p>
                         </div>
 
@@ -267,7 +268,7 @@
                     backgroundColor: [
                         "#00bcb3",
                         "#eaeaea",
-                        "#fb4400",
+                        "var(--mainColor)",
                     ]
                 }]
         };

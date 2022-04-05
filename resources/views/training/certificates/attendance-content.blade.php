@@ -19,7 +19,7 @@
     <div style="height: 100%;background-color: #ffffff;background: url(https://wp.bakkah.net.sa/wp-content/themes/bakkah-new/includes/generate_ji_emails/vendor/phpoffice/phpword/gen_files/certificate/Letter-of-course-new-bg.png) no-repeat;background-size: cover;">
 
       <div style="text-align: center;">
-        <h2 style="font-size: 80px;line-height: 62px;color: #fb4400;margin: 0;padding-top: 330px;">LETTER</h2>
+        <h2 style="font-size: 80px;line-height: 62px;color: var(--mainColor);margin: 0;padding-top: 330px;">LETTER</h2>
         <h4 style="margin:0;padding-top: 30px;font-size: 30px;font-weight: 300;text-transform: uppercase">of course attendance</h4>
       <h3 style="font-weight: bold;font-size: 30px;position: relative;min-height: 24px;margin-top:70px">{{$post->userId->trans_name??null}}</h3>
       <p style="margin-bottom: 0px;font-size: 22px;font-weight: 300;position: relative;">has successfully completed

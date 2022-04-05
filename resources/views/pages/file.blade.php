@@ -90,7 +90,7 @@
 
         <div class="row mx-0 file">
             @if(session()->has('status'))
-                {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
+                {{-- <div style="background: var(--mainColor);color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
                 <div class="container">
                     <div class="row">
                         <div class="error-notice">

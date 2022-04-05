@@ -57,7 +57,13 @@ class BrancheController extends Controller
         $role =  Role::create(['name' => 'Instructor','guard_name' => 'web','role_type_id' => 511,'branch_id' => $branche->id ,'icon' => 'instructor.svg' ]);
         $role->syncPermissions(["21"]);
 
-        Role::create(['name' => 'trainee','guard_name' => 'web','role_type_id' => 512,'branch_id' => $branche->id ,'icon' => 'trainee.svg' ]);
+        Role::create([
+            'name' => 'trainee',
+            'guard_name' => 'web',
+            'role_type_id' => 512,
+            'branch_id' => $branche->id ,
+            'icon' => 'trainee.svg'
+        ]);
 
 
         return Active::Inserted($branche->name);
@@ -73,6 +79,8 @@ class BrancheController extends Controller
         $validated['active'] = request()->has('active')?1:0;
         Branche::find($branch->id)->update($validated);
         Branche::UploadFile($branch, ['method'=>'update']);
+        $user_branch = session()->get('user_branch');
+        $user_branch->main_color = $validated['main_color'];
         return Active::Updated($branch->name);
     }
 
