@@ -78,9 +78,13 @@ class BrancheController extends Controller
         $validated['updated_by'] = auth()->user()->id;
         $validated['active'] = request()->has('active')?1:0;
         Branche::find($branch->id)->update($validated);
-        Branche::UploadFile($branch, ['method'=>'update']);
+        $fileName = Branche::UploadFile($branch, ['method'=>'update']);
         $user_branch = session()->get('user_branch');
-        $user_branch->main_color = $validated['main_color'];
+        if ($branch->id == $user_branch->branch_id){
+            $user_branch->main_color = $validated['main_color'];
+            $user_branch->file = $fileName;
+        }
+
         return Active::Updated($branch->name);
     }
 
