@@ -10,6 +10,7 @@ use App\Models\Admin\Partner;
 use App\Models\Training\Branche;
 use App\Models\Training\Course;
 use App\Constant;
+use App\Timezone;
 use App\Models\Training\Role;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -30,12 +31,14 @@ class BrancheController extends Controller
         $branches = Branche::query();
         $count = $branches->count();
         $branches = $branches->page();
-
         return Active::Index(compact('branches', 'count', 'post_type', 'trash'));
     }
 
     public function create(){
-        return Active::Create();
+        $timezones = Timezone::get();
+        return Active::Create([
+            'timezones'=>$timezones,
+        ]);
     }
 
     public function store(BrancheRequest $request){
@@ -70,7 +73,11 @@ class BrancheController extends Controller
     }
 
     public function edit(Branche $branch){
-        return Active::Edit(['eloquent'=>$branch]);
+        $timezones = Timezone::get();
+        return Active::Edit([
+            'eloquent'=>$branch,
+            'timezones'=>$timezones,
+        ]);
     }
 
     public function update(BrancheRequest $request,Branche $branch){

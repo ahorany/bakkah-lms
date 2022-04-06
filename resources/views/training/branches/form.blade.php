@@ -21,6 +21,7 @@
 @section('col3_block')
     <div class="card pt-3 mb-2">
         {!!Builder::Input('main_color', 'main_color', null, ['col'=>'col-md-12' , 'type'=> 'color'])!!}
+        {!!Builder::Select('timezone', 'timezone', $timezones, null, ['col'=>'col-md-12' , 'model_title'=>'name',])!!}
     </div>
 @endsection
 

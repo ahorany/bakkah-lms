@@ -182,4 +182,5 @@ return [
     'date_from'=>'date from',
     'date_to'=>'date to',
     'main_color'=>'Main Color',
+    'timezone'=>'Timezone',
 ];

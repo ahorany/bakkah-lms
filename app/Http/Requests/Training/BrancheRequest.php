@@ -14,15 +14,16 @@ class BrancheRequest extends FormRequest
 
     public function rules()
     {
+        // dd($this->branch->id);
         return [
             'name'=>'required|min:2|max:200',
             'title'=>'required|min:2|max:200',
             'description'=>'',
             'main_color'=>'',
             'expire_date'=>'',
-            'image'=>'image|mimes:jpeg,png,jpg,gif,svg|max:20480',
+            'timezone'=>'',
             'active'=>'',
-            'file'=>'required|mimes:jpeg,png,jpg,gif,svg|max:20480',
+            'file'=>'requiredOnCreate|mimes:jpeg,png,jpg,gif,svg|max:20480',
             'updated_by'=>'',
         ];
     }
