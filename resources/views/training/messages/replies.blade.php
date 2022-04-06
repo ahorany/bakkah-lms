@@ -49,10 +49,10 @@
     <hr>
     <p>{{$reply->title}}</p>
 
-    @include('training.messages.like_reply_btn', [
-        'table_name'=>'replies',
-        'eloquent'=>$reply,
-        // 'likeable_id'=>$reply->id,
-    ])
+{{--    @include('training.messages.like_reply_btn', [--}}
+{{--        'table_name'=>'replies',--}}
+{{--        'eloquent'=>$reply,--}}
+{{--        // 'likeable_id'=>$reply->id,--}}
+{{--    ])--}}
 </div>
 @endforeach

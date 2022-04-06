@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 function is_super_admin(){
+
     if(session()->get('is_super_admin')){
         return true;
     }
