@@ -67,19 +67,13 @@ nav#sidebarMenu ul li a span.title{
     position: relative;
     justify-content: space-between;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 15px 30px;
 }
 #sidebar-content .dropdown-sidebar>a span.drop-icon svg{
     width: 12px;
     height: 12px;
 }
-#sidebar-content .dropdown-sidebar>a span.title span , #sidebar-content ul li.nav-item .d-flex span{
-    height: 20px;
-}
-/* #sidebar-content .dropdown-sidebar>a span.title span{
-    height: 12px;
-} */
 #sidebar-content .dropdown-sidebar>a span.title {
     display: flex;
     align-items: center;
@@ -1103,6 +1097,11 @@ p.lead.light.card {
 }
 .reply-actions button.share svg:hover path , .reply-actions button.share.is_share svg path {
     fill: green;
+}
+
+/* .disabled-content{ */
+#sidebar-content .nav-item-contents ul li.nav-item a:hover img , #sidebar-content .nav-item-contents ul li.nav-item.active a img{
+    filter: brightness(0) invert(1) !important;
 }
 
 

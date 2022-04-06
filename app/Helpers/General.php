@@ -37,8 +37,6 @@ function is_dynamic_certificate()
 }
 
 
-
-
 function CustomAsset($url){
     return asset(env('LIVE_ASSET').$url);
 }
