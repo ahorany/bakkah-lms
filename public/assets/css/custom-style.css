@@ -61,31 +61,31 @@ nav#sidebarMenu ul li a span.title{
 #sidebar-content .dropdown-sidebar a img{
     height: 22px;
 }
-#sidebar-content .active.dropdown-sidebar>a , #sidebar-content li:hover .dropdown-sidebar>a , #sidebar-content li .dropdown-sidebar ul li:hover a {
+#sidebar-content .active.dropdown-sidebar>a,
+#sidebar-content li:hover .dropdown-sidebar>a,
+#sidebar-content li .dropdown-sidebar ul li:hover a,
+#sidebar-content .active .dropdown-sidebar>a{
     background: #6a6a6a;
     color: #fff;
 }
-#sidebar-content li .dropdown-sidebar ul li:hover a img{
+#sidebar-content li .dropdown-sidebar ul li:hover a img,
+#sidebar-content .dropdown-sidebar ul li.active a img{
     filter: brightness(0) invert(1) !important;
 }
-#sidebar-content li:hover .dropdown-sidebar>a svg path , #sidebar-content li .active.dropdown-sidebar>a svg path{
+#sidebar-content li:hover .dropdown-sidebar>a svg path,
+#sidebar-content li .active.dropdown-sidebar>a svg path,
+#sidebar-content .active .dropdown-sidebar a svg path{
     fill: #fff;
 }
-#sidebar-content .dropdown-sidebar ul li.active a , #sidebar-content .dropdown-sidebar ul li.active:hover a{
+#sidebar-content .dropdown-sidebar ul li.active a,
+#sidebar-content .dropdown-sidebar ul li.active:hover a{
     background: var(--mainColor) !important;
 }
 #sidebar-content .dropdown-sidebar ul li.active a{
     color: #fff;
 }
-#sidebar-content .dropdown-sidebar ul li.active a img{
-    filter: brightness(0) invert(1) !important;
-}
-#sidebar-content .active .dropdown-sidebar>a {
-    background: #6a6a6a;
-    color: #fff;
-}
-#sidebar-content .active .dropdown-sidebar a svg path {
-    fill: #fff;
+#sidebar-content a.disabled-content {
+    opacity: 0.3;
 }
 /********************************/
 .form-control{
