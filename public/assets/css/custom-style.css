@@ -34,54 +34,59 @@ nav#sidebarMenu ul li a span.title{
     transition: all 0.5s ease;
 }
 #sidebar-content ul li a {
-    padding: 15px 30px;
+    padding: 15px;
     display: block;
-}
-#sidebar-content ul.nav li.nav-item a , #sidebar-content li .dropdown-sidebar>a {
-    color: #303d47;
-}
-#sidebar-content ul.nav li.nav-item:hover,
-#sidebar-content li:hover .dropdown-sidebar>a,
-#sidebar-content li.active .dropdown-sidebar>a,
-#sidebar-content ul.nav li.nav-item.active{
-    background: #303d47;
-}
-#sidebar-content ul.nav li.nav-item:hover a,
-#sidebar-content li:hover .dropdown-sidebar>a,
-#sidebar-content li.active .dropdown-sidebar>a,
-#sidebar-content ul.nav li.nav-item.active a{
-    color: #fff;
-}
-#sidebar-content ul.nav li.nav-item a svg,
-#sidebar-content li .dropdown-sidebar>a .title svg{
-    margin-right: 5px;
-    width: 20px;
-}
-#sidebar-content ul.nav li.nav-item:hover a svg path,
-#sidebar-content li:hover .dropdown-sidebar>a svg path,
-#sidebar-content ul.nav li.nav-item.active a svg path,
-#sidebar-content li.active .dropdown-sidebar>a svg path{
-    fill: #fff;
 }
 #sidebar-content .dropdown-sidebar>a {
     position: relative;
     justify-content: space-between;
     display: flex;
     align-items: flex-start;
-    padding: 15px 30px;
+    padding: 15px 20px;
 }
 #sidebar-content .dropdown-sidebar>a span.drop-icon svg{
     width: 12px;
-    height: 12px;
+    height: 6px;
 }
 #sidebar-content .dropdown-sidebar>a span.title {
     display: flex;
     align-items: center;
 }
 #sidebar-content ul.nav .dropdown-sidebar.active ul{
-    background: transparent !important;
+    background: #fff !important;
 }
-
+#sidebar-content .dropdown-sidebar a{
+    color: #6a6a6a;
+}
+#sidebar-content .dropdown-sidebar a img{
+    height: 22px;
+}
+#sidebar-content .active.dropdown-sidebar>a , #sidebar-content li:hover .dropdown-sidebar>a , #sidebar-content li .dropdown-sidebar ul li:hover a {
+    background: #6a6a6a;
+    color: #fff;
+}
+#sidebar-content li .dropdown-sidebar ul li:hover a img{
+    filter: brightness(0) invert(1) !important;
+}
+#sidebar-content li:hover .dropdown-sidebar>a svg path , #sidebar-content li .active.dropdown-sidebar>a svg path{
+    fill: #fff;
+}
+#sidebar-content .dropdown-sidebar ul li.active a , #sidebar-content .dropdown-sidebar ul li.active:hover a{
+    background: var(--mainColor) !important;
+}
+#sidebar-content .dropdown-sidebar ul li.active a{
+    color: #fff;
+}
+#sidebar-content .dropdown-sidebar ul li.active a img{
+    filter: brightness(0) invert(1) !important;
+}
+#sidebar-content .active .dropdown-sidebar>a {
+    background: #6a6a6a;
+    color: #fff;
+}
+#sidebar-content .active .dropdown-sidebar a svg path {
+    fill: #fff;
+}
 /********************************/
 .form-control{
     appearance: auto;
@@ -1099,11 +1104,6 @@ p.lead.light.card {
     fill: green;
 }
 
-/* .disabled-content{ */
-#sidebar-content .nav-item-contents ul li.nav-item a:hover img , #sidebar-content .nav-item-contents ul li.nav-item.active a img{
-    filter: brightness(0) invert(1) !important;
-}
-
 
 @media screen and (min-width:1300px){
     .container.change-password,
@@ -1531,9 +1531,9 @@ p.lead.light.card {
     #sidebar-content ul li a , #sidebar-content .dropdown-sidebar>a{
         padding: 10px 20px;
     }
-    #sidebar-content ul.nav .dropdown-sidebar.active ul{
+    /* #sidebar-content ul.nav .dropdown-sidebar.active ul{
         background: #fff !important;
-    }
+    } */
     .card , .home-section .text-center.course-image.p-3 , #main-vue-element .course-image , .information-card{
         box-shadow: none;
         border: 1px solid gainsboro;
