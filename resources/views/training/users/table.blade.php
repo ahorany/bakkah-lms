@@ -88,7 +88,12 @@ use App\Models\Training\CourseRegistration;
                 </td>
                 <td class="px-1">
                     <?php
-                        $assigned_courses = CourseRegistration::where('user_id',$post->id)->count();
+                        $branch_id = getCurrentUserBranchData()->branch_id;
+                        $assigned_courses = CourseRegistration::join('courses', function ($join) use($branch_id) {
+                                                $join->on('courses_registration.course_id', '=', 'courses.id')
+                                                    ->where('courses.branch_id',$branch_id);
+                                            })
+                        ->where('user_id',$post->id)->count();
                     ?>
                     <span style="display: block;" class="td-title">  {{ $assigned_courses }}</span>
                 </td>

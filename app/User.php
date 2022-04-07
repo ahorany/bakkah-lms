@@ -15,6 +15,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use DB;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -81,12 +83,9 @@ class User extends Authenticatable implements JWTSubject
         return 'remember_token';
     }
 
-
-
     public function gender(){
         return $this->belongsTo(Constant::class, 'gender_id', 'id');
     }
-
 
     public function courses(){
         return $this->belongsToMany(Course::class,'courses_registration','user_id')->withPivot('user_id' ,'course_id','rate', 'progress','paid_status','session_id');
@@ -135,5 +134,22 @@ class User extends Authenticatable implements JWTSubject
             return request()->delegate_user_id;
         }
         return auth()->id();
+    }
+
+    public static function getLearnersNo()
+    {
+        $branch_id = getCurrentUserBranchData()->branch_id;
+
+        $sql  = DB::table('model_has_roles')
+                ->join('roles',function ($join){
+                        $join->on('roles.id','=','model_has_roles.role_id')
+                ->where('roles.role_type_id',512)
+                ->where('roles.deleted_at',null)
+                ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+                })
+                ->join('users','users.id','model_has_roles.model_id');
+        return $sql;
+
+
     }
 }

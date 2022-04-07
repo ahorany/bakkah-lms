@@ -22,7 +22,7 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.course_code')}}</th>
             <th class="">{{__('admin.category')}}</th>
             <th class="">{{__('admin.course_pdus')}}</th>
-            <th class="">{{__('admin.assigned_learners')}}</th>
+            <th class="">{{__('admin.assigned_to_course')}}</th>
             <th class="">{{__('admin.completed_learners')}}</th>
             <th class="">{{__('admin.Registered')}}</th>
             <th class="">{{__('admin.image')}}</th>
@@ -75,25 +75,19 @@ use App\Models\Training\CourseRegistration;
         </td>
         <td>
             <?php
-                $trainee_count =   DB::table('courses_registration')
-                    ->where('course_id',$post->id)
-                    ->groupBy('role_id')
-                    ->select(DB::raw('COUNT(*) as counts'),'role_id')->get();
-                foreach($trainee_count as $c)
-                    if($c->role_id == 2)
-                       echo '<span class="badge-pink mb-1 mr-1 d-block" style="width: max-content;">Instructors: '.$c->counts.'</span>';
-                    elseif($c->role_id == 3)
-                        echo '<span class="badge-blue mr-1">Trainees '.$c->counts.'</span>';
+                $assigned_learners1 = CourseRegistration::getAssigned(512);
+                $assigned_learners =  $assigned_learners1->where('course_id',$post->id)->count();
+
+                $assigned_instructors = CourseRegistration::getAssigned(511);
+                $assigned_instructors =  $assigned_instructors->where('course_id',$post->id)->count();
+
+                $completed_learners =  $assigned_learners1->where('progress',100)->where('course_id',$post->id)->count();
+
+                echo '<span class="badge-pink mb-1 mr-1 d-block" style="width: max-content;">Instructors: '.$assigned_instructors.'</span>';
+                echo '<span class="badge-blue mr-1">Trainees '.$assigned_learners.'</span>';
             ?>
         </td>
         <td>
-            <?php
-            $completed_learners = DB::table('courses_registration')
-                                    ->where('course_id',$post->id)
-                                    ->where('role_id',3)
-                                    ->where('progress',100)->count();
-            ?>
-
              <span class="td-title">{{$completed_learners}}</span>
         </td>
         <td>
@@ -103,11 +97,11 @@ use App\Models\Training\CourseRegistration;
                                     ->where('user_id',auth()->user()->id)->count();
             ?>
              <span class="td-title">
-                 @if($registered>0)
+                @if($registered>0)
                     <span class="badge-green d-block">{{__('admin.True')}}</span>
                 @else
                     <span class="badge-red d-block">{{__('admin.False')}}</span>
-                 @endif
+                @endif
              </span>
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>

@@ -11,6 +11,7 @@ use App\Models\Training\Category;
 
 use App\Constant;
 use App\Models\Training\Certificate;
+use App\Models\Training\CourseRegistration;
 use App\Models\Training\Group;
 use App\Models\Training\Role;
 use App\Models\Training\Unit;
@@ -71,9 +72,19 @@ class CourseController extends Controller
         $count = $courses->count();
         $courses = $courses->page();
 
-        $assigned_learners = $this->getAssignedLearners();
-        $assigned_instructors = $this->getAssignedInstructors();
-        $completed_learners = $this->getCompletedLearners();
+        $assigned_learners1 = CourseRegistration::getAssigned(512);
+        if(!is_null(request()->course_search)) {
+            $assigned_learners1 = $this->SearchCond($assigned_learners1);
+        }
+        $assigned_learners =  $assigned_learners1->count();
+
+        $assigned_instructors = CourseRegistration::getAssigned(511);
+        if(!is_null(request()->course_search)) {
+            $assigned_instructors = $this->SearchCond($assigned_instructors);
+        }
+        $assigned_instructors =  $assigned_instructors->count();
+
+        $completed_learners =  $assigned_learners1->where('progress',100)->count();
 
         $categories = Category::get();
         $delivery_methods = Constant::where('parent_id', 10)->get();
@@ -87,57 +98,6 @@ class CourseController extends Controller
             $query->where('courses.title', 'like', '%' . request()->course_search . '%');
         });
         return $eloquent1;
-    }
-
-    private function getAssignedLearners(){
-        $assigned_learners = DB::table('courses_registration')
-                              ->join('roles',function ($join){
-                                  $join->on('roles.id','=','courses_registration.role_id')
-                                       ->where('roles.role_type_id',512)
-                                       ->where('roles.deleted_at',null)
-                                       ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
-                              });
-
-        if(!is_null(request()->course_search)) {
-            $assigned_learners = $assigned_learners->join('courses','courses.id','courses_registration.course_id');
-            $assigned_learners = $this->SearchCond($assigned_learners);
-        }
-
-        return $assigned_learners->count();
-    }
-
-    private function getAssignedInstructors(){
-        $assigned_instructors = DB::table('courses_registration')
-            ->join('roles',function ($join){
-                $join->on('roles.id','=','courses_registration.role_id')
-                    ->where('roles.role_type_id',511)
-                    ->where('roles.deleted_at',null)
-                    ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
-            });
-
-        if(!is_null(request()->course_search)) {
-            $assigned_instructors = $assigned_instructors->join('courses','courses.id','courses_registration.course_id');
-
-            $assigned_instructors = $this->SearchCond($assigned_instructors);
-        }
-        return  $assigned_instructors->count();
-    }
-
-    private function getCompletedLearners(){
-        $completed_learners = DB::table('courses_registration')
-            ->join('roles',function ($join){
-                $join->on('roles.id','=','courses_registration.role_id')
-                    ->where('roles.role_type_id',512)
-                    ->where('roles.deleted_at',null)
-                    ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
-            })
-            ->where('progress',100);
-        if(!is_null(request()->course_search)) {
-            $completed_learners = $completed_learners->join('courses','courses.id','courses_registration.course_id');
-
-            $completed_learners = $this->SearchCond($completed_learners);
-        }
-        return  $completed_learners->count();
     }
 
 

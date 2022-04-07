@@ -82,7 +82,7 @@
                     </svg>
                     <div>
 
-                        <span>{{__('admin.completed_courses')}}</span>
+                        <span>{{__('admin.completed_learners')}}</span>
                         <b>{{$completed_learners}}</b>
 
                     </div>

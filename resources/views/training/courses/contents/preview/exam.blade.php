@@ -145,14 +145,14 @@
                         <div class="correct_feedback">
                             @{{ question.mark??0 }} Marks
                         </div>
-                        <div class="correct_feedback">
-                            <template v-if="question.feedback">
+                        <template v-if="question.feedback">
+                            <div class="correct_feedback">
                                 <div>
                                     <h6 class="m-0"><strong>Feedback :</strong> </h6>
                                     <div>@{{  question.feedback }}</div>
                                 </div>
-                            </template>
-                        </div>
+                            </div>
+                        </template>
 
                     </div>
                 </template>
