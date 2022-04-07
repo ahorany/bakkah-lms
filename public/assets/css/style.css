@@ -782,6 +782,7 @@ li.has-dropdown .dropdown a:hover {
 ol.breadcrumb {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 ol.breadcrumb li {
@@ -879,8 +880,9 @@ p.time-remaining svg {
 }
 
 .q-card label .radio-mark {
-  top: 50%;
+  top: 7px;
   transform: translateY(-50%);
+  transform: rotate(45deg);
   left: 10px;
   border: 1px solid #ccc;
   background: transparent;
