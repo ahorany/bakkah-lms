@@ -187,4 +187,6 @@ return [
     'export'=>'Export',
     'main_color'=>'Main Color',
     'timezone'=>'Timezone',
+    'discussion' => 'Discussion',
+
 ];

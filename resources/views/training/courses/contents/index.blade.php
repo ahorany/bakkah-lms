@@ -70,6 +70,7 @@
                                             <button style="font-size: 90%;" type="button" @click="OpenModal('presentation',content)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
                                             <button style="font-size: 90%;" type="button" @click="OpenModal('scorm',content)" class="cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
                                             <button style="font-size: 90%;" type="button" @click="OpenModal('exam',content)" class="cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
+                                            <button style="font-size: 90%;" type="button" @click="OpenModal('discussion',content)" class="cyan" id="exam" ><i class="fa fa-comments" aria-hidden="true"></i> {{__('admin.discussion')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -146,7 +147,7 @@
                             </div>
 
                             <div class="modal-body row mx-0">
-                                <div v-if="model_type != 'exam'" class="col-md-6 col-12">
+                                <div v-if="model_type != 'exam' && model_type != 'discussion'" class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Title </label>
                                         <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
@@ -156,7 +157,7 @@
                                     </div>
                                 </div>
 
-                                <div v-if="model_type != 'exam' && model_type != 'scorm' && model_type != 'gift'" class="col-md-6 col-12">
+                                <div v-if="model_type != 'exam' && model_type != 'discussion' && model_type != 'scorm' && model_type != 'gift'" class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Time Limit (seconds) </label>
                                         <input min="0" type="number" v-model="time_limit" name="time_limit" class="form-control" placeholder="time limit">
@@ -167,7 +168,7 @@
                                 </div>
 
 
-                                <div v-if="model_type != 'exam' && model_type != 'scorm' && model_type == 'gift'" class="col-md-6 col-12">
+                                <div v-if="model_type != 'exam' && model_type != 'discussion' && model_type != 'scorm' && model_type == 'gift'" class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Open After (progress) % </label>
                                         <input min="0" type="number" v-model="open_after" name="open_after" class="form-control" placeholder="open after">
@@ -260,7 +261,42 @@
                                 </template>
 
 
-                                <div v-if="model_type == 'section' || model_type == 'exam' " class="modal-diff-content my-2">
+                                <template v-if="model_type == 'discussion'">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="m-0">Title </label>
+                                                <input type="text" v-model="title" name="title" class="form-control" placeholder="title">
+                                                <div v-show="'title' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.title }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="modal-diff-content form-group">
+                                                <label class="m-0">Start Date </label>
+                                                <input type="datetime-local" v-model="start_date" name="start_date" class="form-control" placeholder="start date">
+                                                <div v-show="'start_date' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.start_date }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div  class="modal-diff-content form-group">
+                                                <label class="m-0">End Date </label>
+                                                <input  type="datetime-local" v-model="end_date" name="end_date" class="form-control" placeholder="end date">
+                                                <div v-show="'end_date' in errors">
+                                                    <span style="color: red;font-size: 13px">@{{ errors.end_date }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+
+
+                                <div v-if="model_type == 'section' || model_type == 'exam' ||  model_type == 'discussion' " class="modal-diff-content my-2">
                                     <editor v-model="excerpt" theme="snow" :options="options" :placeholder="'Details'"></editor>
                                     <div v-show="'excerpt' in errors">
                                         <span style="color: red;font-size: 13px">@{{ errors.excerpt }}</span>
@@ -335,7 +371,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12" v-if="model_type != 'section' && model_type != 'exam' && model_type != 'gift' && model_type != 'scorm' &&  model_type != 'video' ">
+                                <div class="col-md-6 col-12" v-if="model_type != 'section' && model_type != 'exam' && model_type != 'discussion' && model_type != 'gift' && model_type != 'scorm' &&  model_type != 'video' ">
                                     <div v-if="model_type != 'section' && model_type != 'exam'" class="form-group form-check child">
                                         <label class="container-check form-check-label" for="downloadable" style="padding: 25px 30px 0; font-size: 15px;">
                                             {{__('admin.downloadable')}}

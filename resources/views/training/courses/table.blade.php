@@ -26,7 +26,6 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.completed_learners')}}</th>
             <th class="">{{__('admin.Registered')}}</th>
             <th class="">{{__('admin.image')}}</th>
-            {{-- <th class="d-none d-sm-table-cell user-td col-md-2">{{__('admin.user')}}</th> --}}
             <th class="text-right">{{__('admin.action')}}</th>
         </tr>
       </thead>
@@ -108,24 +107,16 @@ use App\Models\Training\CourseRegistration;
 
 
           <td class="d-sm-table-cell text-right">
-{{--              @if(!checkUserIsTrainee())--}}
                 {!!Builder::BtnGroupRows($post->trans_title, $post->id, $btn_roles, [
                     'post'=>$post->id,
                 ])!!}
-{{--              @endif--}}
 
-              {{-- <a class="cyan" href="{{CustomRoute('user.course_details', $post->id) }}?preview=true">Preview</a> --}}
               @if( (!request()->has('trash') && request()->trash != "trash") || request()->trash == "" )
 
               <a href="{{route('training.coursesReportOverview',['id'=>$post->id])}}" target="blank" class="cyan mt-1" >
-                {{-- <i class="fa fa-pencil"></i> --}}
                 Report</a>
                 <div class="my-1">
                     @include('training.courses.contents.header',['course_id' => $post->id, 'green' =>true , 'courses_home' =>true ])
-                    {{-- <a href="{{route('training.contents',['course_id'=>$post->id])}}" class="green">Contents</a>
-                    <a href="{{route('training.units',['course_id'=>$post->id])}}" class="green">Units</a>
-                    <a href="{{route('training.course_users',['course_id'=>$post->id])}}" class="green">Users</a>
-                    <a href="{{route('training.role_path',['course_id'=>$post->id])}}" class="green">to Role and Path</a> --}}
                 </div>
               @endif
           </td>
@@ -137,5 +128,5 @@ use App\Models\Training\CourseRegistration;
   </div>
 </div>
 <!-- /.card-body -->
-{{-- {{ $courses->render() }} --}}
+
 {{ $courses->appends(['post_type' => $post_type??null, 'trash' => request()->trash??null, 'course_search' => request()->course_search??null, 'category_id' => request()->category_id??-1, 'show_in_website' => request()->show_in_website??null])->render() }}

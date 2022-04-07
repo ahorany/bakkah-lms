@@ -50,8 +50,10 @@ Route::group([
             Route::post('courses/importQuestionsCourse', 'ImportController@importQuestionsCourse')->name('importQuestionsCourse');
 
 
+//             Route::get('/discussion', 'DiscussionController@discussion')->name('discussion');
 
-            Route::get('/units', 'UnitController@index')->name('units');
+
+             Route::get('/units', 'UnitController@index')->name('units');
             Route::get('/delete_unit', 'UnitController@delete_unit')->name('delete_unit');
             Route::post('/add_unit', 'UnitController@add_unit')->name('add_unit');
             Route::post('/update_unit', 'UnitController@update_unit')->name('update_unit');

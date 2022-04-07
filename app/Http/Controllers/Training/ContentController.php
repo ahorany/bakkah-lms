@@ -232,9 +232,6 @@ class ContentController extends Controller
 
 
 
-
-
-
     public function update_section()
     {
         $rules = [
@@ -274,7 +271,24 @@ class ContentController extends Controller
 
     private function contentValidation($type){
         // validation
-        if($type == 'exam'){
+        if($type == 'discussion'){
+            $start_date = '';
+            $end_date = '';
+            if( strtotime(\request()->start_date) && strtotime(\request()->end_date)  ){
+                $start_date  = 'required|date|before:end_date';
+                $end_date    = 'required|date|after:start_date';
+            }
+
+
+            $rules = [
+                'title'      => "required|string",
+                'course_id'  =>'required|exists:courses,id',
+//                'excerpt'    =>  "required|string",
+                'content_id' => 'required|exists:contents,id',
+                'start_date'  => $start_date,
+                'end_date'     => $end_date,
+            ];
+        }elseif($type == 'exam'){
 
             $start_date = '';
             $end_date = '';

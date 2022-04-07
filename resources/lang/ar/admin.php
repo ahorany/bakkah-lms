@@ -156,4 +156,5 @@ return [
     'session'=>'Session',
     'export'=>'Export',
     'main_color'=>'اللون الأساسي',
+    'discussion' => 'Discussion',
 ];
