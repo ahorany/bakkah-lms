@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .export{
     background: green;
     color: #fff;
@@ -8,13 +7,9 @@
     display: inline-block;
     margin-bottom: 15px;
 }
-=======
 .d-none{
     display: none !important;
 }
-
-
->>>>>>> 22c0a6200be5c2e71df368719033b4e8dc549c19
 .swal2-container{
     z-index: 999999999999999 !important;
 }
@@ -57,7 +52,7 @@ nav#sidebarMenu ul li a span.title{
     padding: 15px 20px;
 }
 #sidebar-content .dropdown-sidebar>a span.drop-icon svg{
-    width: 12px;
+    width: 8px;
     height: 6px;
 }
 #sidebar-content .dropdown-sidebar>a span.title {
@@ -684,7 +679,7 @@ a:hover svg#back{
 }
 button.next_prev {
     width: max-content;
-    padding: 8px;
+    padding: 6px 8px;
     color: #646464;
     background: #fff;
     margin: 0px 5px 5px 5px;
