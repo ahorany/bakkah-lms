@@ -80,7 +80,8 @@ class BrancheController extends Controller
         ]);
     }
 
-    public function update(BrancheRequest $request,Branche $branch){
+    public function update(BrancheRequest $request, Branche $branch){
+
         $validated = $request->validated();
         $validated['updated_by'] = auth()->user()->id;
         $validated['active'] = request()->has('active')?1:0;
