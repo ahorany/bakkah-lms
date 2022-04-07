@@ -45,7 +45,7 @@ class UserController extends Controller
             $q->where('branch_id',getCurrentUserBranchData()->branch_id??1);
         });
 
-
+        $branch_id = getCurrentUserBranchData()->branch_id;
 
         if (!is_null(request()->user_search)) {
             $users = $this->SearchUser($users);
@@ -54,8 +54,12 @@ class UserController extends Controller
         $count = $users->count();
         $users = $users->page();
 
-
-        $learners_no = $this->getLearnersNo();
+        $learners_no  = User::getLearnersNo();
+        if(!is_null(request()->user_search)) {
+            $learners_no = $this->SearchUser($learners_no);
+        }
+        $learners_no =  $learners_no->count();
+        // dd();
         $complete_courses_no = $this->getCompleteCoursesNo();
         $courses_in_progress = $this->getCoursesInProgress();
         $courses_not_started = $this->getCoursesNotStarted();
@@ -76,21 +80,20 @@ class UserController extends Controller
         return $eloquent1;
     }
 
-    private function getLearnersNo(){
-        $learners_no  = DB::table('model_has_roles')->join('roles',function ($join){
-            $join->on('roles.id','=','model_has_roles.role_id')
-                ->where('roles.role_type_id',512)
-                ->where('roles.deleted_at',null)
-                ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
-        });
+    // private function getLearnersNo(){
+    //     $learners_no  = DB::table('model_has_roles')->join('roles',function ($join){
+    //         $join->on('roles.id','=','model_has_roles.role_id')
+    //             ->where('roles.role_type_id',512)
+    //             ->where('roles.deleted_at',null)
+    //             ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+    //     });
 
-
-        if (!is_null(request()->user_search)) {
-            $learners_no = $learners_no->join('users','users.id','model_has_roles.model_id');
-            $learners_no = $this->SearchUser($learners_no);
-        }
-        return $learners_no->count();
-    }
+    //     if (!is_null(request()->user_search)) {
+    //         // $learners_no = $learners_no->join('users','users.id','model_has_roles.model_id');
+    //         $learners_no = $this->SearchUser($learners_no);
+    //     }
+    //     return $learners_no->count();
+    // }
 
     private function getCompleteCoursesNo(){
         $complete_courses_no = DB::table('courses_registration')
@@ -209,7 +212,7 @@ class UserController extends Controller
 
         $role_id = $user->roles()->where('branch_id',$current_user_branch->branch_id)->select('roles.id')->first()->id??-1;
 
-        
+
         $user_branch = DB::table('user_branches')
                       ->where('user_id',$user->id)
                       ->where('branch_id',$current_user_branch->branch_id)->first();

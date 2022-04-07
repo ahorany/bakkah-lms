@@ -151,4 +151,9 @@ return [
     'True'=>'Register',
     'False'=>'Not Register',
     'add_user'=>'Add User',
+    'assigned_to_course'=>'Assigned To Course',
+    'learner'=>'Learner',
+    'session'=>'Session',
+    'export'=>'Export',
+
 ];
