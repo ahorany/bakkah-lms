@@ -1,8 +1,20 @@
+<<<<<<< HEAD
+.export{
+    background: green;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 20px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+=======
 .d-none{
     display: none !important;
 }
 
 
+>>>>>>> 22c0a6200be5c2e71df368719033b4e8dc549c19
 .swal2-container{
     z-index: 999999999999999 !important;
 }

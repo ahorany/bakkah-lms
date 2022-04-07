@@ -181,6 +181,14 @@ return [
     'course_title'=>'course title',
     'date_from'=>'date from',
     'date_to'=>'date to',
+<<<<<<< HEAD
+    'assigned_to_course'=>'Assigned To Course',
+    'learner'=>'Learner',
+    'session'=>'Session',
+    'export'=>'Export',
+
+=======
     'main_color'=>'Main Color',
     'timezone'=>'Timezone',
+>>>>>>> 22c0a6200be5c2e71df368719033b4e8dc549c19
 ];

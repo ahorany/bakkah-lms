@@ -15,6 +15,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use DB;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -122,7 +124,11 @@ class User extends Authenticatable implements JWTSubject
 
         if (!session('is_super_admin')) {
             $rel = $rel->where(function ($q) use ($current_user_branch){
+<<<<<<< HEAD
+                $q->where('roles.branch_id',$current_user_branch->branch_id);
+=======
                  $q->where('roles.branch_id',$current_user_branch->branch_id??1);
+>>>>>>> 22c0a6200be5c2e71df368719033b4e8dc549c19
             });
         }
 
@@ -135,5 +141,22 @@ class User extends Authenticatable implements JWTSubject
             return request()->delegate_user_id;
         }
         return auth()->id();
+    }
+
+    public static function getLearnersNo()
+    {
+        $branch_id = getCurrentUserBranchData()->branch_id;
+
+        $sql  = DB::table('model_has_roles')
+                ->join('roles',function ($join){
+                        $join->on('roles.id','=','model_has_roles.role_id')
+                ->where('roles.role_type_id',512)
+                ->where('roles.deleted_at',null)
+                ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+                })
+                ->join('users','users.id','model_has_roles.model_id');
+        return $sql;
+
+
     }
 }
