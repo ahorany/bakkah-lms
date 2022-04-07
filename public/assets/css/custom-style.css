@@ -104,33 +104,27 @@ nav#sidebarMenu ul li a span.title{
 .mobile-show{
     display: none !important;
 }
-
 .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin{
     border: none;
     background: transparent;
     width: max-content;
 }
-
 .lms-header ul.navbar-nav li.user a.nav-link.role.not_admin svg{
     display: none;
 }
-
 span.flag_icon_false svg path , .flag svg path {
     stroke: gray;
     transform: rotate(15deg);
 }
-
 span.flag_icon_true svg path , .flag-mark svg path {
     fill: var(--mainColor);
     stroke: var(--mainColor);
     transform: rotate(15deg);
 }
-
 span.flag.flag-mark svg path {
     fill: var(--mainColor);
     stroke: var(--mainColor);
 }
-
 .scorm .group_buttons{
     display: inline-block;
 }
@@ -201,9 +195,6 @@ a.review:hover svg path{
     font-family: "Lato Regular" !important;
 }
 .main-button {
-    /* background: var(--mainColor);
-    color: #fff;
-    text-decoration: none; */
     color: #5D5B5A !important;
     border: none !important;
     background: #fff !important;
@@ -239,10 +230,6 @@ li.has-dropdown .dropdown{
 li.has-dropdown .dropdown span{
     font-size: 14px;
 }
-/* .import-question-file {
-    padding: 29px 0 0;
-    text-align: right;
-} */
 .col-md-12.file {
     padding: 0;
 }
@@ -274,7 +261,6 @@ li.has-dropdown .dropdown span{
     font-family: 'Lato Bold';
 }
 /* checkbox */
-
 .container-check {
     position: relative;
     padding-left: 35px;
@@ -286,7 +272,6 @@ li.has-dropdown .dropdown span{
     -ms-user-select: none;
     user-select: none;
   }
-
   .container-check input {
     position: absolute;
     opacity: 0;
@@ -294,7 +279,6 @@ li.has-dropdown .dropdown span{
     height: 0;
     width: 0;
   }
-
   .container-check .checkmark {
     position: absolute;
     top: -7px;
@@ -303,25 +287,20 @@ li.has-dropdown .dropdown span{
     width: 20px;
     background-color: #eee;
   }
-
   .container-check:hover input ~ .checkmark {
     background-color: #ccc;
   }
-
   .container-check input:checked ~ .checkmark {
     background-color: var(--mainColor);
   }
-
   .container-check .checkmark:after {
     content: "";
     position: absolute;
     display: none;
   }
-
   .container-check input:checked ~ .checkmark:after {
     display: block;
   }
-
   .container-check .checkmark:after {
     left: 8px;
     top: 4px;
@@ -333,9 +312,7 @@ li.has-dropdown .dropdown span{
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-
 /* End Checkbox */
-
 .activity_icon {
     width:28px;
     height:28px;
@@ -344,16 +321,13 @@ li.has-dropdown .dropdown span{
     color: rgb(106, 106, 106) !important;
     filter: opacity(0.7);
 }
-
 .padding-list {
     padding: 5px 15px !important;
 }
-
 .q-card {
     margin-bottom: 10px;
     padding: 10px 13% 20px 20px !important;
 }
-
 .q-card h3 {
     font-size: 16px;
 }
@@ -361,7 +335,6 @@ li.has-dropdown .dropdown span{
     box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
 }
 ol.answers li .icon.empty {
-    /* background: #82bafe; */
     background: #f1f1f1;
 }
 ol.answers li{
@@ -390,7 +363,6 @@ ol.answers li{
     margin-top: 0;
 }
 /*************************************************************************************************************/
-
 /* Buttons Style */
 .badge{
     color: #fff;
@@ -478,7 +450,6 @@ display: flex !important;
 align-items: center;
 justify-content: center;
 }
-
 .yellow {
     background: transparent;
     color: #000;
@@ -493,7 +464,6 @@ justify-content: center;
     background: #ffc107;
     text-decoration: none;
 }
-
 .red{
     background: transparent;
     color: #dc3545;
@@ -509,7 +479,6 @@ justify-content: center;
     color: #fff;
     text-decoration: none;
 }
-
 .green{
     background: transparent;
     color: green;
@@ -525,7 +494,6 @@ justify-content: center;
     color: #fff;
     text-decoration: none;
 }
-
 .cyan{
     background: transparent;
     color: #0dcaf0;
@@ -542,7 +510,6 @@ justify-content: center;
     color: #fff;
     text-decoration: none;
 }
-
 .primary{
     background: #007bff;
     color: #fff;
@@ -557,7 +524,6 @@ justify-content: center;
     text-decoration: none;
     color: #fff;
 }
-
 .group_buttons {
     background: transparent;
     color: #009eb8;
@@ -587,7 +553,6 @@ justify-content: center;
     color: #fff !important;
     text-decoration: none;
 }
-
 .primary-outline{
     background: #fff;
     color: #007bff;
@@ -603,20 +568,16 @@ justify-content: center;
     color: #fff;
     background: #007bff;
 }
-
 .info-button:hover{
     background: #0099b8;
     color: #fff;
     text-decoration: none;
 }
-
 /* End Buttons Style */
-
 /**************************************************************************************************************/
 .course-image .progress{
     width: 65%;
     height: 10px;
-    /* border-radius: 8px; */
     border: 2px solid #f2f2f2;
     margin-top: 8px;
     overflow: hidden;
@@ -650,7 +611,6 @@ justify-content: center;
     vertical-align: text-bottom !important;
     fill: #6a6a6a;
 }
-
 svg#back{
     fill: #0dcaf0;
 }
@@ -672,7 +632,6 @@ a:hover svg#back{
     color: #000;
     box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 5%);
 }
-
 .home-section .course-cards:hover , .home-section .text-center.course-image:hover {
     position: relative;
     top: -5px;
@@ -696,11 +655,9 @@ ul.video-list li .play{
     cursor: unset;
     box-shadow: 0 0 5px #33333333;
 }
-
 ul.video-list li .text a {
     color: #6a6a6a;
     font-size: 15px;
-    /* font-family: 'Lato Light'; */
     font-weight: normal;
     text-transform: capitalize;
 }
@@ -711,7 +668,6 @@ ul.video-list li:hover .text a {
     width: 7px !important;
     height: 15px !important;
 }
-
 .req svg path{
     fill: var(--mainColor) !important;
 }
@@ -733,12 +689,10 @@ span.pdu {
 .activity li:hover {
     font-weight: 700;
 }
-
 tr.text-capitalize.ui-sortable-handle:hover {
     box-shadow: 0 0 10px 0 #e0e0e0;
     cursor: grab;
 }
-
 .drag_icon {
     left: -20px;
     top: 15px;
@@ -751,7 +705,6 @@ tr.text-capitalize.ui-sortable-handle:hover {
 tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     display: inline-block;
 }
-
 .course-cards span {
     font-size: 16px;
     font-family: 'Lato Semibold';
@@ -759,9 +712,7 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     color: #707070;
     display: block;
 }
-
 .certificate{
-    /* box-shadow: none; */
     border-radius: 15px;
     padding: 60px 40px 30px;
     position: relative;
@@ -769,17 +720,14 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     box-shadow: 1px 1px 10px 1px #f0f0f0;
     border: none;
 }
-
 .certificate h2{
     color: #000;
     margin: 0;
     margin-top: 5px;
-    /* min-height: 50px; */
     display: flex;
     justify-content: center;
     align-items: baseline;
 }
-
 .certificate .completed {
     margin-top: 15px;
     color: #000;
@@ -789,48 +737,39 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     font-size: 20px;
     font-weight: 500;
 }
-
 .certificate .completed *{
     margin: 0 5px;
 }
-
 .certificate a.download {
     position: absolute;
     top: 15px;
     right: 15px;
 }
-
 .parent_next_prev{
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .padding-none{
     padding: 0 !important;
 }
-
 .p-20{
     padding: 20px;
 }
-
 .certification-card{
     padding: 60px 40px;
 }
-
 .certification-card h2 {
     font-family: 'Lato Light';
     font-size: 25px;
     margin: 0;
     padding-top: 10px;
 }
-
 .congrats h1{
     font-family: 'Lato Bold';
     font-size: 35px;
     color: #000;
 }
-
 .congrats p{
     font-size: 15px;
     color: #000;
@@ -846,7 +785,6 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     right: 20px !important;
     color: #000 !important;
 }
-
 p.time-remaining:hover span , p.time-remaining:hover {
     color: #121212 !important;
 }
@@ -860,7 +798,10 @@ p.time-remaining svg path{
     color: var(--mainColor) !important;
     background: var(--mainColor);
 }
-button.plyr__controls__item.plyr__control:hover , button.plyr__control.plyr__control--overlaid , button.plyr__control.plyr__control--overlaid:hover , button.plyr__control:hover{
+button.plyr__controls__item.plyr__control:hover,
+button.plyr__control.plyr__control--overlaid,
+button.plyr__control.plyr__control--overlaid:hover,
+button.plyr__control:hover{
     background: var(--mainColor) !important;
 }
 .modal .form-group.form-check.child{
@@ -880,7 +821,6 @@ label.container-check.form-check-label span.checkmark{
         margin-bottom:20px;
         padding: 0
     }
-
     .error-notice .oaerror{
         width:100%;
         background-color: #ffffff;
@@ -888,11 +828,9 @@ label.container-check.form-check-label span.checkmark{
         border:1px solid #eee;
         border-left-width:5px;
         border-radius: 3px;
-        /* margin:10px auto; */
         font-family: 'Open Sans', sans-serif;
         font-size: 16px;
     }
-
     .error-notice .danger{
         border-left-color: #d9534f;
         background-color: rgba(217, 83, 79, 0.1);
@@ -903,7 +841,6 @@ label.container-check.form-check-label span.checkmark{
         background-color: rgb(143 188 143 / 20%);
     }
     /* end alert */
-
     .correct_feedback {
         color: #5D5B5A !important;
         padding: 10px !important;
@@ -972,9 +909,7 @@ label.container-check.form-check-label span.checkmark{
         align-items: flex-start;
         text-align: left;
     }
-
 /******************************************************************************************************************/
-
 .custom-model-main {
     text-align: center;
     overflow: hidden;
@@ -982,7 +917,7 @@ label.container-check.form-check-label span.checkmark{
     top: 0;
     right: 0;
     bottom: 0;
-    left: 0; /* z-index: 1050; */
+    left: 0;
     -webkit-overflow-scrolling: touch;
     outline: 0;
     opacity: 0;
@@ -993,7 +928,6 @@ label.container-check.form-check-label span.checkmark{
     overflow-x: hidden;
     overflow-y: auto;
 }
-
 .model-open {
     z-index: 99999;
     opacity: 1;
@@ -1110,8 +1044,6 @@ p.lead.light.card {
 .reply-actions button.share svg:hover path , .reply-actions button.share.is_share svg path {
     fill: green;
 }
-
-
 @media screen and (min-width:1300px){
     .container.change-password,
     .container.change-password .card,
@@ -1137,19 +1069,15 @@ p.lead.light.card {
         height: 100%;
     }
 }
-
 @media screen and (max-width:799px){
     .custom-model-inner{margin-top: 45px;}
 }
-
 /*****************************************************************************************************************/
 /* Media Query */
-
 @media (max-width: 1300.5px) and (min-width: 1200.5px) {
     .certificate{
         padding: 40px 15px;
     }
-
     .certificate .download img{
         width: 35px !important;
     }
@@ -1158,7 +1086,6 @@ p.lead.light.card {
         margin: 0 !important;
     }
 }
-
 @media (max-width: 1200.5px) and (min-width: 991.5px) {
     .calendar .sideb table th{
         font-size: 12px;
@@ -1180,7 +1107,6 @@ p.lead.light.card {
         padding: 10px 20% 20px 20px !important;
     }
 }
-
 @media (max-width: 1025.5px) {
     .no-img.certificate-img img {
         width: 15%;
@@ -1198,9 +1124,7 @@ p.lead.light.card {
     .signin-form {
         width: 70%;
     }
-
 }
-
 @media (min-width: 767.5px) and (max-width: 991.5px) {
     .q-card{
         padding: 10px 18% 20px 20px !important;
@@ -1225,9 +1149,6 @@ p.lead.light.card {
     .m-bottom{
         margin-bottom: 24px;;
     }
-    /* .dash-header.d-flex.justify-content-between.align-items-center{
-        display: block !important;
-    } */
     .parent_next_prev {
         justify-content: start;
     }
@@ -1252,7 +1173,6 @@ p.lead.light.card {
         margin-bottom: 15px;
     }
 }
-
 @media (max-width: 767.5px) {
     div#message-app {
         padding: 0;
@@ -1287,9 +1207,6 @@ p.lead.light.card {
         margin-bottom: 5px;
         padding: 10px 10px 10px 40px;
     }
-    /* .q-card label .radio-mark{
-        top: 9px;
-    } */
     .exam_page .card{
         padding: 15px !important;
     }
@@ -1428,9 +1345,6 @@ p.lead.light.card {
     .dash-header{
         display: none;
     }
-    /* .course_info, .course_header {
-        padding: 0 !important;
-    } */
     main#main-vue-element {
         padding: 0 !important;
     }
@@ -1528,7 +1442,6 @@ p.lead.light.card {
     }
     .q-number div .line {
         display: block;
-        /* width: 1px; */
         height: 24px;
         border-left: 1px solid #fff;
     }
@@ -1538,9 +1451,6 @@ p.lead.light.card {
     #sidebar-content ul li a , #sidebar-content .dropdown-sidebar>a{
         padding: 10px 20px;
     }
-    /* #sidebar-content ul.nav .dropdown-sidebar.active ul{
-        background: #fff !important;
-    } */
     .card , .home-section .text-center.course-image.p-3 , #main-vue-element .course-image , .information-card{
         box-shadow: none;
         border: 1px solid gainsboro;
@@ -1560,7 +1470,6 @@ p.lead.light.card {
         border-radius: 5px;
     }
 }
-
 @media (max-width: 767.5px) and (min-width: 576.5px){
     .container {
         max-width: 100% !important;
@@ -1573,7 +1482,6 @@ p.lead.light.card {
         border-radius: 0 !important;
     }
 }
-
 @media (max-width: 576.5px){
     .signin .logo {
         top: 10% !important;
@@ -1598,9 +1506,6 @@ p.lead.light.card {
         border-bottom: 1px solid gainsboro;
         border-radius: 0;
     }
-    /* .home-section .text-center.course-image.p-3.last{
-        border-bottom: none;
-    } */
     .home-section .card {
         padding: 15px !important;
     }
@@ -1613,9 +1518,6 @@ p.lead.light.card {
     .q-card h3{
         font-size: 16px;
     }
-    /* .card.p-5 , .card.px-5.py-4 {
-        padding: 15px !important;
-    } */
     table a.green.form-control {
         display: inline;
     }
@@ -1685,7 +1587,6 @@ p.lead.light.card {
     .reports .card {
         border-radius: 0 !important;
     }
-
     .course-cards > div{
         width: 150px;
     }
@@ -1699,7 +1600,6 @@ p.lead.light.card {
         margin-right: 20px;
     }
 }
-
 @media (max-width: 500.5px) {
     .exam-simulator .no-img.certificate-img img {
         width: 15%;
@@ -1708,12 +1608,10 @@ p.lead.light.card {
         display: flex !important;
         align-items: space-between;
     }
-
     .no-img.certificate-img img {
         width: 25%;
     }
 }
-
 @media(max-width : 430.5px){
     .signin .logo {
         top: 9% !important;
@@ -1746,7 +1644,6 @@ p.lead.light.card {
         justify-content: center;
     }
 }
-
 @media (max-width: 350.5px){
     .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role{
         width: 145px;
@@ -1755,14 +1652,12 @@ p.lead.light.card {
         justify-content: center;
     }
 }
-
 @media (max-width: 330.5px){
     .lms-header ul.navbar-nav li.has-dropdown a.nav-link.role{
         width: 126px;
         font-size: 12px;
     }
 }
-
 @media (min-width: 2000.5px){
     .course-image .image img {
         width: 50% !important;
@@ -1771,7 +1666,4 @@ p.lead.light.card {
         width: 100px !important;
     }
 }
-
 /* End Media Query */
-
-/******************************************************************************************************************/
