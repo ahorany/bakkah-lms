@@ -31,11 +31,11 @@ $course_collect = (collect($course->contents)->groupBy('is_aside'));
                            @foreach($section->contents as $k => $c)
 
                               <?php
-                               $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
+                               $preview_url = Gate::allows('preview-gate') && request()->preview == true  ? '?preview=true' : '';
                                if($c->post_type != 'exam'){
                                    $url = CustomRoute('user.course_preview', $c->id).$preview_url;
                                }else{
-                                   if(Gate::allows('preview-gate')){
+                                   if(Gate::allows('preview-gate') && request()->preview == true){
                                        $url = CustomRoute('training.add_questions', $c->id).$preview_url;
                                    }
                                    else{
