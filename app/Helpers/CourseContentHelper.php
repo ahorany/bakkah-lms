@@ -33,9 +33,9 @@ class CourseContentHelper
     } // end function
 
 
-     /*
-      * Get User Contents Count
-     */
+    /*
+     * Get User Contents Count
+    */
     public static function getUserCourseCountsCount($course_id){
         $sql = "SELECT COUNT(user_contents.id) as user_contents_count FROM user_contents
                INNER JOIN contents on user_contents.content_id = contents.id
@@ -57,12 +57,12 @@ class CourseContentHelper
     */
     public static function getCourseContentsCount($course_id){
         // Get Contents Count
-        $sql = "SELECT COUNT(id) as contents_count
+        $sql = "SELECT COUNT(contents.id) as contents_count
                 FROM contents
                 INNER JOIN courses on courses.id = contents.course_id AND courses.deleted_at IS NULL AND courses.branch_id = ".getCurrentUserBranchData()->branch_id."
                 WHERE   course_id =". $course_id ."
                 AND parent_id IS NOT NULL
-                AND  deleted_at IS NULL
+                AND  contents.deleted_at IS NULL
                 AND  role_and_path = 1
                 ";
         $contents_count = DB::select(DB::raw($sql));
@@ -146,11 +146,11 @@ class CourseContentHelper
                                     varName = 'cmi.core.lesson_status'
                                   ";
 
-                       $scormPrevDataWhenComplete =  DB::select(DB::raw($sql));
-                       $scormPrevDataWhenComplete = ($scormPrevDataWhenComplete[0]??null);
-                       if (!is_null($scormPrevDataWhenComplete) && $scormPrevDataWhenComplete->varValue != "completed"){
-                           return false;
-                       }
+                        $scormPrevDataWhenComplete =  DB::select(DB::raw($sql));
+                        $scormPrevDataWhenComplete = ($scormPrevDataWhenComplete[0]??null);
+                        if (!is_null($scormPrevDataWhenComplete) && $scormPrevDataWhenComplete->varValue != "completed"){
+                            return false;
+                        }
 
                     }else{
                         $prev_user_content = UserContent::where('user_id',\auth()->id())

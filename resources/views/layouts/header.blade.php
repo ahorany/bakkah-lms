@@ -18,11 +18,20 @@
         opacity: 0.9;
         margin-right: 5px;
     }
+    :root {
+        --mainColor: {{ getCurrentUserBranchData()->main_color }};
+        --secondColor: #303d47;
+        --thirdColor: #00bcb3;
+        --fourthColor: #fd9a18;
+    }
 </style>
 <header class="navbar navbar-dark sticky-top bg-white flex-md-nowrap p-0 shadow lms-header">
     <a class="navbar-brand col-md-3 col-lg-3 col-xl-2 me-0 px-3" href="{{CustomRoute('user.home')}}">
-        <img src="{{CustomAsset('assets/images/logo.png')}}" alt="{{__('education.header_title')}}">
-        <span class="d-none d-sm-block mobile-none">BAKKAH <b>LMS</b></span>
+        @isset(getCurrentUserBranchData()->file)
+            <img src="{{CustomAsset('upload/full/'.getCurrentUserBranchData()->file)}}" alt="{{__('education.header_title')}}">
+        @else
+            <span class="d-none d-sm-block mobile-none"><b>{{ getCurrentUserBranchData()->title }}</b></span>
+        @endisset
     </a>
     <button class="navbar-toggler position-absolute d-md-none collapsed  me-auto ms-3" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
@@ -40,8 +49,7 @@
 
     </button>
     <ul class="navbar-nav mx-0">
-{{--        @isset($role->id)--}}
-             <li class="has-dropdown user mobile-none">
+                <li class="has-dropdown user mobile-none">
                 <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role" href="#">
                     <span>
                         {{getCurrentUserBranchData()->title}}
@@ -67,7 +75,7 @@
                     </div>
             </li>
 
-             <li class="has-dropdown user mobile-none">
+                <li class="has-dropdown user mobile-none">
                 <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="nav-link role @if(($role->role_type_id != 510 && !getCurrentUserBranchData()->delegation_role_id) || is_super_admin()) not_admin @endif" href="#">
                     <span class="icon_role">
                         <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
@@ -80,11 +88,11 @@
 
 
             @if(!is_super_admin())
-                  @if ($role->role_type_id == 510  || getCurrentUserBranchData()->delegation_role_id != null)
+                    @if ($role->role_type_id == 510  || getCurrentUserBranchData()->delegation_role_id != null)
                     <div class="dropdown d-none">
                         <ul class="postition-relative">
                             <?php
-                               $role_id = $role->id;
+                                $role_id = $role->id;
                             ?>
                             @foreach($headerRoles as $role)
                                 <li @if($role->id == $role_id) style="background: #eee;" @endif>
@@ -98,11 +106,9 @@
                             @endforeach
                         </ul>
                     </div>
-                  @endif
+                    @endif
             @endif
         </li>
-
-{{--        @endisset--}}
 
         <li class="has-dropdown user messages mobile-none">
             <ul class="navbar-nav mx-0">
@@ -117,8 +123,8 @@
                         /* box-shadow: 1px 1px 5px #eaeaea; */
                         ">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px"
-                                 viewBox="0 0 100 100" style="vertical-align: middle; fill: #5D5B5A; font-size:18px; width:23px;" xml:space="preserve">
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px"
+                                    viewBox="0 0 100 100" style="vertical-align: middle; fill: #5D5B5A; font-size:18px; width:23px;" xml:space="preserve">
                                 <g>
                                     <path d="M45.91,12.57c0-1.23-0.03-2.59,0.01-3.95c0.05-2.18,1.22-3.64,3.22-4.1c2.12-0.48,4.39,1.03,4.68,3.18
                                         c0.12,0.92,0.08,1.86,0.1,2.79c0.01,0.71,0,1.42,0,2.06c1.9,0.53,3.77,0.88,5.5,1.57c10.3,4.07,16.38,11.58,18.09,22.55
@@ -181,7 +187,7 @@
 
                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: -15px;" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
                     <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"
-                          transform="translate(10.125) rotate(90)" fill="#363636" />
+                            transform="translate(10.125) rotate(90)" fill="#363636" />
                 </svg>
             </a>
 
@@ -213,7 +219,7 @@
                         <a href="{{route('user.certificate')}}" class="d-flex padding-list">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
                                 <path id="Path_132" data-name="Path 132"
-                                      d="M34.5,36h-12A1.5,1.5,0,0,1,21,34.5v-12A1.5,1.5,0,0,1,22.5,21h12A1.5,1.5,0,0,1,36,22.5v12A1.5,1.5,0,0,1,34.5,36Zm-12-13.5v12h12l0-12Zm12-7.5h-12A1.5,1.5,0,0,1,21,13.5V1.5A1.5,1.5,0,0,1,22.5,0h12A1.5,1.5,0,0,1,36,1.5v12A1.5,1.5,0,0,1,34.5,15ZM22.5,1.5v12h12l0-12ZM13.5,36H1.5A1.5,1.5,0,0,1,0,34.5v-12A1.5,1.5,0,0,1,1.5,21h12A1.5,1.5,0,0,1,15,22.5v12A1.5,1.5,0,0,1,13.5,36ZM1.5,22.5v12h12l0-12Zm12-7.5H1.5A1.5,1.5,0,0,1,0,13.5V1.5A1.5,1.5,0,0,1,1.5,0h12A1.5,1.5,0,0,1,15,1.5v12A1.5,1.5,0,0,1,13.5,15ZM1.5,1.5v12h12l0-12Z" />
+                                        d="M34.5,36h-12A1.5,1.5,0,0,1,21,34.5v-12A1.5,1.5,0,0,1,22.5,21h12A1.5,1.5,0,0,1,36,22.5v12A1.5,1.5,0,0,1,34.5,36Zm-12-13.5v12h12l0-12Zm12-7.5h-12A1.5,1.5,0,0,1,21,13.5V1.5A1.5,1.5,0,0,1,22.5,0h12A1.5,1.5,0,0,1,36,1.5v12A1.5,1.5,0,0,1,34.5,15ZM22.5,1.5v12h12l0-12ZM13.5,36H1.5A1.5,1.5,0,0,1,0,34.5v-12A1.5,1.5,0,0,1,1.5,21h12A1.5,1.5,0,0,1,15,22.5v12A1.5,1.5,0,0,1,13.5,36ZM1.5,22.5v12h12l0-12Zm12-7.5H1.5A1.5,1.5,0,0,1,0,13.5V1.5A1.5,1.5,0,0,1,1.5,0h12A1.5,1.5,0,0,1,15,1.5v12A1.5,1.5,0,0,1,13.5,15ZM1.5,1.5v12h12l0-12Z" />
                             </svg>
                             <span class="mx-1">
                                 {{__('education.Certificates')}}
@@ -255,5 +261,3 @@
         </li>
     </ul>
 </header>
-
-

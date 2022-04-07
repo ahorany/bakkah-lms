@@ -1,6 +1,6 @@
 var menu_btn = document.querySelector('.navbar-toggler');
 menu_btn.onclick = e => {
-     if(!document.querySelector('#sidebarMenu')){
+    if(getComputedStyle(document.querySelector('#sidebarMenu')).display == 'none' ){
         menu_btn.dataset.bsTarget = '#sidebar-content'
      }
 

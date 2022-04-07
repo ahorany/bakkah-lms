@@ -28,7 +28,7 @@
                                 </table>
                                 <div><small>Phone: +966 920003928</small></div>
                                 <div><small>Privacy Policy | Contact Support</small></div>
-                                <div><small>© 2021 <span style="color: #fb4400;">Bakkah Inc.</span></small></div>
+                                <div><small>© 2021 <span style="color: var(--mainColor);">Bakkah Inc.</span></small></div>
                             </td>
                             <td width="350" style="text-align:right; vertical-align: bottom;">
                                 <img src="{{CustomAsset('images/email/logo.png')}}" width="70" height="auto" alt="">

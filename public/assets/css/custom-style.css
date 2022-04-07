@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .export{
     background: green;
     color: #fff;
@@ -7,6 +8,13 @@
     display: inline-block;
     margin-bottom: 15px;
 }
+=======
+.d-none{
+    display: none !important;
+}
+
+
+>>>>>>> 22c0a6200be5c2e71df368719033b4e8dc549c19
 .swal2-container{
     z-index: 999999999999999 !important;
 }
@@ -38,60 +46,59 @@ nav#sidebarMenu ul li a span.title{
     transition: all 0.5s ease;
 }
 #sidebar-content ul li a {
-    padding: 15px 30px;
+    padding: 15px;
     display: block;
-}
-#sidebar-content ul.nav li.nav-item a , #sidebar-content li .dropdown-sidebar>a {
-    color: #303d47;
-}
-#sidebar-content ul.nav li.nav-item:hover,
-#sidebar-content li:hover .dropdown-sidebar>a,
-#sidebar-content li.active .dropdown-sidebar>a,
-#sidebar-content ul.nav li.nav-item.active{
-    background: #303d47;
-}
-#sidebar-content ul.nav li.nav-item:hover a,
-#sidebar-content li:hover .dropdown-sidebar>a,
-#sidebar-content li.active .dropdown-sidebar>a,
-#sidebar-content ul.nav li.nav-item.active a{
-    color: #fff;
-}
-#sidebar-content ul.nav li.nav-item a svg,
-#sidebar-content li .dropdown-sidebar>a .title svg{
-    margin-right: 5px;
-    width: 20px;
-}
-#sidebar-content ul.nav li.nav-item:hover a svg path,
-#sidebar-content li:hover .dropdown-sidebar>a svg path,
-#sidebar-content ul.nav li.nav-item.active a svg path,
-#sidebar-content li.active .dropdown-sidebar>a svg path{
-    fill: #fff;
 }
 #sidebar-content .dropdown-sidebar>a {
     position: relative;
     justify-content: space-between;
     display: flex;
-    align-items: center;
-    padding: 15px 30px;
+    align-items: flex-start;
+    padding: 15px 20px;
 }
 #sidebar-content .dropdown-sidebar>a span.drop-icon svg{
     width: 12px;
-    height: 12px;
+    height: 6px;
 }
-#sidebar-content .dropdown-sidebar>a span.title span , #sidebar-content ul li.nav-item .d-flex span{
-    height: 20px;
-}
-/* #sidebar-content .dropdown-sidebar>a span.title span{
-    height: 12px;
-} */
 #sidebar-content .dropdown-sidebar>a span.title {
     display: flex;
     align-items: center;
 }
 #sidebar-content ul.nav .dropdown-sidebar.active ul{
-    background: transparent !important;
+    background: #fff !important;
 }
-
+#sidebar-content .dropdown-sidebar a{
+    color: #6a6a6a;
+}
+#sidebar-content .dropdown-sidebar a img{
+    height: 22px;
+}
+#sidebar-content .active.dropdown-sidebar>a,
+#sidebar-content li:hover .dropdown-sidebar>a,
+#sidebar-content li .dropdown-sidebar ul li:hover a,
+#sidebar-content .active .dropdown-sidebar>a{
+    background: #6a6a6a;
+    color: #fff;
+}
+#sidebar-content li .dropdown-sidebar ul li:hover a img,
+#sidebar-content .dropdown-sidebar ul li.active a img{
+    filter: brightness(0) invert(1) !important;
+}
+#sidebar-content li:hover .dropdown-sidebar>a svg path,
+#sidebar-content li .active.dropdown-sidebar>a svg path,
+#sidebar-content .active .dropdown-sidebar a svg path{
+    fill: #fff;
+}
+#sidebar-content .dropdown-sidebar ul li.active a,
+#sidebar-content .dropdown-sidebar ul li.active:hover a{
+    background: var(--mainColor) !important;
+}
+#sidebar-content .dropdown-sidebar ul li.active a{
+    color: #fff;
+}
+#sidebar-content a.disabled-content {
+    opacity: 0.3;
+}
 /********************************/
 .form-control{
     appearance: auto;
@@ -119,14 +126,14 @@ span.flag_icon_false svg path , .flag svg path {
 }
 
 span.flag_icon_true svg path , .flag-mark svg path {
-    fill: #fb4400;
-    stroke: #fb4400;
+    fill: var(--mainColor);
+    stroke: var(--mainColor);
     transform: rotate(15deg);
 }
 
 span.flag.flag-mark svg path {
-    fill: #fb4400;
-    stroke: #fb4400;
+    fill: var(--mainColor);
+    stroke: var(--mainColor);
 }
 
 .scorm .group_buttons{
@@ -199,7 +206,7 @@ a.review:hover svg path{
     font-family: "Lato Regular" !important;
 }
 .main-button {
-    /* background: #fb4400;
+    /* background: var(--mainColor);
     color: #fff;
     text-decoration: none; */
     color: #5D5B5A !important;
@@ -211,10 +218,10 @@ a.main-button svg path {
     fill:#5D5B5A !important;
 }
 a.main-button:hover svg path {
-    fill: #fb4400 !important
+    fill: var(--mainColor) !important
 }
 .main-button:hover {
-    color: #fb4400 !important
+    color: var(--mainColor) !important
 }
 .inputs .form-group {
     margin: 0 0 15px !important;
@@ -224,7 +231,7 @@ a.main-button:hover svg path {
 }
 em u {
     font-style: normal;
-    text-shadow: 0px 0px #fb4400;
+    text-shadow: 0px 0px var(--mainColor);
     color: #000;
     text-decoration: none;
 }
@@ -262,7 +269,7 @@ li.has-dropdown .dropdown span{
     left: -35px;
     display: block;
     color: #fff;
-    background: #fb4400;
+    background: var(--mainColor);
     width: 100px;
     text-align: center;
     transform: rotate(-45deg);
@@ -307,7 +314,7 @@ li.has-dropdown .dropdown span{
   }
 
   .container-check input:checked ~ .checkmark {
-    background-color: #fb4400;
+    background-color: var(--mainColor);
   }
 
   .container-check .checkmark:after {
@@ -457,8 +464,8 @@ ol.answers li{
 }
 .main-color {
     background: transparent;
-    color: #fb4400;
-    border: 1px solid #fb4400;
+    color: var(--mainColor);
+    border: 1px solid var(--mainColor);
     padding: 4px 10px;
     width: max-content;
     border-radius: 5px;
@@ -467,7 +474,7 @@ ol.answers li{
     font-weight: 500;
 }
 .main-color:hover {
-    background: #fb4400;
+    background: var(--mainColor);
     text-decoration: none;
     color: #fff;
 }
@@ -632,7 +639,7 @@ justify-content: center;
     height: 20px;
 }
 .progress-bar{
-    background: #fb4400;
+    background: var(--mainColor);
     width: 50%;
     margin: 0 !important;
     position: relative;
@@ -711,7 +718,7 @@ ul.video-list li:hover .text a {
 }
 
 .req svg path{
-    fill: #fb4400 !important;
+    fill: var(--mainColor) !important;
 }
 .home-section {
     margin-bottom: 25px;
@@ -849,17 +856,17 @@ p.time-remaining:hover span , p.time-remaining:hover {
     color: #121212 !important;
 }
 p.time-remaining svg path{
-    fill: #fb4400;
+    fill: var(--mainColor);
 }
 .review.dash-header{
     padding: 20px 8px;
 }
 .plyr input {
-    color: #fb4400 !important;
-    background: #fb4400;
+    color: var(--mainColor) !important;
+    background: var(--mainColor);
 }
 button.plyr__controls__item.plyr__control:hover , button.plyr__control.plyr__control--overlaid , button.plyr__control.plyr__control--overlaid:hover , button.plyr__control:hover{
-    background: #fb4400 !important;
+    background: var(--mainColor) !important;
 }
 .modal .form-group.form-check.child{
     margin: 15px 0 !important;
@@ -874,30 +881,31 @@ label.container-check.form-check-label span.checkmark{
     top: 0 !important;
 }
 /** alert */
-.error-notice{
-    margin:5px 0;
-    padding: 0
+    .error-notice{
+        margin-bottom:20px;
+        padding: 0
     }
 
     .error-notice .oaerror{
-    width:100%;
-    background-color: #ffffff;
-    padding:20px;
-    border:1px solid #eee;
-    border-left-width:5px;
-    border-radius: 3px;
-    /* margin:10px auto; */
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
+        width:100%;
+        background-color: #ffffff;
+        padding:15px;
+        border:1px solid #eee;
+        border-left-width:5px;
+        border-radius: 3px;
+        /* margin:10px auto; */
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
     }
 
     .error-notice .danger{
-    border-left-color: #d9534f;
-    background-color: rgba(217, 83, 79, 0.1);
+        border-left-color: #d9534f;
+        background-color: rgba(217, 83, 79, 0.1);
     }
 
-    .error-notice .danger strong{
-    color:#d9534f;
+    .error-notice .success{
+        border-left-color: #8fbc8f;
+        background-color: rgb(143 188 143 / 20%);
     }
     /* end alert */
 
@@ -1109,6 +1117,21 @@ p.lead.light.card {
 }
 
 
+@media screen and (min-width:1300px){
+    .container.change-password,
+    .container.change-password .card,
+    .container.change-password .card .card-body,
+    .container.change-password .card .card-body form{
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        margin-left: 5px !important;
+        margin-right: 5px !important;
+    }
+    .container.change-password {
+        width: 80%;
+        margin: 0 auto !important;
+    }
+}
 @media screen and (min-width:800px){
     .custom-model-main:before {
         content: "";
@@ -1520,9 +1543,9 @@ p.lead.light.card {
     #sidebar-content ul li a , #sidebar-content .dropdown-sidebar>a{
         padding: 10px 20px;
     }
-    #sidebar-content ul.nav .dropdown-sidebar.active ul{
+    /* #sidebar-content ul.nav .dropdown-sidebar.active ul{
         background: #fff !important;
-    }
+    } */
     .card , .home-section .text-center.course-image.p-3 , #main-vue-element .course-image , .information-card{
         box-shadow: none;
         border: 1px solid gainsboro;

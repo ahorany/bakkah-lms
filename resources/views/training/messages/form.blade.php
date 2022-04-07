@@ -49,7 +49,7 @@
                             <select name="course_id" id="course" class="form-control">
                                 <option value="-1" disabled selected>Course...</option>
                                 @foreach ($courses as $course)
-                                    <option value="{{$course->course->id??$course->id}}">{{$course->course->trans_title??$course->trans_title}}</option>
+                                    <option value="{{$course->id}}">{{ \App\Helpers\Lang::TransTitle($course->title) }}</option>
                                 @endforeach
                             </select>
                             @error('course_id')

@@ -58,8 +58,8 @@
         </tr>
         <tr>
             <td class="mcnImageContent" valign="middle" style="text-align:center;background-color: #F6F6F6;">
-                <p style="font-family:Helvetica;font-size:14px;font-weight:normal;text-align:center;margin: 3px !important;color:#999999;">© {{YEAR}} <a href="{{env('APP_URL')}}" target="_blank" style="color:#fb4400;text-decoration:none;">{{__('education.app_title')}}</a></p>
-                {{-- <p style="font-family:Helvetica;font-size:14px;font-weight:normal;text-align:center;margin: 3px !important;color:#999999;">© {{YEAR}} <a href="{{CustomRoute('education.login')}}" target="_blank" style="color:#fb4400;text-decoration:none;">{{__('education.app_title')}}</a></p> --}}
+                <p style="font-family:Helvetica;font-size:14px;font-weight:normal;text-align:center;margin: 3px !important;color:#999999;">© {{YEAR}} <a href="{{env('APP_URL')}}" target="_blank" style="color:var(--mainColor);text-decoration:none;">{{__('education.app_title')}}</a></p>
+                {{-- <p style="font-family:Helvetica;font-size:14px;font-weight:normal;text-align:center;margin: 3px !important;color:#999999;">© {{YEAR}} <a href="{{CustomRoute('education.login')}}" target="_blank" style="color:var(--mainColor);text-decoration:none;">{{__('education.app_title')}}</a></p> --}}
             </td>
         </tr>
         </tbody>

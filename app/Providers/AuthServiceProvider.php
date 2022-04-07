@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
 
 
         Gate::define('preview-gate', function ($user) {
-            $branch_role_admin  = \App\Models\Training\Role::where('branch_id',getCurrentUserBranchData()->branch_id??1)
+            $branch_role_admin  = \App\Models\Training\Role::where('branch_id',getCurrentUserBranchData()->branch_id)
                 ->where('role_type_id',510)->first();
 
             if($user->roles->first()->id == $branch_role_admin->id && request()->has('preview')){

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 function is_super_admin(){
+
     if(session()->get('is_super_admin')){
         return true;
     }
@@ -34,8 +35,6 @@ function is_dynamic_certificate()
 {
     return 1;//1 OR 0
 }
-
-
 
 
 function CustomAsset($url){

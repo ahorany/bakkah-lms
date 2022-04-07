@@ -124,7 +124,11 @@ class User extends Authenticatable implements JWTSubject
 
         if (!session('is_super_admin')) {
             $rel = $rel->where(function ($q) use ($current_user_branch){
+<<<<<<< HEAD
                 $q->where('roles.branch_id',$current_user_branch->branch_id);
+=======
+                 $q->where('roles.branch_id',$current_user_branch->branch_id??1);
+>>>>>>> 22c0a6200be5c2e71df368719033b4e8dc549c19
             });
         }
 

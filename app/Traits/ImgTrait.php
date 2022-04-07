@@ -110,6 +110,8 @@ Trait ImgTrait
 			    // $eloquent->uploads()->updateOrCreate([], $args);
 			}
 		}
+
+		return $fileName;
 	}
 
 	private function NameManipulation($fileName=null, $name='file'){

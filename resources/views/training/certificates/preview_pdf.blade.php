@@ -30,7 +30,7 @@ if(isset($certificate->upload->file))
                 }
                 if (strpos($child->content,  '${literal_date}') !== false)
                 {
-                    $child->content=  str_replace('${literal_date}','<h6 style="background-color: #fb4400;color: #fff;margin: 0;margin-top: 20px;padding: 5px 10px;width: 150px;text-align: center;">'.date_format(now(), 'l, F d, Y').'</h6>',$child->content);
+                    $child->content=  str_replace('${literal_date}','<h6 style="background-color: var(--mainColor);color: #fff;margin: 0;margin-top: 20px;padding: 5px 10px;width: 150px;text-align: center;">'.date_format(now(), 'l, F d, Y').'</h6>',$child->content);
                 }
                 // if (strpos($child->content,  '${from_date_ar}') !== false)
                 // {

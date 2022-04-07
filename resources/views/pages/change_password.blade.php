@@ -18,6 +18,13 @@
             <form class="p-5" method="POST" action="{{ route('user.save_password') }}">
                 @csrf
 
+                @if (session()->has('Success'))
+                    <div class="error-notice">
+                        <div class="oaerror success">
+                            {{ session('Success') }}
+                        </div>
+                    </div>
+                @endif
                 <div class="text-center mb-4">
                     <h2>{{__('education.Change Password')}}</h2>
                     <label style="color: #767676;" for="save">Enter your registered email below to receive password reset code</label>

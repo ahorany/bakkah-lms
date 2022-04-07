@@ -88,7 +88,7 @@
 
     <div class="row mx-0">
         @if(session()->has('status'))
-            <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div>
+            <div style="background: var(--mainColor);color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div>
         @endif
 
         <div class="col-xl-9 col-lg-8 mb-4 mb-lg-0">

@@ -10,6 +10,7 @@ use App\Models\Admin\Partner;
 use App\Models\Training\Branche;
 use App\Models\Training\Course;
 use App\Constant;
+use App\Timezone;
 use App\Models\Training\Role;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -30,12 +31,14 @@ class BrancheController extends Controller
         $branches = Branche::query();
         $count = $branches->count();
         $branches = $branches->page();
-
         return Active::Index(compact('branches', 'count', 'post_type', 'trash'));
     }
 
     public function create(){
-        return Active::Create();
+        $timezones = Timezone::get();
+        return Active::Create([
+            'timezones'=>$timezones,
+        ]);
     }
 
     public function store(BrancheRequest $request){
@@ -57,14 +60,24 @@ class BrancheController extends Controller
         $role =  Role::create(['name' => 'Instructor','guard_name' => 'web','role_type_id' => 511,'branch_id' => $branche->id ,'icon' => 'instructor.svg' ]);
         $role->syncPermissions(["21"]);
 
-        Role::create(['name' => 'trainee','guard_name' => 'web','role_type_id' => 512,'branch_id' => $branche->id ,'icon' => 'trainee.svg' ]);
+        Role::create([
+            'name' => 'trainee',
+            'guard_name' => 'web',
+            'role_type_id' => 512,
+            'branch_id' => $branche->id ,
+            'icon' => 'trainee.svg'
+        ]);
 
 
         return Active::Inserted($branche->name);
     }
 
     public function edit(Branche $branch){
-        return Active::Edit(['eloquent'=>$branch]);
+        $timezones = Timezone::get();
+        return Active::Edit([
+            'eloquent'=>$branch,
+            'timezones'=>$timezones,
+        ]);
     }
 
     public function update(BrancheRequest $request,Branche $branch){
@@ -72,7 +85,13 @@ class BrancheController extends Controller
         $validated['updated_by'] = auth()->user()->id;
         $validated['active'] = request()->has('active')?1:0;
         Branche::find($branch->id)->update($validated);
-        Branche::UploadFile($branch, ['method'=>'update']);
+        $fileName = Branche::UploadFile($branch, ['method'=>'update']);
+        $user_branch = session()->get('user_branch');
+        if ($branch->id == $user_branch->branch_id){
+            $user_branch->main_color = $validated['main_color'];
+            $user_branch->file = $fileName;
+        }
+
         return Active::Updated($branch->name);
     }
 

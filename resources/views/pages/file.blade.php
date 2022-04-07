@@ -6,8 +6,14 @@
 
 @section('style')
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
-
 @endsection
+
+
+@section('sidebar-content')
+    @include("layouts.sidebar-content")
+@endsection
+
+
 
 @section('content')
     <?php
@@ -84,7 +90,7 @@
 
         <div class="row mx-0 file">
             @if(session()->has('status'))
-                {{-- <div style="background: #fb4400;color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
+                {{-- <div style="background: var(--mainColor);color: #fff; padding: 20px;font-size: 1rem">{{session()->get('msg')}}</div> --}}
                 <div class="container">
                     <div class="row">
                         <div class="error-notice">

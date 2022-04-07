@@ -90,8 +90,8 @@ class UserProfileController extends Controller
         $user->update([
             'password' => $password,
         ]);
-
-        return redirect(route('user.home'));
+        session()->flash('Success', 'Updated Success');
+        return view('pages.change_password');
     } // end function
 
 
@@ -102,20 +102,21 @@ class UserProfileController extends Controller
      */
     public function info() {
         $user = DB::select("SELECT users.id,user_branches.name as user_name, users.lang,users.email,users.mobile,
-                                        users.gender_id,users.company,users.job_title,uploads.file
-                                 FROM users
-                                 INNER JOIN user_branches ON users.id = user_branches.user_id
-                                            AND user_branches.deleted_at IS NULL
-                                            AND user_branches.branch_id = ".getCurrentUserBranchData()->branch_id."
-                                 LEFT JOIN uploads ON uploads.uploadable_id = users.id
-                                    AND uploads.deleted_at IS NULL
-                                    AND uploads.uploadable_type = 'App\\\User'
-                                 WHERE users.deleted_at IS NULL AND users.id =".\auth()->user()->id);
+            users.gender_id,users.company,users.job_title,uploads.file
+            FROM users
+            INNER JOIN user_branches ON users.id = user_branches.user_id
+            AND user_branches.deleted_at IS NULL
+            AND user_branches.branch_id = ".getCurrentUserBranchData()->branch_id."
+            LEFT JOIN uploads ON uploads.uploadable_id = users.id
+            AND uploads.deleted_at IS NULL
+            AND uploads.uploadable_type = 'App\\\User'
+            WHERE users.deleted_at IS NULL AND users.id =".\auth()->user()->id);
         if(!$user){
             abort(404);
         }
         $user = $user[0];
         $genders = Constant::where('parent_id', 42)->get();
+        session()->flash('Success', 'Updated Success');
         return view('pages.info',compact('user', 'genders'));
     } // end function
 
@@ -233,9 +234,13 @@ class UserProfileController extends Controller
             DB::table('user_branches')->where('user_id',\auth()->id())->update(['branch_id' => $branch_id]);
         }
 
-       $user_branch = DB::select("SELECT branches.title ,  user_branches.id , user_branches.branch_id , user_branches.user_id ,user_branches.name , user_branches.bio , user_branches.expire_date , user_branches.delegation_role_id  FROM `user_branches`
-                                INNER JOIN branches ON branches.id = user_branches.branch_id AND branches.deleted_at IS NULL
-                                WHERE user_branches.user_id = ".\auth()->id()." AND user_branches.branch_id = ? AND user_branches.deleted_at IS NULL",[$branch_id]);
+       $user_branch = DB::select("SELECT branches.title , branches.main_color , branches.description ,  user_branches.id , user_branches.branch_id , user_branches.user_id ,user_branches.name , user_branches.bio , user_branches.expire_date , user_branches.delegation_role_id , uploads.file
+        FROM `user_branches`
+        INNER JOIN branches ON branches.id = user_branches.branch_id AND branches.deleted_at IS NULL
+        LEFT JOIN uploads ON uploads.uploadable_id = branches.id
+                            AND uploads.deleted_at IS NULL
+                            AND uploads.uploadable_type = 'App\\\Models\\\Training\\\Branche'
+        WHERE user_branches.user_id = ".\auth()->id()." AND user_branches.branch_id = ? AND user_branches.deleted_at IS NULL",[$branch_id]);
 
         if (isset($user_branch[0])){
             session()->put('user_branch',$user_branch[0]);

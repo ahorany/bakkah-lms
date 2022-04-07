@@ -22,7 +22,7 @@
             border-left: 2px solid #eaeaea;
             border-bottom: 1px solid #eaeaea;
             margin-top: 10px;
-            /* margin-left: 5px !important; */
+            margin-left: 10px !important;
         }
         .head {
             display: flex;
@@ -109,12 +109,12 @@
                                 <div class="pt-2 pb-2">
                                     <label>{{$message->description??null}}</label>
                                 </div>
-                                @include('training.messages.like_reply_btn', [
-                                    'table_name'=>'messages',
-                                    'eloquent'=>$message,
-                                ])
+{{--                                @include('training.messages.like_reply_btn', [--}}
+{{--                                    'table_name'=>'messages',--}}
+{{--                                    'eloquent'=>$message,--}}
+{{--                                ])--}}
                             </div>
-                            <br>
+                            {{-- <br> --}}
 
                             @include('training.messages.replies', compact('message'))
                         </div>
@@ -141,32 +141,32 @@
 @endsection
 
 @section('script')
-<script>
-var vrm = new Vue({
-	el:'#message-app',
-    data:{
-        liked_it:'',
-        loved_it:'',
-    },
-    methods: {
-        Like: function(e, operation, table_name, likeable_id){
-            e.preventDefault();
-            var self = this;
+{{--<script>--}}
+{{--var vrm = new Vue({--}}
+{{--	el:'#message-app',--}}
+{{--    data:{--}}
+{{--        liked_it:'',--}}
+{{--        loved_it:'',--}}
+{{--    },--}}
+{{--    methods: {--}}
+{{--        Like: function(e, operation, table_name, likeable_id){--}}
+{{--            e.preventDefault();--}}
+{{--            var self = this;--}}
 
-            axios.get("{{route('user.like')}}", {
-                params: {
-                    operation: operation,
-                    table_name: table_name,
-                    likeable_id: likeable_id,
-                }
-            })
-            .then(response => {
-            })
-            .catch(e => {
-                console.log(e)
-            });
-        }
-    },
-});
-</script>
+{{--            axios.get("{{route('user.like')}}", {--}}
+{{--                params: {--}}
+{{--                    operation: operation,--}}
+{{--                    table_name: table_name,--}}
+{{--                    likeable_id: likeable_id,--}}
+{{--                }--}}
+{{--            })--}}
+{{--            .then(response => {--}}
+{{--            })--}}
+{{--            .catch(e => {--}}
+{{--                console.log(e)--}}
+{{--            });--}}
+{{--        }--}}
+{{--    },--}}
+{{--});--}}
+{{--</script>--}}
 @endsection

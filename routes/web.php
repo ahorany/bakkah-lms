@@ -1,5 +1,5 @@
 <?php
-
+use App\Timezone;
 Route::group([
     'prefix'=>LaravelLocalization::setLocale(),
     'middleware' => [ 'localizationRedirect','localize' ]
@@ -18,6 +18,32 @@ Route::group([
 
 Route::get('/', function(){
     return redirect()->route('user.home');
+});
+
+Route::get('/timezone', function(){
+    // $arr = [];
+    $timestamp = time();
+    foreach (timezone_identifiers_list() as $key=>$zone) {
+        date_default_timezone_set($zone);
+        $zones['id'] = $key+1;
+        $zones['offset'] = date('P', $timestamp);
+        $zones['diff_from_gtm'] = 'UTC/GMT '.date('P', $timestamp);
+        $zones['location'] = $zone;
+        $zones['name'] = '( UTC/GMT '.date('P', $timestamp) . ' ) ' . $zone;
+        $timezone = Timezone::updateOrCreate(
+            [
+                'location' => $zone,
+            ],
+            [
+                'offset' => date('P', $timestamp),
+                'diff_from_gtm' => 'UTC/GMT '.date('P', $timestamp),
+                'location' => $zone,
+                'name' => '( UTC/GMT '.date('P', $timestamp) . ' ) ' . $zone,
+            ]);
+        // $arr[] = $zones;
+    }
+    // $collection = collect(json_decode( json_encode($arr) ));
+    dd('Done');
 });
 
 Route::get('/clear-permissions', function(){

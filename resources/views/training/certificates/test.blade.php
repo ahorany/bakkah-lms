@@ -875,9 +875,9 @@
 
                               </div>
                             </div>
-                            <div style="width: 75%;height: 562px;background-color: #ffffff;float: left;background: url(https://wp.bakkah.net.sa/wp-content/themes/bakkah-new/includes/generate_ji_emails/vendor/phpoffice/phpword/gen_files/certificate/bg-logo.png) no-repeat;background-size: 130px;background-position: right top;border-bottom: 5px solid #fb4400;position: relative;">
+                            <div style="width: 75%;height: 562px;background-color: #ffffff;float: left;background: url(https://wp.bakkah.net.sa/wp-content/themes/bakkah-new/includes/generate_ji_emails/vendor/phpoffice/phpword/gen_files/certificate/bg-logo.png) no-repeat;background-size: 130px;background-position: right top;border-bottom: 5px solid var(--mainColor);position: relative;">
                               <div style="text-align: center;">
-                                <h2 style="font-size: 62px;line-height: 62px;color: #fb4400;margin: 0;padding-top: 85px;">CERTIFICATE</h2>
+                                <h2 style="font-size: 62px;line-height: 62px;color: var(--mainColor);margin: 0;padding-top: 85px;">CERTIFICATE</h2>
                                 <h4 style="margin:0;padding-top: 15px;font-size: 20px;font-weight: 300;">OF COMPLETION</h4>
                               <h3 style="font-weight: bold;font-size: 30px;">Raghad Alamro</h3>
                               <p style="margin-bottom: 0px;font-size: 22px;font-weight: 300;">has successfully completed 23 contact hours in</p>
