@@ -14,17 +14,21 @@ class BrancheRequest extends FormRequest
 
     public function rules()
     {
-        // dd($this->branch->id);
+
+        $file = 'required|';
+        if ($this->method() == "PATCH"){
+            $file = '';
+        }
         return [
-            'name'=>'required|min:2|max:200',
-            'title'=>'required|min:2|max:200',
-            'description'=>'',
-            'main_color'=>'',
-            'expire_date'=>'',
-            'timezone'=>'',
-            'active'=>'',
-            'file'=>'requiredOnCreate|mimes:jpeg,png,jpg,gif,svg|max:20480',
-            'updated_by'=>'',
+            'name'        =>'required|min:2|max:200',
+            'title'       =>'required|min:2|max:200',
+            'description' =>'',
+            'main_color'  =>'',
+            'expire_date' =>'',
+            'timezone'    =>'',
+            'active'      =>'',
+            'file'        => $file.'mimes:jpeg,png,jpg,gif,svg|max:20480',
+            'updated_by'  =>'',
         ];
     }
 }
