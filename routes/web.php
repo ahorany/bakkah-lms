@@ -2,7 +2,7 @@
 use App\Timezone;
 Route::group([
     'prefix'=>LaravelLocalization::setLocale(),
-    'middleware' => [ 'localizationRedirect','localize' ]
+    'middleware' => [ 'localizationRedirect','localize', 'Recaptcha' ]
 ], function(){
 
     Route::get('/zoom', function(){

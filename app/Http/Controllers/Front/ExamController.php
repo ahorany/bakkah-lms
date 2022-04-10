@@ -102,7 +102,12 @@ class ExamController extends Controller
             'start_time' => Carbon::now(),
         ]);
 
-        return view('pages.exam',compact('exam','next','previous'));
+
+        $role_id =  $user_course_register->role_id;
+        // Get Course With Contents
+        $course = $this->getCourseWithContents($exam->course->id, $role_id);
+
+        return view('pages.exam',compact('exam','next','previous','course'));
     } // end function
 
 
@@ -114,6 +119,50 @@ class ExamController extends Controller
         return CourseRegistration::where('course_id',$course_id)
             ->where('user_id',\auth()->id())
             ->first();
+    } // end function
+
+
+    /*
+    * Get Course With Contents
+    */
+    private function getCourseWithContents($course_id, $role_id){
+
+        $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
+
+        if(!Gate::allows('preview-gate')){
+
+            $course = $course->whereHas('users', function ($q){
+                $q->where('users.id', \auth()->id());
+            })->with(['users' => function($query){
+                $query->where('user_id', \auth()->id());
+            }, 'course_rate' => function($query){
+                return $query->where('user_id', \auth()->id());
+            }]);
+        }
+
+        $course = $course->with(['uploads' => function($query){
+            return $query->where(function ($q){
+                $q->where('post_type','intro_video')->orWhere('post_type', 'image');
+            });
+        }, 'contents' => function($query) use($role_id){
+            $query->where('parent_id',null)->with(['gift','details',
+                'contents' => function($q){
+                    return $q->orderBy('order');
+                },
+                'contents.details','contents.user_contents' => function($q){
+                    return $q->where('user_id', \auth()->id());
+                }])
+                ->orderBy('order');
+
+            if($role_id != -1){
+                $role = \App\Models\Training\Role::where('id',$role_id)->first();
+                if ($role->role_type_id == 512){
+                    $query->where('hide_from_trainees', 0);
+                }
+            }
+        }])->first();
+
+        return $course;
     } // end function
 
 
@@ -145,6 +194,9 @@ class ExamController extends Controller
 
         // Get UserExams (Attempts) Count For This Exam
         $user_exams_count = count($exam->exam->users_exams);
+
+        // Get Contents Sidebar
+
 
 
         /*
@@ -276,8 +328,6 @@ class ExamController extends Controller
             'push_data_in_user_exam' => $data
         ];
     } // end function
-
-
 
 
     /****************************************************************************/

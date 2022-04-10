@@ -24,6 +24,7 @@
                                                 <img src="{{CustomAsset('images/email/linked-in.png')}}" width="20" height="auto" alt="">
                                             </a>
                                         </td>
+
                                     </tr>
                                 </table>
                                 <div><small>Phone: +966 920003928</small></div>
