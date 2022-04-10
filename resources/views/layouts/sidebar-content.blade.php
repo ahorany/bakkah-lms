@@ -11,7 +11,7 @@ $course_collect = (collect($course->contents)->groupBy('is_aside'));
 
 @if (isset($course_collect[0]))
  <nav id="sidebar-content" class="col-md-3 col-lg-3 col-xl-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky pt-3">
+    <div class="position-sticky">
         <ul class="nav flex-column postition-relative">
             @foreach($course_collect[0] as $key => $section)
                 <li class="nav-item-contents {{  $section->id == $content->section->id ? 'active' : ''  }}">

@@ -60,7 +60,7 @@ nav#sidebarMenu ul li a span.title{
     align-items: center;
 }
 #sidebar-content ul.nav .dropdown-sidebar.active ul{
-    background: #fff !important;
+    background: #f3f3f3 !important;
 }
 #sidebar-content .dropdown-sidebar a{
     color: #6a6a6a;
@@ -1560,7 +1560,8 @@ p.lead.light.card {
         height: 200px;
     }
     .lms-header a.navbar-brand img{
-        width: 40px;
+        width: auto;
+        height: 50px;
     }
     span.d-none.d-sm-block{
         display: inline-block;

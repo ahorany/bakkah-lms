@@ -47,7 +47,7 @@
 @section('content')
 
                     <div class="d-flex mobile-show" style="align-items: center;">
-                        <h3 class="m-0 title_file_old">{{ $exam->exam->content->course->trans_title }}</h3>
+                        <h3 class="m-0 title_file_old">{{ $exam->section->title }}</h3>
                     </div>
                   <div class="row mx-0 mb-2 justify-content-end">
                     <div class="col-xl-9 col-lg-8 col-md-12 mobile-none">
