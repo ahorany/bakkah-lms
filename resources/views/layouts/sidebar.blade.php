@@ -1,5 +1,5 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-3 col-xl-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky pt-3">
+    <div class="position-sticky">
         <?php
             $url = '';
             if(auth()->user()->upload) {

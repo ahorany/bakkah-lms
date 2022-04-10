@@ -144,7 +144,7 @@
                 'content_title'=>$exam->title,
             ])
             <div class="d-flex mobile-show" style="align-items: center;">
-                <h3 class="m-0 title_file_old">{{ $exam->course->trans_title }}</h3>
+                <h3 class="m-0 title_file_old">{{ $exam->section->title }}</h3>
             </div>
             <div class="parent_next_prev">
                 @if($previous)
