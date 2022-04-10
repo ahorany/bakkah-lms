@@ -39,6 +39,10 @@
         stroke: #fff;
     }
 }
+
+ #sidebarMenu{
+     display: none !important;
+ }
 </style>
 @section('content')
 
