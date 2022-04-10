@@ -83,8 +83,7 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
 
         'api.auth' => \App\Http\Middleware\ApiCheckAuth::class,
-
-
+        'Recaptcha' => \App\Http\Middleware\RecaptchaMiddleware::class,
     ];
 
     /**
