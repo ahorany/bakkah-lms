@@ -92,33 +92,11 @@ nav#sidebarMenu ul li a span.title{
     background: #bbb;
     color: #fff;
 }
-/* #sidebar-content .active.dropdown-sidebar>a{
-    background: #6a6a6a;
-    color: #fff;
-}
-#sidebar-content li .dropdown-sidebar ul li:hover a img,
-#sidebar-content .dropdown-sidebar ul li.active a img{
-    filter: brightness(0) invert(1) !important;
-}
-#sidebar-content li:hover .dropdown-sidebar>a svg path,
-#sidebar-content li .active.dropdown-sidebar>a svg path,
-#sidebar-content .active .dropdown-sidebar a svg path{
-    fill: #fff;
-}
-
-#sidebar-content li:hover .dropdown-sidebar>a,
-#sidebar-content li .dropdown-sidebar ul li:hover a,
-#sidebar-content .dropdown-sidebar ul li.active a,
-#sidebar-content .dropdown-sidebar ul li.active:hover a{
-    background: #bbb !important;
-}
-#sidebar-content .dropdown-sidebar ul li.active a,
-#sidebar-content li:hover .dropdown-sidebar>a,
-#sidebar-content li .dropdown-sidebar ul li:hover a{
-    color: #fff;
-} */
 #sidebar-content a.disabled-content {
     opacity: 0.3;
+}
+button.finish-attemp:hover svg path{
+    stroke: #fff !important;
 }
 /********************************/
 .form-control{
@@ -403,6 +381,11 @@ ol.answers li{
 }
 .live-online{
     background: #d6c11b;
+}
+.gray{
+    color: gray;
+    font-size: 12px;
+    font-family: 'Lato Bold';
 }
 .exam-simulators{
     background: #FFA065;

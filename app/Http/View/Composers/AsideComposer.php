@@ -19,7 +19,7 @@ class AsideComposer
         $view->with('role', $role);
 
         if($role->role_type_id != 510){
-            $user_sidebar_courses = DB::select("SELECT courses.id , courses.title  FROM `courses_registration`
+            $user_sidebar_courses = DB::select("SELECT courses.id , courses.training_option_id , courses.title  FROM `courses_registration`
                                                   INNER JOIN courses ON courses.id = courses_registration.course_id
                                                           AND courses.deleted_at IS NULL
                                                           AND courses.branch_id = ".getCurrentUserBranchData()->branch_id."
