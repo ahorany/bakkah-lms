@@ -54,9 +54,9 @@
                         <div class="dash-header course_info d-flex align-items-center justify-content-between">
                             <h2>{{$exam->title}}</h2>
                             <template v-if="save_status && page_type == 'exam' ">
-                                <button class="form-control main-color my-2" @click.prevent="save()">
+                                <button class="form-control main-color my-2 finish-attemp" @click.prevent="save()">
                                     <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 133.02 104.113">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="12" viewBox="0 0 133.02 104.113">
                                             <g id="check" transform="translate(-1436.246 -232.059)">
                                             <path id="Path_1" data-name="Path 1" d="M75,0,58.984,16.207l-16.8,17L28.711,46.843.937,74.949,0,75.9" transform="translate(1472.5 248.5)" fill="none" stroke="var(--mainColor)" stroke-linejoin="round" stroke-width="15"/>
                                             <path id="Path_2" data-name="Path 2" d="M20,34.5l-3.71-6.4-1.707-2.944L9.563,16.5,7.187,12.4,2.75,4.744,0,0" transform="matrix(0.966, -0.259, 0.259, 0.966, 1448.8, 290.294)" fill="none" stroke="var(--mainColor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
@@ -221,7 +221,6 @@
 
 @section('script')
     <script>
-
         window.exam = {!! json_encode($exam??[]) !!}
             window.start_user_attepmt = {!! json_encode($start_user_attepmt??[]) !!}
             window.page_type = {!! json_encode($page_type??'exam') !!}
@@ -537,10 +536,16 @@
                         });
                 }
             }
-        })
-
+        });
     </script>
+    <script>
+        let x = document.getElementById('main-vue-element');
 
+        x.classList.remove("col-md-9","col-lg-9","col-xl-10")
+        x.classList.add("col-md-12","col-lg-12","col-xl-12")
+
+        document.getElementById('sidebarMenu').remove();
+    </script>
 
 
 @endsection

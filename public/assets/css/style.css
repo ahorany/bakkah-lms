@@ -655,7 +655,8 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
   color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
+  justify-content: flex-start;
   padding: 10px 0;
   height: 100%;
 }
