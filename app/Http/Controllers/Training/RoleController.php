@@ -103,6 +103,11 @@ class RoleController extends Controller
             abort(404);
         }
 
+        $role_type_ids = [510,511,512];
+        if(in_array($role->role_type_id, $role_type_ids)){
+            abort(404);
+        }
+
         Role::where('id', $role->id)->SoftTrash();
         return Active::Deleted($role->title);
     }
