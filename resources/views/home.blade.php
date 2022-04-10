@@ -30,6 +30,7 @@
                 </div>
             </div>
         </div>
+
         <?php
             function getReportNumber($complete_courses,$status){
                 if($complete_courses){
@@ -119,6 +120,7 @@
                 </div>
             </div>
         </div>
+
         @if (count($courses) > 0)
             <div class="home-section">
                 <div class="card p-30 ">
