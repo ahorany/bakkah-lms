@@ -26,7 +26,6 @@ Route::group([
     'middleware' => 'api',
     'namespace' => '\App\Http\Controllers\Api',
     'prefix' => 'auth'
-
 ], function ($router) {
     Route::post('signup', 'AuthController@sign');
     Route::post('login', 'AuthController@login');
