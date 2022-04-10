@@ -110,6 +110,10 @@
     </style>
 @endsection
 
+@section('sidebar-content')
+    @include("layouts.sidebar-content",['content' => $exam])
+@endsection
+
 @section('content')
     <?php
         if( !is_null($next)){
