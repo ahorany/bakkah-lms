@@ -42,10 +42,8 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-
     protected function authenticated(Request $request, $user)
     {
-
         $user_branch = DB::select('SELECT branches.title , branches.main_color , branches.description ,  user_branches.id , user_branches.branch_id , user_branches.user_id ,user_branches.name , user_branches.bio , user_branches.expire_date , user_branches.delegation_role_id , uploads.file
         FROM `user_branches`
         INNER JOIN branches ON branches.id = user_branches.branch_id
@@ -70,6 +68,4 @@ class LoginController extends Controller
         session()->put('is_super_admin',isset($data[0]));
         // dd(getCurrentUserBranchData());
     }
-
-
 }

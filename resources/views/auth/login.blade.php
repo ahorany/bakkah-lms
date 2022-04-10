@@ -61,3 +61,22 @@
         <div class="bottom-bg"></div>
     </div>
 @endsection
+@if(env('reCAPTCHA_RUN'))
+    <script src="https://www.google.com/recaptcha/api.js?render=<?= env('reCAPTCHA_site_key'); ?>"></script>
+@endif
+<script>
+@if(env('reCAPTCHA_RUN'))
+    let form = document.querySelector("form")
+    if(form){
+        if((form.getAttribute('method')).toLowerCase() == "post" && (form.getAttribute('id')).toLowerCase() != "payment-form"){
+            form.innerHTML += `<input type="hidden" id="recaptcha_response" name="recaptcha_response">`
+            grecaptcha.ready(function() {
+                grecaptcha.execute("<?= env('reCAPTCHA_site_key'); ?>", {action: "homepage"}).then(function(token) {
+                    // Add your logic to submit to your backend server here.
+                    document.getElementById('recaptcha_response').value=token;
+                });
+            });
+        }
+    }
+@endif
+</script>
