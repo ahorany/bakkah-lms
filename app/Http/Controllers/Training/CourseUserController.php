@@ -103,24 +103,22 @@ class CourseUserController extends Controller
 
 
     public function add_users_course(){
+
         $course = Course::whereId(\request()->course_id)->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
         if(!$course){
             return response()->json([ 'status' => 'fail']);
         }
-
 
         foreach (request()->delete_users as  $user){
             CourseRegistration::where('course_id',$course->id)->where('user_id',$user['user_id'])->delete();
         }
 
 
-        $roles = Role::where('branch_id',getCurrentUserBranchData()->branch_id)
+        $roles = Role::where('branch_id', getCurrentUserBranchData()->branch_id)
                            ->whereIn('role_type_id',[511,512])->orderBy('role_type_id')->get();
-
 
         $instructor_id = $roles[0]->id;
         $trainee_id    = $roles[1]->id;
-
 
         foreach (request()->users as  $user){
                 CourseRegistration::updateOrcreate(
