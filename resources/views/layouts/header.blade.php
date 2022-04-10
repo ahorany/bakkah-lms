@@ -20,6 +20,7 @@
     }
     :root {
         --mainColor: {{ getCurrentUserBranchData()->main_color }};
+        --firstColor: #fb4400;
         --secondColor: #303d47;
         --thirdColor: #00bcb3;
         --fourthColor: #fd9a18;

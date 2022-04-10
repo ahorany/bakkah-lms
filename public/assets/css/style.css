@@ -376,7 +376,7 @@ ol {
 }
 
 .bg-main {
-  background: var(--mainColor);
+  background: var(--firstColor);
 }
 
 .bg-second {
