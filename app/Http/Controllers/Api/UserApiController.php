@@ -21,10 +21,12 @@ class UserApiController
         $session_id = '';
         $session_date_from = '';
         $session_date_to = '';
+        $attendance_count = '';
         if ($request->session_id){
             $session_id        = "required";
             $session_date_from =  "required|date";
             $session_date_to   = "required|date";
+            $attendance_count   = "required|numeric|min:0|not_in:0";
         }
 
         $rules = [
@@ -35,6 +37,7 @@ class UserApiController
             "session_id"          => $session_id,
             "session_date_from"   => $session_date_from,
             "session_date_to"     => $session_date_to,
+            "attendance_count"    => $attendance_count,
             "paid_status"         => "required|string",
             "expire_date"         => "required|date",
         ];
@@ -73,12 +76,13 @@ class UserApiController
 
             if ($request->session_id){
                 $session = Session::firstOrCreate([
-                    'ref_id' => $request->session_id,
-                    'course_id' => $course->id,
+                    'ref_id'           => $request->session_id,
+                    'course_id'        => $course->id,
                 ],[
-                    'date_from' => $request->session_date_from,
-                    'date_to' => $request->session_date_to,
-                    'branch_id' => 1,
+                    'date_from'        => $request->session_date_from,
+                    'date_to'          => $request->session_date_to,
+                    'attendance_count' => $request->attendance_count,
+                    'branch_id'        => 1,
                 ]);
 
 
