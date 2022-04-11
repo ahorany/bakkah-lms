@@ -382,6 +382,11 @@ ol.answers li{
 .live-online{
     background: #d6c11b;
 }
+.gray{
+    color: gray;
+    font-size: 12px;
+    font-family: 'Lato Bold';
+}
 .exam-simulators{
     background: #FFA065;
 }

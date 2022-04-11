@@ -602,8 +602,12 @@ nav#sidebarMenu ul li a {
   align-items: flex-start;
   color: #000;
   /* border-left: 10px solid transparent; */
+  flex-wrap: wrap;
   transition: all 0.15s ease-in-out;
   text-transform: capitalize;
+}
+nav#sidebarMenu ul li a:hover .gray{
+    color: gainsboro;
 }
 nav#sidebarMenu ul li a p {
   display: inline-block;
