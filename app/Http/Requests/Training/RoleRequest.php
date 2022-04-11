@@ -24,7 +24,8 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'min:3|max:191',
+            'name'      =>'min:3|max:191',
+            'permission'=>'required',
 //            'ar_name'=>'min:2|max:191',
         ];
     }
