@@ -122,16 +122,18 @@
                         </a>
                         <ul>
                             <?php $role_id = $role->id; ?>
+                            @isset($headerRoles)
                                 @foreach($headerRoles as $role)
-                                <li class="nav-item" @if($role->id == $role_id) style="background: #eee;" @endif>
-                                    <a class="nav-link {{  session()->get('active_sidebar_route_name') == $user_page->route_name ? 'active' : '' }}" href="{{route('user.change.role',$role->id)}}">
-                                        <span class="d-flex">
-                                            <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
-                                            {{$role->name}}
-                                        </span>
-                                    </a>
-                                </li>
-                            @endforeach
+                                    <li class="nav-item" @if($role->id == $role_id) style="background: #eee;" @endif>
+                                        <a class="nav-link {{  session()->get('active_sidebar_route_name') == $user_page->route_name ? 'active' : '' }}" href="{{route('user.change.role',$role->id)}}">
+                                            <span class="d-flex">
+                                                <img class="svg-icons svg-icons-h" src="{{CustomAsset('icons/'.$role->icon)}}" alt="{{__('education.roles')}}"/>
+                                                {{$role->name}}
+                                            </span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endisset
                         </ul>
                     </div>
 
