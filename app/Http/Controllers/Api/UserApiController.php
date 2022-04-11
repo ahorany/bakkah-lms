@@ -10,6 +10,7 @@ use App\Models\Training\Session;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\UserMail;
 use Illuminate\Support\Facades\Mail;
@@ -47,7 +48,6 @@ class UserApiController
     }
 
     public function add_users(Request $request){
-        // return $request;
         try{
             $validator = $this->validation($request);
             if($validator->fails()){
@@ -159,6 +159,62 @@ class UserApiController
         Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
 
         return $user;
+    }
+
+
+
+    public function updateAttendanceCount(){
+
+        $rules = [
+            "email"               => 'required',
+            "attendance_count"    => "required|numeric|min:0|not_in:0",
+            "session_id"          => "required",
+        ];
+
+        $validator = Validator::make(\request()->all(), $rules);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'fail',
+                'code' => 403 ,
+                'message' => "Validation Error" ,
+                'errors' => $validator->errors()
+            ],403 );
+        }
+
+     try{
+         $courses_registration =   DB::select("SELECT courses_registration.id as courses_registration_id,courses_registration.attendance_count   FROM users
+                                                            INNER JOIN courses_registration ON courses_registration.user_id = users.id
+                                                            INNER JOIN sessions ON sessions.id = courses_registration.session_id
+                                                                                AND sessions.ref_id = ?
+                                                                                AND sessions.deleted_at IS NULL
+                                    WHERE users.email = ?
+                                    AND sessions.branch_id = 1
+                                    AND users.deleted_at IS NULL ",[\request()->session_id,request()->email]);
+
+           if (isset($courses_registration[0])){
+               CourseRegistration::where('id',$courses_registration[0]->courses_registration_id)->update([
+                   'attendance_count' => \request()->attendance_count,
+               ]);
+              return response()->json([
+                 'status' => 'success',
+                 'code' => 200,
+                 'message' => "Update User Attendance Count Successfully" ,
+              ],200);
+           }else{
+               return response()->json([
+                   'status' => 'fail',
+                   'code' => 404 ,
+                   'message' => "Not found This user in this course" ,
+               ],404 );
+           }
+     }catch (\Exception $exception){
+            return response()->json([
+                'status' => 'fail',
+                'code' => 500 ,
+                'message' => "Server Error" ,
+            ],500 );
+        }
     }
 
 
