@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Training\Course;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\Session;
+use App\Models\Training\UserBranch;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -150,11 +151,18 @@ class UserApiController
         $user = User::firstOrCreate([
             'email'    => $request->email,
         ],[
-            'name'     => $request->name,
             'email'    => $request->email,
             'password' => bcrypt("$request->password"),
         ]);
 
+        UserBranch::firstOrCreate([
+            'user_id'    => $user->id,
+            'branch_id'  => 1 ,
+         ],[
+            'user_id'    => $user->id,
+            'branch_id'  => 1 ,
+            'name'     => $request->name,
+        ]);
         $user->assignRole([3]);
         Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
 
