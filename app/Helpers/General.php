@@ -19,7 +19,7 @@ function is_super_admin(){
     if(session()->get('is_super_admin')){
         return true;
     }
-    return false;
+    return null;
 }
 
 

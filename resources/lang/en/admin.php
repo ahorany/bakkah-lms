@@ -188,5 +188,6 @@ return [
     'main_color'=>'Main Color',
     'timezone'=>'Timezone',
     'discussion' => 'Discussion',
+    'attendance_count' => 'Number of attendance days'
 
 ];

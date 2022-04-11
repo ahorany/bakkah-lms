@@ -43,7 +43,10 @@ class ContentController extends Controller
             },'details','exams'])
             ->orderBy('order')
             ->get();
-        return view('training.courses.contents.index', compact('course', 'contents'));
+
+        $exam_types = Constant::where("post_type",'exam_type')->get();
+
+        return view('training.courses.contents.index', compact('course', 'contents','exam_types'));
     }
 
     public function delete_content()
@@ -289,6 +292,7 @@ class ContentController extends Controller
                 'course_id'  =>'required|exists:courses,id',
 //                'excerpt'    =>  "required|string",
                 'content_id' => 'required|exists:contents,id',
+                'exam_type'  => 'nullable|exists:constants,id',
                 'duration'=>'nullable|numeric|gt:-1',
                 'pagination'=>'nullable|numeric|gt:0',
                 'attempt_count'=>'nullable|numeric|gt:-1',
@@ -396,6 +400,7 @@ class ContentController extends Controller
                 'attempt_count' => request()->attempt_count??0,
                 'pass_mark' =>  request()->pass_mark,
                 'shuffle_answers' => request()->shuffle_answers == 'true' ? 1 : 0,
+                'exam_type' =>  request()->exam_type??null,
             ]);
 
         }else{
@@ -528,6 +533,7 @@ class ContentController extends Controller
 //                'excerpt'    =>  "required|string",
                 'duration'=>'nullable|numeric|gt:-1',
                 'pagination'=>'nullable|numeric|gt:0',
+                'exam_type'  => 'nullable|exists:constants,id',
                 'attempt_count'=>'nullable|numeric|gt:-1',
                 'start_date'  => $start_date,
                 'end_date'     => $end_date,
@@ -588,6 +594,7 @@ class ContentController extends Controller
                 'updated_by' => auth()->id(),
                 'pass_mark' =>  request()->pass_mark,
                 'shuffle_answers' => request()->shuffle_answers == 'true' ? 1 : 0,
+                'exam_type' =>  request()->exam_type??null,
             ]);
 
         } else {

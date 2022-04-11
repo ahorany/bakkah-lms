@@ -157,4 +157,6 @@ return [
     'export'=>'Export',
     'main_color'=>'اللون الأساسي',
     'discussion' => 'Discussion',
+    'attendance_count' => 'Attendance Count'
+
 ];
