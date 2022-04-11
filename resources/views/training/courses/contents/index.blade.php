@@ -242,6 +242,23 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="modal-diff-content form-group">
+                                            <label class="m-0">Exam Type</label>
+                                               <select v-model="exam_type" class="form-control">
+                                                   <option value="">choose value</option>
+                                                   <option v-for="type in exam_types" v-text="type.name" :value="type.id"></option>
+                                               </select>
+
+                                            <div v-show="'exam_type' in errors">
+                                                <span style="color: red;font-size: 13px">@{{ errors.exam_type }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
                                     <div class="col-md-6 col-12">
                                         <div class="modal-diff-content form-group">
                                             <label class="container-check" style="padding: 25px 30px 0; font-size: 15px;">
@@ -426,9 +443,9 @@
 
 
     <script>
-        Vue.config.devtools = true;
-        window.contents = {!! json_encode($contents??[]) !!}
-            window.public_path = {!! json_encode(CustomAsset('upload')??'') !!}
+        window.exam_types  = {!! json_encode($exam_types??[]) !!}
+        window.contents    = {!! json_encode($contents??[]) !!}
+        window.public_path = {!! json_encode(CustomAsset('upload')??'') !!}
         var contents = new Vue({
                 el:'#main-vue-element',
                 data:{
@@ -439,6 +456,7 @@
                     content_id : '',
                     title: '',
                     time_limit: 0,
+                    exam_type : '',
                     open_after: 0,
                     excerpt : '',
                     file_title : '',
@@ -496,6 +514,7 @@
                         this.title = '';
                         this.excerpt = '';
                         this.time_limit = 0;
+                        this.exam_type = '';
                         this.open_after = 0;
                         this.file_url = '';
                         this.file_title = '';
@@ -582,7 +601,11 @@
                                         content.exam ? self.end_date = moment(content.exam.end_date).format('YYYY-MM-DDTHH:mm')  : '';
                                         content.exam ? self.duration = content.exam.duration : 0;
                                         content.exam ? self.pagination = content.exam.pagination : 1;
+                                        content.exam ? self.exam_type = content.exam.exam_type : '';
                                         content.exam ? self.attempt_count = content.exam.attempt_count :1;
+                                        if(self.exam_type == null){
+                                            self.exam_type ='';
+                                        }
                                         content.exam ? self.pass_mark = content.exam.pass_mark : 0;
                                         content.exam ? self.shuffle_answers = (content.exam.shuffle_answers == 1 ? true : false ) : false;
                                         self.model_type = content.post_type;
@@ -774,6 +797,7 @@
                         formData.append('pass_mark', self.pass_mark);
                         formData.append('shuffle_answers', self.shuffle_answers);
                         formData.append('is_gift', self.is_gift);
+                        formData.append('exam_type', self.exam_type);
                         if(self.save_type == 'add'){
                             axios.post("{{route('training.add_content')}}",
                                 formData
@@ -821,13 +845,14 @@
                                                 content.details.excerpt = self.excerpt
                                             }
                                             if(content.exam ){
-                                                content.exam.start_date = self.start_date;
-                                                content.exam.end_date =self.end_date;
-                                                content.exam.duration =self.duration;
-                                                content.exam.pagination =self.pagination;
-                                                content.exam.attempt_count =self.attempt_count;
-                                                content.exam.pass_mark =self.pass_mark;
+                                                content.exam.start_date      = self.start_date;
+                                                content.exam.end_date        = self.end_date;
+                                                content.exam.duration        = self.duration;
+                                                content.exam.pagination      = self.pagination;
+                                                content.exam.attempt_count   = self.attempt_count;
+                                                content.exam.pass_mark       = self.pass_mark;
                                                 content.exam.shuffle_answers = self.shuffle_answers;
+                                                content.exam.exam_type       = self.exam_type;
                                             }
                                             content.post_type = self.model_type;
                                             content.url = self.url;

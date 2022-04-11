@@ -62,5 +62,5 @@
     </div>
   </div>
 <!-- /.card-body -->
-{{-- {{ $roles->render() }} --}}
+
 {{ $roles->appends(['user_search' => request()->user_search??null])->render() }}

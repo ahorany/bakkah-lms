@@ -34,6 +34,7 @@ class SessionRequest extends FormRequest
             'date_from'       => ['required','date'],
             'date_to'         => ['required','date','after:date_from'],
             'course_id'       => ['required','exists:courses,id'],
+            'attendance_count'=> ['required','numeric','min:0','not_in:0'],
             'ref_id'          => $ref_id,
         ];
     }
