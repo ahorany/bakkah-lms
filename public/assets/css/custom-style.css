@@ -61,6 +61,7 @@ nav#sidebarMenu ul li a span.title{
 }
 #sidebar-content ul.nav .dropdown-sidebar.active ul{
     background: #f3f3f3 !important;
+    border-right: 1px solid gainsboro;
 }
 #sidebar-content .dropdown-sidebar a{
     color: #6a6a6a;
