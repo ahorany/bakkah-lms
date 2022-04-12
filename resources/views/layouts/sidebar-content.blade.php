@@ -6,7 +6,6 @@ $course_collect = (collect($course->contents)->groupBy('is_aside'));
 <style>
     #sidebarMenu{
         display: none !important;
-        /* display: none; */
     }
 </style>
 
@@ -14,7 +13,7 @@ $course_collect = (collect($course->contents)->groupBy('is_aside'));
  <nav id="sidebar-content" class="col-md-3 col-lg-3 col-xl-2 d-md-block bg-light sidebar collapse">
     <div class="position-sticky">
         <ul class="nav flex-column postition-relative">
-            <li class="nav-item">
+            <li class="nav-item mobile-show">
                 <a class="nav-link dashboard-home" aria-current="page" href="{{route('user.home')}}">
                    <span class="d-flex">
                        <span style="width: 30px; margin-right: 5px;">
