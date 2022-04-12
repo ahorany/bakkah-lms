@@ -1054,6 +1054,10 @@ p.lead.light.card {
 .reply-actions button.share svg:hover path , .reply-actions button.share.is_share svg path {
     fill: green;
 }
+a.nav-link.dashboard-home {
+    border-bottom: 1px solid gainsboro;
+}
+
 @media screen and (min-width:1300px){
     .container.change-password,
     .container.change-password .card,

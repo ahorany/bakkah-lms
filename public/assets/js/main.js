@@ -1,9 +1,9 @@
 var menu_btn = document.querySelector('.navbar-toggler');
 menu_btn.onclick = e => {
-    if(getComputedStyle(document.querySelector('#sidebarMenu')).display == 'none' ){
+    if(document.querySelector('#sidebar-content')){
         menu_btn.dataset.bsTarget = '#sidebar-content'
-     }
 
+    }
 
     document.querySelector(menu_btn.dataset.bsTarget).classList.toggle('show');
     menu_btn.firstElementChild.classList.toggle('mobile-none');
