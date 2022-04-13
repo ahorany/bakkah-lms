@@ -156,5 +156,10 @@ return [
     'session'=>'Session',
     'export'=>'Export',
     'main_color'=>'اللون الأساسي',
+<<<<<<< HEAD
+=======
+    'discussion' => 'Discussion',
+    'attendance_count' => 'Attendance Count'
+>>>>>>> c7078b86be19fc85ce624ebe0217805853f847b3
 
 ];

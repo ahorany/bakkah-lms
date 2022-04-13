@@ -228,11 +228,11 @@
                                 @foreach($section->contents as $k => $content)
                                   <li>
                                         <?php
-                                            $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
+                                            $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
                                             if($content->post_type != 'exam'){
                                                 $url = CustomRoute('user.course_preview', $content->id).$preview_url;
                                             }else{
-                                                if(Gate::allows('preview-gate')){
+                                                if(Gate::allows('preview-gate') && request()->preview == true){
                                                     $url = CustomRoute('training.add_questions', $content->id).$preview_url;
                                                 }
                                                 else{
@@ -385,11 +385,11 @@
                                                     @foreach($section->contents as $k => $content)
                                                         <li>
                                                                       <?php
-                                                                        $preview_url = Gate::allows('preview-gate') ? '?preview=true' : '';
+                                                                        $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
                                                                         if($content->post_type != 'exam'){
                                                                             $url = CustomRoute('user.course_preview', $content->id).$preview_url;
                                                                         }else{
-                                                                            if(Gate::allows('preview-gate')){
+                                                                            if(Gate::allows('preview-gate') && request()->preview == true){
                                                                                 $url = CustomRoute('training.add_questions', $content->id).$preview_url;
                                                                             }
                                                                             else{

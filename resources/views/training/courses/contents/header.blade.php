@@ -19,6 +19,8 @@
         <span>Preview</span>
     </a>
 
+
+
     @if(!isset($courses_home))
         <a href="{{route('training.courses.index')}}" class="@isset($green) green @else cyan @endisset mb-1 ml-1">
             <span>Course List</span>

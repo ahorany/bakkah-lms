@@ -80,16 +80,21 @@ class BrancheController extends Controller
         ]);
     }
 
-    public function update(BrancheRequest $request,Branche $branch){
+    public function update(BrancheRequest $request, Branche $branch){
         $validated = $request->validated();
         $validated['updated_by'] = auth()->user()->id;
         $validated['active'] = request()->has('active')?1:0;
+        $fileName = '';
         Branche::find($branch->id)->update($validated);
-        $fileName = Branche::UploadFile($branch, ['method'=>'update']);
+        if($request->file('file')!=null){
+            $fileName = Branche::UploadFile($branch, ['method'=>'update']);
+        }
         $user_branch = session()->get('user_branch');
         if ($branch->id == $user_branch->branch_id){
             $user_branch->main_color = $validated['main_color'];
-            $user_branch->file = $fileName;
+            if ($fileName){
+                $user_branch->file = $fileName;
+            }
         }
 
         return Active::Updated($branch->name);

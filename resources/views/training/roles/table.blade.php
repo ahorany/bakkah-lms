@@ -42,9 +42,17 @@
                     <span style="font-size: 70%; padding: 3px 6px;" class="badge badge-success mb-1">{{ $page->title }}</span>
                 @endforeach
             </td>
+               <?php
+                    $role_type_ids = [510,511,512];
+                    if(in_array($role->role_type_id, $role_type_ids)){
+                         if (isset($btn_roles[1])){
+                              array_splice($btn_roles,1,1);
+                         }
+                    }
 
+                ?>
                     <td class="d-sm-table-cell text-right">{!!Builder::BtnGroupRows($role->trans_name, $role->id, $btn_roles, [
-                    'post'=>$role->id,
+                       'post'=>$role->id,
                     ])!!}</td>
 
             </tr>
@@ -54,5 +62,5 @@
     </div>
   </div>
 <!-- /.card-body -->
-{{-- {{ $roles->render() }} --}}
+
 {{ $roles->appends(['user_search' => request()->user_search??null])->render() }}

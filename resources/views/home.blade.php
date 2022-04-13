@@ -19,7 +19,7 @@
                                 We are so happy to have you here and can't wait to start our journey together towards success and glory. Through our interactive self-paced system, you can easily access all the information you need in an endeavor to improve a more comfortable and enjoyable learning experience for students of all backgrounds and abilities.
                                 <br>
                                 A lot of Knowledge & fun are waiting for you, so let's get started. --}}
-                                {{ getCurrentUserBranchData()->description }}
+                                {!! getCurrentUserBranchData()->description !!}
                             </p>
                         </div>
 
@@ -30,6 +30,7 @@
                 </div>
             </div>
         </div>
+
         <?php
             function getReportNumber($complete_courses,$status){
                 if($complete_courses){
@@ -119,6 +120,7 @@
                 </div>
             </div>
         </div>
+
         @if (count($courses) > 0)
             <div class="home-section">
                 <div class="card p-30 ">

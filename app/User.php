@@ -83,12 +83,9 @@ class User extends Authenticatable implements JWTSubject
         return 'remember_token';
     }
 
-
-
     public function gender(){
         return $this->belongsTo(Constant::class, 'gender_id', 'id');
     }
-
 
     public function courses(){
         return $this->belongsToMany(Course::class,'courses_registration','user_id')->withPivot('user_id' ,'course_id','rate', 'progress','paid_status','session_id');

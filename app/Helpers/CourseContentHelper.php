@@ -8,6 +8,7 @@ use App\Models\Training\Exam;
 use App\Models\Training\UserContent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 
 class CourseContentHelper
 {
@@ -187,7 +188,7 @@ class CourseContentHelper
             if( $next->post_type != 'exam') {
                 $next_url = CustomRoute('user.course_preview', $next->id);
             }else{
-                if(Gate::allows('preview-gate')){
+                if(Gate::allows('preview-gate') && request()->preview == true){
                     $next_url =  CustomRoute('training.add_questions', $next->id);
                 }
                 else{
@@ -200,7 +201,7 @@ class CourseContentHelper
             if($previous->post_type != 'exam'){
                 $previous_url = CustomRoute('user.course_preview', $previous->id);
             }else{
-                if(Gate::allows('preview-gate')){
+                if(Gate::allows('preview-gate') && request()->preview == true){
                     $previous_url =  CustomRoute('training.add_questions', $previous->id);
                 }
                 else{
@@ -209,10 +210,12 @@ class CourseContentHelper
             }
         }
 
-        if(Gate::allows('preview-gate')){
+        if(Gate::allows('preview-gate') && request()->preview == true){
             $next_url .= '?preview=true';
             $previous_url .= '?preview=true';
         }
+
+//        dd($next_url);
         return compact('next_url', 'previous_url');
     }
 

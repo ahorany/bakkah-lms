@@ -376,7 +376,7 @@ ol {
 }
 
 .bg-main {
-  background: var(--mainColor);
+  background: var(--firstColor);
 }
 
 .bg-second {
@@ -602,8 +602,12 @@ nav#sidebarMenu ul li a {
   align-items: flex-start;
   color: #000;
   /* border-left: 10px solid transparent; */
+  flex-wrap: wrap;
   transition: all 0.15s ease-in-out;
   text-transform: capitalize;
+}
+nav#sidebarMenu ul li a:hover .gray{
+    color: gainsboro;
 }
 nav#sidebarMenu ul li a p {
   display: inline-block;
@@ -655,7 +659,8 @@ nav#sidebarMenu ul li a svg path , nav#sidebarMenu ul li a svg polyline , nav#si
   color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
+  justify-content: flex-start;
   padding: 10px 0;
   height: 100%;
 }
@@ -782,6 +787,7 @@ li.has-dropdown .dropdown a:hover {
 ol.breadcrumb {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 ol.breadcrumb li {
@@ -879,8 +885,9 @@ p.time-remaining svg {
 }
 
 .q-card label .radio-mark {
-  top: 50%;
+  top: 7px;
   transform: translateY(-50%);
+  transform: rotate(45deg);
   left: 10px;
   border: 1px solid #ccc;
   background: transparent;

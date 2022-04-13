@@ -269,7 +269,8 @@
            },
 
             save : function(){
-                    let self = this;
+
+                let self = this;
                     axios.post("{{route('training.add_users_course')}}",
                         {
                             'users' : self.add_users,

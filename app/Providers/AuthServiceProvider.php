@@ -27,9 +27,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
 
-        Gate::before(function ($user, $ability) {
-             return is_super_admin();
-        });
+          Gate::before(function ($user, $ability) {
+                return is_super_admin();
+          });
 
 
 
@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
             $branch_role_admin  = \App\Models\Training\Role::where('branch_id',getCurrentUserBranchData()->branch_id)
                 ->where('role_type_id',510)->first();
 
-            if($user->roles->first()->id == $branch_role_admin->id && request()->has('preview')){
+            if($user->roles->first()->role_type_id == $branch_role_admin->role_type_id && request()->has('preview')){
                 return true;
             }
             return false;

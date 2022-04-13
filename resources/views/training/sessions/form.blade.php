@@ -14,7 +14,8 @@
             {!!Builder::Select2('course_id', 'course', $courses,null,['model_title' => 'trans_title'])!!}
             {!!Builder::DateTime('date_from', 'date_from', null, ['col'=>'col-md-6'])!!}
             {!!Builder::DateTime('date_to', 'date_from', null, ['col'=>'col-md-6'])!!}
-            {!!Builder::Input('ref_id', 'ref_id')!!}
+            {!!Builder::Input('attendance_count', 'attendance_count', null, ['col'=>'col-md-6','type' => 'number'])!!}
+            {!!Builder::Input('ref_id', 'ref_id', null, ['col'=>'col-md-6','type' => 'number'])!!}
         </div>
     </div>
 @endsection

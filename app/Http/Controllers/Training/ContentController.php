@@ -43,7 +43,10 @@ class ContentController extends Controller
             },'details','exams'])
             ->orderBy('order')
             ->get();
-        return view('training.courses.contents.index', compact('course', 'contents'));
+
+        $exam_types = Constant::where("post_type",'exam_type')->get();
+
+        return view('training.courses.contents.index', compact('course', 'contents','exam_types'));
     }
 
     public function delete_content()
@@ -145,10 +148,10 @@ class ContentController extends Controller
             'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
         ]);
 
-          Gift::create([
-              'open_after' => \request()->open_after,
-              'content_id' => $content->id,
-          ]);
+        Gift::create([
+            'open_after' => \request()->open_after,
+            'content_id' => $content->id,
+        ]);
 
 //        if(request()->hasFile('file')) {
 //            Content::UploadFile($content, ['folder_path' => public_path('upload/files/gifts')]);
@@ -289,6 +292,7 @@ class ContentController extends Controller
                 'course_id'  =>'required|exists:courses,id',
 //                'excerpt'    =>  "required|string",
                 'content_id' => 'required|exists:contents,id',
+                'exam_type'  => 'nullable|exists:constants,id',
                 'duration'=>'nullable|numeric|gt:-1',
                 'pagination'=>'nullable|numeric|gt:0',
                 'attempt_count'=>'nullable|numeric|gt:-1',
@@ -396,6 +400,7 @@ class ContentController extends Controller
                 'attempt_count' => request()->attempt_count??0,
                 'pass_mark' =>  request()->pass_mark,
                 'shuffle_answers' => request()->shuffle_answers == 'true' ? 1 : 0,
+                'exam_type' =>  request()->exam_type??null,
             ]);
 
         }else{
@@ -418,20 +423,20 @@ class ContentController extends Controller
             ]);
 
             if(!request()->url){
-                  $path = '';
-                        switch (request()->type){
-                            case 'video': $path = public_path('upload/files/videos'); break;
-                            case 'audio': $path = public_path('upload/files/audios'); break;
-                            case 'presentation': $path = public_path('upload/files/presentations'); break;
-                            case 'scorm': $path = public_path('upload/files/scorms'); break;
-                            default : $path = public_path('upload/files/files');
-                        }
+                $path = '';
+                switch (request()->type){
+                    case 'video': $path = public_path('upload/files/videos'); break;
+                    case 'audio': $path = public_path('upload/files/audios'); break;
+                    case 'presentation': $path = public_path('upload/files/presentations'); break;
+                    case 'scorm': $path = public_path('upload/files/scorms'); break;
+                    default : $path = public_path('upload/files/files');
+                }
 
-                        Content::UploadFile($content,['folder_path' => $path]);
+                Content::UploadFile($content,['folder_path' => $path]);
 
-                        if(request()->type == "scorm"){
-                           $this->unzipScormFile();
-                        }
+                if(request()->type == "scorm"){
+                    $this->unzipScormFile();
+                }
             }
 
         }
@@ -459,9 +464,9 @@ class ContentController extends Controller
                 $content_file_from_upload =  DB::select(DB::raw($sql));
 
                 if(\request()->has("url") && \request()->url != "" && \request()->url != null){
-                   if(count($content_file_from_upload) > 0){
-                       $file = "";
-                   }
+                    if(count($content_file_from_upload) > 0){
+                        $file = "";
+                    }
 
                     $rules = [
                         'title'      => "required|string",
@@ -473,7 +478,7 @@ class ContentController extends Controller
                     if(count($content_file_from_upload) == 0){
                         $file =  'required_without:url';
                         if(\request()->hasFile('file')){
-                           $file = 'required_without:url|file'.$mimes;
+                            $file = 'required_without:url|file'.$mimes;
                         }
 
                         $rules = [
@@ -528,6 +533,7 @@ class ContentController extends Controller
 //                'excerpt'    =>  "required|string",
                 'duration'=>'nullable|numeric|gt:-1',
                 'pagination'=>'nullable|numeric|gt:0',
+                'exam_type'  => 'nullable|exists:constants,id',
                 'attempt_count'=>'nullable|numeric|gt:-1',
                 'start_date'  => $start_date,
                 'end_date'     => $end_date,
@@ -588,6 +594,7 @@ class ContentController extends Controller
                 'updated_by' => auth()->id(),
                 'pass_mark' =>  request()->pass_mark,
                 'shuffle_answers' => request()->shuffle_answers == 'true' ? 1 : 0,
+                'exam_type' =>  request()->exam_type??null,
             ]);
 
         } else {
@@ -653,7 +660,7 @@ class ContentController extends Controller
         if ($x === true) {
             $zip->extractTo(public_path("upload/files/scorms/").$name);
             $zip->close();
-       }
+        }
 //        unlink(public_path("upload/files/scorms/$fileName"));
     }
 
