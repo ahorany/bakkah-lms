@@ -99,6 +99,7 @@ class MessageController extends Controller
             'role_id' => request()->recipient_id,
             'title' => request()->subject,
             'description' => request()->description,
+            'type' => 'message',
         ]);
 
 
@@ -124,7 +125,7 @@ class MessageController extends Controller
             $message_with_sender_with_course = DB::select("SELECT courses.title,user_branches.name,messages.title as msg_title,messages.description as msg_description FROM messages
                                                             INNER JOIN courses ON courses.id = messages.course_id AND courses.deleted_at IS NULL
                                                             INNER JOIN user_branches ON user_branches.user_id =  messages.user_id AND user_branches.branch_id = " . getCurrentUserBranchData()->branch_id . "
-                                                            WHERE messages.id = " . $msg->id . " AND messages.deleted_at IS NULL");
+                                                            WHERE messages.id = " . $msg->id . " AND messages.type = 'message' AND messages.deleted_at IS NULL");
       }
 
      foreach ($recipients as $recipient){

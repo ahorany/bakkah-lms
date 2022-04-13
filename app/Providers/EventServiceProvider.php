@@ -18,21 +18,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        MailChimpEvent::class => [
-            \App\Listeners\MailChimpListener::class,
-        ],
-        NewPrepareRetargetDiscountRegisterTraineeEvent::class => [
-            \App\Listeners\PrepareRetargetDiscountRegisterTraineeListener::class,
-        ],
-        NewRetargetDiscountRegisterTraineeEvent::class => [
-            \App\Listeners\RetargetDiscountRegisterTraineeListener::class,
-        ],
-        NewTraineeHasRegisteredEvent::class => [
-            \App\Listeners\LMSRegisterTraineeListener::class,
-        ],
-        // Registered::class => [
-        //     SendEmailVerificationNotification::class,
-        // ],
+        \Illuminate\Auth\Events\Login::class => ['App\Listeners\LoginSuccessful'],
     ];
 
     /**

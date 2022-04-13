@@ -67,7 +67,6 @@ class QuestionController extends Controller
     }
 
     public function add_question(){
-        return \request();
         // validation
         $rules = [
             "title"   => "required|string",

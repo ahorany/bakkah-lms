@@ -170,7 +170,6 @@ class UserApiController
     }
 
 
-
     public function updateAttendanceCount(){
 
         $rules = [

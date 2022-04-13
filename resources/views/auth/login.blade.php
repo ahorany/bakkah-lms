@@ -50,7 +50,9 @@
                                 <span class="checkbox-mark"></span>
                             </label>
                         </div>
-                        <button class="btn btn-primary bold w-100 py-2" style="background: #fb4400;">{{__('education.Sign In')}}</button>
+                        <button class="btn btn-primary bold w-100 mb-3 py-2" style="background: #fb4400;">{{__('education.Sign In')}}</button>
+                        <a style="color:#767676"href="{{route('password.update')}}">Forgot Your Password?</a>
+
                     </form>
                 </div>
                 <div class="col-md-6 text-center">
