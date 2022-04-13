@@ -10,6 +10,11 @@
 .d-none{
     display: none !important;
 }
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> c7078b86be19fc85ce624ebe0217805853f847b3
 .swal2-container{
     z-index: 999999999999999 !important;
 }
@@ -61,6 +66,7 @@ nav#sidebarMenu ul li a span.title{
 }
 #sidebar-content ul.nav .dropdown-sidebar.active ul{
     background: #f3f3f3 !important;
+    border-right: 1px solid gainsboro;
 }
 #sidebar-content .dropdown-sidebar a{
     color: #6a6a6a;
@@ -1053,6 +1059,10 @@ p.lead.light.card {
 .reply-actions button.share svg:hover path , .reply-actions button.share.is_share svg path {
     fill: green;
 }
+a.nav-link.dashboard-home {
+    border-bottom: 1px solid gainsboro;
+}
+
 @media screen and (min-width:1300px){
     .container.change-password,
     .container.change-password .card,

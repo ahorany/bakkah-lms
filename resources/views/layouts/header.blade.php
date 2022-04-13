@@ -18,13 +18,13 @@
         opacity: 0.9;
         margin-right: 5px;
     }
-    :root {
+    /* :root {
         --mainColor: {{ getCurrentUserBranchData()->main_color }};
         --firstColor: #fb4400;
         --secondColor: #303d47;
         --thirdColor: #00bcb3;
         --fourthColor: #fd9a18;
-    }
+    } */
 </style>
 <header class="navbar navbar-dark sticky-top bg-white flex-md-nowrap p-0 shadow lms-header">
     <a class="navbar-brand col-md-3 col-lg-3 col-xl-2 me-0 px-3" href="{{CustomRoute('user.home')}}">

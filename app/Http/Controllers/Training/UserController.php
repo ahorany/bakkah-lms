@@ -13,6 +13,7 @@ use App\Mail\UserMail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Training\Role;
+use App\Models\Training\CourseRegistration;
 
 class UserController extends Controller
 {
@@ -59,10 +60,28 @@ class UserController extends Controller
             $learners_no = $this->SearchUser($learners_no);
         }
         $learners_no =  $learners_no->count();
-        // dd();
-        $complete_courses_no = $this->getCompleteCoursesNo();
-        $courses_in_progress = $this->getCoursesInProgress();
-        $courses_not_started = $this->getCoursesNotStarted();
+        //
+        $complete_courses_no = CourseRegistration::getCoursesNo();
+        $complete_courses_no =  $complete_courses_no->where('courses_registration.progress',100);
+        if (!is_null(request()->user_search)) {
+            $complete_courses_no = $this->SearchUser($complete_courses_no);
+        }
+        $complete_courses_no =  $complete_courses_no->count();
+
+        $courses_in_progress = CourseRegistration::getCoursesNo();
+        $courses_in_progress =  $courses_in_progress->where('courses_registration.progress','<',100)
+                                            ->where('courses_registration.progress','>',0);
+        if (!is_null(request()->user_search)) {
+            $courses_in_progress = $this->SearchUser($courses_in_progress);
+        }
+        $courses_in_progress =  $courses_in_progress->count();
+
+        $courses_not_started = CourseRegistration::getCoursesNo();
+        $courses_not_started =  $courses_not_started->where('progress',0);
+        if (!is_null(request()->user_search)) {
+            $courses_not_started = $this->SearchUser($courses_not_started);
+        }
+        $courses_not_started =  $courses_not_started->count();
 
         return Active::Index(compact('users', 'count', 'post_type', 'trash','learners_no','complete_courses_no','courses_in_progress','courses_not_started'));
     }
@@ -80,64 +99,6 @@ class UserController extends Controller
         return $eloquent1;
     }
 
-    // private function getLearnersNo(){
-    //     $learners_no  = DB::table('model_has_roles')->join('roles',function ($join){
-    //         $join->on('roles.id','=','model_has_roles.role_id')
-    //             ->where('roles.role_type_id',512)
-    //             ->where('roles.deleted_at',null)
-    //             ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
-    //     });
-
-    //     if (!is_null(request()->user_search)) {
-    //         // $learners_no = $learners_no->join('users','users.id','model_has_roles.model_id');
-    //         $learners_no = $this->SearchUser($learners_no);
-    //     }
-    //     return $learners_no->count();
-    // }
-
-    private function getCompleteCoursesNo(){
-        $complete_courses_no = DB::table('courses_registration')
-            ->join('courses',function ($join){
-                $join->on('courses.id','=','courses_registration.course_id')
-                    ->where('courses.deleted_at',null)
-                    ->where('courses.branch_id',getCurrentUserBranchData()->branch_id);
-            })->where('progress',100);
-        if (!is_null(request()->user_search)) {
-            $complete_courses_no = $complete_courses_no->join('users','users.id','courses_registration.user_id');
-            $complete_courses_no = $this->SearchUser($complete_courses_no);
-        }
-        return $complete_courses_no->count();
-    }
-
-    private function getCoursesInProgress(){
-        $courses_in_progress = DB::table('courses_registration')
-            ->join('courses',function ($join){
-                $join->on('courses.id','=','courses_registration.course_id')
-                    ->where('courses.deleted_at',null)
-                    ->where('courses.branch_id',getCurrentUserBranchData()->branch_id);
-            })
-            ->where('progress','<',100)->where('progress','>',0);
-        if (!is_null(request()->user_search)) {
-            $courses_in_progress = $courses_in_progress->join('users','users.id','courses_registration.user_id');
-            $courses_in_progress = $this->SearchUser($courses_in_progress);
-        }
-        return $courses_in_progress->count();
-    }
-
-    private function getCoursesNotStarted(){
-        $courses_not_started = DB::table('courses_registration')
-            ->join('courses',function ($join){
-                $join->on('courses.id','=','courses_registration.course_id')
-                    ->where('courses.deleted_at',null)
-                    ->where('courses.branch_id',getCurrentUserBranchData()->branch_id);
-            })
-            ->where('progress',0);
-        if (!is_null(request()->user_search)) {
-            $courses_not_started = $courses_not_started->join('users','users.id','courses_registration.user_id');
-            $courses_not_started = $this->SearchUser($courses_not_started);
-        }
-        return $courses_not_started->count();
-    }
 
 /////////////////////////////////  Create User   ///////////////////////////////////////////////
 

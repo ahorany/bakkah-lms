@@ -40,6 +40,7 @@ Route::group([
              Route::get('/coursesReportOverview', 'ReportController@coursesReportOverview')->name('coursesReportOverview');
              Route::get('/coursesReportUser', 'ReportController@coursesReportUser')->name('coursesReportUser');
              Route::get('/coursesReportTest', 'ReportController@coursesReportTest')->name('coursesReportTest');
+             Route::get('/coursesAssessments', 'ReportController@coursesAssessments')->name('coursesAssessments');
 
 
             Route::post('courses/importCourses', 'ImportController@importCourses')->name('importCourses');
