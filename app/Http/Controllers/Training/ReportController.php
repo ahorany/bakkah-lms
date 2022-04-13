@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Training\CourseRegistration;
 use App\Exports\UsersExport;
+use App\Exports\CoursesExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -37,14 +38,88 @@ class ReportController extends Controller
         $user_id = request()->id;
         $user = User::findOrFail($user_id);
 
-        $learners_no         = DB::table('model_has_roles')->where('role_id',3)->where('model_id',$user_id)->count();
-        $complete_courses_no = DB::table('courses_registration')->where('user_id',$user_id)->where('progress',100)->count();
-        $courses_in_progress = DB::table('courses_registration')->where('progress','<',100)->where('user_id',$user_id)->count();
-        $courses_not_started = DB::table('courses_registration')->where('progress',0)->where('user_id',$user_id)->count();
+        $learners_no         = 1;
+        $complete_courses_no = CourseRegistration::getCoursesNo()
+                                ->where('courses_registration.user_id',$user_id)
+                                ->where('courses_registration.progress',100)->count();
+        $courses_in_progress =  CourseRegistration::getCoursesNo()
+                                ->where('courses_registration.progress','<',100)
+                                ->where('courses_registration.progress','>',0)
+                                ->where('courses_registration.user_id',$user_id)->count();
+        $courses_not_started = CourseRegistration::getCoursesNo()
+                                ->where('courses_registration.progress',0)
+                                ->where('courses_registration.user_id',$user_id)->count();
         $overview = 1;
 
         return view('training.reports.users.user_report',compact('user_id','learners_no','complete_courses_no',
             'courses_in_progress','courses_not_started','overview', 'user'));
+    }
+
+    public function usersReportCourse()
+    {
+        $user_id = request()->id;
+        $user = User::find($user_id);
+        $branch_id = getCurrentUserBranchData()->branch_id;
+        // $courses = CourseRegistration::getCoursesNo()->where('courses_registration.user_id',$user_id)->get();
+        // dd($courses);
+        $select = 'select courses.id,courses.title,courses_registration.progress,courses_registration.score,courses.created_at,courses.PDUs';
+
+        $from = ' from courses_registration
+                    join roles on roles.id = courses_registration.role_id
+                                        and roles.deleted_at is null
+                                        and roles.branch_id = ?
+                                        and roles.role_type_id = 512
+                    join courses on courses.id = courses_registration.course_id 
+                                        and courses.deleted_at is null
+                                        and courses.branch_id = ?
+                    join users on users.id = courses_registration.user_id
+                    join user_branches on user_branches.user_id = users.id 
+                                        and user_branches.deleted_at is null
+                                        and user_branches.branch_id = ?
+                where courses_registration.user_id = ?
+                order by users.id
+                ';
+        $sql = $select.$from;
+        $courses = DB::select($sql, [$branch_id, $branch_id, $branch_id, $user_id]);
+
+        if(isset(request()->export))
+        {
+            return Excel::download(new CoursesExport($from, $user_id), 'Courses.xlsx');
+        }
+
+        return view('training.reports.users.user_report',compact('user_id', 'courses', 'user'));
+    }
+
+    
+
+    public function usersReportTest()
+    {
+        $user_id = request()->id;
+        $user = User::find($user_id);
+        $branch_id = getCurrentUserBranchData()->branch_id;
+        $tests  = DB::table('contents')
+        ->join('exams','exams.content_id','contents.id')
+        ->join('user_exams','user_exams.exam_id','exams.id')
+        ->join('courses','courses.id','contents.course_id')
+        ->join('courses_registration',function ($join) use($user_id){
+            $join->on('courses.id','=','courses_registration.course_id')
+                ->where('courses_registration.user_id',$user_id);
+        })
+        ->join('roles',function ($join) use($branch_id){
+            $join->on('roles.id','=','courses_registration.role_id')
+                ->where('roles.role_type_id',512)
+                ->whereNull('roles.deleted_at')
+                ->where('roles.branch_id',$branch_id);
+        })
+        ->where('user_exams.user_id',$user_id)
+        ->where('courses.branch_id',$branch_id)
+        ->select('user_exams.id', 'contents.title as content_title', 'courses.title as course_title', 'user_exams.time'
+        , 'exams.exam_mark', 'exams.pass_mark', 'user_exams.mark as exam_trainee_mark', 'user_exams.status')
+        ->orderBy('user_exams.time')
+        ->get();
+
+        //dd($tests);
+        return view('training.reports.users.user_report',compact('user_id', 'tests', 'user'));
     }
 
 
@@ -139,39 +214,6 @@ class ReportController extends Controller
 
     }
 
-
-    public function usersReportCourse()
-    {
-        $user_id = request()->id;
-        $user = User::find($user_id);
-
-        $courses  = DB::table('courses')
-        ->join('courses_registration','courses.id','courses_registration.course_id')
-        ->where('user_id',$user_id)->get();
-        // dd($courses);
-        return view('training.reports.users.user_report',compact('user_id', 'courses', 'user'));
-
-    }
-
-    public function usersReportTest()
-    {
-        $user_id = request()->id;
-        $user = User::find($user_id);
-
-        $tests  = DB::table('contents')
-        ->join('exams','exams.content_id','contents.id')
-        ->join('user_exams','user_exams.exam_id','exams.id')
-        ->join('courses','courses.id','contents.course_id')
-        ->where('user_exams.user_id',$user_id)
-        ->select('user_exams.id', 'contents.title as content_title', 'courses.title as course_title', 'user_exams.time'
-        , 'exams.exam_mark', 'exams.pass_mark', 'user_exams.mark as exam_trainee_mark', 'user_exams.status')
-        ->orderBy('user_exams.time')
-        ->get();
-        //dd($tests);
-        return view('training.reports.users.user_report',compact('user_id', 'tests', 'user'));
-    }
-
-
     public function coursesReportOverview()
     {
         $course_id = request()->id;
@@ -204,19 +246,18 @@ class ReportController extends Controller
         $from = ' from courses_registration
                     join roles on roles.id = courses_registration.role_id
                                         and roles.deleted_at is null
-                                        and roles.branch_id = '.$branch_id.'
+                                        and roles.branch_id = ?
                     join users on users.id = courses_registration.user_id
                     join courses on courses.id = courses_registration.course_id
                     left join sessions on sessions.course_id = courses.id
-                where courses_registration.course_id = '.$course_id.'
+                where courses_registration.course_id = ?
                 order by users.id
                 ';
         $sql = $select.$from;
-        $users = DB::select($sql);
-
+        $users = DB::select($sql, [$branch_id, $course_id]);
         if(isset(request()->export))
         {
-            return Excel::download(new UsersExport($from), 'NotCompleted.xlsx');
+            return Excel::download(new UsersExport($from,$course_id), 'Users.xlsx');
         }
 
         return view('training.reports.courses.course_report',compact('course_id', 'users', 'course'));
@@ -225,6 +266,7 @@ class ReportController extends Controller
 
     public function coursesReportTest()
     {
+
         $course_id = request()->id;
         // dd($course_id);
         $course = Course::find($course_id);
@@ -232,14 +274,45 @@ class ReportController extends Controller
                 from contents
                     join exams on exams.content_id = contents.id
                     join courses on courses.id = contents.course_id
-                where courses.id = ".$course_id." ";
+                where courses.id = ? ";
 
-        $tests = DB::select($sql);
+        $tests = DB::select($sql,[$course_id]);
 
         return view('training.reports.courses.course_report',compact('course_id', 'tests', 'course'));
 
     }
 
+    public function coursesAssessments()
+    {
+        $course_id = request()->id;
+        $course = Course::find($course_id);
+        $branch_id = getCurrentUserBranchData()->branch_id;
+        // exam_type
+        $select = 'select users.id,users.name,courses_registration.progress,roles.role_type_id,sessions.date_from,sessions.date_to';
+
+        $from = ' from courses_registration
+                    join roles on roles.id = courses_registration.role_id
+                                        and roles.deleted_at is null
+                                        and roles.branch_id = ?
+                    join users on users.id = courses_registration.user_id
+                    join courses on courses.id = courses_registration.course_id
+                    left join sessions on sessions.course_id = courses.id
+                    join contents on courses.id = contents.course_id 
+                    join exams on exams.content_id = contents.id 
+                        and exams.exam_type in (513,514) 
+                where courses_registration.course_id = ?
+                order by users.id ';
+        $sql = $select.$from;
+        $assessments = DB::select($sql, [$branch_id, $course_id]);
+        if(isset(request()->export))
+        {
+            return Excel::download(new UsersExport($from,$course_id), 'Assessments.xlsx');
+        }
+
+       
+        return view('training.reports.courses.course_report',compact('course_id', 'assessments', 'course'));
+
+    }
 
 
     public function groupReportOverview()

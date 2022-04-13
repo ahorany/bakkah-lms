@@ -151,13 +151,10 @@ return [
     'True'=>'Register',
     'False'=>'Not Register',
     'add_user'=>'Add User',
-<<<<<<< HEAD
     'assigned_to_course'=>'Assigned To Course',
     'learner'=>'Learner',
     'session'=>'Session',
     'export'=>'Export',
-
-=======
     'main_color'=>'اللون الأساسي',
->>>>>>> 22c0a6200be5c2e71df368719033b4e8dc549c19
+
 ];

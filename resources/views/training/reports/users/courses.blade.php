@@ -6,6 +6,9 @@ use App\Models\Training\CourseRegistration;
 <title>{{__('education.User Courses')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
+<a href="{{route('training.usersReportCourse',['id'=>$user_id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
+
+
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center">
       <thead>
@@ -15,7 +18,7 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.progress')}}</th>
             <th class="">{{__('admin.score')}}</th>
             <th class="">{{__('admin.enrolled_on')}}</th>
-            <th class="">{{__('admin.completion_date')}}</th>
+            {{-- <th class="">{{__('admin.completion_date')}}</th> --}}
             <th class="">{{__('admin.pdu')}}</th>
         </tr>
       </thead>
@@ -44,9 +47,9 @@ use App\Models\Training\CourseRegistration;
         <td class="px-1">
             <span class="td-title">{{$post->created_at}}</span>
         </td>
-        <td class="px-1">
+        {{-- <td class="px-1">
             <span class="td-title"></span>
-        </td>
+        </td> --}}
         <td class="px-1">
             <span class="td-title">{{$post->PDUs}}</span>
         </td>

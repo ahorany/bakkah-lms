@@ -124,11 +124,7 @@ class User extends Authenticatable implements JWTSubject
 
         if (!session('is_super_admin')) {
             $rel = $rel->where(function ($q) use ($current_user_branch){
-<<<<<<< HEAD
-                $q->where('roles.branch_id',$current_user_branch->branch_id);
-=======
                  $q->where('roles.branch_id',$current_user_branch->branch_id??1);
->>>>>>> 22c0a6200be5c2e71df368719033b4e8dc549c19
             });
         }
 
@@ -148,15 +144,19 @@ class User extends Authenticatable implements JWTSubject
         $branch_id = getCurrentUserBranchData()->branch_id;
 
         $sql  = DB::table('model_has_roles')
-                ->join('roles',function ($join){
+                ->join('roles',function ($join) use($branch_id){
                         $join->on('roles.id','=','model_has_roles.role_id')
                 ->where('roles.role_type_id',512)
                 ->where('roles.deleted_at',null)
-                ->where('roles.branch_id',getCurrentUserBranchData()->branch_id);
+                ->where('roles.branch_id',$branch_id);
                 })
-                ->join('users','users.id','model_has_roles.model_id');
+                ->join('users','users.id','model_has_roles.model_id')
+                ->join('user_branches',function ($join) use($branch_id){
+                    $join->on('user_branches.user_id','=','users.id')
+                ->where('user_branches.deleted_at',null)
+                ->where('user_branches.branch_id',$branch_id);
+                });
         return $sql;
-
-
     }
+    
 }
