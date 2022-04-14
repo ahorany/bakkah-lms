@@ -454,7 +454,7 @@ class CourseController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'localhost:8001/api/update/cart/progress?',
+            CURLOPT_URL => env('BAKKAH_URL').'/api/update/cart/progress',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -468,7 +468,6 @@ class CourseController extends Controller
         $response = curl_exec($curl);
 
         curl_close($curl);
-
         return $response;
 
 
