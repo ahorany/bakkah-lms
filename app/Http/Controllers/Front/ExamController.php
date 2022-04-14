@@ -88,7 +88,7 @@ class ExamController extends Controller
         // end next and prev
 
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
-        if(!CourseContentHelper::checkPrevContentIsCompleted($exam->status , $previous) && $user_course_register->role_id==3){
+        if(!CourseContentHelper::checkPrevContentIsCompleted($exam->status , $previous) && $user_course_register->role->role_type_id == 512){
             return redirect()->back()->with(["status" => 'danger',"msg" => "Can not open  content (Because the content is not completed) !!"]);
         }// end if
 
@@ -116,7 +116,7 @@ class ExamController extends Controller
      */
     private function checkUserCourseRegistration($course_id){
 
-        return CourseRegistration::where('course_id',$course_id)
+        return CourseRegistration::where('course_id',$course_id)->with(['role','register_user','course'])
             ->where('user_id',\auth()->id())
             ->first();
     } // end function
@@ -194,8 +194,6 @@ class ExamController extends Controller
 
         // Get UserExams (Attempts) Count For This Exam
         $user_exams_count = count($exam->exam->users_exams);
-
-        // Get Contents Sidebar
 
 
 
@@ -345,7 +343,6 @@ class ExamController extends Controller
             })
             ->first();
 
-// dd($user_exam);
         if (!$user_exam){
             abort(404);
         }

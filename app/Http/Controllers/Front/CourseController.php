@@ -288,11 +288,10 @@ class CourseController extends Controller
         // end next and prev
 
 
-
         //TODO: Ahoray
         // Validate prev if completed or not =>  ( IF not redirect back with alert msg )
         if(!$preview_gate_allows){
-            if($user_course_register->role_id == 3){
+            if($user_course_register->role->role_type_id == 512){
                 if(!CourseContentHelper::checkPrevContentIsCompleted($content->status , $previous)){
                     return redirect()->back()->with(["status" => 'danger',"msg" => "You can only go to the next page if you have completed the content"]);
                 }// end if
@@ -318,7 +317,7 @@ class CourseController extends Controller
 
 
        // Update Course Registration Progress When content have (role and path)
-        $this->updateCourseRegistrationProgress($content->course_id,$content->role_and_path);
+        $progress = $this->updateCourseRegistrationProgress($content->course_id,$content->role_and_path);
 
 
        // if downloadable status == true (Download file)
@@ -337,6 +336,7 @@ class CourseController extends Controller
 
 
 
+
         // Check user progress if grater than or equal complete progress for course
         // When user course => completed_at is null => update completed at In Course Registration
         // pop up status => preview else disable
@@ -349,7 +349,7 @@ class CourseController extends Controller
                     ->where('course_id', $content->course->id)->update([
                         'completed_at' => Carbon::now(),
                     ]);
-
+                    $this->updateProgressApiRequest($user_course_register,$progress);
                     $popup_compelte_status = true;
                 } // end if
             } // end if
@@ -400,7 +400,7 @@ class CourseController extends Controller
      */
     private function checkUserCourseRegistrationAndRole($course_id){
 
-        $user_course_register = CourseRegistration::where('course_id', $course_id)
+        $user_course_register = CourseRegistration::where('course_id', $course_id)->with(['role','register_user','course'])
         ->where('user_id',\auth()->id())
         ->first();
         $role_auth_is_admin = \auth()->user()->roles()->first();
@@ -419,6 +419,7 @@ class CourseController extends Controller
      *  Update Course Registration Progress When content have (role and path)
      */
     private function updateCourseRegistrationProgress($course_id,$content_role_and_path){
+        $progress = 0;
         if($content_role_and_path == 1){
             $user_contents_count = DB::select(DB::raw("SELECT COUNT(user_contents.id) as user_contents_count FROM user_contents
                                    INNER JOIN contents on user_contents.content_id = contents.id
@@ -439,12 +440,38 @@ class CourseController extends Controller
                                                             "));
             $contents_count = $contents_count[0]->contents_count??0;
 
+            $progress = round(($user_contents_count / $contents_count) * 100 ,  1);
+
             CourseRegistration::where('course_id',$course_id)
-                ->where('user_id',\auth()->id())->update(['progress'=> round(($user_contents_count / $contents_count) * 100 ,  1)  ]);
+                ->where('user_id',\auth()->id())->update(['progress'=> $progress]);
 
         }
+        return $progress;
     } // end function
 
+    private function updateProgressApiRequest($user_course_register,$progress){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'localhost:8001/api/update/cart/progress?',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('email' => $user_course_register->register_user->email, 'course_ref_id' => $user_course_register->course->ref_id, 'progress' => $progress, 'api_key' => 'rgeQLG2tYWM4XwHJZ4pw163593453239oDY8cpgbtT3t6v7SCUWcrWfmGeEkNXCn1LeVTSmAScPY1'),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        return $response;
+
+
+    }// end function
 
     /*
      * Get Content File Path

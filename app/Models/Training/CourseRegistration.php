@@ -14,6 +14,14 @@ class CourseRegistration extends Model
         return $this->belongsTo('App\Models\Training\Course','course_id');
     }
 
+    public function register_user(){
+        return $this->belongsTo('App\User','user_id');
+    }
+
+    public function role(){
+        return $this->belongsTo('App\Models\Training\Role','role_id');
+    }
+
     public static function getAssigned($role_type_id)//511 OR 512
     {
         $branch_id = getCurrentUserBranchData()->branch_id;
