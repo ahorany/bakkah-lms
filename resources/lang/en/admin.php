@@ -188,10 +188,14 @@ return [
     'main_color'=>'Main Color',
     'timezone'=>'Timezone',
     'discussion' => 'Discussion',
+<<<<<<< HEAD
     'attendance_count' => 'Number of attendance days',
     'pre_assessment_score' => 'Pre Assessment Score',
     'post_assessment_score' => 'Post Assessment Score',
     'knowledge_status' => 'Knowledge Status',
     'session_id' => 'Sessions',
 
+=======
+    'attendance_count' => 'Number of attendance days'
+>>>>>>> a1f88443899c3319d4f3fde40cff3642634df419
 ];

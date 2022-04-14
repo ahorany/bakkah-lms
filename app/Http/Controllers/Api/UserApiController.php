@@ -146,14 +146,17 @@ class UserApiController
 
 
     private function addUser($request){
-        $request->request->add(['en_name'=>$request->name]);
-        $request->request->add(['ar_name'=>$request->name]);
-        $user = User::firstOrCreate([
-            'email'    => $request->email,
-        ],[
-            'email'    => $request->email,
-            'password' => bcrypt("$request->password"),
-        ]);
+        $user = User::where('email' ,$request->email)->first();
+        if (!$user){
+            $user = User::create([
+                'email'    => $request->email,
+                'password' => bcrypt("$request->password"),
+            ]);
+
+            $user->assignRole([3]);
+            Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
+        }
+
 
         UserBranch::firstOrCreate([
             'user_id'    => $user->id,
@@ -163,12 +166,9 @@ class UserApiController
             'branch_id'  => 1 ,
             'name'     => $request->name,
         ]);
-        $user->assignRole([3]);
-        Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
 
         return $user;
     }
-
 
 
     public function updateAttendanceCount(){

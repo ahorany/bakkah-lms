@@ -8,8 +8,10 @@ use App\Models\Training\Answer;
 use App\Models\Training\Content;
 use App\Models\Training\ContentDetails;
 use App\Models\Training\Course;
+use App\Models\Training\Discussion;
 use App\Models\Training\Exam;
 use App\Models\Training\Gift;
+use App\Models\Training\Message;
 use App\Models\Training\Question;
 use App\Models\Training\Unit;
 use Carbon\Carbon;
@@ -39,13 +41,14 @@ class ContentController extends Controller
         $contents = Content::where('course_id',$course_id)
             ->whereNull('parent_id')
             ->with(['gift','contents' => function($q){
-                $q->with(['upload','details','exam'])->withCount('questions')->orderBy('order');
+                $q->with(['upload','details','exam','discussion.message'])->withCount('questions')->orderBy('order');
             },'details','exams'])
             ->orderBy('order')
             ->get();
 
         $exam_types = Constant::where("post_type",'exam_type')->get();
 
+//        return  $contents;
         return view('training.courses.contents.index', compact('course', 'contents','exam_types'));
     }
 
@@ -194,7 +197,6 @@ class ContentController extends Controller
     }
 
 
-
     public function reset_order_contents($course_id){
         $course = Course::select('id')->whereId($course_id)
             ->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
@@ -232,8 +234,6 @@ class ContentController extends Controller
         }
         return response()->json(['status' => true]);
     }
-
-
 
 
 
@@ -277,7 +277,19 @@ class ContentController extends Controller
 
     private function contentValidation($type){
         // validation
-        if($type == 'exam'){
+        if($type == 'discussion') {
+            $start_date  = 'required|date|before:end_date';
+            $end_date    = 'required|date|after:start_date';
+
+            $rules = [
+                'title'      => "required|string",
+                'course_id'  =>'required|exists:courses,id',
+                'excerpt'    =>  "required|string",
+                'content_id' => 'required|exists:contents,id',
+                'start_date'  => $start_date,
+                'end_date'     => $end_date,
+            ];
+        }elseif($type == 'exam'){
 
             $start_date = '';
             $end_date = '';
@@ -372,8 +384,36 @@ class ContentController extends Controller
             $paid_status = 503 ;
         }
 
+        if(\request()->type == 'discussion'){
+            $user = \auth()->user();
 
-        if(\request()->type == 'exam'){
+            $msg = Message::create([
+                'user_id' => $user->id,
+                'course_id' => request()->course_id,
+                'title' => request()->title,
+                'description' => request()->excerpt,
+                'type' => request()->type,
+            ]);
+
+
+            $content = Content::create([
+                'title'      => request()->title,
+                'course_id'  =>request()->course_id,
+                'post_type'  => request()->type,
+                'parent_id'  => request()->content_id,
+                'status'     => 1,
+                'paid_status' => $paid_status,
+                'downloadable' =>  0,
+                'order'  => $max_order[0]->max_order ? ($max_order[0]->max_order + 1) : 1,
+            ]);
+
+
+            $content->discussion()->create([
+                'start_date'    =>  request()->start_date??Carbon::now(),
+                'end_date' => request()->end_date,
+                'message_id' => $msg->id,
+            ]);
+        }elseif(\request()->type == 'exam'){
             $content = Content::create([
                 'title'      => request()->title,
                 'course_id'  =>request()->course_id,
@@ -441,11 +481,26 @@ class ContentController extends Controller
 
         }
 
-        $content = Content::whereId($content->id)->with(['upload','details','exam'])->first();
+        $content = Content::whereId($content->id)->with(['upload','details','exam','discussion.message'])->first();
         return response()->json([ 'status' => 'success','data' => $content]);
     }
 
     private function updateContentValidation($type){
+
+//        if($type == 'discussion') {
+//            $start_date  = 'required|date|before:end_date';
+//            $end_date    = 'required|date|after:start_date';
+//
+//            $rules = [
+//                'title'      => "required|string",
+//                'course_id'  =>'required|exists:courses,id',
+//                'excerpt'    =>  "required|string",
+//                'content_id' => 'required|exists:contents,id',
+//                'start_date'  => $start_date,
+//                'end_date'     => $end_date,
+//            ];
+//        }
+
 
         $mimes ='';
         switch ($type){
@@ -514,32 +569,42 @@ class ContentController extends Controller
             }
 
         }else{
-
-            $start_date = '';
-            $end_date = '';
-//            dd(strtotime(\request()->end_date));
-            if( strtotime(\request()->start_date) && strtotime(\request()->end_date)  ){
-                $start_date  = 'required|date|before:end_date';
-                $end_date    = 'required|date|after:start_date';
-            }else if(strtotime(\request()->start_date) && !strtotime(\request()->end_date) ){
-                request()->request->add(['end_date' => null]);
+            if($type == 'discussion') {
+                $rules = [
+                    'title'      => "required|string",
+                    'course_id'  =>'required|exists:courses,id',
+                    'excerpt'    =>  "required|string",
+                    'content_id' => 'required|exists:contents,id',
+                    'start_date'  => 'required|date|before:end_date',
+                    'end_date'     => 'required|date|after:start_date',
+                ];
+            }else{
                 $start_date = '';
                 $end_date = '';
+                if( strtotime(\request()->start_date) && strtotime(\request()->end_date)  ){
+                    $start_date  = 'required|date|before:end_date';
+                    $end_date    = 'required|date|after:start_date';
+                }else if(strtotime(\request()->start_date) && !strtotime(\request()->end_date) ){
+                    request()->request->add(['end_date' => null]);
+                    $start_date = '';
+                    $end_date = '';
+                }
+
+                $rules = [
+                    'title'      => "required|string",
+//                'excerpt'    =>  "required|string",
+                    'duration'=>'nullable|numeric|gt:-1',
+                    'pagination'=>'nullable|numeric|gt:0',
+                    'exam_type'  => 'nullable|exists:constants,id',
+                    'attempt_count'=>'nullable|numeric|gt:-1',
+                    'start_date'  => $start_date,
+                    'end_date'     => $end_date,
+                    'pass_mark' => "required|gt:-1|lt:101"
+
+                ];
             }
 
-//            dd(\request()->end_date);
-            $rules = [
-                'title'      => "required|string",
-//                'excerpt'    =>  "required|string",
-                'duration'=>'nullable|numeric|gt:-1',
-                'pagination'=>'nullable|numeric|gt:0',
-                'exam_type'  => 'nullable|exists:constants,id',
-                'attempt_count'=>'nullable|numeric|gt:-1',
-                'start_date'  => $start_date,
-                'end_date'     => $end_date,
-                'pass_mark' => "required|gt:-1|lt:101"
 
-            ];
         }
 
 
@@ -574,7 +639,34 @@ class ContentController extends Controller
         }
 
 
-        if (\request()->type == 'exam') {
+        if(\request()->type == 'discussion'){
+            $discussion = Discussion::where('content_id',request()->content_id)->first();
+            if (!$discussion){
+                abort(404);
+            }
+
+            $discussion->update([
+                'start_date'    =>  request()->start_date??Carbon::now(),
+                'end_date' => request()->end_date,
+            ]);
+
+
+            Message::where('id',$discussion->message_id)->update([
+                'title' => request()->title,
+                'description' => request()->excerpt,
+                'type' => request()->type,
+            ]);
+
+            $content = Content::whereId(request()->content_id)->update([
+                'title' => request()->title,
+                'status' => 1,
+                'paid_status' => $paid_status,
+                'downloadable' =>  0,
+            ]);
+
+
+
+        }elseif (\request()->type == 'exam') {
             $content = Content::whereId(request()->content_id)->update([
                 'title' => request()->title,
                 'status' => request()->status == 'true' ? 1 : 0,
@@ -641,7 +733,7 @@ class ContentController extends Controller
             }
         }
 
-        $content = Content::whereId(request()->content_id)->with(['upload','details','exam'])->first();
+        $content = Content::whereId(request()->content_id)->with(['upload','details','exam','discussion.message'])->first();
         return response()->json([ 'status' => 'success','data' => $content]);
 
 //        return response()->json([ 'status' => 'success']);

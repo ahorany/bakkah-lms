@@ -22,8 +22,8 @@ class Content extends Model
         return $this->belongsTo('App\Models\Training\Content','parent_id');
     }
 
-    public function discussions(){
-        return $this->hasMany(Discussion::class,'content_id');
+    public function discussion(){
+        return $this->hasOne(Discussion::class,'content_id');
     }
 
     public function exams(){
