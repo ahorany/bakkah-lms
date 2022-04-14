@@ -336,7 +336,6 @@ class CourseController extends Controller
 
 
 
-
         // Check user progress if grater than or equal complete progress for course
         // When user course => completed_at is null => update completed at In Course Registration
         // pop up status => preview else disable
@@ -349,7 +348,9 @@ class CourseController extends Controller
                     ->where('course_id', $content->course->id)->update([
                         'completed_at' => Carbon::now(),
                     ]);
+                if (getCurrentUserBranchData()->branch_id == 1){
                     $this->updateProgressApiRequest($user_course_register,$progress);
+                }
                     $popup_compelte_status = true;
                 } // end if
             } // end if
