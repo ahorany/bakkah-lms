@@ -7,6 +7,7 @@ use App\Helpers\Active;
 use App\Http\Requests\Training\CourseRequest;
 use App\User;
 use App\Models\Training\Course;
+use App\Models\Training\Session;
 use App\Models\Training\Content;
 
 use App\Constant;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Training\CourseRegistration;
 use App\Exports\UsersExport;
+use App\Exports\AssessmentExport;
 use App\Exports\CoursesExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -69,11 +71,11 @@ class ReportController extends Controller
                                         and roles.deleted_at is null
                                         and roles.branch_id = ?
                                         and roles.role_type_id = 512
-                    join courses on courses.id = courses_registration.course_id 
+                    join courses on courses.id = courses_registration.course_id
                                         and courses.deleted_at is null
                                         and courses.branch_id = ?
                     join users on users.id = courses_registration.user_id
-                    join user_branches on user_branches.user_id = users.id 
+                    join user_branches on user_branches.user_id = users.id
                                         and user_branches.deleted_at is null
                                         and user_branches.branch_id = ?
                 where courses_registration.user_id = ?
@@ -90,7 +92,7 @@ class ReportController extends Controller
         return view('training.reports.users.user_report',compact('user_id', 'courses', 'user'));
     }
 
-    
+
 
     public function usersReportTest()
     {
@@ -287,30 +289,93 @@ class ReportController extends Controller
         $course_id = request()->id;
         $course = Course::find($course_id);
         $branch_id = getCurrentUserBranchData()->branch_id;
-        // exam_type
-        $select = 'select users.id,users.name,courses_registration.progress,roles.role_type_id,sessions.date_from,sessions.date_to';
+        $sessions = Session::where('course_id',$course_id)->get();
 
-        $from = ' from courses_registration
-                    join roles on roles.id = courses_registration.role_id
-                                        and roles.deleted_at is null
-                                        and roles.branch_id = ?
-                    join users on users.id = courses_registration.user_id
-                    join courses on courses.id = courses_registration.course_id
-                    left join sessions on sessions.course_id = courses.id
-                    join contents on courses.id = contents.course_id 
-                    join exams on exams.content_id = contents.id 
-                        and exams.exam_type in (513,514) 
-                where courses_registration.course_id = ?
-                order by users.id ';
+        $select = "select pre.user_id, pre.name user_name,pre.mark pre_mark, post.mark post_mark,pre.content_id, post.content_id,
+        if(pre.mark<post.mark,'Improved',if(pre.mark=post.mark,'Constant','Deceased')) knowledge_status,
+        pre.attendance_count,trainer.name trainer_name,pre.email user_email,pre.s_id";
+        $from = ' from
+        (
+            SELECT max(user_exams.mark) mark, user_exams.user_id user_id,user_branches.name name
+                    , exams.content_id content_id,courses_registration.attendance_count attendance_count,
+                    courses_registration.session_id,users.email,
+                    concat("SID :",sessions.id,"|",sessions.date_from,"|",sessions.date_to) as s_id
+            FROM user_exams
+            join exams on user_exams.exam_id = exams.id
+            join contents on contents.id = exams.content_id  and contents.course_id = ?
+            join courses on courses.id = contents.course_id
+            join courses_registration on user_exams.user_id = courses_registration.user_id
+                                        and courses_registration.course_id = ? ';
+            if(isset(request()->session_id))
+                $from .= 'and courses_registration.session_id = ? ';
+            $from .= '
+            join sessions on sessions.id = courses_registration.session_id
+            join users on users.id = user_exams.user_id
+            join  user_branches on  user_branches.user_id = users.id and user_branches.branch_id = ?
+            join  roles on  roles.id = courses_registration.role_id
+                            and roles.role_type_id = ? and roles.deleted_at is Null
+                            and roles.branch_id = ?
+            where exams.exam_type = ?
+            group by user_exams.user_id, exams.content_id,user_branches.name,courses_registration.attendance_count,
+            courses_registration.session_id,users.email,sessions.id
+        ) pre
+        left join (
+            SELECT max(user_exams.mark) mark, user_exams.user_id user_id
+                    , exams.content_id  content_id,user_branches.name name
+            FROM user_exams
+            join exams on user_exams.exam_id = exams.id and exams.exam_type = ?
+            join contents on contents.id = exams.content_id   and contents.course_id = ?
+            join courses on courses.id = contents.course_id
+            join courses_registration on user_exams.user_id = courses_registration.user_id
+                                        and courses_registration.course_id = ? ';
+            if(isset(request()->session_id))
+                $from .= 'and courses_registration.session_id = ? ';
+            $from .= '
+            join users on users.id = user_exams.user_id
+            join  user_branches on  user_branches.user_id = users.id and user_branches.branch_id = ?
+            join  roles on  roles.id = courses_registration.role_id
+                            and roles.role_type_id = ? and roles.deleted_at is Null
+                            and roles.branch_id = ?
+            where exams.exam_type = ?
+            group by user_exams.user_id, exams.content_id,user_branches.name
+        ) post on pre.user_id = post.user_id
+        left join
+        (
+            SELECT courses_registration.session_id, GROUP_CONCAT(user_branches.name) name
+            FROM roles
+            join courses_registration on courses_registration.role_id = roles.id
+                                and roles.role_type_id = ?
+                                and roles.deleted_at is Null and roles.branch_id = ? ';
+            if(isset(request()->session_id))
+                $from .= ' and courses_registration.session_id = ? ';
+            $from .= '
+            join users on users.id = courses_registration.user_id
+            join  user_branches on  user_branches.user_id = users.id and user_branches.branch_id = ?
+            GROUP BY courses_registration.session_id
+        ) trainer on trainer.session_id  = pre.session_id
+        order by pre.session_id  ';
+
         $sql = $select.$from;
-        $assessments = DB::select($sql, [$branch_id, $course_id]);
-        if(isset(request()->export))
+
+        if(isset(request()->session_id))
         {
-            return Excel::download(new UsersExport($from,$course_id), 'Assessments.xlsx');
+            $session_id = request()->session_id;
+            $assessments = DB::select($sql, [$course_id, $course_id,$session_id,$branch_id,512,$branch_id,513,514,$course_id,$course_id,$session_id,$branch_id,512,$branch_id,514,511,$branch_id,$session_id,$branch_id]);
+        }
+        else
+        {
+            $session_id = '';
+            $assessments = DB::select($sql, [$course_id, $course_id,$branch_id,512,$branch_id,513,514,$course_id,$course_id,$branch_id,512,$branch_id,514,511,$branch_id,$branch_id]);
         }
 
-       
-        return view('training.reports.courses.course_report',compact('course_id', 'assessments', 'course'));
+
+        if(isset(request()->export))
+        {
+            return Excel::download(new AssessmentExport($from,$course_id,$session_id), 'Assessments.xlsx');
+        }
+
+
+        return view('training.reports.courses.course_report',compact('course_id', 'assessments', 'course','sessions'));
 
     }
 

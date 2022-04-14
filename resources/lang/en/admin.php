@@ -187,10 +187,11 @@ return [
     'export'=>'Export',
     'main_color'=>'Main Color',
     'timezone'=>'Timezone',
-<<<<<<< HEAD
-=======
     'discussion' => 'Discussion',
-    'attendance_count' => 'Number of attendance days'
+    'attendance_count' => 'Number of attendance days',
+    'pre_assessment_score' => 'Pre Assessment Score',
+    'post_assessment_score' => 'Post Assessment Score',
+    'knowledge_status' => 'Knowledge Status',
+    'session_id' => 'Sessions',
 
->>>>>>> c7078b86be19fc85ce624ebe0217805853f847b3
 ];

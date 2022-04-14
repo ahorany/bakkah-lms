@@ -17,7 +17,7 @@ class UsersExport implements FromCollection, WithHeadings
         $this->sql = $sql;
         $this->course_id = $course_id;
     }
-    }
+
 
     public function collection()
     {
