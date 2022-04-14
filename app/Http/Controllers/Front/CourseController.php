@@ -470,14 +470,12 @@ class CourseController extends Controller
         curl_close($curl);
         return $response;
 
-
     }// end function
 
     /*
      * Get Content File Path
      */
     private function getContentFilePath($content_type){
-
         $file = "";
         if(isset($content)){
             switch ($content_type){
