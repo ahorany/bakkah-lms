@@ -64,27 +64,27 @@ use App\Models\Training\CourseRegistration;
                 </td>
 
                 <td class="px-1">
-                    <span style="display: block;">{{$post->branches[0]->pivot->name}}</span>
+                    <span style="display: block;">{{$post->name}}</span>
                 </td>
 
                 <td class="px-1">
-                    <span class="td-title">{{$post->email??null}}</span>
+                    <span class="td-title">{{$post->user->email??null}}</span>
                 </td>
 
                 <td class="px-1">
-                    <span class="td-title">{{$post->mobile??null}}</span>
+                    <span class="td-title">{{$post->user->mobile??null}}</span>
                 </td>
 
                 <td class="px-1">
-                    @foreach($post->roles as $role)
+                    @foreach($post->user->roles as $role)
                         <span class="td-title {{$roles_class[$role->id]??'badge-pink'}} ">{{$role->name}}</span>
                     @endforeach
                 </td>
                 <td class="px-1">
-                    <span class="td-title">{{$post->company??null}}</span>
+                    <span class="td-title">{{$post->user->company??null}}</span>
                 </td>
                 <td class="px-1">
-                    <span class="td-title">{{$post->last_login??'Not logged in'}}</span>
+                    <span class="td-title">{{$post->user->last_login??'Not logged in'}}</span>
                 </td>
                 <td class="px-1">
                     <?php
@@ -93,13 +93,13 @@ use App\Models\Training\CourseRegistration;
                                                 $join->on('courses_registration.course_id', '=', 'courses.id')
                                                     ->where('courses.branch_id',$branch_id);
                                             })
-                        ->where('user_id',$post->id)->count();
+                        ->where('user_id',$post->user_id)->count();
                     ?>
                     <span style="display: block;" class="td-title">  {{ $assigned_courses }}</span>
                 </td>
                 <td class="px-1">
-                    {!!Builder::BtnGroupRows($post->trans_name, $post->id, $btn_roles, [
-                        'post'=>$post->id,
+                    {!!Builder::BtnGroupRows($post->name, $post->user_id, $btn_roles, [
+                        'post'=>$post->user_id,
                     ])!!}
                     @can('user.report')
                         @if(!(\request()->has('trash') && \request()->trash =='trash'))

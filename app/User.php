@@ -100,7 +100,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function branches(){
-        return $this->belongsToMany(Branche::class,'user_branches','user_id','branch_id')->withPivot('user_id','branch_id','name','bio');
+        return $this->belongsToMany(Branche::class,'user_branches','user_id','branch_id')->withPivot('user_id','branch_id','name','bio','deleted_at');
     }
 
     /**
@@ -155,5 +155,5 @@ class User extends Authenticatable implements JWTSubject
                 });
         return $sql;
     }
-    
+
 }

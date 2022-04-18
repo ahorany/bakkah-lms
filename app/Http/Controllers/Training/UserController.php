@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Training;
 
+use App\Models\Training\UserBranch;
 use DB;
 use App\User;
 use App\Constant;
@@ -38,18 +39,21 @@ class UserController extends Controller
         $post_type = GetPostType('users');
         $trash = GetTrash();
 
-        $users = User::with(['branches','roles' => function($q){
-            $q->select('id','name')->where('branch_id',getCurrentUserBranchData()->branch_id);
-        }])->whereHas('roles',function ($q){
-            $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)->where('roles.id','<>',4);
-        })->whereHas('branches',function ($q){
-            $q->where('branch_id',getCurrentUserBranchData()->branch_id??1);
-        });
+
+        $users = UserBranch::where('branch_id',getCurrentUserBranchData()->branch_id??1)
+            ->with(['user'=> function($q){
+                $q->with(['roles' => function($q){
+                    $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)
+                        ->where('roles.id','<>',4);
+                }]);
+            }])->whereHas('user.roles',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)->where('roles.id','!=',4);
+            });
 
         $branch_id = getCurrentUserBranchData()->branch_id;
 
         if (!is_null(request()->user_search)) {
-            $users = $this->SearchUser($users);
+            $users = $this->SearchUser($users,true);
         }
 
         $count = $users->count();
@@ -87,15 +91,20 @@ class UserController extends Controller
     }
 
 
-    private function SearchUser($eloquent){
+    private function SearchUser($eloquent,$is_eloquent = false){
 
-        $eloquent1 = $eloquent->where(function ($query) {
-            $query->where('users.name', 'like', '%' . request()->user_search . '%')
-                ->orWhere('users.email', 'like', '%' . request()->user_search . '%')
-                ->orWhere('users.mobile', 'like', '%' . request()->user_search . '%')
-                ->orWhere('users.job_title', 'like', '%' . request()->user_search . '%')
-                ->orWhere('users.company', 'like', '%' . request()->user_search . '%');
-        });
+        if ($is_eloquent){
+            $eloquent1 = $eloquent->where(function ($query) {
+                $query->where('user_branches.name', 'like', '%' . request()->user_search . '%');
+            })->orWhereHas('user',function ($q){
+                $q->where('email', 'like', '%' . request()->user_search . '%');
+            });
+        }else{
+            $eloquent1 = $eloquent->where(function ($query) {
+                $query->where('user_branches.name', 'like', '%' . request()->user_search . '%');
+                $query->orWhere('users.email', 'like', '%' . request()->user_search . '%');
+            });
+        }
         return $eloquent1;
     }
 
@@ -113,7 +122,6 @@ class UserController extends Controller
 
 
         return Active::Create([
-//            'eloquent' => new User(),
             'genders' => $genders,
             'post_type' => $post_type,
             'roles' => $roles,
@@ -152,7 +160,7 @@ class UserController extends Controller
 
         Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
 
-        return Active::Inserted($user->trans_name,[
+        return Active::Inserted($user->email,[
             'post_type' => $post_type,
         ]);
     }
@@ -177,8 +185,6 @@ class UserController extends Controller
         $user_branch = DB::table('user_branches')
                       ->where('user_id',$user->id)
                       ->where('branch_id',$current_user_branch->branch_id)->first();
-
-
 
 
         return Active::Edit([
@@ -235,7 +241,9 @@ class UserController extends Controller
             Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
         }
 
-        return Active::Updated($user->trans_name, [
+//        User::where('id',$user->id)->update(['is_logout' => 1]);
+
+        return Active::Updated($user->email, [
             'post_type' => $post_type,
         ]);
     }
@@ -246,8 +254,12 @@ class UserController extends Controller
 
     public function destroy(User $user, Request $request)
     {
-        User::where('id', $user->id)->SoftTrash();
-        return Active::Deleted($user->trans_name);
+        UserBranch::where('user_id', $user->id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)->SoftTrash();
+
+        User::where('id',$user->id)->update(['is_logout' => 1]);
+
+        return Active::Deleted($user->email);
     }
 
 
@@ -256,9 +268,10 @@ class UserController extends Controller
 
     public function restore($user)
     {
-        User::where('id', $user)->RestoreFromTrash();
+        UserBranch::where('user_id', $user)->where('branch_id',getCurrentUserBranchData()->branch_id)->RestoreFromTrash();
+        User::where('id',$user)->update(['is_logout' => 1]);
         $user = User::where('id', $user)->first();
-        return Active::Restored($user->trans_name);
+        return Active::Restored($user->email);
     }
 
 

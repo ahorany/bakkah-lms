@@ -188,5 +188,9 @@ return [
     'main_color'=>'Main Color',
     'timezone'=>'Timezone',
     'discussion' => 'Discussion',
-    'attendance_count' => 'Number of attendance days'
+    'attendance_count' => 'Number of attendance days',
+    'pre_assessment_score' => 'Pre Assessment Score',
+    'post_assessment_score' => 'Post Assessment Score',
+    'knowledge_status' => 'Knowledge Status',
+    'session_id' => 'Sessions',
 ];

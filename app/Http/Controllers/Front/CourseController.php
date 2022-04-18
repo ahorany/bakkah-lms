@@ -49,6 +49,10 @@ class CourseController extends Controller
         ->select('id', 'role_id', 'progress')
         ->first();
 
+        if(!$course_registration){
+            abort(404);
+        }
+
         $role_id = (!$preview_gate_allows) ? $course_registration->role_id : -1;
        // Get Course With Contents
         $course = $this->getCourseWithContents($course_id, $role_id);
