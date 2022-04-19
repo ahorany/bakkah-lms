@@ -46,12 +46,18 @@ class CourseController extends Controller
 
         $course_registration = CourseRegistration::where('course_id', $course_id)
         ->where('user_id', $user_id)
-        ->select('id', 'role_id')
+        ->select('id', 'role_id', 'progress')
         ->first();
+
+        if(!$course_registration){
+            abort(404);
+        }
 
         $role_id = (!$preview_gate_allows) ? $course_registration->role_id : -1;
        // Get Course With Contents
         $course = $this->getCourseWithContents($course_id, $role_id);
+
+        // dd($course_registration);
         // validate if course exists or not
         if(!$course){
             abort(404);

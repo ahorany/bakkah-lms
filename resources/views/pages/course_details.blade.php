@@ -92,10 +92,16 @@
                         <img src="{{CustomAsset($url)}}" height="auto" width="100px">
                     </div>
                 @endif
+
+                <?php
+                    $progress = $course_registration->progress??0;
+                ?>
                 <div class="progress">
-                    <div style="width: {{$course->users[0]->pivot->progress??0}}% !important;" class="bar"></div>
+                    <div style="width: {{$progress}}% !important;" class="bar"></div>
+                    {{-- <div style="width: {{$course->users[0]->pivot->progress??0}}% !important;" class="bar"></div> --}}
                 </div>
-                <small>{{$course->users[0]->pivot->progress??0}}% Complete</small>
+                <small>{{$progress}}% Complete</small>
+                {{-- <small>{{$course->users[0]->pivot->progress??0}}% Complete</small> --}}
             </div>
             <div class="mx-md-4 course_info information-card">
                 <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
