@@ -41,20 +41,22 @@ class ReportController extends Controller
 
     public function usersReportOverview()
     {
+
         $user_id = request()->id;
+        //dd($user_id);
         $user = User::findOrFail($user_id);
 
         $learners_no         = 1;
-        $complete_courses_no = CourseRegistration::getCoursesNo()
-                                ->where('courses_registration.user_id',$user_id)
-                                ->where('courses_registration.progress',100)->count();
+        $complete_courses_no =  CourseRegistration::getCoursesNo()
+                                    ->where('courses_registration.user_id',$user_id)
+                                    ->where('courses_registration.progress',100)->count();
         $courses_in_progress =  CourseRegistration::getCoursesNo()
-                                ->where('courses_registration.progress','<',100)
-                                ->where('courses_registration.progress','>',0)
-                                ->where('courses_registration.user_id',$user_id)->count();
+                                    ->where('courses_registration.progress','<',100)
+                                    ->where('courses_registration.progress','>',0)
+                                    ->where('courses_registration.user_id',$user_id)->count();
         $courses_not_started = CourseRegistration::getCoursesNo()
-                                ->where('courses_registration.progress',0)
-                                ->where('courses_registration.user_id',$user_id)->count();
+                                    ->where('courses_registration.progress',0)
+                                    ->where('courses_registration.user_id',$user_id)->count();
         $overview = 1;
 
         return view('training.reports.users.user_report',compact('user_id','learners_no','complete_courses_no',
@@ -198,10 +200,12 @@ class ReportController extends Controller
         // $contents = DB::table('scormvars_master')->pluck('content_id')->toArray();
         // $contents_unique = array_unique($contents);
         // $scorms = Content::whereIn('id',$contents_unique);
-
+        $branch_id = getCurrentUserBranchData()->branch_id;
         $user_id = request()->user_id;
-        $user = User::find($user_id);
-
+        $user = User::join('user_branches','user_branches.user_id','users.id')
+                        ->where('branch_id',$branch_id)
+                        ->select('user_branches.name')->find($user_id);
+        // dd($user);s
         $scorms = DB::table('scormvars_master')
         ->join('users', function ($join) {
             $join->on('scormvars_master.user_id', '=', 'users.id');
@@ -381,6 +385,23 @@ class ReportController extends Controller
 
         return view('training.reports.courses.course_report',compact('course_id', 'assessments', 'course','sessions'));
 
+    }
+
+
+    public function coursesReportScorm()//new
+    {
+        $contents = DB::table('scormvars_master')->pluck('content_id')->toArray();
+        $contents_unique = array_unique($contents);
+        $scorms = Content::whereIn('id',$contents_unique);
+
+        $type = 'course';
+        $course_id = request()->id;
+        $scorms = $scorms->where('course_id',$course_id);
+        $course = Course::where('id',$course_id)->first();
+
+        $scorms = $scorms->get();
+        // dd($scorms);
+        return view('training.reports.courses.course_report',compact('scorms','type','course','course_id'));
     }
 
     public function progressDetails()

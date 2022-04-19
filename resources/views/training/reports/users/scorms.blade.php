@@ -11,8 +11,8 @@ use App\Models\Training\CourseRegistration;
       <thead>
         <tr>
             <th class="">{{__('admin.index')}}</th>
-            <th class="">{{__('admin.scorm')}}</th>
             <th class="">{{__('admin.course_name')}}</th>
+            <th class="">{{__('admin.scorm')}}</th>
             <th class="">{{__('admin.date')}}</th>
             <th class="">{{__('admin.result')}}</th>
             <th class="">{{__('admin.score')}}</th>

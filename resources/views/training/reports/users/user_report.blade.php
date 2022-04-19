@@ -35,7 +35,7 @@
                 <a href="{{route('training.usersReportOverview',['id'=>$user->id])}}" class="group_buttons btn-sm {{$active_overview}}">Overview</a>
                 <a  href="{{route('training.usersReportCourse',['id'=>$user->id])}}" class="group_buttons btn-sm {{$active_users}}">Courses</a>
                 <a href="{{route('training.usersReportTest',['id'=>$user->id])}}" class="group_buttons btn-sm {{$active_tests}}">Tests</a>
-                {{-- <a href="{{route('training.usersReportScorm',['user_id'=>$user->id])}}" class="group_buttons btn-sm {{$active_scorms}}">SCORM</a> --}}
+                <a href="{{route('training.usersReportScorm',['user_id'=>$user->id])}}" class="group_buttons btn-sm {{$active_scorms}}">SCORM</a>
             </div>
         </div>
     </div>

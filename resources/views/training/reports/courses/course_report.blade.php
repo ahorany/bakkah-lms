@@ -30,7 +30,7 @@
     elseif(isset($scorms))
     {
         $active_scorms = 'active';
-        $path = 'training.reports.scorms.scorms';
+        $path = 'training.reports.courses.scorms';
     }
     elseif(isset($assessments))
     {
@@ -45,7 +45,7 @@
                 <a href="{{route('training.coursesReportOverview',['id'=>$course_id])}}" class="group_buttons btn-sm {{$active_overview}}">Overview</a>
                 <a href="{{route('training.coursesReportUser',['id'=>$course_id])}}" class="group_buttons btn-sm {{$active_users}}">Users</a>
                 <a href="{{route('training.coursesReportTest',['id'=>$course_id])}}" class="group_buttons btn-sm {{$active_tests}}">Tests</a>
-                {{-- <a href="{{route('training.scormsReportScorms',['course_id'=>$course_id])}}" class="group_buttons btn-sm {{$active_scorms}}">SCORMS</a> --}}
+                <a href="{{route('training.coursesReportScorm',['id'=>$course_id])}}" class="group_buttons btn-sm {{$active_scorms}}">SCORMS</a>
                 {{-- <a href="{{route('training.course_users',['id'=>$course_id])}}" class="group_buttons btn-sm">Certificates</a> --}}
                 <a href="{{route('training.coursesAssessments',['id'=>$course_id])}}" class="group_buttons btn-sm {{$active_assessments}}">Assessments</a>
             </div>

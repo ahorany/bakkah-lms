@@ -193,9 +193,6 @@ return [
     'post_assessment_score' => 'Post Assessment Score',
     'knowledge_status' => 'Knowledge Status',
     'session_id' => 'Sessions',
-<<<<<<< HEAD
     'attendance_count' => 'Number of attendance days',
     'certificate' => 'Certificate',
-=======
->>>>>>> e4d0cf02bd61e38c655c00d37bdb28ff2d9f6c70
 ];

@@ -8,17 +8,17 @@ Route::group([
 	Route::group(['prefix'=>'training', 'as'=>'training.'], function(){
 
 
-           Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.users.index'], function(){
-               Route::resource('users', 'UserController');
-               Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
-               Route::get('/get/user/data', 'UserController@getUserData')->name('getUserData');
+            Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.users.index'], function(){
+                Route::resource('users', 'UserController');
+                Route::patch('/users/{user}/restore', 'UserController@restore')->name('users.restore');
+                Route::get('/get/user/data', 'UserController@getUserData')->name('getUserData');
 
-               Route::get('/usersReportOverview', 'ReportController@usersReportOverview')->name('usersReportOverview');
-               Route::get('/usersReportCourse', 'ReportController@usersReportCourse')->name('usersReportCourse');
-               Route::get('/usersReportTest', 'ReportController@usersReportTest')->name('usersReportTest');
-               Route::get('/usersReportScorm', 'ReportController@usersReportScorm')->name('usersReportScorm');
+                Route::get('/usersReportOverview', 'ReportController@usersReportOverview')->name('usersReportOverview');
+                Route::get('/usersReportCourse', 'ReportController@usersReportCourse')->name('usersReportCourse');
+                Route::get('/usersReportTest', 'ReportController@usersReportTest')->name('usersReportTest');
+                Route::get('/usersReportScorm', 'ReportController@usersReportScorm')->name('usersReportScorm');
 
-           });
+            });
 
 
             Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.roles.index'], function(){
@@ -33,7 +33,7 @@ Route::group([
             });
 
 
-         Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.courses.index'], function(){
+        Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.courses.index'], function(){
             Route::resource('courses', 'CourseController');
             Route::patch('/courses/{course}/restore', 'CourseController@restore')->name('courses.restore');
 
@@ -41,6 +41,7 @@ Route::group([
             Route::get('/coursesReportOverview', 'ReportController@coursesReportOverview')->name('coursesReportOverview');
             Route::get('/coursesReportUser', 'ReportController@coursesReportUser')->name('coursesReportUser');
             Route::get('/coursesReportTest', 'ReportController@coursesReportTest')->name('coursesReportTest');
+            Route::get('/coursesReportScorm', 'ReportController@coursesReportScorm')->name('coursesReportScorm');
             Route::get('/coursesAssessments', 'ReportController@coursesAssessments')->name('coursesAssessments');
             Route::get('/progressDetails', 'ReportController@progressDetails')->name('progressDetails');
             Route::get('/exam', 'ReportController@exam')->name('exam');
@@ -59,7 +60,7 @@ Route::group([
 //             Route::get('/discussion', 'DiscussionController@discussion')->name('discussion');
 
 
-             Route::get('/units', 'UnitController@index')->name('units');
+            Route::get('/units', 'UnitController@index')->name('units');
             Route::get('/delete_unit', 'UnitController@delete_unit')->name('delete_unit');
             Route::post('/add_unit', 'UnitController@add_unit')->name('add_unit');
             Route::post('/update_unit', 'UnitController@update_unit')->name('update_unit');
@@ -115,10 +116,6 @@ Route::group([
         });
 
 
-
-
-
-
           Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.certificates.index'], function(){
               Route::get('certificates/preview', 'CertificateControllerH@preview')->name('certificates.preview');
               Route::get('certificates/add_new', 'CertificateControllerH@add_new')->name('certificates.add_new');
@@ -133,17 +130,11 @@ Route::group([
 
 
 
-
-
-
          Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.scormsReportOverview'], function(){
             Route::get('/scormsReportOverview', 'ReportController@scormsReportOverview')->name('scormsReportOverview');
             Route::get('/scormsReportScorms', 'ReportController@scormsReportScorms')->name('scormsReportScorms');
             Route::get('/scorm_users', 'ReportController@scorm_users')->name('scorm_users');
          });
-
-
-
 
 
          Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.categories.index'], function(){
