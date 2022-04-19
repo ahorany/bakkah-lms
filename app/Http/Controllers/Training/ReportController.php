@@ -19,6 +19,10 @@ use App\Exports\UsersExport;
 use App\Exports\AssessmentExport;
 use App\Exports\CoursesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Gate;
+use Carbon\Carbon;
+use App\Models\Training\UserExam;
+use App\Helpers\CourseContentHelper;
 
 
 class ReportController extends Controller
@@ -64,7 +68,7 @@ class ReportController extends Controller
         $branch_id = getCurrentUserBranchData()->branch_id;
         // $courses = CourseRegistration::getCoursesNo()->where('courses_registration.user_id',$user_id)->get();
         // dd($courses);
-        $select = 'select courses.id,courses.title,courses_registration.progress,courses_registration.score,courses.created_at,courses.PDUs';
+        $select = 'select courses.id,courses.title,courses_registration.progress,courses_registration.score,courses.created_at,courses.PDUs,courses.complete_progress,courses_registration.id as c_reg_id ';
 
         $from = ' from courses_registration
                     join roles on roles.id = courses_registration.role_id
@@ -79,17 +83,17 @@ class ReportController extends Controller
                                         and user_branches.deleted_at is null
                                         and user_branches.branch_id = ?
                 where courses_registration.user_id = ?
-                order by users.id
-                ';
+                order by users.id ';
+
         $sql = $select.$from;
         $courses = DB::select($sql, [$branch_id, $branch_id, $branch_id, $user_id]);
-
+        // dd($courses);
         if(isset(request()->export))
         {
             return Excel::download(new CoursesExport($from, $user_id), 'Courses.xlsx');
         }
 
-        return view('training.reports.users.user_report',compact('user_id', 'courses', 'user'));
+        return view('training.reports.users.user_report',compact('courses', 'user'));
     }
 
 
@@ -167,8 +171,8 @@ class ReportController extends Controller
 
     public function scorm_users()
     {
-        $scorm_id = request()->id;
 
+        $scorm_id = request()->id;
         // $completed_courses  = DB::table('user_groups')
         // ->join('course_groups', function ($join) use($group_id) {
         //     $join->on('course_groups.group_id', '=', 'user_groups.group_id')
@@ -379,6 +383,171 @@ class ReportController extends Controller
 
     }
 
+    public function progressDetails()
+    {
+
+        session()->put('active_sidebar_route_name',-1);
+
+        $user_id = request()->user_id;
+        $course_id = request()->course_id;
+        $preview_gate_allows = Gate::allows('preview-gate');
+
+        // clear session => (Sidebar active color)
+        session()->put('Infrastructure_id', -1);
+
+        $course_registration = CourseRegistration::where('course_id', $course_id)
+        ->where('user_id', $user_id)
+        ->select('id', 'role_id')
+        ->first();
+
+        $role_id = (!$preview_gate_allows) ? $course_registration->role_id : -1;
+       // Get Course With Contents
+
+        $course = $this->getCourseWithContents($course_id, $role_id);
+        // $course = $this->getCourseWithContents($course_id, $role_id);
+        // validate if course exists or not
+        if(!$course){
+            abort(404);
+        }// end if
+
+        // Get total rate for course
+        $total_rate = app('App\Http\Controllers\Front\CourseController')->getTotalRateForCourse($course->id);
+
+        // Get User Course Activities
+        $activities = app('App\Http\Controllers\Front\CourseController')->getUserCourseActivities($course->id, $user_id);
+        $user   = User::where('id',$user_id)->first();
+        return view('training.reports.courses.progress_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id','user'));
+        // return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id'));
+    }
+
+    public function exam(){
+
+        $content_id = request()->content_id;
+        $user_id = request()->user_id;
+        // Get Exam Content
+        $exam = Content::whereId($content_id)
+            ->with(['section','course','exam' => function($q){
+                return $q->with(['users_exams' => function($q){
+                    return $q->where('user_id', request()->user_id);
+                }]);
+            }])
+            ->whereHas('course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->first();
+
+        if (!$exam){
+            abort(404);
+        }
+
+        $user_course_register = CourseRegistration::where('course_id',$exam->course->id)->with(['role','register_user','course'])
+        ->where('user_id',$user_id)
+        ->first();
+
+        // Validate User Course Registration And Exam is Exists Or Not
+        if( !$user_course_register || (!$exam->exam) ){
+            abort(404);
+        }
+
+
+        $role_id =  $user_course_register->role_id;
+        // Get Course With Contents
+        $course = Course::where('id',$exam->course->id)->first();
+        $user   = User::where('id',$user_id)->first();
+        return view('training.reports.courses.exam',compact('exam','course','user'));
+        // return view('pages.exam',compact('exam','course'));
+    } // end function
+
+
+    public function exam_review($exam_id,$user_id,$course_id){
+
+        $page_type = 'review';
+
+        // Get UserExam (Attempt) Data
+        $exam = UserExam::whereId($exam_id)
+            ->where('user_id',$user_id)
+            ->where('status',1)
+            ->with(['exam.content.questions.answers','user_answers','user_questions'])
+            ->whereHas('exam.content.course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->first();
+
+        if (!$exam){
+            abort(404);
+        }
+
+        // Get next and prev
+        $arr = CourseContentHelper::nextAndPreviouseQuery($exam->exam->content->course_id,$exam->exam->content->id,$exam->exam->content->order,$exam->exam->content->parent_id,$exam->exam->content->section->order);
+        $previous = $arr[0];
+        $next = $arr[1];
+        $next = ($next[0]??null);
+        $previous = ($previous[0]??null);
+
+
+        $course = Course::where('id',$course_id)->first();
+        $user   = User::where('id',$user_id)->first();
+        // end next and prev
+        return view('pages.review',compact('exam','page_type','next','previous','course','user'));
+
+    } // end function
+
+    public function exam_result_details ($user_exams_id,$user_id,$course_id){
+        // Get UserExam (Attempt) Data
+        $exam = UserExam::whereId($user_exams_id)
+            ->where('user_id',$user_id)
+            ->where('status',1)
+            ->with(['exam' => function($q){
+                return $q->select('id','content_id')->with(['content' => function($query){
+                    $query->select('id','title');
+                }]);
+            }])
+            ->whereHas('exam.content.course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+            })
+            ->first();
+
+        // Check If Attempt Is Exists
+        if ( !$exam  ) abort(404);
+
+        $exam_title =  $exam->exam->content->title;
+        $exam_id =  $exam->exam->content->id;
+
+        $unit_marks =  DB::select(DB::raw("
+            SELECT units.title as unit_title, questions.unit_id as unit_id , SUM(user_questions.mark) as unit_marks , SUM(questions.mark) as total_marks
+            from questions
+            left join user_questions ON user_questions.question_id = questions.id
+            and user_questions.user_exam_id = $user_exams_id
+            LEFT JOIN units ON questions.unit_id = units.id
+            where questions.exam_id = $exam_id
+            GROUP BY questions.unit_id
+       "));
+
+        $units_rprt = DB::select(" SELECT m.id, m.title, sum(m.res) as result ,count(m.question_id) as count,sum(m.tot) as total
+           from (
+           SELECT u.id, u.title, qu.question_id
+           , (select uq.mark/count(id) from question_units where question_id = qu.question_id) as res
+            , (select q.mark/count(id) from question_units where question_id = qu.question_id) as tot
+           , uq.mark
+           from units u
+           join question_units qu on u.id=qu.unit_id
+           join user_questions uq on uq.question_id = qu.question_id
+           join user_exams ue on ue.id = uq.user_exam_id
+           join questions q on q.id = uq.question_id
+           where  ue.id = $user_exams_id
+           order by u.id asc
+                ) as m
+                group by m.id
+                union
+            SELECT  ' ' as id, 'Other' as title,sum(uq.mark) as result,count(uq.question_id) as count,sum(q.mark)
+            from user_questions uq  join user_exams ue on ue.id = uq.user_exam_id
+            join questions q on q.id = uq.question_id
+            where  ue.id = $user_exams_id and uq.question_id not in (select question_id from question_units)
+            ") ;
+         $course = Course::where('id',$course_id)->first();
+         $user   = User::where('id',$user_id)->first();
+        return view('pages.exam_details',compact('unit_marks','exam_title','exam_id','units_rprt','user','course'));
+    } // end function
 
     public function groupReportOverview()
     {
@@ -436,9 +605,45 @@ class ReportController extends Controller
 
     }
 
+    public function getCourseWithContents($course_id, $role_id){
 
+        $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
 
+        // if(!Gate::allows('preview-gate')){
 
+        //     $course = $course->whereHas('users', function ($q){
+        //         $q->where('users.id', \auth()->id());
+        //     })->with(['users' => function($query){
+        //         $query->where('user_id', \auth()->id());
+        //     }, 'course_rate' => function($query){
+        //         return $query->where('user_id', \auth()->id());
+        //     }]);
+        // }
+
+        $course = $course->with(['uploads' => function($query){
+            return $query->where(function ($q){
+                $q->where('post_type','intro_video')->orWhere('post_type', 'image');
+            });
+        }, 'contents' => function($query) use($role_id){
+            $query->where('parent_id',null)->with(['gift','details',
+                'contents' => function($q){
+                    return $q->orderBy('order');
+                },
+                'contents.details','contents.user_contents' => function($q){
+                    return $q->where('user_id', \auth()->id());
+                }])
+            ->orderBy('order');
+
+            if($role_id != -1){
+                $role = \App\Models\Training\Role::where('id',$role_id)->first();
+                if ($role->role_type_id == 512){
+                    $query->where('hide_from_trainees', 0);
+                }
+            }
+        }])->first();
+
+        return $course;
+    } // end function
 
 
 

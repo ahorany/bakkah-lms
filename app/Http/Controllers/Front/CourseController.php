@@ -72,7 +72,7 @@ class CourseController extends Controller
     /*
      * Get Course With Contents
      */
-    private function getCourseWithContents($course_id, $role_id){
+    public function getCourseWithContents($course_id, $role_id){
 
         $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
 
@@ -115,7 +115,7 @@ class CourseController extends Controller
     /*
      * Get total rate for course
      */
-    private function getTotalRateForCourse($course_id){
+    public function getTotalRateForCourse($course_id){
 
         $sql = 'SELECT AVG(rate) as total_rate
                 FROM `courses_registration`
@@ -129,7 +129,7 @@ class CourseController extends Controller
     /*
      * Get User Course Activities
      */
-    private function getUserCourseActivities($course_id,$user_id){
+    public function getUserCourseActivities($course_id,$user_id){
 
         $sql = "SELECT contents.id as content_id,contents.post_type as type,
             courses.title as course_title,contents.title as content_title

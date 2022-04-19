@@ -157,15 +157,13 @@ return [
     'export'=>'Export',
     'main_color'=>'اللون الأساسي',
     'discussion' => 'Discussion',
-<<<<<<< HEAD
     'attendance_count' => 'Attendance Count',
     'pre_assessment_score' => 'Pre Assessment Score',
     'post_assessment_score' => 'Post Assessment Score',
     'knowledge_status' => 'Knowledge Status',
     'session_id' => 'الجلسات',
+    'attendance_count' => 'Attendance Count',
+    'certificate' => 'Certificate',
 
-=======
-    'attendance_count' => 'Attendance Count'
->>>>>>> a1f88443899c3319d4f3fde40cff3642634df419
 
 ];
