@@ -41,7 +41,7 @@
     <div class="course_info mb-3 card p-3">
         <div class="row">
             <div class="col-md-6">
-                <span class="mr-1 p-1 badge badge-dark" style="font-size: 0.8rem;">{{$course->trans_title}}</span>
+                <span class="mr-1 p-1 badge badge-dark" style="font-size: 0.8rem;"> {{ \App\Helpers\Lang::TransTitle($course[0]->title) }}</span>
                 <a href="{{route('training.coursesReportOverview',['id'=>$course_id])}}" class="group_buttons btn-sm {{$active_overview}}">Overview</a>
                 <a href="{{route('training.coursesReportUser',['id'=>$course_id])}}" class="group_buttons btn-sm {{$active_users}}">Users</a>
                 <a href="{{route('training.coursesReportTest',['id'=>$course_id])}}" class="group_buttons btn-sm {{$active_tests}}">Tests</a>

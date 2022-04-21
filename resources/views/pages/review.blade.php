@@ -23,9 +23,9 @@
 
 @section('content')
 @if(isset($user))
-<h1 style="text-align:left;float:left;">{{$user->trans_name}}</h1>
-<h1 style="text-align:right;float:right;">{{$course->trans_title}}</h1>
-<hr style="clear:both;"/>
+    <h1 style="text-align:left;float:left;">{{$user->trans_name}}</h1>
+    <h1 style="text-align:right;float:right;">{{$course->trans_title}}</h1>
+    <hr style="clear:both;"/>
 @endif
     <div class="d-flex mobile-show" style="align-items: center;">
         <h3 class="m-0 title_file_old">{{ $exam->exam->content->course->trans_title }}</h3>
@@ -34,10 +34,16 @@
     <div class="d-flex p-3" style="justify-content: space-between; align-items:center; flex-wrap: wrap;">
         <h2 class="m-0"><i class="fas fa-graduation-cap"></i> {{$exam->exam->content->title}}</h2>
         <?php
+
             if(isset($user))
-                $url = CustomRoute('training.exam',['content_id'=>$exam->exam->content->id,'user_id'=>$user->id] );
+            {
+                $url = CustomRoute('training.exam',['content_id'=>$exam->exam->content->id,'user_id'=>$user->id,'back_page'=>$back_page] );
+            }
             else
-                $url = CustomRoute('user.exam',$exam->exam->content->id);
+            {
+                $url = CustomRoute('user.exam',$exam->exam->content->id);//basic route
+            }
+
         ?>
 
         <a style="width: 85px;" href="{{$url}}" class="cyan form-control">
