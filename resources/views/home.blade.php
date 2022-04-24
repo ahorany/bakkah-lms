@@ -172,7 +172,8 @@
                                 @endif
 
                                 <div class="progress">
-                                    <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div>
+                                    <div style="width: {{$course->progress??0}}% !important;" class="bar"></div>
+                                    {{-- <div style="width: {{$course->pivot->progress??0}}% !important;" class="bar"></div> --}}
                                 </div>
                                 <small>{{$course->progress??0}}% Complete</small>
                             </div>

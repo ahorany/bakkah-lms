@@ -46,7 +46,7 @@ class CourseController extends Controller
 
         $course_registration = CourseRegistration::where('course_id', $course_id)
         ->where('user_id', $user_id)
-        ->select('id', 'role_id')
+        ->select('id', 'role_id', 'progress')
         ->first();
 
         if(!$course_registration){
@@ -56,6 +56,8 @@ class CourseController extends Controller
         $role_id = (!$preview_gate_allows) ? $course_registration->role_id : -1;
        // Get Course With Contents
         $course = $this->getCourseWithContents($course_id, $role_id);
+
+        // dd($course_registration);
         // validate if course exists or not
         if(!$course){
             abort(404);
@@ -76,7 +78,7 @@ class CourseController extends Controller
     /*
      * Get Course With Contents
      */
-    private function getCourseWithContents($course_id, $role_id){
+    public function getCourseWithContents($course_id, $role_id){
 
         $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
 
@@ -119,7 +121,7 @@ class CourseController extends Controller
     /*
      * Get total rate for course
      */
-    private function getTotalRateForCourse($course_id){
+    public function getTotalRateForCourse($course_id){
 
         $sql = 'SELECT AVG(rate) as total_rate
                 FROM `courses_registration`
@@ -133,7 +135,7 @@ class CourseController extends Controller
     /*
      * Get User Course Activities
      */
-    private function getUserCourseActivities($course_id,$user_id){
+    public function getUserCourseActivities($course_id,$user_id){
 
         $sql = "SELECT contents.id as content_id,contents.post_type as type,
             courses.title as course_title,contents.title as content_title

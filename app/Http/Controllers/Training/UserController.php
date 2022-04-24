@@ -39,7 +39,6 @@ class UserController extends Controller
         $post_type = GetPostType('users');
         $trash = GetTrash();
 
-
         $users = UserBranch::where('branch_id',getCurrentUserBranchData()->branch_id??1)
             ->with(['user'=> function($q){
                 $q->with(['roles' => function($q){
@@ -50,6 +49,7 @@ class UserController extends Controller
                 $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)->where('roles.id','!=',4);
             });
 
+
         $branch_id = getCurrentUserBranchData()->branch_id;
 
         if (!is_null(request()->user_search)) {
@@ -58,7 +58,7 @@ class UserController extends Controller
 
         $count = $users->count();
         $users = $users->page();
-
+        // dd($users);
         $learners_no  = User::getLearnersNo();
         if(!is_null(request()->user_search)) {
             $learners_no = $this->SearchUser($learners_no);

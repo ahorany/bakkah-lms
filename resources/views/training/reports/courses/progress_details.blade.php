@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('useHead')
-    <title>{{$course->trans_title}} | {{ __('home.DC_title') }}</title>
+    <title>Report | {{$course->trans_title}} | {{ __('home.DC_title') }}</title>
 @endsection
 <style>
     .section-title {
@@ -49,8 +49,32 @@
 </style>
 
 @section('content')
-
+@if(isset($user))
+<h1 style="text-align:left;float:left;">{{$user->trans_name}}</h1>
+<h1 style="text-align:right;float:right;">{{$course->trans_title}}</h1>
+<hr style="clear:both;"/>
+@endif
     <?php
+
+    if($back_page == 'courses' || $back_page == 'progress_details')
+        $back_page_url = route('training.usersReportCourse',['id'=>$user->id]);
+    elseif($back_page == 'tests')
+        $back_page_url = route('training.usersReportTest',['id'=>$user->id]);
+
+    ?>
+    <div class="d-flex p-3" style="justify-content: space-between; align-items:center; flex-wrap: wrap;">
+        <h2 class="m-0"><i class="fas fa-graduation-cap"></i> Progress Details Report</h2>
+        <a style="width: 85px;" href="{{$back_page_url}}" class="cyan form-control">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="back" style="vertical-align: middle;" width="35%" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+                <path d="M8.66,30.08c0.27-1.02,1-1.72,1.72-2.43c4.76-4.75,9.51-9.51,14.27-14.26c1.15-1.15,2.78-1.32,4.01-0.44  c1.42,1.03,1.67,3.1,0.54,4.45c-0.11,0.13-0.22,0.25-0.34,0.37c-2.77,2.77-5.53,5.56-8.34,8.31c-0.61,0.6-1.37,1.04-2.06,1.54  c0.1,0,0.26,0,0.42,0c9.65,0,19.3,0,28.95,0c1.02,0,1.94,0.24,2.65,1.04c1.53,1.75,0.67,4.45-1.61,4.98  c-0.37,0.09-0.77,0.1-1.15,0.1c-9.64,0.01-19.27,0-28.91,0c-0.16,0-0.33,0-0.53,0c0.05,0.06,0.07,0.1,0.1,0.11  c1.08,0.43,1.93,1.17,2.73,1.99c2.55,2.57,5.1,5.13,7.66,7.69c0.7,0.7,1.14,1.49,1.12,2.5c-0.03,1.21-0.56,2.1-1.66,2.61  c-1.08,0.5-2.13,0.38-3.1-0.31c-0.24-0.17-0.44-0.38-0.65-0.58c-4.63-4.63-9.25-9.25-13.88-13.88c-0.78-0.78-1.62-1.51-1.94-2.62  C8.66,30.85,8.66,30.47,8.66,30.08z"/>
+            </svg>
+        </span>
+        <span>back</span>
+        </a>
+    </div>
+
+<?php
 
     $video = null;
     $image = null;
@@ -92,16 +116,10 @@
                         <img src="{{CustomAsset($url)}}" height="auto" width="100px">
                     </div>
                 @endif
-
-                <?php
-                    $progress = $course_registration->progress??0;
-                ?>
                 <div class="progress">
-                    <div style="width: {{$progress}}% !important;" class="bar"></div>
-                    {{-- <div style="width: {{$course->users[0]->pivot->progress??0}}% !important;" class="bar"></div> --}}
+                    <div style="width: {{$course->users[0]->pivot->progress??0}}% !important;" class="bar"></div>
                 </div>
-                <small>{{$progress}}% Complete</small>
-                {{-- <small>{{$course->users[0]->pivot->progress??0}}% Complete</small> --}}
+                <small>{{$course->users[0]->pivot->progress??0}}% Complete</small>
             </div>
             <div class="mx-md-4 course_info information-card">
                 <h1 style="text-transform: capitalize;">{{$course->trans_title}}</h1>
@@ -152,49 +170,6 @@
                     </template>
                 </div>
 
-                @if(!Gate::allows('preview-gate'))
-                    <div class="d-flex" style="flex-wrap: wrap;">
-                        <li class="has-dropdown user course-details" style="list-style: none; margin-right: 5px; margin-bottom: 5px;">
-                            <a onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('d-none'); return false;" class="main-button main-color review" href="#">
-                                {{__('education.Add a Review')}}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="10.125" height="6.382" viewBox="0 0 10.125 6.382">
-                                    <path id="Path_114" data-name="Path 114" d="M6.382,5.063,0,0V10.125Z"
-                                          transform="translate(10.125) rotate(90)" fill="var(--mainColor)" />
-                                </svg>
-                            </a>
-                            <div class="dropdown d-none" style="left: 0; min-width:auto; width: max-content !important;">
-                                <div class="p-2">
-                                    <template v-for="(item, index) in 5">
-                                    <span @click="review(item)" v-if="item <= rate">
-                                        <svg :id="index" onmouseleave="mouseleave(this.id)" onmouseover="svghover(this.id)" xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
-                                             viewBox="0 0 17.43 16.6">
-                                            <path id="Path_39" data-name="Path 39"
-                                                  d="M88.211,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.805-5.326,2.753,5.35,5.934,1.018L87.348,194Z"
-                                                  transform="translate(-74.153 -183.355)" fill="var(--mainColor)" />
-                                        </svg>
-                                    </span>
-                                        <span @click="review(item)" v-if="item > rate">
-                                        <svg :id="index" onmouseleave="mouseleave(this.id)" onmouseover="svghover(this.id)" xmlns="http://www.w3.org/2000/svg" width="18%" height="20"
-                                             viewBox="0 0 17.43 16.6">
-                                            {{-- id="Path_42"  --}}
-                                            <path data-name="Path 42"
-                                                  MessageController d="M142.346,199.955l-5.375-2.706-5.4,2.66.915-5.948-4.2-4.313,5.938-.966,2.8-5.326,2.753,5.35,5.934,1.018L141.483,194Z"
-                                                  transform="translate(-128.289 -183.355)" />
-                                        </svg>
-                                    </span>
-                                    </template>
-                                </div>
-                            </div>
-                        </li>
-                        @if(!is_null($course->users[0]->pivot->progress))
-                            <a href="{{route("user.resume",$course->id)}}" class="main-button main-color" style="margin-right: 5px; margin-bottom: 5px;">Resume Course</a>
-                        @endif
-
-                        @if($course->users[0]->pivot->paid_status != 503)
-                            <a href="{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}" class="mx-0 px-4 main-color" style="margin-right: 5px; margin-bottom: 5px;">Pay Now</a>
-                        @endif
-                    </div>
-                @endif
             </div>
         </div>
 
@@ -264,15 +239,15 @@
                                                 $content_show = true;
                                             }
 
+                                            $url = CustomRoute('training.exam',['content_id'=>$content->id,'user_id'=>$user->id,'back_page'=>'progress_details'] ).$preview_url;
                                       ?>
 
-                                        <a @if($content_show)
-                                           href="{{$url}}"
-                                           @elseif($popup_pay_status)
-                                            href="#" class="gray-icon" onclick="pupupPay(event,'{!! PAY_COURSE_BAKKAH_URL . $course->ref_id !!}')"
-                                           @else
-                                            href="#" class="gray-icon" onclick="return false"
-                                           @endif
+                                        <a
+                                           @if($content->post_type == 'exam')
+                                                href="{{$url}}"
+                                            @else
+                                                href="#"  onclick="return false"
+                                            @endif
                                         >
                                            <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
                                            <span>
@@ -284,18 +259,18 @@
                                             @endif
                                         </span>
                                            <span class="svg">
-                            @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
-                                                <span class="flag_icon_true">
-                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
-                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
-                                                    @endif
-                                </span>
-                                            @else
-                                                <span class="flag_icon_false">
-                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
-                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
-                                                    @endif
-                                </span>
+                                            @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
+                                                                <span class="flag_icon_true">
+                                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
+                                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
+                                                                    @endif
+                                                </span>
+                                                            @else
+                                                                <span class="flag_icon_false">
+                                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
+                                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
+                                                                    @endif
+                                                </span>
                                             @endif
                                             @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                 <span>
@@ -339,7 +314,7 @@
                     @endif
 
 
-                        <div class="custom-model-main">
+                        {{-- <div class="custom-model-main">
                             <div class="custom-model-inner">
                                 <div class="custom-model-wrap">
                                     <div class="close-btn">×</div>
@@ -362,11 +337,11 @@
                                 </div>
                             </div>
                             <div class="bg-overlay"></div>
-                        </div>
+                        </div> --}}
 
 
 
-                        @if(isset($course_collect[1]))
+                        {{-- @if(isset($course_collect[1]))
                             @foreach($course_collect[1] as  $key => $section)
                                 <div>
                                     <div class="text-center course-image certificate certification-card exam-simulator">
@@ -389,29 +364,27 @@
                                             @isset($section->contents)
                                                 <ul>
                                                     @foreach($section->contents as $k => $content)
-                                                        <li>
+                                                        <li> --}}
                                                                       <?php
-                                                                        $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
-                                                                        if($content->post_type != 'exam'){
-                                                                            $url = CustomRoute('user.course_preview', $content->id).$preview_url;
-                                                                        }else{
-                                                                            if(Gate::allows('preview-gate') && request()->preview == true){
-                                                                                $url = CustomRoute('training.add_questions', $content->id).$preview_url;
-                                                                            }
-                                                                            else{
-                                                                                $url = CustomRoute('user.exam', $content->id).$preview_url;
-                                                                            }
-                                                                        }
-                                                                        ?>
+                                                                        // $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
+                                                                        // if($content->post_type != 'exam'){
+                                                                        //     $url = CustomRoute('user.course_preview', $content->id).$preview_url;
+                                                                        // }else{
+                                                                        //     if(Gate::allows('preview-gate') && request()->preview == true){
+                                                                        //         $url = CustomRoute('training.add_questions', $content->id).$preview_url;
+                                                                        //     }
+                                                                        //     else{
+                                                                        //         $url = CustomRoute('user.exam', $content->id).$preview_url;
+                                                                        //     }
+                                                                        // }
 
-                                                                        <?php
-                                                                        $content_show = false;
-                                                                        if ($content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
-                                                                            $content_show = true;
-                                                                        }
+                                                                        // $content_show = false;
+                                                                        // if ($content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
+                                                                        //     $content_show = true;
+                                                                        // }
 
                                                                         ?>
-                                                                        <a @if($content_show)
+                                                                        {{-- <a @if($content_show)
                                                                            href="{{$url}}"
                                                                            @else
                                                                            class="gray-icon" href="#" onclick="return false"
@@ -447,14 +420,14 @@
                                     </div>
                                 </div>
                             @endforeach
-                        @endif
+                        @endif --}}
 
-                    @if(count($activities) > 0)
+                    {{-- @if(count($activities) > 0)
                         @include('Html.activity-card', [
                          'activities'=>$activities,
                          'cls'=>'card p-30 activity',
                      ])
-                   @endif
+                   @endif --}}
 
                 </div>
             </div>

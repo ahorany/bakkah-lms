@@ -10,9 +10,9 @@ use App\Models\Training\CourseRegistration;
     <table class="table table-hover table-condensed text-center">
       <thead>
         <tr>
-            <th class="">{{__('admin.index')}}</th>
-            <th class="">{{__('admin.test')}}</th>
+            <th class="">#</th>
             <th class="">{{__('admin.course')}}</th>
+            <th class="">{{__('admin.test')}}</th>
             <th class="">{{__('admin.date')}}</th>
             <th class="">{{__('admin.exam_mark')}}</th>
             <th class="">{{__('admin.exam_pass')}}</th>
@@ -25,13 +25,17 @@ use App\Models\Training\CourseRegistration;
       @foreach($tests as $exam)
       <tr data-id="{{$exam->id}}">
         <td>
-          <span class="td-title px-1">{{$loop->iteration}}</span>
+            <span class="td-title px-1">{{$loop->iteration}}</span>
         </td>
         <td class="px-1">
-            <span style="display: block;">{{ $exam->content_title }} </span>
+
+            <a href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$exam->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span></a>
+
         </td>
         <td class="px-1">
-            <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span>
+
+            <a href="{{CustomRoute('training.exam',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a>
+
         </td>
         <td class="px-1">
             <span class="td-title">{{$exam->time}}</span>
@@ -57,3 +61,4 @@ use App\Models\Training\CourseRegistration;
       </tbody>
     </table>
   </div>
+  {{$paginator->render()}}

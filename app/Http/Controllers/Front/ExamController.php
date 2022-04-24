@@ -234,6 +234,7 @@ class ExamController extends Controller
      * Get Exam Data From DB When Start Attempt
      */
     private function getExamDataFromDB($exam_id){
+
         $exam = Content::whereId($exam_id)
             ->with(['course','exam' => function($q){
                 return $q->with(['users_exams' => function($query){
