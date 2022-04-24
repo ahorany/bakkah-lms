@@ -58,7 +58,7 @@
 
     if($back_page == 'courses' || $back_page == 'progress_details')
         $back_page_url = route('training.usersReportCourse',['id'=>$user->id]);
-    elseif($back_page == 'tests')
+    elseif($back_page == 'tests' || $back_page == 'users_tests')
         $back_page_url = route('training.usersReportTest',['id'=>$user->id]);
 
     ?>

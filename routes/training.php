@@ -94,7 +94,7 @@ Route::group([
             Route::get('/add_questions/{exam_id}', 'QuestionController@add_questions')->name('add_questions');
             Route::post('/add_question', 'QuestionController@add_question')->name('add_question');
             Route::get('/delete_question', 'QuestionController@delete_question')->name('delete_question');
-
+            Route::get('/exam_preview', 'QuestionController@exam_preview')->name('exam_preview');
 
 
             Route::post('/add_answer', 'QuestionController@add_answer')->name('add_answer');
