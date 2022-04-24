@@ -52,6 +52,12 @@ class UserApiController
         try{
             $validator = $this->validation($request);
             if($validator->fails()){
+
+                Mail::raw(json_encode(['response' => $validator->errors(),'request' => $request->all()]), function ($message) {
+                    $message->to(['elbardawellkhaled@gmail.com','hsalah@bakkah.net.sa','abed_348@hotmail.com']);
+                    $message->subject('LMS Problem!');
+                });
+
                 return response()->json([
                     'status' => 'fail',
                     'code' => 403 ,
@@ -136,6 +142,11 @@ class UserApiController
             ],200);
 
         }catch (\Exception $exception){
+            Mail::raw(json_encode($exception->getMessage()), function ($message) {
+                $message->to(['elbardawellkhaled@gmail.com','hsalah@bakkah.net.sa','abed_348@hotmail.com']);
+                $message->subject('LMS Problem!');
+            });
+
             return response()->json([
                 'status' => 'fail',
                 'code' => 500 ,
