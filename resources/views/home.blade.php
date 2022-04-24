@@ -12,7 +12,7 @@
                 <div class="card p-30">
                     <div class="row align-items-center">
                         <div class="col-lg-8">
-                            <h2 class="mt-0">Hi, {{auth()->user()->trans_name}}</h2>
+                            <h2 class="mt-0">Hi, {{getCurrentUserBranchData()->name}}</h2>
                             <p class="lead" style="text-transform: none !important;">
                                 {{-- Welcome to Bakkah Learning Management System!
                                 <br>

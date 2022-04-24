@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -49,5 +51,8 @@ class LoginSuccessful
                                   WHERE model_has_roles.role_id = 4 AND model_has_roles.model_id = '.auth()->id());
 
         session()->put('is_super_admin',isset($data[0]));
+        User::where('id',$user->id)->update([
+            'last_login' => Carbon::now()
+        ]);
     }
 }
