@@ -55,8 +55,10 @@
 <hr style="clear:both;"/>
 @endif
     <?php
-     $back_page_url = route('training.usersReportCourse',['id'=>$user->id]);
-    if($back_page == 'users_tests')
+
+    if($back_page == 'courses' || $back_page == 'progress_details')
+        $back_page_url = route('training.usersReportCourse',['id'=>$user->id]);
+    elseif($back_page == 'tests')
         $back_page_url = route('training.usersReportTest',['id'=>$user->id]);
 
     ?>
@@ -236,7 +238,8 @@
                                            }else if ( $content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
                                                 $content_show = true;
                                             }
-                                            $url = CustomRoute('training.exam',['content_id'=>$content->id,'user_id'=>$user->id,'back_page'=>$back_page] ).$preview_url;
+
+                                            $url = CustomRoute('training.exam',['content_id'=>$content->id,'user_id'=>$user->id,'back_page'=>'progress_details'] ).$preview_url;
                                       ?>
 
                                         <a
@@ -256,18 +259,18 @@
                                             @endif
                                         </span>
                                            <span class="svg">
-                            @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
-                                                <span class="flag_icon_true">
-                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
-                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
-                                                    @endif
-                                </span>
-                                            @else
-                                                <span class="flag_icon_false">
-                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
-                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
-                                                    @endif
-                                </span>
+                                            @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->flag == 1)
+                                                                <span class="flag_icon_true">
+                                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
+                                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
+                                                                    @endif
+                                                </span>
+                                                            @else
+                                                                <span class="flag_icon_false">
+                                                    @if(file_exists(public_path('icons/file_flag_old.svg')))
+                                                                        {!!  file_get_contents(public_path('icons/file_flag_old.svg'))  !!}
+                                                                    @endif
+                                                </span>
                                             @endif
                                             @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
                                                 <span>

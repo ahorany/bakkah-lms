@@ -29,7 +29,7 @@ use App\Models\Training\CourseRegistration;
         </td>
         <td class="px-1">
 
-            <a href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$exam->course_id,'back_page'=>'users_tests'])}}" class="btn-sm outline"><span style="display: block;">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span></a>
+            <a href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$exam->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span></a>
 
         </td>
         <td class="px-1">

@@ -41,7 +41,7 @@ use App\Models\Training\CourseRegistration;
             <div class="progress">
                 <div class="progress-bar bg-main" role="progressbar"@if ($post->progress !=null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif  aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress !=null) {{$post->progress}}% @else 0% @endif </div>
               </div>
-              <div style="float:right;"><a href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->id,'back_page'=>'users_courses'])}}" class="btn-sm outline">{{__('admin.details')}}</a></div>
+              <div style="float:right;"><a href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->id,'back_page'=>'courses'])}}" class="btn-sm outline">{{__('admin.details')}}</a></div>
         </td>
         {{-- <td class="px-1">
             <span class="badge badge-info">{{$post->score}}</span>

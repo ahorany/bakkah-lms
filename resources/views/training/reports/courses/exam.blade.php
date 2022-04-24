@@ -123,8 +123,9 @@
 
 <?php
 
-$back_page_url = route('training.progressDetails',['user_id'=>$user->id,'course_id'=>$course->id]);
-if($back_page == 'users_tests')
+if($back_page == 'courses' || $back_page == 'progress_details')
+    $back_page_url = route('training.progressDetails',['user_id'=>$user->id,'course_id'=>$course->id]);
+else if($back_page == 'tests')
     $back_page_url = route('training.usersReportTest',['id'=>$user->id]);
 ?>
 <div class="d-flex p-3" style="justify-content: space-between; align-items:center; flex-wrap: wrap;">

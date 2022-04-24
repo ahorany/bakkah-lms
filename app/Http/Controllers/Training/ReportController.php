@@ -462,7 +462,7 @@ class ReportController extends Controller
 
         $user_id = request()->user_id;
         $course_id = request()->course_id;
-        $back_page = request()->back_page??'users_courses';
+        $back_page = request()->back_page??'courses';
         $preview_gate_allows = Gate::allows('preview-gate');
 
         // clear session => (Sidebar active color)
