@@ -103,7 +103,7 @@ use App\Models\Training\CourseRegistration;
                     ])!!}
                     @can('user.report')
                         @if(!(\request()->has('trash') && \request()->trash =='trash'))
-                            <a href="{{route('training.usersReportOverview',['id'=>$post->id])}}" target="blank" class="cyan my-1" >
+                            <a href="{{route('training.usersReportOverview',['id'=>$post->user_id])}}" target="blank" class="cyan my-1" >
                                  Report</a>
                          @endif
                     @endcan

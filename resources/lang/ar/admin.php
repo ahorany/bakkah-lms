@@ -162,4 +162,11 @@ return [
     'post_assessment_score' => 'Post Assessment Score',
     'knowledge_status' => 'Knowledge Status',
     'session_id' => 'الجلسات',
+    'attendance_count' => 'Attendance Count',
+    'certificate' => 'Certificate',
+    'completedNo' => 'No. of Completed Trainees',
+    'passedNo' => 'No. of Passed Trainees',
+    'content_name' => 'Content',
+
+
 ];

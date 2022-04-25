@@ -1,3 +1,8 @@
+<style>
+    .href{
+        color: black;
+    }
+</style>
 <?php
 use App\Models\Training\CourseRegistration;
 ?>
@@ -13,8 +18,9 @@ use App\Models\Training\CourseRegistration;
     <table class="table table-hover table-condensed text-center">
       <thead>
         <tr>
-            <th class="">{{__('admin.index')}}</th>
-            <th class="">{{__('admin.name')}}</th>
+            <th class="">#</th>
+            <th class="">{{__('admin.user')}}</th>
+            <th class="">{{__('admin.email')}}</th>
             <th class="">{{__('admin.progress')}}</th>
            {{--  <th class="">{{__('admin.score')}}</th>
             <th class="">{{__('admin.enrolled_on')}}</th>
@@ -35,29 +41,32 @@ use App\Models\Training\CourseRegistration;
                 </td>
 
                 <td class="px-1">
-                    <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span>
+                    <a href="{{route('training.usersReportOverview',['id'=>$post->id])}}" target="_blank" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span></a>
                 </td>
-
+                <td class="px-1">
+                    <span style="display: block;">{{$post->email }} </span>
+                </td>
                 <td class="px-1">
                     @if($post->role_type_id == 512)
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
                     </div>
+                    <div style="float:right;"><a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id])}}" class="btn-sm outline"><span class="href">{{__('admin.details')}}</span></a></div>
                     @endif
                 </td>
 
                 <td>
-                    {{$post->date_from}} -  {{$post->date_to}}
+                    <span class="badge-green" > {{$post->date_from?$post->date_from.' - ':''}}   {{$post->date_to}}</span>
                 </td>
-
 
 
                 <td>
                     @if($post->role_type_id == 511)
-                        <span class="badge-pink" style="width: max-content;">{{__('admin.instructor')}}</span>
+                        <span class="badge-pink" >
                     @elseif($post->role_type_id == 512)
-                        <span class="badge-blue">{{__('admin.learner')}}</span>
+                        <span class="badge-blue">
                     @endif
+                    {{\App\Helpers\Lang::TransTitle($post->c_name)}}</span>
                 </td>
 
             </tr>
@@ -65,3 +74,4 @@ use App\Models\Training\CourseRegistration;
       </tbody>
     </table>
   </div>
+  {{$paginator->render()}}

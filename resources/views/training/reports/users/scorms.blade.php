@@ -10,9 +10,9 @@ use App\Models\Training\CourseRegistration;
     <table class="table table-hover table-condensed text-center">
       <thead>
         <tr>
-            <th class="">{{__('admin.index')}}</th>
+            <th class="">#</th>
+            <th class="">{{__('admin.course')}}</th>
             <th class="">{{__('admin.scorm')}}</th>
-            <th class="">{{__('admin.course_name')}}</th>
             <th class="">{{__('admin.date')}}</th>
             <th class="">{{__('admin.result')}}</th>
             <th class="">{{__('admin.score')}}</th>
@@ -55,3 +55,4 @@ use App\Models\Training\CourseRegistration;
       </tbody>
     </table>
   </div>
+  {{$paginator->render()}}

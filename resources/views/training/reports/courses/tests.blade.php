@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\DB;
     <table class="table table-hover table-condensed text-center">
         <thead>
         <tr>
-            <th class="">{{__('admin.index')}}</th>
-            <th class="">{{__('admin.test')}}</th>
-            <th class="">{{__('admin.completed')}}</th>
-            <th class="">{{__('admin.passed')}}</th>
+            <th class="">#</th>
+            <th class="text-left">{{__('admin.test')}}</th>
+            <th class="">{{__('admin.completedNo')}}</th>
+            <th class="">{{__('admin.passedNo')}}</th>
         </tr>
         </thead>
         <tbody>
@@ -23,8 +23,12 @@ use Illuminate\Support\Facades\DB;
                     <td>
                         <span class="td-title px-1">{{$loop->iteration}}</span>
                     </td>
-                    <td class="px-1">
+                    <td class="px-1 text-left">
                         <span style="display: block;">{{ $post->content_title }} </span>
+                        {{-- <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id + '?preview=true'" :target="entry.id">
+                            <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                        </a> --}}
+                        <a  class="primary-outline" href="{{route('training.exam_preview',['exam_id'=>$post->id])}} "><i class="fa fa-plus" aria-hidden="true"></i> Preview </a>
                     </td>
                     <td>
                         <?php
@@ -34,22 +38,22 @@ use Illuminate\Support\Facades\DB;
                                             ->count(DB::raw('DISTINCT status,user_id'));
                         ?>
                         <span style="display: block;">{{ $completed }} </span>
-                </td>
-                <td>
-                    <?php
-                        $sql = " select count(x.uu) count
-                                from
-                                ( select max(user_exams.mark) ,user_exams.user_id uu
-                                    from user_exams join exams on exams.id = user_exams.exam_id
-                                    where user_exams.mark >= (exams.pass_mark/100*exams.exam_mark)
-                                    and user_exams.exam_id = ".$post ->id."
-                                    group by user_exams.user_id ) as x";
-                        $passess = DB::select($sql);
-                        // dump($passess);
-                    ?>
-                    @foreach($passess as $pass)
-                        <span style="display: block;">{{ $pass->count??0 }} </span>
-                    @endforeach
+                    </td>
+                    <td>
+                        <?php
+                            $sql = " select count(x.uu) count
+                                    from
+                                    ( select max(user_exams.mark) ,user_exams.user_id uu
+                                        from user_exams join exams on exams.id = user_exams.exam_id
+                                        where user_exams.mark >= (exams.pass_mark/100*exams.exam_mark)
+                                        and user_exams.exam_id = ".$post ->id."
+                                        group by user_exams.user_id ) as x";
+                            $passess = DB::select($sql);
+                            // dump($passess);
+                        ?>
+                        @foreach($passess as $pass)
+                            <span style="display: block;">{{ $pass->count??0 }} </span>
+                        @endforeach
                     </td>
 
                 </tr>
@@ -57,3 +61,4 @@ use Illuminate\Support\Facades\DB;
         </tbody>
     </table>
 </div>
+{{$paginator->render()}}

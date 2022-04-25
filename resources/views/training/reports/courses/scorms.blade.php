@@ -1,49 +1,49 @@
-<?php
-use App\Models\Training\CourseRegistration;
-use Illuminate\Support\Facades\DB;
-?>
-
 @section('useHead')
-    <title>{{__('education.Course_scorm')}} | {{ __('home.DC_title') }}</title>
+    <title>{{__('education.Course Users')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
+{{-- <h4>SCORMS IN :  {{\App\Helpers\Lang::TransTitle($course[0]->title) }} </h4> --}}
+
 <div class="card-body table-responsive p-0">
-    <table class="table table-hover table-condensed text-center">
+    <table class="table table-hover table-condensed text-center scorm">
       <thead>
         <tr>
-            <th class="">{{__('admin.index')}}</th>
-            <th class="">{{__('admin.test')}}</th>
-            <th class="">{{__('admin.completed')}}</th>
+            <th class="">#</th>
+            {{-- <th class="">{{__('admin.course_name')}}</th> --}}
+            <th class="text-left">{{__('admin.scorm')}}</th>
+            <th class="">{{__('admin.attempts')}}</th>
             <th class="">{{__('admin.passed')}}</th>
-
         </tr>
       </thead>
       <tbody>
-      @foreach($tests as $post)
-      <tr data-id="{{$post->id}}">
-        <td>
-          <span class="td-title px-1">{{$loop->iteration}}</span>
-        </td>
-        <td class="px-1">
-            <span style="display: block;">{{ $post->content_title }} </span>
-        </td>
-       <td>
-            <?php
-                $completed = DB::table('user_exams')
-                            ->where('exam_id',$post->id)
-                            ->where('status',1)
-                            ->count(DB::raw('DISTINCT status,user_id'));
-            ?>
-             <span style="display: block;">{{ $completed }} </span>
-       </td>
-       <td>
-        <?php
+        @foreach($scorms as $post)
+            <tr data-id="{{$post->id}}">
+                <td>
+                <span class="td-title px-1">{{$loop->iteration}}</span>
+                </td>
+                {{-- <td class="px-1">
+                    <span style="display: block;"> <a style="display: block;" href="{{route('training.scormsReportScorms',['course_id'=>$course[0]->id])}}" >{{\App\Helpers\Lang::TransTitle($course[0]->title) }}</a> </span>
 
-        ?>
-        </td>
+                </td> --}}
+                <td class="px-1 text-left">
+                    {{$post->title }}
+                </td>
 
-      </tr>
-      @endforeach
+                <td class="px-1">
+                    <span style="display: block;"> {{$post->attempts??0}}</span>
+                </td>
+                <td class="px-1">
+                    <span style="display: block;"> {{$post->passess??0}} </span>
+                </td>
+            </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
+  {{$paginator->render()}}
+
+  <script>
+    $(function(){
+            $(".scorms").addClass("active");
+    });
+</script>

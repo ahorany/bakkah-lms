@@ -119,7 +119,7 @@ return [
     'learners'=>'Learners',
     'completed_courses'=>'Completed Courses',
     'courses_in_progress'=>'Courses In Progress',
-    'course'=>'course',
+    'course'=>'Course',
     'courses_not_started'=>'Courses Not Started',
     'users'=>'Users',
     'last_login'=>'Last Login',
@@ -193,4 +193,9 @@ return [
     'post_assessment_score' => 'Post Assessment Score',
     'knowledge_status' => 'Knowledge Status',
     'session_id' => 'Sessions',
+    'attendance_count' => 'Number of attendance days',
+    'certificate' => 'Certificate',
+    'completedNo' => 'No. of Completed Trainees',
+    'passedNo' => 'No. of Passed Trainees',
+    'content_name' => 'Content',
 ];
