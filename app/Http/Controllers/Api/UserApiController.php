@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Mail;
 
 class UserApiController
 {
-
     private function validation($request){
         $session_id = '';
         $session_date_from = '';

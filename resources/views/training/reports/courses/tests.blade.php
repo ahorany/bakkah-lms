@@ -25,6 +25,10 @@ use Illuminate\Support\Facades\DB;
                     </td>
                     <td class="px-1 text-left">
                         <span style="display: block;">{{ $post->content_title }} </span>
+                        {{-- <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id + '?preview=true'" :target="entry.id">
+                            <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                        </a> --}}
+                        <a  class="primary-outline" href="{{route('training.exam_preview',['exam_id'=>$post->id])}} "><i class="fa fa-plus" aria-hidden="true"></i> Preview </a>
                     </td>
                     <td>
                         <?php
