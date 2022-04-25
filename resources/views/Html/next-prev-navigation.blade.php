@@ -10,7 +10,7 @@
     @endif
 
     @if($next)
-        <button title="{{$next->title}}" class="next next_prev">
+        <button title="{{$next->title}}" class="next next_prev" @isset($next_url) onclick="location.href ='{{$next_url}}'" @endisset >
             <span id="demo">
                 <span>{{__('education.Next')}}</span>
                 <svg id="Group_104" data-name="Group 104" xmlns="http://www.w3.org/2000/svg" width="14.836" height="24.835" viewBox="0 0 14.836 24.835">

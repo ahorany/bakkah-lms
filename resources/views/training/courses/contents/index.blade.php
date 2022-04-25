@@ -68,7 +68,7 @@
                                         <button style="font-size: 90%;" type="button" @click="OpenModal('presentation',content)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
                                         <button style="font-size: 90%;" type="button" @click="OpenModal('scorm',content)" class="cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
                                         <button style="font-size: 90%;" type="button" @click="OpenModal('exam',content)" class="cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
-{{--                                        <button style="font-size: 90%;" type="button" @click="OpenModal('discussion',content)" class="cyan" id="exam" ><i class="fa fa-comments" aria-hidden="true"></i> {{__('admin.discussion')}}</button>--}}
+                                        <button style="font-size: 90%;" type="button" @click="OpenModal('discussion',content)" class="cyan" id="exam" ><i class="fa fa-comments" aria-hidden="true"></i> {{__('admin.discussion')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -109,6 +109,7 @@
                                     <span v-if="entry.post_type == 'presentation'" class="badge badge-success"><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> @{{entry.post_type}}</span>
                                     <span v-if="entry.post_type == 'exam'" class="badge badge-info"><i class="fa fa-file" aria-hidden="true"></i> @{{entry.post_type}}</span>
                                     <span v-if="entry.post_type == 'exam'" class="badge badge-secondary">Questions Count : ( @{{entry.questions_count}} )</span>
+                                    <span v-if="entry.post_type == 'discussion'" class="badge badge-dark"><i class="fa fa-comments" aria-hidden="true"></i> @{{entry.post_type}}</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">

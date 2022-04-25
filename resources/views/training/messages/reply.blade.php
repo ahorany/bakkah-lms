@@ -38,8 +38,24 @@
 @endsection
 
 @section('content')
+   @if($type == 'discussion')
+        <?php
+        $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
+        $next_url = $NextPrevNavigation['next_url'];
+        $previous_url = $NextPrevNavigation['previous_url'];
+        ?>
+   @endif
     <div id="message-app" class="container">
-        <div class="card px-5 py-3 mb-2" style="direction: rtl;">
+        <div class="card px-5 py-3 mb-2">
+            @if($type == 'discussion')
+
+                @include('Html.next-prev-navigation', [
+                     'next'=>$next,
+                     'previous'=>$previous,
+                     'previous_url'=>$previous_url,
+                     'next_url'=>$next_url,
+                 ])
+          @endif
             <a href="{{route('user.messages.inbox')}}" class="cyan form-control" style="width: 85px; text-align:center;">
                 {{__('education.Back')}}
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="back" style="vertical-align: middle;" width="35%" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve">
@@ -47,6 +63,9 @@
                 </svg>
             </a>
         </div>
+
+
+
         <div class="card p-5">
             <form action="{{route('user.add_reply')}}" method="GET">
                 <div class="row">
@@ -107,7 +126,7 @@
                                     <strong>{{$message->title??null}}</strong>
                                 </div>
                                 <div class="pt-2 pb-2">
-                                    <label>{{$message->description??null}}</label>
+                                    <label>{!!  $message->description??null !!}</label>
                                 </div>
 {{--                                @include('training.messages.like_reply_btn', [--}}
 {{--                                    'table_name'=>'messages',--}}
@@ -119,7 +138,8 @@
                             @include('training.messages.replies', compact('message'))
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    @if(!$disabled_reply)
+                       <div class="col-md-12">
                         <div class="form-group mb-3">
                             <input type="hidden" name="message_id" value="{{$message->id}}">
                             <label for="reply"><strong>{{__('education.Reply')}}: </strong></label>
@@ -129,11 +149,14 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group mb-3">
-                            <input type="submit" class="main-color form-control" value="Submit">
+
+                        <div class="col-md-12">
+                            <div class="form-group mb-3">
+                                <input type="submit" class="main-color form-control" value="Submit">
+                            </div>
                         </div>
-                    </div>
+                    @endif
+
                 </div>
             </form>
         </div>

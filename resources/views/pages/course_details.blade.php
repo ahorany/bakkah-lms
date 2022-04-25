@@ -234,8 +234,16 @@
                                 @foreach($section->contents as $k => $content)
                                   <li>
                                         <?php
-                                            $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
-                                            if($content->post_type != 'exam'){
+                                           $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
+                                           if ($content->post_type == 'discussion'){
+                                              if ($preview_url){
+                                                  $preview_url .= '&type=discussion';
+                                              }else{
+                                                  $preview_url .= '?type=discussion';
+                                              }
+                                              $url = CustomRoute('user.reply_message', $content->discussion->message_id).$preview_url;
+
+                                           }elseif($content->post_type != 'exam'){
                                                 $url = CustomRoute('user.course_preview', $content->id).$preview_url;
                                             }else{
                                                 if(Gate::allows('preview-gate') && request()->preview == true){

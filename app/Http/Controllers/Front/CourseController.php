@@ -105,7 +105,7 @@ class CourseController extends Controller
                 },
                 'contents.details','contents.user_contents' => function($q){
                     return $q->where('user_id', \auth()->id());
-                }])
+                },'contents.discussion'])
             ->orderBy('order');
 
             if($role_id != -1){

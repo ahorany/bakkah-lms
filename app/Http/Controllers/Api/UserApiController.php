@@ -137,7 +137,7 @@ class UserApiController
             return response()->json([
                 'status' => 'success',
                 'code' => 200,
-                'message' => "Add User Successfully" ,
+                'message' => "User Added Successfully" ,
                 'data' => ["user" => $courseRegistration]
             ],200);
 

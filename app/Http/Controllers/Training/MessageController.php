@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Training;
 
+use App\Helpers\CourseContentHelper;
 use App\Http\Controllers\Controller;
 use App\Helpers\Active;
 use App\Http\Requests\Training\CourseRequest;
 use App\Models\Admin\Partner;
+use App\Models\Training\Content;
+use App\Models\Training\Discussion;
 use App\Models\Training\Role;
 use App\Models\Training\Course;
 use App\Constant;
@@ -72,6 +75,11 @@ class MessageController extends Controller
             ],
         ];
 
+        $validator = Validator::make(\request()->all(), $rules);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
         $user = \auth()->user();
         $user_auth_role = $user->roles()->first();
         if ($user_auth_role->role_type_id == 511 || $user_auth_role->role_type_id == 512) {
@@ -81,11 +89,8 @@ class MessageController extends Controller
             }
         }
 
-        $validator = Validator::make(\request()->all(), $rules);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }
+
 
         $recipient_role = Role::select('id', 'role_type_id')->where('id', request()->recipient_id)->first();
         // if recipient is trainee => ABORT(404)
@@ -144,11 +149,62 @@ class MessageController extends Controller
     }
 
     public function replyMessage($id){
-        $message = Message::where('id',$id)->with(['course.course','user','replies.user'])->first();
+        $type = 'message';
+        if (request()->has('type')){
+            $type = request()->type;
+        }
+
+        $message = Message::where('id',$id)->with(['course.course','user','replies.user'])->where('type',$type)->first();
         if(!$message || !$message->course){
             abort(404);
         }
-        return view('training.messages.reply',compact('message'));
+
+        $disabled_reply = false;
+        $user = auth()->user();
+        $user_role =  $user->roles()->first();
+
+        if ($message->type == 'discussion'){
+            $now = Carbon::now();
+            $discussion = Discussion::with(['message'])->where('message_id',$message->id)->first();
+
+            // check date
+            if($discussion->start_date <= $now && $discussion->end_date > $now){
+                // check participants
+                if ($user_role->id != 4 && $user_role->role_type_id != 510 && $user->id != $message->user_id){
+                    $user_course_registration =  CourseRegistration::where('user_id',$user->id)->where('course_id',$discussion->message->course_id)->first();
+                    if (!$user_course_registration){
+                        abort(404);
+                    }
+                }
+            }else{
+                $disabled_reply = true;
+            }
+
+            $content = Content::where('id',$discussion->content_id)->first();
+            if (!$content){
+                abort(404);
+            }
+            // Get next and prev
+            $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
+            $next = $arr['next'];
+            $previous = $arr['previous'];
+            // end next and prev
+
+            return view('training.messages.reply',compact('message','type','discussion','disabled_reply','next','previous'));
+
+        }else{
+            // not sender and not admin and not super admin
+            if ($user_role->id != 4 && $user_role->role_type_id != 510 && $user->id != $message->user_id){
+                // not recipient
+                $recipient_message = RecipientMessage::where('user_id',$user->id)->where('message_id',$message->id)->first();
+                if (!$recipient_message){
+                    abort(404);
+                }
+            }
+
+            return view('training.messages.reply',compact('message','type','disabled_reply'));
+        }
+
     }
 
     public function addreply(){
@@ -203,14 +259,16 @@ class MessageController extends Controller
 
         if($user_auth_role->role_type_id == 511){
             $condition = "AND";
-            $sql .= " INNER JOIN courses_registration ON courses_registration.course_id = courses.id
+            $sql .= "  INNER JOIN recipient_messages ON recipient_messages.message_id = messages.id AND recipient_messages.user_id = ".auth()->id()."
+            INNER JOIN courses_registration ON courses_registration.course_id = courses.id
             WHERE courses_registration.user_id=".auth()->id()."";
         }
 
         if($user_auth_role->role_type_id == 512) {
             $is_inbox = false;
             $condition = "AND";
-            $sql .= " INNER JOIN courses_registration ON courses_registration.course_id = courses.id
+            $sql .= " INNER JOIN recipient_messages ON recipient_messages.message_id = messages.id AND recipient_messages.user_id = ".auth()->id()."
+                      INNER JOIN courses_registration ON courses_registration.course_id = courses.id
                       INNER JOIN roles ON roles.id = courses_registration.role_id AND roles.deleted_at IS NULL
             WHERE courses_registration.user_id=".auth()->id()."
             and users.id=".auth()->id()."
@@ -228,11 +286,14 @@ class MessageController extends Controller
             $type = request()->type;
             if ($type == "sent"){
                 $sql .= " ".$condition." messages.user_id=".auth()->id();
+                $condition = "AND";
             }elseif($type == "inbox"){
                 $sql .= " ".$condition." messages.user_id !=".auth()->id();
+                $condition = "AND";
             }
         }
 
+        $sql .= " ".$condition." messages.type != 'discussion' ";
         $sql .= " GROUP BY messages.id";
 
         $messages = DB::select(DB::raw($sql));
