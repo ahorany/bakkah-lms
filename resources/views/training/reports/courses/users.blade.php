@@ -1,3 +1,8 @@
+<style>
+    .href{
+        color: black;
+    }
+</style>
 <?php
 use App\Models\Training\CourseRegistration;
 ?>
@@ -36,7 +41,7 @@ use App\Models\Training\CourseRegistration;
                 </td>
 
                 <td class="px-1">
-                    <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span>
+                    <a href="{{route('training.usersReportOverview',['id'=>$post->id])}}" target="_blank" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span></a>
                 </td>
                 <td class="px-1">
                     <span style="display: block;">{{$post->email }} </span>
@@ -46,6 +51,7 @@ use App\Models\Training\CourseRegistration;
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
                     </div>
+                    <div style="float:right;"><a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id])}}" class="btn-sm outline"><span class="href">{{__('admin.details')}}</span></a></div>
                     @endif
                 </td>
 
