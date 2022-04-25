@@ -419,9 +419,6 @@ class CourseController extends Controller
         return $user_course_register;
     } // end function
 
-
-
-
     /*
      *  Update Course Registration Progress When content have (role and path)
      */
@@ -429,29 +426,27 @@ class CourseController extends Controller
         $progress = 0;
         if($content_role_and_path == 1){
             $user_contents_count = DB::select(DB::raw("SELECT COUNT(user_contents.id) as user_contents_count FROM user_contents
-                                   INNER JOIN contents on user_contents.content_id = contents.id
-                                   WHERE user_contents.user_id =".\auth()->id()."
-                                   AND  contents.deleted_at IS NULL
-                                   AND  contents.role_and_path = 1
-                                   AND contents.course_id = ". $course_id ."
-
-                             "));
+                INNER JOIN contents on user_contents.content_id = contents.id
+                WHERE user_contents.user_id =".\auth()->id()."
+                AND contents.deleted_at IS NULL
+                AND contents.role_and_path = 1
+                AND contents.course_id = ". $course_id ."
+            "));
             $user_contents_count = $user_contents_count[0]->user_contents_count??0;
 
             $contents_count = DB::select(DB::raw("SELECT COUNT(id) as contents_count
-                                                            FROM contents
-                                                            WHERE   course_id =". $course_id ."
-                                                            AND parent_id IS NOT NULL
-                                                            AND  deleted_at IS NULL
-                                                            AND  role_and_path = 1
-                                                            "));
-            $contents_count = $contents_count[0]->contents_count??0;
+                FROM contents
+                WHERE course_id =". $course_id ."
+                AND parent_id IS NOT NULL
+                AND deleted_at IS NULL
+                AND role_and_path = 1
+            "));
 
+            $contents_count = $contents_count[0]->contents_count??0;
             $progress = round(($user_contents_count / $contents_count) * 100 ,  1);
 
             CourseRegistration::where('course_id',$course_id)
-                ->where('user_id',\auth()->id())->update(['progress'=> $progress]);
-
+            ->where('user_id',\auth()->id())->update(['progress'=> $progress]);
         }
         return $progress;
     } // end function
