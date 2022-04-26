@@ -25,6 +25,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -154,12 +155,18 @@ class MessageController extends Controller
             $type = request()->type;
         }
 
-        $message = Message::where('id',$id)->with(['course.course','user','replies.user'])->where('type',$type)->first();
+        $message = Message::where('id',$id)->with(['course.course','user.branches' => function($q){
+            $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+        },'replies.user.branches' => function($q){
+            $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+        }])->where('type',$type)->first();
+
         if(!$message || !$message->course){
             abort(404);
         }
 
         $disabled_reply = false;
+        $discussion_not_start = false;
         $user = auth()->user();
         $user_role =  $user->roles()->first();
 
@@ -167,16 +174,22 @@ class MessageController extends Controller
             $now = Carbon::now();
             $discussion = Discussion::with(['message'])->where('message_id',$message->id)->first();
 
+            // check participants
+            if ($user_role->id != 4 && $user_role->role_type_id != 510 && $user->id != $message->user_id){
+                $user_course_registration =  CourseRegistration::where('user_id',$user->id)->where('course_id',$discussion->message->course_id)->first();
+                if (!$user_course_registration){
+                    abort(404);
+                }
+            }
+
+
             // check date
             if($discussion->start_date <= $now && $discussion->end_date > $now){
-                // check participants
-                if ($user_role->id != 4 && $user_role->role_type_id != 510 && $user->id != $message->user_id){
-                    $user_course_registration =  CourseRegistration::where('user_id',$user->id)->where('course_id',$discussion->message->course_id)->first();
-                    if (!$user_course_registration){
-                        abort(404);
-                    }
-                }
+
             }else{
+                if ($discussion->start_date > $now && !(Gate::allows('preview-gate'))){
+                    $discussion_not_start = true;
+                }
                 $disabled_reply = true;
             }
 
@@ -190,7 +203,7 @@ class MessageController extends Controller
             $previous = $arr['previous'];
             // end next and prev
 
-            return view('training.messages.reply',compact('message','type','discussion','disabled_reply','next','previous'));
+            return view('training.messages.reply',compact('message','type','discussion','disabled_reply','next','previous','discussion_not_start'));
 
         }else{
             // not sender and not admin and not super admin
@@ -202,7 +215,7 @@ class MessageController extends Controller
                 }
             }
 
-            return view('training.messages.reply',compact('message','type','disabled_reply'));
+            return view('training.messages.reply',compact('message','type','disabled_reply','discussion_not_start'));
         }
 
     }
@@ -218,10 +231,41 @@ class MessageController extends Controller
         ];
 
         $validator = Validator::make(\request()->all(), $rules);
-
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
+
+        $user = auth()->user();
+        $user_role =  $user->roles()->first();
+
+        if ($message->type == 'discussion'){
+            $now = Carbon::now();
+            $discussion = Discussion::with(['message'])->where('message_id',$message->id)->first();
+
+            // check participants
+            if ($user_role->id != 4 && $user_role->role_type_id != 510 && $user->id != $message->user_id){
+                $user_course_registration =  CourseRegistration::where('user_id',$user->id)->where('course_id',$discussion->message->course_id)->first();
+                if (!$user_course_registration){
+                    abort(404);
+                }
+            }
+
+
+            // check date
+            if( !($discussion->start_date <= $now && $discussion->end_date > $now)){
+                abort(404);
+            }
+        }else{
+            // not sender and not admin and not super admin
+            if ($user_role->id != 4 && $user_role->role_type_id != 510 && $user->id != $message->user_id){
+                // not recipient
+                $recipient_message = RecipientMessage::where('user_id',$user->id)->where('message_id',$message->id)->first();
+                if (!$recipient_message){
+                    abort(404);
+                }
+            }
+        }
+
 
         Reply::create([
             'title'      => request()->reply,

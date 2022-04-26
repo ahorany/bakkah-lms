@@ -45,7 +45,7 @@ class CourseController extends Controller
         if(is_super_admin() || $user->role_type_id == 510){
             $courses = Course::with(['upload', 'user','deliveryMethod']);
         }else{  // (Not All courses  just registared)
-            $role_instructor_id = Role::select('id')->where('role_type_id')
+            $role_instructor_id = Role::select('id')->where('role_type_id',511)
                                    ->where('branch_id',getCurrentUserBranchData()->branch_id)
                                    ->first()->id;
             $courses = Course::with(['upload'])
