@@ -440,7 +440,7 @@ class CourseController extends Controller
                 WHERE course_id =". $course_id ."
                 AND parent_id IS NOT NULL
                 AND deleted_at IS NULL
-                AND post_type = 'discussion'
+                AND post_type != 'discussion'
                 AND role_and_path = 1
             "));
 
