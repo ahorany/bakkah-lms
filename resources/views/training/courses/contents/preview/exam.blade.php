@@ -111,6 +111,7 @@
 
         <div class="col-xl-9 col-lg-8 mb-4 mb-lg-0">
                 <template v-for="(question,index) in content.questions">
+
                     <div :key="index" :id="'question_' + index" class="card p-30 q-card preview-exam">
 
                         <div class="action_preview">
@@ -121,9 +122,11 @@
                             <button @click="deleteQuestion(question.id)" class="red" >
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
+                            <button v-if="question.shuffle_answers==1" class="green" title="Shuffled Answers">
+                                <i class="fa fa-random" aria-hidden="true"></i>
+                            </button>
                             {{-- <span class="left d-none"><i class="fa fa-chevron-left" aria-hidden="true"></i></span> --}}
                         </div>
-
 
                         <div class="q-number">
                             <div>
@@ -210,6 +213,17 @@
                                 </div>
                             </div>
 
+                            <div class="modal-diff-content form-group">
+                                <label class="container-check" style="padding: 25px 30px 0; font-size: 15px;">
+                                    Shuffle Answers
+                                    <input class="mx-3" style="display: inline-block;" id="shuffle" type="checkbox" v-model="shuffle_answers" name="shuffle_answers">
+                                    <span class="checkmark" style="top: 26px;"></span>
+                                    <div v-show="'shuffle_answers' in errors">
+                                        <span style="color: red;font-size: 13px">@{{ errors.shuffle_answers }}</span>
+                                    </div>
+                                </label>
+                            </div>
+
                             <div class="form-group">
                                 <label>Unit </label>
                                 <select multiple v-model="units_select" class="form-control">
@@ -276,6 +290,7 @@
                     title: '',
                     feedback: '',
                     mark: 0,
+                    shuffle_answers: 1,
                     unit_id: -1,
                     units_select : [],
                     content: window.content,
@@ -338,6 +353,7 @@
                         this.feedback = '';
                         this.units_select = [];
                         this.mark = 0;
+                        this.shuffle_answers = 1;
                         this.answers = [];
                         this.question_id = null;
                         this.save_type = 'add';
@@ -355,20 +371,19 @@
                         this.save_type = 'edit';
                         this.errors = {};
 
-
                         this.content.questions.forEach(function (question) {
                             if (question.id == question_id) {
                                 self.answers = question.answers
                                 self.title = question.title;
                                 self.feedback = question.feedback;
                                 self.mark = question.mark;
+                                self.shuffle_answers = question.shuffle_answers;
                                 self.units_select = [];
                                 if(question.units){
                                     question.units.forEach(function (unit) {
                                         self.units_select.push(unit.id)
                                     });
                                 }
-
                                 // self.unit_id = question.unit_id ? question.unit_id : -1;
                             }
                             return true;
@@ -445,17 +460,18 @@
 
 
                     save: function () {
+
                         let self = this;
                         if (self.title == null) {
                             self.errors = {'title': 'The title field is required.'};
                             return;
                         }
 
-
                         axios.post("{{route('training.add_question')}}",
                             {
                                 'title': self.title,
                                 'mark': self.mark,
+                                'shuffle_answers': self.shuffle_answers,
                                 'feedback': self.feedback,
                                 'units_select': self.units_select,
                                 'exam_id': self.content.id,
@@ -487,6 +503,7 @@
                                     this.title = '';
                                     this.feedback = '';
                                     this.mark = 0;
+                                    this.shuffle_answers = 1;
                                     this.content_id = '';
                                     this.type = '';
                                     self.errors = {};
@@ -506,17 +523,11 @@
                             answer.title = ''
                         });
                         this.mark = 0;
+                        this.shuffle_answers = 1;
                     },
                 }
-
-
             });
-
-
     </script>
-
-
-
     {{-- <script>
         $(document).ready(function(){
             $('.action_preview span.setting').click(function(){
