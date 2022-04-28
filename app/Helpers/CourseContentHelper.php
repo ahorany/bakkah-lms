@@ -125,7 +125,7 @@ class CourseContentHelper
     /*
       *  Validate prev if completed or not =>  ( IF not redirect back with alert msg )
     */
-    public static function checkPrevContentIsCompleted($content_status , $previous,$user_course_register = null){
+    public static function checkPrevContentIsCompleted($content_status , $previous, $user_course_register = null){
 
         if($content_status != 1){
 

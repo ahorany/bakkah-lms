@@ -133,7 +133,7 @@ class MigrationITILCourseUsersImport implements ToCollection
 
                             // update progress
                             $courseRegistration->update([
-                                'progress' => (($user_content_count / count($course_contents)) * 100)
+                                'progress' => round((($user_content_count / count($course_contents)) * 100), 1)
                             ]);
                         }// end else
                     } else {

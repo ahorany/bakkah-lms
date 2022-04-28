@@ -65,7 +65,8 @@ Route::get('/clear-cache', function(){
 
 Route::get('migration/user/import/{course_id}',function ($course_id){
     if (auth()->id() == 1){
-       Excel::import(new \App\Imports\MigrationITILCourseUsersImport($course_id), public_path('upload\excel\Course_ITIL_4_Foundation_-_Self_Paced_IT010_report.xlsx'));
+        // dd('test');
+       Excel::import(new \App\Imports\MigrationITILCourseUsersImport($course_id), public_path('upload\excel\Course_ECBA_self.xlsx'));
        dd('success');
     }
 })->middleware('auth');
