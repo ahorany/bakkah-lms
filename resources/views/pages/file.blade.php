@@ -144,6 +144,7 @@
                             {{--                            Your browser does not support the video tag.--}}
                             {{--                        </video>--}}
 
+
                             <video  playsinline controls class="video w-100" preload="metadata"  controlsList="nodownload" id="player">
                                 <source src="{{CustomAsset('upload/files/videos/'.$content->upload->file)}}" type="video/mp4" />
                                 Your browser does not support the video tag.
@@ -213,7 +214,17 @@
                             <iframe style="" width="100%" height="600px"  src='https://view.officeapps.live.com/op/embed.aspx?src={{CustomAsset('upload/files/files/'.$content->upload->file)}}' ></iframe>
                         @endif
 
-                    @endisset
+                    @else
+                        @if($content->post_type == 'video' && $content->url)
+                            <?php
+                            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $content->url, $match)) {
+                                $video_id = $match[1]??null;
+                            }
+                            ?>
+                            <iframe style="" width="100%" height="600px" allowfullscreen="" src='https://www.youtube.com/embed/{{$video_id??null}}' ></iframe>
+
+                        @endif
+                        @endisset
                     {{--                    <iframe id="update_file_source" style="" width="100%" height="600px"  src='' ></iframe>--}}
 
 

@@ -323,7 +323,7 @@
                             </div>
 
                             <div v-else-if="model_type != 'video' && model_type != 'gift'" class="modal-diff-content">
-                                <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 200MB)</div>
+                                <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 1GB)</div>
 
                                 <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
                                 <div v-show="'file' in errors">
