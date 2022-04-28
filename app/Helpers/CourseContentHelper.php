@@ -125,7 +125,7 @@ class CourseContentHelper
     /*
       *  Validate prev if completed or not =>  ( IF not redirect back with alert msg )
     */
-    public static function checkPrevContentIsCompleted($content_status , $previous){
+    public static function checkPrevContentIsCompleted($content_status , $previous,$user_course_register = null){
 
         if($content_status != 1){
 
@@ -141,6 +141,7 @@ class CourseContentHelper
                 if($pass_mark != 0){
 
                     if($content->post_type=='scorm'){
+
                         // $user_id = sprintf("%'.05d", auth()->user()->id);
                         // $content_id = sprintf("%'.05d", $content->id);
                         // $SCOInstanceID = (1).$user_id.(2).$content_id;
@@ -154,6 +155,13 @@ class CourseContentHelper
                         $scormPrevDataWhenComplete =  DB::select(DB::raw($sql));
                         $scormPrevDataWhenComplete = ($scormPrevDataWhenComplete[0]??null);
                         if (!is_null($scormPrevDataWhenComplete) && $scormPrevDataWhenComplete->varValue != "completed"){
+
+
+                            if(!is_null($user_course_register)){
+                                if($user_course_register->is_migrated == 1){
+                                    return true;
+                                }
+                            }
                             return false;
                         }
 

@@ -32,7 +32,7 @@ class MigrationITILCourseUsersImport implements ToCollection
         }
 
         $course_contents = Content::where('course_id', $this->course_id)
-            ->where('role_and_path', 1)
+//            ->where('role_and_path', 1)
             ->where('post_type', '!=', 'section')
             ->where('post_type', '!=', 'discussion')
             ->get();
@@ -87,6 +87,7 @@ class MigrationITILCourseUsersImport implements ToCollection
                         'role_id' => $role_id,
                         'paid_status' => 503,
                         'completed_at' => $completed_at,
+                        'is_migrated' => 1,
                     ]);
 
 
