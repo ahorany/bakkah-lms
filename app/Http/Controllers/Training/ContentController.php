@@ -315,7 +315,7 @@ class ContentController extends Controller
         }else{
             $mimes ='';
             switch ($type){
-                case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:1000000' ; break;
+                case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:1600000' ; break;
                 case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
                 case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,doc,docx,xls,xlsx,jpeg,png'; break;
                 case 'scorm': $mimes = '|mimes:zip'; break;
@@ -504,7 +504,7 @@ class ContentController extends Controller
 
         $mimes ='';
         switch ($type){
-            case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:1000000' ; break;
+            case 'video': $mimes = '|mimes:mp4,mov,ogg,qt|max:1600000' ; break;
             case 'audio': $mimes = '|required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'; break;
             case 'presentation': $mimes = '|mimes:ppt,pptx,pdf,doc,docx,xls,xlsx,jpeg,png'; break;
             case 'scorm': $mimes = '|mimes:zip'; break;
