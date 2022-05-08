@@ -67,13 +67,14 @@ class QuestionController extends Controller
     }
 
     public function exam_preview(){ // new
+
         $exam_id = request()->exam_id;
         $content = Content::where('id',$exam_id)->with(['exam','questions.answers','questions.units'])->latest()->first();
 
         // Get next and prev
-        $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
-        $next = $arr['next'];
-        $previous = $arr['previous'];
+        // $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
+        // $next = $arr['next'];
+        // $previous = $arr['previous'];
         // end next and prev
 
         $course_id = $content->course_id;
@@ -81,7 +82,7 @@ class QuestionController extends Controller
         $units = $this->buildTree($units);
         $import_types = Constant::where('post_type','imports')->get();
 
-        return view('training.courses.contents.preview.exam', compact('content','units','course_id','import_types','next', 'previous'));
+        return view('training.courses.contents.preview.exam', compact('content','units','course_id','import_types'));
 
     }
 

@@ -30,47 +30,50 @@
                     <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Course : {{$content->course->trans_title}}</h4>
                     <h4 style="font-size: 0.8rem;" class="mr-1 p-1 badge badge-dark">Exam : {{$content->title}}</h4>
                 </div>
-                <div>
-                    <?php
-                    $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
-                    $next_url = $NextPrevNavigation['next_url'];
-                    $previous_url = $NextPrevNavigation['previous_url'];
-                    ?>
-                    @include('Html.next-prev-navigation', [
-                        'next'=>$next,
-                        'previous'=>$previous,
-                        'previous_url'=>$previous_url,
-                    ])
-                    <script>
-                        function NextBtn(){
-                            document.querySelector(".next").addEventListener("click", function(event){
-                                window.location.href = '{{$next_url??null}}'
-                            });
-                        }
-                        NextBtn();
-                    </script>
-                </div>
+                @if(isset($next))
+                    <div>
+                        <?php
+                        $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
+                        $next_url = $NextPrevNavigation['next_url'];
+                        $previous_url = $NextPrevNavigation['previous_url'];
+                        ?>
+                        @include('Html.next-prev-navigation', [
+                            'next'=>$next,
+                            'previous'=>$previous,
+                            'previous_url'=>$previous_url,
+                        ])
+                        <script>
+                            function NextBtn(){
+                                document.querySelector(".next").addEventListener("click", function(event){
+                                    window.location.href = '{{$next_url??null}}'
+                                });
+                            }
+                            NextBtn();
+                        </script>
+                    </div>
+                @endif
             </div>
         </div>
-        <div class="col-md-12 col-12">
-            <div  class="course_info mb-3 card p-3">
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 col-12">
-                        <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
-                            <i class="fa fa-plus"></i> Add multiple choice question
-                        </button>
+        @if(isset($next))
+            <div class="col-md-12 col-12">
+                <div  class="course_info mb-3 card p-3">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
+                                <i class="fa fa-plus"></i> Add multiple choice question
+                            </button>
 
-                        <button type="button" @click="OpenModal('fill_gap')" class="btn-sm group_buttons mb-1" style="width: max-content;">
-                            <i class="fa fa-plus"></i> Add fill gap question
-                        </button>
-                    </div>
-                    <div class="col-lg-9 col-md-8 col-12">
-                        @include('training.courses.contents.header',['course_id' => $course_id, 'contents' =>true , 'units' => false])
-                    </div>
+                            <button type="button" @click="OpenModal('fill_gap')" class="btn-sm group_buttons mb-1" style="width: max-content;">
+                                <i class="fa fa-plus"></i> Add fill gap question
+                            </button>
+                        </div>
+                        <div class="col-lg-9 col-md-8 col-12">
+                            @include('training.courses.contents.header',['course_id' => $course_id, 'contents' =>true , 'units' => false])
+                        </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
 
 
         <div class="col-md-12 col-12">
@@ -108,7 +111,7 @@
                 </form>
             </div>
         </div>
-
+        @endif
         <div class="col-xl-9 col-lg-8 mb-4 mb-lg-0">
                 <template v-for="(question,index) in content.questions">
                     <div :key="index" :id="'question_' + index" class="card p-30 q-card preview-exam">

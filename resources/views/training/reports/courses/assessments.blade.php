@@ -19,22 +19,19 @@ use App\Models\Training\CourseRegistration;
                     <div class="row">
                         {!! Builder::Hidden('trash') !!}
                         {!! Builder::Hidden('id', $course_id) !!}
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="session_id">{{__('admin.session_id')}}</label>
                                 <select name="session_id" class="form-control" style="width:250px" data-show-flag="true" >
                                 <option value="">Choose Value</option>
                                 @foreach ($sessions as $key => $value)
-
-                                <option value="{{ $value->id }}" {{ request()->session_id == $key ? "selected" :""}}>
+                                <option value="{{ $value->id }}" {{-- {{ old('session_id') == $key ? "selected" :""}}--}} >
                                     SID : {{$value->id }} | {{$value->date_from}} | {{$value->date_to}}
                                 </option>
                                 @endforeach
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-md-12">
                             <div style="margin-top: 5px;">
                                 {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}

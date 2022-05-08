@@ -128,7 +128,7 @@ if($back_page == 'courses' || $back_page == 'progress_details')
 else if($back_page == 'tests' || $back_page == 'users_tests')
     $back_page_url = route('training.usersReportTest',['id'=>$user->id]);
 ?>
-<div class="d-flex p-3" style="justify-content: space-between; align-items:center; flex-wrap: wrap;">
+{{-- <div class="d-flex p-3" style="justify-content: space-between; align-items:center; flex-wrap: wrap;">
     <h2 class="m-0"><i class="fas fa-graduation-cap"></i> Exam Details</h2>
     <a style="width: 85px;" href="{{$back_page_url}}"  class="cyan form-control">
     <span>
@@ -139,7 +139,7 @@ else if($back_page == 'tests' || $back_page == 'users_tests')
 
     <span>back</span>
     </a>
-</div>
+</div> --}}
 
     <div class="card p-5 user-info exam_page">
 
