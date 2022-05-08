@@ -36,8 +36,8 @@ function is_dynamic_certificate()
     return 1;//1 OR 0
 }
 
-
 function CustomAsset($url){
+    // return 'https://learning.bakkah.com/public/'.$url;
     return asset(env('LIVE_ASSET').$url);
 }
 

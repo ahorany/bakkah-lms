@@ -7,6 +7,11 @@
     display: inline-block;
     margin-bottom: 15px;
 }
+#message-app>.card.px-5.py-3.mb-2 {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
 .d-none{
     display: none !important;
 }
@@ -61,7 +66,7 @@ nav#sidebarMenu ul li a span.title{
 }
 #sidebar-content ul.nav .dropdown-sidebar.active ul{
     background: #f3f3f3 !important;
-    border-right: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
 }
 #sidebar-content .dropdown-sidebar a{
     color: #6a6a6a;

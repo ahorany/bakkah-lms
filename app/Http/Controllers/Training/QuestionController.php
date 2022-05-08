@@ -115,6 +115,7 @@ class QuestionController extends Controller
             'mark' => \request()->mark,
             'feedback' => \request()->feedback,
             'exam_id' => \request()->exam_id,
+            'shuffle_answers' => \request()->shuffle_answers??0,
             'question_type' => 'multichoice',
         ]);
 
@@ -138,13 +139,13 @@ class QuestionController extends Controller
 
 
         foreach (request()->answers as $answer ){
-                Answer::updateOrCreate(['id' => $answer['id'] ],[
-                    'title' => $answer['title'],
-                    'type' => 'multi_choice',
-                    'check_correct' => $answer['check_correct'] ? 1 : 0,
-                    'question_id' => $question->id,
-                ]);
-
+            Answer::updateOrCreate(['id' => $answer['id'] ],[
+                'title' => $answer['title'],
+                'type' => 'multi_choice',
+                'check_correct' => $answer['check_correct'] ? 1 : 0,
+                'question_id' => $question->id,
+                'shuffle_answers' => $question->shuffle_answers,
+            ]);
         }
 
         if(\request()->save_type == 'add'){

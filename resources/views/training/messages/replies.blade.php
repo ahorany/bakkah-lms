@@ -2,7 +2,7 @@
 <div class="reply">
     <div class="head">
         <h4 class="username">
-            {{$reply->user->trans_name??null}}
+            {{$reply->user->branches[0]->pivot->name??null }}
         </h4>
         {{-- <small style="line-height: 1.5rem; color:#999999;">{{$reply->created_at}}</small> --}}
         <small style="line-height: 1.5rem; color:#999999; display: flex;">

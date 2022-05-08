@@ -46,10 +46,10 @@
 </style>
 @section('content')
 
-                    <div class="d-flex mobile-show" style="align-items: center;">
-                        <h3 class="m-0 title_file_old">{{ $exam->section->title }}</h3>
+                <div class="d-flex mobile-show" style="align-items: center;">
+                    <h3 class="m-0 title_file_old">{{ $exam->section->title }}</h3>
                     </div>
-                  <div class="row mx-0 mb-2 justify-content-end">
+                    <div class="row mx-0 mb-2 justify-content-end">
                     <div class="col-xl-9 col-lg-8 col-md-12 mobile-none">
                         <div class="dash-header course_info d-flex align-items-center justify-content-between">
                             <h2>{{$exam->title}}</h2>
@@ -66,7 +66,7 @@
                                     </span>
                                     <span class="mx-1">Finish Attemp</span>
                                 </button>
-                             </template>
+                                </template>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-12">

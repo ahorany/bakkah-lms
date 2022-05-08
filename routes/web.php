@@ -61,3 +61,15 @@ Route::get('/clear-cache', function(){
     }
     return redirect()->route('education.index');
 })->middleware('auth');
+
+
+Route::get('migration/user/import/{course_id}',function ($course_id){
+    if (auth()->id() == 1){
+        // dd('test');
+       Excel::import(new \App\Imports\MigrationITILCourseUsersImport($course_id), public_path('upload/excel/ecba_self.xlsx'));
+       dd('success');
+    }
+})->middleware('auth');
+
+
+

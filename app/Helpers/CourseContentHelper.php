@@ -78,9 +78,11 @@ class CourseContentHelper
     */
     public static function nextAndPreviouseQuery($course_id,$content_id,$content_order,$content_parent_id,$section_order){
 
-        $sql = "SELECT contents.id , sections.id as section_id , contents.order,sections.order as section_order , contents.title,contents.post_type FROM `contents`
+        $sql = "SELECT contents.id , sections.id as section_id , contents.order,sections.order as section_order , contents.title,contents.post_type,discussions.message_id FROM `contents`
         INNER JOIN contents AS sections ON contents.parent_id = sections.id AND sections.deleted_at IS NULL
         INNER JOIN courses on courses.id = contents.course_id AND courses.deleted_at IS NULL AND courses.branch_id = ".getCurrentUserBranchData()->branch_id."
+        LEFT JOIN discussions on discussions.content_id = contents.id
+        LEFT JOIN messages on discussions.message_id = messages.id
         WHERE contents.course_id =  $course_id
         AND contents.id !=  $content_id
         AND contents.deleted_at IS NULL
@@ -96,9 +98,11 @@ class CourseContentHelper
         $next =  DB::select(DB::raw($sql));
 
 
-        $sql = "SELECT contents.id , contents.title,contents.post_type FROM `contents`
+        $sql = "SELECT contents.id , contents.title,contents.post_type,discussions.message_id  FROM `contents`
                        INNER JOIN contents AS sections ON contents.parent_id = sections.id AND sections.deleted_at IS NULL
                        INNER JOIN courses on courses.id = contents.course_id AND courses.deleted_at IS NULL AND courses.branch_id = ".getCurrentUserBranchData()->branch_id."
+                       LEFT JOIN discussions on discussions.content_id = contents.id
+                       LEFT JOIN messages on discussions.message_id = messages.id
                        WHERE contents.course_id = $course_id
                        AND contents.id !=  $content_id
                        AND contents.deleted_at IS NULL
@@ -121,7 +125,7 @@ class CourseContentHelper
     /*
       *  Validate prev if completed or not =>  ( IF not redirect back with alert msg )
     */
-    public static function checkPrevContentIsCompleted($content_status , $previous){
+    public static function checkPrevContentIsCompleted($content_status , $previous, $user_course_register = null){
 
         if($content_status != 1){
 
@@ -137,6 +141,7 @@ class CourseContentHelper
                 if($pass_mark != 0){
 
                     if($content->post_type=='scorm'){
+
                         // $user_id = sprintf("%'.05d", auth()->user()->id);
                         // $content_id = sprintf("%'.05d", $content->id);
                         // $SCOInstanceID = (1).$user_id.(2).$content_id;
@@ -150,6 +155,13 @@ class CourseContentHelper
                         $scormPrevDataWhenComplete =  DB::select(DB::raw($sql));
                         $scormPrevDataWhenComplete = ($scormPrevDataWhenComplete[0]??null);
                         if (!is_null($scormPrevDataWhenComplete) && $scormPrevDataWhenComplete->varValue != "completed"){
+
+
+                            if(!is_null($user_course_register)){
+                                if($user_course_register->is_migrated == 1){
+                                    return true;
+                                }
+                            }
                             return false;
                         }
 
@@ -185,7 +197,9 @@ class CourseContentHelper
         $next_url = '';
         $previous_url = '';
         if( !is_null($next)){
-            if( $next->post_type != 'exam') {
+            if ($next->post_type == 'discussion'){
+                $next_url = CustomRoute('user.reply_message', $next->message_id)."?type=discussion";
+            }elseif( $next->post_type != 'exam') {
                 $next_url = CustomRoute('user.course_preview', $next->id);
             }else{
                 if(Gate::allows('preview-gate') && request()->preview == true){
@@ -198,7 +212,9 @@ class CourseContentHelper
         }
 
         if(!is_null($previous)){
-            if($previous->post_type != 'exam'){
+            if ($previous->post_type == 'discussion'){
+                $previous_url = CustomRoute('user.reply_message', $previous->message_id)."?type=discussion";
+            }elseif($previous->post_type != 'exam'){
                 $previous_url = CustomRoute('user.course_preview', $previous->id);
             }else{
                 if(Gate::allows('preview-gate') && request()->preview == true){
@@ -215,7 +231,6 @@ class CourseContentHelper
             $previous_url .= '?preview=true';
         }
 
-//        dd($next_url);
         return compact('next_url', 'previous_url');
     }
 

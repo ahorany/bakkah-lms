@@ -68,7 +68,7 @@
                                         <button style="font-size: 90%;" type="button" @click="OpenModal('presentation',content)" class="cyan" id="presentation" ><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> {{__('admin.presentaion')}}</button>
                                         <button style="font-size: 90%;" type="button" @click="OpenModal('scorm',content)" class="cyan" id="scorm" ><i class="fa fa-file-archive-o" aria-hidden="true"></i> {{__('admin.scorm')}}</button>
                                         <button style="font-size: 90%;" type="button" @click="OpenModal('exam',content)" class="cyan" id="exam" ><i class="fa fa-file" aria-hidden="true"></i> {{__('admin.exam')}}</button>
-{{--                                        <button style="font-size: 90%;" type="button" @click="OpenModal('discussion',content)" class="cyan" id="exam" ><i class="fa fa-comments" aria-hidden="true"></i> {{__('admin.discussion')}}</button>--}}
+                                        <button style="font-size: 90%;" type="button" @click="OpenModal('discussion',content)" class="cyan" id="exam" ><i class="fa fa-comments" aria-hidden="true"></i> {{__('admin.discussion')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -109,12 +109,17 @@
                                     <span v-if="entry.post_type == 'presentation'" class="badge badge-success"><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> @{{entry.post_type}}</span>
                                     <span v-if="entry.post_type == 'exam'" class="badge badge-info"><i class="fa fa-file" aria-hidden="true"></i> @{{entry.post_type}}</span>
                                     <span v-if="entry.post_type == 'exam'" class="badge badge-secondary">Questions Count : ( @{{entry.questions_count}} )</span>
+                                    <span v-if="entry.post_type == 'discussion'" class="badge badge-dark"><i class="fa fa-comments" aria-hidden="true"></i> @{{entry.post_type}}</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="BtnGroupRows buttons" data-id="150">
                                         <a v-if="entry.post_type == 'exam'"  class="primary-outline" :href="base_url  + '/training' + '/add_questions' + '/'+ entry.id "><i class="fa fa-plus" aria-hidden="true"></i> Questions<!-- Add Questions  --> </a>
 
-                                        <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id + '?preview=true'" :target="entry.id">
+                                        <a v-if="entry.post_type != 'exam' && entry.post_type != 'discussion' " class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id + '?preview=true'" :target="entry.id">
+                                            <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                                        </a>
+
+                                        <a v-if="entry.post_type != 'exam'  && entry.post_type == 'discussion'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/reply_message/' + entry.discussion.message_id + '?type=discussion&preview=true'" :target="entry.id">
                                             <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                                         </a>
 
@@ -318,7 +323,7 @@
                             </div>
 
                             <div v-else-if="model_type != 'video' && model_type != 'gift'" class="modal-diff-content">
-                                <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 200MB)</div>
+                                <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 1.6GB)</div>
 
                                 <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
                                 <div v-show="'file' in errors">
@@ -346,7 +351,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <i class="far fa-file-code"></i>
                                                     <span class="title mr-1">Add File:</span>
-                                                    <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 200MB)</div>
+                                                    <div style="color: rgb(251, 68, 0) !important; font-size: 11px; font-weight: 700;">Note: (Max Upload File Size: 1.6GB)</div>
                                                 </div>
                                                 <input type="file" @change="file = $event.target.files[0]" ref="inputFile" class="form-control">
                                             </label>

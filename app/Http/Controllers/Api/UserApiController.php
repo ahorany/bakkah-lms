@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Mail;
 
 class UserApiController
 {
-
     private function validation($request){
         $session_id = '';
         $session_date_from = '';
@@ -137,7 +136,7 @@ class UserApiController
             return response()->json([
                 'status' => 'success',
                 'code' => 200,
-                'message' => "Add User Successfully" ,
+                'message' => "User Added Successfully" ,
                 'data' => ["user" => $courseRegistration]
             ],200);
 
