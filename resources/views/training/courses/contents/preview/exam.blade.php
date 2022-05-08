@@ -63,13 +63,14 @@
                                 <i class="fa fa-plus"></i> Add multiple choice question
                             </button>
 
-                            <button type="button" @click="OpenModal('fill_gap')" class="btn-sm group_buttons mb-1" style="width: max-content;">
-                                <i class="fa fa-plus"></i> Add fill gap question
-                            </button>
-                        </div>
-                        <div class="col-lg-9 col-md-8 col-12">
-                            @include('training.courses.contents.header',['course_id' => $course_id, 'contents' =>true , 'units' => false])
-                        </div>
+{{--                        <button type="button" @click="OpenModal('fill_gap')" class="btn-sm group_buttons mb-1" style="width: max-content;">--}}
+{{--                            <i class="fa fa-plus"></i> Add fill gap question--}}
+{{--                        </button>--}}
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-12">
+                        @include('training.courses.contents.header',['course_id' => $course_id, 'contents' =>true , 'units' => false])
+                    </div>
+
 
                     </div>
                 </div>
