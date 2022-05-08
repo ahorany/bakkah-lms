@@ -65,6 +65,7 @@ class CourseRegistration extends Model
         ->where('user_branches.deleted_at',null)
         ->where('user_branches.branch_id',$branch_id);
         });
+
         return $sql;
     }
 

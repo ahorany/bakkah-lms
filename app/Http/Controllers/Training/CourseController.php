@@ -84,7 +84,7 @@ class CourseController extends Controller
         }
         $assigned_instructors =  $assigned_instructors->count();
 
-        $completed_learners =  $assigned_learners1->where('progress',100)->count();
+        $completed_learners =  $assigned_learners1->whereRaw('courses_registration.progress >= courses.complete_progress')->count();
 
         $categories = Category::get();
         $delivery_methods = Constant::where('parent_id', 10)->get();

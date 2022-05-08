@@ -66,12 +66,12 @@ class UserController extends Controller
         $learners_no =  $learners_no->count();
         //
         $complete_courses_no = CourseRegistration::getCoursesNo();
-        $complete_courses_no =  $complete_courses_no->where('courses_registration.progress',100);
+        $complete_courses_no =  $complete_courses_no->whereRaw('courses_registration.progress >= courses.complete_progress');
         if (!is_null(request()->user_search)) {
             $complete_courses_no = $this->SearchUser($complete_courses_no);
         }
         $complete_courses_no =  $complete_courses_no->count();
-
+        // dd($complete_courses_no);
         $courses_in_progress = CourseRegistration::getCoursesNo();
         $courses_in_progress =  $courses_in_progress->where('courses_registration.progress','<',100)
                                             ->where('courses_registration.progress','>',0);

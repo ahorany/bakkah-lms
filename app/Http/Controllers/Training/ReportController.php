@@ -72,8 +72,9 @@ class ReportController extends Controller
     {
         $user_id = request()->id;
         $sql = "SELECT users.id,users.email,user_branches.name
-        FROM users  join user_branches on users.id = user_branches.user_id
-        where users.id = ? " ;
+                FROM users  join user_branches on users.id = user_branches.user_id
+                where users.id = ? " ;
+
         $user = DB::select($sql,[$user_id]);
         $branch_id = getCurrentUserBranchData()->branch_id;
         // $courses = CourseRegistration::getCoursesNo()->where('courses_registration.user_id',$user_id)->get();
