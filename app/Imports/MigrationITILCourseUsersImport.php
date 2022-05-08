@@ -61,7 +61,7 @@ class MigrationITILCourseUsersImport implements ToCollection
                     }
 
                     $user->assignRole([$role_id]);
-                    //    Mail::to($user->email)->send(new UserMail($user->id ,  $passArr['text_pass']));
+                    Mail::to($user->email)->send(new UserMail($user->id ,  $passArr['text_pass']));
                 }
 
 
