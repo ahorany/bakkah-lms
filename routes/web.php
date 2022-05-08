@@ -70,3 +70,6 @@ Route::get('migration/user/import/{course_id}',function ($course_id){
        dd('success');
     }
 })->middleware('auth');
+
+
+
