@@ -62,7 +62,7 @@
         $back_page_url = route('training.usersReportTest',['id'=>$user->id]);
 
     ?>
-    <div class="d-flex p-3" style="justify-content: space-between; align-items:center; flex-wrap: wrap;">
+    {{-- <div class="d-flex p-3" style="justify-content: space-between; align-items:center; flex-wrap: wrap;">
         <h2 class="m-0"><i class="fas fa-graduation-cap"></i> Progress Details Report</h2>
         <a style="width: 85px;" href="{{$back_page_url}}" class="cyan form-control">
         <span>
@@ -72,7 +72,7 @@
         </span>
         <span>back</span>
         </a>
-    </div>
+    </div> --}}
 
 <?php
 
@@ -242,7 +242,7 @@
                                             $url = CustomRoute('training.exam',['content_id'=>$content->id,'user_id'=>$user->id,'back_page'=>'progress_details'] ).$preview_url;
                                       ?>
 
-                                        <a
+                                        <a target="_blank"
                                            @if($content->post_type == 'exam')
                                                 href="{{$url}}"
                                             @else

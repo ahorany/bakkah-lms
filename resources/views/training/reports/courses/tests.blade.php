@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
             <th class="text-left">{{__('admin.test')}}</th>
             <th class="">{{__('admin.completedNo')}}</th>
             <th class="">{{__('admin.passedNo')}}</th>
+            <th class=""></th>
         </tr>
         </thead>
         <tbody>
@@ -28,7 +29,7 @@ use Illuminate\Support\Facades\DB;
                         {{-- <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id + '?preview=true'" :target="entry.id">
                             <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                         </a> --}}
-                        <a  class="primary-outline" href="{{route('training.exam_preview',['exam_id'=>$post->id])}} "><i class="fa fa-plus" aria-hidden="true"></i> Preview </a>
+
                     </td>
                     <td>
                         <?php
@@ -41,19 +42,24 @@ use Illuminate\Support\Facades\DB;
                     </td>
                     <td>
                         <?php
+
                             $sql = " select count(x.uu) count
                                     from
                                     ( select max(user_exams.mark) ,user_exams.user_id uu
                                         from user_exams join exams on exams.id = user_exams.exam_id
-                                        where user_exams.mark >= (exams.pass_mark/100*exams.exam_mark)
-                                        and user_exams.exam_id = ".$post ->id."
-                                        group by user_exams.user_id ) as x";
+                                            where user_exams.mark >= (exams.pass_mark/100*exams.exam_mark)
+                                            and user_exams.exam_id = ".$post ->id."
+                                        group by user_exams.user_id ) as x ";
                             $passess = DB::select($sql);
+
                             // dump($passess);
                         ?>
                         @foreach($passess as $pass)
                             <span style="display: block;">{{ $pass->count??0 }} </span>
                         @endforeach
+                    </td>
+                    <td>
+                        <a class="primary-outline" target="_blank" href="{{route('training.exam_preview',['exam_id'=>$post->id])}} ">{{--<i class="fa fa-plus" aria-hidden="true"></i>--}} Preview </a>
                     </td>
 
                 </tr>

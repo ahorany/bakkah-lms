@@ -30,6 +30,7 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.session')}}</th>
 
             <th class="">{{__('admin.user_type')}}</th>
+            <th class=""></th>
         </tr>
       </thead>
       <tbody>
@@ -51,7 +52,7 @@ use App\Models\Training\CourseRegistration;
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
                     </div>
-                    <div style="float:right;"><a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id])}}" class="btn-sm outline"><span class="href">{{__('admin.details')}}</span></a></div>
+
                     @endif
                 </td>
 
@@ -68,7 +69,9 @@ use App\Models\Training\CourseRegistration;
                     @endif
                     {{\App\Helpers\Lang::TransTitle($post->c_name)}}</span>
                 </td>
-
+                <td>
+                    <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id])}}" class="btn-sm outline" target="_blank"><span class="href">{{__('admin.details')}}</span></a>
+                </td>
             </tr>
         @endforeach
       </tbody>
