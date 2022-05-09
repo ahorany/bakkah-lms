@@ -15,16 +15,16 @@ use App\Models\Training\CourseRegistration;
 
 
 <div class="card-body table-responsive p-0">
-    <table class="table table-hover table-condensed text-center">
+    <table class="table table-hover table-condensed">
       <thead>
         <tr>
             <th class="">#</th>
             <th class="">{{__('admin.course')}}</th>
             <th class="">{{__('admin.progress')}}</th>
             {{-- <th class="">{{__('admin.score')}}</th> --}}
-            <th class="">{{__('admin.enrolled_on')}}</th>
+            <th class="text-center">{{__('admin.enrolled_on')}}</th>
             {{-- <th class="">{{__('admin.completion_date')}}</th> --}}
-            <th class="">{{__('admin.pdu')}}</th>
+            <th class="text-center">{{__('admin.pdu')}}</th>
             <th class=""></th>
         </tr>
       </thead>
@@ -50,18 +50,18 @@ use App\Models\Training\CourseRegistration;
         {{-- <td class="px-1">
             <span class="badge badge-info">{{$post->score}}</span>
         </td> --}}
-        <td class="px-1">
+        <td class="px-1 text-center">
             <span class="td-title">{{$post->created_at}}</span>
         </td>
         {{-- <td class="px-1">
             <span class="td-title"></span>
         </td> --}}
-        <td class="px-1">
+        <td class="px-1 text-center">
             <span class="td-title">{{$post->PDUs}}</span>
         </td>
         <td>
             {{-- <a class="primary-outline" target="_blank" href="{{route('training.exam_preview',['exam_id'=>$post->id])}} "><i class="fa fa-plus" aria-hidden="true"></i> Preview </a> --}}
-            <a  target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->id])}}" class="btn-sm outline" ><span class="href primary-outline">{{__('admin.details')}}</span></a>
+            <a  target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->id,'preview'=>'true'])}}" class="btn-sm outline" ><span class="href primary-outline">{{__('admin.details')}}</span></a>
             @if(isset($post->progress) && ($post->progress >= $post->complete_progress ))
                     <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
                         target="_blank" class="primary-outline">

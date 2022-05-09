@@ -68,8 +68,9 @@ class QuestionController extends Controller
 
     public function exam_preview(){ // new
 
-        $exam_id = request()->exam_id;
-        $content = Content::where('id',$exam_id)->with(['exam','questions.answers','questions.units'])->latest()->first();
+        $content_id = request()->content_id;
+        // dd($exam_id);
+        $content = Content::where('id',$content_id)->with(['exam','questions.answers','questions.units'])->latest()->first();
 
         // Get next and prev
         // $arr = CourseContentHelper::NextAndPreviouseNavigation($content);

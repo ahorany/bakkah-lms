@@ -22,7 +22,7 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.user')}}</th>
             <th class="">{{__('admin.email')}}</th>
             <th class="">{{__('admin.progress')}}</th>
-           {{--  <th class="">{{__('admin.score')}}</th>
+            {{--  <th class="">{{__('admin.score')}}</th>
             <th class="">{{__('admin.enrolled_on')}}</th>
             <th class="">{{__('admin.completion_date')}}</th>
             <th class="">{{__('admin.pdu')}}</th> --}}
@@ -60,8 +60,8 @@ use App\Models\Training\CourseRegistration;
                     <span class="badge-green" > {{$post->date_from?$post->date_from.' - ':''}}   {{$post->date_to}}</span>
                 </td>
 
-
                 <td>
+
                     @if($post->role_type_id == 511)
                         <span class="badge-pink" >
                     @elseif($post->role_type_id == 512)
@@ -69,8 +69,10 @@ use App\Models\Training\CourseRegistration;
                     @endif
                     {{\App\Helpers\Lang::TransTitle($post->c_name)}}</span>
                 </td>
+
                 <td>
-                    <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id])}}" class="btn-sm outline" target="_blank"><span class="href">{{__('admin.details')}}</span></a>
+                    <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id,'preview'=>'true'])}}" class="primary-outline" target="_blank"><span class="href">{{__('admin.details')}}</span></a>
+
                 </td>
             </tr>
         @endforeach

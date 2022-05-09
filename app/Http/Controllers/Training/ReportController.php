@@ -308,12 +308,12 @@ class ReportController extends Controller
         $sql2 = "SELECT * FROM courses where id = ? " ;
         $course = DB::select($sql2,[$course_id ]);
 
-        $sql = "select exams.id , contents.title as content_title
+        $sql = "select contents.id as content_id, contents.title as content_title,exams.id as exam_id
                 from contents
                     join exams on exams.content_id = contents.id
                     join courses on courses.id = contents.course_id
-                where courses.id = ? ";
-
+                where courses.id = ? and contents.deleted_at is null ";
+        // dd($sql);
         $tests = DB::select($sql,[$course_id]);
 
         $paginator = Paginator::GetPaginator($tests);
@@ -485,7 +485,7 @@ class ReportController extends Controller
        // Get Course With Contents
 
         $course = $this->getCourseWithContents($course_id, $role_id);
-        // dd($course);
+
         // $course = $this->getCourseWithContents($course_id, $role_id);
         // validate if course exists or not
         if(!$course){
