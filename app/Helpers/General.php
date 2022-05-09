@@ -47,8 +47,9 @@ function CustomAsset($url){
     //  return 'https://learning.bakkah.com/public/'.$url;
 }
 
-function CustomAssetStaticFile($url){
+function CustomAssetScormFile($url){
     return asset(env('LIVE_ASSET').$url);
+    //  return 'https://learning.bakkah.com/public/'.$url;
 }
 
 function DateTimeNow(){
