@@ -71,7 +71,7 @@ use App\Models\Training\CourseRegistration;
                 </td>
 
                 <td>
-                    <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id])}}" class="btn-sm outline" target="_blank"><span class="href">{{__('admin.details')}}</span></a>
+                    <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id,'preview'=>'true'])}}" class="btn-sm outline" target="_blank"><span class="href">{{__('admin.details')}}</span></a>
                 </td>
             </tr>
         @endforeach

@@ -485,7 +485,7 @@ class ReportController extends Controller
        // Get Course With Contents
 
         $course = $this->getCourseWithContents($course_id, $role_id);
-        // dd($course);
+
         // $course = $this->getCourseWithContents($course_id, $role_id);
         // validate if course exists or not
         if(!$course){
