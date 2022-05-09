@@ -37,14 +37,14 @@ function is_dynamic_certificate()
 }
 
 function CustomAsset($url){
-    //    return asset(env('LIVE_ASSET').$url);
+       return asset(env('LIVE_ASSET').$url);
 
-    $url_arr = explode('.', $url);
-    $last_url = [count($url_arr) - 1];
-    if ($last_url == "css" || $last_url == "js"){
-        return asset(env('LIVE_ASSET').$url);
-    }
-     return 'https://learning.bakkah.com/public/'.$url;
+    // $url_arr = explode('.', $url);
+    // $last_url = [count($url_arr) - 1];
+    // if ($last_url == "css" || $last_url == "js"){
+    //     return asset(env('LIVE_ASSET').$url);
+    // }
+    //  return 'https://learning.bakkah.com/public/'.$url;
 
 }
 

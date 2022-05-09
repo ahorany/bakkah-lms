@@ -15,16 +15,16 @@ use App\Models\Training\CourseRegistration;
 
 
 <div class="card-body table-responsive p-0">
-    <table class="table table-hover table-condensed text-center">
+    <table class="table table-hover table-condensed">
       <thead>
         <tr>
             <th class="">#</th>
             <th class="">{{__('admin.course')}}</th>
             <th class="">{{__('admin.progress')}}</th>
             {{-- <th class="">{{__('admin.score')}}</th> --}}
-            <th class="">{{__('admin.enrolled_on')}}</th>
+            <th class="text-center">{{__('admin.enrolled_on')}}</th>
             {{-- <th class="">{{__('admin.completion_date')}}</th> --}}
-            <th class="">{{__('admin.pdu')}}</th>
+            <th class="text-center">{{__('admin.pdu')}}</th>
             <th class=""></th>
         </tr>
       </thead>
@@ -50,13 +50,13 @@ use App\Models\Training\CourseRegistration;
         {{-- <td class="px-1">
             <span class="badge badge-info">{{$post->score}}</span>
         </td> --}}
-        <td class="px-1">
+        <td class="px-1 text-center">
             <span class="td-title">{{$post->created_at}}</span>
         </td>
         {{-- <td class="px-1">
             <span class="td-title"></span>
         </td> --}}
-        <td class="px-1">
+        <td class="px-1 text-center">
             <span class="td-title">{{$post->PDUs}}</span>
         </td>
         <td>
