@@ -167,6 +167,8 @@ return [
     'completedNo' => 'No. of Completed Trainees',
     'passedNo' => 'No. of Passed Trainees',
     'content_name' => 'Content',
+    'no_attempts' => 'Attempts Count',
+    'no_passed' => 'Passed Count',
 
 
 ];

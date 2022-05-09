@@ -478,13 +478,14 @@ class ReportController extends Controller
 
         $course_registration = CourseRegistration::where('course_id', $course_id)
         ->where('user_id', $user_id)
-        ->select('id', 'role_id')
+        ->select('id', 'role_id', 'progress')
         ->first();
-        // dd($course_id);
+        // dd($course_registration);
         $role_id = (!$preview_gate_allows) ? $course_registration->role_id : -1;
        // Get Course With Contents
 
         $course = $this->getCourseWithContents($course_id, $role_id);
+        // dd($course);
         // $course = $this->getCourseWithContents($course_id, $role_id);
         // validate if course exists or not
         if(!$course){
@@ -497,6 +498,7 @@ class ReportController extends Controller
         // Get User Course Activities
         $activities = app('App\Http\Controllers\Front\CourseController')->getUserCourseActivities($course->id, $user_id);
         $user   = User::where('id',$user_id)->first();
+        // dd($user);
         return view('training.reports.courses.progress_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id','user','back_page'));
         // return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id'));
     }
@@ -704,16 +706,16 @@ class ReportController extends Controller
 
         $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
 
-        // if(!Gate::allows('preview-gate')){
+        if(!Gate::allows('preview-gate')){
 
-        //     $course = $course->whereHas('users', function ($q){
-        //         $q->where('users.id', \auth()->id());
-        //     })->with(['users' => function($query){
-        //         $query->where('user_id', \auth()->id());
-        //     }, 'course_rate' => function($query){
-        //         return $query->where('user_id', \auth()->id());
-        //     }]);
-        // }
+            $course = $course->whereHas('users', function ($q){
+                $q->where('users.id', \auth()->id());
+            })->with(['users' => function($query){
+                $query->where('user_id', \auth()->id());
+            }, 'course_rate' => function($query){
+                return $query->where('user_id', \auth()->id());
+            }]);
+        }
 
         $course = $course->with(['uploads' => function($query){
             return $query->where(function ($q){

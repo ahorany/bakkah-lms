@@ -397,60 +397,7 @@
                                         <hr class="my-3">
                                         <div class="learning-file">
                                             @isset($section->contents)
-                                                <ul>
-                                                    @foreach($section->contents as $k => $content)
-                                                        <li>
-                                                                      <?php
-                                                                        $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
-                                                                        if($content->post_type != 'exam'){
-                                                                            $url = CustomRoute('user.course_preview', $content->id).$preview_url;
-                                                                        }else{
-                                                                            if(Gate::allows('preview-gate') && request()->preview == true){
-                                                                                $url = CustomRoute('training.add_questions', $content->id).$preview_url;
-                                                                            }
-                                                                            else{
-                                                                                $url = CustomRoute('user.exam', $content->id).$preview_url;
-                                                                            }
-                                                                        }
-                                                                        ?>
 
-                                                                        <?php
-                                                                        $content_show = false;
-                                                                        if ($content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
-                                                                            $content_show = true;
-                                                                        }
-
-                                                                        ?>
-                                                                        <a @if($content_show)
-                                                                           href="{{$url}}"
-                                                                           @else
-                                                                           class="gray-icon" href="#" onclick="return false"
-                                                                            @endif >
-                                                                            <img style="margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
-
-
-                                                                            <span class="text">{{$content->title}}</span>
-
-                                                                             <span class="svg">
-
-                                                                                @if(isset($content->user_contents[0]) && $content->user_contents[0]->pivot->is_completed == 1)
-                                                                                    <span>
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
-                                                                                            <path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#4cdd42" stroke-width="3" stroke-dasharray="0 0"/>
-                                                                                            <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#fff"/>
-                                                                                        </svg>
-                                                                                    </span>
-                                                                                @else
-                                                                                    <span>
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52"><path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#ccc" stroke-width="3" stroke-dasharray="0 0"></path> <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#ccc"></path></svg>
-                                                                                    </span>
-                                                                                @endif
-                                                                           </span>
-                                                                        </a>
-
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
 
                                             @endisset
                                         </div>

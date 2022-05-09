@@ -16,8 +16,8 @@
             <th class="">#</th>
             {{-- <th class="">{{__('admin.course_name')}}</th> --}}
             <th class="text-left">{{__('admin.scorm')}}</th>
-            <th class="">{{__('admin.attempts')}}</th>
-            <th class="">{{__('admin.passed')}}</th>
+            <th class="">{{__('admin.no_attempts')}}</th>
+            <th class="">{{__('admin.no_passed')}}</th>
         </tr>
       </thead>
       <tbody>
