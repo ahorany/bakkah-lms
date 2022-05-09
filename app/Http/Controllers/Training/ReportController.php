@@ -419,8 +419,8 @@ class ReportController extends Controller
         $assessments = $paginator->items();
         $count = $paginator->total();
 
-
-        return view('training.reports.courses.course_report',compact('course_id', 'assessments', 'course','sessions','paginator','count'));
+        $session_id = request()->session_id??'';
+        return view('training.reports.courses.course_report',compact('course_id', 'assessments', 'course','sessions','paginator','count','session_id'));
 
     }
 
