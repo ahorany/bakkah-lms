@@ -1,3 +1,8 @@
+<style>
+    .href{
+        color:black;
+    }
+    </style>
 @section('useHead')
     <title>{{__('education.Course Users')}} | {{ __('home.DC_title') }}</title>
 @endsection
@@ -26,7 +31,8 @@
 
                 </td> --}}
                 <td class="px-1 text-left">
-                    {{$post->title }}
+                    <a href="{{CustomRoute('user.course_preview', $post->content_id)}}" target="_blank" class="href" >
+                        {{ \App\Helpers\Lang::TransTitle($post->title) }}</a>
                 </td>
 
                 <td class="px-1">

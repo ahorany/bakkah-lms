@@ -1,3 +1,8 @@
+<style>
+    .href{
+        color:black;
+    }
+    </style>
 <?php
 use App\Models\Training\CourseRegistration;
 ?>
@@ -20,6 +25,7 @@ use App\Models\Training\CourseRegistration;
         </tr>
       </thead>
       <tbody>
+
       @foreach($scorms as $post)
       <tr data-id="{{$post->id}}">
         <td>
@@ -27,10 +33,13 @@ use App\Models\Training\CourseRegistration;
           <span class="td-title px-1">{{$loop->iteration}}</span>
         </td>
         <td class="px-1">
-            <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->crtitle) }}  </span>
+            {{-- <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->crtitle) }}  </span> --}}
+            <a target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($post->crtitle) }} </span></a>
+
         </td>
         <td class="px-1">
-            <span style="display: block;">{{ $post->cotitle }} </span>
+            <a href="{{CustomRoute('user.course_preview', $post->id)}}" target="_blank" class="href" >
+                {{ \App\Helpers\Lang::TransTitle($post->cotitle) }}</a>
         </td>
         <td class="px-1">
             <span class="td-title">{{$post->date}}</span>

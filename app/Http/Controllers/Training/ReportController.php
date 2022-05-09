@@ -153,14 +153,17 @@ class ReportController extends Controller
                 FROM users  join user_branches on users.id = user_branches.user_id
                 where users.id = ? " ;
         $user = DB::select($sql,[$user_id]);
-        // dd($user);s
+        // dd($user);
         $sql2 = " select contents.id,courses.title as crtitle,contents.title as cotitle,scormvars_master.date,
-                        scormvars_master.score,scormvars_master.lesson_status
+                        scormvars_master.score,scormvars_master.lesson_status,courses.id as course_id
                 from scormvars_master   join users on scormvars_master.user_id = users.id
                                                 and scormvars_master.user_id = ?
                                         join contents on contents.id = scormvars_master.content_id
+                                                and contents.deleted_at is null
                                         join courses on courses.id = contents.course_id and courses.branch_id = ?
+                where scormvars_master.deleted_at is  null
                 ";
+        // dd($sql2);
         $scorms = DB::select($sql2, [$user_id,$branch_id]);
         $paginator = Paginator::GetPaginator($scorms);
         $scorms = $paginator->items();
@@ -432,6 +435,8 @@ class ReportController extends Controller
             from `contents`
             join scormvars_master on contents.id = scormvars_master.content_id
                         and scormvars_master.course_id = ?
+                        and contents.deleted_at is null
+                        and scormvars_master.deleted_at is null
             group by scormvars_master.course_id ,scormvars_master.content_id,scormvars_master.lesson_status,contents.title
         ) i
         left join
@@ -442,6 +447,8 @@ class ReportController extends Controller
             where lesson_status = 'completed'
             group by scormvars_master.course_id ,scormvars_master.content_id,scormvars_master.lesson_status,contents.title
         ) other on other.id = i.id";
+        // dump($course_id);
+        // dd($sql);
         $scorms = DB::select($sql,[$course_id,$course_id ]);
 
         $paginator = Paginator::GetPaginator($scorms);
@@ -473,7 +480,7 @@ class ReportController extends Controller
         ->where('user_id', $user_id)
         ->select('id', 'role_id')
         ->first();
-
+        // dd($course_id);
         $role_id = (!$preview_gate_allows) ? $course_registration->role_id : -1;
        // Get Course With Contents
 
