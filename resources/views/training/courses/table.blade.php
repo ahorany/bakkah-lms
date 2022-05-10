@@ -83,7 +83,7 @@ use App\Models\Training\CourseRegistration;
                 $completed_learners =  $assigned_learners1->whereRaw('courses_registration.progress >= courses.complete_progress')->where('course_id',$post->id)->count();
 
                 echo '<span class="badge-pink mb-1 mr-1 d-block" style="width: max-content;">Instructors: '.$assigned_instructors.'</span>';
-                echo '<span class="badge-blue mr-1">Trainees '.$assigned_learners.'</span>';
+                echo '<span class="badge-blue mr-1">Learners '.$assigned_learners.'</span>';
             ?>
         </td>
         <td>

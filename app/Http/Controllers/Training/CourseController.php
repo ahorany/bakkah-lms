@@ -56,33 +56,33 @@ class CourseController extends Controller
 
         $courses->where('branch_id',getCurrentUserBranchData()->branch_id);
 
+        $assigned_learners1 = CourseRegistration::getAssigned(512);
+        $assigned_instructors = CourseRegistration::getAssigned(511);
         if (request()->has('course_search') && !is_null(request()->course_search)) {
             $courses = $this->SearchCond($courses);
+            $assigned_learners1 = $this->SearchCond($assigned_learners1);
+            $assigned_instructors = $this->SearchCond($assigned_instructors);
         }
 
         if (request()->has('category_id') && request()->category_id != -1){
 
             $courses = $courses->where('courses.category_id', request()->category_id);
+            $assigned_learners1 = $assigned_learners1->where('courses.category_id', request()->category_id);
+            $assigned_instructors = $assigned_instructors->where('courses.category_id', request()->category_id);
         }
 
         if (request()->has('training_option_id') && request()->training_option_id != -1){
             $courses = $courses->where('courses.training_option_id', request()->training_option_id);
+            $assigned_learners1 = $assigned_learners1->where('courses.training_option_id', request()->training_option_id);
+            $assigned_instructors = $assigned_instructors->where('courses.training_option_id', request()->training_option_id);
         }
 
 
         $count = $courses->count();
         $courses = $courses->page();
 
-        $assigned_learners1 = CourseRegistration::getAssigned(512);
-        if(!is_null(request()->course_search)) {
-            $assigned_learners1 = $this->SearchCond($assigned_learners1);
-        }
         $assigned_learners =  $assigned_learners1->count();
 
-        $assigned_instructors = CourseRegistration::getAssigned(511);
-        if(!is_null(request()->course_search)) {
-            $assigned_instructors = $this->SearchCond($assigned_instructors);
-        }
         $assigned_instructors =  $assigned_instructors->count();
 
         $completed_learners =  $assigned_learners1->whereRaw('courses_registration.progress >= courses.complete_progress')->count();
