@@ -72,7 +72,12 @@ use App\Models\Training\CourseRegistration;
 
                 <td>
                     <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id,'preview'=>'true'])}}" class="primary-outline" target="_blank"><span class="href">{{__('admin.details')}}</span></a>
-
+                    @if(isset($post->progress) && ($post->progress >= $post->complete_progress ))
+                        <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
+                            target="_blank" class="primary-outline">
+                            Certificate
+                        </a>
+                    @endif
                 </td>
             </tr>
         @endforeach

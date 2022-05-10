@@ -117,20 +117,21 @@
                 <template v-for="(question,index) in content.questions">
 
                     <div :key="index" :id="'question_' + index" class="card p-30 q-card preview-exam">
-
-                        <div class="action_preview">
-                            {{-- <span class="setting"><i class="fa fa-cog" aria-hidden="true"></i></span> --}}
-                            <button type="button" @click="OpenEditModal(question.id)" class="yellow" id="answer" >
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </button>
-                            <button @click="deleteQuestion(question.id)" class="red" >
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                            <button v-if="question.shuffle_answers==1" class="green" title="Shuffled Answers">
-                                <i class="fa fa-random" aria-hidden="true"></i>
-                            </button>
-                            {{-- <span class="left d-none"><i class="fa fa-chevron-left" aria-hidden="true"></i></span> --}}
-                        </div>
+                        @if(isset($next))
+                            <div class="action_preview">
+                                {{-- <span class="setting"><i class="fa fa-cog" aria-hidden="true"></i></span> --}}
+                                <button type="button" @click="OpenEditModal(question.id)" class="yellow" id="answer" >
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </button>
+                                <button @click="deleteQuestion(question.id)" class="red" >
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                                <button v-if="question.shuffle_answers==1" class="green" title="Shuffled Answers">
+                                    <i class="fa fa-random" aria-hidden="true"></i>
+                                </button>
+                                {{-- <span class="left d-none"><i class="fa fa-chevron-left" aria-hidden="true"></i></span> --}}
+                            </div>
+                        @endif
 
                         <div class="q-number">
                             <div>

@@ -61,6 +61,7 @@ class CourseController extends Controller
         }
 
         if (request()->has('category_id') && request()->category_id != -1){
+
             $courses = $courses->where('courses.category_id', request()->category_id);
         }
 

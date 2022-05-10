@@ -39,7 +39,7 @@ use App\Models\Training\CourseRegistration;
         </td>
         <td class="px-1">
 
-            <a  target="_blank"  href="{{CustomRoute('training.exam',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a>
+            <a  target="_blank"  href="{{CustomRoute('training.exam_show',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a>
 
         </td>
         <td class="px-1">

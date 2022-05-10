@@ -81,7 +81,7 @@ class ReportController extends Controller
         $user = DB::select($sql,[$user_id]);
         $branch_id = getCurrentUserBranchData()->branch_id;
         // $courses = CourseRegistration::getCoursesNo()->where('courses_registration.user_id',$user_id)->get();
-        // dd($courses);
+        // dd($courses);complete_progress
         $select = 'select courses.id,courses.title,courses_registration.progress,courses_registration.score,courses.created_at,courses.PDUs,courses.complete_progress,courses_registration.id as c_reg_id ';
 
         $from = ' from courses_registration
@@ -156,7 +156,6 @@ class ReportController extends Controller
                 FROM users  join user_branches on users.id = user_branches.user_id
                 where users.id = ? " ;
         $user = DB::select($sql,[$user_id]);
-
         // dd($user);
         $sql2 = " select contents.id,courses.title as crtitle,contents.title as cotitle,scormvars_master.date,
                         scormvars_master.score,scormvars_master.lesson_status,courses.id as course_id
@@ -275,7 +274,7 @@ class ReportController extends Controller
         $course = DB::select($sql2,[$course_id ]);
         $branch_id = getCurrentUserBranchData()->branch_id;
 
-        $select = ' select users.id,users.email,user_branches.name,courses_registration.progress,roles.role_type_id,sessions.date_from,sessions.date_to,constants.name as c_name ';
+        $select = ' select users.id,users.email,user_branches.name,courses_registration.progress,roles.role_type_id,sessions.date_from,sessions.date_to,constants.name as c_name ,courses.complete_progress,courses_registration.id as c_reg_id';
 
         $from = ' from courses_registration
                     join roles on roles.id = courses_registration.role_id
@@ -718,7 +717,7 @@ class ReportController extends Controller
             ->with(['upload','course' ,'section.gift','user_contents' => function($q){
                 $q->where('user_id',request()->user_id);
             }])->whereHas('course',function ($q){
-                $q->where('bnranch_id',getCurrentUserBranchData()->branch_id);
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
             })->first();
 
         // Check if content not found => ABORT(404)
