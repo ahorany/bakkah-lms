@@ -184,7 +184,7 @@
                                 {{-- @include('Html.PDF.pdf', ['file'=>$content->upload->file??null]) --}}
                                 {{-- <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script> --}}
                                 @include('Html.PDF.adobe', [
-                                    'file'=>CustomAsset('upload/files/presentations/'.$content->upload->file),
+                                    'file'=>CustomAsset('upload/files/presentations/'.$content->upload->file, true),
                                     'title'=>$content->title??null,
                                 ])
                             @elseif($content->upload->extension == 'xls' )
