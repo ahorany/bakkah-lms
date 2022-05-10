@@ -24,7 +24,9 @@ use Carbon\Carbon;
 use App\Models\Training\UserExam;
 use App\Helpers\CourseContentHelper;
 use App\Models\Paginator;
-
+use App\Models\Training\UserContentsPdf;
+use App\Models\Training\Message;
+use App\Models\Training\Discussion;
 
 class ReportController extends Controller
 {
@@ -54,9 +56,10 @@ class ReportController extends Controller
         $learners_no         = 1;
         $complete_courses_no =  CourseRegistration::getCoursesNo()
                                     ->where('courses_registration.user_id',$user_id)
-                                    ->where('courses_registration.progress',100)->count();
+                                    ->whereRaw('courses_registration.progress >= courses.complete_progress')
+                                    ->count();
         $courses_in_progress =  CourseRegistration::getCoursesNo()
-                                    ->where('courses_registration.progress','<',100)
+                                    ->whereRaw('courses_registration.progress < courses.complete_progress')
                                     ->where('courses_registration.progress','>',0)
                                     ->where('courses_registration.user_id',$user_id)->count();
         $courses_not_started = CourseRegistration::getCoursesNo()
@@ -153,6 +156,7 @@ class ReportController extends Controller
                 FROM users  join user_branches on users.id = user_branches.user_id
                 where users.id = ? " ;
         $user = DB::select($sql,[$user_id]);
+
         // dd($user);
         $sql2 = " select contents.id,courses.title as crtitle,contents.title as cotitle,scormvars_master.date,
                         scormvars_master.score,scormvars_master.lesson_status,courses.id as course_id
@@ -161,6 +165,7 @@ class ReportController extends Controller
                                         join contents on contents.id = scormvars_master.content_id
                                                 and contents.deleted_at is null
                                         join courses on courses.id = contents.course_id and courses.branch_id = ?
+                                                and courses.deleted_at is null
                 where scormvars_master.deleted_at is  null
                 ";
         // dd($sql2);
@@ -463,6 +468,7 @@ class ReportController extends Controller
         return view('training.reports.courses.course_report',compact('scorms','course','course_id','paginator','count'));
     }
 
+
     public function progressDetails()
     {
 
@@ -471,7 +477,6 @@ class ReportController extends Controller
         $user_id = request()->user_id;
         $course_id = request()->course_id;
         $back_page = request()->back_page??'courses';
-        $preview_gate_allows = Gate::allows('preview-gate');
 
         // clear session => (Sidebar active color)
         session()->put('Infrastructure_id', -1);
@@ -481,12 +486,11 @@ class ReportController extends Controller
         ->select('id', 'role_id', 'progress')
         ->first();
         // dd($course_registration);
-        $role_id = (!$preview_gate_allows) ? $course_registration->role_id : -1;
+        $role_id = -1;
        // Get Course With Contents
 
-        $course = $this->getCourseWithContents($course_id, $role_id);
+        $course = $this->getCourseWithContents($course_id, $role_id,$user_id);
 
-        // $course = $this->getCourseWithContents($course_id, $role_id);
         // validate if course exists or not
         if(!$course){
             abort(404);
@@ -702,32 +706,88 @@ class ReportController extends Controller
 
     }
 
-    public function getCourseWithContents($course_id, $role_id){
+
+    public function preview_content(){
+        $content_id = request()->content_id;
+        $user_id = request()->user_id;
+        $preview_gate_allows = Gate::allows('preview-gate');
+
+
+        // Get content from DB
+        $content = Content::whereId($content_id)
+            ->with(['upload','course' ,'section.gift','user_contents' => function($q){
+                $q->where('user_id',request()->user_id);
+            }])->whereHas('course',function ($q){
+                $q->where('bnranch_id',getCurrentUserBranchData()->branch_id);
+            })->first();
+
+        // Check if content not found => ABORT(404)
+        if (!$content){
+            abort(404);
+        }// end if
+
+        // Get next and prev
+        $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
+        $next = $arr['next'];
+        $previous = $arr['previous'];
+        // end next and prev
+
+        $enabled = true;
+
+       // if downloadable status == true (Download file)
+        if($content->downloadable == 1){
+            // get content file path
+            $file = $this->getContentFilePath($content->post_type);
+            if ($file){
+                return response()->download($file); // download response
+            }
+        }// end if
+
+
+
+        // get time limit content (duration in seconds)
+        $time_limit = $content->time_limit;
+
+        $popup_gift_status = false;
+
+        $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',request()->user_id)->pluck('current_page')->first();
+
+        $flag = 0;
+        $role_id = -1;
+        // Get Course With Contents
+        $course = $this->getCourseWithContents($content->course->id, $role_id,$user_id);
+
+        return view('training.reports.courses.preview_content',compact('content','previous','next','enabled','time_limit','popup_gift_status','page_num','flag','course'));
+        // return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','popup_gift_status','page_num','flag','course'));
+    } //
+
+
+
+    public function getCourseWithContents($course_id, $role_id,$user_id){
 
         $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
 
-        if(!Gate::allows('preview-gate')){
 
-            $course = $course->whereHas('users', function ($q){
-                $q->where('users.id', \auth()->id());
-            })->with(['users' => function($query){
-                $query->where('user_id', \auth()->id());
-            }, 'course_rate' => function($query){
-                return $query->where('user_id', \auth()->id());
-            }]);
-        }
+        $course = $course->whereHas('users', function ($q) use ($user_id){
+            $q->where('users.id', $user_id);
+        })->with(['users' => function($query) use ($user_id){
+            $query->where('user_id', $user_id);
+        }, 'course_rate' => function($query) use ($user_id){
+            return $query->where('user_id', $user_id);
+        }]);
 
-        $course = $course->with(['uploads' => function($query){
+
+        $course = $course->with(['uploads' => function($query) {
             return $query->where(function ($q){
                 $q->where('post_type','intro_video')->orWhere('post_type', 'image');
             });
-        }, 'contents' => function($query) use($role_id){
+        }, 'contents' => function($query) use($role_id,$user_id){
             $query->where('parent_id',null)->with(['gift','details',
                 'contents' => function($q){
                     return $q->orderBy('order');
                 },
-                'contents.details','contents.user_contents' => function($q){
-                    return $q->where('user_id', \auth()->id());
+                'contents.details','contents.user_contents' => function($q) use($user_id) {
+                    return $q->where('user_id', $user_id);
                 }])
             ->orderBy('order');
 
@@ -738,13 +798,68 @@ class ReportController extends Controller
                 }
             }
         }])->first();
-
+        // dd($course);
         return $course;
     } // end function
 
 
+    public function preview_discussion(){
+
+        $type = 'message';
+        if (request()->has('type')){
+            $type = request()->type;
+        }
+        $id = request()->id;
+        $user_id = request()->user_id;
+        $message = Message::where('id',$id)->with(['course.course','user.branches' => function($q){
+            $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+        },'replies.user.branches' => function($q){
+            $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+        }])->where('type',$type)->first();
+
+        if(!$message || !$message->course){
+            abort(404);
+        }
+
+        $disabled_reply = false;
+        $discussion_not_start = false;
+        $user = User::where('id',$user_id)->first();// auth()->user();
+        // dd($user);
+        $user_role =  $user->roles()->first();
+
+        if ($message->type == 'discussion'){
+            $now = Carbon::now();
+            $discussion = Discussion::with(['message'])->where('message_id',$message->id)->first();
+
+            // check participants
+            if ($user_role->id != 4 && $user_role->role_type_id != 510 && $user->id != $message->user_id){
+                $user_course_registration =  CourseRegistration::where('user_id',$user->id)->where('course_id',$discussion->message->course_id)->first();
+                if (!$user_course_registration){
+                    abort(404);
+                }
+            }
 
 
+            // check date
+            if($discussion->start_date <= $now && $discussion->end_date > $now){
 
+            }else{
+                if ($discussion->start_date > $now && !(Gate::allows('preview-gate'))){
+                    $discussion_not_start = true;
+                }
+                $disabled_reply = true;
+            }
+
+            $content = Content::where('id',$discussion->content_id)->first();
+            if (!$content){
+                abort(404);
+            }
+
+            // end next and prev
+            return view('training.reports.courses.preview_discussion',compact('message','type','discussion','disabled_reply','discussion_not_start'));
+            // return view('training.messages.reply',compact('message','type','discussion','disabled_reply','next','previous','discussion_not_start'));
+
+        }
+    }
 
 }

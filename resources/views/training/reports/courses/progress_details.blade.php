@@ -209,45 +209,47 @@
                                 @foreach($section->contents as $k => $content)
                                   <li>
                                         <?php
-                                            $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
-                                            if($content->post_type != 'exam'){
-                                                $url = CustomRoute('user.course_preview', $content->id).$preview_url;
+                                            $preview_url = '?preview=true';
+                                            if ($content->post_type == 'discussion'){
+                                                $preview_url .= '&type=discussion';
+                                                $url = CustomRoute('training.preview_discussion', ['id'=>$content->discussion->message_id,'user_id'=>$user->id]).$preview_url;
+                                            }
+                                            elseif($content->post_type != 'exam'){
+                                                $url = CustomRoute('training.preview_content', ['content_id'=>$content->id,'user_id'=>$user->id]).$preview_url;
                                             }else{
-                                                if(Gate::allows('preview-gate') && request()->preview == true){
-                                                    $url = CustomRoute('training.add_questions', $content->id).$preview_url;
-                                                }
-                                                else{
-                                                    $url = CustomRoute('user.exam', $content->id).$preview_url;
-                                                }
+                                                // $url = CustomRoute('user.exam', $content->id).$preview_url;
+                                                $url = CustomRoute('training.exam_show',['content_id'=>$content->id,'user_id'=>$user->id] ).$preview_url;
+
                                             }
                                         ?>
 
                                         <?php
-                                            $content_show = false;
-                                            $popup_pay_status = false;
-                                            if( isset($content->user_contents[0])  ){
-                                                $content_show = true;
-                                            }else if ($section->post_type != "section"){
-                                                 if ($content->paid_status == 504 && $content->status == 1 ){ // if free
-                                                     $content_show = true;
-                                                 }else if( $content->status == 1 || (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 503 && $content->paid_status == 503) ){ // if content paid and user pay course
-                                                     $content_show = true;
-                                                 }else{ // if course paid and user not pay course
-                                                     $popup_pay_status = true; // preview pop up pay now
-                                                 }
-                                           }else if ( $content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
-                                                $content_show = true;
-                                            }
+                                        //     $content_show = false;
+                                        //     $popup_pay_status = false;
+                                        //     if( isset($content->user_contents[0])  ){
+                                        //         $content_show = true;
+                                        //     }else if ($section->post_type != "section"){
+                                        //          if ($content->paid_status == 504 && $content->status == 1 ){ // if free
+                                        //              $content_show = true;
+                                        //          }else if( $content->status == 1 || (isset($course->users[0]) && $course->users[0]->pivot->paid_status == 503 && $content->paid_status == 503) ){ // if content paid and user pay course
+                                        //              $content_show = true;
+                                        //          }else{ // if course paid and user not pay course
+                                        //              $popup_pay_status = true; // preview pop up pay now
+                                        //          }
+                                        //    }else if ( $content->status == 1 || (isset($course->users[0]) && $section->post_type == 'gift' && $section->gift->open_after <= $course->users[0]->pivot->progress) ){
+                                        //         $content_show = true;
+                                        //     }
 
-                                            $url = CustomRoute('training.exam',['content_id'=>$content->id,'user_id'=>$user->id,'back_page'=>'progress_details'] ).$preview_url;
-                                      ?>
+
+                                        ?>
 
                                         <a target="_blank"
-                                           @if($content->post_type == 'exam')
+                                           {{-- @if($content->post_type == 'exam')
                                                 href="{{$url}}"
                                             @else
-                                                href="#"  onclick="return false"
-                                            @endif
+                                                href="#" onclick="return false"
+                                            @endif --}}
+                                            href="{{$url}}"
                                         >
                                            <img style="filter: opacity(0.7);margin-right: 5px;" width="28.126" height="28.127" src="{{CustomAsset('icons/'.$content->post_type.'.svg')}}" alt="{{$content->title}}">
                                            <span>

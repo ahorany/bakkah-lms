@@ -36,6 +36,7 @@ class CourseController extends Controller
      *  Course User page
      */
     public function course_details($course_id){
+
         session()->put('active_sidebar_route_name',-1);
 
         $user_id = User::delegate_user_id();
@@ -276,7 +277,7 @@ class CourseController extends Controller
 
         } // end if
 
-
+        // dd($content);
 
 
         // gift status and check open after
@@ -311,21 +312,26 @@ class CourseController extends Controller
         *  Update Start Time For User Content
         *  When User Open Content Page AND User Content Not Completed
         */
-        $dataArr = $this->createUserContentOrUpdate($content_id, $content->time_limit);
-        $userContent = $dataArr[0];
-        $is_completed = $dataArr[1];
+        if(!$preview_gate_allows){
+            $dataArr = $this->createUserContentOrUpdate($content_id, $content->time_limit);
+            $userContent = $dataArr[0];
+            $is_completed = $dataArr[1];
 
-        // Check content is completed => enabled next button
-        $enabled = true;
-        if ($is_completed != 1){
-            $enabled = false;
-        }// end if
+            // Check content is completed => enabled next button
+            $enabled = true;
+            if ($is_completed != 1){
+                $enabled = false;
+            }// end if
 
 
 
-       // Update Course Registration Progress When content have (role and path)
-        $progress = $this->updateCourseRegistrationProgress($content->course_id,$content->role_and_path);
-
+        // Update Course Registration Progress When content have (role and path)
+            $progress = $this->updateCourseRegistrationProgress($content->course_id,$content->role_and_path);
+        }
+        else
+        {
+            $enabled = true;
+        }
 
        // if downloadable status == true (Download file)
         if($content->downloadable == 1){
@@ -390,9 +396,9 @@ class CourseController extends Controller
 
 
         // user content flag (0 or 1)
-        $flag = $userContent->flag;
-
-
+        $flag = 0;
+        if(!$preview_gate_allows)
+            $flag = $userContent->flag;
 
         $role_id = (!$preview_gate_allows) ? $user_course_register->role_id : -1;
         // Get Course With Contents

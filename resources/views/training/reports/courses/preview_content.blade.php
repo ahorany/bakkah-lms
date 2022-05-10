@@ -16,39 +16,10 @@
 
 
 @section('content')
-    <?php
-        $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
-        $next_url = $NextPrevNavigation['next_url'];
-        $previous_url = $NextPrevNavigation['previous_url'];
-    ?>
+
 
     <div class="user-info">
-        @if($popup_compelte_status)
-            <div class="custom-model-main custom-model-main-cert model-open">
-                <div class="custom-model-inner">
-                    <div class="custom-model-wrap">
-                        <div class="close-btn">×</div>
-                        <div class="pop-up-content-wrap">
-                            <div class="congrats">
-                                <div class="text-center course-image">
-                                    <div class="no-img certificate-img" style="display:flex; align-items: center; justify-content: center;">
-                                        <img src="{{CustomAsset('icons/certificate.svg')}}" height="auto" width="30%">
-                                    </div>
-                                    <div>
-                                        <h1>Congratulations!</h1>
-                                        <p>
-                                            You have successfully completed the course. Can’t wait for to hear the good news about you getting certified! <br><br>
-                                            Good Luck in your exam
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-overlay"></div>
-            </div>
-        @endif
+
 
         @if($popup_gift_status)
             <div class="custom-model-main custom-model-main-gift model-open">
@@ -131,12 +102,6 @@
                         @endif
                     </div>
 
-
-                    @include('Html.next-prev-navigation', [
-                        'next'=>$next,
-                        'previous'=>$previous,
-                        'previous_url'=>$previous_url,
-                    ])
                 </div>
                 <div class="card-body">
                     @isset($content->upload->file)
@@ -239,15 +204,6 @@
 
 @section("script")
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @if($popup_compelte_status || $popup_gift_status)
-        <script>
-            $(".close-btn, .bg-overlay").click(function(){
-                $(".custom-model-main-gift").removeClass('model-open');
-                $(".custom-model-main-cert").removeClass('model-open');
-            });
-        </script>
-    @endif
 
     <script>
         // save Flag
@@ -268,12 +224,7 @@
 
         document.getElementById("demo").innerHTML = "Next";
 
-        function NextBtn(){
-            document.querySelector(".next").addEventListener("click", function(event){
-                window.location.href = '{{$next_url??null}}'
-            });
-        }
-        NextBtn();
+
     </script>
 
 
@@ -479,10 +430,6 @@
 
                         document.querySelector(".next").insertAdjacentHTML('beforeend', svg_next);
 
-                        {{--document.querySelector(".next").addEventListener("click", function(event){
-                            window.location.href = '{{$next_url??null}}'
-                        });--}}
-                        NextBtn();
                     }
 
                 }, 1000);
@@ -492,10 +439,7 @@
             document.getElementById("demo").innerHTML = "Next";
             document.querySelector(".next").insertAdjacentHTML('beforeend', svg_next);
 
-            {{--document.querySelector(".next").addEventListener("click", function(event){
-                window.location.href = '{{$next_url??null}}'
-            });--}}
-            NextBtn();
+
         }
     </script>
 @endsection

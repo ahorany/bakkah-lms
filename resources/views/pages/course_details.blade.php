@@ -230,14 +230,14 @@
                             <h3>{{$section->title}}</h3>
                             <div class="excerpt-text">{!! $section->details->excerpt??null !!}</div>
                           @isset($section->contents)
-                             <ul>
+                            <ul>
                                 @foreach($section->contents as $k => $content)
-                                  <li>
+                                    <li>
                                         <?php
-                                           $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
-                                           if ($content->post_type == 'discussion'){
-                                              if ($preview_url){
-                                                  $preview_url .= '&type=discussion';
+                                            $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
+                                            if ($content->post_type == 'discussion'){
+                                                if ($preview_url){
+                                                    $preview_url .= '&type=discussion';
                                               }else{
                                                   $preview_url .= '?type=discussion';
                                               }

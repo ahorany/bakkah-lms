@@ -36,6 +36,7 @@ class UserController extends Controller
 
     public function index()
     {
+
         $post_type = GetPostType('users');
         $trash = GetTrash();
 

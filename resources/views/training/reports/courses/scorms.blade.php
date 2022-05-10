@@ -31,8 +31,9 @@
 
                 </td> --}}
                 <td class="px-1 text-left">
-                    <a href="{{CustomRoute('user.course_preview', $post->content_id)}}" target="_blank" class="href" >
-                        {{ \App\Helpers\Lang::TransTitle($post->title) }}</a>
+                    {{ \App\Helpers\Lang::TransTitle($post->title) }}
+                    {{-- <a href="{{CustomRoute('user.course_preview', $post->content_id)}}" target="_blank" class="href" >
+                        {{ \App\Helpers\Lang::TransTitle($post->title) }}</a> --}}
                 </td>
 
                 <td class="px-1">

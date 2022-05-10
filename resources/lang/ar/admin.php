@@ -169,6 +169,8 @@ return [
     'content_name' => 'Content',
     'no_attempts' => 'Attempts Count',
     'no_passed' => 'Passed Count',
+    'Delivery Method ID' => 'Delivery Method ID',
+
 
 
 ];
