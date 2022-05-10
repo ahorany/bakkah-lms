@@ -173,7 +173,7 @@ return [
     'Gift'=>'Gift',
     'add_gift'=>'Add Gift',
     'Free'=>'Free',
-    'ref_id'=>'Ref id',
+    'ref_id'=>'Delivery Method ID',
     'Registered'=>'Registered',
     'True'=>'Register',
     'False'=>'Not Register',
@@ -200,5 +200,4 @@ return [
     'content_name' => 'Content',
     'no_attempts' => 'Attempts Count',
     'no_passed' => 'Passed Count',
-    'Delivery Method ID' => 'Delivery Method ID',
 ];
