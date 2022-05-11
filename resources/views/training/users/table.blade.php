@@ -54,7 +54,7 @@ use App\Models\Training\CourseRegistration;
               1 => 'badge-green',
               2 => 'badge-pink',
               3 => 'badge-blue',
-              4 => 'badge-blue',
+              4 => 'badge-red',
           ];
           ?>
           @foreach($users as $post)
