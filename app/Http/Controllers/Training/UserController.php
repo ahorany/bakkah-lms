@@ -60,12 +60,13 @@ class UserController extends Controller
         $count = $users->count();
         $users = $users->page();
         // dd($users);
-        $learners_no  = User::getLearnersNo();
-        if(!is_null(request()->user_search)) {
-            $learners_no = $this->SearchUser($learners_no);
-        }
-        $learners_no =  $learners_no->count();
+        // $learners_no  = User::getLearnersNo();
+        // if(!is_null(request()->user_search)) {
+        //     $learners_no = $this->SearchUser($learners_no);
+        // }
+        // $learners_no =  $learners_no->count();
         //
+        $users_no = $count;
         $complete_courses_no = CourseRegistration::getCoursesNo();
         $complete_courses_no =  $complete_courses_no->whereRaw('courses_registration.progress >= courses.complete_progress');
         if (!is_null(request()->user_search)) {
@@ -88,7 +89,7 @@ class UserController extends Controller
         }
         $courses_not_started =  $courses_not_started->count();
 
-        return Active::Index(compact('users', 'count', 'post_type', 'trash','learners_no','complete_courses_no','courses_in_progress','courses_not_started'));
+        return Active::Index(compact('users', 'count', 'post_type', 'trash','users_no','complete_courses_no','courses_in_progress','courses_not_started'));
     }
 
 

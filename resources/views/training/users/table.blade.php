@@ -51,9 +51,9 @@ use App\Models\Training\CourseRegistration;
 
           <?php
           $roles_class = [
-              1 => 'badge-blue',
+              1 => 'badge-green',
               2 => 'badge-pink',
-              3 => 'badge-green',
+              3 => 'badge-blue',
               4 => 'badge-blue',
           ];
           ?>

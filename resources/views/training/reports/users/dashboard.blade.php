@@ -15,8 +15,8 @@
                         </image>
                     </svg>
                     <div>
-                        <span>{{__('admin.learners')}}</span>
-                        <b>{{$learners_no}}</b>
+                        <span>{{__('admin.users_no')}}</span>
+                        <b>{{$users_no}}</b>
                     </div>
                 </div>
 

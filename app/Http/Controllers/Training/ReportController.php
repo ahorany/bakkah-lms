@@ -53,7 +53,7 @@ class ReportController extends Controller
                 where users.id = ? " ;
         $user = DB::select($sql,[$user_id]);
         // dd($user);
-        $learners_no         = 1;
+        $users_no         = 1;
         $complete_courses_no =  CourseRegistration::getCoursesNo()
                                     ->where('courses_registration.user_id',$user_id)
                                     ->whereRaw('courses_registration.progress >= courses.complete_progress')
@@ -67,7 +67,7 @@ class ReportController extends Controller
                                     ->where('courses_registration.user_id',$user_id)->count();
         $overview = 1;
 
-        return view('training.reports.users.user_report',compact('user_id','learners_no','complete_courses_no',
+        return view('training.reports.users.user_report',compact('user_id','users_no','complete_courses_no',
             'courses_in_progress','courses_not_started','overview', 'user'));
     }
 
@@ -82,7 +82,7 @@ class ReportController extends Controller
         $branch_id = getCurrentUserBranchData()->branch_id;
         // $courses = CourseRegistration::getCoursesNo()->where('courses_registration.user_id',$user_id)->get();
         // dd($courses);complete_progress
-        $select = 'select courses.id,courses.title,courses_registration.progress,courses_registration.score,courses.created_at,courses.PDUs,courses.complete_progress,courses_registration.id as c_reg_id ';
+        $select = 'select courses.id,courses.title,courses_registration.progress,courses_registration.score,courses.created_at,courses.PDUs,courses.complete_progress,courses_registration.id as c_reg_id,categories.title as categ_title,courses.training_option_id as deleviry_method_id  ,constants.name  as deleviry_method_name ';
 
         $from = ' from courses_registration
                     join roles on roles.id = courses_registration.role_id
@@ -96,6 +96,8 @@ class ReportController extends Controller
                     join user_branches on user_branches.user_id = users.id
                                         and user_branches.deleted_at is null
                                         and user_branches.branch_id = ?
+                    left join categories on categories.id = courses.category_id
+                    join constants on constants.id = courses.training_option_id
                 where courses_registration.user_id = ?
                 order by users.id ';
 

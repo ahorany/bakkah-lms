@@ -169,4 +169,6 @@ return [
     'content_name' => 'Content',
     'no_attempts' => 'Attempts Count',
     'no_passed' => 'Passed Count',
+    'users_no' => 'Users',
+
 ];

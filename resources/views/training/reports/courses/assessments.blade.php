@@ -102,7 +102,7 @@ use App\Models\Training\CourseRegistration;
                     <span style="display: block;">{{ $post->trainer_name }} </span>
                 </td>
                 <td>
-                    <span style="display: block;">{{ $post->s_id }} </span>
+                    <span class="badge-green" > {{ $post->s_id }}</span>
                 </td>
 
             </tr>
