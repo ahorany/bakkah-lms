@@ -314,10 +314,11 @@ class ReportController extends Controller
         $sql2 = "SELECT * FROM courses where id = ? " ;
         $course = DB::select($sql2,[$course_id ]);
 
-        $sql = "select contents.id as content_id, contents.title as content_title,exams.id as exam_id
+        $sql = "select contents.id as content_id, contents.title as content_title,exams.id as exam_id,c2.title as section
                 from contents
                     join exams on exams.content_id = contents.id
                     join courses on courses.id = contents.course_id
+                    join contents  c2 on contents.parent_id = c2.id
                 where courses.id = ? and contents.deleted_at is null ";
         // dd($sql);
         $tests = DB::select($sql,[$course_id]);
@@ -356,7 +357,7 @@ class ReportController extends Controller
             if(isset(request()->session_id))
                 $from .= 'and courses_registration.session_id = ? ';
             $from .= '
-            join sessions on sessions.id = courses_registration.session_id
+            left join sessions on sessions.id = courses_registration.session_id
             join users on users.id = user_exams.user_id
             join  user_branches on  user_branches.user_id = users.id and user_branches.branch_id = ?
             join  roles on  roles.id = courses_registration.role_id
@@ -434,25 +435,26 @@ class ReportController extends Controller
     public function coursesReportScorm()//new
     {
         $course_id = request()->id;
-        $sql = "SELECT i.id,i.content_id,i.course_id,i.title,i.attempts,other.passess
-        FROM
-        (
-            select count(content_id) attempts,scormvars_master.id id ,scormvars_master.user_id,scormvars_master.content_id,scormvars_master.course_id,contents.title
-            from `contents`
-            join scormvars_master on contents.id = scormvars_master.content_id
-                        and scormvars_master.course_id = ?
-                        and contents.deleted_at is null
-                        and scormvars_master.deleted_at is null
-            group by scormvars_master.course_id ,scormvars_master.content_id,contents.title
-        ) i
-        left join
-        (
-            select count(content_id) passess,scormvars_master.id id
-            from `contents` join scormvars_master on contents.id = scormvars_master.content_id
-                        and scormvars_master.course_id = ?
-            where lesson_status = 'completed'
-            group by scormvars_master.course_id ,scormvars_master.content_id,contents.title
-        ) other on other.id = i.id";
+        $sql = "SELECT i.id,i.content_id,i.course_id,i.title,i.attempts,other.passess,i.sestion
+                FROM
+                (
+                    select count(content_id) attempts,scormvars_master.id id ,scormvars_master.user_id,scormvars_master.content_id,scormvars_master.course_id,contents.title,c2.title as sestion
+                    from `contents`
+                    join scormvars_master on contents.id = scormvars_master.content_id
+                                and scormvars_master.course_id = ?
+                                and contents.deleted_at is null
+                                and scormvars_master.deleted_at is null
+                    join contents  c2 on contents.parent_id = c2.id
+                    group by scormvars_master.course_id ,scormvars_master.content_id,contents.title,c2.title
+                ) i
+                left join
+                (
+                    select count(content_id) passess,scormvars_master.id id
+                    from `contents` join scormvars_master on contents.id = scormvars_master.content_id
+                                and scormvars_master.course_id = ?
+                    where lesson_status = 'completed'
+                    group by scormvars_master.course_id ,scormvars_master.content_id,contents.title
+                ) other on other.id = i.id ";
         // dump($course_id);
         // dd($sql);
         $scorms = DB::select($sql,[$course_id,$course_id ]);

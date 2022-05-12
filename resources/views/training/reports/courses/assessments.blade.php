@@ -89,7 +89,7 @@ use App\Models\Training\CourseRegistration;
                     if($post->knowledge_status == 'Improved' )
                         $badge = 'badge-green';
                     else if($post->knowledge_status == 'Constant')
-                        $badge = 'badge-yellow';
+                        $badge = 'badge-lim';
                     else
                         $badge = 'badge-red';
                     @endphp

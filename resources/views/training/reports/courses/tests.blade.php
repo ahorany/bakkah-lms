@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
         <thead>
         <tr>
             <th class="">#</th>
+            <th class="text-left">Section</th>
             <th class="text-left">{{__('admin.test')}}</th>
             <th class="">{{__('admin.completedNo')}}</th>
             <th class="">{{__('admin.passedNo')}}</th>
@@ -23,6 +24,10 @@ use Illuminate\Support\Facades\DB;
                 <tr data-id="{{$post->exam_id}}">
                     <td>
                         <span class="td-title px-1">{{$loop->iteration}}</span>
+                    </td>
+                    <td class="px-1 text-left">
+                        <span style="display: block;">{{ $post->section }} </span>
+
                     </td>
                     <td class="px-1 text-left">
                         <span style="display: block;">{{ $post->content_title }} </span>

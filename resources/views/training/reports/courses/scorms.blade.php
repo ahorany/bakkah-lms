@@ -15,9 +15,10 @@
         <tr>
             <th class="">#</th>
             {{-- <th class="">{{__('admin.course_name')}}</th> --}}
+            <th class="text-left">Section</th>
             <th class="text-left">{{__('admin.scorm')}}</th>
             <th class="">{{__('admin.no_attempts')}}</th>
-            <th class="">{{__('admin.no_passed')}}</th>
+            <th class="">Completed Count{{--{{__('admin.no_passed')}}--}}</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,9 @@
             <tr data-id="{{$post->id}}">
                 <td>
                 <span class="td-title px-1">{{$loop->iteration}}</span>
+                <td>
+                    {{ \App\Helpers\Lang::TransTitle($post->sestion) }}
+                </td>
                 </td>
                 {{-- <td class="px-1">
                     <span style="display: block;"> <a style="display: block;" href="{{route('training.scormsReportScorms',['course_id'=>$course[0]->id])}}" >{{\App\Helpers\Lang::TransTitle($course[0]->title) }}</a> </span>

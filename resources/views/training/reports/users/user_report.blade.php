@@ -31,7 +31,7 @@
     <div  class="course_info mb-3 card p-3">
         <div class="row">
             <div class="col-md-6">
-                <span class="mr-1 p-1 badge badge-dark" style="font-size: 0.8rem;">{{$user[0]->name}}</span>
+                <span class="mr-1 p-1 badge badge-dark" style="font-size: 0.8rem;">{{$user[0]->name}} | {{$user[0]->email}}  </span>
                 <a href="{{route('training.usersReportOverview',['id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_overview}}">Overview</a>
                 <a  href="{{route('training.usersReportCourse',['id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_users}}">Courses</a>
                 <a href="{{route('training.usersReportTest',['id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_tests}}">Tests</a>

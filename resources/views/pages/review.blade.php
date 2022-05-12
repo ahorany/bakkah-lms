@@ -37,7 +37,7 @@
 
             if(isset($user))
             {
-                $url = CustomRoute('training.exam',['content_id'=>$exam->exam->content->id,'user_id'=>$user->id,'back_page'=>$back_page] );
+                $url = CustomRoute('training.exam_show',['content_id'=>$exam->exam->content->id,'user_id'=>$user->id,'back_page'=>$back_page] );
             }
             else
             {
