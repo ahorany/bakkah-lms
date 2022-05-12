@@ -434,16 +434,16 @@ class ReportController extends Controller
     public function coursesReportScorm()//new
     {
         $course_id = request()->id;
-        $sql = "SELECT i.id,i.content_id,i.course_id,i.lesson_status,i.title,i.attempts,other.passess
+        $sql = "SELECT i.id,i.content_id,i.course_id,i.title,i.attempts,other.passess
         FROM
         (
-            select count(content_id) attempts,scormvars_master.id id ,scormvars_master.user_id,scormvars_master.content_id,scormvars_master.course_id,scormvars_master.lesson_status,contents.title
+            select count(content_id) attempts,scormvars_master.id id ,scormvars_master.user_id,scormvars_master.content_id,scormvars_master.course_id,contents.title
             from `contents`
             join scormvars_master on contents.id = scormvars_master.content_id
                         and scormvars_master.course_id = ?
                         and contents.deleted_at is null
                         and scormvars_master.deleted_at is null
-            group by scormvars_master.course_id ,scormvars_master.content_id,scormvars_master.lesson_status,contents.title
+            group by scormvars_master.course_id ,scormvars_master.content_id,contents.title
         ) i
         left join
         (
@@ -451,7 +451,7 @@ class ReportController extends Controller
             from `contents` join scormvars_master on contents.id = scormvars_master.content_id
                         and scormvars_master.course_id = ?
             where lesson_status = 'completed'
-            group by scormvars_master.course_id ,scormvars_master.content_id,scormvars_master.lesson_status,contents.title
+            group by scormvars_master.course_id ,scormvars_master.content_id,contents.title
         ) other on other.id = i.id";
         // dump($course_id);
         // dd($sql);
