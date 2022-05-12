@@ -13,7 +13,7 @@ Route::group([
         return view('scorm');
     });
 
-    Auth::routes(['register' => false]);
+    Auth::routes(['register' => true]);
 });
 
 Route::get('/', function(){
@@ -70,6 +70,3 @@ Route::get('migration/user/import/{course_id}',function ($course_id){
        dd('success');
     }
 })->middleware('auth');
-
-
-
