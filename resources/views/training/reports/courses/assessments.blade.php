@@ -52,14 +52,14 @@ use App\Models\Training\CourseRegistration;
     <thead>
         <tr>
             <th class="">#</th>
-            <th class="">{{__('admin.name')}}</th>
-            <th class="">{{__('admin.email')}}</th>
+            <th class="text-left">{{__('admin.name')}}</th>
+            <th class="text-left">{{__('admin.email')}}</th>
             <th class="">{{__('admin.pre_assessment_score')}}</th>
             <th class="">{{__('admin.post_assessment_score')}}</th>
             <th class="">{{__('admin.knowledge_status')}}</th>
             <th class="">{{__('admin.attendance_count')}}</th>
-            <th class="">{{__('admin.instructor')}}</th>
-            <th class="">{{__('admin.session_id')}}</th>
+            <th class="text-left">{{__('admin.instructor')}}</th>
+            <th class="text-left">{{__('admin.session_id')}}</th>
         </tr>
     </thead>
     <tbody>
@@ -70,10 +70,10 @@ use App\Models\Training\CourseRegistration;
                     <span class="td-title px-1">{{$loop->iteration}}</span>
                 </td>
 
-                <td class="px-1">
+                <td class="text-left">
                     <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->user_name) }} </span>
                 </td>
-                <td class="px-1">
+                <td class="text-left">
                     <span style="display: block;">{{ $post->user_email }} </span>
                 </td>
 
@@ -98,10 +98,10 @@ use App\Models\Training\CourseRegistration;
                 <td>
                     <span style="display: block;">{{ $post->attendance_count }} </span>
                 </td>
-                <td>
+                <td class="text-left">
                     <span style="display: block;">{{ $post->trainer_name }} </span>
                 </td>
-                <td>
+                <td class="text-left">
                     <span class="badge-green" > {{ $post->s_id }}</span>
                 </td>
 

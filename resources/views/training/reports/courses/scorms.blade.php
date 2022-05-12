@@ -26,7 +26,7 @@
             <tr data-id="{{$post->id}}">
                 <td>
                 <span class="td-title px-1">{{$loop->iteration}}</span>
-                <td>
+                <td class="px-1 text-left">
                     {{ \App\Helpers\Lang::TransTitle($post->sestion) }}
                 </td>
                 </td>

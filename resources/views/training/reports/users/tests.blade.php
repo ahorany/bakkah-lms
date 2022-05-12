@@ -16,8 +16,8 @@ use App\Models\Training\CourseRegistration;
       <thead>
         <tr>
             <th class="">#</th>
-            <th class="">{{__('admin.course')}}</th>
-            <th class="">{{__('admin.test')}}</th>
+            <th class="text-left">{{__('admin.course')}}</th>
+            <th class="text-left">{{__('admin.test')}}</th>
             <th class="">{{__('admin.date')}}</th>
             <th class="">{{__('admin.exam_mark')}}</th>
             <th class="">Pass Mark</th>{{-- {{__('admin.exam_pass')}} --}}
@@ -32,17 +32,17 @@ use App\Models\Training\CourseRegistration;
         <td>
             <span class="td-title px-1">{{$loop->iteration}}</span>
         </td>
-        <td class="px-1">
+        <td class="px-1 text-left" >
 
             <a target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$exam->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span></a>
 
         </td>
-        <td class="px-1">
+        <td class="px-1 text-left">
 
             <a  target="_blank"  href="{{CustomRoute('training.exam_show',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a>
 
         </td>
-        <td class="px-1">
+        <td class="px-1 text-left"">
             <span class="td-title">{{$exam->time}}</span>
         </td>
         <td class="px-1">
