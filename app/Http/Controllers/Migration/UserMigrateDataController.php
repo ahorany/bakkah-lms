@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Migration;
 use App\Http\Controllers\Controller;
 use App\Imports\StoreDBMigrationCourseUsersImport;
 use App\Mail\UserMail;
+use App\Mail\UserMigrationMail;
 use App\Models\Training\Content;
 use App\Models\Training\Course;
 use App\Models\Training\CourseRegistration;
@@ -74,7 +75,21 @@ class UserMigrateDataController extends Controller
             'master_id' => 'required|exists:user_migration_files,id',
         ]);
 
-        return $request;
+
+        $master =  DB::table('user_migration_files')
+            ->where('id',$request->master_id)
+            ->where('course_id',$request->course_id)
+            ->first();
+        if (!$master){
+            abort(404);
+        }
+        $rows = DB::table('user_migration_data')->get();
+        foreach ($rows as $index => $row) {
+            Mail::to($row->email)->send(new UserMigrationMail());
+        }
+
+
+        return redirect()->back()->with(['color' => 'green' , 'msg' => 'Successfully done!']);
     }// end method
 
 
@@ -84,6 +99,15 @@ class UserMigrateDataController extends Controller
         $request->validate([
             'master_id' => 'required|exists:user_migration_files,id',
         ]);
+
+
+       $master =  DB::table('user_migration_files')
+            ->where('master_id',$request->master_id)
+            ->where('course_id',$request->course_id)
+            ->first();
+       if (!$master){
+           abort(404);
+       }
 
         $course = Course::select('id', 'ref_id')->where('id', $request->course_id)->first();
         if ((!$course) || $course->training_option_id == 13) {
@@ -96,8 +120,6 @@ class UserMigrateDataController extends Controller
             ->where('post_type', '!=', 'discussion')
             ->get();
 
-
-        // deleted head row
 
 
         $rows = DB::table('user_migration_data')->get();
