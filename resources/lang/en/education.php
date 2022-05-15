@@ -111,4 +111,5 @@ return [
     'Add New'=>'Add New',
     'Like'=>'Like',
     'Love'=>'Love',
+    'Sessions'=>'Sessions',
 ];

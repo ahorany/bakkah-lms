@@ -1,11 +1,16 @@
 .export{
     background: green;
-    color: #fff;
+    color: #fff !important;
+    text-decoration: none !important;
     font-size: 12px;
     font-weight: 700;
     padding: 5px 20px;
     display: inline-block;
     margin-bottom: 15px;
+}
+.export:hover{
+    color: #fff !important;
+    text-decoration: none !important;
 }
 #message-app>.card.px-5.py-3.mb-2 {
     display: flex;

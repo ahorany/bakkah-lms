@@ -22,12 +22,12 @@ class UsersExport implements FromCollection, WithHeadings
     public function collection()
     {
         $query = $this->sql;
-        // dd($query);
+        // dd($this->course_id);
         $branch_id = getCurrentUserBranchData()->branch_id;
         $select = " select JSON_UNQUOTE(JSON_EXTRACT(users.name, '$.en')) as User , concat(courses_registration.progress,' %') as progress  ,
         if(roles.role_type_id = 511,'Instructor','Learner')  as role_type_id,sessions.date_from  as date_from  ,sessions.date_to as date_to ".$query;
-        // dd($select);
-        return collect(DB::select($select, [$branch_id, $this->course_id]));
+
+        return collect(DB::select($select, [$branch_id,$branch_id, $this->course_id]));
     }
 
     public function headings(): array

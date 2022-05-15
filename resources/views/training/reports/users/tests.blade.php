@@ -16,11 +16,11 @@ use App\Models\Training\CourseRegistration;
       <thead>
         <tr>
             <th class="">#</th>
-            <th class="">{{__('admin.course')}}</th>
-            <th class="">{{__('admin.test')}}</th>
+            <th class="text-left">{{__('admin.course')}}</th>
+            <th class="text-left">{{__('admin.test')}}</th>
             <th class="">{{__('admin.date')}}</th>
             <th class="">{{__('admin.exam_mark')}}</th>
-            <th class="">{{__('admin.exam_pass')}}</th>
+            <th class="">Pass Mark</th>{{-- {{__('admin.exam_pass')}} --}}
             <th class="">{{__('admin.trainee_mark')}}</th>
             <th class="">{{__('admin.result')}}</th>
 
@@ -32,30 +32,33 @@ use App\Models\Training\CourseRegistration;
         <td>
             <span class="td-title px-1">{{$loop->iteration}}</span>
         </td>
-        <td class="px-1">
+        <td class="px-1 text-left" >
 
             <a target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$exam->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span></a>
 
         </td>
-        <td class="px-1">
+        <td class="px-1 text-left">
 
-            <a  target="_blank"  href="{{CustomRoute('training.exam',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a>
+            <a  target="_blank"  href="{{CustomRoute('training.exam_show',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a>
 
         </td>
-        <td class="px-1">
+        <td class="px-1 text-left"">
             <span class="td-title">{{$exam->time}}</span>
         </td>
         <td class="px-1">
             <span class="td-title">{{$exam->exam_mark}}</span>
         </td>
+        <?php
+        $pass_mark = $exam->pass_mark/100*$exam->exam_mark;
+        ?>
         <td class="px-1">
-            <span class="td-title">{{$exam->pass_mark}}%</span>
+            <span class="td-title">{{$pass_mark}}</span>
         </td>
         <td class="px-1">
             <span class="badge badge-info">{{$exam->exam_trainee_mark}} / {{$exam->exam_mark}}</span>
         </td>
         <td class="px-1">
-            @if(($exam->exam_trainee_mark/$exam->exam_mark) >= $exam->pass_mark)
+            @if($exam->exam_trainee_mark >= $pass_mark)
                 <span class="badge badge-success">{{__('admin.pass')}}</span>
             @else
                 <span class="badge badge-danger">{{__('admin.fail')}}</span>

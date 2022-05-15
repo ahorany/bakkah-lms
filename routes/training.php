@@ -44,9 +44,12 @@ Route::group([
             Route::get('/coursesReportScorm', 'ReportController@coursesReportScorm')->name('coursesReportScorm');
             Route::get('/coursesAssessments', 'ReportController@coursesAssessments')->name('coursesAssessments');
             Route::get('/progressDetails', 'ReportController@progressDetails')->name('progressDetails');
-            Route::get('/exam', 'ReportController@exam')->name('exam');
+            Route::get('/exam_show', 'ReportController@exam')->name('exam_show');
             Route::get('/exam_review', 'ReportController@exam_review')->name('exam.review');
             Route::get('/exam_result_details/details', 'ReportController@exam_result_details')->name('exam.exam_result_details');
+            Route::get('/preview_content', 'ReportController@preview_content')->name('preview_content');
+            Route::get('/preview_discussion', 'ReportController@preview_discussion')->name('preview_discussion');
+
 
 
             Route::post('courses/importCourses', 'ImportController@importCourses')->name('importCourses');

@@ -26,4 +26,5 @@ return [
     'categories'=>'تصنيفات',
     'scorm_Reports'=>'Scorm Reports',
     'Search'=>'بحث',
+    'Sessions'=>'Sessions',
 ];

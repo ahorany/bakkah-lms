@@ -29,9 +29,9 @@ use App\Models\Training\CourseRegistration;
       <thead>
         <tr>
             <th class="">{{__('admin.index')}}</th>
-            <th class="">{{__('admin.name')}}</th>
-            <th class="">{{__('admin.email')}}</th>
-            <th class="">{{__('admin.mobile')}}</th>
+            <th class="text-left">{{__('admin.name')}}</th>
+            <th class="text-left">{{__('admin.email')}}</th>
+            <th class="text-left">{{__('admin.mobile')}}</th>
             <th class="">{{__('admin.role')}}</th>
             <th class="">{{__('admin.company')}}</th>
             <th class="">{{__('admin.last_login')}}</th>
@@ -51,10 +51,10 @@ use App\Models\Training\CourseRegistration;
 
           <?php
           $roles_class = [
-              1 => 'badge-blue',
+              1 => 'badge-green',
               2 => 'badge-pink',
-              3 => 'badge-green',
-              4 => 'badge-blue',
+              3 => 'badge-blue',
+              4 => 'badge-red',
           ];
           ?>
           @foreach($users as $post)
@@ -63,15 +63,15 @@ use App\Models\Training\CourseRegistration;
                   <span class="td-title px-1">{{$loop->iteration}}</span>
                 </td>
 
-                <td class="px-1">
+                <td  class="px-1 text-left">
                     <span style="display: block;">{{$post->name}}</span>
                 </td>
 
-                <td class="px-1">
+                <td class="px-1 text-left">
                     <span class="td-title">{{$post->user->email??null}}</span>
                 </td>
 
-                <td class="px-1">
+                <td class="px-1 text-left">
                     <span class="td-title">{{$post->user->mobile??null}}</span>
                 </td>
 

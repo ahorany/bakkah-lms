@@ -146,7 +146,7 @@ return [
     'category'=>'التصنيف',
     'import_type'=>'Import Type',
     'sample'=>'Sample',
-    'ref_id'=>'Ref id',
+    'ref_id'=>'Delivery Method ID',
     'Registered'=>'Registered',
     'True'=>'Register',
     'False'=>'Not Register',
@@ -167,6 +167,8 @@ return [
     'completedNo' => 'No. of Completed Trainees',
     'passedNo' => 'No. of Passed Trainees',
     'content_name' => 'Content',
-
+    'no_attempts' => 'Attempts Count',
+    'no_passed' => 'Passed Count',
+    'users_no' => 'Users',
 
 ];

@@ -19,15 +19,15 @@ use App\Models\Training\CourseRegistration;
       <thead>
         <tr>
             <th class="">#</th>
-            <th class="">{{__('admin.user')}}</th>
-            <th class="">{{__('admin.email')}}</th>
-            <th class="">{{__('admin.progress')}}</th>
-           {{--  <th class="">{{__('admin.score')}}</th>
+            <th class="text-left">{{__('admin.user')}}</th>
+            <th class="text-left">{{__('admin.email')}}</th>
+            <th class="text-left">{{__('admin.progress')}}</th>
+            {{--  <th class="">{{__('admin.score')}}</th>
             <th class="">{{__('admin.enrolled_on')}}</th>
             <th class="">{{__('admin.completion_date')}}</th>
             <th class="">{{__('admin.pdu')}}</th> --}}
 
-            <th class="">{{__('admin.session')}}</th>
+            <th class="text-left">{{__('admin.session')}}</th>
 
             <th class="">{{__('admin.user_type')}}</th>
             <th class=""></th>
@@ -41,13 +41,13 @@ use App\Models\Training\CourseRegistration;
                     <span class="td-title px-1">{{$loop->iteration}}</span>
                 </td>
 
-                <td class="px-1">
+                <td class="px-1 text-left">
                     <a href="{{route('training.usersReportOverview',['id'=>$post->id])}}" target="_blank" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span></a>
                 </td>
-                <td class="px-1">
+                <td class="px-1 text-left">
                     <span style="display: block;">{{$post->email }} </span>
                 </td>
-                <td class="px-1">
+                <td class="px-1 text-left">
                     @if($post->role_type_id == 512)
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
@@ -56,12 +56,12 @@ use App\Models\Training\CourseRegistration;
                     @endif
                 </td>
 
-                <td>
+                <td class="text-left">
                     <span class="badge-green" > {{$post->date_from?$post->date_from.' - ':''}}   {{$post->date_to}}</span>
                 </td>
 
-
                 <td>
+
                     @if($post->role_type_id == 511)
                         <span class="badge-pink" >
                     @elseif($post->role_type_id == 512)
@@ -69,8 +69,15 @@ use App\Models\Training\CourseRegistration;
                     @endif
                     {{\App\Helpers\Lang::TransTitle($post->c_name)}}</span>
                 </td>
+
                 <td>
-                    <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id])}}" class="btn-sm outline" target="_blank"><span class="href">{{__('admin.details')}}</span></a>
+                    <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id,'preview'=>'true'])}}" class="primary-outline" target="_blank"><span class="href">{{__('admin.details')}}</span></a>
+                    @if(isset($post->progress) && ($post->progress >= $post->complete_progress ))
+                        <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
+                            target="_blank" class="primary-outline">
+                            Certificate
+                        </a>
+                    @endif
                 </td>
             </tr>
         @endforeach

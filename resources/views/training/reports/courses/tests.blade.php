@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
         <thead>
         <tr>
             <th class="">#</th>
+            <th class="text-left">Section</th>
             <th class="text-left">{{__('admin.test')}}</th>
             <th class="">{{__('admin.completedNo')}}</th>
             <th class="">{{__('admin.passedNo')}}</th>
@@ -20,9 +21,13 @@ use Illuminate\Support\Facades\DB;
         </thead>
         <tbody>
             @foreach($tests as $post)
-                <tr data-id="{{$post->id}}">
+                <tr data-id="{{$post->exam_id}}">
                     <td>
                         <span class="td-title px-1">{{$loop->iteration}}</span>
+                    </td>
+                    <td class="px-1 text-left">
+                        <span style="display: block;">{{ $post->section }} </span>
+
                     </td>
                     <td class="px-1 text-left">
                         <span style="display: block;">{{ $post->content_title }} </span>
@@ -34,7 +39,7 @@ use Illuminate\Support\Facades\DB;
                     <td>
                         <?php
                             $completed = DB::table('user_exams')
-                                            ->where('exam_id',$post ->id)
+                                            ->where('exam_id',$post->exam_id)
                                             ->where('status',1)
                                             ->count(DB::raw('DISTINCT status,user_id'));
                         ?>
@@ -48,7 +53,7 @@ use Illuminate\Support\Facades\DB;
                                     ( select max(user_exams.mark) ,user_exams.user_id uu
                                         from user_exams join exams on exams.id = user_exams.exam_id
                                             where user_exams.mark >= (exams.pass_mark/100*exams.exam_mark)
-                                            and user_exams.exam_id = ".$post ->id."
+                                            and user_exams.exam_id = ".$post->exam_id."
                                         group by user_exams.user_id ) as x ";
                             $passess = DB::select($sql);
 
@@ -59,7 +64,8 @@ use Illuminate\Support\Facades\DB;
                         @endforeach
                     </td>
                     <td>
-                        <a class="primary-outline" target="_blank" href="{{route('training.exam_preview',['exam_id'=>$post->id])}} ">{{--<i class="fa fa-plus" aria-hidden="true"></i>--}} Preview </a>
+
+                        <a class="primary-outline" target="_blank" href="{{route('training.exam_preview',['content_id'=>$post->content_id])}} ">{{--<i class="fa fa-plus" aria-hidden="true"></i>--}} Preview </a>
                     </td>
 
                 </tr>

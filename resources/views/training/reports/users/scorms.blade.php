@@ -1,3 +1,8 @@
+<style>
+.href{
+    color:black;
+}
+</style>
 <?php
 use App\Models\Training\CourseRegistration;
 ?>
@@ -11,26 +16,31 @@ use App\Models\Training\CourseRegistration;
       <thead>
         <tr>
             <th class="">#</th>
-            <th class="">{{__('admin.course')}}</th>
-            <th class="">{{__('admin.scorm')}}</th>
+            <th class="text-left">{{__('admin.course')}}</th>
+            <th class="text-left">{{__('admin.scorm')}}</th>
             <th class="">{{__('admin.date')}}</th>
-            <th class="">{{__('admin.result')}}</th>
+            <th class="text-left">{{__('admin.result')}}</th>
             <th class="">{{__('admin.score')}}</th>
 
         </tr>
       </thead>
       <tbody>
+
       @foreach($scorms as $post)
       <tr data-id="{{$post->id}}">
         <td>
 
           <span class="td-title px-1">{{$loop->iteration}}</span>
         </td>
-        <td class="px-1">
-            <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->crtitle) }}  </span>
+        <td class="px-1 text-left">
+            {{-- <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($post->crtitle) }}  </span> --}}
+            <a target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($post->crtitle) }} </span></a>
+
         </td>
-        <td class="px-1">
-            <span style="display: block;">{{ $post->cotitle }} </span>
+        <td class="px-1 text-left">
+            {{ \App\Helpers\Lang::TransTitle($post->cotitle) }}
+            {{-- <a href="{{CustomRoute('user.course_preview', $post->id)}}" target="_blank" class="href" >
+                {{ \App\Helpers\Lang::TransTitle($post->cotitle) }}</a> --}}
         </td>
         <td class="px-1">
             <span class="td-title">{{$post->date}}</span>

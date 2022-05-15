@@ -176,9 +176,9 @@
                         @foreach ($messages as $message)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{json_decode($message->course_title)->$lang}}</td>
+                                <td>{{json_decode($message->course_title)->$lang??null}}</td>
                                 @if($is_inbox)
-                                <td>{{json_decode($message->username_send_msg)->$lang}}</td>
+                                <td>{{json_decode($message->username_send_msg)->$lang??null}}</td>
                                 @else
                                 <td>{{$message->recipient == 2 ? "Instructor" : "Admin" }}</td>
                                 @endif

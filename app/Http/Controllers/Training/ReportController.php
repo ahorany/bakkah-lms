@@ -24,7 +24,9 @@ use Carbon\Carbon;
 use App\Models\Training\UserExam;
 use App\Helpers\CourseContentHelper;
 use App\Models\Paginator;
-
+use App\Models\Training\UserContentsPdf;
+use App\Models\Training\Message;
+use App\Models\Training\Discussion;
 
 class ReportController extends Controller
 {
@@ -51,12 +53,13 @@ class ReportController extends Controller
                 where users.id = ? " ;
         $user = DB::select($sql,[$user_id]);
         // dd($user);
-        $learners_no         = 1;
+        $users_no         = 1;
         $complete_courses_no =  CourseRegistration::getCoursesNo()
                                     ->where('courses_registration.user_id',$user_id)
-                                    ->where('courses_registration.progress',100)->count();
+                                    ->whereRaw('courses_registration.progress >= courses.complete_progress')
+                                    ->count();
         $courses_in_progress =  CourseRegistration::getCoursesNo()
-                                    ->where('courses_registration.progress','<',100)
+                                    ->whereRaw('courses_registration.progress < courses.complete_progress')
                                     ->where('courses_registration.progress','>',0)
                                     ->where('courses_registration.user_id',$user_id)->count();
         $courses_not_started = CourseRegistration::getCoursesNo()
@@ -64,7 +67,7 @@ class ReportController extends Controller
                                     ->where('courses_registration.user_id',$user_id)->count();
         $overview = 1;
 
-        return view('training.reports.users.user_report',compact('user_id','learners_no','complete_courses_no',
+        return view('training.reports.users.user_report',compact('user_id','users_no','complete_courses_no',
             'courses_in_progress','courses_not_started','overview', 'user'));
     }
 
@@ -72,13 +75,14 @@ class ReportController extends Controller
     {
         $user_id = request()->id;
         $sql = "SELECT users.id,users.email,user_branches.name
-        FROM users  join user_branches on users.id = user_branches.user_id
-        where users.id = ? " ;
+                FROM users  join user_branches on users.id = user_branches.user_id
+                where users.id = ? " ;
+
         $user = DB::select($sql,[$user_id]);
         $branch_id = getCurrentUserBranchData()->branch_id;
         // $courses = CourseRegistration::getCoursesNo()->where('courses_registration.user_id',$user_id)->get();
-        // dd($courses);
-        $select = 'select courses.id,courses.title,courses_registration.progress,courses_registration.score,courses.created_at,courses.PDUs,courses.complete_progress,courses_registration.id as c_reg_id ';
+        // dd($courses);complete_progress
+        $select = 'select courses.id,courses.title,courses_registration.progress,courses_registration.score,courses.created_at,courses.PDUs,courses.complete_progress,courses_registration.id as c_reg_id,categories.title as categ_title,courses.training_option_id as deleviry_method_id  ,constants.name  as deleviry_method_name ';
 
         $from = ' from courses_registration
                     join roles on roles.id = courses_registration.role_id
@@ -92,6 +96,8 @@ class ReportController extends Controller
                     join user_branches on user_branches.user_id = users.id
                                         and user_branches.deleted_at is null
                                         and user_branches.branch_id = ?
+                    left join categories on categories.id = courses.category_id
+                    join constants on constants.id = courses.training_option_id
                 where courses_registration.user_id = ?
                 order by users.id ';
 
@@ -152,14 +158,18 @@ class ReportController extends Controller
                 FROM users  join user_branches on users.id = user_branches.user_id
                 where users.id = ? " ;
         $user = DB::select($sql,[$user_id]);
-        // dd($user);s
+        // dd($user);
         $sql2 = " select contents.id,courses.title as crtitle,contents.title as cotitle,scormvars_master.date,
-                        scormvars_master.score,scormvars_master.lesson_status
+                        scormvars_master.score,scormvars_master.lesson_status,courses.id as course_id
                 from scormvars_master   join users on scormvars_master.user_id = users.id
                                                 and scormvars_master.user_id = ?
                                         join contents on contents.id = scormvars_master.content_id
+                                                and contents.deleted_at is null
                                         join courses on courses.id = contents.course_id and courses.branch_id = ?
+                                                and courses.deleted_at is null
+                where scormvars_master.deleted_at is  null
                 ";
+        // dd($sql2);
         $scorms = DB::select($sql2, [$user_id,$branch_id]);
         $paginator = Paginator::GetPaginator($scorms);
         $scorms = $paginator->items();
@@ -266,7 +276,7 @@ class ReportController extends Controller
         $course = DB::select($sql2,[$course_id ]);
         $branch_id = getCurrentUserBranchData()->branch_id;
 
-        $select = ' select users.id,users.email,user_branches.name,courses_registration.progress,roles.role_type_id,sessions.date_from,sessions.date_to,constants.name as c_name ';
+        $select = ' select users.id,users.email,user_branches.name,courses_registration.progress,roles.role_type_id,sessions.date_from,sessions.date_to,constants.name as c_name ,courses.complete_progress,courses_registration.id as c_reg_id';
 
         $from = ' from courses_registration
                     join roles on roles.id = courses_registration.role_id
@@ -304,12 +314,13 @@ class ReportController extends Controller
         $sql2 = "SELECT * FROM courses where id = ? " ;
         $course = DB::select($sql2,[$course_id ]);
 
-        $sql = "select exams.id , contents.title as content_title
+        $sql = "select contents.id as content_id, contents.title as content_title,exams.id as exam_id,c2.title as section
                 from contents
                     join exams on exams.content_id = contents.id
                     join courses on courses.id = contents.course_id
-                where courses.id = ? ";
-
+                    join contents  c2 on contents.parent_id = c2.id
+                where courses.id = ? and contents.deleted_at is null ";
+        // dd($sql);
         $tests = DB::select($sql,[$course_id]);
 
         $paginator = Paginator::GetPaginator($tests);
@@ -346,7 +357,7 @@ class ReportController extends Controller
             if(isset(request()->session_id))
                 $from .= 'and courses_registration.session_id = ? ';
             $from .= '
-            join sessions on sessions.id = courses_registration.session_id
+            left join sessions on sessions.id = courses_registration.session_id
             join users on users.id = user_exams.user_id
             join  user_branches on  user_branches.user_id = users.id and user_branches.branch_id = ?
             join  roles on  roles.id = courses_registration.role_id
@@ -415,8 +426,8 @@ class ReportController extends Controller
         $assessments = $paginator->items();
         $count = $paginator->total();
 
-
-        return view('training.reports.courses.course_report',compact('course_id', 'assessments', 'course','sessions','paginator','count'));
+        $session_id = request()->session_id??'';
+        return view('training.reports.courses.course_report',compact('course_id', 'assessments', 'course','sessions','paginator','count','session_id'));
 
     }
 
@@ -424,23 +435,28 @@ class ReportController extends Controller
     public function coursesReportScorm()//new
     {
         $course_id = request()->id;
-        $sql = "SELECT i.id,i.content_id,i.course_id,i.lesson_status,i.title,i.attempts,other.passess
-        FROM
-        (
-            select count(content_id) attempts,scormvars_master.id id ,scormvars_master.user_id,scormvars_master.content_id,scormvars_master.course_id,scormvars_master.lesson_status,contents.title
-            from `contents`
-            join scormvars_master on contents.id = scormvars_master.content_id
-                        and scormvars_master.course_id = ?
-            group by scormvars_master.course_id ,scormvars_master.content_id,scormvars_master.lesson_status,contents.title
-        ) i
-        left join
-        (
-            select count(content_id) passess,scormvars_master.id id
-            from `contents` join scormvars_master on contents.id = scormvars_master.content_id
-                        and scormvars_master.course_id = ?
-            where lesson_status = 'completed'
-            group by scormvars_master.course_id ,scormvars_master.content_id,scormvars_master.lesson_status,contents.title
-        ) other on other.id = i.id";
+        $sql = "SELECT i.id,i.content_id,i.course_id,i.title,i.attempts,other.passess,i.sestion
+                FROM
+                (
+                    select count(content_id) attempts,scormvars_master.id id ,scormvars_master.user_id,scormvars_master.content_id,scormvars_master.course_id,contents.title,c2.title as sestion
+                    from `contents`
+                    join scormvars_master on contents.id = scormvars_master.content_id
+                                and scormvars_master.course_id = ?
+                                and contents.deleted_at is null
+                                and scormvars_master.deleted_at is null
+                    join contents  c2 on contents.parent_id = c2.id
+                    group by scormvars_master.course_id ,scormvars_master.content_id,contents.title,c2.title
+                ) i
+                left join
+                (
+                    select count(content_id) passess,scormvars_master.id id
+                    from `contents` join scormvars_master on contents.id = scormvars_master.content_id
+                                and scormvars_master.course_id = ?
+                    where lesson_status = 'completed'
+                    group by scormvars_master.course_id ,scormvars_master.content_id,contents.title
+                ) other on other.id = i.id ";
+        // dump($course_id);
+        // dd($sql);
         $scorms = DB::select($sql,[$course_id,$course_id ]);
 
         $paginator = Paginator::GetPaginator($scorms);
@@ -455,6 +471,7 @@ class ReportController extends Controller
         return view('training.reports.courses.course_report',compact('scorms','course','course_id','paginator','count'));
     }
 
+
     public function progressDetails()
     {
 
@@ -463,21 +480,20 @@ class ReportController extends Controller
         $user_id = request()->user_id;
         $course_id = request()->course_id;
         $back_page = request()->back_page??'courses';
-        $preview_gate_allows = Gate::allows('preview-gate');
 
         // clear session => (Sidebar active color)
         session()->put('Infrastructure_id', -1);
 
         $course_registration = CourseRegistration::where('course_id', $course_id)
         ->where('user_id', $user_id)
-        ->select('id', 'role_id')
+        ->select('id', 'role_id', 'progress')
         ->first();
-
-        $role_id = (!$preview_gate_allows) ? $course_registration->role_id : -1;
+        // dd($course_registration);
+        $role_id = -1;
        // Get Course With Contents
 
-        $course = $this->getCourseWithContents($course_id, $role_id);
-        // $course = $this->getCourseWithContents($course_id, $role_id);
+        $course = $this->getCourseWithContents($course_id, $role_id,$user_id);
+
         // validate if course exists or not
         if(!$course){
             abort(404);
@@ -489,6 +505,7 @@ class ReportController extends Controller
         // Get User Course Activities
         $activities = app('App\Http\Controllers\Front\CourseController')->getUserCourseActivities($course->id, $user_id);
         $user   = User::where('id',$user_id)->first();
+        // dd($user);
         return view('training.reports.courses.progress_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id','user','back_page'));
         // return view('pages.course_details',compact('course', 'total_rate', 'activities', 'course_registration', 'role_id'));
     }
@@ -692,32 +709,88 @@ class ReportController extends Controller
 
     }
 
-    public function getCourseWithContents($course_id, $role_id){
+
+    public function preview_content(){
+        $content_id = request()->content_id;
+        $user_id = request()->user_id;
+        $preview_gate_allows = Gate::allows('preview-gate');
+
+
+        // Get content from DB
+        $content = Content::whereId($content_id)
+            ->with(['upload','course' ,'section.gift','user_contents' => function($q){
+                $q->where('user_id',request()->user_id);
+            }])->whereHas('course',function ($q){
+                $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+            })->first();
+
+        // Check if content not found => ABORT(404)
+        if (!$content){
+            abort(404);
+        }// end if
+
+        // Get next and prev
+        $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
+        $next = $arr['next'];
+        $previous = $arr['previous'];
+        // end next and prev
+
+        $enabled = true;
+
+       // if downloadable status == true (Download file)
+        if($content->downloadable == 1){
+            // get content file path
+            $file = $this->getContentFilePath($content->post_type);
+            if ($file){
+                return response()->download($file); // download response
+            }
+        }// end if
+
+
+
+        // get time limit content (duration in seconds)
+        $time_limit = $content->time_limit;
+
+        $popup_gift_status = false;
+
+        $page_num = UserContentsPdf::where('content_id',$content->id)->where('user_id',request()->user_id)->pluck('current_page')->first();
+
+        $flag = 0;
+        $role_id = -1;
+        // Get Course With Contents
+        $course = $this->getCourseWithContents($content->course->id, $role_id,$user_id);
+
+        return view('training.reports.courses.preview_content',compact('content','previous','next','enabled','time_limit','popup_gift_status','page_num','flag','course'));
+        // return view('pages.file', compact('content','previous','next','enabled','time_limit','popup_compelte_status','popup_gift_status','page_num','flag','course'));
+    } //
+
+
+
+    public function getCourseWithContents($course_id, $role_id,$user_id){
 
         $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
 
-        // if(!Gate::allows('preview-gate')){
 
-        //     $course = $course->whereHas('users', function ($q){
-        //         $q->where('users.id', \auth()->id());
-        //     })->with(['users' => function($query){
-        //         $query->where('user_id', \auth()->id());
-        //     }, 'course_rate' => function($query){
-        //         return $query->where('user_id', \auth()->id());
-        //     }]);
-        // }
+        $course = $course->whereHas('users', function ($q) use ($user_id){
+            $q->where('users.id', $user_id);
+        })->with(['users' => function($query) use ($user_id){
+            $query->where('user_id', $user_id);
+        }, 'course_rate' => function($query) use ($user_id){
+            return $query->where('user_id', $user_id);
+        }]);
 
-        $course = $course->with(['uploads' => function($query){
+
+        $course = $course->with(['uploads' => function($query) {
             return $query->where(function ($q){
                 $q->where('post_type','intro_video')->orWhere('post_type', 'image');
             });
-        }, 'contents' => function($query) use($role_id){
+        }, 'contents' => function($query) use($role_id,$user_id){
             $query->where('parent_id',null)->with(['gift','details',
                 'contents' => function($q){
                     return $q->orderBy('order');
                 },
-                'contents.details','contents.user_contents' => function($q){
-                    return $q->where('user_id', \auth()->id());
+                'contents.details','contents.user_contents' => function($q) use($user_id) {
+                    return $q->where('user_id', $user_id);
                 }])
             ->orderBy('order');
 
@@ -728,13 +801,68 @@ class ReportController extends Controller
                 }
             }
         }])->first();
-
+        // dd($course);
         return $course;
     } // end function
 
 
+    public function preview_discussion(){
+
+        $type = 'message';
+        if (request()->has('type')){
+            $type = request()->type;
+        }
+        $id = request()->id;
+        $user_id = request()->user_id;
+        $message = Message::where('id',$id)->with(['course.course','user.branches' => function($q){
+            $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+        },'replies.user.branches' => function($q){
+            $q->where('branch_id',getCurrentUserBranchData()->branch_id);
+        }])->where('type',$type)->first();
+
+        if(!$message || !$message->course){
+            abort(404);
+        }
+
+        $disabled_reply = false;
+        $discussion_not_start = false;
+        $user = User::where('id',$user_id)->first();// auth()->user();
+        // dd($user);
+        $user_role =  $user->roles()->first();
+
+        if ($message->type == 'discussion'){
+            $now = Carbon::now();
+            $discussion = Discussion::with(['message'])->where('message_id',$message->id)->first();
+
+            // check participants
+            if ($user_role->id != 4 && $user_role->role_type_id != 510 && $user->id != $message->user_id){
+                $user_course_registration =  CourseRegistration::where('user_id',$user->id)->where('course_id',$discussion->message->course_id)->first();
+                if (!$user_course_registration){
+                    abort(404);
+                }
+            }
 
 
+            // check date
+            if($discussion->start_date <= $now && $discussion->end_date > $now){
 
+            }else{
+                if ($discussion->start_date > $now && !(Gate::allows('preview-gate'))){
+                    $discussion_not_start = true;
+                }
+                $disabled_reply = true;
+            }
+
+            $content = Content::where('id',$discussion->content_id)->first();
+            if (!$content){
+                abort(404);
+            }
+
+            // end next and prev
+            return view('training.reports.courses.preview_discussion',compact('message','type','discussion','disabled_reply','discussion_not_start'));
+            // return view('training.messages.reply',compact('message','type','discussion','disabled_reply','next','previous','discussion_not_start'));
+
+        }
+    }
 
 }

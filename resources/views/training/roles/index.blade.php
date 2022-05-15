@@ -1,6 +1,6 @@
 @extends('layouts.crm.index')
 
-@section('title', __('admin.roles') . ' | ' . env('APP_NAME'))
+{{-- @section('title', __('admin.roles') . ' | ' . env('APP_NAME')) --}}
 
 @section('useHead')
     <title>{{__('education.Roles')}} | {{ __('home.DC_title') }}</title>
