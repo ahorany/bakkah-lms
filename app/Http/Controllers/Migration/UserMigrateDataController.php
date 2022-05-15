@@ -86,8 +86,16 @@ class UserMigrateDataController extends Controller
         if (!$master){
             abort(404);
         }
-        $rows = DB::table('user_migration_data')->get();
+
+        $rows = DB::table('user_migration_data')
+            ->where('master_id',$request->master_id)
+            ->where('course_id',$request->course_id)
+            ->where('sent',0)
+            ->get();
         foreach ($rows as $index => $row) {
+            DB::table('user_migration_data')->where('id',$row->id)->update([
+                'sent' => 1,
+            ]);
             Mail::to($row->email)->send(new UserMigrationMail());
         }
 
