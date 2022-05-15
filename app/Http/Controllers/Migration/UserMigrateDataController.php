@@ -71,6 +71,9 @@ class UserMigrateDataController extends Controller
 
 
     public function sendMails(Request $request){
+        if (auth()->id() != 1){
+            abort(404);
+        }
         $request->validate([
             'master_id' => 'required|exists:user_migration_files,id',
         ]);
@@ -96,6 +99,10 @@ class UserMigrateDataController extends Controller
 
 
     public function save(Request $request){
+        if (auth()->id() != 1){
+            abort(404);
+        }
+
         $request->validate([
             'master_id' => 'required|exists:user_migration_files,id',
         ]);
