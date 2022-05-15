@@ -403,7 +403,6 @@ class CertificateControllerH extends Controller
     }
 
     public function certificate_dynamic() {
-
         // $course = Course::find(request()->course_registration_id);
         $course_registration = CourseRegistration::leftJoin('sessions', function($query){
             $query->on('sessions.id','=','courses_registration.session_id')
@@ -417,8 +416,11 @@ class CertificateControllerH extends Controller
         // dd(request()->course_registration_id);
 
         $course = Course::find($course_registration->course_id);
+
         $body = $this->certificate_body(['certificate_id'=>$course->certificate_id,
                                         'course_registration'=>$course_registration]);
+                                        // dd('dxdd');
+
         return view('training.certificates.certificate.index', [
             'cart'=>$body['cart'],
             'data_for_qr'=>$body['data_for_qr'],
@@ -429,7 +431,6 @@ class CertificateControllerH extends Controller
     }
 
     public function certificate_body($array=null) {
-        // dd($array);
         // ============ Start of Data will be in certificate ==================
         $cart = '';$data_for_qr='';
         // if(isset($array['cart_id']) && $array['cart_id'] != '')
@@ -454,6 +455,7 @@ class CertificateControllerH extends Controller
         //     // dd($certificate_id);
         // }
         // else
+
         if(isset($array['certificate_id']) && $array['certificate_id'] != '')
         {
             $certificate_id = $array['certificate_id'];
@@ -518,6 +520,7 @@ class CertificateControllerH extends Controller
             $user = '' ;$course_registration='';$course='';
             if(isset($array['course_registration']))
             {
+
                 $course_registration = $array['course_registration'];
                 $course = Course::find($course_registration->course_id);
                 // $course = Course::find($array['course_id']);

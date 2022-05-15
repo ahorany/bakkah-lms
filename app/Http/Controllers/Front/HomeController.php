@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Mail\UserMail;
+use App\Mail\MigrationMail;
 use App\Notifications\sendTestNotfication;
 use App\User;
 use Carbon\Carbon;
@@ -42,7 +43,9 @@ class HomeController extends Controller
      */
     public function home() {
 
-        // Mail::to("abed_348@hotmail.com")->send(new UserMail(1 , '1111111'));
+        // migration-mail
+        // Mail::to("abed_348@hotmail.com")->send(new MigrationMail());
+
         // dd('send');
         // clear session => (Sidebar active color)
         session()->put('Infrastructure_id',-1);
