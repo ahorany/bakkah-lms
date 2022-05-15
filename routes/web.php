@@ -13,7 +13,7 @@ Route::group([
         return view('scorm');
     });
 
-    Auth::routes(['register' => true]);
+    Auth::routes(['register' => false]);
 });
 
 Route::get('/', function(){
