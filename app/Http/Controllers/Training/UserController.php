@@ -58,7 +58,6 @@ class UserController extends Controller
 
         $count = $users->count();
         $users = $users->page();
-        // dd($users);
         $learners_no  = User::getLearnersNo();
         if(!is_null(request()->user_search)) {
             $learners_no = $this->SearchUser($learners_no);

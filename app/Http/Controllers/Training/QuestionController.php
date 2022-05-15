@@ -37,16 +37,7 @@ class QuestionController extends Controller
         return $branch;
     }
 
-//    public function add_questions($exam_id){
-//        $content = Content::where('id',$exam_id)->with(['questions.answers','questions.units'])->latest()->first();
-//        $course_id = $content->course_id;
-//        $units = Unit::where('course_id',$course_id)->with(['subunits'])->get();
-//        $units = $this->buildTree($units);
-//        $import_types = Constant::where('post_type','imports')->get();
-//        // dd($import_types);
-//        return view('training.courses.contents.exam', compact('content','units','course_id','import_types'));
-//
-//    }
+
 
     public function add_questions($exam_id){
         $content = Content::where('id',$exam_id)->with(['exam','questions.answers','questions.units'])->latest()->first();

@@ -62,10 +62,6 @@
                             <button type="button" @click="OpenModal('question')" class="btn-sm group_buttons mb-1" style="width: max-content;">
                                 <i class="fa fa-plus"></i> Add multiple choice question
                             </button>
-
-{{--                        <button type="button" @click="OpenModal('fill_gap')" class="btn-sm group_buttons mb-1" style="width: max-content;">--}}
-{{--                            <i class="fa fa-plus"></i> Add fill gap question--}}
-{{--                        </button>--}}
                     </div>
                     <div class="col-lg-9 col-md-8 col-12">
                         @include('training.courses.contents.header',['course_id' => $course_id, 'contents' =>true , 'units' => false])
@@ -239,7 +235,7 @@
                                 </div> --}}
                             </div>
 
-                            <div v-if="model_type != 'fill_gap'" class="mt-4">
+                            <div class="mt-4">
                                 <div class="mb-2" v-show="'answers' in errors">
                                     <span style="color: red;font-size: 13px">@{{ errors.answers }}</span>
                                 </div>
@@ -532,21 +528,7 @@
                 }
             });
     </script>
-    {{-- <script>
-        $(document).ready(function(){
-            $('.action_preview span.setting').click(function(){
-                $('.action_preview button').show();
-                $('.action_preview span.left').removeClass('d-none');
-                $('.action_preview span.setting').hide();
-            });
 
-            $('.action_preview span.left').click(function(){
-                $('.action_preview span.setting').show();
-                $('.action_preview button').hide();
-                $('.action_preview span.left').addClass('d-none');
-            });
-        });
-    </script> --}}
 
 @endsection
 
