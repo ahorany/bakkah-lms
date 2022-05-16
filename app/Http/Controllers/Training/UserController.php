@@ -59,20 +59,11 @@ class UserController extends Controller
 
         $count = $users->count();
         $users = $users->page();
-<<<<<<< HEAD
         $learners_no  = User::getLearnersNo();
         if(!is_null(request()->user_search)) {
             $learners_no = $this->SearchUser($learners_no);
         }
         $learners_no =  $learners_no->count();
-=======
-        // dd($users);
-        // $learners_no  = User::getLearnersNo();
-        // if(!is_null(request()->user_search)) {
-        //     $learners_no = $this->SearchUser($learners_no);
-        // }
-        // $learners_no =  $learners_no->count();
->>>>>>> de72646a78a8ace1313280aefa11cbd18cc28fa3
         //
         $users_no = $count;
         $complete_courses_no = CourseRegistration::getCoursesNo();

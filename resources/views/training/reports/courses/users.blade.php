@@ -49,8 +49,9 @@ use App\Models\Training\CourseRegistration;
                 </td>
                 <td class="px-1 text-left">
                     @if($post->role_type_id == 512)
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
+                    <div class="progress progress-new">
+                        <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                        <span>@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</span>
                     </div>
 
                     @endif
