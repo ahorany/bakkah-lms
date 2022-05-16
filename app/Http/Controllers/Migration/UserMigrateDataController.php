@@ -161,7 +161,7 @@ class UserMigrateDataController extends Controller
                     }
 
                     $user->assignRole([$role_id]);
-                    Mail::to($user->email)->send(new UserMail($user->id ,  $row['plain_password']));
+                    Mail::to($user->email)->send(new UserMail($user->id ,$row['first_name'] . " " . $row['last_name'],  $row['plain_password']));
                 }
 
 

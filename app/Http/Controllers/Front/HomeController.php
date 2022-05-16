@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Mail\UserMail;
 use App\Mail\MigrationMail;
-use App\Notifications\sendTestNotfication;
 use App\User;
 use Carbon\Carbon;
 // use http\Url;

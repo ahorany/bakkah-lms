@@ -164,7 +164,7 @@ class UserApiController
             ]);
 
             $user->assignRole([3]);
-            Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
+            Mail::to($user->email)->send(new UserMail($user ,$request->name ,  $request->password));
         }
 
 
