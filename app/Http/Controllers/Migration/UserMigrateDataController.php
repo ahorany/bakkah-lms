@@ -91,7 +91,12 @@ class UserMigrateDataController extends Controller
             ->where('master_id',$request->master_id)
             ->where('course_id',$request->course_id)
             ->where('sent',0)
+            ->take(20)
             ->get();
+        if (!$rows){
+            dd('Done !!');
+        }
+
         foreach ($rows as $index => $row) {
             DB::table('user_migration_data')->where('id',$row->id)->update([
                 'sent' => 1,
@@ -117,7 +122,7 @@ class UserMigrateDataController extends Controller
 
 
        $master =  DB::table('user_migration_files')
-            ->where('master_id',$request->master_id)
+            ->where('id',$request->master_id)
             ->where('course_id',$request->course_id)
             ->first();
        if (!$master){

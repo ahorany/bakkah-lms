@@ -18,6 +18,6 @@ class UserMigrationMail extends Mailable
 
     public function build()
     {
-        return $this->view('training.mails.migration-mail');
+        return $this->subject('Announcement: Transferring to Bakkah New LMS')->view('training.mails.migration-mail');
     }
 }
