@@ -23,7 +23,6 @@ class MigrationITILCourseUsersImport implements ToCollection
         $this->course_id = $course_id;
     }
 
-
     public function collection(Collection $rows)
     {
         $course = Course::select('id', 'ref_id')->where('id', $this->course_id)->first();

@@ -21,7 +21,9 @@
         $next_url = $NextPrevNavigation['next_url'];
         $previous_url = $NextPrevNavigation['previous_url'];
     ?>
-
+<video style="display: none">
+    <source src='/y.mp4' type='video/mp4'>
+</video>
     <div class="user-info">
         @if($popup_compelte_status)
             <div class="custom-model-main custom-model-main-cert model-open">

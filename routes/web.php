@@ -63,13 +63,16 @@ Route::get('/clear-cache', function(){
 })->middleware('auth');
 
 
-Route::get('migration/user/import/{course_id}',function ($course_id){
-    if (auth()->id() == 1){
-        // dd('test');
-       Excel::import(new \App\Imports\MigrationITILCourseUsersImport($course_id), public_path('upload/excel/ecba_self.xlsx'));
-       dd('success');
-    }
-})->middleware('auth');
+
+
+Route::group(['prefix' => 'migration','namespace' => '\App\Http\Controllers\Migration','middleware' => 'auth'],function (){
+    Route::get('import/users/{course_id}','UserMigrateDataController@index')->name('migration.users.index');
+    Route::post('import/users/{course_id}','UserMigrateDataController@upload')->name('migration.users.store');
+    Route::post('send/mails/{course_id}','UserMigrateDataController@sendMails')->name('migration.users.mails');
+    Route::post('save/{course_id}','UserMigrateDataController@save')->name('migration.users.save');
+});
+
+
 
 
 
