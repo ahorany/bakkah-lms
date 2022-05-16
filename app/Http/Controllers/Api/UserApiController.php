@@ -75,7 +75,7 @@ class UserApiController
 
             $user = $this->addUser($request);
 
-            $course = Course::select('id','ref_id')->where('ref_id',$request->course_id)->first();
+            $course = Course::select('id','ref_id','title')->where('ref_id',$request->course_id)->first();
 
             $courseRegistration =  CourseRegistration::where( 'user_id',$user->id)
                 ->where('course_id',$course->id)
