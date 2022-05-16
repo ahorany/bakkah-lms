@@ -8,7 +8,7 @@
 
 @section('table')
 
-{{--    @include('training.'.$folder.'.search')--}}
+   {{-- @include('training.'.$folder.'.search') --}}
 	{{Builder::SetTrash($trash)}}
 	{{Builder::SetFolder($folder)}}
 	{{Builder::SetPrefix('training.')}}

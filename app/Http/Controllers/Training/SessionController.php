@@ -33,6 +33,8 @@ class SessionController extends Controller
         $post_type = 'sessions';
         $trash = GetTrash();
         $sessions = Session::with(['course'])->where('branch_id',getCurrentUserBranchData()->branch_id);
+        // if(request()->course_search != '')
+        //     $sessions = $sessions->where('courses.title', 'like', '%' . request()->course_search . '%');
         $count = $sessions->count();
         $sessions = $sessions->page();
         return Active::Index(compact('sessions', 'count', 'post_type', 'trash'));

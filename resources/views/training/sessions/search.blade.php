@@ -31,7 +31,9 @@
                             {!! Builder::Hidden('post_type', $post_type) !!}
                             {!! Builder::Hidden('trash') !!}
 
-                            {!! Builder::Input('session_search', 'session_search', request()->session_search??null, ['col'=>'col-md-12'])!!}
+                            {!!Builder::Input('course_search', 'course_search',request()->course_search??null,['col'=>'col-md-6'])!!}
+
+
                             <div class="col-md-12">
                                 <div style="margin-top: 5px;">
                                     {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
