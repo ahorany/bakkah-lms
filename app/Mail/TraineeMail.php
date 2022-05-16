@@ -12,26 +12,18 @@ class TraineeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    //public $CourseInterest;
 
-    // public function __construct($CourseInterest)
-    // {
-    //     $this->CourseInterest = $CourseInterest;
-    // }
-
-    public function __construct($user_id , $course_id)
+    public function __construct($username, $course)
     {
-        $this->user_id = $user_id;
-        $this->course_id = $course_id;
+        $this->username = $username;
+        $this->course      = $course;
     }
 
     public function build()
     {
-        $user = User::where('id',$this->user_id)->first();
-        $course = Course::where('id',$this->course_id)->first();
         return $this->view('training.mails.trainee-mail', [
-            'user'=>$user,
-            'course'=>$course,
+            'username'     => $this->username,
+            'course'       => $this->course,
         ]);
     }
 }

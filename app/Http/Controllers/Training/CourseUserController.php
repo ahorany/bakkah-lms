@@ -13,6 +13,7 @@ use App\Models\Training\CourseRegistration;
 use App\Models\Training\Exam;
 use App\Models\Training\Question;
 use App\Models\Training\Session;
+use App\Models\Training\UserBranch;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -103,8 +104,9 @@ class CourseUserController extends Controller
 
 
     public function add_users_course(){
-
-        $course = Course::whereId(\request()->course_id)->where('branch_id',getCurrentUserBranchData()->branch_id)->first();
+        $course = Course::whereId(\request()->course_id)
+            ->where('branch_id',getCurrentUserBranchData()->branch_id)
+            ->first();
         if(!$course){
             return response()->json([ 'status' => 'fail']);
         }
@@ -135,9 +137,13 @@ class CourseUserController extends Controller
                         'session_id'     => $user['session_id'],
                     ]
                 );
-                if($user['role_id'] == 3){
-                    $user = User::where('id',$user['user_id'])->first();
-                    Mail::to($user->email)->send(new TraineeMail($user->id, $course->id));
+
+                if($user['role_type_id'] == 512){
+                    $user = UserBranch::where('user_id',$user['user_id'])
+                            ->where('branch_id', getCurrentUserBranchData()->branch_id)
+                            ->with(['user'])
+                            ->first();
+                    Mail::to($user->user->email)->send(new TraineeMail($user->name, $course));
                 }
         }
         return response()->json([ 'status' => 'success']);
