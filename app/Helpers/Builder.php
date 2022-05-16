@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Gate;
 
 class Builder {
+
 	protected static $trash = null;
 	public static $eloquent = null;
 	protected static $folder = 'posts';
