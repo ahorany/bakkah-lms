@@ -12,18 +12,19 @@ class UserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct($user_id , $password)
+    public function __construct($user,$username, $password)
     {
-        $this->user_id = $user_id;
+        $this->user     = $user;
+        $this->username = $username;
         $this->password = $password;
     }
 
     public function build()
     {
-        $user = User::where('id',$this->user_id)->first();
         return $this->view('training.mails.user-mail', [
-            'user'=>$user,
-            'password'=>$this->password,
+            'user'    => $this->user,
+            'username'=> $this->username,
+            'password'=> $this->password,
         ]);
     }
 }

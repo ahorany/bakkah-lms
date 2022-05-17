@@ -22,7 +22,7 @@
 <h2>Step 2: Send Mails</h2>
 <form method="POST" action="{{route('migration.users.mails',[request()->course_id])}}">
     @csrf
-    <input type="text" name="master_id" />
+    <input placeholder="Master Id" type="text" name="master_id" />
     <button type="submit">Send Mails</button>
 </form>
 
@@ -37,7 +37,7 @@
     @endif
 
     @csrf
-    <input type="text" name="master_id" />
+    <input placeholder="Master Id" type="text" name="master_id" />
     @error('master_id')
          <div style="color: #ff0000">{{$message}}</div>
     @enderror

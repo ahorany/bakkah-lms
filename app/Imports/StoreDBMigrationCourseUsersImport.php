@@ -1,21 +1,12 @@
 <?php
 namespace App\Imports;
 
-use App\Mail\UserMail;
-use App\Models\Training\Content;
-use App\Models\Training\Course;
-use App\Models\Training\CourseRegistration;
-use App\Models\Training\UserBranch;
-use App\Models\Training\UserContent;
-use App\User;
-use Carbon\Carbon;
+
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class StoreDBMigrationCourseUsersImport implements ToCollection
 {

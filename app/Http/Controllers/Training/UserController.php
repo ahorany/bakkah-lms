@@ -159,7 +159,7 @@ class UserController extends Controller
             'name'      => $request->name,
         ]);
 
-        Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
+        Mail::to($user->email)->send(new UserMail($user ,$request->name,  $request->password));
 
         return Active::Inserted($user->email,[
             'post_type' => $post_type,
@@ -239,7 +239,7 @@ class UserController extends Controller
         User::UploadFile($user, ['method' => 'update']);
 
         if ($request->password){
-            Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
+            Mail::to($user->email)->send(new UserMail($user->id ,$request->name,  $request->password));
         }
 
 //        User::where('id',$user->id)->update(['is_logout' => 1]);

@@ -4,7 +4,7 @@
 <main style="text-align: center; width: 90%; margin: 15px auto 0;">
 
     <div style="margin: 15px 0">
-        <h5 style="font-size: 15px; margin: 15px 0; text-align: center;">Dear {{$user->en_name}},</h5>
+        <h5 style="font-size: 15px; margin: 15px 0; text-align: center;">Dear {{$username}},</h5>
         <p style="font-size: 14px; margin: 15px 0; text-align: center;">Welcome to Bakkah LMS! We are pleased you joined our community and wish you a great learning experience with us.</p>
         @isset($course)
             @if ($course->training_option_id == 11)

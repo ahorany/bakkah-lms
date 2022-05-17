@@ -37,7 +37,7 @@ function is_dynamic_certificate()
 }
 
 function CustomAsset($url, $strict_for_this=false){
-    //   return asset(env('LIVE_ASSET').$url);
+      return asset(env('LIVE_ASSET').$url);
 
     $url_arr = explode('.', $url);
     $last_url = [count($url_arr) - 1];

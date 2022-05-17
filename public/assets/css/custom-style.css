@@ -8,6 +8,16 @@
     display: inline-block;
     margin-bottom: 15px;
 }
+.progress.progress-new{
+    position: relative !important;
+}
+.progress.progress-new span{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50% ,-50%);
+}
+
 .export:hover{
     color: #fff !important;
     text-decoration: none !important;
@@ -619,7 +629,7 @@ justify-content: center;
     width: 50%;
     margin: 0 !important;
     position: relative;
-    height: 20px;
+    height: 16px;
 }
 .lms-header ul.navbar-nav li.user a svg{
     margin: 0;

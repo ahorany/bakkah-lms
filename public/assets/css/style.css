@@ -808,7 +808,7 @@ ol.breadcrumb li a {
   font-size: 25px;
   margin: 0;
   margin-bottom: 10px;
-  font-family: "Lato Bold";
+  /* font-family: "Lato Bold"; */
 }
 
 .card {
