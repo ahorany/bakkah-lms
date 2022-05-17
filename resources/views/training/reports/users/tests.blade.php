@@ -11,6 +11,11 @@ use App\Models\Training\CourseRegistration;
 <title>{{__('education.User Tests')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
+@if(!is_null($course) && $course != '')
+    <a href="{{route('training.usersReportTest',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'show_all'=>1])}}" class="group_buttons btn-sm">All Courses </a>
+    <a href="{{route('training.usersReportTest',['id'=>$user[0]->id,'course_id'=>$course[0]->id])}}" class="group_buttons btn-sm ">{{ \App\Helpers\Lang::TransTitle($course[0]->title) }} </a>
+@endif
+
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center">
       <thead>
@@ -34,12 +39,12 @@ use App\Models\Training\CourseRegistration;
         </td>
         <td class="px-1 text-left" >
 
-            <a target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$exam->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span></a>
+            <a target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$exam->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;text-decoration:underline;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span></a>
 
         </td>
         <td class="px-1 text-left">
 
-            <a  target="_blank"  href="{{CustomRoute('training.exam_show',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a>
+            <a  target="_blank"  href="{{CustomRoute('training.exam_show',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;text-decoration:underline;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a>
 
         </td>
         <td class="px-1 text-left"">

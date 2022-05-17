@@ -201,4 +201,6 @@ return [
     'no_attempts' => 'Attempts Count',
     'no_passed' => 'Passed Count',
     'users_no' => 'Users',
+    'enrolled_date' => 'Enrolled Date',
+    'Last_login_date' => 'Last login Date',
 ];

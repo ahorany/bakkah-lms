@@ -43,7 +43,7 @@ class CourseRegistration extends Model
     }
 
 
-    public static function getCoursesNo()
+    public static function getCoursesNo($course_id)
     {
         $branch_id = getCurrentUserBranchData()->branch_id;
 
@@ -54,10 +54,16 @@ class CourseRegistration extends Model
                 ->whereNull('roles.deleted_at')
                 ->where('roles.branch_id',$branch_id);
         })
-        ->join('courses',function ($join) use($branch_id){
+        ->join('courses',function ($join) use($branch_id,$course_id){
             $join->on('courses.id','=','courses_registration.course_id')
-                ->whereNull('courses.deleted_at')
-                ->where('courses.branch_id',$branch_id);
+                ->whereNull('courses.deleted_at');
+                if(!is_null($course_id))
+                {
+                    $join = $join->where('courses.id',$course_id);
+                }
+
+                $join = $join->where('courses.branch_id',$branch_id);
+
         })
         ->join('users','users.id','courses_registration.user_id')
         ->join('user_branches',function ($join) use($branch_id){

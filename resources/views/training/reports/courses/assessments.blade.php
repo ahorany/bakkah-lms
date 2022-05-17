@@ -57,9 +57,11 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.pre_assessment_score')}}</th>
             <th class="">{{__('admin.post_assessment_score')}}</th>
             <th class="">{{__('admin.knowledge_status')}}</th>
-            <th class="">{{__('admin.attendance_count')}}</th>
-            <th class="text-left">{{__('admin.instructor')}}</th>
-            <th class="text-left">{{__('admin.session_id')}}</th>
+            @if($course[0]->training_option_id == 13)
+                <th class="">{{__('admin.attendance_count')}}</th>
+                <th class="text-left">{{__('admin.instructor')}}</th>
+                <th class="text-left">{{__('admin.session_id')}}</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -90,20 +92,24 @@ use App\Models\Training\CourseRegistration;
                         $badge = 'badge-green';
                     else if($post->knowledge_status == 'Constant')
                         $badge = 'badge-lim';
-                    else
+                    else if($post->knowledge_status == 'Deceased')
                         $badge = 'badge-red';
+                    else if($post->knowledge_status == 'Not Yet')
+                        $badge = 'badge-blue';
                     @endphp
                     <span style="display: block;" class="{{$badge}}">{{ $post->knowledge_status }} </span>
                 </td>
-                <td>
-                    <span style="display: block;">{{ $post->attendance_count }} </span>
-                </td>
-                <td class="text-left">
-                    <span style="display: block;">{{ $post->trainer_name }} </span>
-                </td>
-                <td class="text-left">
-                    <span class="badge-green" > {{ $post->s_id }}</span>
-                </td>
+                @if($course[0]->training_option_id == 13)
+                    <td>
+                        <span style="display: block;">{{ $post->attendance_count }} </span>
+                    </td>
+                    <td class="text-left">
+                        <span style="display: block;">{{ $post->trainer_name }} </span>
+                    </td>
+                    <td class="text-left">
+                        <span class="badge-green" > {{ $post->s_id }}</span>
+                    </td>
+                @endif
 
             </tr>
         @endforeach

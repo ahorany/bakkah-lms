@@ -170,5 +170,7 @@ return [
     'no_attempts' => 'Attempts Count',
     'no_passed' => 'Passed Count',
     'users_no' => 'Users',
+    'enrolled_date' => 'تاريخ التسجيل',
+    'Last_login_date' => 'تاريخ اخر دخول',
 
 ];

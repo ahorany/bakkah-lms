@@ -46,34 +46,52 @@ class ReportController extends Controller
     {
 
         $user_id = request()->id;
-        // dd($user_id);
+        $course_id = request()->course_id??null;
+        $course = '';
+        if(!is_null($course_id))
+        {
+            $sql2 = "SELECT id,title
+                     FROM courses
+                      where id = ? " ;
+            $course = DB::select($sql2,[$course_id]);
+        }
+
         // $user = User::findOrFail($user_id);
         $sql = "SELECT users.id,users.email,user_branches.name
                 FROM users  join user_branches on users.id = user_branches.user_id
                 where users.id = ? " ;
         $user = DB::select($sql,[$user_id]);
         // dd($user);
-        $users_no         = 1;
-        $complete_courses_no =  CourseRegistration::getCoursesNo()
+        $users_no            = 1;
+        $complete_courses_no =  CourseRegistration::getCoursesNo($course_id)
                                     ->where('courses_registration.user_id',$user_id)
                                     ->whereRaw('courses_registration.progress >= courses.complete_progress')
                                     ->count();
-        $courses_in_progress =  CourseRegistration::getCoursesNo()
+        $courses_in_progress =  CourseRegistration::getCoursesNo($course_id)
                                     ->whereRaw('courses_registration.progress < courses.complete_progress')
                                     ->where('courses_registration.progress','>',0)
                                     ->where('courses_registration.user_id',$user_id)->count();
-        $courses_not_started = CourseRegistration::getCoursesNo()
+        $courses_not_started = CourseRegistration::getCoursesNo($course_id)
                                     ->where('courses_registration.progress',0)
                                     ->where('courses_registration.user_id',$user_id)->count();
         $overview = 1;
 
         return view('training.reports.users.user_report',compact('user_id','users_no','complete_courses_no',
-            'courses_in_progress','courses_not_started','overview', 'user'));
+            'courses_in_progress','courses_not_started','overview', 'user','course'));
     }
 
     public function usersReportCourse()
     {
         $user_id = request()->id;
+        $course_id = request()->course_id??null;
+        $course = '';
+        if(!is_null($course_id))
+        {
+            $sql2 = "SELECT id,title FROM courses where id = ? " ;
+            $course = DB::select($sql2,[$course_id]);
+        }
+        $show_all = request()->show_all??0;
+
         $sql = "SELECT users.id,users.email,user_branches.name
                 FROM users  join user_branches on users.id = user_branches.user_id
                 where users.id = ? " ;
@@ -88,30 +106,41 @@ class ReportController extends Controller
                     join roles on roles.id = courses_registration.role_id
                                         and roles.deleted_at is null
                                         and roles.branch_id = ?
-                                        and roles.role_type_id = 512
+                                        and roles.role_type_id = ?
                     join courses on courses.id = courses_registration.course_id
                                         and courses.deleted_at is null
-                                        and courses.branch_id = ?
-                    join users on users.id = courses_registration.user_id
+                                        and courses.branch_id = ? ';
+        if(!is_null($course_id) && $show_all == 0)
+        {
+            $from .=' and courses.id = ?';
+        }
+            $from .=' join users on users.id = courses_registration.user_id
                     join user_branches on user_branches.user_id = users.id
                                         and user_branches.deleted_at is null
                                         and user_branches.branch_id = ?
                     left join categories on categories.id = courses.category_id
                     join constants on constants.id = courses.training_option_id
                 where courses_registration.user_id = ?
-                order by users.id ';
+                order by courses.id ';
 
         $sql2 = $select.$from;
-        $courses = DB::select($sql2, [$branch_id, $branch_id, $branch_id, $user_id]);
+        if(!is_null($course_id) && $show_all == 0)
+        {
+            $courses = DB::select($sql2, [$branch_id,512, $branch_id, $course_id,$branch_id, $user_id]);
+        }
+        else
+        {
+            $courses = DB::select($sql2, [$branch_id,512, $branch_id, $branch_id, $user_id]);
+        }
         $paginator = Paginator::GetPaginator($courses);
         $courses = $paginator->items();
         $count = $paginator->total();
         if(isset(request()->export))
         {
-            return Excel::download(new CoursesExport($from, $user_id), 'Courses.xlsx');
+            return Excel::download(new CoursesExport($from, $user_id,$course_id,$show_all), 'Courses.xlsx');
         }
 
-        return view('training.reports.users.user_report',compact('courses', 'user','paginator','count'));
+        return view('training.reports.users.user_report',compact('courses', 'user','paginator','count','course'));
     }
 
 
@@ -119,6 +148,15 @@ class ReportController extends Controller
     public function usersReportTest()
     {
         $user_id = request()->id;
+        $course_id = request()->course_id??null;
+        $course = '';
+        if(!is_null($course_id))
+        {
+            $sql2 = "SELECT id,title FROM courses where id = ? " ;
+            $course = DB::select($sql2,[$course_id]);
+        }
+        $show_all = request()->show_all??0;
+
         $sql = "SELECT users.id,users.email,user_branches.name
                 FROM users  join user_branches on users.id = user_branches.user_id
                 where users.id = ? " ;
@@ -132,28 +170,41 @@ class ReportController extends Controller
                                 join user_exams on  user_exams.exam_id = exams.id
                                         and user_exams.user_id =  ?
                                 join courses on courses.id = contents.course_id
-                                        and courses.branch_id = ?
-                                join courses_registration on courses.id  = courses_registration.course_id
+                                        and courses.branch_id = ? ";
+        if(!is_null($course_id))
+            $sql2 .= 'and courses.id = ? ';
+         $sql2 .= "join courses_registration on courses.id  = courses_registration.course_id
                                         and courses_registration.user_id = ?
                                 join roles on  roles.id = courses_registration.role_id
                                         and  roles.role_type_id = ?
                                         and roles.deleted_at is null
                                         and roles.branch_id = ?
-                order by user_exams.time   ";
-
-        $tests = DB::select($sql2, [$user_id, $branch_id, $user_id, 512, $branch_id]);
+                order by courses.id,user_exams.time   ";
+        if(!is_null($course_id))
+            $tests = DB::select($sql2, [$user_id, $branch_id, $course_id,$user_id, 512, $branch_id]);
+        else
+            $tests = DB::select($sql2, [$user_id, $branch_id, $user_id, 512, $branch_id]);
         $paginator = Paginator::GetPaginator($tests);
         $tests = $paginator->items();
         $count = $paginator->total();
 
-        return view('training.reports.users.user_report',compact('user_id', 'tests', 'user','paginator','count'));
+        return view('training.reports.users.user_report',compact('user_id', 'tests', 'user','paginator','count','course'));
     }
 
     public function usersReportScorm()
     {
 
-        $branch_id = getCurrentUserBranchData()->branch_id;
-        $user_id = request()->user_id;
+        $branch_id  = getCurrentUserBranchData()->branch_id;
+        $user_id    = request()->user_id;
+        $course_id  = request()->course_id??null;
+        $course = '';
+        if(!is_null($course_id))
+        {
+            $sql2 = "SELECT id,title FROM courses where id = ? " ;
+            $course = DB::select($sql2,[$course_id]);
+        }
+        $show_all = request()->show_all??0;
+
         $sql = "SELECT users.id,users.email,user_branches.name
                 FROM users  join user_branches on users.id = user_branches.user_id
                 where users.id = ? " ;
@@ -166,16 +217,23 @@ class ReportController extends Controller
                                         join contents on contents.id = scormvars_master.content_id
                                                 and contents.deleted_at is null
                                         join courses on courses.id = contents.course_id and courses.branch_id = ?
-                                                and courses.deleted_at is null
-                where scormvars_master.deleted_at is  null
-                ";
-        // dd($sql2);
-        $scorms = DB::select($sql2, [$user_id,$branch_id]);
+                                                and courses.deleted_at is null ";
+        if(!is_null($course_id))
+            $sql2 .= " and courses.id = ? ";
+
+        $sql2 .= " where scormvars_master.deleted_at is  null
+                    order by courses.id ";
+        // dd($user);
+        if(!is_null($course_id))
+            $scorms = DB::select($sql2, [$user_id,$branch_id,$course_id]);
+        else
+            $scorms = DB::select($sql2, [$user_id,$branch_id]);
+
         $paginator = Paginator::GetPaginator($scorms);
         $scorms = $paginator->items();
         $count  = $paginator->total();
 
-        return view('training.reports.users.user_report',compact('user_id', 'scorms','user','paginator','count'));
+        return view('training.reports.users.user_report',compact('user_id', 'scorms','user','paginator','count','course'));
 
 
     }
@@ -274,9 +332,10 @@ class ReportController extends Controller
         $course_id = request()->id;
         $sql2 = "SELECT * FROM courses where id = ? " ;
         $course = DB::select($sql2,[$course_id ]);
+        $training_option_id = $course[0]->training_option_id;
         $branch_id = getCurrentUserBranchData()->branch_id;
 
-        $select = ' select users.id,users.email,user_branches.name,courses_registration.progress,roles.role_type_id,sessions.date_from,sessions.date_to,constants.name as c_name ,courses.complete_progress,courses_registration.id as c_reg_id';
+        $select = ' select users.id,users.email,user_branches.name,courses_registration.progress,roles.role_type_id,sessions.date_from,sessions.date_to,constants.name as c_name ,courses.complete_progress,courses_registration.id as c_reg_id,courses_registration.created_at as enrolled_date ,users.last_login as last_login';
 
         $from = ' from courses_registration
                     join roles on roles.id = courses_registration.role_id
@@ -299,7 +358,7 @@ class ReportController extends Controller
 
         if(isset(request()->export))
         {
-            return Excel::download(new UsersExport($from,$course_id), 'Users.xlsx');
+            return Excel::download(new UsersExport($from,$course_id,$training_option_id), 'Users.xlsx');
         }
 
         return view('training.reports.courses.course_report',compact('course_id', 'users', 'course','paginator','count'));
@@ -336,11 +395,12 @@ class ReportController extends Controller
         $course_id = request()->id;
         $sql2 = "SELECT * FROM courses where id = ? " ;
         $course = DB::select($sql2,[$course_id ]);
+        $training_option_id = $course[0]->training_option_id;
         $branch_id = getCurrentUserBranchData()->branch_id;
         $sessions = Session::where('course_id',$course_id)->get();
 
         $select = "select pre.user_id, pre.name user_name,pre.mark pre_mark, post.mark post_mark,pre.content_id, post.content_id,
-        if(pre.mark<post.mark,'Improved',if(pre.mark=post.mark,'Constant','Deceased')) knowledge_status,
+        if(post.mark is Null or post.mark = '','Not Yet',if(pre.mark<post.mark,'Improved',if(pre.mark=post.mark,'Constant','Deceased'))) knowledge_status,
         pre.attendance_count,trainer.name trainer_name,pre.email user_email,pre.s_id";
         $from = ' from
         (
@@ -419,7 +479,7 @@ class ReportController extends Controller
 
         if(isset(request()->export))
         {
-            return Excel::download(new AssessmentExport($from,$course_id,$session_id), 'Assessments.xlsx');
+            return Excel::download(new AssessmentExport($from,$course_id,$session_id,$training_option_id), 'Assessments.xlsx');
         }
 
         $paginator = Paginator::GetPaginator($assessments);

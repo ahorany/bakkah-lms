@@ -22,13 +22,14 @@ use App\Models\Training\CourseRegistration;
             <th class="text-left">{{__('admin.user')}}</th>
             <th class="text-left">{{__('admin.email')}}</th>
             <th class="text-left">{{__('admin.progress')}}</th>
-            {{--  <th class="">{{__('admin.score')}}</th>
-            <th class="">{{__('admin.enrolled_on')}}</th>
-            <th class="">{{__('admin.completion_date')}}</th>
+            {{--  <th class="">{{__('admin.score')}}</th>--}}
+            <th class="">{{__('admin.enrolled_date')}}</th>
+            <th class="">{{__('admin.Last_login_date')}}</th>
+           {{-- <th class="">{{__('admin.completion_date')}}</th>
             <th class="">{{__('admin.pdu')}}</th> --}}
-
-            <th class="text-left">{{__('admin.session')}}</th>
-
+            @if($course[0]->training_option_id == 13)
+                <th class="text-left">{{__('admin.session')}}</th>
+            @endif
             <th class="">{{__('admin.user_type')}}</th>
             <th class=""></th>
         </tr>
@@ -42,24 +43,31 @@ use App\Models\Training\CourseRegistration;
                 </td>
 
                 <td class="px-1 text-left">
-                    <a href="{{route('training.usersReportOverview',['id'=>$post->id])}}" target="_blank" class="btn-sm outline"><span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span></a>
+                    <a href="{{route('training.usersReportOverview',['id'=>$post->id,'course_id'=>$course_id])}}" target="_blank" class="btn-sm outline"><span style="display: block;text-decoration: underline;" class="href">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span></a>
                 </td>
                 <td class="px-1 text-left">
                     <span style="display: block;">{{$post->email }} </span>
                 </td>
                 <td class="px-1 text-left">
                     @if($post->role_type_id == 512)
+
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
                     </div>
 
                     @endif
                 </td>
-
-                <td class="text-left">
-                    <span class="badge-green" > {{$post->date_from?$post->date_from.' - ':''}}   {{$post->date_to}}</span>
+                <td class="px-1 text-left">
+                    <span style="display: block;">{{$post->enrolled_date }} </span>
                 </td>
-
+                <td class="px-1 text-left">
+                    <span style="display: block;">{{$post->last_login }} </span>
+                </td>
+                @if($course[0]->training_option_id == 13)
+                    <td class="text-left">
+                        <span class="badge-green" > {{$post->date_from?$post->date_from.' - ':''}}   {{$post->date_to}}</span>
+                    </td>
+                @endif
                 <td>
 
                     @if($post->role_type_id == 511)

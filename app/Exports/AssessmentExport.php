@@ -12,11 +12,12 @@ class AssessmentExport implements FromCollection, WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($sql=null,$course_id,$session_id)
+    public function __construct($sql=null,$course_id,$session_id,$training_option_id)
     {
         $this->sql = $sql;
         $this->course_id = $course_id;
         $this->session_id = $session_id;
+        $this->training_option_id = $training_option_id;
         // dd($this->session_id);
     }
 
@@ -26,8 +27,14 @@ class AssessmentExport implements FromCollection, WithHeadings
         $query = $this->sql;
         // dd($query);
         $branch_id = getCurrentUserBranchData()->branch_id;
-
-        $select = " select pre.name,pre.email , pre.mark as pre_assessment_score, post.mark, if(pre.mark<post.mark,'Improved',if(pre.mark=post.mark,'Constant','Deceased')) knowledge_status , pre.attendance_count,trainer.name trainer_name ,pre.s_id SID ".$query;
+        if($this->training_option_id == 13)//live
+        {
+            $select = " select pre.name,pre.email , pre.mark as pre_assessment_score, post.mark, if(post.mark is Null or post.mark = '','Not Yet', if(pre.mark<post.mark,'Improved',if(pre.mark=post.mark,'Constant','Deceased'))) knowledge_status , pre.attendance_count,trainer.name trainer_name ,pre.s_id SID ".$query;
+        }
+        else
+        {
+            $select = " select pre.name,pre.email , pre.mark as pre_assessment_score, post.mark,  if(post.mark is Null or post.mark = '','Not Yet',if(pre.mark<post.mark,'Improved',if(pre.mark=post.mark,'Constant','Deceased'))) knowledge_status  ".$query;
+        }
 
         // dd($select);
         if( $this->session_id == '')
@@ -43,7 +50,14 @@ class AssessmentExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["User","Email","Pre Assessment Score","Post Assessment Score","Knowledge Status","Number of attendance days","instructor","SID"];
+        if($this->training_option_id == 13)//live
+        {
+            return ["User","Email","Pre Assessment Score","Post Assessment Score","Knowledge Status","Number of attendance days","instructor","SID"];
+        }
+        else
+        {
+            return ["User","Email","Pre Assessment Score","Post Assessment Score","Knowledge Status"];
+        }
     }
 }
 
