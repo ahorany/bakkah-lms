@@ -156,13 +156,13 @@ class CourseContentHelper
                         $scormPrevDataWhenComplete = ($scormPrevDataWhenComplete[0]??null);
                         if (!is_null($scormPrevDataWhenComplete) && $scormPrevDataWhenComplete->varValue != "completed"){
 
-
-                            if(!is_null($user_course_register)){
-                                if($user_course_register->is_migrated == 1){
-                                    return true;
-                                }
-                            }
-                            return false;
+//                            if(!is_null($user_course_register)){
+//                                if($user_course_register->is_migrated == 1){
+//                                    return true;
+//                                }
+//                            }
+//                            return false;
+                            return true;
                         }
 
                     }else{

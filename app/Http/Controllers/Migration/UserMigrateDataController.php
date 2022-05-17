@@ -145,7 +145,7 @@ class UserMigrateDataController extends Controller
         $rows = DB::table('user_migration_data')->get();
 
         foreach ($rows as $index => $row) {
-            try {
+//            try {
                 $row = (array)$row;
 
                 $user = User::where('email', $row['email'])->first();
@@ -161,7 +161,7 @@ class UserMigrateDataController extends Controller
                     }
 
                     $user->assignRole([$role_id]);
-                    Mail::to($user->email)->send(new UserMail($user->id ,$row['first_name'] . " " . $row['last_name'],  $row['plain_password']));
+                    Mail::to($user->email)->send(new UserMail($user ,$row['first_name'] . " " . $row['last_name'],  $row['plain_password']));
                 }
 
 
@@ -245,10 +245,10 @@ class UserMigrateDataController extends Controller
 
                 }// end if => check courseRegistration
 
-            } catch (\Exception $e) {
-                dump($index);
-                dd($row);
-            }
+//            } catch (\Exception $e) {
+//                dump($index);
+//                dd($row);
+//            }
         }// end foreach
 
         return redirect()->back()->with(['color' => 'green' , 'msg' => 'Successfully done!']);
