@@ -23,7 +23,7 @@
         Note: We will transfer all your training history to date over to the new Learning Management System (LMS).
     </p>
 
-    <table border="0"  width="400" style="margin: 0 auto;" cellspacing="0">
+    <table border="0"  width="400" style="margin: 0 auto;" cellspacing="0">-
         <tr>
             <td>
                 <hr>
