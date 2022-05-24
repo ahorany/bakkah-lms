@@ -33,7 +33,7 @@ class DiscussionController extends Controller
 
         $discussions = Discussion::with(['message' => function($q) use($course_id){
             $q->where('course_id',$course_id)->with(['user']);
-        }]);
+        }])->where('course_id',$course_id);
 
         $count = $discussions->count();
         $discussions = $discussions->page();

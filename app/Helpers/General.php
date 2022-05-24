@@ -6,7 +6,7 @@ define('PAGINATE', 15);
 define('SUBHOUR', 2);//session will expire before 2 hours
 define('YEAR', date('Y'));
 define('green_attendance_rate', 15);
-define('PAY_COURSE_BAKKAH_URL', 'https://bakkah.com/sessions/');
+define('PAY_COURSE_BAKKAH_URL', 'https://bakkah.com/sessions/triningOptionSingle/');
 define('COMPLETED_PROGRESS', 100);
 
 

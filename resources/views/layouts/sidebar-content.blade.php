@@ -45,9 +45,7 @@ $course_collect = (collect($course->contents)->groupBy('is_aside'));
 
                               <?php
                                $preview_url = Gate::allows('preview-gate') && request()->preview == true  ? '?preview=true' : '';
-                               if ($c->post_type == 'discussion'){
-                                   $url = CustomRoute('user.reply_message', $c->discussion->message_id)."?type=discussion";
-                               }elseif($c->post_type != 'exam'){
+                               if($c->post_type != 'exam'){
                                    $url = CustomRoute('user.course_preview', $c->id).$preview_url;
                                }else{
                                    if(Gate::allows('preview-gate') && request()->preview == true){
