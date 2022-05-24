@@ -2,13 +2,13 @@
     .href{
         color:black;
     }
-    </style>
+</style>
 @section('useHead')
     <title>{{__('education.Course Users')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
 {{-- <h4>SCORMS IN :  {{\App\Helpers\Lang::TransTitle($course[0]->title) }} </h4> --}}
-
+<a href="{{route('training.coursesReportScorm',['id'=>$course_id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center scorm">
       <thead>
@@ -18,7 +18,8 @@
             <th class="text-left">Section</th>
             <th class="text-left">{{__('admin.scorm')}}</th>
             <th class="">{{__('admin.no_attempts')}}</th>
-            <th class="">Completed Count{{--{{__('admin.no_passed')}}--}}</th>
+            <th class="">Completed{{--{{__('admin.no_passed')}}--}}</th>
+            <th class=""></th>
         </tr>
       </thead>
       <tbody>
@@ -45,6 +46,12 @@
                 </td>
                 <td class="px-1">
                     <span style="display: block;"> {{$post->passess??0}} </span>
+                </td>
+
+                <td>
+                    <a class="nav-link cyan" target="_blank" href="{{route('training.scormUsers',['content_id'=>$post->content_id])}} " title="Users" style=" display: inline-block">
+                        @include('training.reports.svg_report.users')
+                         </a>
                 </td>
             </tr>
         @endforeach

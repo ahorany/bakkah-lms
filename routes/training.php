@@ -49,6 +49,8 @@ Route::group([
             Route::get('/exam_result_details/details', 'ReportController@exam_result_details')->name('exam.exam_result_details');
             Route::get('/preview_content', 'ReportController@preview_content')->name('preview_content');
             Route::get('/preview_discussion', 'ReportController@preview_discussion')->name('preview_discussion');
+            Route::get('/testUsers', 'ReportController@testUsers')->name('testUsers');
+            Route::get('/scormUsers', 'ReportController@scormUsers')->name('scormUsers');
 
 
 

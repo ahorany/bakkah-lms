@@ -90,13 +90,21 @@ use App\Models\Training\CourseRegistration;
             <span class="td-title">{{$post->PDUs}}</span>
         </td>
         <td>
+
             {{-- <a class="primary-outline" target="_blank" href="{{route('training.exam_preview',['exam_id'=>$post->id])}} "><i class="fa fa-plus" aria-hidden="true"></i> Preview </a> --}}
-            <a  target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->id])}}" class="btn-sm outline" ><span class="href primary-outline">{{__('admin.details')}}</span></a>
+            <a  target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->id])}}" class="nav-link cyan"  style=" display: inline-block"  title="Progress">
+                @include('training.reports.svg_report.progress')
+            </a>
+
+            <a class="nav-link cyan" target="_blank" href="{{route('training.coursesReportUser',['id'=>$post->id,'user_id'=>$user[0]->id])}}" title="Users" style=" display: inline-block">
+                @include('training.reports.svg_report.users')
+            </a>
+
             @if(isset($post->progress) && ($post->progress >= $post->complete_progress ))
-                    <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
-                        target="_blank" class="primary-outline">
-                        Certificate
-                    </a>
+                <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
+                    target="_blank" class="nav-link cyan"  title="Certificate" style=" display: inline-block">
+                    @include('training.reports.svg_report.certificate')
+                </a>
             @endif
 
         </td>

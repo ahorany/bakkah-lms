@@ -11,6 +11,8 @@ use App\Models\Training\CourseRegistration;
 <title>{{__('education.User Tests')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
+<a href="{{route('training.usersReportTest',['id'=>$user[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
+
 @if(!is_null($course) && $course != '')
     <a href="{{route('training.usersReportTest',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'show_all'=>1])}}" class="group_buttons btn-sm">All Courses </a>
     <a href="{{route('training.usersReportTest',['id'=>$user[0]->id,'course_id'=>$course[0]->id])}}" class="group_buttons btn-sm ">{{ \App\Helpers\Lang::TransTitle($course[0]->title) }} </a>
@@ -28,23 +30,27 @@ use App\Models\Training\CourseRegistration;
             <th class="">Pass Mark</th>{{-- {{__('admin.exam_pass')}} --}}
             <th class="">{{__('admin.trainee_mark')}}</th>
             <th class="">{{__('admin.result')}}</th>
+            <th class=""></th>
 
         </tr>
       </thead>
       <tbody>
       @foreach($tests as $exam)
+      {{-- @dd($exam->content_id) --}}
       <tr data-id="{{$exam->id}}">
         <td>
             <span class="td-title px-1">{{$loop->iteration}}</span>
         </td>
         <td class="px-1 text-left" >
 
-            <a target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$exam->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;text-decoration:underline;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span></a>
+            {{-- <a target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$exam->course_id,'back_page'=>'tests'])}}" class="btn-sm outline"><span style="display: block;text-decoration:underline;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span></a> --}}
+            <span style="display: block;">{{ \App\Helpers\Lang::TransTitle($exam->course_title) }} </span>
 
         </td>
         <td class="px-1 text-left">
 
-            <a  target="_blank"  href="{{CustomRoute('training.exam_show',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;text-decoration:underline;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a>
+            {{-- <a  target="_blank"  href="{{CustomRoute('training.exam_show',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id,'back_page'=>'users_tests'] )}}" class="btn-sm outline"><span style="display: block;text-decoration:underline;" class="href">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span></a> --}}
+            <span style="display: block;"">{{ \App\Helpers\Lang::TransTitle($exam->content_title) }} </span>
 
         </td>
         <td class="px-1 text-left"">
@@ -68,6 +74,16 @@ use App\Models\Training\CourseRegistration;
             @else
                 <span class="badge badge-danger">{{__('admin.fail')}}</span>
             @endif
+        </td>
+        <td>
+
+            <a class="nav-link cyan" target="_blank" href="{{CustomRoute('training.exam_show',['content_id'=>$exam->content_id,'user_id'=>$user[0]->id] )}} " title="Preview" style=" display: inline-block">
+                @include('training.reports.svg_report.preview')
+            </a>
+
+            <a class="nav-link cyan" target="_blank" href="{{route('training.testUsers',['exam_id'=>$exam->id,'content_id'=>$exam->content_id])}} " title="Users" style=" display: inline-block">
+                @include('training.reports.svg_report.users')
+                </a>
         </td>
       </tr>
       @endforeach

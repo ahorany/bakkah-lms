@@ -156,4 +156,13 @@ class User extends Authenticatable implements JWTSubject
         return $sql;
     }
 
+    public static function getUser($user_id)
+    {
+        $sql = "SELECT users.id,users.email,user_branches.name
+        FROM users  join user_branches on users.id = user_branches.user_id  and user_branches.branch_id = ? and user_branches.deleted_at is null
+        where users.id = ? " ;
+        $user = DB::select( $sql,[getCurrentUserBranchData()->branch_id,$user_id]);
+        return $user;
+    }
+
 }

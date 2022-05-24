@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 @section('useHead')
     <title>{{__('education.Course Tests')}} | {{ __('home.DC_title') }}</title>
 @endsection
-
+<a href="{{route('training.coursesReportTest',['id'=>$course_id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center">
         <thead>
@@ -31,41 +31,27 @@ use Illuminate\Support\Facades\DB;
                     </td>
                     <td class="px-1 text-left">
                         <span style="display: block;">{{ $post->content_title }} </span>
+
                         {{-- <a v-if="entry.post_type != 'exam'" class="cyan" title="Preview" :href="'{{url('/')}}/{{app()->getLocale()}}/user/preview-content/' + entry.id + '?preview=true'" :target="entry.id">
                             <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                         </a> --}}
 
                     </td>
                     <td>
-                        <?php
-                            $completed = DB::table('user_exams')
-                                            ->where('exam_id',$post->exam_id)
-                                            ->where('status',1)
-                                            ->count(DB::raw('DISTINCT status,user_id'));
-                        ?>
-                        <span style="display: block;">{{ $completed }} </span>
+                        <span style="display: block;">{{ $post->completed }} </span>
                     </td>
                     <td>
-                        <?php
-
-                            $sql = " select count(x.uu) count
-                                    from
-                                    ( select max(user_exams.mark) ,user_exams.user_id uu
-                                        from user_exams join exams on exams.id = user_exams.exam_id
-                                            where user_exams.mark >= (exams.pass_mark/100*exams.exam_mark)
-                                            and user_exams.exam_id = ".$post->exam_id."
-                                        group by user_exams.user_id ) as x ";
-                            $passess = DB::select($sql);
-
-                            // dump($passess);
-                        ?>
-                        @foreach($passess as $pass)
-                            <span style="display: block;">{{ $pass->count??0 }} </span>
-                        @endforeach
+                        <span style="display: block;">{{  $post->passess }} </span>
                     </td>
                     <td>
 
-                        <a class="primary-outline" target="_blank" href="{{route('training.exam_preview',['content_id'=>$post->content_id])}} ">{{--<i class="fa fa-plus" aria-hidden="true"></i>--}} Preview </a>
+                        <a class="nav-link cyan" target="_blank" href="{{route('training.exam_preview',['content_id'=>$post->content_id])}} " title="Preview" style=" display: inline-block">
+                            @include('training.reports.svg_report.preview')
+                        </a>
+
+                        <a class="nav-link cyan" target="_blank" href="{{route('training.testUsers',['exam_id'=>$post->exam_id,'content_id'=>$post->content_id])}} "  title="Users" style=" display: inline-block">
+                            @include('training.reports.svg_report.users')
+                        </a>
                     </td>
 
                 </tr>

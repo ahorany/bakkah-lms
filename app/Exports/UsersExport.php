@@ -12,11 +12,13 @@ class UsersExport implements FromCollection, WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($sql=null,$course_id,$training_option_id)
+    public function __construct($sql=null,$course_id,$training_option_id,$user_id,$show_all)
     {
         $this->sql = $sql;
         $this->course_id = $course_id;
         $this->training_option_id = $training_option_id;
+        $this->user_id = $user_id;
+        $this->show_all = $show_all;
     }
 
 
@@ -36,8 +38,10 @@ class UsersExport implements FromCollection, WithHeadings
             if(roles.role_type_id = 511,'Instructor','Learner')  as role_type_id ,courses_registration.created_at as enrolled_date ,users.last_login as last_login".$query;
         }
 
-
-        return collect(DB::select($select, [$branch_id,$branch_id, $this->course_id]));
+        if(!is_null($this->user_id) && $this->show_all == 0)
+            return collect(DB::select($select, [$branch_id,$branch_id, $this->course_id,$this->user_id]));
+        else
+            return collect(DB::select($select, [$branch_id,$branch_id, $this->course_id]));
     }
 
     public function headings(): array
