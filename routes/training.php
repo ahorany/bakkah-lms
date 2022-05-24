@@ -60,7 +60,6 @@ Route::group([
             Route::post('courses/importQuestionsCourse', 'ImportController@importQuestionsCourse')->name('importQuestionsCourse');
 
 
-//             Route::get('/discussion', 'DiscussionController@discussion')->name('discussion');
 
 
             Route::get('/units', 'UnitController@index')->name('units');
@@ -156,6 +155,8 @@ Route::group([
              Route::get('/groupsReporcourse', 'ReportController@groupsReporcourse')->name('groupsReporcourse');
          });
 
+        Route::resource('discussions', '\App\Http\Controllers\Training\DiscussionController');
+        Route::patch('/discussions/{discussion}/restore', '\App\Http\Controllers\Training\DiscussionController@restore')->name('discussions.restore');
 
 
 

@@ -25,7 +25,7 @@
 
         @yield('seo')
 
-		{!!Builder::BtnGroupForm()!!}
+		{!!Builder::BtnGroupForm(true,request()->getQueryString())!!}
 	</div>
 
 	<div class="col-md-3">

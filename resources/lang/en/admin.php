@@ -203,4 +203,7 @@ return [
     'users_no' => 'Users',
     'enrolled_date' => 'Enrolled Date',
     'Last_login_date' => 'Last login Date',
+    'start_date' => 'Start date',
+    'end_date' => 'End date',
+
 ];
