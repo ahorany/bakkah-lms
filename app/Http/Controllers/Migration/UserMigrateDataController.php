@@ -157,7 +157,9 @@ class UserMigrateDataController extends Controller
 
 
         $rows = DB::table('user_migration_data')
-        ->where('sent', 1)
+        ->where('sent', '!=', 2)
+        ->where('master_id', $master->id)
+        ->where('course_id', $course->id)
         // ->where('id', 115)
         ->take(10)
         ->get();
