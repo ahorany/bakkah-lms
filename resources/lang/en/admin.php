@@ -203,11 +203,8 @@ return [
     'users_no' => 'Users',
     'enrolled_date' => 'Enrolled Date',
     'Last_login_date' => 'Last login Date',
-<<<<<<< HEAD
     'test_time' => 'Time',
-=======
     'start_date' => 'Start date',
     'end_date' => 'End date',
 
->>>>>>> 9cad0802302133f29162b2944a2b13f6f0d6b89e
 ];
