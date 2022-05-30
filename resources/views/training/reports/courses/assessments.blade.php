@@ -6,7 +6,31 @@ use App\Models\Training\CourseRegistration;
     <title>{{__('education.Course Users')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-<a href="{{route('training.coursesAssessments',['id'=>$course_id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
+
+@if( $show_all == 1)
+    <a href="{{route('training.coursesAssessments',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@else
+    <a href="{{route('training.coursesAssessments',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif
+
+
+@if(!is_null($user) && $user != '')
+    <?php
+        $active_all = '';
+        $active_s  = '';
+
+        if($show_all  == 1)
+        {
+            $active_all = 'active';
+        }
+        else
+        {
+            $active_s = 'active';
+        }
+    ?>
+    <a href="{{route('training.coursesAssessments',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Users </a>
+    <a href="{{route('training.coursesAssessments',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
+@endif
 
 <form id="post-search" class="courses form-inline mb-4" method="get" action="{{route('training.coursesAssessments')}}">
     <div class="col-md-12">

@@ -12,13 +12,34 @@ use App\Models\Training\CourseRegistration;
     <title>{{__('education.Course Users')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-{{-- {!! Builder::Submit('export', 'export_results', 'btn-success', 'file-excel') !!} --}}
-<a href="{{route('training.coursesReportUser',['id'=>$course_id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
-@if(!is_null($user) && $user != '')
 
-    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>1])}}" class="group_buttons btn-sm">All Users </a>
-    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm ">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
+
+
+@if( $show_all == 1)
+    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@else
+    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
 @endif
+
+
+@if(!is_null($user) && $user != '')
+    <?php
+        $active_all = '';
+        $active_s  = '';
+
+        if($show_all  == 1)
+        {
+            $active_all = 'active';
+        }
+        else
+        {
+            $active_s = 'active';
+        }
+    ?>
+    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Users </a>
+    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
+@endif
+
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center">
       <thead>
@@ -89,7 +110,7 @@ use App\Models\Training\CourseRegistration;
                         @include('training.reports.svg_report.progress')
                     </a>
 
-                    <a href="{{route('training.usersReportCourse',['id'=>$post->id,'course_id'=>$course_id])}}"  target="_blank" class="nav-link cyan" title="Courses" style=" display: inline-block">
+                    <a href="{{route('training.usersReportCourse',['id'=>$post->id,'course_id'=>$course_id,'show_all'=>0])}}"  target="_blank" class="nav-link cyan" title="Courses" style=" display: inline-block">
                         @include('training.reports.svg_report.courses')
 
                     </a>
@@ -108,3 +129,4 @@ use App\Models\Training\CourseRegistration;
     </table>
   </div>
   {{$paginator->render()}}
+

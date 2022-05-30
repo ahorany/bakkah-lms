@@ -8,7 +8,33 @@
 @endsection
 
 {{-- <h4>SCORMS IN :  {{\App\Helpers\Lang::TransTitle($course[0]->title) }} </h4> --}}
-<a href="{{route('training.coursesReportScorm',['id'=>$course_id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
+
+
+@if( $show_all == 1)
+    <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@else
+    <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif
+
+
+@if(!is_null($user) && $user != '')
+    <?php
+        $active_all = '';
+        $active_s  = '';
+
+        if($show_all  == 1)
+        {
+            $active_all = 'active';
+        }
+        else
+        {
+            $active_s = 'active';
+        }
+    ?>
+    <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Users </a>
+    <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
+@endif
+
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center scorm">
       <thead>
@@ -24,7 +50,7 @@
       </thead>
       <tbody>
         @foreach($scorms as $post)
-            <tr data-id="{{$post->id}}">
+            <tr data-id="{{$post->content_id}}">
                 <td>
                 <span class="td-title px-1">{{$loop->iteration}}</span>
                 <td class="px-1 text-left">

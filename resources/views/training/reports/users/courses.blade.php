@@ -11,14 +11,30 @@ use App\Models\Training\CourseRegistration;
 <title>{{__('education.User Courses')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-<a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
+
+@if( $show_all == 1)
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@else
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif
 
 
-@if(!is_null($course) && $course != '' )
+@if(!is_null($course) && $course != '')
+    <?php
+        $active_all = '';
+        $active_s  = '';
 
-    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'show_all'=>1])}}" class="group_buttons btn-sm">All Courses </a>
-    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id])}}" class="group_buttons btn-sm ">{{ \App\Helpers\Lang::TransTitle($course[0]->title) }} </a>
-
+        if($show_all  == 1)
+        {
+            $active_all = 'active';
+        }
+        else
+        {
+            $active_s = 'active';
+        }
+    ?>
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Courses </a>
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($course[0]->title) }} </a>
 @endif
 
 <div class="card-body table-responsive p-0">
@@ -96,7 +112,7 @@ use App\Models\Training\CourseRegistration;
                 @include('training.reports.svg_report.progress')
             </a>
 
-            <a class="nav-link cyan" target="_blank" href="{{route('training.coursesReportUser',['id'=>$post->id,'user_id'=>$user[0]->id])}}" title="Users" style=" display: inline-block">
+            <a class="nav-link cyan" target="_blank" href="{{route('training.coursesReportUser',['id'=>$post->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" title="Users" style=" display: inline-block">
                 @include('training.reports.svg_report.users')
             </a>
 

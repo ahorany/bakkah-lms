@@ -24,6 +24,7 @@ class CourseRegistration extends Model
 
     public static function getAssigned($role_type_id)//511 OR 512
     {
+
         $branch_id = getCurrentUserBranchData()->branch_id;
 
         $sql = DB::table('courses_registration')
@@ -73,6 +74,17 @@ class CourseRegistration extends Model
         });
 
         return $sql;
+    }
+
+    public static function get_assigned_courses($user_id)
+    {
+        $branch_id = getCurrentUserBranchData()->branch_id;
+
+        return CourseRegistration::join('courses', function ($join) use($branch_id) {
+                    $join->on('courses_registration.course_id', '=', 'courses.id')
+                        ->where('courses.branch_id',$branch_id);
+                })
+                ->where('user_id',$user_id)->count();
     }
 
 

@@ -2,6 +2,15 @@
     <title>{{__('education.User Reports')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
+{{-- @if( $show_all??null == 1)
+    <a href="{{route('training.usersReportOverview',['id'=>$user[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@else
+    <a href="{{route('training.usersReportOverview',['id'=>$user[0]->id??null,'course_id'=>$course[0]->id??null,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif --}}
+
+@if(isset($user[0]->id))
+    <a href="{{route('training.usersReportOverview',['id'=>$user[0]->id??null,'course_id'=>$course[0]->id??null,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif
 <div class="row mb-4 dashboard p-0">
 
     <div class="col-lg-12">
