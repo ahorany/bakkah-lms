@@ -219,6 +219,12 @@
             </div>
         @endif
 
+        <div class="row mx-0 my-4">
+            <div class="col-lg-9 col-xl-9 course_info">
+                <p class="lead light card"><a target="_blank"  href="{{route('training.discussions.index',['course_id' => $course->id])}}" style="display: flex;color: #5d5b5a;font-weight: 600;"><img width="28.126" height="28.127" src="http://localhost:8000/icons/discussion.svg" alt="Occaecat ex eaque es" style="filter: opacity(0.7); margin-right: 5px;"> <span class="d-inline-block">Discussions</span> </a></p>
+            </div>
+        </div>
+
         @if (isset($course_collect[0]))
             <div class="row mx-0 mt-3 course-content">
                 <div class="col-12 course_info no-padding">
@@ -235,15 +241,7 @@
                                     <li>
                                         <?php
                                             $preview_url = Gate::allows('preview-gate') && request()->preview == true ? '?preview=true' : '';
-                                            if ($content->post_type == 'discussion'){
-                                                if ($preview_url){
-                                                    $preview_url .= '&type=discussion';
-                                              }else{
-                                                  $preview_url .= '?type=discussion';
-                                              }
-                                              $url = CustomRoute('user.reply_message', $content->discussion->message_id).$preview_url;
-
-                                           }elseif($content->post_type != 'exam'){
+                                            if($content->post_type != 'exam'){
                                                 $url = CustomRoute('user.course_preview', $content->id).$preview_url;
                                             }else{
                                                 if(Gate::allows('preview-gate') && request()->preview == true){
@@ -313,11 +311,11 @@
                                                         <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#fff"/>
                                                     </svg>
                                                 </span>
-                                    @else
-                                        <span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52"><path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#ccc" stroke-width="3" stroke-dasharray="0 0"></path> <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#ccc"></path></svg>
-                                        </span>
-                                    @endif
+                                            @else
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52"><path id="Path" d="M0,24.5A24.5,24.5,0,1,0,24.5,0,24.5,24.5,0,0,0,0,24.5Z" transform="translate(1.5 1.5)" fill="#fff" stroke="#ccc" stroke-width="3" stroke-dasharray="0 0"></path> <path id="Path-2" data-name="Path" d="M10.516,15.62a2.042,2.042,0,0,1-2.879,0L.491,8.474A2.042,2.042,0,0,1,3.37,5.6l5.707,5.7L19.887.491A2.042,2.042,0,0,1,22.766,3.37h0Z" transform="translate(14.372 17.946)" fill="#ccc"></path></svg>
+                                                </span>
+                                            @endif
                                             @endif
                                            </span>
                                        </a>

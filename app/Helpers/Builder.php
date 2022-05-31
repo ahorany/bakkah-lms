@@ -13,6 +13,12 @@ class Builder {
 	protected static $btn_param = [];
 	public static $prefix = 'admin.';
 	public static $namespace = 'admin.';
+	public static $hasRouteParams = false;
+
+
+	static function HasRouteParams($bool){
+        self::$hasRouteParams = $bool;
+    }
 
 	static function SetTrash($trash=null){
 		self::$trash = $trash;
@@ -444,8 +450,7 @@ class Builder {
 	/*
 	* For Table
 	*/
-	static function Route($name, $post_type, $array=array()){
-
+	static function Route($name, $post_type,$array = []){
 		$args = [];
 		if(!is_null($post_type))
             $args = array_merge($args , ['post_type'=>$post_type]);
@@ -458,12 +463,29 @@ class Builder {
 
 	static function Href($name, $post_type, $class, $icon, $route=null){
 		$name1 = !is_null($name)?__('admin.'.$name):null;
-		return '<a name="'.$name.'" href="'.$route.'" class="mr-1 '.$class.'" title="'.$name1.' '.__('admin.'.$post_type).'"><i class="fa fa-'.$icon.'"></i> '.$name1.'</a>';
+		if (self::$hasRouteParams){
+		   $routeQuery =  request()->getQueryString();
+		   if (str_contains($route,'?')){
+		       $route .= "&".$routeQuery;
+           }else{
+               $route .= "?".$routeQuery;
+           }
+                if($name == 'list'){
+                    $route =  str_replace('trash=trash','',$route);
+                }
+
+                if ($name == 'trash'){
+                    $route =  str_replace('=trash','=trash',$route);
+                }
+        }
+
+
+        return '<a name="'.$name.'" href="'.$route.'" class="mr-1 '.$class.'" title="'.$name1.' '.__('admin.'.$post_type).'"><i class="fa fa-'.$icon.'"></i> '.$name1.'</a>';
 	}
 
-	static function Create($post_type){
+	static function Create($post_type,$array = array()){
 		// $args = self::SetPage($args);
-		$route = self::Route(self::$folder.'.create', $post_type);//.self::getPage();
+		$route = self::Route(self::$folder.'.create', $post_type,$array);//.self::getPage();
 		return self::Href('create', $post_type, 'primary', 'plus', $route);
 	}
 
@@ -520,11 +542,27 @@ class Builder {
 		$route = route(self::$namespace.self::$folder.'.'.$route, $args);
 		$name1 = !is_null($name)?__('admin.'.$name):null;
         $modal = !is_null($data_target) ? ' onclick="replicate(event)" ' : '' ;
+        if (self::$hasRouteParams){
+            $routeQuery =  request()->getQueryString();
+            if (str_contains($route,'?')){
+                $route .= "&".$routeQuery;
+            }else{
+                $route .= "?".$routeQuery;
+            }
+        }
 		return '<a href="'.$route.'" class="btn '.$class.' btn-table" title="'.$name1.' '.$title.'" '.$modal.'><i class="fa fa-'.$icon.'"></i> '.$name1.'</a> ';
 	}
 
 	static function GridButton($name, $title, $id, $class, $icon, $route, $trashed_status=0){
 		$route = route(self::$namespace.self::$folder.'.'.$route, [$id]);
+        if (self::$hasRouteParams){
+            $routeQuery =  request()->getQueryString();
+            if (str_contains($route,'?')){
+                $route .= "&".$routeQuery;
+            }else{
+                $route .= "?".$routeQuery;
+            }
+        }
 		$name1 = !is_null($name)?__('admin.'.$name):null;
 
 		$button = '<form name="'.$name.'" data-id="'.$id.'" method="post" action="'.$route.'" style="display:inline-block;">';
@@ -616,7 +654,10 @@ class Builder {
 			if(is_null(self::$trash) && count($array)==0)
 				$array = ['Trash'];
 			foreach($array as $key => $value){
-				$btn .= self::$value(self::$post_type);
+//			    dd($value);
+                if (!is_numeric($value)){
+                    $btn .= self::$value(self::$post_type);
+                }
 			}
 		$btn .= '</span>';
 

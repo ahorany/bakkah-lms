@@ -161,6 +161,7 @@ class MessageController extends Controller
             $q->where('branch_id',getCurrentUserBranchData()->branch_id);
         }])->where('type',$type)->first();
 
+//        dd($message);
         if(!$message || !$message->course){
             abort(404);
         }
@@ -193,17 +194,7 @@ class MessageController extends Controller
                 $disabled_reply = true;
             }
 
-            $content = Content::where('id',$discussion->content_id)->first();
-            if (!$content){
-                abort(404);
-            }
-            // Get next and prev
-            $arr = CourseContentHelper::NextAndPreviouseNavigation($content);
-            $next = $arr['next'];
-            $previous = $arr['previous'];
-            // end next and prev
-
-            return view('training.messages.reply',compact('message','type','discussion','disabled_reply','next','previous','discussion_not_start'));
+            return view('training.messages.reply',compact('message','type','discussion','disabled_reply','discussion_not_start'));
 
         }else{
             // not sender and not admin and not super admin

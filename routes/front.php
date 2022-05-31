@@ -54,7 +54,6 @@ Route::group([
 
 
 
-
         Route::get('/exam/{exam_id}', [\App\Http\Controllers\Front\ExamController::class, 'exam'])->name('exam');
         Route::get('preview/exam/{exam_id}', [\App\Http\Controllers\Front\ExamController::class, 'preview_exam'])->name('preview.exam');
         Route::get('exam/{user_exams_id}/details', [\App\Http\Controllers\Front\ExamController::class, 'attempt_details'])->name('attempt_details.exam');

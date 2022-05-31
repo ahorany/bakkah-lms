@@ -71,6 +71,7 @@ class UserMigrateDataController extends Controller
 
 
     public function sendMails(Request $request){
+
         if (auth()->id() != 1){
             abort(404);
         }
@@ -87,12 +88,29 @@ class UserMigrateDataController extends Controller
             abort(404);
         }
 
+        $not_sent = DB::table('users')
+        // ->where('sent', '!=', 0)
+        ->pluck('email')
+        ->toArray()
+        ;
+
         $rows = DB::table('user_migration_data')
-            ->where('master_id',$request->master_id)
-            ->where('course_id',$request->course_id)
-            ->where('sent',0)
+            ->where('master_id', $request->master_id)
+            ->where('course_id', $request->course_id)
+            ->where('sent', 0)
+
+            ->whereNotIn('email', $not_sent)
+            ->take(10)
             ->get();
+
+        $_count = count($rows);
+
+        if (!$rows){
+            dd('Done !!');
+        }
+
         foreach ($rows as $index => $row) {
+
             DB::table('user_migration_data')->where('id',$row->id)->update([
                 'sent' => 1,
             ]);
@@ -100,13 +118,14 @@ class UserMigrateDataController extends Controller
         }
 
 
-        return redirect()->back()->with(['color' => 'green' , 'msg' => 'Successfully done!']);
+        return redirect()->back()->with(['color' => 'green' , 'msg' => 'Successfully done! '.$_count]);
     }// end method
 
 
 
 
     public function save(Request $request){
+
         if (auth()->id() != 1){
             abort(404);
         }
@@ -117,7 +136,7 @@ class UserMigrateDataController extends Controller
 
 
        $master =  DB::table('user_migration_files')
-            ->where('master_id',$request->master_id)
+            ->where('id',$request->master_id)
             ->where('course_id',$request->course_id)
             ->first();
        if (!$master){
@@ -137,7 +156,13 @@ class UserMigrateDataController extends Controller
 
 
 
-        $rows = DB::table('user_migration_data')->get();
+        $rows = DB::table('user_migration_data')
+        ->where('sent', '!=', 2)
+        ->where('master_id', $master->id)
+        ->where('course_id', $course->id)
+        // ->where('id', 115)
+        ->take(10)
+        ->get();
 
         foreach ($rows as $index => $row) {
             try {
@@ -156,8 +181,13 @@ class UserMigrateDataController extends Controller
                     }
 
                     $user->assignRole([$role_id]);
-                    Mail::to($user->email)->send(new UserMail($user->id ,  $row['plain_password']));
+                     Mail::to($user->email)->send(new UserMail($user ,$row['first_name'] . " " . $row['last_name'],  $row['plain_password']));
+
                 }
+
+                DB::table('user_migration_data')->where('id', $row['id'])->update([
+                    'sent' => 2,
+                ]);
 
 
                 UserBranch::firstOrCreate([
@@ -241,6 +271,7 @@ class UserMigrateDataController extends Controller
                 }// end if => check courseRegistration
 
             } catch (\Exception $e) {
+                dump($e);
                 dump($index);
                 dd($row);
             }
@@ -248,6 +279,4 @@ class UserMigrateDataController extends Controller
 
         return redirect()->back()->with(['color' => 'green' , 'msg' => 'Successfully done!']);
     }// end method
-
-
 }

@@ -164,11 +164,15 @@ return [
     'session_id' => 'الجلسات',
     'attendance_count' => 'Attendance Count',
     'certificate' => 'Certificate',
-    'completedNo' => 'No. of Completed Trainees',
-    'passedNo' => 'No. of Passed Trainees',
+    'completedNo' => 'Completed',
+    'passedNo' => 'Passed',
     'content_name' => 'Content',
-    'no_attempts' => 'Attempts Count',
-    'no_passed' => 'Passed Count',
+    'no_attempts' => 'Attempts',
+    'no_passed' => 'Passed',
     'users_no' => 'Users',
+    'enrolled_date' => 'تاريخ التسجيل',
+    'Last_login_date' => 'تاريخ اخر دخول',
+    'test_time' => 'مدة الاختبار',
+
 
 ];

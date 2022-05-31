@@ -6,7 +6,31 @@ use App\Models\Training\CourseRegistration;
     <title>{{__('education.Course Users')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-<a href="{{route('training.coursesAssessments',['id'=>$course_id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
+
+@if( $show_all == 1)
+    <a href="{{route('training.coursesAssessments',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@else
+    <a href="{{route('training.coursesAssessments',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif
+
+
+@if(!is_null($user) && $user != '')
+    <?php
+        $active_all = '';
+        $active_s  = '';
+
+        if($show_all  == 1)
+        {
+            $active_all = 'active';
+        }
+        else
+        {
+            $active_s = 'active';
+        }
+    ?>
+    <a href="{{route('training.coursesAssessments',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Users </a>
+    <a href="{{route('training.coursesAssessments',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
+@endif
 
 <form id="post-search" class="courses form-inline mb-4" method="get" action="{{route('training.coursesAssessments')}}">
     <div class="col-md-12">
@@ -57,9 +81,11 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.pre_assessment_score')}}</th>
             <th class="">{{__('admin.post_assessment_score')}}</th>
             <th class="">{{__('admin.knowledge_status')}}</th>
-            <th class="">{{__('admin.attendance_count')}}</th>
-            <th class="text-left">{{__('admin.instructor')}}</th>
-            <th class="text-left">{{__('admin.session_id')}}</th>
+            @if($course[0]->training_option_id == 13)
+                <th class="">{{__('admin.attendance_count')}}</th>
+                <th class="text-left">{{__('admin.instructor')}}</th>
+                <th class="text-left">{{__('admin.session_id')}}</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -90,20 +116,24 @@ use App\Models\Training\CourseRegistration;
                         $badge = 'badge-green';
                     else if($post->knowledge_status == 'Constant')
                         $badge = 'badge-lim';
-                    else
+                    else if($post->knowledge_status == 'Deceased')
                         $badge = 'badge-red';
+                    else if($post->knowledge_status == 'Not Yet')
+                        $badge = 'badge-blue';
                     @endphp
                     <span style="display: block;" class="{{$badge}}">{{ $post->knowledge_status }} </span>
                 </td>
-                <td>
-                    <span style="display: block;">{{ $post->attendance_count }} </span>
-                </td>
-                <td class="text-left">
-                    <span style="display: block;">{{ $post->trainer_name }} </span>
-                </td>
-                <td class="text-left">
-                    <span class="badge-green" > {{ $post->s_id }}</span>
-                </td>
+                @if($course[0]->training_option_id == 13)
+                    <td>
+                        <span style="display: block;">{{ $post->attendance_count }} </span>
+                    </td>
+                    <td class="text-left">
+                        <span style="display: block;">{{ $post->trainer_name }} </span>
+                    </td>
+                    <td class="text-left">
+                        <span class="badge-green" > {{ $post->s_id }}</span>
+                    </td>
+                @endif
 
             </tr>
         @endforeach

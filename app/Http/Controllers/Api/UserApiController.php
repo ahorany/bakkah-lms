@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Mail\TraineeMail;
 use App\Models\Training\Course;
 use App\Models\Training\CourseRegistration;
 use App\Models\Training\Session;
@@ -74,7 +75,7 @@ class UserApiController
 
             $user = $this->addUser($request);
 
-            $course = Course::select('id','ref_id')->where('ref_id',$request->course_id)->first();
+            $course = Course::select('id','ref_id','title')->where('ref_id',$request->course_id)->first();
 
             $courseRegistration =  CourseRegistration::where( 'user_id',$user->id)
                 ->where('course_id',$course->id)
@@ -101,6 +102,12 @@ class UserApiController
                         'paid_status' => $paid_status,
                         'session_id'  => $session->id,
                     ]);
+
+                        $user = UserBranch::where('user_id',$user->id)
+                            ->where('branch_id', 1)
+                            ->with(['user'])
+                            ->first();
+                        Mail::to($user->user->email)->send(new TraineeMail($user->name, $course));
                 }else{
                     $courseRegistration->update([
                         'user_id'     => $user->id,
@@ -120,6 +127,12 @@ class UserApiController
                         'expire_date' => $request->expire_date,
                         'paid_status' => $paid_status,
                     ]);
+
+                    $user = UserBranch::where('user_id',$user->id)
+                        ->where('branch_id', 1)
+                        ->with(['user'])
+                        ->first();
+                    Mail::to($user->user->email)->send(new TraineeMail($user->name, $course));
 
 
                 }else{
@@ -164,7 +177,7 @@ class UserApiController
             ]);
 
             $user->assignRole([3]);
-            Mail::to($user->email)->send(new UserMail($user->id ,  $request->password));
+            Mail::to($user->email)->send(new UserMail($user ,$request->name ,  $request->password));
         }
 
 

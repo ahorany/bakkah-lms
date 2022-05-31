@@ -17,13 +17,13 @@
     </table>
 
     <p style="font-size: 14px; text-align: left;">
-        We hope you receive this email in good health. We are always keen to offer the most suited learning products to improve and polish your skills, inspire growth and build capabilities. In this journey that we venture together. We are pleased to announce that we will be moving to our new Learning Management System (LMS). Due of this moving, you will not be able to login into your accounts on Sunday 15-05-2022, this will resume by the next day. Upon completion of the transfer, you will be able to login to the new Learning Management System (LMS) by using your new username and the new password that you will receive via emails.
+        We hope you receive this email in good health. We are always keen to offer the most suited learning products to improve and polish your skills, inspire growth and build capabilities. In this journey that we venture together. We are pleased to announce that we will be moving to our new Learning Management System (LMS). Due of this moving, you will not be able to login into your accounts on Thursday 19-05-2022, this will resume by the next day. Upon completion of the transfer, you will be able to login to the new Learning Management System (LMS) by using your new username and the new password that you will receive via emails.
         <br>
         <br>
         Note: We will transfer all your training history to date over to the new Learning Management System (LMS).
     </p>
 
-    <table border="0"  width="400" style="margin: 0 auto;" cellspacing="0">
+    <table border="0"  width="400" style="margin: 0 auto;" cellspacing="0">-
         <tr>
             <td>
                 <hr>

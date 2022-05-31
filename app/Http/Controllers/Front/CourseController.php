@@ -36,7 +36,6 @@ class CourseController extends Controller
      *  Course User page
      */
     public function course_details($course_id){
-
         session()->put('active_sidebar_route_name',-1);
 
         $user_id = User::delegate_user_id();
@@ -106,7 +105,7 @@ class CourseController extends Controller
                 },
                 'contents.details','contents.user_contents' => function($q){
                     return $q->where('user_id', \auth()->id());
-                },'contents.discussion'])
+                }])
             ->orderBy('order');
 
             if($role_id != -1){
@@ -446,7 +445,6 @@ class CourseController extends Controller
                 WHERE course_id =". $course_id ."
                 AND parent_id IS NOT NULL
                 AND deleted_at IS NULL
-                AND post_type != 'discussion'
                 AND role_and_path = 1
             "));
 

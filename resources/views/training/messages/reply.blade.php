@@ -38,24 +38,9 @@
 @endsection
 
 @section('content')
-   @if($type == 'discussion')
-        <?php
-        $NextPrevNavigation = \App\Helpers\CourseContentHelper::NextPrevNavigation($next, $previous);
-        $next_url = $NextPrevNavigation['next_url'];
-        $previous_url = $NextPrevNavigation['previous_url'];
-        ?>
-   @endif
+
     <div id="message-app" class="container">
         <div class="card px-5 py-3 mb-2">
-            @if($type == 'discussion')
-
-                @include('Html.next-prev-navigation', [
-                     'next'=>$next,
-                     'previous'=>$previous,
-                     'previous_url'=>$previous_url,
-                     'next_url'=>$next_url,
-                 ])
-          @endif
             <a href="{{$type == 'discussion' ? route('user.course_details',$message->course->course->id) : route('user.messages.inbox')}}" class="cyan form-control" style="width: 85px; text-align:center;">
                 {{__('education.Back')}}
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="back" style="vertical-align: middle;" width="35%" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve">
