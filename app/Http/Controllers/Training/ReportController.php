@@ -317,6 +317,7 @@ class ReportController extends Controller
         $assigned_instructors = CourseRegistration::getCoursesNo($course_id,511)->count();
         $completed_learners =  CourseRegistration::getCoursesNo($course_id,512)
                                                     ->whereRaw('courses_registration.progress >= courses.complete_progress')
+                                                    ->where('courses_registration.progress','!=',0)
                                                     ->count();
         $learners_in_progress =  CourseRegistration::getCoursesNo($course_id,512)
                                                     ->whereRaw('courses_registration.progress < courses.complete_progress')

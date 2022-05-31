@@ -69,7 +69,7 @@ class UserController extends Controller
         $complete_courses_no_sql = CourseRegistration::getCoursesNo(null,512);
         // dd($complete_courses_no_sql->count());
         $complete_courses_no_sql =  $complete_courses_no_sql->whereRaw('courses_registration.progress >= courses.complete_progress')
-                                                            ->where('courses_registration.progress','!=',0);;
+                                                            ->where('courses_registration.progress','!=',0);
         if (!is_null(request()->user_search)) {
             $complete_courses_no_sql = $this->SearchUser($complete_courses_no_sql);
         }
