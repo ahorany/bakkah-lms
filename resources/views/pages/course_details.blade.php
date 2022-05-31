@@ -325,7 +325,7 @@
                 <div class="col-lg-4 course_info no-padding">
 
                     <div class="course_info">
-                        <p class="lead light card" style="margin-top: 0 !important;"><a target="_blank"  href="{{route('training.discussions.index',['course_id' => $course->id])}}" style="display: flex;color: #5d5b5a;font-weight: 600;"><img width="28.126" height="28.127" src="http://localhost:8000/icons/discussion.svg" alt="Occaecat ex eaque es" style="filter: opacity(0.7); margin-right: 5px;"> <span class="d-inline-block">Discussions</span> </a></p>
+                        <p class="lead light card" style="margin-top: 0 !important;"><a target="_blank"  href="{{route('training.discussions.index',['course_id' => $course->id])}}" style="display: flex;color: #5d5b5a;font-weight: 600;"><img width="28.126" height="28.127" src="{{CustomAsset('icons/discussion.svg')}}" alt="Occaecat ex eaque es" style="filter: opacity(0.7); margin-right: 5px;"> <span class="d-inline-block">Discussions</span> </a></p>
                     </div>
 
                     @if(isset($course->users[0]->pivot->progress) && ($course->users[0]->pivot->progress >= $course->complete_progress ))
