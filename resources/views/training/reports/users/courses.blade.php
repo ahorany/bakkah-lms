@@ -4,7 +4,7 @@
     }
 </style>
 <?php
-use App\Models\Training\CourseRegistration;
+    use App\Models\Training\CourseRegistration;
 ?>
 
 @section('useHead')
