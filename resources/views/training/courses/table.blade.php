@@ -75,9 +75,10 @@ use App\Models\Training\CourseRegistration;
         <td>
             <?php
                 $assigned_learners =  CourseRegistration::getCoursesNo($post->id,512)->count();
-                $assigned_instructors =  CourseRegistration::getCoursesNo($post->id,511)->count();
+                $assigned_instructors = CourseRegistration::getCoursesNo($post->id,511)->count();
                 $completed_learners =  CourseRegistration::getCoursesNo($post->id,512)
                                         ->whereRaw('courses_registration.progress >= courses.complete_progress')
+                                        ->where('courses_registration.progress','!=',0)
                                         ->count();
 
                 echo '<span class="badge-pink mb-1 mr-1 d-block" style="width: max-content;">Instructors: '.$assigned_instructors.'</span>';

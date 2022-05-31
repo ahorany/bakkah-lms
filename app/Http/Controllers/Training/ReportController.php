@@ -78,6 +78,7 @@ class ReportController extends Controller
         $complete_courses_no =  CourseRegistration::getCoursesNo($course_id,512)
                                     ->where('courses_registration.user_id',$user_id)
                                     ->whereRaw('courses_registration.progress >= courses.complete_progress')
+                                    ->where('courses_registration.progress','!=',0)
                                     ->count();
         $courses_in_progress =  CourseRegistration::getCoursesNo($course_id,512)
                                     ->whereRaw('courses_registration.progress < courses.complete_progress')
