@@ -35,14 +35,13 @@ class UsersExport implements FromCollection, WithHeadings,WithTitle,ShouldAutoSi
         $branch_id = getCurrentUserBranchData()->branch_id;
         if($this->training_option_id == 13)//live
         {
-
-            $select = " select JSON_UNQUOTE(JSON_EXTRACT(users.name, '$.en')) as User ,users.email as email , concat(courses_registration.progress,' %') as progress  ,
+            $select = " select JSON_UNQUOTE(JSON_EXTRACT(users.name, '$.en')) as User ,users.email as email ,  if(roles.role_type_id=512,concat(courses_registration.progress,' %'),'' ) as progress  ,
             courses_registration.completed_at ,
             if(roles.role_type_id = 511,'Instructor','Learner')  as role_type_id,sessions.date_from  as date_from  ,sessions.date_to as date_to ,courses_registration.created_at as enrolled_date ,users.last_login as last_login ".$query;
         }
         else
         {
-            $select = " select JSON_UNQUOTE(JSON_EXTRACT(users.name, '$.en')) as User , users.email as email ,concat(courses_registration.progress,' %') as progress  ,
+            $select = " select JSON_UNQUOTE(JSON_EXTRACT(users.name, '$.en')) as User , users.email as email ,if(roles.role_type_id=512,concat(courses_registration.progress,' %'),'' ) as progress ,
             courses_registration.completed_at ,
             if(roles.role_type_id = 511,'Instructor','Learner')  as role_type_id ,courses_registration.created_at as enrolled_date ,users.last_login as last_login ".$query;
         }

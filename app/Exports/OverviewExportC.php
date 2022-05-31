@@ -59,7 +59,7 @@ class OverviewExportC implements FromCollection,WithEvents,WithTitle,ShouldAutoS
         $u_name['u_name'] = ' Course name';
         $u_name['u_name_v'] = $course[0]->name;
         $cat['cat'] = 'Category';
-        $cat['cat_v'] =  $category[0]->title;
+        $cat['cat_v'] =  $category[0]->title??null;
         $u_t['u_t'] = 'Creation date';
         $u_t['u_t_v'] =  $course[0]->created_at;
         $pdu['pdu'] = 'pdu';

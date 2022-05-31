@@ -56,8 +56,9 @@ class CourseController extends Controller
 
         $courses->where('branch_id',getCurrentUserBranchData()->branch_id);
 
-        $assigned_learners1 = CourseRegistration::getAssigned(512);
-        $assigned_instructors = CourseRegistration::getAssigned(511);
+        $assigned_learners1 = CourseRegistration::getCoursesNo(null,512);
+        // dd($assigned_learners1->count());
+        $assigned_instructors = CourseRegistration::getCoursesNo(null,511);
         if (request()->has('course_search') && !is_null(request()->course_search)) {
             $courses = $this->SearchCond($courses);
             $assigned_learners1 = $this->SearchCond($assigned_learners1);
