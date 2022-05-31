@@ -105,21 +105,22 @@ use App\Models\Training\CourseRegistration;
                 </td>
 
                 <td class="text-left">
+                    @if($post->role_type_id == 512)
+                        <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id,'preview'=>'true'])}}" class="nav-link cyan" style=" display: inline-block" target="_blank" title="Progress">
+                            @include('training.reports.svg_report.progress')
+                        </a>
 
-                    <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id,'preview'=>'true'])}}" class="nav-link cyan" style=" display: inline-block" target="_blank" title="Progress">
-                        @include('training.reports.svg_report.progress')
-                    </a>
-
-                    <a href="{{route('training.usersReportCourse',['id'=>$post->id,'course_id'=>$course_id,'show_all'=>0])}}"  target="_blank" class="nav-link cyan" title="Courses" style=" display: inline-block">
-                        @include('training.reports.svg_report.courses')
-
-                    </a>
-                    @if(isset($post->progress) && ($post->progress >= $post->complete_progress ))
-                        <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
-                            target="_blank" class="nav-link cyan"  title="Certificate" style=" display: inline-block">
-                            @include('training.reports.svg_report.certificate')
+                        <a href="{{route('training.usersReportCourse',['id'=>$post->id,'course_id'=>$course_id,'show_all'=>0])}}"  target="_blank" class="nav-link cyan" title="Courses" style=" display: inline-block">
+                            @include('training.reports.svg_report.courses')
 
                         </a>
+                        @if(isset($post->progress) && ($post->progress >= $post->complete_progress ))
+                            <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
+                                target="_blank" class="nav-link cyan"  title="Certificate" style=" display: inline-block">
+                                @include('training.reports.svg_report.certificate')
+
+                            </a>
+                        @endif
                     @endif
 
                 </td>

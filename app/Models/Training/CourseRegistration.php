@@ -22,37 +22,20 @@ class CourseRegistration extends Model
         return $this->belongsTo('App\Models\Training\Role','role_id');
     }
 
-    public static function getAssigned($role_type_id)//511 OR 512
+
+    public static function getCoursesNo($course_id=null,$role_type_id=null)
     {
 
         $branch_id = getCurrentUserBranchData()->branch_id;
 
         $sql = DB::table('courses_registration')
-        ->join('roles',function ($join) use($role_type_id,$branch_id){
-            $join->on('roles.id','=','courses_registration.role_id')
-                ->where('roles.role_type_id',$role_type_id)
-                ->whereNull('roles.deleted_at')
-                ->where('roles.branch_id',$branch_id);
-        })
-        ->join('courses',function ($join) use($branch_id){
-            $join->on('courses.id','=','courses_registration.course_id')
-                ->whereNull('courses.deleted_at')
-                ->where('courses.branch_id',$branch_id);
-        });
-
-        return $sql;
-    }
-
-
-    public static function getCoursesNo($course_id)
-    {
-        $branch_id = getCurrentUserBranchData()->branch_id;
-
-        $sql = DB::table('courses_registration')
-        ->join('roles',function ($join) use($branch_id){
-            $join->on('roles.id','=','courses_registration.role_id')
-                ->where('roles.role_type_id',512)
-                ->whereNull('roles.deleted_at')
+        ->join('roles',function ($join) use($branch_id,$role_type_id){
+            $join->on('roles.id','=','courses_registration.role_id');
+            if(!is_null($role_type_id))
+            {
+                $join = $join->where('roles.role_type_id',$role_type_id);
+            }
+            $join = $join->whereNull('roles.deleted_at')
                 ->where('roles.branch_id',$branch_id);
         })
         ->join('courses',function ($join) use($branch_id,$course_id){
@@ -76,16 +59,7 @@ class CourseRegistration extends Model
         return $sql;
     }
 
-    public static function get_assigned_courses($user_id)
-    {
-        $branch_id = getCurrentUserBranchData()->branch_id;
 
-        return CourseRegistration::join('courses', function ($join) use($branch_id) {
-                    $join->on('courses_registration.course_id', '=', 'courses.id')
-                        ->where('courses.branch_id',$branch_id);
-                })
-                ->where('user_id',$user_id)->count();
-    }
 
 
 

@@ -75,16 +75,18 @@ class ReportController extends Controller
 
         // dd($user);
         $users_no            = 1;
-        $complete_courses_no =  CourseRegistration::getCoursesNo($course_id)
+        $complete_courses_no =  CourseRegistration::getCoursesNo($course_id,512)
                                     ->where('courses_registration.user_id',$user_id)
                                     ->whereRaw('courses_registration.progress >= courses.complete_progress')
                                     ->count();
-        $courses_in_progress =  CourseRegistration::getCoursesNo($course_id)
+        $courses_in_progress =  CourseRegistration::getCoursesNo($course_id,512)
                                     ->whereRaw('courses_registration.progress < courses.complete_progress')
                                     ->where('courses_registration.progress','>',0)
                                     ->where('courses_registration.user_id',$user_id)->count();
-        $courses_not_started = CourseRegistration::getCoursesNo($course_id)
+        $courses_not_started = CourseRegistration::getCoursesNo($course_id,512)
                                     ->where('courses_registration.progress',0)
+                                    ->where('courses_registration.user_id',$user_id)->count();
+        $assigned_courses =  CourseRegistration::getCoursesNo(null,512)
                                     ->where('courses_registration.user_id',$user_id)->count();
         $overview = 1;
 
@@ -93,7 +95,7 @@ class ReportController extends Controller
             $from_course = $this->usersReportCourseFromSql(null,1);
             $from_test = $this->usersReportTestFromSql(null,1);
             $from_scorm = $this->usersReportScormFromSql(null,1);
-            return Excel::download(new userOverviewExport($user_id,$complete_courses_no,$from_course, $from_test,$from_scorm), 'userOverview.xlsx');
+            return Excel::download(new userOverviewExport($user_id,$complete_courses_no,$from_course, $from_test,$from_scorm,$assigned_courses), 'userOverview.xlsx');
         }
 
         return view('training.reports.users.user_report',compact('user_id','users_no','complete_courses_no',
@@ -310,16 +312,19 @@ class ReportController extends Controller
             $user = User::getUser($user_id);
         }
 
-
-
-        $assigned_learners =  CourseRegistration::getAssigned(512)->where('course_id',$course_id)->count();
-        $assigned_instructors = CourseRegistration::getAssigned(511)->where('course_id',$course_id)->count();
-        $completed_learners =  CourseRegistration::getAssigned(512)->whereRaw('courses_registration.progress >= courses.complete_progress')
-                                                    ->where('course_id',$course_id)->count();
-        $learners_in_progress =  CourseRegistration::getAssigned(512)->whereRaw('courses_registration.progress < courses.complete_progress')
+        $assigned_learners =  CourseRegistration::getCoursesNo($course_id,512)->count();
+        $assigned_instructors = CourseRegistration::getCoursesNo($course_id,511)->count();
+        $completed_learners =  CourseRegistration::getCoursesNo($course_id,512)
+                                                    ->whereRaw('courses_registration.progress >= courses.complete_progress')
+                                                    ->count();
+        $learners_in_progress =  CourseRegistration::getCoursesNo($course_id,512)
+                                                    ->whereRaw('courses_registration.progress < courses.complete_progress')
                                                     ->where('courses_registration.progress','>',0)
-                                                    ->where('course_id',$course_id)->count();
-        $learners_not_started = CourseRegistration::getAssigned(512)->where('courses_registration.progress',0)->where('course_id',$course_id)->count();
+                                                    ->count();
+        $learners_not_started = CourseRegistration::getCoursesNo($course_id,512)
+                                                    ->where('courses_registration.progress',0)
+                                                    ->count();
+
         $count = 1;
         $overview = 1;
 
@@ -374,7 +379,6 @@ class ReportController extends Controller
         if(isset(request()->export))
         {
             return Excel::download(new UsersExport($from,$course_id,$training_option_id,$user_id,$show_all), 'Users.xlsx');
-
         }
         // dd($show_all);
         return view('training.reports.courses.course_report',compact('course_id', 'users', 'course','paginator','count','user','show_all'));
@@ -832,7 +836,6 @@ class ReportController extends Controller
 
         $course = Course::where('id', $course_id)->where('branch_id',getCurrentUserBranchData()->branch_id);
 
-
         $course = $course->whereHas('users', function ($q) use ($user_id){
             $q->where('users.id', $user_id);
         })->with(['users' => function($query) use ($user_id){
@@ -972,7 +975,6 @@ class ReportController extends Controller
 
     public function scormUsers()
     {
-
 
         $content_id = request()->content_id;
         $sql_c = "select title,course_id,id from contents where id = ?";

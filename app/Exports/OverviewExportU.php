@@ -17,10 +17,11 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class OverviewExportU implements FromCollection,WithEvents,WithTitle,ShouldAutoSize,WithStyles
 {
-    public function __construct($user_id,$complete_courses_no)
+    public function __construct($user_id,$complete_courses_no,$assigned_courses)
     {
         $this->user_id = $user_id;
         $this->complete_courses_no = $complete_courses_no;
+        $this->assigned_courses = $assigned_courses;
     }
 
      public function collection()
@@ -42,13 +43,6 @@ class OverviewExportU implements FromCollection,WithEvents,WithTitle,ShouldAutoS
 
         $sql_t = "select name from roles where id = (select role_id from  model_has_roles where model_id = ? and model_type = ? ) ";
         $user_t = DB::select($sql_t,[$this->user_id,'App\User']);
-
-        $sql_c_r = "select count(*)  as count
-                    from courses_registration join courses on courses_registration.course_id = courses.id
-                                                                and courses.branch_id = ?
-                    where courses_registration.user_id = ? ";
-        $user_c_r = DB::select($sql_c_r,[$branch_id,$this->user_id]);
-
 
         $all = [];
         $info['info'] = 'Report information';
@@ -75,7 +69,7 @@ class OverviewExportU implements FromCollection,WithEvents,WithTitle,ShouldAutoS
 
         $activity['activity'] = ' Training activity';
         $assigned['assigned'] = 'Assigned courses';
-        $assigned['assigned_v'] =  $user_c_r[0]->count;
+        $assigned['assigned_v'] =  $this->assigned_courses;
         $completed['completed'] = 'Completed courses';
         $completed['completed_v'] =   $this->complete_courses_no;
 

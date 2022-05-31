@@ -35,7 +35,7 @@ use App\Models\Training\CourseRegistration;
             <th class="">{{__('admin.role')}}</th>
             <th class="">{{__('admin.company')}}</th>
             <th class="">{{__('admin.last_login')}}</th>
-            <th class="">{{__('admin.assigned_courses')}}</th>
+            <th class="">{{__('admin.assigned_courses')}} as learner</th>
             <th class="" style="width: 12%;">{{__('admin.action')}}</th>
         </tr>
       </thead>
@@ -88,13 +88,8 @@ use App\Models\Training\CourseRegistration;
                 </td>
                 <td class="px-1">
                     <?php
-                        // $branch_id = getCurrentUserBranchData()->branch_id;
-                        $assigned_courses = CourseRegistration::get_assigned_courses($post->user_id);
-                        // $assigned_courses = CourseRegistration::join('courses', function ($join) use($branch_id) {
-                        //                         $join->on('courses_registration.course_id', '=', 'courses.id')
-                        //                             ->where('courses.branch_id',$branch_id);
-                        //                     })
-                        // ->where('user_id',$post->user_id)->count();
+                        $assigned_courses =  CourseRegistration::getCoursesNo(null,512)
+                                    ->where('courses_registration.user_id',$post->user_id)->count();
                     ?>
                     <span style="display: block;" class="td-title">  {{ $assigned_courses }}</span>
                 </td>
@@ -102,12 +97,14 @@ use App\Models\Training\CourseRegistration;
                     {!!Builder::BtnGroupRows($post->name, $post->user_id, $btn_roles, [
                         'post'=>$post->user_id,
                     ])!!}
-                    @can('user.report')
-                        @if(!(\request()->has('trash') && \request()->trash =='trash'))
-                            <a href="{{route('training.usersReportOverview',['id'=>$post->user_id])}}" target="blank" class="cyan my-1" >
-                                 Report</a>
-                         @endif
-                    @endcan
+                    @if($assigned_courses > 0)
+                        @can('user.report')
+                            @if(!(\request()->has('trash') && \request()->trash =='trash'))
+                                <a href="{{route('training.usersReportOverview',['id'=>$post->user_id])}}" target="blank" class="cyan my-1" >
+                                    Report</a>
+                            @endif
+                        @endcan
+                    @endif
                  </td>
           </tr>
           @endforeach
