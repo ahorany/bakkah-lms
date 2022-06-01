@@ -90,9 +90,7 @@ class UserMigrateDataController extends Controller
 
         $not_sent = DB::table('users')
         // ->where('sent', '!=', 0)
-        ->pluck('email')
-        ->toArray()
-        ;
+        ->pluck('email');
 
         $rows = DB::table('user_migration_data')
             ->where('master_id', $request->master_id)
@@ -279,4 +277,7 @@ class UserMigrateDataController extends Controller
 
         return redirect()->back()->with(['color' => 'green' , 'msg' => 'Successfully done!']);
     }// end method
+
+
+
 }

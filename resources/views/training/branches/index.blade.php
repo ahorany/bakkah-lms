@@ -15,7 +15,7 @@
 	{{Builder::SetObject('branch')}}
 
 	@include('training.'.$folder.'.table')
+{{-- @include('crm.'.$folder.'.search') --}}
 
-	{{-- @include('crm.'.$folder.'.search') --}}
 
 @endsection
