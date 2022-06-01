@@ -8,14 +8,25 @@
     display: inline-block;
     margin-bottom: 15px;
 }
+.progress-bar{
+    background: var(--mainColor);
+    width: 50%;
+    margin: 0 !important;
+    position: relative;
+    height: 16px;
+}
 .progress.progress-new{
     position: relative !important;
+}
+.progress.progress-new .progress-bar{
+    background: #fbc400;
 }
 .progress.progress-new span{
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50% ,-50%);
+    font-weight: 700;
 }
 
 .export:hover{
@@ -624,13 +635,7 @@ justify-content: center;
     font-family: 'Lato Light';
     height: 20px;
 }
-.progress-bar{
-    background: var(--mainColor);
-    width: 50%;
-    margin: 0 !important;
-    position: relative;
-    height: 16px;
-}
+
 .lms-header ul.navbar-nav li.user a svg{
     margin: 0;
     width: 17px;
@@ -743,7 +748,7 @@ tr.text-capitalize.ui-sortable-handle:hover .drag_icon svg{
     display: block;
 }
 .certificate{
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 60px 40px 30px;
     position: relative;
     margin-bottom: 20px;

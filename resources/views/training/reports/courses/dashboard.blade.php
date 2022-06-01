@@ -1,3 +1,10 @@
+
+
+@if(isset($course[0]->id))
+    <a href="{{route('training.coursesReportOverview',['id'=>$course[0]->id??null,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif
+
+
 <div class="row mb-4 dashboard">
 
     <div class="col-lg-12 p-0">

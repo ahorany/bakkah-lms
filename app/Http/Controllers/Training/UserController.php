@@ -66,28 +66,30 @@ class UserController extends Controller
         $learners_no =  $learners_no->count();
         //
         $users_no = $count;
-        $complete_courses_no = CourseRegistration::getCoursesNo(null);
-        $complete_courses_no =  $complete_courses_no->whereRaw('courses_registration.progress >= courses.complete_progress');
+        $complete_courses_no_sql = CourseRegistration::getCoursesNo(null,512);
+        // dd($complete_courses_no_sql->count());
+        $complete_courses_no_sql =  $complete_courses_no_sql->whereRaw('courses_registration.progress >= courses.complete_progress')
+                                                            ->where('courses_registration.progress','!=',0);
         if (!is_null(request()->user_search)) {
-            $complete_courses_no = $this->SearchUser($complete_courses_no);
+            $complete_courses_no_sql = $this->SearchUser($complete_courses_no_sql);
         }
-        $complete_courses_no =  $complete_courses_no->count();
+        $complete_courses_no =  $complete_courses_no_sql->count();
         // dd($complete_courses_no);
-        $courses_in_progress = CourseRegistration::getCoursesNo(null);
-        $courses_in_progress =  $courses_in_progress->whereRaw('courses_registration.progress < courses.complete_progress')
+        $courses_in_progress_sql = CourseRegistration::getCoursesNo(null,512);
+        $courses_in_progress_sql =  $courses_in_progress_sql->whereRaw('courses_registration.progress < courses.complete_progress')
                                             ->where('courses_registration.progress','>',0);
         if (!is_null(request()->user_search)) {
-            $courses_in_progress = $this->SearchUser($courses_in_progress);
+            $courses_in_progress_sql = $this->SearchUser($courses_in_progress_sql);
         }
-        $courses_in_progress =  $courses_in_progress->count();
+        $courses_in_progress =  $courses_in_progress_sql->count();
 
-        $courses_not_started = CourseRegistration::getCoursesNo(null);
-        $courses_not_started =  $courses_not_started->where('progress',0);
+        $courses_not_started_sql = CourseRegistration::getCoursesNo(null,512);
+        $courses_not_started_sql =  $courses_not_started_sql->where('progress',0);
         if (!is_null(request()->user_search)) {
-            $courses_not_started = $this->SearchUser($courses_not_started);
+            $courses_not_started_sql = $this->SearchUser($courses_not_started_sql);
         }
-        $courses_not_started =  $courses_not_started->count();
-
+        $courses_not_started =  $courses_not_started_sql->count();
+        // dd($complete_courses_no->count(),    );
         return Active::Index(compact('users', 'count', 'post_type', 'trash','users_no','complete_courses_no','courses_in_progress','courses_not_started'));
     }
 

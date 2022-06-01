@@ -12,6 +12,7 @@ use App\Traits\UserTrait;
 use App\User;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Course extends Model
 {
@@ -144,6 +145,15 @@ class Course extends Model
         ], JSON_UNESCAPED_UNICODE);
 
         $this->attributes['disclaimer'] = $data;
+    }
+
+    public static function getCourse($course_id)
+    {
+        $sql2 = "SELECT courses.* ,constants.name as const_name
+        FROM courses  join constants on constants.id = courses.training_option_id
+        where courses.id = ? " ;
+        $course = DB::select($sql2,[$course_id ]);
+        return $course;
     }
 
 

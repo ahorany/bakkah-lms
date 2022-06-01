@@ -2,12 +2,38 @@
     .href{
         color:black;
     }
-    </style>
+</style>
 @section('useHead')
     <title>{{__('education.Course Users')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
 {{-- <h4>SCORMS IN :  {{\App\Helpers\Lang::TransTitle($course[0]->title) }} </h4> --}}
+
+
+@if( $show_all == 1)
+    <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@else
+    <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif
+
+
+@if(!is_null($user) && $user != '')
+    <?php
+        $active_all = '';
+        $active_s  = '';
+
+        if($show_all  == 1)
+        {
+            $active_all = 'active';
+        }
+        else
+        {
+            $active_s = 'active';
+        }
+    ?>
+    <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Users </a>
+    <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
+@endif
 
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center scorm">
@@ -18,12 +44,13 @@
             <th class="text-left">Section</th>
             <th class="text-left">{{__('admin.scorm')}}</th>
             <th class="">{{__('admin.no_attempts')}}</th>
-            <th class="">Completed Count{{--{{__('admin.no_passed')}}--}}</th>
+            <th class="">Completed{{--{{__('admin.no_passed')}}--}}</th>
+            <th class=""></th>
         </tr>
       </thead>
       <tbody>
         @foreach($scorms as $post)
-            <tr data-id="{{$post->id}}">
+            <tr data-id="{{$post->content_id}}">
                 <td>
                 <span class="td-title px-1">{{$loop->iteration}}</span>
                 <td class="px-1 text-left">
@@ -45,6 +72,12 @@
                 </td>
                 <td class="px-1">
                     <span style="display: block;"> {{$post->passess??0}} </span>
+                </td>
+
+                <td>
+                    <a class="nav-link cyan" target="_blank" href="{{route('training.scormUsers',['content_id'=>$post->content_id])}} " title="Users" style=" display: inline-block">
+                        @include('training.reports.svg_report.users')
+                         </a>
                 </td>
             </tr>
         @endforeach

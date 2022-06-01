@@ -46,47 +46,50 @@ class CourseController extends Controller
             $courses = Course::with(['upload', 'user','deliveryMethod']);
         }else{  // (Not All courses  just registared)
             $role_instructor_id = Role::select('id')->where('role_type_id',511)
-                                   ->where('branch_id',getCurrentUserBranchData()->branch_id)
-                                   ->first()->id;
+                                    ->where('branch_id',getCurrentUserBranchData()->branch_id)
+                                    ->first()->id;
             $courses = Course::with(['upload'])
-                       ->whereHas('users', function($q) use($role_instructor_id){
+                        ->whereHas('users', function($q) use($role_instructor_id){
                 return $q->where('user_id',auth()->user()->id)->where('courses_registration.role_id',$role_instructor_id);
             });
         }
 
         $courses->where('branch_id',getCurrentUserBranchData()->branch_id);
 
-        $assigned_learners1 = CourseRegistration::getAssigned(512);
-        $assigned_instructors = CourseRegistration::getAssigned(511);
+        $assigned_learners_sql = CourseRegistration::getCoursesNo(null,512);
+        // dd($assigned_learners_sql->count());
+        $assigned_instructors_sql = CourseRegistration::getCoursesNo(null,511);
         if (request()->has('course_search') && !is_null(request()->course_search)) {
             $courses = $this->SearchCond($courses);
-            $assigned_learners1 = $this->SearchCond($assigned_learners1);
-            $assigned_instructors = $this->SearchCond($assigned_instructors);
+            $assigned_instructors_sql = $this->SearchCond($assigned_learners_sql);
+            $assigned_instructors_sql = $this->SearchCond($assigned_instructors_sql);
         }
 
         if (request()->has('category_id') && request()->category_id != -1){
 
             $courses = $courses->where('courses.category_id', request()->category_id);
-            $assigned_learners1 = $assigned_learners1->where('courses.category_id', request()->category_id);
-            $assigned_instructors = $assigned_instructors->where('courses.category_id', request()->category_id);
+            $assigned_learners_sql = $assigned_learners_sql->where('courses.category_id', request()->category_id);
+            $assigned_instructors_sql = $assigned_instructors_sql->where('courses.category_id', request()->category_id);
         }
 
         if (request()->has('training_option_id') && request()->training_option_id != -1){
             $courses = $courses->where('courses.training_option_id', request()->training_option_id);
-            $assigned_learners1 = $assigned_learners1->where('courses.training_option_id', request()->training_option_id);
-            $assigned_instructors = $assigned_instructors->where('courses.training_option_id', request()->training_option_id);
+            $assigned_learners_sql = $assigned_learners_sql->where('courses.training_option_id', request()->training_option_id);
+            $assigned_instructors_sql = $assigned_instructors_sql->where('courses.training_option_id', request()->training_option_id);
         }
 
 
         $count = $courses->count();
         $courses = $courses->page();
 
-        $assigned_learners =  $assigned_learners1->count();
+        $assigned_learners =  $assigned_learners_sql->count();
+        // dump($assigned_learners_sql->count());
+        $assigned_instructors =  $assigned_instructors_sql->count();
 
-        $assigned_instructors =  $assigned_instructors->count();
-
-        $completed_learners =  $assigned_learners1->whereRaw('courses_registration.progress >= courses.complete_progress')->count();
-
+        $completed_learners =  $assigned_learners_sql->whereRaw('courses_registration.progress >= courses.complete_progress')
+                                                    ->where('courses_registration.progress','!=',0)
+                                                    ->count();
+        // dd($assigned_learners_sql->count());
         $categories = Category::get();
         $delivery_methods = Constant::where('parent_id', 10)->get();
 

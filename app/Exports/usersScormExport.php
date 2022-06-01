@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Exports;
-use App\Models\Training\Cart;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -13,41 +12,43 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
 
-class CoursesExport implements FromCollection, WithHeadings,WithTitle,ShouldAutoSize,WithStyles,WithEvents
+class usersScormExport implements FromCollection, WithHeadings,WithTitle,ShouldAutoSize,WithStyles,WithEvents
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($sql=null, $user_id,$course_id,$show_all)
+    // $from,$course_id,$user_id, 512
+    public function __construct($from=null, $course_id,$user_id,$show_all)
     {
-        $this->sql = $sql;
-        $this->user_id = $user_id;
+        $this->from = $from;
         $this->course_id = $course_id;
+        $this->user_id = $user_id;
         $this->show_all = $show_all;
     }
 
     public function collection()
     {
-        $query = $this->sql;
 
-        $select = " select JSON_UNQUOTE(JSON_EXTRACT(courses.title, '$.en')) as Course , concat(courses_registration.progress,' %') as progress  ,courses_registration.created_at,courses_registration.completed_at,courses.PDUs ".$query;
+        $query = $this->from;
+        $select = " select JSON_UNQUOTE(JSON_EXTRACT(courses.title,'$.en')) as course_title,contents.title as content_title, scormvars_master.date,scormvars_master.lesson_status, scormvars_master.score ".$query;
         // dd($select);
         $branch_id = getCurrentUserBranchData()->branch_id;
 
-        if(!is_null($this->course_id) &&  $this->show_all == 0)
-            return collect(DB::select($select, [$branch_id,512, $branch_id,$this->course_id, $branch_id, $this->user_id] ));
+
+        if(!is_null($this->course_id) && $this->show_all == 0)
+            return collect(DB::select($select, [ $this->user_id,$branch_id, $this->course_id] ));
         else
-            return collect(DB::select($select, [$branch_id,512, $branch_id, $branch_id, $this->user_id] ));
+            return collect(DB::select($select, [$this->user_id,$branch_id] ));
     }
 
     public function headings(): array
     {
-        return ["Course","progress","Enrolled On","Completion Date","PDUs"];
+        return ["Course","Scorm","Date","Progress","Score"];
     }
 
     public function title(): string
     {
-        return 'Courses';
+        return 'SCORMS';
     }
 
     public function registerEvents(): array

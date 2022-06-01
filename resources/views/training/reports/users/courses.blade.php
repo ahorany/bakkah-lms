@@ -4,21 +4,38 @@
     }
 </style>
 <?php
-use App\Models\Training\CourseRegistration;
+    use App\Models\Training\CourseRegistration;
 ?>
 
 @section('useHead')
 <title>{{__('education.User Courses')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-<a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
+
+@if( $show_all == 1)
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'export'=>1])}}" class="export btn-sm">
+        {{__('admin.export')}} </a>
+@else
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif
 
 
-@if(!is_null($course) && $course != '' )
+@if(!is_null($course) && $course != '')
+    <?php
+        $active_all = '';
+        $active_s  = '';
 
-    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'show_all'=>1])}}" class="group_buttons btn-sm">All Courses </a>
-    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id])}}" class="group_buttons btn-sm ">{{ \App\Helpers\Lang::TransTitle($course[0]->title) }} </a>
-
+        if($show_all  == 1)
+        {
+            $active_all = 'active';
+        }
+        else
+        {
+            $active_s = 'active';
+        }
+    ?>
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Courses </a>
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($course[0]->title) }} </a>
 @endif
 
 <div class="card-body table-responsive p-0">
@@ -90,13 +107,21 @@ use App\Models\Training\CourseRegistration;
             <span class="td-title">{{$post->PDUs}}</span>
         </td>
         <td>
+
             {{-- <a class="primary-outline" target="_blank" href="{{route('training.exam_preview',['exam_id'=>$post->id])}} "><i class="fa fa-plus" aria-hidden="true"></i> Preview </a> --}}
-            <a  target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->id])}}" class="btn-sm outline" ><span class="href primary-outline">{{__('admin.details')}}</span></a>
+            <a  target="_blank" href="{{route('training.progressDetails',['user_id'=>$user[0]->id,'course_id'=>$post->id])}}" class="nav-link cyan"  style=" display: inline-block"  title="Progress">
+                @include('training.reports.svg_report.progress')
+            </a>
+
+            <a class="nav-link cyan" target="_blank" href="{{route('training.coursesReportUser',['id'=>$post->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" title="Users" style=" display: inline-block">
+                @include('training.reports.svg_report.users')
+            </a>
+
             @if(isset($post->progress) && ($post->progress >= $post->complete_progress ))
-                    <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
-                        target="_blank" class="primary-outline">
-                        Certificate
-                    </a>
+                <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
+                    target="_blank" class="nav-link cyan"  title="Certificate" style=" display: inline-block">
+                    @include('training.reports.svg_report.certificate')
+                </a>
             @endif
 
         </td>

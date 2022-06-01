@@ -3,6 +3,7 @@
         color: black;
     }
 </style>
+
 <?php
 use App\Models\Training\CourseRegistration;
 ?>
@@ -11,8 +12,33 @@ use App\Models\Training\CourseRegistration;
     <title>{{__('education.Course Users')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-{{-- {!! Builder::Submit('export', 'export_results', 'btn-success', 'file-excel') !!} --}}
-<a href="{{route('training.coursesReportUser',['id'=>$course_id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}}</a>
+
+
+
+@if( $show_all == 1)
+    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@else
+    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif
+
+
+@if(!is_null($user) && $user != '')
+    <?php
+        $active_all = '';
+        $active_s  = '';
+
+        if($show_all  == 1)
+        {
+            $active_all = 'active';
+        }
+        else
+        {
+            $active_s = 'active';
+        }
+    ?>
+    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Users </a>
+    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
+@endif
 
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center">
@@ -43,22 +69,16 @@ use App\Models\Training\CourseRegistration;
                 </td>
 
                 <td class="px-1 text-left">
-                    <a href="{{route('training.usersReportOverview',['id'=>$post->id,'course_id'=>$course_id])}}" target="_blank" class="btn-sm outline"><span style="display: block;text-decoration: underline;" class="href">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span></a>
+                    <span style="display: block;" class="href">{{ \App\Helpers\Lang::TransTitle($post->name) }} </span>
                 </td>
                 <td class="px-1 text-left">
                     <span style="display: block;">{{$post->email }} </span>
                 </td>
                 <td class="px-1 text-left">
                     @if($post->role_type_id == 512)
-<<<<<<< HEAD
-
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100">@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</div>
-=======
                     <div class="progress progress-new">
                         <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100"></div>
-                        <span>@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</span>
->>>>>>> 9b5450ce2ec5f63db2e90d2f77632595ad7edb74
+                        <span >@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</span>
                     </div>
 
                     @endif
@@ -84,14 +104,25 @@ use App\Models\Training\CourseRegistration;
                     {{\App\Helpers\Lang::TransTitle($post->c_name)}}</span>
                 </td>
 
-                <td>
-                    <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id,'preview'=>'true'])}}" class="primary-outline" target="_blank"><span class="href">{{__('admin.details')}}</span></a>
-                    @if(isset($post->progress) && ($post->progress >= $post->complete_progress ))
-                        <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
-                            target="_blank" class="primary-outline">
-                            Certificate
+                <td class="text-left">
+                    @if($post->role_type_id == 512)
+                        <a href="{{route('training.progressDetails',['user_id'=>$post->id,'course_id'=>$course_id,'preview'=>'true'])}}" class="nav-link cyan" style=" display: inline-block" target="_blank" title="Progress">
+                            @include('training.reports.svg_report.progress')
                         </a>
+
+                        <a href="{{route('training.usersReportCourse',['id'=>$post->id,'course_id'=>$course_id,'show_all'=>0])}}"  target="_blank" class="nav-link cyan" title="Courses" style=" display: inline-block">
+                            @include('training.reports.svg_report.courses')
+
+                        </a>
+                        @if(isset($post->progress) && ($post->progress >= $post->complete_progress ))
+                            <a href="{{route('training.certificates.certificate_dynamic', ['course_registration_id'=> $post->c_reg_id ] )}}"
+                                target="_blank" class="nav-link cyan"  title="Certificate" style=" display: inline-block">
+                                @include('training.reports.svg_report.certificate')
+
+                            </a>
+                        @endif
                     @endif
+
                 </td>
             </tr>
         @endforeach
@@ -99,3 +130,4 @@ use App\Models\Training\CourseRegistration;
     </table>
   </div>
   {{$paginator->render()}}
+
