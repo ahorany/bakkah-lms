@@ -94,16 +94,15 @@ use App\Models\Training\CourseRegistration;
                                     ->where('course_id',$post->id)
                                     ->where('user_id',auth()->user()->id)->count();
             ?>
-             <span class="td-title">
-                @if($registered>0)
-                    <span class="badge-green d-block">{{__('admin.True')}}</span>
-                @else
-                    <span class="badge-red d-block">{{__('admin.False')}}</span>
-                @endif
-             </span>
+                <span class="td-title">
+                    @if($registered>0)
+                        <span class="badge-green d-block">{{__('admin.True')}}</span>
+                    @else
+                        <span class="badge-red d-block">{{__('admin.False')}}</span>
+                    @endif
+                </span>
         </td>
         <td class="d-sm-table-cell">{!!Builder::UploadRow($post)!!}</td>
-
 
           <td class="d-sm-table-cell text-right">
                 {!!Builder::BtnGroupRows($post->trans_title, $post->id, $btn_roles, [
@@ -119,6 +118,7 @@ use App\Models\Training\CourseRegistration;
                 </div>
               @endif
           </td>
+
       </tr>
 
       @endforeach
@@ -129,3 +129,6 @@ use App\Models\Training\CourseRegistration;
 <!-- /.card-body -->
 
 {{ $courses->appends(['post_type' => $post_type??null, 'trash' => request()->trash??null, 'course_search' => request()->course_search??null, 'category_id' => request()->category_id??-1, 'show_in_website' => request()->show_in_website??null])->render() }}
+
+
+
