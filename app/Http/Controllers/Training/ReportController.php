@@ -303,8 +303,7 @@ class ReportController extends Controller
     public function coursesReportOverview()
     {
         $course_id = request()->id;
-        $sql2 = "SELECT * FROM courses where id = ? " ;
-        $course = DB::select($sql2,[$course_id ]);
+        $course = Course::getCourse($course_id);
         $user_id = request()->user_id??null;
         $show_all = request()->show_all??1;
         $user = '';
@@ -347,9 +346,7 @@ class ReportController extends Controller
     public function coursesReportUser()
     {
         $course_id = request()->id;
-
-        $sql2 = "SELECT * FROM courses where id = ? " ;
-        $course = DB::select($sql2,[$course_id ]);
+        $course = Course::getCourse($course_id);
         $training_option_id = $course[0]->training_option_id;
         $branch_id = getCurrentUserBranchData()->branch_id;
         $show_all = request()->show_all??1;
@@ -399,8 +396,7 @@ class ReportController extends Controller
         }
         $show_all = request()->show_all??1;
 
-        $sql2 = "SELECT * FROM courses where id = ? " ;
-        $course = DB::select($sql2,[$course_id ]);
+        $course = Course::getCourse($course_id);
 
         $select = " select distinct contents.id as content_id, contents.title as content_title,exams.id as exam_id,c2.title as section ,
         (select count(DISTINCT status,user_id) from user_exams where status= 1 and  exam_id= exams.id) as completed ,
@@ -462,8 +458,7 @@ class ReportController extends Controller
         $scorms = $paginator->items();
         $count = $paginator->total();
 
-        $sql2 = "SELECT * FROM courses where id = ? " ;
-        $course = DB::select($sql2,[$course_id ]);
+        $course = Course::getCourse($course_id);
         if(isset(request()->export))
         {
             return Excel::download(new CoursesScormsExport($from,$course_id, $user_id,$show_all), 'Scorms_'.$course_id.'.xlsx');
@@ -475,8 +470,7 @@ class ReportController extends Controller
     public function coursesAssessments()
     {
         $course_id = request()->id;
-        $sql2 = "SELECT * FROM courses where id = ? " ;
-        $course = DB::select($sql2,[$course_id ]);
+        $course = Course::getCourse($course_id);
         $training_option_id = $course[0]->training_option_id;
         $branch_id = getCurrentUserBranchData()->branch_id;
         $sessions = Session::where('course_id',$course_id)->get();

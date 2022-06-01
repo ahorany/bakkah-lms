@@ -403,6 +403,7 @@ class CertificateControllerH extends Controller
     }
 
     public function certificate_dynamic() {
+
         // $course = Course::find(request()->course_registration_id);
         $course_registration = CourseRegistration::leftJoin('sessions', function($query){
             $query->on('sessions.id','=','courses_registration.session_id')
@@ -416,7 +417,8 @@ class CertificateControllerH extends Controller
         // dd(request()->course_registration_id);
 
         $course = Course::find($course_registration->course_id);
-
+        // dump($course_registration->course_id);
+        // dd($course);
         $body = $this->certificate_body(['certificate_id'=>$course->certificate_id,
                                         'course_registration'=>$course_registration]);
                                         // dd('dxdd');

@@ -7,11 +7,12 @@
 @section('table')
 
 <?php
-    $active_overview = '';
-    $active_users  = '';
-    $active_tests  = '';
-    $active_scorms = '';
+    $active_overview    = '';
+    $active_users       = '';
+    $active_tests       = '';
+    $active_scorms      = '';
     $active_assessments = '';
+
     if(isset($overview))
     {
         $active_overview = 'active';
@@ -38,11 +39,18 @@
         $path = 'training.reports.courses.assessments';
     }
 ?>
-
+    @php
+    $type = [
+        '11' => 'self-paced',
+        '13' => 'live-online',
+        '353' => 'exam-simulators',
+        '383' => 'instructor-led',
+    ];
+    @endphp
     <div class="course_info mb-3 card p-3">
         <div class="row">
             <div class="col-md-12">
-                <span class="mr-1 p-1 badge badge-dark" style="font-size: 0.8rem;"> {{ \App\Helpers\Lang::TransTitle($course[0]->title) }}</span>
+                <span class="mr-1 p-1 badge badge-dark" style="font-size: 0.8rem;"> {{ \App\Helpers\Lang::TransTitle($course[0]->title) }} </span> <span class="mr-1 p-1 badge {{ $type[$course[0]->training_option_id] }}" style="font-size: 0.8rem;">  {{\App\Helpers\Lang::TransTitle($course[0]->const_name)}}</span>
                 <a href="{{route('training.coursesReportOverview',['id'=>$course_id,'user_id'=>$user[0]->id??null])}}" class="group_buttons btn-sm {{$active_overview}}">Overview</a>
                 <a href="{{route('training.coursesReportUser',['id'=>$course_id,'user_id'=>$user[0]->id??null])}}" class="group_buttons btn-sm {{$active_users}}">Users</a>
                 <a href="{{route('training.coursesReportTest',['id'=>$course_id,'user_id'=>$user[0]->id??null])}}" class="group_buttons btn-sm {{$active_tests}}">Tests</a>
@@ -53,6 +61,6 @@
         </div>
     </div>
 
-        @include($path)
+    @include($path)
 
 @endsection
