@@ -29,7 +29,7 @@
     }
 
     .row-trainee{
-        background: #ecdfdf;
+        background: #f5f5f5;
     }
     @media (max-width: 1100px){
         table{
@@ -129,7 +129,9 @@
                 </div>
 
                     <div class="container row mx-0 mt-2">
-
+                        <div v-if="status_message" class="error-notice">
+                            <div class="oaerror danger" v-text="status_message"></div>
+                        </div>
                     <div class="col-md-6 col-12">
                         <div class="form-group">
                             <label>Name: </label>
@@ -149,6 +151,7 @@
                 </div>
 
                  <div class="modal-body" style="overflow: auto;height: 200px;">
+
 {{--                        <div class="p-3">--}}
 {{--                            <label class="form-group">Expire Date: </label>--}}
 {{--                            <input   type="datetime-local" v-model="expire_date" name="expire_date" class="w-100 form-control d-inline-block" placeholder="Expire date">--}}
@@ -240,6 +243,7 @@
             search_users    : [] ,
             add_users : [],
             delete_users : [],
+            status_message : '',
         },
         created(){
         },
@@ -306,7 +310,14 @@
                             self.add_users    = [];
                             self.delete_users = [];
                             self.search_users = [];
+                            self.status_message = ''
                             $('#ContentModal').modal('hide')
+                        }else{
+                            if(response.data.message) {
+                                // $('#ContentModal').modal('hide')
+                                self.status_message = response.data.message
+                            }
+
                         }
                     })
                     .catch(e => {
