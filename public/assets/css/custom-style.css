@@ -5,8 +5,17 @@
     font-size: 12px;
     font-weight: 700;
     padding: 5px 20px;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    width: max-content;
     margin-bottom: 15px;
+}
+.export svg {
+    width: 20px;
+    margin-right: 5px;
+}
+.export svg path{
+    fill: #fff;
 }
 .progress-bar{
     background: var(--mainColor);
