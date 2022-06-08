@@ -12,32 +12,33 @@
 @endsection
 
 
+{{--
 @if( $show_all == 1)
-    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'export'=>1])}}" class="export btn-sm">
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id??null,'export'=>1])}}" class="export btn-sm">
         {{__('admin.export')}} </a>
 @else
-    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
-@endif
-
+    <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id??null,'course_id'=>$course[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
+@endif --}}
 
 @if(!is_null($course) && $course != '')
     <?php
+
         $active_all = '';
         $active_s  = '';
 
-        if($show_all  == 1)
+        if(isset($course[0]->id) && $show_all == 0)
         {
-            $active_all = 'active';
+            $active_s = 'active';
         }
         else
         {
-            $active_s = 'active';
+            $active_all = 'active';
         }
     ?>
     <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Courses </a>
     <a href="{{route('training.usersReportCourse',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($course[0]->title) }} </a>
 @endif
-
+@include('training.reports.search.search_users_courses')
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed">
       <thead>

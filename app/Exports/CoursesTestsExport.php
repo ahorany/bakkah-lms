@@ -18,12 +18,10 @@ class CoursesTestsExport implements FromCollection, WithHeadings,WithTitle,Shoul
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($from=null,$course_id,$user_id,$show_all)
+    public function __construct($from)
     {
-        $this->from = $from;
-        $this->course_id = $course_id;
-        $this->user_id = $user_id;
-        $this->show_all = $show_all;
+        $this->from = $from[0];
+        $this->search_arr = $from[1];
     }
 
 
@@ -34,14 +32,7 @@ class CoursesTestsExport implements FromCollection, WithHeadings,WithTitle,Shoul
         $select = " select  distinct contents.title as content_title,c2.title as section ,(select count(DISTINCT status,user_id) from user_exams where status= 1 and  exam_id= exams.id) as completed ,
         (select count(DISTINCT status,user_id) from user_exams where status= 1 and  exam_id= exams.id and mark >= (exams.pass_mark/100*exams.exam_mark)) as passess ".$query;
 
-        if(!is_null($this->user_id) && $this->show_all == 0)
-        {
-            return collect(DB::select($select, [$this->user_id,1, $this->course_id]));
-        }
-        else
-        {
-            return collect(DB::select($select, [ $this->course_id]));
-        }
+        return collect(DB::select($select, $this->search_arr));
 
     }
 

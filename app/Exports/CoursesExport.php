@@ -18,26 +18,21 @@ class CoursesExport implements FromCollection, WithHeadings,WithTitle,ShouldAuto
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($sql=null, $user_id,$course_id,$show_all)
+    public function __construct($usersReportCourseFromSql)
     {
-        $this->sql = $sql;
-        $this->user_id = $user_id;
-        $this->course_id = $course_id;
-        $this->show_all = $show_all;
+        $this->sql = $usersReportCourseFromSql[0];
+        $this->search_arr = $usersReportCourseFromSql[1];
+
     }
 
     public function collection()
     {
         $query = $this->sql;
-
+        // dd($query);
         $select = " select JSON_UNQUOTE(JSON_EXTRACT(courses.title, '$.en')) as Course , concat(courses_registration.progress,' %') as progress  ,courses_registration.created_at,courses_registration.completed_at,courses.PDUs ".$query;
-        // dd($select);
-        $branch_id = getCurrentUserBranchData()->branch_id;
 
-        if(!is_null($this->course_id) &&  $this->show_all == 0)
-            return collect(DB::select($select, [$branch_id,512, $branch_id,$this->course_id, $branch_id, $this->user_id] ));
-        else
-            return collect(DB::select($select, [$branch_id,512, $branch_id, $branch_id, $this->user_id] ));
+// dd($this->search_arr);
+        return collect(DB::select($select, $this->search_arr ));
     }
 
     public function headings(): array

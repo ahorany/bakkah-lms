@@ -28,11 +28,12 @@ class userOverviewExport implements WithMultipleSheets
 
     public function sheets(): array
     {
+
         return [
             new OverviewExportU($this->user_id,$this->complete_courses_no,$this->assigned_courses),
-            new CoursesExport($this->from_course,$this->user_id,null,1),
-            new usersTestsExport($this->from_test,null,$this->user_id,1),
-            new usersScormExport($this->from_scorm,null,$this->user_id,1),
+            new CoursesExport($this->from_course),
+            new usersTestsExport($this->from_test),
+            new usersScormExport($this->from_scorm),
         ];
     }
 

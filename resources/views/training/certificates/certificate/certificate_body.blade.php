@@ -34,7 +34,8 @@
 @endif
 {{-- @include('training.certificates.certificate.content') --}}
 <?php
-    // $show_pdf3 = env('APP_URL') . 'certificates/certificate/'.$file_name_pdf.'.pdf';
+
+// $show_pdf3 = env('APP_URL') . 'certificates/certificate/'.$file_name_pdf.'.pdf';
     // $show_pdf = CustomAsset('certificates/certificate/'.$file_name_pdf.'.pdf');
     // $physical_pdf = public_path() . '/certificates/certificate/'.$file_name_pdf.'.pdf';
     if(!isset($folder))

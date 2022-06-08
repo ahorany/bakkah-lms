@@ -173,6 +173,7 @@ return [
     'enrolled_date' => 'تاريخ التسجيل',
     'Last_login_date' => 'تاريخ اخر دخول',
     'test_time' => 'مدة الاختبار',
-
+    'user_search' => 'User Search',
+    'section' => 'Section',
 
 ];

@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\DB;
     <title>{{__('education.Course Tests')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-@if( $show_all == 1)
+{{-- @if( $show_all == 1)
     <a href="{{route('training.coursesReportTest',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
 @else
     <a href="{{route('training.coursesReportTest',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
-@endif
+@endif --}}
 
 
 @if(!is_null($user) && $user != '')
@@ -19,18 +19,19 @@ use Illuminate\Support\Facades\DB;
         $active_all = '';
         $active_s  = '';
 
-        if($show_all  == 1)
+        if(isset($user[0]->id) && $show_all == 0)
         {
-            $active_all = 'active';
+            $active_s = 'active';
         }
         else
         {
-            $active_s = 'active';
+            $active_all = 'active';
         }
     ?>
     <a href="{{route('training.coursesReportTest',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Users </a>
     <a href="{{route('training.coursesReportTest',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
 @endif
+@include('training.reports.search.search_courses_tests')
 
 
 <div class="card-body table-responsive p-0">

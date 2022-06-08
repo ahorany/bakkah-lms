@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Training\Role;
 use App\Models\Training\CourseRegistration;
+use App\Models\Paginator;
+
 
 class UserController extends Controller
 {
@@ -39,26 +41,72 @@ class UserController extends Controller
 
         $post_type = GetPostType('users');
         $trash = GetTrash();
-
-        $users = UserBranch::where('branch_id',getCurrentUserBranchData()->branch_id??1)
-            ->with(['user'=> function($q){
-                $q->with(['roles' => function($q){
-                    $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)
-                        ->where('roles.id','<>',4);
-                }]);
-            }])->whereHas('user.roles',function ($q){
-                $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)->where('roles.id','!=',4);
-            });
-
-
         $branch_id = getCurrentUserBranchData()->branch_id;
 
-        if (!is_null(request()->user_search)) {
-            $users = $this->SearchUser($users,true);
-        }
+        // $users = UserBranch::where('branch_id',getCurrentUserBranchData()->branch_id??1)
+        //     ->with(['user'=> function($q){
+        //         $q->with(['roles' => function($q){
+        //             $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)
+        //                 ->where('roles.id','<>',4);
+        //         }]);
+        //     }])->whereHas('user.roles',function ($q){
+        //         $q->where('branch_id',getCurrentUserBranchData()->branch_id??1)->where('roles.id','!=',4);
+        //     });
 
-        $count = $users->count();
-        $users = $users->page();
+        // dd($users->toSql());
+        // select * from `user_branches`
+        // where `branch_id` = ?
+        //     and exists
+        //              ( select * from `users` where `user_branches`.`user_id` = `users`.`id`
+        //                     and exists
+        //                          ( select * from `roles` inner join `model_has_roles` on `roles`.`id` = `model_has_roles`.`role_id` where `users`.`id` = `model_has_roles`.`model_id` and `model_has_roles`.`model_type` = ? and `branch_id` = ? and `roles`.`id` != ? and (`roles`.`branch_id` = ?) and `roles`.`deleted_at` is null)
+        //             and `users`.`deleted_at` is null)
+        // and `user_branches`.`deleted_at` is null
+
+        $sql = " select users.id as  user_id ,user_branches.name,users.email,users.mobile,users.company,
+                        users.last_login,roles.role_type_id,roles.id as role_id ,constants.name role_name
+                from user_branches  join users on users.id = user_branches.user_id
+                                                and user_branches.branch_id = ?
+                                                and user_branches.deleted_at is null
+                                                and users.deleted_at is null
+                                    join model_has_roles on  users.id = model_has_roles.model_id and model_has_roles.model_type = ?
+                                    join roles on model_has_roles.role_id = roles.id
+                                                and roles.id != ? and roles.deleted_at is null   and roles.branch_id = ?
+                                    join constants on constants.id = roles.role_type_id
+                where 1 " ;
+
+        // dd($users);
+        $search_arr = [$branch_id,'App\\User',4,$branch_id];
+
+        $sql = $this->search_sql($sql);
+        $search_arr = $this->search_arr($search_arr);
+
+
+        // dd($sql);
+        // if ($is_eloquent){
+        //     $eloquent1 = $eloquent->where(function ($query) {
+        //         $query->where('user_branches.name', 'like', '%' . request()->user_search . '%');
+        //     })->orWhereHas('user',function ($q){
+        //         $q->where('email', 'like', '%' . request()->user_search . '%');
+        //     });
+        // }else{
+        //     $eloquent1 = $eloquent->where(function ($query) {
+        //         $query->where('user_branches.name', 'like', '%' . request()->user_search . '%');
+        //         $query->orWhere('users.email', 'like', '%' . request()->user_search . '%');
+        //     });
+        // }
+        // $users = $this->SearchUser($users,true);
+        // dd($sql);
+
+
+
+        $users = DB::select( $sql,$search_arr);
+        $paginator = Paginator::GetPaginator($users);
+        $users = $paginator->items();
+        $count  = $paginator->total();
+
+        // $count = $users->count();
+        // $users = $users->page();
         $learners_no  = User::getLearnersNo();
         if(!is_null(request()->user_search)) {
             $learners_no = $this->SearchUser($learners_no);
@@ -90,9 +138,32 @@ class UserController extends Controller
         }
         $courses_not_started =  $courses_not_started_sql->count();
         // dd($complete_courses_no->count(),    );
-        return Active::Index(compact('users', 'count', 'post_type', 'trash','users_no','complete_courses_no','courses_in_progress','courses_not_started'));
+        return Active::Index(compact('users', 'count', 'post_type', 'trash','users_no','complete_courses_no','courses_in_progress','courses_not_started','paginator'));
     }
 
+    private function search_sql($sql){
+
+        if (!is_null(request()->user_search))
+        {
+            $sql .= " and ( user_branches.name like '%".request()->user_search."%'  or users.email like '%".request()->user_search."%' ) ";
+        }
+
+        if (!is_null(request()->mobile))
+        {
+            $sql .= " and users.mobile = ? ";
+        }
+        return $sql;
+    }
+
+    private function search_arr($search_arr){
+
+
+        if (!is_null(request()->mobile))
+        {
+            array_push($search_arr,request()->mobile);
+        }
+        return $search_arr;
+    }
 
     private function SearchUser($eloquent,$is_eloquent = false){
 

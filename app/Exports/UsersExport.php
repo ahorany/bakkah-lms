@@ -21,13 +21,11 @@ class UsersExport implements FromCollection, WithHeadings,WithTitle,ShouldAutoSi
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($sql=null,$course_id,$training_option_id,$user_id,$show_all)
+    public function __construct($sql,$training_option_id)
     {
-        $this->sql = $sql;
-        $this->course_id = $course_id;
+        $this->sql = $sql[0];
         $this->training_option_id = $training_option_id;
-        $this->user_id = $user_id;
-        $this->show_all = $show_all;
+        $this->search_arr = $sql[1];
     }
 
 
@@ -38,11 +36,10 @@ class UsersExport implements FromCollection, WithHeadings,WithTitle,ShouldAutoSi
         $branch_id = getCurrentUserBranchData()->branch_id;
         if($this->training_option_id == 13)//live
         {
-
             $select = " select user_branches.name as User ,users.email as email ,  if(roles.role_type_id=512,concat(courses_registration.progress,' %'),'' ) as progress  ,
             courses_registration.completed_at ,
             if(roles.role_type_id = 511,'Instructor','Learner')  as role_type_id,sessions.date_from  as date_from  ,sessions.date_to as date_to ,courses_registration.created_at as enrolled_date ,users.last_login as last_login,if(courses_registration.progress >= courses.complete_progress and courses_registration.progress != 0 ,concat('=HYPERLINK(\"https://learning.bakkah.com/en/training/certificates/certificate?course_registration_id=',courses_registration.id,'\",\"Show\")'),'-'
-           ) as certificate ".$query;
+            ) as certificate ".$query;
         }
         else
         {
@@ -52,10 +49,7 @@ class UsersExport implements FromCollection, WithHeadings,WithTitle,ShouldAutoSi
                 ) as certificate ".$query;
         }
 
-        if(!is_null($this->user_id) && $this->show_all == 0)
-            return collect(DB::select($select, [$branch_id,$branch_id, $this->course_id,$this->user_id]));
-        else
-            return collect(DB::select($select, [$branch_id,$branch_id, $this->course_id]));
+        return collect(DB::select($select,  $this->search_arr));
     }
 
     public function headings(): array

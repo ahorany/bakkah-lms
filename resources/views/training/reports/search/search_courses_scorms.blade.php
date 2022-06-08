@@ -15,7 +15,8 @@
         padding-right: 0 !important;
     }
     </style>
-    <form id="post-search" class="mb-4" method="get" action="{{route('training.users.index')}}">
+    {{-- @dd($user[0]->id) --}}
+    <form id="post-search" class="mb-4" method="get" action="{{route('training.coursesReportScorm',['id'=>$course[0]->id??null,'user_id'=>$user[0]->id??null])}}">
         <div class="card card-default">
             <div class="card-header">
                 <b>{{__('admin.search form')}}</b>
@@ -23,15 +24,19 @@
             <div class="card-body">
                 <div class="container-fluid">
                     <div class="row">
-                        {!! Builder::Hidden('page', request()->page??1) !!}
-                        {!! Builder::Hidden('post_type', $post_type) !!}
-                        {!! Builder::Hidden('trash') !!}
-                        {!! Builder::Input('user_search', 'user_search',request()->user_search??null,['col'=>'col-md-6'])!!}
-                        {!! Builder::Input('mobile', 'mobile',request()->mobile??null,['col'=>'col-md-6'])!!}
+                        {{-- {!! Builder::Hidden('page', request()->page??1) !!} --}}
+                        {!! Builder::Hidden('id', $course[0]->id??null) !!}
+                        {!! Builder::Hidden('user_id', $user[0]->id??null) !!}
+                        {!! Builder::Hidden('show_all', $show_all??null) !!}
+
+                        {!! Builder::Input('section', 'section',request()->section??null,['col'=>'col-md-6'])!!}
+                        {!! Builder::Input('scorm', 'scorm',request()->scorm??null,['col'=>'col-md-6'])!!}
+
                         <div class="col-md-12">
                             <div style="margin-left:0px;margin-top: 5px;">
                                 {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
                                 <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
+                                <input type="submit" value="export" name="export" class="export">
                             </div>
                         </div>
                     </div>

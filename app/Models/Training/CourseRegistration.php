@@ -27,7 +27,23 @@ class CourseRegistration extends Model
     {
 
         $branch_id = getCurrentUserBranchData()->branch_id;
+        // $sql = "select *
+        //         from courses_registration join roles on roles.id = courses_registration.role_id
+        //                                     and roles.deleted_at is null
+        //                                     and roles.branch_id = $branch_id " ;
+        // if(!is_null($role_type_id))
+        // {
+        //     $sql .= ' and  roles.role_type_id = $role_type_id ';
+        // }
+        // $sql .= " join courses on courses.id = courses_registration.course_id and courses.deleted_at and courses.branch_id = $branch_id  ";
+        // if(!is_null($course_id))
+        // {
+        //     $sql =' and courses.id = $course_id ';
+        // }
 
+        // $sql .= ' join users on users.id = courses_registration.user_id
+        //           join  user_branches on user_branches.user_id = users.id and user_branches.deleted_at is null
+        //                                                     and user_branches.branch_id = $branch_id';
         $sql = DB::table('courses_registration')
         ->join('roles',function ($join) use($branch_id,$role_type_id){
             $join->on('roles.id','=','courses_registration.role_id');

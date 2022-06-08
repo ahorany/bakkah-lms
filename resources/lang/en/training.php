@@ -86,6 +86,6 @@ return [
     'certificate_id'=>'Certificate',
     'user_search'=>'User Search',
     'role_search'=>'Role Search',
-
+    'mobile' => 'Mobile',
 
 ];

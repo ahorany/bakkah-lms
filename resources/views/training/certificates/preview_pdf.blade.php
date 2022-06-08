@@ -18,7 +18,7 @@ if(isset($certificate->upload->file))
                 $training_option = $course->training_option_id??353;
                 $gender = 'he';
 
-                if($user->gender_id != 43)
+                if($user[0]->gender_id != 43)
                     $gender = 'she';
 
                 if (strpos($child->content,  '${finished}') !== false)
@@ -65,11 +65,11 @@ if(isset($certificate->upload->file))
                 }
                 if (strpos($child->content,  '${name_en}') !== false)
                 {
-                    $child->content=  str_replace('${name_en}',$user->en_name,$child->content);
+                    $child->content=  str_replace('${name_en}',$user[0]->name,$child->content);
                 }
                 if (strpos($child->content,  '${name_ar}') !== false)
                 {
-                    $child->content=  str_replace('${name_ar}',$user->ar_name,$child->content);
+                    $child->content=  str_replace('${name_ar}',$user[0]->name,$child->content);
                 }
                 if (strpos($child->content,  '${certificate}') !== false)
                 {
@@ -131,6 +131,7 @@ if(isset($certificate->upload->file))
                 }
                 if (strpos($child->content,  '${cource_img}') !== false)
                 {
+                    // dd($course->upload->file);
                     // if($cart->course->type_id != 370)
                     // {
                     //      if(env('NODE_ENV')=='production')
@@ -139,7 +140,10 @@ if(isset($certificate->upload->file))
                     //         $path = "https://bakkah.com/";
                         // dd($course->upload->file);
                         if(isset($course->upload->file))
+                        {
                             $child->content=  str_replace('${cource_img}','<img src="https://stage.bakkah.com/public/upload/thumb300/'.$course->upload->file.'" style="width: 200px;display: block;margin: 0 auto;margin-top: 5px;">',$child->content);
+                        }
+
 
                     // }
                 }

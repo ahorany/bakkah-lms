@@ -10,11 +10,11 @@
 {{-- <h4>SCORMS IN :  {{\App\Helpers\Lang::TransTitle($course[0]->title) }} </h4> --}}
 
 
-@if( $show_all == 1)
+{{-- @if( $show_all == 1)
     <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
 @else
     <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
-@endif
+@endif --}}
 
 
 @if(!is_null($user) && $user != '')
@@ -22,18 +22,19 @@
         $active_all = '';
         $active_s  = '';
 
-        if($show_all  == 1)
+        if(isset($user[0]->id))
         {
-            $active_all = 'active';
+            $active_s = 'active';
         }
         else
         {
-            $active_s = 'active';
+            $active_all = 'active';
         }
     ?>
     <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Users </a>
     <a href="{{route('training.coursesReportScorm',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
 @endif
+@include('training.reports.search.search_courses_scorms')
 
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center scorm">
@@ -54,7 +55,7 @@
                 <td>
                 <span class="td-title px-1">{{$loop->iteration}}</span>
                 <td class="px-1 text-left">
-                    {{ \App\Helpers\Lang::TransTitle($post->sestion) }}
+                    {{ \App\Helpers\Lang::TransTitle($post->section) }}
                 </td>
                 </td>
                 {{-- <td class="px-1">

@@ -60,5 +60,8 @@ return [
     'align'=>'Align',
     'choose_value'=>'Choose Value',
     'certificate_id'=>'Certificate',
+    'certificate_id'=>'Certificate',
+    'mobile' => 'Mobile',
+
 
 ];

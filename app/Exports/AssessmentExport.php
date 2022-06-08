@@ -18,22 +18,18 @@ class AssessmentExport implements FromCollection, WithHeadings,WithTitle,ShouldA
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($sql=null,$course_id,$session_id,$training_option_id,$user_id,$show_all)
+    public function __construct($sql,$training_option_id)
     {
-        $this->sql = $sql;
-        $this->course_id = $course_id;
-        $this->session_id = $session_id;
+        $this->sql = $sql[0];
         $this->training_option_id = $training_option_id;
-        $this->user_id = $user_id;
-        $this->show_all = $show_all;
-        // dd($this->session_id);
+        $this->search_arr = $sql[1];
     }
 
 
     public function collection()
     {
         $query = $this->sql;
-        // dd($query);
+
         $branch_id = getCurrentUserBranchData()->branch_id;
         if($this->training_option_id == 13)//live
         {
@@ -44,29 +40,8 @@ class AssessmentExport implements FromCollection, WithHeadings,WithTitle,ShouldA
             $select = " select pre.name,pre.email , pre.mark as pre_assessment_score, post.mark,  if(post.mark is Null or post.mark = '','Not Yet',if(pre.mark<post.mark,'Improved',if(pre.mark=post.mark,'Constant','Deceased'))) knowledge_status  ".$query;
         }
 
-        // dd($select);
-        if( $this->session_id == '')
-        {
-            if(!is_null($this->user_id) && $this->show_all == 0)
-            {
-                return collect( DB::select($select, [$this->course_id, $this->course_id,$this->user_id,$branch_id,512,$branch_id,513,514,$this->course_id,$this->course_id,$branch_id,512,$branch_id,514,511,$branch_id,$branch_id]));
-            }
-            else
-            {
-                return collect( DB::select($select, [$this->course_id, $this->course_id,$branch_id,512,$branch_id,513,514,$this->course_id,$this->course_id,$branch_id,512,$branch_id,514,511,$branch_id,$branch_id]));
-            }
-        }
-        else
-        {
-            if(!is_null($this->user_id) && $this->show_all == 0)
-            {
-                return collect( DB::select($select, [$this->course_id, $this->course_id,$this->session_id,$this->user_id,$branch_id,512,$branch_id,513,514,$this->course_id,$this->course_id,$this->session_id,$branch_id,512,$branch_id,514,511,$branch_id,$this->session_id,$branch_id]));
-            }
-            else
-            {
-                return collect( DB::select($select, [$this->course_id, $this->course_id,$this->session_id,$branch_id,512,$branch_id,513,514,$this->course_id,$this->course_id,$this->session_id,$branch_id,512,$branch_id,514,511,$branch_id,$this->session_id,$branch_id]));
-            }
-        }
+        // dd($this->search_arr);
+        return collect( DB::select($select, $this->search_arr));
 
     }
 
@@ -115,6 +90,4 @@ class AssessmentExport implements FromCollection, WithHeadings,WithTitle,ShouldA
    }
 
 }
-
-
 

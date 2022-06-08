@@ -19,28 +19,19 @@ class CoursesScormsExport implements FromCollection, WithHeadings,WithTitle,Shou
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($from=null,$course_id,$user_id,$show_all)
+    public function __construct($from)
     {
-        $this->from = $from;
-        $this->course_id = $course_id;
-        $this->user_id = $user_id;
-        $this->show_all = $show_all;
+        $this->from = $from[0];
+        $this->search_arr = $from[1];
     }
 
 
     public function collection()
     {
         $query = $this->from;
-        $select = " select  i.sestion,i.title,i.attempts,other.passess ".$query;
-        if(!is_null($this->user_id) && $this->show_all == 0)
-        {
-            return collect(DB::select($select, [ $this->course_id,$this->course_id,$this->course_id,$this->user_id]));
-        }
-        else
-        {
-            return collect(DB::select($select, [ $this->course_id,$this->course_id]));
+        $select = " select  i.section,i.title,i.attempts,other.passess ".$query;
 
-        }
+        return collect(DB::select($select, $this->search_arr));
     }
 
     public function headings(): array

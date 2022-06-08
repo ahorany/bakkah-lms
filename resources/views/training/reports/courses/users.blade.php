@@ -14,12 +14,11 @@ use App\Models\Training\CourseRegistration;
 
 
 
-
-@if( $show_all == 1)
+{{-- @if( $show_all == 1)
     <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
 @else
     <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
-@endif
+@endif --}}
 
 
 @if(!is_null($user) && $user != '')
@@ -27,19 +26,19 @@ use App\Models\Training\CourseRegistration;
         $active_all = '';
         $active_s  = '';
 
-        if($show_all  == 1)
+        if(isset($user[0]->id) && $show_all == 0)
         {
-            $active_all = 'active';
+            $active_s = 'active';
         }
         else
         {
-            $active_s = 'active';
+            $active_all = 'active';
         }
     ?>
     <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id])}}" class="group_buttons btn-sm {{$active_all}}" >All Users </a>
     <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'show_all'=>0])}}" class="group_buttons btn-sm {{$active_s}}">{{ \App\Helpers\Lang::TransTitle($user[0]->name) }} | {{$user[0]->email}} </a>
 @endif
-
+@include('training.reports.search.search_courses_users')
 <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center">
       <thead>
@@ -51,7 +50,7 @@ use App\Models\Training\CourseRegistration;
             {{--  <th class="">{{__('admin.score')}}</th>--}}
             <th class="">{{__('admin.enrolled_date')}}</th>
             <th class="">{{__('admin.Last_login_date')}}</th>
-           {{-- <th class="">{{__('admin.completion_date')}}</th>
+            {{-- <th class="">{{__('admin.completion_date')}}</th>
             <th class="">{{__('admin.pdu')}}</th> --}}
             @if($course[0]->training_option_id == 13)
                 <th class="text-left">{{__('admin.session')}}</th>
@@ -76,11 +75,10 @@ use App\Models\Training\CourseRegistration;
                 </td>
                 <td class="px-1 text-left">
                     @if($post->role_type_id == 512)
-                    <div class="progress progress-new">
-                        <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100"></div>
-                        <span >@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</span>
-                    </div>
-
+                        <div class="progress progress-new">
+                            <div class="progress-bar" role="progressbar" @if ($post->progress != null) style="width: {{$post->progress}}%;" @else style="width: 0%;" @endif aria-valuenow="{{$post->progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            <span >@if ($post->progress != null) {{$post->progress}}% @else 0% @endif</span>
+                        </div>
                     @endif
                 </td>
                 <td class="px-1 text-left">

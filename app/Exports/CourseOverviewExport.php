@@ -24,13 +24,14 @@ class CourseOverviewExport implements WithMultipleSheets
     }
     public function sheets(): array
     {
+
         return [
 
             new OverviewExportC($this->course[0]->id,$this->assigned_learners,$this->completed_learners,$this->learners_in_progress,$this->learners_not_started,$this->assigned_instructors),
-            new UsersExport($this->from_user,$this->course[0]->id,$this->course[0]->training_option_id,null,1),
-            new CoursesTestsExport($this->from_test,$this->course[0]->id,null,1),
-            new CoursesScormsExport($this->from_scorm,$this->course[0]->id,null,1),
-            new AssessmentExport($this->from_assessment,$this->course[0]->id,null,$this->course[0]->training_option_id,null,1),
+            new UsersExport($this->from_user,$this->course[0]->training_option_id),
+            new CoursesTestsExport($this->from_test),
+            new CoursesScormsExport($this->from_scorm),
+            new AssessmentExport($this->from_assessment,$this->course[0]->training_option_id ),
 
         ];
     }

@@ -206,5 +206,7 @@ return [
     'test_time' => 'Time',
     'start_date' => 'Start date',
     'end_date' => 'End date',
+    'user_search' => 'User Search',
+    'section' => 'Section',
 
 ];

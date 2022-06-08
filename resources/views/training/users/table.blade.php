@@ -13,16 +13,18 @@ use App\Models\Training\CourseRegistration;
 @endsection
 
 @include('training.reports.users.dashboard')
-<div class="card courses">
-  <div class="card-header">
-      <?php $create_role = false; ?>
-      @can('users.create')
-          <?php $create_role = true; ?>
-      @endcan
 
-    {!!Builder::BtnGroupTable($create_role)!!}
-    {!!Builder::TableAllPosts($count, $users->count())!!}
-  </div>
+<div class="card courses">
+    <div class="card-header">
+        <?php $create_role = false; ?>
+        @can('users.create')
+            <?php $create_role = true; ?>
+        @endcan
+        {{-- @dd($paginator) --}}
+        {{-- @dd( $users->count()) --}}
+        {!!Builder::BtnGroupTable($create_role)!!}
+        {!!Builder::TableAllPosts($count, 15)!!}
+    </div>
 
   <div class="card-body table-responsive p-0">
     <table class="table table-hover table-condensed text-center">
@@ -51,14 +53,14 @@ use App\Models\Training\CourseRegistration;
 
           <?php
           $roles_class = [
-              1 => 'badge-green',
-              2 => 'badge-pink',
-              3 => 'badge-blue',
-              4 => 'badge-red',
+              510 => 'badge-green',
+              511 => 'badge-pink',
+              512 => 'badge-blue',
+              4   => 'badge-red',
           ];
           ?>
           @foreach($users as $post)
-            <tr data-id="{{$post->id}}">
+            <tr data-id="{{$post->user_id}}">
                 <td>
                   <span class="td-title px-1">{{$loop->iteration}}</span>
                 </td>
@@ -68,23 +70,21 @@ use App\Models\Training\CourseRegistration;
                 </td>
 
                 <td class="px-1 text-left">
-                    <span class="td-title">{{$post->user->email??null}}</span>
+                    <span class="td-title">{{$post->email??null}}</span>
                 </td>
 
                 <td class="px-1 text-left">
-                    <span class="td-title">{{$post->user->mobile??null}}</span>
+                    <span class="td-title">{{$post->mobile??null}}</span>
                 </td>
 
                 <td class="px-1">
-                    @foreach($post->user->roles as $role)
-                        <span class="td-title {{$roles_class[$role->id]??'badge-pink'}} ">{{$role->name}}</span>
-                    @endforeach
+                        <span class="td-title {{$roles_class[$post->role_type_id]??'badge-pink'}} ">{{\App\Helpers\Lang::TransTitle($post->role_name)}}</span>
                 </td>
                 <td class="px-1">
-                    <span class="td-title">{{$post->user->company??null}}</span>
+                    <span class="td-title">{{$post->company??null}}</span>
                 </td>
                 <td class="px-1">
-                    <span class="td-title">{{$post->user->last_login??'Not logged in'}}</span>
+                    <span class="td-title">{{$post->last_login??'Not logged in'}}</span>
                 </td>
                 <td class="px-1">
                     <?php
@@ -113,10 +113,10 @@ use App\Models\Training\CourseRegistration;
   </div>
 </div>
 <!-- /.card-body -->
+{{$paginator->render()}}
 
-
-
+{{--
 {{ $users->appends([
     'user_search' => request()->user_search??null,
     'post_type' => $post_type
-    ])->render() }}
+    ])->render() }} --}}

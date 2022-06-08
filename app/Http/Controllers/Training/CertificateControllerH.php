@@ -526,7 +526,8 @@ class CertificateControllerH extends Controller
                 $course_registration = $array['course_registration'];
                 $course = Course::find($course_registration->course_id);
                 // $course = Course::find($array['course_id']);
-                $user = User::find($course_registration->user_id);
+                // $user = User::find($course_registration->user_id);
+                $user = User::getUser($course_registration->user_id);
 
                 $data_for_qr = $course->en_title;
 
@@ -535,9 +536,9 @@ class CertificateControllerH extends Controller
                     $data_for_qr .= "\n"."With ".$course->PDUs." PDUs";
                 }
 
-                if(!is_null($user->trans_name))
+                if(!is_null($user[0]->name))
                 {
-                    $data_for_qr .= " for"."\n".$user->trans_name;
+                    $data_for_qr .= " for"."\n".$user[0]->name;
                 }
 
                 $data_for_qr .= "\n"."stage.bakkah.com/";

@@ -18,12 +18,10 @@ class usersTestsExport implements FromCollection, WithHeadings,WithTitle,ShouldA
     * @return \Illuminate\Support\Collection
     */
     // $from,$course_id,$user_id, 512
-    public function __construct($from=null, $course_id,$user_id,$show_all)
+    public function __construct($from)
     {
-        $this->from = $from;
-        $this->course_id = $course_id;
-        $this->user_id = $user_id;
-        $this->show_all = $show_all;
+        $this->from = $from[0];
+        $this->search_arr = $from[1];
     }
 
     public function collection()
@@ -33,13 +31,9 @@ class usersTestsExport implements FromCollection, WithHeadings,WithTitle,ShouldA
         $select = " select JSON_UNQUOTE(JSON_EXTRACT(courses.title,'$.en')) as course_title,contents.title as content_title,  user_exams.time
         , exams.exam_mark, exams.pass_mark/100*exams.exam_mark, user_exams.mark as exam_trainee_mark,if(user_exams.mark >= (exams.pass_mark/100*exams.exam_mark),'Pass','Fail') as result ".$query;
         // dd($select);
-        $branch_id = getCurrentUserBranchData()->branch_id;
+// dd($this->search_arr);
+        return collect(DB::select($select, $this->search_arr ));
 
-
-        if(!is_null($this->course_id) && $this->show_all == 0)
-            return collect(DB::select($select, [$this->user_id, $branch_id, $this->course_id,$this->user_id, 512, $branch_id] ));
-        else
-            return collect(DB::select($select, [$this->user_id, $branch_id, $this->user_id, 512, $branch_id] ));
     }
 
     public function headings(): array

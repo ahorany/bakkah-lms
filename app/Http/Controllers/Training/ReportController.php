@@ -9,6 +9,7 @@ use App\User;
 use App\Models\Training\Course;
 use App\Models\Training\Session;
 use App\Models\Training\Content;
+use App\Models\Training\Category;
 
 use App\Constant;
 use App\Models\Training\Group;
@@ -93,9 +94,9 @@ class ReportController extends Controller
 
         if(isset(request()->export))
         {
-            $from_course = $this->usersReportCourseFromSql(null,1);
-            $from_test = $this->usersReportTestFromSql(null,1);
-            $from_scorm = $this->usersReportScormFromSql(null,1);
+            $from_course = $this->usersReportCourseFromSql(null);
+            $from_test = $this->usersReportTestFromSql(null);
+            $from_scorm = $this->usersReportScormFromSql(null);
             return Excel::download(new userOverviewExport($user_id,$complete_courses_no,$from_course, $from_test,$from_scorm,$assigned_courses), 'userOverview.xlsx');
         }
 
@@ -107,7 +108,7 @@ class ReportController extends Controller
     {
         $user_id = request()->id;
         $course_id = request()->course_id??null;
-
+        // dd(request()->all());
         $course = '';
         if(!is_null($course_id))
         {
@@ -124,18 +125,12 @@ class ReportController extends Controller
 
         $select = 'select courses.id,courses.title,courses_registration.progress,courses_registration.score,courses.created_at,courses.PDUs,courses.complete_progress,courses_registration.id as c_reg_id,categories.title as categ_title,courses.training_option_id as deleviry_method_id  ,constants.name  as deleviry_method_name ';
 
-        $from = $this->usersReportCourseFromSql($course_id,$show_all);
-
+        $usersReportCourseFromSql = $this->usersReportCourseFromSql($course_id);
+        $from = $usersReportCourseFromSql[0];
+        $search_arr = $usersReportCourseFromSql[1];
         // dd($from);
         $sql2 = $select.$from;
-        if(!is_null($course_id) && $show_all == 0)
-        {
-            $courses = DB::select($sql2, [$branch_id,512, $branch_id, $course_id,$branch_id, $user_id]);
-        }
-        else
-        {
-            $courses = DB::select($sql2, [$branch_id,512, $branch_id, $branch_id, $user_id]);
-        }
+        $courses = DB::select($sql2, $search_arr);
 
         $paginator = Paginator::GetPaginator($courses);
         $courses = $paginator->items();
@@ -143,10 +138,13 @@ class ReportController extends Controller
         if(isset(request()->export))
         {
             // dd($course_id);
-            return Excel::download(new CoursesExport($from, $user_id,$course_id,$show_all), 'Courses.xlsx');
+            return Excel::download(new CoursesExport($usersReportCourseFromSql), 'Courses.xlsx');
         }
 
-        return view('training.reports.users.user_report',compact('courses', 'user','paginator','count','course','show_all'));
+        $categories = Category::get();
+        $delivery_methods = Constant::where('parent_id', 10)->get();
+
+        return view('training.reports.users.user_report',compact('courses', 'user','paginator','count','course','show_all','categories','delivery_methods'));
     }
 
 
@@ -170,25 +168,26 @@ class ReportController extends Controller
         , exams.exam_mark, exams.pass_mark, user_exams.mark as exam_trainee_mark, user_exams.status,
         courses.id as course_id,contents.id as content_id ";
 
-        $from = $this->usersReportTestFromSql($course_id,$show_all);
+        $usersReportTestFromSql = $this->usersReportTestFromSql($course_id);
+        $from = $usersReportTestFromSql[0];
+        $search_arr = $usersReportTestFromSql[1];
 
         $sql2 = $select.$from;
         // dd($sql2);
-        if(!is_null($course_id) && $show_all == 0)
-            $tests = DB::select($sql2, [$user_id, $branch_id, $course_id,$user_id, 512, $branch_id]);
-        else
-            $tests = DB::select($sql2, [$user_id, $branch_id, $user_id, 512, $branch_id]);
+        $tests = DB::select($sql2,  $search_arr);
 
         $paginator = Paginator::GetPaginator($tests);
         $tests = $paginator->items();
         $count = $paginator->total();
-
+        // dd(request()->all());
         if(isset(request()->export))
         {
-            return Excel::download(new usersTestsExport($from,$course_id,$user_id,$show_all), 'usersTests_.xlsx');
+            // dd($from);
+            return Excel::download(new usersTestsExport($usersReportTestFromSql), 'usersTests_.xlsx');
         }
 
-        return view('training.reports.users.user_report',compact('user_id', 'tests', 'user','paginator','count','course','show_all'));
+        $results = Constant::where('post_type', 'result')->get();
+        return view('training.reports.users.user_report',compact('user_id', 'tests', 'user','paginator','count','course','show_all','results'));
     }
 
     public function usersReportScorm()
@@ -211,7 +210,11 @@ class ReportController extends Controller
         $select = " select contents.id,courses.title as crtitle,contents.title as cotitle,scormvars_master.date,
         scormvars_master.score,scormvars_master.lesson_status,courses.id as course_id ";
 
-        $from = $this->usersReportScormFromSql($course_id,$show_all);
+
+        $usersReportScormFromSql = $this->usersReportScormFromSql($course_id);
+        $from = $usersReportScormFromSql[0];
+        $search_arr = $usersReportScormFromSql[1];
+
 
         $sql2 = $select.$from;
         // dd($user);
@@ -226,7 +229,8 @@ class ReportController extends Controller
 
         if(isset(request()->export))
         {
-            return Excel::download(new usersScormExport($from,$course_id,$user_id,$show_all), 'usersScorms_.xlsx');
+            // dd($from);
+            return Excel::download(new usersScormExport($usersReportScormFromSql), 'usersScorms_.xlsx');
         }
 
         return view('training.reports.users.user_report',compact('user_id', 'scorms','user','paginator','count','course','show_all'));
@@ -331,10 +335,10 @@ class ReportController extends Controller
 
         if(isset(request()->export))
         {
-            $from_user = $this->coursesReportUserFromSql(null,1);
-            $from_test  = $this->coursesReportTestFromSql(null,1);
-            $from_scorm  = $this->coursesReportScormFromSql(null,1);
-            $from_assessment  = $this->coursesAssessmentsFromSql(null,1);
+            $from_user = $this->coursesReportUserFromSql(null);
+            $from_test  = $this->coursesReportTestFromSql(null);
+            $from_scorm  = $this->coursesReportScormFromSql(null);
+            $from_assessment  = $this->coursesAssessmentsFromSql(null);
             // dd($learners_in_progress);
             return Excel::download(new CourseOverviewExport($assigned_learners,$completed_learners,$learners_in_progress,$learners_not_started,$assigned_instructors,$from_user,$from_test,$from_scorm,$from_assessment,$course), 'CourseOverview.xlsx');
         }
@@ -358,18 +362,14 @@ class ReportController extends Controller
         }
 
         $select = ' select users.id,users.email,user_branches.name,courses_registration.progress,roles.role_type_id,sessions.date_from,sessions.date_to,constants.name as c_name ,courses.complete_progress,courses_registration.id as c_reg_id,courses_registration.created_at as enrolled_date ,users.last_login as last_login';
-        $from = $this->coursesReportUserFromSql($user_id,$show_all);
+
+        $coursesReportUserFromSql = $this->coursesReportUserFromSql($user_id);
+        $from = $coursesReportUserFromSql[0];
+        $search_arr = $coursesReportUserFromSql[1];
 
         $sql = $select.$from;
 
-        if(!is_null($user_id) && $show_all==0)
-        {
-            $users = DB::select($sql, [$branch_id,$branch_id, $course_id,$user_id]);
-        }
-        else
-        {
-            $users = DB::select($sql, [$branch_id,$branch_id, $course_id]);
-        }
+        $users = DB::select($sql, $search_arr);
 
         $paginator = Paginator::GetPaginator($users);
         $users = $paginator->items();
@@ -377,7 +377,7 @@ class ReportController extends Controller
 
         if(isset(request()->export))
         {
-            return Excel::download(new UsersExport($from,$course_id,$training_option_id,$user_id,$show_all), 'Users.xlsx');
+            return Excel::download(new UsersExport($coursesReportUserFromSql,$training_option_id), 'Users.xlsx');
         }
         // dd($show_all);
         return view('training.reports.courses.course_report',compact('course_id', 'users', 'course','paginator','count','user','show_all'));
@@ -401,18 +401,15 @@ class ReportController extends Controller
         $select = " select distinct contents.id as content_id, contents.title as content_title,exams.id as exam_id,c2.title as section ,
         (select count(DISTINCT status,user_id) from user_exams where status= 1 and  exam_id= exams.id) as completed ,
         (select count(DISTINCT status,user_id) from user_exams where status= 1 and  exam_id= exams.id and mark >= (exams.pass_mark/100*exams.exam_mark)) as passess";
-        $from = $this->coursesReportTestFromSql($user_id,$show_all);
+
+
+        $coursesReportTestFromSql = $this->coursesReportTestFromSql($user_id);
+        $from = $coursesReportTestFromSql[0];
+        $search_arr = $coursesReportTestFromSql[1];
+
         $sql = $select.$from;
         // dd($sql);
-        if(!is_null($user_id) && $show_all == 0)
-        {
-            $tests = DB::select($sql,[$user_id,1,$course_id]);
-        }
-        else
-        {
-            $tests = DB::select($sql,[$course_id]);
-        }
-
+        $tests = DB::select($sql, $search_arr);
 
         $paginator = Paginator::GetPaginator($tests);
         $tests = $paginator->items();
@@ -420,7 +417,7 @@ class ReportController extends Controller
 
         if(isset(request()->export))
         {
-            return Excel::download(new CoursesTestsExport($from,$course_id,$user_id,$show_all), 'Tests_'.$course_id.'.xlsx');
+            return Excel::download(new CoursesTestsExport($coursesReportTestFromSql), 'Tests_'.$course_id.'.xlsx');
         }
 
         return view('training.reports.courses.course_report',compact('course_id', 'tests', 'course','paginator','count','show_all','user'));
@@ -439,19 +436,17 @@ class ReportController extends Controller
         }
         $show_all = request()->show_all??1;
 
-        $select = " SELECT i.content_id,i.course_id,i.title,i.attempts,other.passess,i.sestion ";
-        $from = $this->coursesReportScormFromSql($user_id,$show_all);
+        $select = " SELECT i.content_id,i.course_id,i.title,i.attempts,other.passess,i.section ";
+        $from = $this->coursesReportScormFromSql($user_id);
+
+        $coursesReportScormFromSql = $this->coursesReportScormFromSql($user_id);
+        $from = $coursesReportScormFromSql[0];
+        $search_arr = $coursesReportScormFromSql[1];
+
         $sql = $select.$from;
         // dump($course_id);
         // dd($sql);
-        if(!is_null($user_id) && $show_all == 0)
-        {
-            $scorms = DB::select($sql,[$course_id,$course_id,$course_id,$user_id ]);
-        }
-        else
-        {
-            $scorms = DB::select($sql,[$course_id,$course_id ]);
-        }
+        $scorms = DB::select($sql,$search_arr);
 
 
         $paginator = Paginator::GetPaginator($scorms);
@@ -461,7 +456,7 @@ class ReportController extends Controller
         $course = Course::getCourse($course_id);
         if(isset(request()->export))
         {
-            return Excel::download(new CoursesScormsExport($from,$course_id, $user_id,$show_all), 'Scorms_'.$course_id.'.xlsx');
+            return Excel::download(new CoursesScormsExport($coursesReportScormFromSql), 'Scorms_'.$course_id.'.xlsx');
         }
         return view('training.reports.courses.course_report',compact('scorms','course','course_id','paginator','count','show_all','user'));
     }
@@ -487,41 +482,19 @@ class ReportController extends Controller
         $select = "select pre.user_id, pre.name user_name,pre.mark pre_mark, post.mark post_mark,pre.content_id, post.content_id,
         if(post.mark is Null or post.mark = '','Not Yet',if(pre.mark<post.mark,'Improved',if(pre.mark=post.mark,'Constant','Deceased'))) knowledge_status,
         pre.attendance_count,trainer.name trainer_name,pre.email user_email,pre.s_id";
-        $from = $this->coursesAssessmentsFromSql($user_id,$show_all);
+
+
+        $coursesAssessmentsFromSql = $this->coursesAssessmentsFromSql($user_id);
+        $from = $coursesAssessmentsFromSql[0];
+        $search_arr = $coursesAssessmentsFromSql[1];
 
         $sql = $select.$from;
 
-        if(isset(request()->session_id))
-        {
-            $session_id = request()->session_id;
-            if(!is_null($user_id) && $show_all == 0)
-            {
-                $assessments = DB::select($sql, [$course_id, $course_id,$session_id,$user_id,$branch_id,512,$branch_id,513,514,$course_id,$course_id,$session_id,$branch_id,512,$branch_id,514,511,$branch_id,$session_id,$branch_id]);
-            }
-            else
-            {
-                $assessments = DB::select($sql, [$course_id, $course_id,$session_id,$branch_id,512,$branch_id,513,514,$course_id,$course_id,$session_id,$branch_id,512,$branch_id,514,511,$branch_id,$session_id,$branch_id]);
-            }
-
-        }
-        else
-        {
-            $session_id = '';
-            if(!is_null($user_id) && $show_all == 0)
-            {
-                $assessments = DB::select($sql, [$course_id, $course_id,$user_id,$branch_id,512,$branch_id,513,514,$course_id,$course_id,$branch_id,512,$branch_id,514,511,$branch_id,$branch_id]);
-            }
-            else
-            {
-                $assessments = DB::select($sql, [$course_id, $course_id,$branch_id,512,$branch_id,513,514,$course_id,$course_id,$branch_id,512,$branch_id,514,511,$branch_id,$branch_id]);
-            }
-
-        }
-
+        $assessments = DB::select($sql,  $search_arr);
 
         if(isset(request()->export))
         {
-            return Excel::download(new AssessmentExport($from,$course_id,$session_id,$training_option_id,$user_id,$show_all), 'Assessments.xlsx');
+            return Excel::download(new AssessmentExport($coursesAssessmentsFromSql,$training_option_id), 'Assessments.xlsx');
         }
 
         $paginator = Paginator::GetPaginator($assessments);
@@ -1000,8 +973,14 @@ class ReportController extends Controller
 
     }
 
-    private function usersReportCourseFromSql($course_id,$show_all)
+    private function usersReportCourseFromSql($course_id)
     {
+
+        $branch_id = getCurrentUserBranchData()->branch_id;
+        $show_all = request()->show_all??1;
+        // dd(request()->all());
+        $user_id = request()->id;
+        $search_arr = [$branch_id,512, $branch_id];
         $from = ' from courses_registration
         join roles on roles.id = courses_registration.role_id
                             and roles.deleted_at is null
@@ -1010,25 +989,52 @@ class ReportController extends Controller
         join courses on courses.id = courses_registration.course_id
                             and courses.deleted_at is null
                             and courses.branch_id = ? ';
-            if(!is_null($course_id) && $show_all == 0)
-            {
-                $from .=' and courses.id = ?';
-            }
 
-        $from .=' join users on users.id = courses_registration.user_id
-            join user_branches on user_branches.user_id = users.id
-                                and user_branches.deleted_at is null
-                                and user_branches.branch_id = ?
-            left join categories on categories.id = courses.category_id
-            join constants on constants.id = courses.training_option_id
-        where courses_registration.user_id = ?
-        order by courses.id ';
+        if(!is_null($course_id) && $show_all == 0)
+        {
+            $from .=' and courses.id = ?';
+            array_push($search_arr,$course_id);
+        }
 
-        return $from;
+        if(isset(request()->course_search) && !is_null(request()->course_search))
+        {
+            $from .=" and courses.title like '%".request()->course_search."%'  ";
+        }
+
+        if(isset(request()->category_id) && request()->category_id != -1)
+        {
+            $from .=" and courses.category_id = ?  ";
+            array_push($search_arr,request()->category_id);
+        }
+
+        if(isset(request()->training_option_id) && request()->training_option_id != -1)
+        {
+            $from .=" and courses.training_option_id = ?  ";
+            array_push($search_arr,request()->training_option_id);
+        }
+
+        $from .='   join users on users.id = courses_registration.user_id
+                    join user_branches on user_branches.user_id = users.id
+                                        and user_branches.deleted_at is null
+                                        and user_branches.branch_id = ?
+                    left join categories on categories.id = courses.category_id
+                    join constants on constants.id = courses.training_option_id
+                where courses_registration.user_id = ?
+                order by courses.id ';
+        array_push($search_arr,$branch_id,$user_id);
+        // array_push($search_arr,);
+        $arr[0] = $from;
+        $arr[1] = $search_arr;
+        return $arr;
     }
 
-    private function usersReportTestFromSql($course_id,$show_all)
+    private function usersReportTestFromSql($course_id)
     {
+        $branch_id  = getCurrentUserBranchData()->branch_id;
+        $show_all   = request()->show_all??1;
+        $user_id    = request()->id;
+        $search_arr =  [$user_id, $branch_id];
+
         $from = " from contents join exams on exams.content_id = contents.id
         join user_exams on  user_exams.exam_id = exams.id
                 and user_exams.user_id =  ?
@@ -1037,7 +1043,26 @@ class ReportController extends Controller
         if(!is_null($course_id) && $show_all == 0)
         {
             $from .= 'and courses.id = ? ';
+            array_push($search_arr,$course_id);
         }
+        if(isset(request()->course_search) && !is_null(request()->course_search))
+        {
+            $from .=" and courses.title like '%".request()->course_search."%'  ";
+        }
+        if(isset(request()->test) && !is_null(request()->test))
+        {
+            $from .=" and contents.title like '%".request()->test."%'  ";
+        }
+        if(isset(request()->result) && request()->result != -1)
+        {
+            if(request()->result == 516)
+                $from .=" and  user_exams.mark >=  (exams.pass_mark/100* exams.exam_mark) ";
+            elseif(request()->result == 517)
+                $from .=" and  user_exams.mark <  (exams.pass_mark/100* exams.exam_mark) ";
+
+        }
+
+
 
         $from .= "join courses_registration on courses.id  = courses_registration.course_id
                     and courses_registration.user_id = ?
@@ -1046,11 +1071,21 @@ class ReportController extends Controller
                     and roles.deleted_at is null
                     and roles.branch_id = ?
         order by courses.id,user_exams.time   ";
-        return $from;
+        array_push($search_arr,$user_id, 512, $branch_id);
+        // array_push($search_arr,);
+        $arr[0] = $from;
+        $arr[1] = $search_arr;
+        return $arr;
     }
 
-    private function usersReportScormFromSql($course_id,$show_all)
+    private function usersReportScormFromSql($course_id)
     {
+
+        $branch_id  = getCurrentUserBranchData()->branch_id;
+        $show_all   = request()->show_all??1;
+        $user_id    = request()->id;
+        $search_arr =  [ $user_id,$branch_id];
+
         $from = "from scormvars_master   join users on scormvars_master.user_id = users.id
                                 and scormvars_master.user_id = ?
                         join contents on contents.id = scormvars_master.content_id
@@ -1058,15 +1093,35 @@ class ReportController extends Controller
                         join courses on courses.id = contents.course_id and courses.branch_id = ?
                                 and courses.deleted_at is null";
         if(!is_null($course_id) && $show_all == 0)
+        {
             $from .= " and courses.id = ? ";
+            array_push($search_arr,$course_id);
+        }
+        if(isset(request()->course_search) && !is_null(request()->course_search))
+        {
+            $from .=" and courses.title like '%".request()->course_search."%'  ";
+        }
+        if(isset(request()->scorm) && !is_null(request()->scorm))
+        {
+            $from .=" and contents.title like '%".request()->scorm."%'  ";
+        }
+
 
         $from .= " where scormvars_master.deleted_at is  null
                     order by courses.id ";
-        return $from;
+        // dd($from);
+        $arr[0] = $from;
+        $arr[1] = $search_arr;
+        return $arr;
     }
 
-    public function coursesReportUserFromSql($user_id,$show_all)
+    public function coursesReportUserFromSql($user_id)
     {
+        $branch_id = getCurrentUserBranchData()->branch_id;
+        $show_all = request()->show_all??1;
+        $course_id = request()->id;
+        $search_arr =  [$branch_id,$branch_id, $course_id];
+
         $from = ' from courses_registration
                 join roles on roles.id = courses_registration.role_id
                                     and roles.deleted_at is null
@@ -1079,39 +1134,88 @@ class ReportController extends Controller
             where courses_registration.course_id = ? ';
         if(!is_null($user_id) && $show_all == 0)
         {
-        $from .= ' and users.id = ?' ;
+             $from .= ' and users.id = ?' ;
+             array_push($search_arr,$user_id);
         }
+        if(isset(request()->user_search) && !is_null(request()->user_search))
+        {
+            $from .=" and ( user_branches.name like '%".request()->user_search."%' or users.email like  '%".request()->user_search."%' ) ";
+        }
+        if(isset(request()->mobile) && !is_null(request()->mobile))
+        {
+            $from .=" and  users.mobile  = ? ";
+            array_push($search_arr,request()->mobile);
+        }
+
         $from .= ' order by users.id ';
-        return $from;
+
+        $arr[0] = $from;
+        $arr[1] = $search_arr;
+        return $arr;
     }
 
 
-    public function coursesReportTestFromSql($user_id,$show_all)
+    public function coursesReportTestFromSql($user_id)
     {
+
+        $branch_id = getCurrentUserBranchData()->branch_id;
+        $show_all = request()->show_all??1;
+        $course_id = request()->id;
+        $search_arr =  [];
+
         $from = "   from contents
                         join exams on exams.content_id = contents.id
                         join courses on courses.id = contents.course_id
                         join contents  c2 on contents.parent_id = c2.id ";
+
         if(!is_null($user_id) && $show_all == 0)
         {
             $from  .= " join user_exams on user_exams.exam_id = exams.id and user_exams.user_id = ?  and user_exams.status = ? ";
+            array_push($search_arr,$user_id,1);
         }
+
+        if(isset(request()->section) && !is_null(request()->section))
+        {
+            $from .=" and  c2.title like '%".request()->section."%'  ";
+        }
+        if(isset(request()->test) && !is_null(request()->test))
+        {
+            $from .=" and  contents.title like '%".request()->test."%'  ";
+        }
+
         $from  .= " where courses.id = ? and contents.deleted_at is null ";
-        return $from;
+        array_push($search_arr,$course_id);
+
+        $arr[0] = $from;
+        $arr[1] = $search_arr;
+        return $arr;
     }
 
-    public function coursesReportScormFromSql($user_id,$show_all)
+    public function coursesReportScormFromSql($user_id)
     {
+        $course_id = request()->id;
+        $show_all = request()->show_all??1;
+        $search_arr =  [$course_id,$course_id ];
+
+
         $from = "  FROM
                     (
-                        select count(content_id) attempts,scormvars_master.user_id,scormvars_master.content_id,scormvars_master.course_id,contents.title,c2.title as sestion
+                        select count(content_id) attempts,scormvars_master.user_id,scormvars_master.content_id,scormvars_master.course_id,contents.title,c2.title as section
                         from `contents`
                         join scormvars_master on contents.id = scormvars_master.content_id
                                     and scormvars_master.course_id = ?
                                     and contents.deleted_at is null
                                     and scormvars_master.deleted_at is null ";
-        $from .= "     join contents  c2 on contents.parent_id = c2.id
-                        group by scormvars_master.course_id ,scormvars_master.content_id,contents.title,c2.title
+        $from .= "     join contents  c2 on contents.parent_id = c2.id ";
+        if(isset(request()->section) && !is_null(request()->section))
+        {
+            $from .=" and  c2.title like '%".request()->section."%'  ";
+        }
+        if(isset(request()->scorm) && !is_null(request()->scorm))
+        {
+            $from .=" and  contents.title like '%".request()->scorm."%'  ";
+        }
+        $from .= "     group by scormvars_master.course_id ,scormvars_master.content_id,contents.title,c2.title
 
                     ) i
                     left join
@@ -1122,19 +1226,28 @@ class ReportController extends Controller
 
         $from .= "      where lesson_status = 'completed'
                         group by scormvars_master.course_id ,scormvars_master.content_id,contents.title
-                    ) other on other.content_id = i.content_id
-                    ";
+                    ) other on other.content_id = i.content_id ";
+
         if(!is_null($user_id) && $show_all == 0)
         {
             $from .= " join scormvars_master s on s.content_id = i.content_id
                         and  s.course_id = ? and s.user_id = ?
                             and s.deleted_at is null  ";
+            array_push($search_arr,$course_id,$user_id);
         }
-        return $from;
+        $arr[0] = $from;
+        $arr[1] = $search_arr;
+        return $arr;
     }
 
-    public function coursesAssessmentsFromSql($user_id,$show_all)
+    public function coursesAssessmentsFromSql($user_id)
     {
+        $course_id = request()->id;
+        $show_all = request()->show_all??1;
+        $branch_id = getCurrentUserBranchData()->branch_id;
+        $search_arr =  [$course_id,$course_id ];
+        // [$course_id, $course_id,$session_id,$user_id,$branch_id,512,$branch_id,513,514,$course_id,$course_id,$session_id,$branch_id,512,$branch_id,514,511,$branch_id,$session_id,$branch_id]
+
         $from = ' from
         (
             SELECT max(user_exams.mark) mark, user_exams.user_id user_id,user_branches.name name
@@ -1148,16 +1261,27 @@ class ReportController extends Controller
             join courses_registration on user_exams.user_id = courses_registration.user_id
                                         and courses_registration.course_id = ? ';
             if(isset(request()->session_id))
+            {
                 $from .= 'and courses_registration.session_id = ? ';
+                array_push($search_arr,request()->session_id);
+            }
+
             $from .= '
             left join sessions on sessions.id = courses_registration.session_id
             join users on users.id = user_exams.user_id ';
             if(!is_null($user_id) && $show_all == 0)
             {
                 $from .= ' and users.id = ? ';
+                array_push($search_arr,$user_id);
             }
             $from .= '
-            join  user_branches on  user_branches.user_id = users.id and user_branches.branch_id = ?
+            join  user_branches on  user_branches.user_id = users.id and user_branches.branch_id = ? ';
+            if(isset(request()->user_search) && !is_null(request()->user_search))
+            {
+                $from .=" and  ( user_branches.name like '%".request()->user_search."%' or users.email like '%".request()->user_search."%' ) ";
+            }
+
+            $from .= '
             join  roles on  roles.id = courses_registration.role_id
                             and roles.role_type_id = ? and roles.deleted_at is Null
                             and roles.branch_id = ?
@@ -1174,8 +1298,13 @@ class ReportController extends Controller
             join courses on courses.id = contents.course_id
             join courses_registration on user_exams.user_id = courses_registration.user_id
                                         and courses_registration.course_id = ? ';
+            array_push($search_arr,$branch_id,512,$branch_id,513,514,$course_id,$course_id);
             if(isset(request()->session_id))
+            {
                 $from .= 'and courses_registration.session_id = ? ';
+                array_push($search_arr,request()->session_id);
+            }
+
             $from .= '
             join users on users.id = user_exams.user_id
             join  user_branches on  user_branches.user_id = users.id and user_branches.branch_id = ?
@@ -1192,15 +1321,23 @@ class ReportController extends Controller
             join courses_registration on courses_registration.role_id = roles.id
                                 and roles.role_type_id = ?
                                 and roles.deleted_at is Null and roles.branch_id = ? ';
+            array_push($search_arr,$branch_id,512,$branch_id,514,511,$branch_id);
             if(isset(request()->session_id))
+            {
                 $from .= ' and courses_registration.session_id = ? ';
+                array_push($search_arr,request()->session_id);
+            }
+
             $from .= '
             join users on users.id = courses_registration.user_id
             join  user_branches on  user_branches.user_id = users.id and user_branches.branch_id = ?
             GROUP BY courses_registration.session_id
         ) trainer on trainer.session_id  = pre.session_id
         order by pre.session_id  ';
-        return $from;
+        array_push($search_arr,$branch_id);
+        $arr[0] = $from;
+        $arr[1] = $search_arr;
+        return $arr;
     }
 
 }
