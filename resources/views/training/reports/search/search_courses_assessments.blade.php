@@ -54,9 +54,9 @@
                                 {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
 
                                 <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
-                                <button type="submit" value="export" name="export" class="main-color ex">Export
-                                    @include('training.reports.svg_report.export')
+                                <button type="submit" value="export" name="export" class=" ex export btn-sm" style="float: right;">  @include('training.reports.svg_report.export') Export
                                 </button>
+
 
                             </div>
                         </div>

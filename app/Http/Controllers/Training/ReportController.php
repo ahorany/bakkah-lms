@@ -349,6 +349,7 @@ class ReportController extends Controller
 
     public function coursesReportUser()
     {
+
         $course_id = request()->id;
         $course = Course::getCourse($course_id);
         $training_option_id = $course[0]->training_option_id;
