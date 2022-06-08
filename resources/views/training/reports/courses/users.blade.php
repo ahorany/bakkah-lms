@@ -14,11 +14,6 @@ use App\Models\Training\CourseRegistration;
 
 
 
-{{-- @if( $show_all == 1)
-    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
-@else
-    <a href="{{route('training.coursesReportUser',['id'=>$course[0]->id,'user_id'=>$user[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
-@endif --}}
 
 
 @if(!is_null($user) && $user != '')

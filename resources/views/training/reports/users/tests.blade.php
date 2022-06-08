@@ -11,13 +11,6 @@ use App\Models\Training\CourseRegistration;
 <title>{{__('education.User Tests')}} | {{ __('home.DC_title') }}</title>
 @endsection
 
-{{-- @if( $show_all == 1)
-    <a href="{{route('training.usersReportTest',['id'=>$user[0]->id,'export'=>1])}}" class="export btn-sm">{{__('admin.export')}} </a>
-@else
-    <a href="{{route('training.usersReportTest',['id'=>$user[0]->id,'course_id'=>$course[0]->id,'export'=>1,'show_all'=>0])}}" class="export btn-sm">{{__('admin.export')}} </a>
-@endif --}}
-
-
 @if(!is_null($course) && $course != '')
     <?php
         $active_all = '';
