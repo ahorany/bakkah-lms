@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Training;
 
 use App\Http\Controllers\Controller;
 use App\Mail\TraineeMail;
+use App\Models\Training\CourseSetting;
 use App\Models\Training\Role;
 use App\Models\Training\Answer;
 use App\Models\Training\Content;
@@ -111,6 +112,23 @@ class CourseUserController extends Controller
             return response()->json([ 'status' => 'fail']);
         }
 
+
+
+        $course_limit = CourseSetting::where('course_id',$course->id)->where('branche_id',getCurrentUserBranchData()->branch_id)->first();
+        if ($course_limit){
+            $current_value = $course_limit->current_value - count(request()->delete_users) + count(request()->users);
+            if ($course_limit->value < $current_value ){
+                return response()->json([ 'status' => 'fail','message' => 'You have reached the maximum number of users in this course']);
+            }
+
+            $course_limit->update([
+                'current_value' => $current_value
+            ]);
+        }
+
+
+
+
         foreach (request()->delete_users as  $user){
             CourseRegistration::where('course_id',$course->id)->where('user_id',$user['user_id'])->delete();
         }
@@ -156,6 +174,16 @@ class CourseUserController extends Controller
         $course_id = \request()->course_id;
         $user =  User::findOrFail($user_id);
         $course =  Course::findOrFail($course_id);
+
+        $course_limit = CourseSetting::where('course_id',$course->id)->where('branche_id',getCurrentUserBranchData()->branch_id)->first();
+        if ($course_limit){
+            $current_value = $course_limit->current_value - 1;
+
+            $course_limit->update([
+                'current_value' => $current_value
+            ]);
+        }
+
         CourseRegistration::where('user_id',$user->id)->where('course_id',$course->id)->delete();
         return response()->json(['status' => 'success']);
     }
