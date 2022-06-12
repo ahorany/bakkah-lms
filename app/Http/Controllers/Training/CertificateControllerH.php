@@ -344,6 +344,7 @@ class CertificateControllerH extends Controller
 
         // return request()->all();
     }
+
     public function replicate()
     {
         $parent_id = request()->certificate;

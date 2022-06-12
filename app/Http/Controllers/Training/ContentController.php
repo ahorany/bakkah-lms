@@ -63,6 +63,35 @@ class ContentController extends Controller
         return response()->json([ 'status' => 'success']);
     }
 
+
+    public function duplicate_content()
+    {
+        $content_id = request()->content_id;
+        $course_id = request()->course_id;
+
+        $insertQuery = "insert into contents (title,url,status,course_id,parent_id,post_type,is_aside,downloadable,time_limit,`order`,paid_status,created_by,trashed_status,created_at,role_and_path,hide_from_trainees) SELECT title,url,status,course_id,parent_id,post_type,is_aside,downloadable,time_limit,`order`,paid_status,'".auth()->user()->id."',trashed_status,'".now()."',role_and_path,hide_from_trainees
+                FROM contents where id = $content_id " ;
+
+        DB::insert($insertQuery);
+        $inserted_id = DB::getPdo()->lastInsertId();
+
+        DB::table('contents')
+        ->where('id', $inserted_id)
+        ->update(['title' => DB::raw("CONCAT( title,'_','".$inserted_id."')")]);
+
+
+        $contents = Content::where('course_id',$course_id)
+            ->whereNull('parent_id')
+            ->with(['gift','contents' => function($q){
+                $q->with(['upload','details','exam'])->withCount('questions')->orderBy('order');
+            },'details','exams'])
+            ->orderBy('order')
+            ->get();
+
+        return response()->json([ 'status' => 'success','contents'=>$contents]);
+    }
+
+
     public function add_section()
     {
         $rules = [
@@ -185,9 +214,9 @@ class ContentController extends Controller
             'open_after' => \request()->open_after,
         ]);
 
-//        if(request()->hasFile('file')){
-//            Content::UploadFile(Content::where('id', request()->content_id)->first(), ['method' => 'update', 'folder_path' => public_path('upload/files/gifts')]);
-//        }
+        // if(request()->hasFile('file')){
+        //      Content::UploadFile(Content::where('id', request()->content_id)->first(), ['method' => 'update', 'folder_path' => public_path('upload/files/gifts')]);
+        //        }
 
 
         $content = Content::whereId(\request()->content_id)->with(['details','contents','gift'])->first();

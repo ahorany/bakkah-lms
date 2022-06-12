@@ -1,3 +1,4 @@
+
 @section('useHead')
     <title>{{__('education.User Reports')}} | {{ __('home.DC_title') }}</title>
 @endsection
@@ -92,3 +93,53 @@
         </div>
     </div>
 </div>
+
+
+<div class="row mb-4 dashboard p-0">
+
+    <div class="col-lg-12">
+        <div class="card h-100 p-30">
+<canvas class="myChart" width="400" height="400"></canvas>
+</div>
+</div>
+</div>
+<br>
+<script>
+
+
+// Any of the following formats may be used
+const ctx = document.getElementsByClassName('myChart');
+// const ctx = document.getElementById('myChart').getContext('2d');
+// const ctx = $('#myChart');
+// const ctx = 'myChart';
+
+const myChart = new Chart(ctx, {
+    type: 'doughnut',//pie//doughnut
+    data: {
+        labels: ['Courses Not Started', 'Courses In Progress', 'Completed Courses'],
+        datasets: [{
+            label: 'Courses',
+            data: [ {!!$courses_not_started !!}, {!! $courses_in_progress !!}, {!! $complete_courses_no !!}],
+            backgroundColor: [
+                'rgba(215, 5, 5, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(5, 190, 42, 0.5)',
+
+            ],
+            borderColor: [
+                'rgba(215, 5, 5, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(5, 190, 42, 0.5)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>

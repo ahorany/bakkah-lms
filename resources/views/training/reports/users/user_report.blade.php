@@ -1,5 +1,4 @@
 @extends('layouts.crm.index')
-
 @section('table')
 <?php
     $active_overview = '';

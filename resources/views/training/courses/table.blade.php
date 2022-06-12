@@ -117,6 +117,8 @@ use App\Models\Training\CourseRegistration;
                     @include('training.courses.contents.header',['course_id' => $post->id, 'green' =>true , 'courses_home' =>true ])
                 </div>
               @endif
+
+              <a href="{{route('training.duplicate_course',['course_id'=>$post->id])}}" class="cyan mt-1" title="Duplicate" onclick="return confirm('Are you sure?')" ><i class="fa fa-files-o" ></i> Duplicate</a>
           </td>
 
       </tr>

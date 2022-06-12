@@ -250,4 +250,32 @@ class CourseController extends Controller
     }
 
 
+    public function duplicate_course()
+    {
+        $course_id = request()->course_id;
+
+        $c = Course::where('id',$course_id)->first();
+        if (!$c){
+            abort(404);
+        }
+
+        $json = $c->title;
+        $json = json_decode($json, true);
+        $en = $json['en'];$ar = $json['ar'];
+
+
+        $insertQuery = "insert into courses (title	,excerpt	,ref_id	,training_option_id	,complete_progress	,accredited_notes,disclaimer	,post_type 	,PDUs	,price	,	exam_price	,	take2_price	,	take2_price_usd	,	rating	,reviews,branch_id	,created_by, 	trashed_status	,slug	,`order`	,group_id	,algolia_order	,xero_code	,xero_exam_code	,material_cost	,short_title	,created_at		,	exam_is_included	,partner_id	,certificate_type_id	,certificate_id	,type_id	,show_in_website,active,wp_id	,wp_city	,wp_migrate	,post_year	,reference_course_id	,`code`	,certificate_no	,category_id) SELECT title	,excerpt	,ref_id	,training_option_id	,complete_progress	,accredited_notes	,disclaimer	,post_type 	,PDUs	,price	,	exam_price	,	take2_price	,	take2_price_usd	,	rating	,reviews	,branch_id	,'".auth()->user()->id."',trashed_status	,slug	,`order`	,group_id	,algolia_order	,xero_code	,xero_exam_code	,material_cost	,short_title	,'".now()."',	exam_is_included	,partner_id	,certificate_type_id	,certificate_id	,type_id	,show_in_website,active,wp_id	,wp_city	,wp_migrate	,post_year	,reference_course_id	,`code`	,certificate_no	,category_id
+                            FROM courses where id = $course_id " ;
+
+        DB::insert($insertQuery);
+        $inserted_id = DB::getPdo()->lastInsertId();
+
+        DB::table('courses')
+            ->where('id', $inserted_id)
+            ->update(['title->en' => $en.'_copy_'.$inserted_id,
+                    'title->ar' => $ar.'_copy_'.$inserted_id]);
+
+        return redirect()->route('training.courses.index',['course_search'=>$en]);
+    }
+
 }

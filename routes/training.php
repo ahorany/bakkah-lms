@@ -36,6 +36,7 @@ Route::group([
         Route::group(['middleware' => 'SetSideBarItemActiveBySession:training.courses.index'], function(){
             Route::resource('courses', 'CourseController');
             Route::patch('/courses/{course}/restore', 'CourseController@restore')->name('courses.restore');
+            Route::get('/duplicate_course', 'CourseController@duplicate_course')->name('duplicate_course');
 
 
             Route::get('/coursesReportOverview', 'ReportController@coursesReportOverview')->name('coursesReportOverview');
@@ -81,7 +82,6 @@ Route::group([
             Route::post('/course_users/delete', 'CourseUserController@delete_user_course')->name('delete_user_course');
 
 
-
             Route::get('/contents', 'ContentController@contents')->name('contents');
             Route::post('/add_section', 'ContentController@add_section')->name('add_section');
             Route::post('/update_section', 'ContentController@update_section')->name('update_section');
@@ -92,7 +92,7 @@ Route::group([
             Route::post('/add_gift', 'ContentController@add_gift')->name('add_gift');
             Route::post('/update_gift', 'ContentController@update_gift')->name('update_gift');
             Route::post('/save/content/order', 'ContentController@save_content_order')->name('contents.save_order');
-
+            Route::get('/duplicate_content', 'ContentController@duplicate_content')->name('duplicate_content');
 
 
             Route::get('/add_questions/{exam_id}', 'QuestionController@add_questions')->name('add_questions');

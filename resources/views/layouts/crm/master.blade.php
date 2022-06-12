@@ -100,6 +100,7 @@
     });
 
 </script>
+
 @yield('script')
 
 </body>

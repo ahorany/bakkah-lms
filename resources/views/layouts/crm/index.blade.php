@@ -1,6 +1,7 @@
 @extends('layouts.crm.master')
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
 
     <style>
         table .btn-table {

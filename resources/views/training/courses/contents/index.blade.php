@@ -126,6 +126,8 @@
                                             <i class="fa fa-pencil" aria-hidden="true"></i> </button>
 
                                         <button title="Delete" @click="deleteContent(content.id,entry.id)"  class="red"><i class="fa fa-trash" aria-hidden="true"></i> </button>
+
+                                        <button v-if="entry.post_type != 'exam'" title="Duplicate" @click="duplicateContent(content.id,entry.id)"  class="green"><i class="fa fa-files-o" aria-hidden="true"></i> </button>
                                     </div>
                                 </td>
                             </tr>
@@ -702,6 +704,26 @@
                             this.deleteRequest(content_id)
                         }
                     },
+                    duplicateContent : function (parent_id,content_id){
+
+                        let self = this;
+                        if(confirm(" Are you sure ? ")){
+
+                            axios.get("{{route('training.duplicate_content')}}",{
+                                params : {
+                                    content_id : content_id,
+                                    course_id  : self.course_id
+                                }
+                                })
+                                .then(response => {
+                                    self.contents = response.data.contents;
+                                })
+                                .catch(e => {
+                                    console.log(e)
+                            });
+                        }
+                    },
+
                     deleteSection : function(section_id){
                         let self = this;
                         if(confirm("Are you sure ? ")){
@@ -823,6 +845,7 @@
                                 'Content-Type' : 'multipart/form-data',
                             }
                         };
+
                         formData.append('course_id', self.course_id);
                         formData.append('time_limit', self.time_limit);
                         formData.append('content_id', self.content_id);
@@ -843,6 +866,7 @@
                         formData.append('shuffle_answers', self.shuffle_answers);
                         formData.append('is_gift', self.is_gift);
                         formData.append('exam_type', self.exam_type);
+
                         if(self.save_type == 'add'){
                             axios.post("{{route('training.add_content')}}",
                                 formData
@@ -856,7 +880,8 @@
                                         }
                                     }else{
                                         self.contents.forEach(function (section) {
-                                            if(section.id == self.content_id){
+                                            if(section.id == self.content_id)
+                                            {
                                                 section.contents.push(response.data.data);
                                             }
                                             return true ;
@@ -923,6 +948,7 @@
                                             self.errors[property] = self.errors[property][0];
                                         }
                                     }else{
+
                                         self.contents.forEach(function (section) {
                                             if(section.id == response.data.data.parent_id){
                                                 section.contents.forEach(function (content) {

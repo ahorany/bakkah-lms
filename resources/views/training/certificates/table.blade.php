@@ -33,9 +33,7 @@
 
                     <td>
                         <span style="display: block;">{{$post->trans_title??null}}</span>
-                        {!! Builder::BtnGroupRows($post->title, $post->id, ['Edit', 'Destroy', 'Dublicate'], [
-                        'post'=>$post->id,
-                        ]) !!}
+                            {!! Builder::BtnGroupRows($post->title, $post->id, ['Edit', 'Destroy', 'Dublicate'], ['post'=>$post->id,]) !!}
                     </td>
 
                     <td>
