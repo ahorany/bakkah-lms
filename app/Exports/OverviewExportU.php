@@ -42,7 +42,7 @@ class OverviewExportU implements FromCollection,WithEvents,WithTitle,ShouldAutoS
         $user = DB::select($sql_u,[$this->user_id]);
 
         $sql_t = "select name from roles where id = (select role_id from  model_has_roles where model_id = ? and model_type = ? ) ";
-        $user_t = DB::select($sql_t,[$this->user_id,'App\User']);
+        $user_t = DB::select($sql_t,[$this->user_id,'App\\User']);
 
         $all = [];
         $info['info'] = 'Report information';

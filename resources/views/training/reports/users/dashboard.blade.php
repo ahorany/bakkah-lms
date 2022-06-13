@@ -35,6 +35,7 @@
         <span>{{__('admin.export')}}</span>
     </a>
 @endif
+
 <div class="row mb-4 dashboard p-0">
 
     <div class="col-lg-12">
@@ -98,20 +99,21 @@
             </div>
         </div>
     </div>
+
 </div>
 
 
-
-        <div class="chartBOx">
-            <canvas id="myChart"></canvas>
-        </div>
+<div class="chartBOx">
+    <canvas id="myChart"></canvas>
+</div>
 
 <br>
-<script>
 
+<script>
 
 // Any of the following formats may be used
 const ctx = document.getElementById('myChart');
+
 // const ctx = document.getElementsByClassName('myChart').getContext('2d');
 // const ctx = $('.myChart');
 // const ctx = 'myChart';
@@ -119,7 +121,7 @@ const ctx = document.getElementById('myChart');
 const myChart = new Chart(ctx, {
     type: 'doughnut',//pie//doughnut
     data: {
-        labels: ['Courses Not Started', 'Courses In Progress', 'Completed Courses'],
+        labels: ['Not Started', 'In Progress', 'Completed'],
         datasets: [{
             label: 'Courses',
             data: [ {!!$courses_not_started !!}, {!! $courses_in_progress !!}, {!! $complete_courses_no !!}],
