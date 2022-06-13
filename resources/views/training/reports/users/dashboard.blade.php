@@ -1,3 +1,9 @@
+<style>
+    .chartBOx{
+        width: 300px ;
+        height: 300px;
+    }
+</style>
 
 @section('useHead')
     <title>{{__('education.User Reports')}} | {{ __('home.DC_title') }}</title>
@@ -95,22 +101,19 @@
 </div>
 
 
-<div class="row mb-4 dashboard p-0">
 
-    <div class="col-lg-12">
-        <div class="card h-100 p-30">
-<canvas class="myChart" width="400" height="400"></canvas>
-</div>
-</div>
-</div>
+        <div class="chartBOx">
+            <canvas id="myChart"></canvas>
+        </div>
+
 <br>
 <script>
 
 
 // Any of the following formats may be used
-const ctx = document.getElementsByClassName('myChart');
-// const ctx = document.getElementById('myChart').getContext('2d');
-// const ctx = $('#myChart');
+const ctx = document.getElementById('myChart');
+// const ctx = document.getElementsByClassName('myChart').getContext('2d');
+// const ctx = $('.myChart');
 // const ctx = 'myChart';
 
 const myChart = new Chart(ctx, {
@@ -135,11 +138,24 @@ const myChart = new Chart(ctx, {
         }]
     },
     options: {
+        maintainAspectRatio :true,
         scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
+            xAxes: [{
+                gridLines: {
+                display: false,
+                },
+            }],
+            yAxes: [{
+                gridLines: {
+                drawBorder: false,
+                },
+            }]
+
+       },
+
+    },
+
+
 });
 </script>
+
