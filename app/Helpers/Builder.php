@@ -447,6 +447,13 @@ class Builder {
         return '<button type="'.$type.'" name="'.$name.'" class=" '.$class.'"><i class="'.$icon_fa.'"></i> '.self::title($title, false, 'admin.').'</button>';
     }
 
+    static function clearSearch($name, $title, $class='btn-primary', $icon=null, $array=[]){
+        return '<button type="button" class="cyan" name="clear_search">'.self::title('clear', false, 'admin.').'</button>';
+        // $type = $array['type']??'submit';
+        // $icon_fa=$array['icon']??'fa fa-'.$icon;
+        // return '<button type="'.$type.'" name="'.$name.'" class=" '.$class.'"><i class="'.$icon_fa.'"></i> '.self::title($title, false, 'admin.').'</button>';
+    }
+
     /*
     * For Table
     */

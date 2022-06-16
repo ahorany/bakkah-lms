@@ -88,7 +88,7 @@ class ReportController extends Controller
         $courses_not_started = CourseRegistration::getCoursesNo($course_id,512)
                                     ->where('courses_registration.progress',0)
                                     ->where('courses_registration.user_id',$user_id)->count();
-        $assigned_courses =  CourseRegistration::getCoursesNo(null,512)
+        $assigned_courses    =  CourseRegistration::getCoursesNo(null,512)
                                     ->where('courses_registration.user_id',$user_id)->count();
         $overview = 1;
 

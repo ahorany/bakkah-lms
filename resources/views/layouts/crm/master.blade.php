@@ -99,6 +99,13 @@
         });
     });
 
+
+    $('button[name="clear_search"]').click(function(){
+            $('input[type="text"]').val('');
+            $('select').val(-1);
+
+        });
+
 </script>
 
 @yield('script')

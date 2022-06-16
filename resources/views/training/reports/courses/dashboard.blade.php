@@ -28,7 +28,7 @@
         <div class="card h-100 p-30">
 
             <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-center">
-            @if(isset($count))
+            @if(isset($count) && !isset($show_all))
                 <div class="course-cards" style="border-color: rgb(48 61 71 / 50%)">
                     <svg version="1.1" class="icon-report bg-four" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve">
                         <style type="text/css">

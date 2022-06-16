@@ -35,7 +35,7 @@
                         <div class="col-md-12">
                             <div style="margin-top: 5px;">
                                 {!! Builder::Submit('search', 'search', 'main-color', 'search') !!}
-                                <button type="reset" class="cyan" >{{__('admin.clear')}}</button>
+                                {!! Builder::clearSearch('clear', 'clear', 'cyan', 'clear') !!}
                             </div>
                         </div>
                     </div>

@@ -99,10 +99,10 @@ class UserController extends Controller
         // dd($sql);
 
 
-
         $users = DB::select( $sql,$search_arr);
+        // dd($sql);
         $paginator = Paginator::GetPaginator($users);
-        $users = $paginator->items();
+        $users  = $paginator->items();
         $count  = $paginator->total();
 
         // $count = $users->count();
@@ -118,11 +118,19 @@ class UserController extends Controller
         // dd($complete_courses_no_sql->count());
         $complete_courses_no_sql =  $complete_courses_no_sql->whereRaw('courses_registration.progress >= courses.complete_progress')
                                                             ->where('courses_registration.progress','!=',0);
+
         if (!is_null(request()->user_search)) {
             $complete_courses_no_sql = $this->SearchUser($complete_courses_no_sql);
         }
         $complete_courses_no =  $complete_courses_no_sql->count();
-        // dd($complete_courses_no);
+
+        $assigned_learners_sql = CourseRegistration::getCoursesNo(null,512);
+        if (!is_null(request()->user_search)) {
+            $complete_courses_no_sql = $this->SearchUser($assigned_learners_sql);
+        }
+        $assigned_learners =  $assigned_learners_sql->toSql();
+
+        // dd($assigned_learners);
         $courses_in_progress_sql = CourseRegistration::getCoursesNo(null,512);
         $courses_in_progress_sql =  $courses_in_progress_sql->whereRaw('courses_registration.progress < courses.complete_progress')
                                             ->where('courses_registration.progress','>',0);
@@ -137,6 +145,7 @@ class UserController extends Controller
             $courses_not_started_sql = $this->SearchUser($courses_not_started_sql);
         }
         $courses_not_started =  $courses_not_started_sql->count();
+
         // dd($complete_courses_no->count(),    );
         return Active::Index(compact('users', 'count', 'post_type', 'trash','users_no','complete_courses_no','courses_in_progress','courses_not_started','paginator'));
     }
@@ -367,3 +376,5 @@ class UserController extends Controller
     }
 
 } // end class
+
+
